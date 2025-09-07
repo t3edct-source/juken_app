@@ -6,7 +6,7 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebas
 
 // あなたのプロジェクト専用の firebaseConfig を貼る
 const firebaseConfig = {
-  apiKey: "AIzaSyD7WHlICoZ1d...（正しいキー）",
+  apiKey: "AIzaSyD7WHlIcOz1dwvp3nWOpvJdd9prSomZThA",
   authDomain: "t3ed-af16f.firebaseapp.com",
   projectId: "t3ed-af16f",
   storageBucket: "t3ed-af16f.appspot.com",
