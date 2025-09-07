@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>中学受験社会｜地理学習</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+
+  <div class="question-box">
+    <div id="modeLabel"></div>
+    <div id="eraLabel" style="margin-bottom: 0.5rem; font-weight:700;"></div>
+    <div class="source" id="source"></div>
+    <h2 id="question"></h2>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation"></div>
+    <div class="navigation-buttons">
+      <button id="prevBtn" style="display: none;">前の問題へ</button>
+      <button id="nextBtn">次の問題へ</button>
+    </div>
+    <div id="historyDisplay"></div>
+  </div>
+
+  <script src="loader.js"></script>
+  <script src="script.js"></script>
+  <script>
+    const eraMap = {
+      japan_geo1_front: "① 世界の国と日本の地形（前半）",
+      japan_geo1_back: "① 世界の国と日本の地形（後半）"
+    };
+    const era = new URLSearchParams(location.search).get("era") || "japan_geo1_front";
+    document.getElementById("eraLabel").textContent = "単元：" + (eraMap[era] || era);
+  </script>
+</body>
+</html>

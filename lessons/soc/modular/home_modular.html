@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>中学受験社会｜地理学習メニュー</title>
+  <style>
+    /* TOPページと統一したスタイル */
+    * { box-sizing: border-box; }
+    
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+      background: linear-gradient(135deg, #fefce8, #fff7ed, #fdf2f8);
+      min-height: 100vh;
+      margin: 0;
+      padding: 24px;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    /* TOPページと同じ背景装飾 */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(251, 191, 36, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 60% 80%, rgba(251, 146, 60, 0.12) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 32px 24px 36px;
+      border-radius: 20px;
+      border: 2px solid rgb(226 232 240);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 10;
+      transition: all 0.3s ease;
+    }
+    
+    .wrap:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.15);
+      border-color: rgb(203 213 225);
+    }
+    
+    .wrap::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #ea580c, #f97316);
+      border-radius: 20px 20px 0 0;
+    }
+    
+    h1 {
+      margin: 0 0 8px;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #1f2937;
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    p.lead {
+      margin: 0 0 16px;
+      color: #6b7280;
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 8px;
+    }
+    
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      border-radius: 1rem;
+      padding: 16px 18px;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn.unit {
+      background: linear-gradient(135deg, #fff7ed, #fed7aa);
+      border: 2px solid rgb(226 232 240);
+      color: #92400e;
+      box-shadow: 0 2px 8px rgba(234, 88, 12, 0.1);
+    }
+    
+    .btn.unit:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 20px rgba(234, 88, 12, 0.15);
+      border-color: #f97316;
+    }
+    
+    .btn.unit.active {
+      border-color: #ea580c;
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      color: white;
+      box-shadow: 0 4px 16px rgba(234, 88, 12, 0.3);
+    }
+    
+    .row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+    
+    .btn.mode {
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      color: #fff;
+      font-size: 1.1rem;
+      padding: 18px 20px;
+      box-shadow: 0 4px 16px rgba(234, 88, 12, 0.25);
+    }
+    
+    .btn.mode:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(234, 88, 12, 0.35);
+    }
+    
+    .btn.mode.oboeru {
+      background: linear-gradient(135deg, #6b7280, #4b5563);
+      box-shadow: 0 4px 16px rgba(107, 114, 128, 0.25);
+    }
+    
+    .btn.mode.oboeru:hover {
+      box-shadow: 0 8px 25px rgba(107, 114, 128, 0.35);
+    }
+    
+    .desc {
+      margin-top: 16px;
+      padding: 20px;
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+      border-left: 4px solid #f59e0b;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
+    }
+    
+    .desc h3 {
+      margin: 0 0 8px;
+      color: #92400e;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    
+    .desc p {
+      margin: 6px 0;
+      color: #b45309;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+    
+    .footer {
+      margin-top: 12px;
+      color: #6b7280;
+      font-weight: 500;
+    }
+    
+    @media (max-width: 720px) {
+      .grid, .row {
+        grid-template-columns: 1fr;
+      }
+      
+      .wrap {
+        padding: 24px 20px 28px;
+      }
+      
+      h1 {
+        font-size: 1.5rem;
+      }
+      
+      .btn {
+        padding: 14px 16px;
+      }
+      
+      .btn.mode {
+        padding: 16px 18px;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 戻るボタン（画面左上に固定） -->
+  <button id="backBtn" onclick="goBack()" style="position: fixed; top: 20px; left: 20px; z-index: 1000; padding: 12px 18px; background: linear-gradient(135deg, #ea580c, #f97316); color: white; border: none; border-radius: 12px; cursor: pointer; font-size: 14px; font-weight: 600; box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px) scale(1.05)'; this.style.boxShadow='0 6px 16px rgba(234, 88, 12, 0.4)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 4px 12px rgba(234, 88, 12, 0.3)'">← 戻る</button>
+
+  <div class="wrap">
+    <h1>🗺️ 中学受験社会：地理分野</h1>
+    <p class="lead">理解（わかる編）と暗記（覚える編）で、入試に向けた確実な知識を身につけよう！</p>
+
+    <div class="grid" id="eraButtons">
+      <button class="btn unit active" data-era="japan_geo1_front">① 世界の国と日本の地形（前半）</button>
+      <button class="btn unit" data-era="japan_geo1_back">① 世界の国と日本の地形（後半）</button>
+      <!-- これから追加していく単元のプレースホルダ：
+      <button class="btn unit" data-era="geo_climate_front">② 地形と気候と暮らし（前半）</button>
+      <button class="btn unit" data-era="geo_climate_back">② 地形と気候と暮らし（後半）</button>
+      -->
+    </div>
+
+    <div class="row" style="margin-top:12px">
+      <a id="btnWakaru" class="btn mode" href="#">📚 わかる編（理解型）</a>
+      <a id="btnOboeru" class="btn mode oboeru" href="#">🧠 覚える編（暗記型）</a>
+    </div>
+
+    <div class="desc">
+      <h3>📚 わかる編（理解型学習）</h3>
+      <p>具体例とイメージで地理の基礎概念をしっかり理解。中学受験に必要な「なぜ？」を解決します。</p>
+      <h3>🧠 覚える編（暗記型学習）</h3>
+      <p>重要ポイントを効率的に暗記。入試で問われる地名・地形・特徴を確実にマスターしよう！</p>
+    </div>
+
+    <p class="footer">単元とモードを選択して、中学受験対策をスタート！</p>
+  </div>
+
+  <script>
+    // 戻るボタンの機能
+    function goBack() {
+      // iframe内で実行されているかチェック
+      if (window.parent !== window) {
+        // iframe内の場合、親フレームに戻るメッセージを送信
+        try {
+          window.parent.postMessage({ type: 'lesson:goBack' }, '*');
+          return;
+        } catch (e) {
+          console.log('postMessage failed, falling back to direct navigation');
+        }
+      }
+      
+      // メインページがある場合は戻る、ない場合は前のページに戻る
+      if (window.opener && !window.opener.closed) {
+        window.close();
+      } else if (document.referrer) {
+        window.history.back();
+      } else {
+        // メインページ（算数・社会共通）に移動
+        window.location.href = '../../../index.html';
+      }
+    }
+
+    let currentEra = 'japan_geo1_front';
+    const eraButtons = document.querySelectorAll('.btn.unit');
+    function updateLinks(){
+      document.getElementById('btnWakaru').href = 'index_modular.html?era=' + currentEra + '&mode=wakaru';
+      document.getElementById('btnOboeru').href = 'index_modular.html?era=' + currentEra + '&mode=oboeru';
+    }
+    eraButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        eraButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentEra = btn.dataset.era;
+        updateLinks();
+      });
+    });
+    updateLinks();
+  </script>
+</body>
+</html>

@@ -1,0 +1,272 @@
+﻿[
+  {
+    "id": "sci.physics.motion",
+    "grade": 6,
+    "subject": "sci",
+    "title": "物体の運動とてこ",
+    "duration_min": 15,
+    "sku_required": null,
+    "path": "lessons/sci/physics/motion/output.html",
+    "format": "html",
+    "tags": [
+      "物理",
+      "運動",
+      "てこ"
+    ]
+  },
+  {
+    "id": "sci.chemistry.water_solution",
+    "grade": 6,
+    "subject": "sci",
+    "title": "水溶液の性質",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/chemistry/water_solution/output.html",
+    "format": "html",
+    "tags": [
+      "化学",
+      "水溶液",
+      "酸性・アルカリ性"
+    ]
+  },
+  {
+    "id": "sci.biology.human_body",
+    "grade": 6,
+    "subject": "sci",
+    "title": "人体のつくりとはたらき",
+    "duration_min": 18,
+    "sku_required": null,
+    "path": "lessons/sci/biology/human_body/output.html",
+    "format": "html",
+    "tags": [
+      "生物",
+      "人体",
+      "消化・血液循環"
+    ]
+  },
+  {
+    "id": "sci.earth.weather",
+    "grade": 5,
+    "subject": "sci",
+    "title": "天気の変化",
+    "duration_min": 16,
+    "sku_required": null,
+    "path": "lessons/sci/earth/weather/output.html",
+    "format": "html",
+    "tags": [
+      "地学",
+      "天気",
+      "雲・雨"
+    ]
+  },
+  {
+    "id": "sci.biology.plants",
+    "grade": 5,
+    "subject": "sci",
+    "title": "植物の発芽・成長・結実",
+    "duration_min": 14,
+    "sku_required": null,
+    "path": "lessons/sci/biology/plants/output.html",
+    "format": "html",
+    "tags": [
+      "生物",
+      "植物",
+      "発芽・光合成"
+    ]
+  },
+  {
+    "id": "soc.history.heian",
+    "grade": 6,
+    "subject": "soc",
+    "title": "平安時代の文化と政治",
+    "duration_min": 18,
+    "sku_required": null,
+    "path": "lessons/soc/history/heian/output.html",
+    "format": "html",
+    "tags": [
+      "歴史",
+      "平安時代",
+      "貴族政治"
+    ]
+  },
+  {
+    "id": "soc.history.kamakura",
+    "grade": 6,
+    "subject": "soc",
+    "title": "鎌倉時代の武士の世の中",
+    "duration_min": 16,
+    "sku_required": null,
+    "path": "lessons/soc/history/kamakura/output.html",
+    "format": "html",
+    "tags": [
+      "歴史",
+      "鎌倉時代",
+      "武士・幕府"
+    ]
+  },
+  {
+    "id": "soc.geography.japan_regions",
+    "grade": 5,
+    "subject": "soc",
+    "title": "日本の国土と地域的特色",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/soc/geography/japan_regions/output.html",
+    "format": "html",
+    "tags": [
+      "地理",
+      "日本の国土",
+      "地域"
+    ]
+  },
+  {
+    "id": "soc.geography.japan_terrain_front",
+    "grade": 5,
+    "subject": "soc",
+    "title": "世界の国と日本の地形（前半）",
+    "duration_min": 15,
+    "sku_required": null,
+    "path": "lessons/soc/modular/index_modular.html?era=japan_geo1_front&mode=wakaru",
+    "format": "modular",
+    "tags": [
+      "地理",
+      "日本の地形",
+      "世界の国"
+    ]
+  },
+  {
+    "id": "soc.geography.japan_terrain_back",
+    "grade": 5,
+    "subject": "soc",
+    "title": "世界の国と日本の地形（後半）",
+    "duration_min": 15,
+    "sku_required": null,
+    "path": "lessons/soc/modular/index_modular.html?era=japan_geo1_back&mode=wakaru",
+    "format": "modular",
+    "tags": [
+      "地理",
+      "日本の地形",
+      "国土の特徴"
+    ]
+  },
+  {
+    "id": "soc.geography.japan_terrain_front_quiz",
+    "grade": 5,
+    "subject": "social_drill",
+    "title": "世界の国と日本の地形（前半）〈覚える編〉",
+    "duration_min": 10,
+    "sku_required": null,
+    "path": "lessons/soc/modular/index_modular.html?era=japan_geo1_front&mode=oboeru",
+    "format": "drill",
+    "tags": [
+      "暗記",
+      "地理",
+      "クイズ"
+    ]
+  },
+  {
+    "id": "soc.geography.japan_terrain_back_quiz",
+    "grade": 5,
+    "subject": "social_drill",
+    "title": "世界の国と日本の地形（後半）〈覚える編〉",
+    "duration_min": 10,
+    "sku_required": null,
+    "path": "lessons/soc/modular/index_modular.html?era=japan_geo1_back&mode=oboeru",
+    "format": "drill",
+    "tags": [
+      "暗記",
+      "地理",
+      "クイズ"
+    ]
+  },
+  {
+    "id": "soc.civics.constitution",
+    "grade": 6,
+    "subject": "soc",
+    "title": "日本国憲法と基本的人権",
+    "duration_min": 15,
+    "sku_required": null,
+    "path": "lessons/soc/civics/constitution/output.html",
+    "format": "html",
+    "tags": [
+      "公民",
+      "憲法",
+      "人権"
+    ]
+  },
+  {
+    "id": "science_drill.physics.formulas",
+    "grade": 6,
+    "subject": "science_drill",
+    "title": "物理公式暗記ドリル",
+    "duration_min": 10,
+    "sku_required": null,
+    "path": "lessons/drill/science/physics_formulas/output.html",
+    "format": "drill",
+    "tags": [
+      "暗記",
+      "物理",
+      "公式"
+    ]
+  },
+  {
+    "id": "science_drill.chemistry.elements",
+    "grade": 6,
+    "subject": "science_drill",
+    "title": "化学元素・化合物暗記",
+    "duration_min": 12,
+    "sku_required": null,
+    "path": "lessons/drill/science/chemistry_elements/output.html",
+    "format": "drill",
+    "tags": [
+      "暗記",
+      "化学",
+      "元素・化合物"
+    ]
+  },
+  {
+    "id": "social_drill.history.timeline",
+    "grade": 6,
+    "subject": "social_drill",
+    "title": "歴史年表・人物暗記",
+    "duration_min": 15,
+    "sku_required": null,
+    "path": "lessons/drill/social/history_timeline/output.html",
+    "format": "drill",
+    "tags": [
+      "暗記",
+      "歴史",
+      "年表・人物"
+    ]
+  },
+  {
+    "id": "social_drill.geography.prefectures",
+    "grade": 5,
+    "subject": "social_drill",
+    "title": "都道府県・県庁所在地暗記",
+    "duration_min": 8,
+    "sku_required": null,
+    "path": "lessons/drill/social/prefectures/output.html",
+    "format": "drill",
+    "tags": [
+      "暗記",
+      "地理",
+      "都道府県"
+    ]
+  },
+  {
+    "id": "soc.geography.selection_menu",
+    "grade": 5,
+    "subject": "soc",
+    "title": "地理学習メニュー（単元・モード選択）",
+    "duration_min": 1,
+    "sku_required": null,
+    "path": "lessons/soc/modular/home_modular.html",
+    "format": "menu",
+    "tags": [
+      "地理",
+      "メニュー",
+      "単元選択"
+    ]
+  }
+]

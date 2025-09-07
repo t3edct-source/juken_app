@@ -1,0 +1,309 @@
+
+
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ステップナビ | 中学受験理科・社会</title>
+  <meta name="description" content="中学受験専門 理科・社会学習アプリ（分野別学習＋暗記ドリル＋過去問対策）" />
+  
+  <!-- PWA対応 -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#2563eb" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="ステップナビ" />
+  <link rel="apple-touch-icon" href="icons/icon-192x192.png" />
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50 text-slate-800 min-h-screen relative overflow-x-hidden">
+  <!-- 背景装飾要素 -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden">
+    <div class="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-yellow-200/30 to-orange-300/30 rounded-full blur-xl"></div>
+    <div class="absolute top-40 right-20 w-24 h-24 bg-gradient-to-br from-pink-200/30 to-red-300/30 rounded-full blur-xl"></div>
+    <div class="absolute bottom-40 left-20 w-28 h-28 bg-gradient-to-br from-orange-200/30 to-yellow-300/30 rounded-full blur-xl"></div>
+    <div class="absolute bottom-20 right-10 w-20 h-20 bg-gradient-to-br from-pink-200/30 to-orange-300/30 rounded-full blur-xl"></div>
+  </div>
+  
+  <a href="#view" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:bg-white focus:px-3 focus:py-2 focus:rounded">本編へスキップ</a>
+
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-orange-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="#/home" class="flex items-center gap-2 group">
+        <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-orange-400 to-pink-500 shadow-md transform group-hover:scale-105 transition-transform duration-200 flex items-center justify-center text-lg">🎮</div>
+        <span class="font-bold text-xl text-slate-800">ステップナビ</span>
+      </a>
+      <nav class="flex items-center gap-3 text-sm">
+        <!-- PWAインストールボタン -->
+        <button id="installBtn" class="px-3 py-2 rounded-lg bg-orange-500 text-white hover:bg-orange-600 hidden shadow-sm transition-colors duration-200">
+          📱 アプリに追加
+        </button>
+        <button id="purchaseBtn" class="px-3 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm transition-colors duration-200">💳 購入</button>
+        <button id="btnLogin" class="px-3 py-2 rounded-lg bg-orange-500 text-white hover:bg-orange-600 shadow-sm transition-colors duration-200">ログイン</button>
+        <button id="btnLogout" class="px-3 py-2 rounded-lg bg-gray-500 text-white hover:bg-gray-600 shadow-sm transition-colors duration-200 hidden">ログアウト</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="app" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 relative z-10">
+    <div id="view" aria-live="polite"></div>
+
+    <!-- Firebase認証ボックス -->
+    <div id="authBox" class="auth-container">
+      <input id="email" placeholder="メールアドレス" class="auth-input">
+      <input id="pw" type="password" placeholder="パスワード" class="auth-input">
+      <button id="loginEmail" class="auth-btn auth-btn-primary">ログイン</button>
+      <button id="loginGoogle" class="auth-btn auth-btn-google">Googleでログイン</button>
+      <button id="logout" class="auth-btn auth-btn-secondary" style="display:none">ログアウト</button>
+      <p id="who" class="auth-status"></p>
+    </div>
+
+    <!-- ▼ 必須ビュー群（JSが表示/非表示を切り替えます） -->
+    <section id="homeView" class="section-gap">
+      <!-- 横長イラストエリア -->
+      <div class="w-full h-44 mb-6 overflow-hidden relative">
+        <!-- イラスト表示エリア -->
+        <div class="relative z-10 text-center">
+          <img id="subjectHero" src="./images/hero/hero-main.png" alt="楽しい学習イラスト" class="h-44 w-full object-cover transition-all duration-500">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <p id="subjectMessage" class="text-white font-bold text-xl drop-shadow-lg bg-black/20 px-4 py-2 rounded-full">中学受験合格に向けて、理科・社会を徹底攻略！</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 教科別タブ -->
+      <div class="subject-tabs mb-6">
+        <button class="subject-tab active" data-subject="recommended">⭐ おすすめ学習</button>
+        <button class="subject-tab" data-subject="sci">🔬 理科わかる</button>
+        <button class="subject-tab" data-subject="soc">🌍 社会わかる</button>
+        <button class="subject-tab" data-subject="science_drill">🧪 理科おぼえる</button>
+        <button class="subject-tab" data-subject="social_drill">📍 社会おぼえる</button>
+      </div>
+      
+      <div id="lessonList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    </section>
+
+    <section id="lessonView" class="section-gap hidden">
+      <div class="flex items-center justify-between mb-4 px-6 sm:px-8 lg:px-10">
+        <h2 id="lessonTitle" class="text-2xl font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">🎓 レッスン</h2>
+        <div class="flex items-center gap-3">
+          <button id="memoToggleBtn" class="px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 text-sm font-bold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">📝 メモ</button>
+          <button id="fullscreenBtn" class="px-3 py-2 rounded-full bg-gradient-to-r from-green-500 to-blue-600 text-white hover:from-green-600 hover:to-blue-700 text-xs font-bold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
+            📱 全画面
+          </button>
+          <a href="#/home" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white text-sm font-bold rounded-full transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">← もどる</a>
+        </div>
+      </div>
+      <div class="lesson-area card p-0 overflow-hidden mx-0">
+        <iframe id="lessonFrame" title="レッスン" style="width:100%;height:88vh;border:0;"></iframe>
+        <div id="lessonContainer"></div>
+      </div>
+    </section>
+
+    <section id="purchaseView" class="section-gap hidden">
+      <h2 class="text-xl font-bold mb-2">ご購入</h2>
+      <p id="purchaseText" class="mb-4">この教材の購入が必要です。</p>
+      <button class="btn">購入手続きへ</button>
+    </section>
+
+    <section id="resultView" class="section-gap hidden">
+      <h2 class="text-xl font-bold mb-2">学習結果</h2>
+      <div id="resultBox"></div>
+    </section>
+    <!-- ▲ 必須ビュー群 -->
+  </main>
+
+  <footer class="border-t border-orange-200 bg-white/95 mt-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-center">
+      <p class="text-slate-600 text-sm">© <span id="year"></span> T3エデュケーション</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  
+  <!-- Service Worker登録 -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then((registration) => {
+            console.log('Service Worker登録成功:', registration.scope);
+          })
+          .catch((error) => {
+            console.log('Service Worker登録失敗:', error);
+          });
+      });
+    }
+  </script>
+
+  <!-- 購入モーダル -->
+  <div id="purchaseModal" class="modal-overlay hidden">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h2 class="modal-title">📚 コンテンツ詳細・購入</h2>
+        <button id="closePurchaseModal" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-intro">
+          <p>各学年の理科・社会の詳細内容をご確認いただけます。気になるパックをお選びください。</p>
+        </div>
+        <div id="modalPackGrid" class="modal-pack-grid">
+          <!-- JSで学年別パック詳細を描画 -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="modalCloseBtn" class="btn-secondary">閉じる</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 購入確認モーダル -->
+  <div id="purchaseConfirmModal" class="modal-overlay hidden">
+    <div class="modal-container purchase-confirm-modal">
+      <div class="modal-header">
+        <h2 class="modal-title">💳 購入確認</h2>
+        <button id="closePurchaseConfirmModal" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="purchase-confirm-content">
+          <div class="purchase-item-info">
+            <div class="purchase-item-icon">📚</div>
+            <div class="purchase-item-details">
+              <h3 id="purchaseItemTitle" class="purchase-item-title">小6 理科</h3>
+              <p id="purchaseItemDescription" class="purchase-item-description">物理・化学・生物・地学の全分野を学習できます</p>
+              <div class="purchase-price">
+                <span class="price-label">価格：</span>
+                <span class="price-amount">¥2,980</span>
+                <span class="price-note">（税込）</span>
+              </div>
+            </div>
+          </div>
+          <div class="purchase-confirm-message">
+            <p>上記のコンテンツを購入しますか？</p>
+            <small>※このボタンは仮実装です。実際の決済は行われません。</small>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelPurchaseBtn" class="btn-secondary">キャンセル</button>
+        <button id="confirmPurchaseBtn" class="btn-primary">購入する</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 購入処理中モーダル -->
+  <div id="purchaseProcessingModal" class="modal-overlay hidden">
+    <div class="modal-container purchase-processing-modal">
+      <div class="modal-body">
+        <div class="processing-content">
+          <div class="processing-spinner"></div>
+          <h3 class="processing-title">購入処理中...</h3>
+          <p class="processing-message">しばらくお待ちください</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 購入完了モーダル -->
+  <div id="purchaseCompleteModal" class="modal-overlay hidden">
+    <div class="modal-container purchase-complete-modal">
+      <div class="modal-header">
+        <h2 class="modal-title">🎉 購入完了</h2>
+        <button id="closePurchaseCompleteModal" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="purchase-complete-content">
+          <div class="success-icon">✅</div>
+          <h3 id="completedItemTitle" class="completed-item-title">小6 理科</h3>
+          <p class="completion-message">購入が完了しました！<br>すぐに学習を始められます。</p>
+          <div class="purchase-benefits">
+            <h4>利用可能になった機能：</h4>
+            <ul>
+              <li>📖 すべての理科レッスン</li>
+              <li>📝 練習問題・テスト</li>
+              <li>📊 学習進捗の記録</li>
+              <li>🎯 苦手分野の分析</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="startLearningFromPurchase" class="btn-primary">学習を始める</button>
+        <button id="continueBrowsingBtn" class="btn-secondary">他のコンテンツを見る</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase認証 + メインアプリケーション -->
+  <script type="module">
+  // Firebase認証機能の初期化とイベント登録
+  import { auth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup,
+           signInWithEmailAndPassword, signOut } from "./firebaseConfig.js";
+
+  const $ = (s)=>document.querySelector(s);
+
+  // Firebase認証のイベントハンドラ
+  $("#loginEmail")?.addEventListener("click", async ()=>{
+    const email = $("#email").value.trim();
+    const pw = $("#pw").value;
+    if (!email || !pw) {
+      alert("メールアドレスとパスワードを入力してください");
+      return;
+    }
+    try {
+      await signInWithEmailAndPassword(auth, email, pw);
+      alert("ログイン成功");
+    } catch(err) {
+      alert("ログイン失敗: " + err.message);
+    }
+  });
+
+  $("#loginGoogle")?.addEventListener("click", async ()=>{
+    try {
+      await signInWithPopup(auth, new GoogleAuthProvider());
+      alert("Googleログイン成功");
+    } catch(err) {
+      alert("Googleログイン失敗: " + err.message);
+    }
+  });
+
+  $("#logout")?.addEventListener("click", ()=>{
+    signOut(auth);
+  });
+
+  // Firebase認証状態の監視とUI更新
+  onAuthStateChanged(auth, (user)=>{
+    if(user){
+      $("#who").textContent = `ログイン中: ${user.email || user.displayName}`;
+      $("#logout").style.display = "";
+      
+      // アプリ側の状態も更新
+      if (window.syncFirebaseAuth) {
+        window.syncFirebaseAuth(user);
+      }
+    } else {
+      $("#who").textContent = "未ログイン";
+      $("#logout").style.display = "none";
+      
+      // アプリ側の状態も更新
+      if (window.syncFirebaseAuth) {
+        window.syncFirebaseAuth(null);
+      }
+    }
+  });
+
+  // グローバルにFirebase認証オブジェクトを公開
+  window.firebaseAuth = { auth, signOut, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider };
+  </script>
+
+<script type="module" src="./firebaseConfig.js"></script>
+<script type="module" src="./app.js"></script>
+
+
+</body>
+</html>
