@@ -6,14 +6,14 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebas
 
 // あなたのプロジェクト専用の firebaseConfig を貼る
 const firebaseConfig = {
-  apiKey: "AIzaSyD7WHlICoZ1dwvp3nWOpvJdd9PrSomZThA",
+  apiKey: "AIzaSyD7WHlICoZ1d...（正しいキー）",
   authDomain: "t3ed-af16f.firebaseapp.com",
   projectId: "t3ed-af16f",
   storageBucket: "t3ed-af16f.appspot.com",
   messagingSenderId: "83126646265",
   appId: "1:83126646265:web:116d169b511d76a4f7cbe8",
-  measurementId: "G-NM2EHERB79"
 };
+
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
