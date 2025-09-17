@@ -257,7 +257,8 @@
     }
     try {
       await signInWithEmailAndPassword(auth, email, pw);
-      alert("ログイン成功");
+      // ログイン成功時はonAuthStateChangedで自動的にUI更新される
+      console.log("ログイン成功");
     } catch(err) {
       alert("ログイン失敗: " + err.message);
     }
@@ -266,7 +267,8 @@
   $("#loginGoogle")?.addEventListener("click", async ()=>{
     try {
       await signInWithPopup(auth, new GoogleAuthProvider());
-      alert("Googleログイン成功");
+      // ログイン成功時はonAuthStateChangedで自動的にUI更新される
+      console.log("Googleログイン成功");
     } catch(err) {
       alert("Googleログイン失敗: " + err.message);
     }
@@ -278,9 +280,16 @@
 
   // Firebase認証状態の監視とUI更新
   onAuthStateChanged(auth, (user)=>{
+    const authBox = $("#authBox");
+    
     if(user){
       $("#who").textContent = `ログイン中: ${user.email || user.displayName}`;
       $("#logout").style.display = "";
+      
+      // ログイン成功時：認証フォームを非表示にする
+      if(authBox) {
+        authBox.style.display = "none";
+      }
       
       // アプリ側の状態も更新
       if (window.syncFirebaseAuth) {
@@ -289,6 +298,11 @@
     } else {
       $("#who").textContent = "未ログイン";
       $("#logout").style.display = "none";
+      
+      // ログアウト時：認証フォームを表示する
+      if(authBox) {
+        authBox.style.display = "block";
+      }
       
       // アプリ側の状態も更新
       if (window.syncFirebaseAuth) {
