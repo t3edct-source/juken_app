@@ -792,65 +792,108 @@
     signOut(auth);
   });
 
-  // Firebase認証状態の監視とUI更新
-  onAuthStateChanged(auth, (user)=>{
-    const authBox = $("#authBox");
-    const verificationBox = $("#emailVerificationBox");
-    
-    if(user){
-      // メール確認状態をチェック
-      if (!user.emailVerified && !verificationState.isWaitingForVerification) {
-        // 未確認かつ確認待ち画面でない場合は確認画面を表示
-        if (user.providerData.some(provider => provider.providerId === 'password')) {
-          // メール/パスワードログインの場合のみ確認が必要
-          showEmailVerificationScreen(user);
-          return;
+  // Firebase認証状態の監視とUI更新（エラーハンドリング強化）
+  try {
+    onAuthStateChanged(auth, (user)=>{
+      console.log("🔥 Firebase認証状態変化:", user ? "ログイン" : "ログアウト");
+      
+      const authBox = $("#authBox");
+      const verificationBox = $("#emailVerificationBox");
+      
+      if(user){
+        console.log("📋 ユーザー情報:", {
+          uid: user.uid,
+          email: user.email,
+          emailVerified: user.emailVerified,
+          displayName: user.displayName,
+          providerData: user.providerData?.map(p => ({ providerId: p.providerId }))
+        });
+        
+        // メール確認状態をチェック
+        if (!user.emailVerified && !verificationState.isWaitingForVerification) {
+          // 未確認かつ確認待ち画面でない場合は確認画面を表示
+          if (user.providerData.some(provider => provider.providerId === 'password')) {
+            // メール/パスワードログインの場合のみ確認が必要
+            console.log("📧 メール確認画面を表示");
+            showEmailVerificationScreen(user);
+            return;
+          }
         }
-      }
-      
-      // 確認済みまたはGoogleログインの場合
-      $("#who").textContent = `ログイン中: ${user.email || user.displayName}`;
-      $("#logout").style.display = "";
-      
-      // 認証フォームを非表示、確認画面も非表示
-      if(authBox) authBox.style.display = "none";
-      if(verificationBox) verificationBox.classList.add('hidden');
-      
-      // 確認完了の場合は自動チェックを停止
-      if (user.emailVerified && verificationState.isWaitingForVerification) {
+        
+        // 確認済みまたはGoogleログインの場合
+        $("#who").textContent = `ログイン中: ${user.email || user.displayName}`;
+        $("#logout").style.display = "";
+        
+        // 認証フォームを非表示、確認画面も非表示
+        if(authBox) authBox.style.display = "none";
+        if(verificationBox) verificationBox.classList.add('hidden');
+        
+        // 確認完了の場合は自動チェックを停止
+        if (user.emailVerified && verificationState.isWaitingForVerification) {
+          stopVerificationCheck();
+          verificationState.isWaitingForVerification = false;
+        }
+        
+        // アプリ側の状態も更新（確実に実行されるよう遅延処理）
+        console.log("🔄 syncFirebaseAuth 呼び出し準備...");
+        setTimeout(() => {
+          if (window.syncFirebaseAuth) {
+            console.log("✅ syncFirebaseAuth を呼び出します:", user.uid);
+            try {
+              window.syncFirebaseAuth(user);
+              console.log("✅ syncFirebaseAuth 完了");
+            } catch (error) {
+              console.error("❌ syncFirebaseAuth エラー:", error);
+            }
+          } else {
+            console.error("❌ window.syncFirebaseAuth が見つかりません");
+          }
+        }, 100);
+      } else {
+        console.log("🚪 ログアウト状態");
+        $("#who").textContent = "未ログイン";
+        $("#logout").style.display = "none";
+        
+        // ログアウト時：認証フォームを表示、確認画面は非表示
+        if(authBox) authBox.style.display = "block";
+        if(verificationBox) verificationBox.classList.add('hidden');
+        
+        // 確認状態をリセット
         stopVerificationCheck();
+        verificationState.user = null;
         verificationState.isWaitingForVerification = false;
+        
+        // アプリ側の状態も更新
+        setTimeout(() => {
+          if (window.syncFirebaseAuth) {
+            console.log("🔄 syncFirebaseAuth null を呼び出します");
+            try {
+              window.syncFirebaseAuth(null);
+              console.log("✅ syncFirebaseAuth null 完了");
+            } catch (error) {
+              console.error("❌ syncFirebaseAuth null エラー:", error);
+            }
+          } else {
+            console.error("❌ window.syncFirebaseAuth が見つかりません");
+          }
+        }, 100);
       }
-      
-      // アプリ側の状態も更新
-      if (window.syncFirebaseAuth) {
-        window.syncFirebaseAuth(user);
-      }
-    } else {
-      $("#who").textContent = "未ログイン";
-      $("#logout").style.display = "none";
-      
-      // ログアウト時：認証フォームを表示、確認画面は非表示
+    }, (error) => {
+      console.error("🚨 Firebase認証状態監視エラー:", error);
+      // エラーが発生した場合でも基本的なUI状態は設定
+      $("#who").textContent = "認証エラー";
+      const authBox = $("#authBox");
       if(authBox) authBox.style.display = "block";
-      if(verificationBox) verificationBox.classList.add('hidden');
-      
-      // 確認状態をリセット
-      stopVerificationCheck();
-      verificationState.user = null;
-      verificationState.isWaitingForVerification = false;
-      
-      // アプリ側の状態も更新
-      if (window.syncFirebaseAuth) {
-        window.syncFirebaseAuth(null);
-      }
-    }
-  });
+    });
+    console.log("🔥 Firebase認証監視を開始しました");
+  } catch (error) {
+    console.error("🚨 onAuthStateChanged 初期化エラー:", error);
+  }
 
   // グローバルにFirebase認証オブジェクトを公開
   window.firebaseAuth = { auth, signOut, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider };
   </script>
 
-<script type="module" src="./firebaseConfig.js"></script>
 <script type="module" src="./app.js"></script>
 
 
