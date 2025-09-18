@@ -1398,6 +1398,60 @@ html{scroll-behavior:smooth}
   }
 }
 
+/* ===== 購入ボタン無効化スタイル ===== */
+.btn-primary.disabled,
+.btn-primary:disabled {
+  background: #9ca3af !important; 
+  color: #6b7280 !important;
+  cursor: not-allowed !important; 
+  transform: none !important;
+  box-shadow: none !important; 
+  opacity: 0.7;
+  border: 1px solid #d1d5db;
+}
+
+.btn-primary.disabled:hover,
+.btn-primary:disabled:hover {
+  background: #9ca3af !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.btn-secondary.disabled,
+.btn-secondary:disabled {
+  background: #d1d5db !important; 
+  color: #9ca3af !important;
+  cursor: not-allowed !important; 
+  transform: none !important;
+  box-shadow: none !important; 
+  opacity: 0.7;
+  border: 1px solid #e5e7eb;
+}
+
+.btn-secondary.disabled:hover,
+.btn-secondary:disabled:hover {
+  background: #d1d5db !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ヘッダー購入ボタンの無効化スタイル */
+button[disabled].cursor-not-allowed {
+  pointer-events: none;
+}
+
+/* パックカード内の無効化ボタン */
+.pack-actions .btn-primary.disabled,
+.pack-actions .btn-primary:disabled {
+  font-size: 0.875rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.modal-pack-actions .btn-primary.disabled,
+.modal-pack-actions .btn-primary:disabled {
+  font-size: 0.875rem;
+}
+
 /* ===== レッスン画面の全幅表示 ===== */
 #lessonView .lesson-area {
   margin-left: calc(-1 * (1rem + 1.5rem));

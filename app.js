@@ -116,16 +116,65 @@ function syncFirebaseAuth(user) {
     };
     document.getElementById('btnLogin')?.classList.add('hidden');
     document.getElementById('btnLogout')?.classList.remove('hidden');
+    
+    // 購入ボタンの状態を更新
+    updatePurchaseButtonsState(user);
   } else {
     // ログアウト状態
     state.user = null;
     document.getElementById('btnLogin')?.classList.remove('hidden');
     document.getElementById('btnLogout')?.classList.add('hidden');
+    
+    // 購入ボタンを無効化
+    updatePurchaseButtonsState(null);
   }
+}
+
+// 購入ボタンの状態を更新する関数
+function updatePurchaseButtonsState(user) {
+  const headerPurchaseBtn = document.getElementById('purchaseBtn');
+  
+  if (user) {
+    // 認証済みユーザーの場合
+    const isEmailVerified = user.emailVerified || user.providerData?.some(provider => provider.providerId !== 'password');
+    
+    if (headerPurchaseBtn) {
+      if (isEmailVerified) {
+        // メール確認済みまたはソーシャルログイン
+        headerPurchaseBtn.disabled = false;
+        headerPurchaseBtn.textContent = '💳 購入';
+        headerPurchaseBtn.className = 'px-3 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm transition-colors duration-200';
+        headerPurchaseBtn.title = '';
+      } else {
+        // メール未確認
+        headerPurchaseBtn.disabled = true;
+        headerPurchaseBtn.textContent = '📧 メール確認必要';
+        headerPurchaseBtn.className = 'px-3 py-2 rounded-lg bg-gray-400 text-white cursor-not-allowed shadow-sm';
+        headerPurchaseBtn.title = 'メールアドレスの確認が必要です';
+      }
+    }
+  } else {
+    // 未ログインユーザーの場合
+    if (headerPurchaseBtn) {
+      headerPurchaseBtn.disabled = true;
+      headerPurchaseBtn.textContent = '🔒 ログイン必要';
+      headerPurchaseBtn.className = 'px-3 py-2 rounded-lg bg-gray-400 text-white cursor-not-allowed shadow-sm';
+      headerPurchaseBtn.title = 'ログインが必要です';
+    }
+  }
+  
+  // LP内の購入ボタンも更新
+  updateLPPurchaseButtons(user);
+  
+  // モーダル内の購入ボタンも更新
+  updateModalPurchaseButtons(user);
 }
 
 // syncFirebaseAuth関数をグローバルに公開
 window.syncFirebaseAuth = syncFirebaseAuth;
+
+// モーダル内から呼び出すためのグローバル関数
+window.handleModalAuthRequired = handleModalAuthRequired;
 
 // Firebase認証状態変化を監視してアプリ状態を同期
 // (index.htmlのFirebase認証スクリプトから直接呼び出される)
@@ -1106,36 +1155,69 @@ function updateSubjectHero(subject) {
 function renderLP(){
   const grid = document.getElementById('lpGrid'); if(!grid) return;
   const purchased = new Set(loadPurchases());
+  const user = state.user;
+  const canPurchase = user && (user.emailVerified || user.providerData?.some(provider => provider.providerId !== 'password'));
+  
   grid.innerHTML = PACKS.map(p => {
     const unlocked = purchased.has(p.id);
+    
+    let purchaseButton = '';
+    if (unlocked) {
+      purchaseButton = `<button class="btn-secondary" data-act="open" data-pack="${p.id}">開く</button>`;
+    } else if (!user) {
+      purchaseButton = `<button class="btn-primary disabled" data-act="login-required" data-pack="${p.id}" disabled title="ログインが必要です">🔒 ログイン必要</button>`;
+    } else if (!canPurchase) {
+      purchaseButton = `<button class="btn-primary disabled" data-act="verify-required" data-pack="${p.id}" disabled title="メールアドレスの確認が必要です">📧 メール確認必要</button>`;
+    } else {
+      purchaseButton = `<button class="btn-primary" data-act="buy" data-pack="${p.id}">購入</button>`;
+    }
+    
     return `
       <div class="pack-card ${unlocked ? 'unlocked':''}" data-pack="${p.id}">
         <span class="lock-badge">🔒</span>
         <div class="pack-title">${p.label}</div>
         <div class="pack-meta">学年：小${p.grade} ／ 教科：${p.subject}</div>
         <div class="pack-actions">
-          ${unlocked
-            ? `<button class="btn-secondary" data-act="open" data-pack="${p.id}">開く</button>`
-            : `<button class="btn-primary" data-act="buy" data-pack="${p.id}">購入</button>`
-          }
+          ${purchaseButton}
           <button class="btn-secondary" data-act="set-grade" data-grade="${p.grade}">学年に設定</button>
         </div>
       </div>
     `;
   }).join('');
 
+  // イベントハンドラの設定
   grid.querySelectorAll('button[data-act="buy"]').forEach(btn=>{
     btn.onclick = () => fakePurchase(btn.getAttribute('data-pack'));
   });
+  
   grid.querySelectorAll('button[data-act="open"]').forEach(btn=>{
     btn.onclick = () => openPack(btn.getAttribute('data-pack'));
   });
+  
+  grid.querySelectorAll('button[data-act="login-required"]').forEach(btn=>{
+    btn.onclick = () => {
+      alert('購入機能を利用するには、ログインが必要です。\n右上の「ログイン」ボタンからアカウントを作成またはログインしてください。');
+    };
+  });
+  
+  grid.querySelectorAll('button[data-act="verify-required"]').forEach(btn=>{
+    btn.onclick = () => {
+      alert('購入機能を利用するには、メールアドレスの確認が必要です。\n確認メールのリンクをクリックしてから再度お試しください。');
+    };
+  });
+  
   grid.querySelectorAll('button[data-act="set-grade"]').forEach(btn=>{
     btn.onclick = () => { setCurrentGrade(parseInt(btn.getAttribute('data-grade'))); renderAppView(); window.scrollTo({top:0, behavior:'smooth'}); };
   });
 
   const start = document.getElementById('startLearningBtn');
   if(start){ start.onclick = () => { if(!getCurrentGrade()) setCurrentGrade(4); renderAppView(); window.scrollTo({top:0, behavior:'smooth'}); }; }
+}
+
+// LP内の購入ボタン状態を更新
+function updateLPPurchaseButtons(user) {
+  // LP再描画で対応
+  renderLP();
 }
 
 // ダミー購入（サンプル）
@@ -1225,6 +1307,8 @@ function renderModalContent() {
   if (!grid) return;
   
   const purchased = new Set(loadPurchases());
+  const user = state.user;
+  const canPurchase = user && (user.emailVerified || user.providerData?.some(provider => provider.providerId !== 'password'));
   
   grid.innerHTML = PACKS.map(pack => {
     const details = PACK_DETAILS[pack.id];
@@ -1236,6 +1320,17 @@ function renderModalContent() {
         <div class="modal-subject-topics">${topics.join('・')}</div>
       </div>
     `).join('');
+    
+    let actionButton = '';
+    if (isPurchased) {
+      actionButton = `<button class="btn-secondary" onclick="openPack('${pack.id}')">学習開始</button>`;
+    } else if (!user) {
+      actionButton = `<button class="btn-primary disabled" disabled title="ログインが必要です" onclick="handleModalAuthRequired('login')">🔒 ログイン必要</button>`;
+    } else if (!canPurchase) {
+      actionButton = `<button class="btn-primary disabled" disabled title="メールアドレスの確認が必要です" onclick="handleModalAuthRequired('verify')">📧 メール確認必要</button>`;
+    } else {
+      actionButton = `<button class="btn-primary" onclick="modalPurchasePack('${pack.id}')">購入する</button>`;
+    }
     
     return `
       <div class="modal-pack-card ${isPurchased ? 'purchased' : ''}">
@@ -1251,15 +1346,30 @@ function renderModalContent() {
           </div>
         </div>
         <div class="modal-pack-actions">
-          ${isPurchased 
-            ? `<button class="btn-secondary" onclick="openPack('${pack.id}')">学習開始</button>`
-            : `<button class="btn-primary" onclick="modalPurchasePack('${pack.id}')">購入する</button>`
-          }
+          ${actionButton}
           <button class="btn-secondary" onclick="setCurrentGrade(${pack.grade}); renderAppView();">学年に設定</button>
         </div>
       </div>
     `;
   }).join('');
+}
+
+// モーダル内の認証要求ハンドラ
+function handleModalAuthRequired(type) {
+  if (type === 'login') {
+    alert('購入機能を利用するには、ログインが必要です。\nモーダルを閉じて、右上の「ログイン」ボタンからアカウントを作成またはログインしてください。');
+  } else if (type === 'verify') {
+    alert('購入機能を利用するには、メールアドレスの確認が必要です。\n確認メールのリンクをクリックしてから再度お試しください。');
+  }
+}
+
+// モーダル内の購入ボタン状態を更新
+function updateModalPurchaseButtons(user) {
+  // モーダルが開いている場合のみ再描画
+  const modal = document.getElementById('purchaseModal');
+  if (modal && !modal.classList.contains('hidden')) {
+    renderModalContent();
+  }
 }
 
 function modalPurchasePack(packId) {
@@ -1277,7 +1387,25 @@ function setupPurchaseModal() {
   // 購入ボタンのクリックイベント
   const purchaseBtn = document.getElementById('purchaseBtn');
   if (purchaseBtn) {
-    purchaseBtn.addEventListener('click', openPurchaseModal);
+    purchaseBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      // 認証状態をチェック
+      if (!state.user) {
+        alert('購入機能を利用するには、ログインが必要です。\n右上の「ログイン」ボタンからアカウントを作成またはログインしてください。');
+        return;
+      }
+      
+      // メール確認状態をチェック
+      const isEmailVerified = state.user.emailVerified || state.user.providerData?.some(provider => provider.providerId !== 'password');
+      if (!isEmailVerified) {
+        alert('購入機能を利用するには、メールアドレスの確認が必要です。\n確認メールのリンクをクリックしてから再度お試しください。');
+        return;
+      }
+      
+      // 認証済みの場合のみモーダルを開く
+      openPurchaseModal();
+    });
   }
   
   // モーダル閉じるボタンのイベント
@@ -1429,5 +1557,8 @@ async function startup(){
   
   // 購入モーダルのセットアップ
   setupPurchaseModal();
+  
+  // 初期状態で購入ボタンを無効化（未ログイン状態）
+  updatePurchaseButtonsState(null);
 }
 startup();
