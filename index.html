@@ -55,12 +55,67 @@
 
     <!-- Firebase認証ボックス -->
     <div id="authBox" class="auth-container">
-      <input id="email" placeholder="メールアドレス" class="auth-input">
-      <input id="pw" type="password" placeholder="パスワード" class="auth-input">
-      <button id="loginEmail" class="auth-btn auth-btn-primary">ログイン</button>
-      <button id="loginGoogle" class="auth-btn auth-btn-google">Googleでログイン</button>
-      <button id="logout" class="auth-btn auth-btn-secondary" style="display:none">ログアウト</button>
-      <p id="who" class="auth-status"></p>
+      <div class="auth-header">
+        <h3 class="auth-title">ログイン</h3>
+        <p class="auth-subtitle">アカウントにサインインしてください</p>
+      </div>
+      
+      <form id="authForm" class="auth-form">
+        <div class="input-group">
+          <label for="email" class="input-label">メールアドレス</label>
+          <input id="email" type="email" placeholder="example@email.com" 
+                 class="auth-input" required autocomplete="email"
+                 aria-describedby="email-error">
+          <div id="email-error" class="input-error hidden"></div>
+        </div>
+        
+        <div class="input-group">
+          <label for="pw" class="input-label">パスワード</label>
+          <div class="password-input-wrapper">
+            <input id="pw" type="password" placeholder="パスワードを入力" 
+                   class="auth-input" required autocomplete="current-password"
+                   aria-describedby="pw-error">
+            <button type="button" id="togglePassword" class="password-toggle" 
+                    aria-label="パスワードを表示/非表示">
+              👁️
+            </button>
+          </div>
+          <div id="pw-error" class="input-error hidden"></div>
+        </div>
+        
+        <button type="submit" id="loginEmail" class="auth-btn auth-btn-primary">
+          <span class="btn-content">
+            <span class="btn-text">ログイン</span>
+            <span class="btn-spinner hidden">⏳</span>
+          </span>
+        </button>
+      </form>
+      
+      <div class="auth-divider">
+        <span>または</span>
+      </div>
+      
+      <button id="loginGoogle" class="auth-btn auth-btn-google">
+        <span class="btn-content">
+          <span class="google-icon">🔍</span>
+          <span class="btn-text">Googleでログイン</span>
+          <span class="btn-spinner hidden">⏳</span>
+        </span>
+      </button>
+      
+      <div class="auth-links">
+        <button type="button" id="resetPassword" class="link-btn">
+          パスワードを忘れた方
+        </button>
+      </div>
+      
+      <button id="logout" class="auth-btn auth-btn-secondary" style="display:none">
+        <span class="btn-content">
+          <span class="btn-text">ログアウト</span>
+        </span>
+      </button>
+      
+      <div id="who" class="auth-status"></div>
     </div>
 
     <!-- ▼ 必須ビュー群（JSが表示/非表示を切り替えます） -->
@@ -243,34 +298,183 @@
   <script type="module">
   // Firebase認証機能の初期化とイベント登録
   import { auth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup,
-           signInWithEmailAndPassword, signOut } from "./firebaseConfig.js";
+           signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "./firebaseConfig.js";
 
   const $ = (s)=>document.querySelector(s);
 
-  // Firebase認証のイベントハンドラ
-  $("#loginEmail")?.addEventListener("click", async ()=>{
+  // バリデーション関数
+  function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  }
+
+  function showError(fieldId, message) {
+    const errorEl = $(`#${fieldId}-error`);
+    if (errorEl) {
+      errorEl.textContent = message;
+      errorEl.classList.remove('hidden');
+    }
+  }
+
+  function hideError(fieldId) {
+    const errorEl = $(`#${fieldId}-error`);
+    if (errorEl) {
+      errorEl.classList.add('hidden');
+    }
+  }
+
+  function setLoading(buttonId, isLoading) {
+    const btn = $(`#${buttonId}`);
+    if (!btn) return;
+    
+    const spinner = btn.querySelector('.btn-spinner');
+    const text = btn.querySelector('.btn-text');
+    
+    if (isLoading) {
+      btn.disabled = true;
+      spinner?.classList.remove('hidden');
+      if (text) text.textContent = '処理中...';
+    } else {
+      btn.disabled = false;
+      spinner?.classList.add('hidden');
+      if (buttonId === 'loginEmail' && text) text.textContent = 'ログイン';
+      if (buttonId === 'loginGoogle' && text) text.textContent = 'Googleでログイン';
+    }
+  }
+
+  // リアルタイムバリデーション
+  $("#email")?.addEventListener("input", (e) => {
+    const email = e.target.value.trim();
+    if (email && !validateEmail(email)) {
+      showError('email', '正しいメールアドレスを入力してください');
+    } else {
+      hideError('email');
+    }
+  });
+
+  $("#pw")?.addEventListener("input", (e) => {
+    const password = e.target.value;
+    if (password && password.length < 6) {
+      showError('pw', 'パスワードは6文字以上で入力してください');
+    } else {
+      hideError('pw');
+    }
+  });
+
+  // パスワード表示/非表示切り替え
+  $("#togglePassword")?.addEventListener("click", () => {
+    const pwInput = $("#pw");
+    const toggle = $("#togglePassword");
+    if (pwInput && toggle) {
+      if (pwInput.type === "password") {
+        pwInput.type = "text";
+        toggle.textContent = "🙈";
+      } else {
+        pwInput.type = "password";
+        toggle.textContent = "👁️";
+      }
+    }
+  });
+
+  // フォーム送信処理
+  $("#authForm")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    
     const email = $("#email").value.trim();
     const pw = $("#pw").value;
-    if (!email || !pw) {
-      alert("メールアドレスとパスワードを入力してください");
-      return;
+    
+    // バリデーション
+    let hasError = false;
+    
+    if (!email) {
+      showError('email', 'メールアドレスを入力してください');
+      hasError = true;
+    } else if (!validateEmail(email)) {
+      showError('email', '正しいメールアドレスを入力してください');
+      hasError = true;
+    } else {
+      hideError('email');
     }
+    
+    if (!pw) {
+      showError('pw', 'パスワードを入力してください');
+      hasError = true;
+    } else if (pw.length < 6) {
+      showError('pw', 'パスワードは6文字以上で入力してください');
+      hasError = true;
+    } else {
+      hideError('pw');
+    }
+    
+    if (hasError) return;
+    
+    setLoading('loginEmail', true);
+    
     try {
       await signInWithEmailAndPassword(auth, email, pw);
       // ログイン成功時はonAuthStateChangedで自動的にUI更新される
       console.log("ログイン成功");
     } catch(err) {
-      alert("ログイン失敗: " + err.message);
+      let errorMessage = "ログインに失敗しました";
+      if (err.code === 'auth/user-not-found') {
+        errorMessage = "このメールアドレスは登録されていません";
+      } else if (err.code === 'auth/wrong-password') {
+        errorMessage = "パスワードが間違っています";
+      } else if (err.code === 'auth/too-many-requests') {
+        errorMessage = "試行回数が多すぎます。しばらく待ってから再試行してください";
+      }
+      showError('pw', errorMessage);
+    } finally {
+      setLoading('loginEmail', false);
     }
   });
 
   $("#loginGoogle")?.addEventListener("click", async ()=>{
+    setLoading('loginGoogle', true);
+    
     try {
       await signInWithPopup(auth, new GoogleAuthProvider());
       // ログイン成功時はonAuthStateChangedで自動的にUI更新される
       console.log("Googleログイン成功");
     } catch(err) {
-      alert("Googleログイン失敗: " + err.message);
+      let errorMessage = "Googleログインに失敗しました";
+      if (err.code === 'auth/popup-closed-by-user') {
+        errorMessage = "ログインがキャンセルされました";
+      } else if (err.code === 'auth/popup-blocked') {
+        errorMessage = "ポップアップがブロックされました。ブラウザの設定を確認してください";
+      }
+      showError('pw', errorMessage);
+    } finally {
+      setLoading('loginGoogle', false);
+    }
+  });
+
+  // パスワードリセット機能
+  $("#resetPassword")?.addEventListener("click", async () => {
+    const email = $("#email").value.trim();
+    
+    if (!email) {
+      showError('email', 'メールアドレスを入力してください');
+      return;
+    }
+    
+    if (!validateEmail(email)) {
+      showError('email', '正しいメールアドレスを入力してください');
+      return;
+    }
+    
+    try {
+      await sendPasswordResetEmail(auth, email);
+      alert(`パスワードリセットメールを ${email} に送信しました。\nメールボックスを確認してください。`);
+      hideError('email');
+    } catch(err) {
+      let errorMessage = "パスワードリセットメールの送信に失敗しました";
+      if (err.code === 'auth/user-not-found') {
+        errorMessage = "このメールアドレスは登録されていません";
+      } else if (err.code === 'auth/too-many-requests') {
+        errorMessage = "リクエストが多すぎます。しばらく待ってから再試行してください";
+      }
+      showError('email', errorMessage);
     }
   });
 
