@@ -175,11 +175,26 @@ function updatePurchaseButtonsState(user) {
     if (headerPurchaseBtn) {
       if (isEmailVerified) {
         // メール確認済みまたはソーシャルログイン
-        headerPurchaseBtn.disabled = false;
-        headerPurchaseBtn.textContent = '💳 購入';
-        headerPurchaseBtn.className = 'px-3 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm transition-colors duration-200';
-        headerPurchaseBtn.title = '';
-        console.log('購入ボタンを有効化しました');
+        // 少し遅延してからボタンを有効化（state.user の確実な設定を待つ）
+        setTimeout(() => {
+          headerPurchaseBtn.disabled = false;
+          headerPurchaseBtn.textContent = '💳 購入';
+          headerPurchaseBtn.className = 'px-3 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm transition-colors duration-200';
+          headerPurchaseBtn.title = '';
+          console.log('✅ 購入ボタンを有効化しました（遅延実行）');
+          
+          // state.user の最終確認
+          if (!state.user && user) {
+            console.log('🔄 購入ボタン有効化時に state.user を再設定');
+            state.user = {
+              id: user.uid,
+              name: user.displayName || user.email,
+              email: user.email,
+              emailVerified: user.emailVerified,
+              providerData: user.providerData
+            };
+          }
+        }, 200);
       } else {
         // メール未確認
         headerPurchaseBtn.disabled = true;
@@ -1457,23 +1472,42 @@ function setupPurchaseModal() {
         stateUserSame: state.user === window.state?.user
       });
       
-      // 認証状態をチェック（複数の状態を確認）
-      const currentUser = state.user || window.state?.user;
+      // Firebase認証の現在の状態を直接確認
+      let currentUser = state.user || window.state?.user;
+      
+      // Firebase auth から直接ユーザー情報を取得（最新状態を確認）
+      if (!currentUser && window.firebaseAuth?.auth?.currentUser) {
+        console.log('🔄 Firebase auth.currentUser から状態を取得します');
+        const firebaseUser = window.firebaseAuth.auth.currentUser;
+        currentUser = {
+          id: firebaseUser.uid,
+          name: firebaseUser.displayName || firebaseUser.email,
+          email: firebaseUser.email,
+          emailVerified: firebaseUser.emailVerified,
+          providerData: firebaseUser.providerData
+        };
+        
+        // state.user も更新
+        state.user = currentUser;
+        console.log('✅ Firebase currentUser から state.user を更新:', currentUser);
+      }
+      
       if (!currentUser) {
-        console.error('❌ 認証エラー: state.user が null');
+        console.error('❌ 認証エラー: ユーザーが見つかりません');
         console.error('❌ デバッグ詳細:', {
           'state.user': state.user,
           'window.state?.user': window.state?.user,
+          'firebase.currentUser': window.firebaseAuth?.auth?.currentUser,
           'state === window.state': state === window.state
         });
-        alert('購入機能を利用するには、ログインが必要です。\n右上の「ログイン」ボタンからアカウントを作成またはログインしてください。\n\nデバッグ情報: ユーザー状態が未定義です。');
+        alert('購入機能を利用するには、ログインが必要です。\n右上の「ログイン」ボタンからアカウントを作成またはログインしてください。');
         return;
       }
       
       // 状態を統一
-      if (!state.user && window.state?.user) {
-        console.log('🔄 window.state から state.user を復元します');
-        state.user = window.state.user;
+      if (!state.user && currentUser) {
+        console.log('🔄 state.user を設定します');
+        state.user = currentUser;
       }
       
       // メール確認状態をチェック
