@@ -110,7 +110,9 @@ function syncFirebaseAuth(user) {
     state.user = { 
       id: user.uid, 
       name: user.displayName || user.email,
-      email: user.email 
+      email: user.email,
+      emailVerified: user.emailVerified,
+      providerData: user.providerData
     };
     document.getElementById('btnLogin')?.classList.add('hidden');
     document.getElementById('btnLogout')?.classList.remove('hidden');
@@ -1261,6 +1263,12 @@ function renderModalContent() {
 }
 
 function modalPurchasePack(packId) {
+  // メール確認チェック
+  if (state.user && !state.user.emailVerified && state.user.providerData?.some(provider => provider.providerId === 'password')) {
+    alert('購入機能を利用するには、メールアドレスの確認が必要です。\n確認メールのリンクをクリックしてから再度お試しください。');
+    return;
+  }
+  
   // 購入確認モーダルを表示
   showPurchaseConfirmModal(packId);
 }

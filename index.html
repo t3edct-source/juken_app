@@ -125,6 +125,80 @@
       <div id="who" class="auth-status"></div>
     </div>
 
+    <!-- メール確認待ち画面 -->
+    <div id="emailVerificationBox" class="auth-container hidden">
+      <div class="verification-header">
+        <div class="verification-icon">📧</div>
+        <h3 class="verification-title">メール確認が必要です</h3>
+        <p class="verification-subtitle">アカウントを安全に利用するため、メールアドレスの確認をお願いします</p>
+      </div>
+      
+      <div class="verification-content">
+        <div class="verification-step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <p><strong id="verificationEmail">your@email.com</strong> に確認メールを送信しました</p>
+          </div>
+        </div>
+        
+        <div class="verification-step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <p>メールボックスを確認し、認証リンクをクリックしてください</p>
+          </div>
+        </div>
+        
+        <div class="verification-step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <p>確認完了後、自動的に購入機能が利用可能になります</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="verification-status">
+        <div id="verificationProgress" class="verification-progress">
+          <div class="progress-dot active">📧</div>
+          <div class="progress-line"></div>
+          <div class="progress-dot" id="progressCheck">⏳</div>
+          <div class="progress-line"></div>
+          <div class="progress-dot">✅</div>
+        </div>
+        <p id="verificationStatusText" class="verification-status-text">確認メールの送信完了</p>
+      </div>
+      
+      <div class="verification-actions">
+        <button id="resendVerificationEmail" class="auth-btn auth-btn-primary">
+          <span class="btn-content">
+            <span class="btn-text">確認メールを再送信</span>
+            <span class="btn-spinner hidden">⏳</span>
+          </span>
+        </button>
+        
+        <button id="checkVerificationStatus" class="auth-btn auth-btn-secondary">
+          確認状態をチェック
+        </button>
+        
+        <button id="backToAuth" class="link-btn">
+          別のアカウントでログイン
+        </button>
+      </div>
+      
+      <div class="verification-help">
+        <details class="help-section">
+          <summary>📮 メールが届かない場合</summary>
+          <div class="help-content">
+            <ul>
+              <li>迷惑メールフォルダをご確認ください</li>
+              <li>メールアドレスに入力ミスがないかご確認ください</li>
+              <li>「再送信」ボタンをクリックしてもう一度お試しください</li>
+              <li>それでも届かない場合は、別のメールアドレスで登録をお試しください</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </div>
+
     <!-- ▼ 必須ビュー群（JSが表示/非表示を切り替えます） -->
     <section id="homeView" class="section-gap">
       <!-- 横長イラストエリア -->
@@ -305,12 +379,20 @@
   <script type="module">
   // Firebase認証機能の初期化とイベント登録
   import { auth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup,
-           signInWithEmailAndPassword, signOut, sendPasswordResetEmail, createUserWithEmailAndPassword } from "./firebaseConfig.js";
+           signInWithEmailAndPassword, signOut, sendPasswordResetEmail, createUserWithEmailAndPassword, sendEmailVerification } from "./firebaseConfig.js";
 
   const $ = (s)=>document.querySelector(s);
 
   // 認証モード管理
   let isSignupMode = false;
+  let verificationCheckInterval = null;
+
+  // メール確認関連の状態管理
+  const verificationState = {
+    user: null,
+    isWaitingForVerification: false,
+    lastCheckTime: null
+  };
 
   function toggleAuthMode() {
     isSignupMode = !isSignupMode;
@@ -345,6 +427,63 @@
     hideError('pw');
   }
 
+  // メール確認画面の表示/非表示制御
+  function showEmailVerificationScreen(user) {
+    const authBox = $("#authBox");
+    const verificationBox = $("#emailVerificationBox");
+    const verificationEmail = $("#verificationEmail");
+    
+    if (authBox) authBox.classList.add('hidden');
+    if (verificationBox) verificationBox.classList.remove('hidden');
+    if (verificationEmail) verificationEmail.textContent = user.email;
+    
+    verificationState.user = user;
+    verificationState.isWaitingForVerification = true;
+    
+    startVerificationCheck();
+  }
+
+  function hideEmailVerificationScreen() {
+    const authBox = $("#authBox");
+    const verificationBox = $("#emailVerificationBox");
+    
+    if (verificationBox) verificationBox.classList.add('hidden');
+    if (authBox) authBox.classList.remove('hidden');
+    
+    verificationState.isWaitingForVerification = false;
+    stopVerificationCheck();
+  }
+
+  function updateVerificationProgress(isVerified) {
+    const progressCheck = $("#progressCheck");
+    const statusText = $("#verificationStatusText");
+    const progressLines = document.querySelectorAll('.progress-line');
+    
+    if (isVerified) {
+      if (progressCheck) {
+        progressCheck.textContent = "✅";
+        progressCheck.classList.add('completed');
+      }
+      if (statusText) {
+        statusText.textContent = "メール確認が完了しました！";
+      }
+      progressLines.forEach(line => line.classList.add('completed'));
+      
+      // 3秒後に自動的に画面を切り替え
+      setTimeout(() => {
+        hideEmailVerificationScreen();
+      }, 3000);
+    } else {
+      if (progressCheck) {
+        progressCheck.textContent = "⏳";
+        progressCheck.classList.remove('completed');
+      }
+      if (statusText) {
+        statusText.textContent = "メール確認をお待ちしています...";
+      }
+    }
+  }
+
   // バリデーション関数
   function validateEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -376,12 +515,73 @@
     if (isLoading) {
       btn.disabled = true;
       spinner?.classList.remove('hidden');
-      if (text) text.textContent = '処理中...';
+      if (text) {
+        if (buttonId === 'resendVerificationEmail') {
+          text.textContent = '送信中...';
+        } else {
+          text.textContent = '処理中...';
+        }
+      }
     } else {
       btn.disabled = false;
       spinner?.classList.add('hidden');
       if (buttonId === 'loginEmail' && text) text.textContent = 'ログイン';
       if (buttonId === 'loginGoogle' && text) text.textContent = 'Googleでログイン';
+      if (buttonId === 'resendVerificationEmail' && text) text.textContent = '確認メールを再送信';
+    }
+  }
+
+  // 確認状態の自動チェック機能
+  function startVerificationCheck() {
+    if (verificationCheckInterval) {
+      clearInterval(verificationCheckInterval);
+    }
+    
+    // 5秒ごとに確認状態をチェック
+    verificationCheckInterval = setInterval(async () => {
+      if (verificationState.user) {
+        try {
+          // ユーザー情報を再読み込み
+          await verificationState.user.reload();
+          
+          if (verificationState.user.emailVerified) {
+            updateVerificationProgress(true);
+            stopVerificationCheck();
+            
+            // 確認完了通知
+            setTimeout(() => {
+              alert('メール確認が完了しました！購入機能をご利用いただけます。');
+            }, 500);
+          }
+        } catch (error) {
+          console.error('確認状態チェックエラー:', error);
+        }
+      }
+    }, 5000);
+  }
+
+  function stopVerificationCheck() {
+    if (verificationCheckInterval) {
+      clearInterval(verificationCheckInterval);
+      verificationCheckInterval = null;
+    }
+  }
+
+  // 手動確認チェック
+  async function checkVerificationStatus() {
+    if (!verificationState.user) return;
+    
+    try {
+      await verificationState.user.reload();
+      
+      if (verificationState.user.emailVerified) {
+        updateVerificationProgress(true);
+        alert('メール確認が完了しました！');
+      } else {
+        alert('まだメール確認が完了していません。メールボックスをご確認ください。');
+      }
+    } catch (error) {
+      alert('確認状態の取得に失敗しました。しばらく待ってから再度お試しください。');
     }
   }
 
@@ -424,6 +624,36 @@
     toggleAuthMode();
   });
 
+  // メール確認画面のイベントハンドラ
+  $("#resendVerificationEmail")?.addEventListener("click", async () => {
+    if (!verificationState.user) return;
+    
+    setLoading('resendVerificationEmail', true);
+    
+    try {
+      await sendEmailVerification(verificationState.user);
+      alert('確認メールを再送信しました。メールボックスをご確認ください。');
+    } catch (error) {
+      let errorMessage = "確認メールの再送信に失敗しました";
+      if (error.code === 'auth/too-many-requests') {
+        errorMessage = "短時間で多くの要求が送信されました。しばらく待ってから再度お試しください。";
+      }
+      alert(errorMessage);
+    } finally {
+      setLoading('resendVerificationEmail', false);
+    }
+  });
+
+  $("#checkVerificationStatus")?.addEventListener("click", () => {
+    checkVerificationStatus();
+  });
+
+  $("#backToAuth")?.addEventListener("click", () => {
+    // 現在のユーザーをログアウトして認証画面に戻る
+    signOut(auth);
+    hideEmailVerificationScreen();
+  });
+
   // フォーム送信処理
   $("#authForm")?.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -461,8 +691,20 @@
     try {
       if (isSignupMode) {
         // 新規登録処理
-        await createUserWithEmailAndPassword(auth, email, pw);
+        const userCredential = await createUserWithEmailAndPassword(auth, email, pw);
         console.log("アカウント作成成功");
+        
+        // メール確認を送信
+        try {
+          await sendEmailVerification(userCredential.user);
+          console.log("確認メール送信成功");
+          
+          // 確認画面を表示
+          showEmailVerificationScreen(userCredential.user);
+        } catch (verificationError) {
+          console.error("確認メール送信エラー:", verificationError);
+          alert("アカウントは作成されましたが、確認メールの送信に失敗しました。後で再送信してください。");
+        }
       } else {
         // ログイン処理
         await signInWithEmailAndPassword(auth, email, pw);
@@ -553,14 +795,31 @@
   // Firebase認証状態の監視とUI更新
   onAuthStateChanged(auth, (user)=>{
     const authBox = $("#authBox");
+    const verificationBox = $("#emailVerificationBox");
     
     if(user){
+      // メール確認状態をチェック
+      if (!user.emailVerified && !verificationState.isWaitingForVerification) {
+        // 未確認かつ確認待ち画面でない場合は確認画面を表示
+        if (user.providerData.some(provider => provider.providerId === 'password')) {
+          // メール/パスワードログインの場合のみ確認が必要
+          showEmailVerificationScreen(user);
+          return;
+        }
+      }
+      
+      // 確認済みまたはGoogleログインの場合
       $("#who").textContent = `ログイン中: ${user.email || user.displayName}`;
       $("#logout").style.display = "";
       
-      // ログイン成功時：認証フォームを非表示にする
-      if(authBox) {
-        authBox.style.display = "none";
+      // 認証フォームを非表示、確認画面も非表示
+      if(authBox) authBox.style.display = "none";
+      if(verificationBox) verificationBox.classList.add('hidden');
+      
+      // 確認完了の場合は自動チェックを停止
+      if (user.emailVerified && verificationState.isWaitingForVerification) {
+        stopVerificationCheck();
+        verificationState.isWaitingForVerification = false;
       }
       
       // アプリ側の状態も更新
@@ -571,10 +830,14 @@
       $("#who").textContent = "未ログイン";
       $("#logout").style.display = "none";
       
-      // ログアウト時：認証フォームを表示する
-      if(authBox) {
-        authBox.style.display = "block";
-      }
+      // ログアウト時：認証フォームを表示、確認画面は非表示
+      if(authBox) authBox.style.display = "block";
+      if(verificationBox) verificationBox.classList.add('hidden');
+      
+      // 確認状態をリセット
+      stopVerificationCheck();
+      verificationState.user = null;
+      verificationState.isWaitingForVerification = false;
       
       // アプリ側の状態も更新
       if (window.syncFirebaseAuth) {
