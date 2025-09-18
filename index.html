@@ -967,6 +967,27 @@
 
 <script type="module" src="./app.js" onload="console.log('✅ app.js 読み込み完了')" onerror="console.error('❌ app.js 読み込み失敗')"></script>
 
+<!-- 開発・テスト用：直接購入ボタン（社会小5） -->
+<div id="devPurchaseSection" style="position: fixed; bottom: 20px; right: 20px; background: rgba(255,255,255,0.95); padding: 15px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 2px solid #e5e7eb; z-index: 1000;">
+  <div style="margin-bottom: 10px; font-size: 0.875rem; color: #6b7280;">開発・テスト用</div>
+  <button id="buy-shakai" style="background: #2563eb; color: white; padding: 10px 15px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.875rem;">社会小5（¥2,980）を購入</button>
+</div>
+
+<script type="module">
+  // 開発・テスト用の直接購入ボタン
+  document.getElementById("buy-shakai")?.addEventListener("click", () => {
+    if (window.startPurchase) {
+      window.startPurchase("shakai_gakushu_5", "社会小5");
+    } else {
+      console.error("startPurchase 関数が見つかりません");
+    }
+  });
+  
+  // 開発環境でのみ表示
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    document.getElementById("devPurchaseSection").style.display = "block";
+  }
+</script>
 
 </body>
 </html>

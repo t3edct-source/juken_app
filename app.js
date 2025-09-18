@@ -11,12 +11,12 @@ const state = {
 
 // ===== Packs: 小4/5/6 × 理/社（6パック） =====
 const PACKS = [
-  { id:'g4-sci', grade:4, subject:'理科', label:'小4 理科' },
-  { id:'g4-soc', grade:4, subject:'社会', label:'小4 社会' },
-  { id:'g5-sci', grade:5, subject:'理科', label:'小5 理科' },
-  { id:'g5-soc', grade:5, subject:'社会', label:'小5 社会' },
-  { id:'g6-sci', grade:6, subject:'理科', label:'小6 理科' },
-  { id:'g6-soc', grade:6, subject:'社会', label:'小6 社会' },
+  { id:'g4-sci', grade:4, subject:'理科', label:'小4 理科', productId:'rika_gakushu_4', price:2980 },
+  { id:'g4-soc', grade:4, subject:'社会', label:'小4 社会', productId:'shakai_gakushu_4', price:2980 },
+  { id:'g5-sci', grade:5, subject:'理科', label:'小5 理科', productId:'rika_gakushu_5', price:2980 },
+  { id:'g5-soc', grade:5, subject:'社会', label:'小5 社会', productId:'shakai_gakushu_5', price:2980 },
+  { id:'g6-sci', grade:6, subject:'理科', label:'小6 理科', productId:'rika_gakushu_6', price:2980 },
+  { id:'g6-soc', grade:6, subject:'社会', label:'小6 社会', productId:'shakai_gakushu_6', price:2980 },
 ];
 
 // ===== 各パックの詳細コンテンツ定義 =====
@@ -230,8 +230,65 @@ function updatePurchaseButtonsState(user) {
 window.syncFirebaseAuth = syncFirebaseAuth;
 console.log("🚀 syncFirebaseAuth をグローバルに公開しました");
 
+// ===== Stripe Checkout連携機能 =====
+async function startPurchase(productId, packLabel) {
+  console.log('🛒 Stripe購入開始:', { productId, packLabel });
+  
+  // Firebase認証状態を確認
+  const user = window.firebaseAuth?.auth?.currentUser;
+  if (!user) {
+    alert("購入するにはログインが必要です。右上のログインボタンからアカウントを作成またはログインしてください。");
+    return;
+  }
+  
+  if (!user.emailVerified) {
+    alert("購入するにはメールアドレスの確認が必要です。確認メールのリンクをクリックしてから再度お試しください。");
+    return;
+  }
+  
+  console.log('✅ 認証チェック完了 - Stripe Checkoutを開始');
+  
+  try {
+    // Netlify Functions経由でStripe Checkoutセッションを作成
+    const response = await fetch("/.netlify/functions/create-checkout-session", {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json" 
+      },
+      body: JSON.stringify({
+        productId: productId,     // 例: "shakai_gakushu_5"
+        uid: user.uid,           // Firebaseユーザー ID
+        userEmail: user.email,   // ユーザーメールアドレス
+        packLabel: packLabel     // UI表示用
+      }),
+    });
+    
+    const result = await response.json();
+    console.log('💳 Checkout セッション作成結果:', result);
+    
+    if (result.error) {
+      console.error('❌ Checkout セッション作成エラー:', result.error);
+      alert("購入処理の開始に失敗しました: " + result.error);
+      return;
+    }
+    
+    if (result.url) {
+      console.log('🔄 Stripe Checkoutにリダイレクト:', result.url);
+      // Stripe Checkoutページへリダイレクト
+      window.location.href = result.url;
+    } else {
+      console.error('❌ Checkout URL が見つかりません');
+      alert("購入ページの生成に失敗しました。もう一度お試しください。");
+    }
+  } catch (error) {
+    console.error('❌ 購入開始エラー:', error);
+    alert("購入処理中にエラーが発生しました: " + error.message);
+  }
+}
+
 // モーダル内から呼び出すためのグローバル関数
 window.handleModalAuthRequired = handleModalAuthRequired;
+window.startPurchase = startPurchase;
 
 // Firebase認証状態変化を監視してアプリ状態を同期
 // (index.htmlのFirebase認証スクリプトから直接呼び出される)
@@ -1232,8 +1289,9 @@ function renderLP(){
     return `
       <div class="pack-card ${unlocked ? 'unlocked':''}" data-pack="${p.id}">
         <span class="lock-badge">🔒</span>
-        <div class="pack-title">${p.label}</div>
-        <div class="pack-meta">学年：小${p.grade} ／ 教科：${p.subject}</div>
+      <div class="pack-title">${p.label}</div>
+      <div class="pack-meta">学年：小${p.grade} ／ 教科：${p.subject}</div>
+      <div class="pack-price">¥${p.price.toLocaleString()}</div>
         <div class="pack-actions">
           ${purchaseButton}
           <button class="btn-secondary" data-act="set-grade" data-grade="${p.grade}">学年に設定</button>
@@ -1244,7 +1302,7 @@ function renderLP(){
 
   // イベントハンドラの設定
   grid.querySelectorAll('button[data-act="buy"]').forEach(btn=>{
-    btn.onclick = () => fakePurchase(btn.getAttribute('data-pack'));
+    btn.onclick = () => startRealPurchase(btn.getAttribute('data-pack'));
   });
   
   grid.querySelectorAll('button[data-act="open"]').forEach(btn=>{
@@ -1278,6 +1336,20 @@ function updateLPPurchaseButtons(user) {
 }
 
 // ダミー購入（サンプル）
+// 実際の購入開始（Stripe Checkout）
+function startRealPurchase(packId){
+  const pack = PACKS.find(p => p.id === packId);
+  if (!pack) {
+    console.error('❌ パックが見つかりません:', packId);
+    alert('指定された商品が見つかりません。');
+    return;
+  }
+  
+  console.log('🛒 実際の購入を開始:', pack);
+  startPurchase(pack.productId, pack.label);
+}
+
+// ダミー購入（開発・テスト用）
 function fakePurchase(packId){
   const arr = loadPurchases(); if(!arr.includes(packId)){ arr.push(packId); savePurchases(arr); }
   renderAppView();
@@ -1430,14 +1502,17 @@ function updateModalPurchaseButtons(user) {
 }
 
 function modalPurchasePack(packId) {
+  console.log('🛒 モーダル内購入:', packId);
+  
   // メール確認チェック
   if (state.user && !state.user.emailVerified && state.user.providerData?.some(provider => provider.providerId === 'password')) {
     alert('購入機能を利用するには、メールアドレスの確認が必要です。\n確認メールのリンクをクリックしてから再度お試しください。');
     return;
   }
   
-  // 購入確認モーダルを表示
-  showPurchaseConfirmModal(packId);
+  // 購入モーダルを閉じてから実際の購入を開始
+  closePurchaseModal();
+  startRealPurchase(packId);
 }
 
 function setupPurchaseModal() {
