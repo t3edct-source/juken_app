@@ -105,6 +105,8 @@ function logoutMock(){
 
 // Firebase認証状態変化をアプリの状態に反映する関数
 function syncFirebaseAuth(user) {
+  console.log('syncFirebaseAuth 呼び出し:', user ? '認証済み' : '未認証');
+  
   if (user) {
     // ログイン状態
     state.user = { 
@@ -114,6 +116,9 @@ function syncFirebaseAuth(user) {
       emailVerified: user.emailVerified,
       providerData: user.providerData
     };
+    
+    console.log('ユーザー状態を更新:', state.user);
+    
     document.getElementById('btnLogin')?.classList.add('hidden');
     document.getElementById('btnLogout')?.classList.remove('hidden');
     
@@ -121,6 +126,7 @@ function syncFirebaseAuth(user) {
     updatePurchaseButtonsState(user);
   } else {
     // ログアウト状態
+    console.log('ユーザー状態をクリア');
     state.user = null;
     document.getElementById('btnLogin')?.classList.remove('hidden');
     document.getElementById('btnLogout')?.classList.add('hidden');
@@ -132,11 +138,19 @@ function syncFirebaseAuth(user) {
 
 // 購入ボタンの状態を更新する関数
 function updatePurchaseButtonsState(user) {
+  console.log('updatePurchaseButtonsState 呼び出し:', user ? '認証済み' : '未認証');
+  
   const headerPurchaseBtn = document.getElementById('purchaseBtn');
   
   if (user) {
     // 認証済みユーザーの場合
     const isEmailVerified = user.emailVerified || user.providerData?.some(provider => provider.providerId !== 'password');
+    
+    console.log('認証状態詳細:', {
+      emailVerified: user.emailVerified,
+      providerData: user.providerData,
+      isEmailVerified: isEmailVerified
+    });
     
     if (headerPurchaseBtn) {
       if (isEmailVerified) {
@@ -145,13 +159,17 @@ function updatePurchaseButtonsState(user) {
         headerPurchaseBtn.textContent = '💳 購入';
         headerPurchaseBtn.className = 'px-3 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm transition-colors duration-200';
         headerPurchaseBtn.title = '';
+        console.log('購入ボタンを有効化しました');
       } else {
         // メール未確認
         headerPurchaseBtn.disabled = true;
         headerPurchaseBtn.textContent = '📧 メール確認必要';
         headerPurchaseBtn.className = 'px-3 py-2 rounded-lg bg-gray-400 text-white cursor-not-allowed shadow-sm';
         headerPurchaseBtn.title = 'メールアドレスの確認が必要です';
+        console.log('購入ボタンを無効化しました（メール未確認）');
       }
+    } else {
+      console.error('購入ボタンが見つかりません (ID: purchaseBtn)');
     }
   } else {
     // 未ログインユーザーの場合
@@ -160,6 +178,9 @@ function updatePurchaseButtonsState(user) {
       headerPurchaseBtn.textContent = '🔒 ログイン必要';
       headerPurchaseBtn.className = 'px-3 py-2 rounded-lg bg-gray-400 text-white cursor-not-allowed shadow-sm';
       headerPurchaseBtn.title = 'ログインが必要です';
+      console.log('購入ボタンを無効化しました（未ログイン）');
+    } else {
+      console.error('購入ボタンが見つかりません (ID: purchaseBtn)');
     }
   }
   
@@ -1390,19 +1411,44 @@ function setupPurchaseModal() {
     purchaseBtn.addEventListener('click', (e) => {
       e.preventDefault();
       
+      // ボタンが無効化されている場合はクリックを無視
+      if (purchaseBtn.disabled) {
+        console.log('購入ボタンは無効化されています。クリックを無視します。');
+        return;
+      }
+      
+      // デバッグ情報を出力
+      console.log('購入ボタンクリック - 認証状態:', state.user);
+      console.log('購入ボタンクリック - ボタン状態:', {
+        disabled: purchaseBtn.disabled,
+        textContent: purchaseBtn.textContent,
+        className: purchaseBtn.className
+      });
+      console.log('購入ボタンクリック - ユーザー情報:', {
+        user: !!state.user,
+        emailVerified: state.user?.emailVerified,
+        providerData: state.user?.providerData
+      });
+      
       // 認証状態をチェック
       if (!state.user) {
-        alert('購入機能を利用するには、ログインが必要です。\n右上の「ログイン」ボタンからアカウントを作成またはログインしてください。');
+        console.error('認証エラー: state.user が null');
+        alert('購入機能を利用するには、ログインが必要です。\n右上の「ログイン」ボタンからアカウントを作成またはログインしてください。\n\nデバッグ情報: ユーザー状態が未定義です。');
         return;
       }
       
       // メール確認状態をチェック
       const isEmailVerified = state.user.emailVerified || state.user.providerData?.some(provider => provider.providerId !== 'password');
       if (!isEmailVerified) {
+        console.error('メール確認エラー:', {
+          emailVerified: state.user.emailVerified,
+          providerData: state.user.providerData
+        });
         alert('購入機能を利用するには、メールアドレスの確認が必要です。\n確認メールのリンクをクリックしてから再度お試しください。');
         return;
       }
       
+      console.log('認証チェック完了 - 購入モーダルを開きます');
       // 認証済みの場合のみモーダルを開く
       openPurchaseModal();
     });
@@ -1560,5 +1606,22 @@ async function startup(){
   
   // 初期状態で購入ボタンを無効化（未ログイン状態）
   updatePurchaseButtonsState(null);
+  
+  // デバッグ用: 5秒間隔で状態を表示
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    setInterval(() => {
+      console.log('=== 現在の状態 ===');
+      console.log('state.user:', state.user);
+      const purchaseBtn = document.getElementById('purchaseBtn');
+      if (purchaseBtn) {
+        console.log('購入ボタン状態:', {
+          disabled: purchaseBtn.disabled,
+          textContent: purchaseBtn.textContent,
+          className: purchaseBtn.className
+        });
+      }
+      console.log('==================');
+    }, 5000);
+  }
 }
 startup();
