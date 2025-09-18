@@ -21,11 +21,16 @@ export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
+// Firebase Auth の言語を日本語に設定
+auth.languageCode = 'ja';
+console.log('🇯🇵 Firebase Auth言語設定: 日本語');
+
 // 認証ドメインの設定を確認
 console.log('🔥 Firebase初期化完了:', {
   authDomain: firebaseConfig.authDomain,
   currentOrigin: window.location.origin,
-  projectId: firebaseConfig.projectId
+  projectId: firebaseConfig.projectId,
+  language: auth.languageCode
 });
 
 // 他ファイルから利用できるようエクスポート

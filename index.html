@@ -631,8 +631,18 @@
     setLoading('resendVerificationEmail', true);
     
     try {
-      await sendEmailVerification(verificationState.user);
+      // メール確認設定（日本語、続行URL設定）
+      const actionCodeSettings = {
+        url: window.location.origin, // 現在のサイトに戻る
+        handleCodeInApp: false
+      };
+      
+      // 言語設定を確実に適用
+      auth.languageCode = 'ja';
+      
+      await sendEmailVerification(verificationState.user, actionCodeSettings);
       alert('確認メールを再送信しました。メールボックスをご確認ください。');
+      console.log("確認メール再送信成功（日本語設定）");
     } catch (error) {
       let errorMessage = "確認メールの再送信に失敗しました";
       if (error.code === 'auth/too-many-requests') {
@@ -694,10 +704,19 @@
         const userCredential = await createUserWithEmailAndPassword(auth, email, pw);
         console.log("アカウント作成成功");
         
-        // メール確認を送信
+        // メール確認を送信（日本語設定付き）
         try {
-          await sendEmailVerification(userCredential.user);
-          console.log("確認メール送信成功");
+          // メール確認設定（日本語、続行URL設定）
+          const actionCodeSettings = {
+            url: window.location.origin, // 現在のサイトに戻る
+            handleCodeInApp: false
+          };
+          
+          // 言語設定を確実に適用
+          auth.languageCode = 'ja';
+          
+          await sendEmailVerification(userCredential.user, actionCodeSettings);
+          console.log("確認メール送信成功（日本語設定）");
           
           // 確認画面を表示
           showEmailVerificationScreen(userCredential.user);
@@ -774,8 +793,18 @@
     }
     
     try {
-      await sendPasswordResetEmail(auth, email);
+      // パスワードリセット設定（日本語、続行URL設定）
+      const actionCodeSettings = {
+        url: window.location.origin + '?mode=resetPassword',
+        handleCodeInApp: false
+      };
+      
+      // 言語設定を確実に適用
+      auth.languageCode = 'ja';
+      
+      await sendPasswordResetEmail(auth, email, actionCodeSettings);
       alert(`パスワードリセットメールを ${email} に送信しました。\nメールボックスを確認してください。`);
+      console.log("パスワードリセットメール送信成功（日本語設定）");
       hideError('email');
     } catch(err) {
       let errorMessage = "パスワードリセットメールの送信に失敗しました";
