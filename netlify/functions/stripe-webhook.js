@@ -37,4 +37,7 @@ exports.handler = async (event) => {
   }
 
   return { statusCode: 200, body: "success" };
+
+  exports.config = { bodyParser: false };
+
 };
