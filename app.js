@@ -105,11 +105,12 @@ function logoutMock(){
 
 // Firebase認証状態変化をアプリの状態に反映する関数
 function syncFirebaseAuth(user) {
-  console.log('syncFirebaseAuth 呼び出し:', user ? '認証済み' : '未認証');
+  console.log('🔥 syncFirebaseAuth 呼び出し:', user ? '認証済み' : '未認証');
+  console.log('🔥 受信したユーザー情報:', user);
   
   if (user) {
     // ログイン状態
-    state.user = { 
+    const newUserState = { 
       id: user.uid, 
       name: user.displayName || user.email,
       email: user.email,
@@ -117,22 +118,41 @@ function syncFirebaseAuth(user) {
       providerData: user.providerData
     };
     
-    console.log('ユーザー状態を更新:', state.user);
+    console.log('🔄 state.user 更新前:', state.user);
+    state.user = newUserState;
+    console.log('✅ state.user 更新後:', state.user);
     
+    // UI更新
     document.getElementById('btnLogin')?.classList.add('hidden');
     document.getElementById('btnLogout')?.classList.remove('hidden');
     
     // 購入ボタンの状態を更新
+    console.log('🔄 購入ボタン状態を更新します...');
     updatePurchaseButtonsState(user);
+    
+    // 状態確認用ログ
+    setTimeout(() => {
+      console.log('📊 最終確認 - state.user:', state.user);
+      console.log('📊 最終確認 - window.state:', window.state);
+    }, 500);
   } else {
     // ログアウト状態
-    console.log('ユーザー状態をクリア');
+    console.log('🚪 ユーザー状態をクリア');
+    console.log('🔄 state.user クリア前:', state.user);
     state.user = null;
+    console.log('✅ state.user クリア後:', state.user);
+    
     document.getElementById('btnLogin')?.classList.remove('hidden');
     document.getElementById('btnLogout')?.classList.add('hidden');
     
     // 購入ボタンを無効化
     updatePurchaseButtonsState(null);
+  }
+  
+  // グローバルステートも確認
+  if (!window.state) {
+    console.log('⚠️ window.state が存在しません。作成します。');
+    window.state = state;
   }
 }
 
@@ -1419,31 +1439,49 @@ function setupPurchaseModal() {
       }
       
       // デバッグ情報を出力
-      console.log('購入ボタンクリック - 認証状態:', state.user);
-      console.log('購入ボタンクリック - ボタン状態:', {
+      console.log('🛒 購入ボタンクリック - 認証状態:', state.user);
+      console.log('🛒 購入ボタンクリック - ボタン状態:', {
         disabled: purchaseBtn.disabled,
         textContent: purchaseBtn.textContent,
         className: purchaseBtn.className
       });
-      console.log('購入ボタンクリック - ユーザー情報:', {
+      console.log('🛒 購入ボタンクリック - ユーザー情報:', {
         user: !!state.user,
         emailVerified: state.user?.emailVerified,
         providerData: state.user?.providerData
       });
+      console.log('🛒 購入ボタンクリック - window.state:', window.state);
+      console.log('🛒 購入ボタンクリック - グローバル確認:', {
+        hasState: !!window.state,
+        hasUser: !!window.state?.user,
+        stateUserSame: state.user === window.state?.user
+      });
       
-      // 認証状態をチェック
-      if (!state.user) {
-        console.error('認証エラー: state.user が null');
+      // 認証状態をチェック（複数の状態を確認）
+      const currentUser = state.user || window.state?.user;
+      if (!currentUser) {
+        console.error('❌ 認証エラー: state.user が null');
+        console.error('❌ デバッグ詳細:', {
+          'state.user': state.user,
+          'window.state?.user': window.state?.user,
+          'state === window.state': state === window.state
+        });
         alert('購入機能を利用するには、ログインが必要です。\n右上の「ログイン」ボタンからアカウントを作成またはログインしてください。\n\nデバッグ情報: ユーザー状態が未定義です。');
         return;
       }
       
+      // 状態を統一
+      if (!state.user && window.state?.user) {
+        console.log('🔄 window.state から state.user を復元します');
+        state.user = window.state.user;
+      }
+      
       // メール確認状態をチェック
-      const isEmailVerified = state.user.emailVerified || state.user.providerData?.some(provider => provider.providerId !== 'password');
+      const isEmailVerified = currentUser.emailVerified || currentUser.providerData?.some(provider => provider.providerId !== 'password');
       if (!isEmailVerified) {
-        console.error('メール確認エラー:', {
-          emailVerified: state.user.emailVerified,
-          providerData: state.user.providerData
+        console.error('❌ メール確認エラー:', {
+          emailVerified: currentUser.emailVerified,
+          providerData: currentUser.providerData
         });
         alert('購入機能を利用するには、メールアドレスの確認が必要です。\n確認メールのリンクをクリックしてから再度お試しください。');
         return;

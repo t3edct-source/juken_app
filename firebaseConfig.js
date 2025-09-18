@@ -21,5 +21,12 @@ export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
+// 認証ドメインの設定を確認
+console.log('🔥 Firebase初期化完了:', {
+  authDomain: firebaseConfig.authDomain,
+  currentOrigin: window.location.origin,
+  projectId: firebaseConfig.projectId
+});
+
 // 他ファイルから利用できるようエクスポート
 export { onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, createUserWithEmailAndPassword, sendEmailVerification };
