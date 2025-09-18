@@ -1232,6 +1232,14 @@ html{scroll-behavior:smooth}
   position: relative;
 }
 
+.auth-toggle {
+  text-align: center; margin: 1.5rem 0;
+}
+
+.auth-toggle p {
+  color: #64748b; font-size: 0.875rem; margin-bottom: 0.5rem;
+}
+
 .auth-links {
   text-align: center; margin: 1rem 0;
 }

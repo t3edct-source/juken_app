@@ -56,8 +56,8 @@
     <!-- Firebase認証ボックス -->
     <div id="authBox" class="auth-container">
       <div class="auth-header">
-        <h3 class="auth-title">ログイン</h3>
-        <p class="auth-subtitle">アカウントにサインインしてください</p>
+        <h3 class="auth-title" id="authTitle">ログイン</h3>
+        <p class="auth-subtitle" id="authSubtitle">アカウントにサインインしてください</p>
       </div>
       
       <form id="authForm" class="auth-form">
@@ -85,11 +85,18 @@
         
         <button type="submit" id="loginEmail" class="auth-btn auth-btn-primary">
           <span class="btn-content">
-            <span class="btn-text">ログイン</span>
+            <span class="btn-text" id="submitBtnText">ログイン</span>
             <span class="btn-spinner hidden">⏳</span>
           </span>
         </button>
       </form>
+      
+      <div class="auth-toggle">
+        <p id="toggleText">アカウントをお持ちでない方</p>
+        <button type="button" id="authToggle" class="link-btn">
+          新規登録はこちら
+        </button>
+      </div>
       
       <div class="auth-divider">
         <span>または</span>
@@ -298,9 +305,45 @@
   <script type="module">
   // Firebase認証機能の初期化とイベント登録
   import { auth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup,
-           signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "./firebaseConfig.js";
+           signInWithEmailAndPassword, signOut, sendPasswordResetEmail, createUserWithEmailAndPassword } from "./firebaseConfig.js";
 
   const $ = (s)=>document.querySelector(s);
+
+  // 認証モード管理
+  let isSignupMode = false;
+
+  function toggleAuthMode() {
+    isSignupMode = !isSignupMode;
+    
+    const title = $("#authTitle");
+    const subtitle = $("#authSubtitle");
+    const submitBtn = $("#submitBtnText");
+    const toggleText = $("#toggleText");
+    const authToggle = $("#authToggle");
+    const resetPassword = $("#resetPassword");
+    
+    if (isSignupMode) {
+      // 新規登録モード
+      title.textContent = "新規登録";
+      subtitle.textContent = "新しいアカウントを作成してください";
+      submitBtn.textContent = "アカウント作成";
+      toggleText.textContent = "既にアカウントをお持ちの方";
+      authToggle.textContent = "ログインはこちら";
+      resetPassword.style.display = "none";
+    } else {
+      // ログインモード
+      title.textContent = "ログイン";
+      subtitle.textContent = "アカウントにサインインしてください";
+      submitBtn.textContent = "ログイン";
+      toggleText.textContent = "アカウントをお持ちでない方";
+      authToggle.textContent = "新規登録はこちら";
+      resetPassword.style.display = "";
+    }
+    
+    // エラーをクリア
+    hideError('email');
+    hideError('pw');
+  }
 
   // バリデーション関数
   function validateEmail(email) {
@@ -376,6 +419,11 @@
     }
   });
 
+  // 認証モード切り替え
+  $("#authToggle")?.addEventListener("click", () => {
+    toggleAuthMode();
+  });
+
   // フォーム送信処理
   $("#authForm")?.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -411,17 +459,37 @@
     setLoading('loginEmail', true);
     
     try {
-      await signInWithEmailAndPassword(auth, email, pw);
-      // ログイン成功時はonAuthStateChangedで自動的にUI更新される
-      console.log("ログイン成功");
+      if (isSignupMode) {
+        // 新規登録処理
+        await createUserWithEmailAndPassword(auth, email, pw);
+        console.log("アカウント作成成功");
+      } else {
+        // ログイン処理
+        await signInWithEmailAndPassword(auth, email, pw);
+        console.log("ログイン成功");
+      }
+      // 成功時はonAuthStateChangedで自動的にUI更新される
     } catch(err) {
-      let errorMessage = "ログインに失敗しました";
-      if (err.code === 'auth/user-not-found') {
-        errorMessage = "このメールアドレスは登録されていません";
-      } else if (err.code === 'auth/wrong-password') {
-        errorMessage = "パスワードが間違っています";
-      } else if (err.code === 'auth/too-many-requests') {
-        errorMessage = "試行回数が多すぎます。しばらく待ってから再試行してください";
+      let errorMessage = isSignupMode ? "アカウント作成に失敗しました" : "ログインに失敗しました";
+      
+      if (isSignupMode) {
+        // 新規登録時のエラー
+        if (err.code === 'auth/email-already-in-use') {
+          errorMessage = "このメールアドレスは既に使用されています";
+        } else if (err.code === 'auth/weak-password') {
+          errorMessage = "パスワードが弱すぎます。より強力なパスワードを設定してください";
+        } else if (err.code === 'auth/invalid-email') {
+          errorMessage = "メールアドレスの形式が正しくありません";
+        }
+      } else {
+        // ログイン時のエラー
+        if (err.code === 'auth/user-not-found') {
+          errorMessage = "このメールアドレスは登録されていません";
+        } else if (err.code === 'auth/wrong-password') {
+          errorMessage = "パスワードが間違っています";
+        } else if (err.code === 'auth/too-many-requests') {
+          errorMessage = "試行回数が多すぎます。しばらく待ってから再試行してください";
+        }
       }
       showError('pw', errorMessage);
     } finally {
