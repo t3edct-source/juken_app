@@ -191,8 +191,9 @@ function updatePurchaseButtonsState(user) {
   updateModalPurchaseButtons(user);
 }
 
-// syncFirebaseAuth関数をグローバルに公開
+// syncFirebaseAuth関数をグローバルに公開（即座に実行）
 window.syncFirebaseAuth = syncFirebaseAuth;
+console.log("🚀 syncFirebaseAuth をグローバルに公開しました");
 
 // モーダル内から呼び出すためのグローバル関数
 window.handleModalAuthRequired = handleModalAuthRequired;

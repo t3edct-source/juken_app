@@ -836,7 +836,7 @@
         
         // アプリ側の状態も更新（確実に実行されるよう遅延処理）
         console.log("🔄 syncFirebaseAuth 呼び出し準備...");
-        setTimeout(() => {
+        const syncUser = () => {
           if (window.syncFirebaseAuth) {
             console.log("✅ syncFirebaseAuth を呼び出します:", user.uid);
             try {
@@ -846,9 +846,30 @@
               console.error("❌ syncFirebaseAuth エラー:", error);
             }
           } else {
-            console.error("❌ window.syncFirebaseAuth が見つかりません");
+            console.error("❌ window.syncFirebaseAuth が見つかりません - 再試行します");
+            // 再試行（最大5回）
+            let retryCount = 0;
+            const retrySync = () => {
+              if (retryCount < 5 && !window.syncFirebaseAuth) {
+                retryCount++;
+                console.log(`🔄 syncFirebaseAuth 再試行 ${retryCount}/5`);
+                setTimeout(retrySync, 200);
+              } else if (window.syncFirebaseAuth) {
+                console.log("✅ syncFirebaseAuth 見つかりました - 呼び出します:", user.uid);
+                try {
+                  window.syncFirebaseAuth(user);
+                  console.log("✅ syncFirebaseAuth 完了（再試行）");
+                } catch (error) {
+                  console.error("❌ syncFirebaseAuth エラー（再試行）:", error);
+                }
+              } else {
+                console.error("❌ syncFirebaseAuth の読み込みに失敗しました");
+              }
+            };
+            retrySync();
           }
-        }, 100);
+        };
+        setTimeout(syncUser, 100);
       } else {
         console.log("🚪 ログアウト状態");
         $("#who").textContent = "未ログイン";
@@ -864,7 +885,7 @@
         verificationState.isWaitingForVerification = false;
         
         // アプリ側の状態も更新
-        setTimeout(() => {
+        const syncLogout = () => {
           if (window.syncFirebaseAuth) {
             console.log("🔄 syncFirebaseAuth null を呼び出します");
             try {
@@ -874,9 +895,30 @@
               console.error("❌ syncFirebaseAuth null エラー:", error);
             }
           } else {
-            console.error("❌ window.syncFirebaseAuth が見つかりません");
+            console.error("❌ window.syncFirebaseAuth が見つかりません - 再試行します");
+            // 再試行（最大5回）
+            let retryCount = 0;
+            const retrySync = () => {
+              if (retryCount < 5 && !window.syncFirebaseAuth) {
+                retryCount++;
+                console.log(`🔄 syncFirebaseAuth null 再試行 ${retryCount}/5`);
+                setTimeout(retrySync, 200);
+              } else if (window.syncFirebaseAuth) {
+                console.log("✅ syncFirebaseAuth 見つかりました - null を呼び出します");
+                try {
+                  window.syncFirebaseAuth(null);
+                  console.log("✅ syncFirebaseAuth null 完了（再試行）");
+                } catch (error) {
+                  console.error("❌ syncFirebaseAuth null エラー（再試行）:", error);
+                }
+              } else {
+                console.error("❌ syncFirebaseAuth の読み込みに失敗しました（ログアウト）");
+              }
+            };
+            retrySync();
           }
-        }, 100);
+        };
+        setTimeout(syncLogout, 100);
       }
     }, (error) => {
       console.error("🚨 Firebase認証状態監視エラー:", error);
@@ -894,7 +936,7 @@
   window.firebaseAuth = { auth, signOut, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider };
   </script>
 
-<script type="module" src="./app.js"></script>
+<script type="module" src="./app.js" onload="console.log('✅ app.js 読み込み完了')" onerror="console.error('❌ app.js 読み込み失敗')"></script>
 
 
 </body>
