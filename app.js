@@ -1718,11 +1718,17 @@ function ensureGradeBanner(){
 
 // ===== 購入モーダル関連 =====
 function openPurchaseModal() {
+  console.log('🔍 openPurchaseModal 開始');
   const modal = document.getElementById('purchaseModal');
-  if (!modal) return;
+  if (!modal) {
+    console.error('❌ purchaseModal が見つかりません');
+    return;
+  }
   
+  console.log('✅ purchaseModal 要素が見つかりました');
   renderModalContent();
   modal.classList.remove('hidden');
+  console.log('✅ purchaseModal を表示しました');
   
   // エスケープキーでモーダルを閉じる
   document.addEventListener('keydown', handleModalKeydown);
@@ -1743,10 +1749,14 @@ function handleModalKeydown(e) {
 }
 
 function renderModalContent() {
-  const grid = document.getElementById('modalPackGrid');
-  if (!grid) return;
-  
   console.log('🔍 renderModalContent 開始');
+  const grid = document.getElementById('modalPackGrid');
+  if (!grid) {
+    console.error('❌ modalPackGrid が見つかりません');
+    return;
+  }
+  
+  console.log('✅ modalPackGrid 要素が見つかりました');
   
   const purchased = new Set(loadPurchases());
   const user = state.user;
