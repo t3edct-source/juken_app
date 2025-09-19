@@ -1746,11 +1746,13 @@ function renderModalContent() {
   const grid = document.getElementById('modalPackGrid');
   if (!grid) return;
   
+  console.log('🔍 renderModalContent 開始');
+  
   const purchased = new Set(loadPurchases());
   const user = state.user;
   const canPurchase = user && (user.emailVerified || user.providerData?.some(provider => provider.providerId !== 'password'));
   
-  grid.innerHTML = PACKS.map(pack => {
+  const htmlContent = PACKS.map(pack => {
     const details = PACK_DETAILS[pack.id];
     const isPurchased = purchased.has(pack.id);
     
@@ -1792,6 +1794,9 @@ function renderModalContent() {
       </div>
     `;
   }).join('');
+  
+  console.log('🔍 生成されたHTML:', htmlContent);
+  grid.innerHTML = htmlContent;
   
   // イベントリスナーを動的に登録
   attachModalEventListeners();
