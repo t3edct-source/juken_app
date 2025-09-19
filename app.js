@@ -2163,6 +2163,13 @@ startup();
 // ===== HTML から呼び出される関数のグローバル公開（暫定対応） =====
 // ⚠️ 注意: これは暫定対応です。将来的にはイベント委譲に移行予定
 window.modalPurchasePack = modalPurchasePack;
+
+// デバッグ: グローバル公開の確認
+console.log('🔍 グローバル関数公開確認:', {
+  'window.modalPurchasePack': typeof window.modalPurchasePack,
+  'modalPurchasePack': typeof modalPurchasePack,
+  '関数の中身': window.modalPurchasePack?.toString().substring(0, 100) + '...'
+});
 window.openPack = openPack;
 window.setCurrentGrade = setCurrentGrade;
 window.showPurchaseConfirmModal = showPurchaseConfirmModal;
