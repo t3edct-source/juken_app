@@ -2,7 +2,12 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const PRICE_TABLE = {
-  shakai_gakushu_5: "price_1S8aY2HzyxbrJMQOKjct926R", // ←控えたPrice IDに置き換える
+  rika_gakushu_4: "price_1S8xZZHzyxbrJMQOeoaqM3JU", // 小4理科
+  shakai_gakushu_4: "price_1S8xYIHzyxbrJMQOB52QlIdr", // 小4社会
+  rika_gakushu_5: "price_1S8xZxHzyxbrJMQOWQpTsRzD", // 小5理科
+  shakai_gakushu_5: "price_1S8aY2HzyxbrJMQOKjct926R", // 小5社会
+  rika_gakushu_6: "price_1S8xaIHzyxbrJMQOO3zKSz4I", // 小6理科
+  shakai_gakushu_6: "price_1S8xYuHzyxbrJMQOKg7dBPI2", // 小6社会
 };
 
 exports.handler = async (event) => {
