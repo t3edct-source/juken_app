@@ -1,12 +1,125 @@
 // Firebase認証基盤統合版 - メインアプリケーション
 
+// Firebase Firestore 関数のインポート（entitlements チェック用）
+import { db, collection, doc, getDoc, getDocs, onSnapshot } from './firebaseConfig.js';
+
+// 🎉 Stripe Checkout 成功・キャンセル処理
+function handleCheckoutResult() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const success = urlParams.get('success');
+  const canceled = urlParams.get('canceled');
+  const productId = urlParams.get('product');
+  
+  if (success === 'true') {
+    console.log('🎉 Stripe Checkout 成功:', { productId });
+    
+    // 購入成功メッセージを表示
+    const pack = PACKS.find(p => p.productId === productId);
+    const packName = pack ? pack.label : 'コンテンツ';
+    
+    // 成功メッセージの表示
+    setTimeout(() => {
+      showPurchaseSuccessMessage(packName);
+      
+      // URLパラメータをクリーンアップ
+      const cleanUrl = window.location.origin + window.location.pathname;
+      window.history.replaceState({}, document.title, cleanUrl);
+      
+      // UI更新（entitlementsが自動で更新されるまで少し待つ）
+      setTimeout(() => {
+        updateUIAfterEntitlementsChange();
+      }, 2000);
+    }, 1000);
+    
+  } else if (canceled === 'true') {
+    console.log('❌ Stripe Checkout キャンセル');
+    
+    // キャンセルメッセージを表示
+    setTimeout(() => {
+      showPurchaseCancelMessage();
+      
+      // URLパラメータをクリーンアップ
+      const cleanUrl = window.location.origin + window.location.pathname;
+      window.history.replaceState({}, document.title, cleanUrl);
+    }, 500);
+  }
+}
+
+// 🎉 購入成功メッセージを表示
+function showPurchaseSuccessMessage(packName) {
+  // 既存のモーダルを確認して非表示にする
+  const existingModals = ['purchaseModal', 'purchaseConfirmModal', 'purchaseProcessingModal'];
+  existingModals.forEach(modalId => {
+    const modal = document.getElementById(modalId);
+    if (modal) modal.classList.add('hidden');
+  });
+  
+  // 購入完了モーダルを表示
+  const completeModal = document.getElementById('purchaseCompleteModal');
+  if (completeModal) {
+    // タイトルを更新
+    const titleEl = completeModal.querySelector('.completed-item-title');
+    if (titleEl) titleEl.textContent = packName;
+    
+    // モーダルを表示
+    completeModal.classList.remove('hidden');
+    
+    // 自動で5秒後に閉じる
+    setTimeout(() => {
+      completeModal.classList.add('hidden');
+    }, 5000);
+  } else {
+    // フォールバック: シンプルなアラート
+    alert(`🎉 購入完了！\n\n${packName}の購入が完了しました。\n教材のロックが解除されました。`);
+  }
+}
+
+// ❌ 購入キャンセルメッセージを表示  
+function showPurchaseCancelMessage() {
+  // シンプルなトーストメッセージを作成
+  const toast = document.createElement('div');
+  toast.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #f56565;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 10000;
+    font-size: 14px;
+    max-width: 300px;
+    animation: slideInRight 0.3s ease-out;
+  `;
+  toast.innerHTML = `
+    <div style="font-weight: bold;">購入がキャンセルされました</div>
+    <div style="font-size: 12px; margin-top: 5px; opacity: 0.9;">
+      再度購入をご希望の場合は、購入ボタンからお手続きください。
+    </div>
+  `;
+  
+  document.body.appendChild(toast);
+  
+  // 4秒後に自動で削除
+  setTimeout(() => {
+    toast.style.animation = 'slideOutRight 0.3s ease-in';
+    setTimeout(() => {
+      if (toast.parentNode) {
+        toast.parentNode.removeChild(toast);
+      }
+    }, 300);
+  }, 4000);
+}
+
 // 親シェル：catalog読込のパス冗長化（./catalog.json → ../catalog.json の順で試行）
 const state = {
   user: null,
   catalog: [],
   current: null,
   selectedGrade: null,
-  selectedSubject: null
+  selectedSubject: null,
+  userEntitlements: new Set() // ユーザーの購入済みコンテンツ
 };
 
 // ===== Packs: 小4/5/6 × 理/社（6パック） =====
@@ -74,9 +187,111 @@ const PACK_DETAILS = {
   }
 };
 
-// ===== 購入・学年状態（localStorage管理） =====
+// ===== 購入・学年状態管理 =====
 const LS_KEYS = { purchases:'purchases', currentGrade:'currentGrade' };
-function loadPurchases(){ try{ return JSON.parse(localStorage.getItem(LS_KEYS.purchases) || '[]'); }catch{ return []; } }
+
+// 🔥 Firebase Entitlements をチェックして購入済みコンテンツを取得
+async function loadUserEntitlements(userId) {
+  if (!userId) {
+    console.log('👤 ユーザーIDが無いため、entitlementsをクリアします');
+    state.userEntitlements.clear();
+    return [];
+  }
+  
+  try {
+    console.log('🔍 Firebase entitlementsを取得中...', userId);
+    const entitlementsRef = collection(db, 'users', userId, 'entitlements');
+    const snapshot = await getDocs(entitlementsRef);
+    
+    const activeEntitlements = [];
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+      if (data.active === true) {
+        activeEntitlements.push(doc.id); // productId
+        console.log('✅ アクティブなentitlement:', doc.id, data);
+      } else {
+        console.log('❌ 非アクティブなentitlement:', doc.id, data);
+      }
+    });
+    
+    // state に保存
+    state.userEntitlements = new Set(activeEntitlements);
+    console.log('📦 ユーザーのentitlements更新:', Array.from(state.userEntitlements));
+    
+    return activeEntitlements;
+  } catch (error) {
+    console.error('❌ entitlements取得エラー:', error);
+    state.userEntitlements.clear();
+    return [];
+  }
+}
+
+// 🎧 Firebase Entitlements をリアルタイム監視
+let entitlementsUnsubscribe = null;
+function startEntitlementsListener(userId) {
+  // 既存のリスナーを停止
+  if (entitlementsUnsubscribe) {
+    entitlementsUnsubscribe();
+    entitlementsUnsubscribe = null;
+  }
+  
+  if (!userId) return;
+  
+  try {
+    console.log('🎧 entitlementsリアルタイム監視を開始:', userId);
+    const entitlementsRef = collection(db, 'users', userId, 'entitlements');
+    
+    entitlementsUnsubscribe = onSnapshot(entitlementsRef, (snapshot) => {
+      const activeEntitlements = [];
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        if (data.active === true) {
+          activeEntitlements.push(doc.id);
+        }
+      });
+      
+      console.log('🔄 entitlementsリアルタイム更新:', activeEntitlements);
+      state.userEntitlements = new Set(activeEntitlements);
+      
+      // UI を更新
+      updateUIAfterEntitlementsChange();
+    }, (error) => {
+      console.error('❌ entitlementsリスナーエラー:', error);
+    });
+  } catch (error) {
+    console.error('❌ entitlementsリスナー開始エラー:', error);
+  }
+}
+
+// 📱 entitlements変更後のUI更新
+function updateUIAfterEntitlementsChange() {
+  // LP画面の更新
+  renderLP();
+  
+  // モーダルの更新
+  renderModalContent();
+  
+  // アプリビューの更新
+  renderAppView();
+  
+  console.log('🔄 entitlements変更によりUI更新完了');
+}
+
+// 💾 LocalStorage との互換性（開発・テスト用）
+function loadPurchases(){ 
+  // 認証済みユーザーの場合は Firebase entitlements を使用
+  if (state.user && state.userEntitlements.size > 0) {
+    return Array.from(state.userEntitlements);
+  }
+  
+  // 未認証またはentitlementsが無い場合は LocalStorage を使用（開発用）
+  try{ 
+    return JSON.parse(localStorage.getItem(LS_KEYS.purchases) || '[]'); 
+  } catch { 
+    return []; 
+  } 
+}
+
 function savePurchases(ids){ localStorage.setItem(LS_KEYS.purchases, JSON.stringify(ids)); }
 function getCurrentGrade(){ const g = parseInt(localStorage.getItem(LS_KEYS.currentGrade)||''); return (g>=4 && g<=6) ? g : null; }
 function setCurrentGrade(g){ localStorage.setItem(LS_KEYS.currentGrade, String(g)); }
@@ -126,15 +341,31 @@ function syncFirebaseAuth(user) {
     document.getElementById('btnLogin')?.classList.add('hidden');
     document.getElementById('btnLogout')?.classList.remove('hidden');
     
-    // 購入ボタンの状態を更新
-    console.log('🔄 購入ボタン状態を更新します...');
-    updatePurchaseButtonsState(user);
+    // 🔥 Firebase Entitlements を読み込み
+    console.log('🔍 ユーザーのentitlementsを読み込み中...');
+    loadUserEntitlements(user.uid).then(() => {
+      console.log('✅ entitlements読み込み完了');
+      
+      // 🎧 リアルタイム監視を開始
+      startEntitlementsListener(user.uid);
+      
+      // 購入ボタンの状態を更新
+      console.log('🔄 購入ボタン状態を更新します...');
+      updatePurchaseButtonsState(user);
+      
+      // UI全体を更新
+      updateUIAfterEntitlementsChange();
+    }).catch(error => {
+      console.error('❌ entitlements読み込みエラー:', error);
+      updatePurchaseButtonsState(user);
+    });
     
     // 状態確認用ログ
     setTimeout(() => {
       console.log('📊 最終確認 - state.user:', state.user);
       console.log('📊 最終確認 - window.state:', window.state);
-    }, 500);
+      console.log('📦 最終確認 - userEntitlements:', Array.from(state.userEntitlements));
+    }, 1000);
   } else {
     // ログアウト状態
     console.log('🚪 ユーザー状態をクリア');
@@ -142,11 +373,25 @@ function syncFirebaseAuth(user) {
     state.user = null;
     console.log('✅ state.user クリア後:', state.user);
     
+    // 🔥 entitlements をクリア
+    state.userEntitlements.clear();
+    console.log('🧹 userEntitlements クリア完了');
+    
+    // 🎧 entitlements リスナーを停止
+    if (entitlementsUnsubscribe) {
+      entitlementsUnsubscribe();
+      entitlementsUnsubscribe = null;
+      console.log('🛑 entitlementsリスナー停止');
+    }
+    
     document.getElementById('btnLogin')?.classList.remove('hidden');
     document.getElementById('btnLogout')?.classList.add('hidden');
     
     // 購入ボタンを無効化
     updatePurchaseButtonsState(null);
+    
+    // UI を更新
+    updateUIAfterEntitlementsChange();
   }
   
   // グローバルステートも確認
@@ -293,7 +538,32 @@ window.startPurchase = startPurchase;
 // Firebase認証状態変化を監視してアプリ状態を同期
 // (index.htmlのFirebase認証スクリプトから直接呼び出される)
 
-function hasEntitlement(sku){ if(!sku) return true; return !!state.user; }
+// 🔐 実際のFirestore entitlementsをチェック
+function hasEntitlement(sku) { 
+  if (!sku) return true; // SKU指定なしは常に許可
+  if (!state.user) return false; // 未認証は常に拒否
+  
+  // Firebase entitlements をチェック
+  const hasFirebaseEntitlement = state.userEntitlements.has(sku);
+  
+  // 開発・テスト用: LocalStorage もチェック（フォールバック）
+  const localPurchases = JSON.parse(localStorage.getItem(LS_KEYS.purchases) || '[]');
+  const hasLocalPurchase = localPurchases.includes(sku);
+  
+  const result = hasFirebaseEntitlement || hasLocalPurchase;
+  
+  console.log('🔐 entitlementチェック:', {
+    sku,
+    user: !!state.user,
+    firebaseEntitlements: Array.from(state.userEntitlements),
+    hasFirebaseEntitlement,
+    localPurchases,
+    hasLocalPurchase,
+    result
+  });
+  
+  return result;
+}
 
 function saveProgress(lessonId, score, detail){
   const key = `progress:${lessonId}`;
@@ -1748,6 +2018,9 @@ function handlePurchaseCompleteKeydown(e) {
 }
 
 async function startup(){
+  // 🎉 Stripe Checkout 結果をチェック（最初に実行）
+  handleCheckoutResult();
+  
   document.getElementById('btnLogin')?.addEventListener('click', loginMock);
   document.getElementById('btnLogout')?.addEventListener('click', logoutMock);
   await loadCatalog();

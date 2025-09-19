@@ -18,8 +18,8 @@ exports.handler = async (event) => {
         },
       ],
       mode: "payment",
-      success_url: `${process.env.URL}/success`,
-      cancel_url: `${process.env.URL}/cancel`,
+      success_url: `${process.env.URL}/?success=true&product=${productId}`,
+      cancel_url: `${process.env.URL}/?canceled=true`,
       metadata: { uid, productId },
     });
 
