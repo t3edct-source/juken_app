@@ -1398,7 +1398,7 @@ function renderResult(id){
             <a href="index.html" class="flex-1 px-4 py-3 rounded-lg bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold text-center transition-all duration-200">
               ホームへ
             </a>
-            <button onclick="clearSessionResult(); setHash('lesson', '${id}');" class="flex-1 px-4 py-3 rounded-lg border-2 border-orange-500 text-orange-500 hover:bg-orange-50 font-semibold transition-all duration-200">
+            <button data-action="retry-lesson" data-lesson-id="${id}" class="flex-1 px-4 py-3 rounded-lg border-2 border-orange-500 text-orange-500 hover:bg-orange-50 font-semibold transition-all duration-200">
               再挑戦
             </button>
           </div>
@@ -1763,13 +1763,13 @@ function renderModalContent() {
     
     let actionButton = '';
     if (isPurchased) {
-      actionButton = `<button class="btn-secondary" onclick="openPack('${pack.id}')">学習開始</button>`;
+      actionButton = `<button class="btn-secondary" data-action="open" data-pack-id="${pack.id}">学習開始</button>`;
     } else if (!user) {
-      actionButton = `<button class="btn-primary disabled" disabled title="ログインが必要です" onclick="handleModalAuthRequired('login')">🔒 ログイン必要</button>`;
+      actionButton = `<button class="btn-primary disabled" disabled title="ログインが必要です" data-action="auth-required" data-type="login">🔒 ログイン必要</button>`;
     } else if (!canPurchase) {
-      actionButton = `<button class="btn-primary disabled" disabled title="メールアドレスの確認が必要です" onclick="handleModalAuthRequired('verify')">📧 メール確認必要</button>`;
+      actionButton = `<button class="btn-primary disabled" disabled title="メールアドレスの確認が必要です" data-action="auth-required" data-type="verify">📧 メール確認必要</button>`;
     } else {
-      actionButton = `<button class="btn-primary" onclick="modalPurchasePack('${pack.id}')">購入する</button>`;
+      actionButton = `<button class="btn-primary" data-action="purchase" data-pack-id="${pack.id}">購入する</button>`;
     }
     
     return `
@@ -1787,11 +1787,62 @@ function renderModalContent() {
         </div>
         <div class="modal-pack-actions">
           ${actionButton}
-          <button class="btn-secondary" onclick="setCurrentGrade(${pack.grade}); renderAppView();">学年に設定</button>
+          <button class="btn-secondary" data-action="set-grade" data-grade="${pack.grade}">学年に設定</button>
         </div>
       </div>
     `;
   }).join('');
+  
+  // イベントリスナーを動的に登録
+  attachModalEventListeners();
+}
+
+// モーダル内のイベントリスナーを動的に登録
+function attachModalEventListeners() {
+  const grid = document.getElementById('modalPackGrid');
+  if (!grid) return;
+  
+  // すべてのボタンにイベントリスナーを追加
+  grid.querySelectorAll('button[data-action]').forEach(button => {
+    const action = button.getAttribute('data-action');
+    const packId = button.getAttribute('data-pack-id');
+    const grade = button.getAttribute('data-grade');
+    const type = button.getAttribute('data-type');
+    
+    // 既存のイベントリスナーを削除（重複防止）
+    button.replaceWith(button.cloneNode(true));
+    const newButton = grid.querySelector(`button[data-action="${action}"]${packId ? `[data-pack-id="${packId}"]` : ''}${grade ? `[data-grade="${grade}"]` : ''}${type ? `[data-type="${type}"]` : ''}`);
+    
+    if (newButton) {
+      switch (action) {
+        case 'purchase':
+          newButton.addEventListener('click', () => {
+            console.log('🛒 購入ボタンクリック (addEventListener):', packId);
+            modalPurchasePack(packId);
+          });
+          break;
+        case 'open':
+          newButton.addEventListener('click', () => {
+            console.log('📂 パック開放ボタンクリック:', packId);
+            openPack(packId);
+          });
+          break;
+        case 'set-grade':
+          newButton.addEventListener('click', () => {
+            console.log('🎓 学年設定ボタンクリック:', grade);
+            setCurrentGrade(parseInt(grade));
+            renderAppView();
+          });
+          break;
+        case 'auth-required':
+          newButton.addEventListener('click', () => {
+            console.log('🔒 認証要求ボタンクリック:', type);
+            handleModalAuthRequired(type);
+          });
+          break;
+      }
+    }
+  });
 }
 
 // モーダル内の認証要求ハンドラ
