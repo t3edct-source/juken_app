@@ -1,6 +1,12 @@
 // Firebase認証基盤統合版 - メインアプリケーション
 console.log('🚀 app.js 読み込み開始 - Version 20241219-001');
 
+// 🚀 緊急対策: DOMContentLoaded でイベント委譲を確実に設定
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('🚀 DOMContentLoaded: イベント委譲を設定します');
+  setupGlobalEventDelegation();
+});
+
 // Firebase Firestore 関数のインポート（entitlements チェック用）
 // 暫定的にコメントアウト - ES Module読み込みエラー回避のため
 // import { db, collection, doc, getDoc, getDocs, onSnapshot } from './firebaseConfig.js';
@@ -2182,6 +2188,9 @@ startup();
 // ===== HTML から呼び出される関数のグローバル公開（暫定対応） =====
 // ⚠️ 注意: これは暫定対応です。将来的にはイベント委譲に移行予定
 window.modalPurchasePack = modalPurchasePack;
+window.openPack = openPack;
+window.setCurrentGrade = setCurrentGrade;
+window.renderAppView = renderAppView;
 
 // 🚀 グローバルイベント委譲の設定（②本格対応）
 function setupGlobalEventDelegation() {
