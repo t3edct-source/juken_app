@@ -1,4 +1,5 @@
 // Firebase認証基盤統合版 - メインアプリケーション
+console.log('🚀 app.js 読み込み開始 - Version 20241219-001');
 
 // Firebase Firestore 関数のインポート（entitlements チェック用）
 // 暫定的にコメントアウト - ES Module読み込みエラー回避のため
@@ -1805,7 +1806,9 @@ function renderModalContent() {
   grid.innerHTML = htmlContent;
   
   // イベントリスナーを動的に登録
-  attachModalEventListeners();
+  // 注意: ②本格対応のイベント委譲により、この関数は不要になりました
+  // attachModalEventListeners();
+  console.log('📝 モーダルコンテンツを生成しました。イベントはグローバル委譲で処理されます。');
 }
 
 // モーダル内のイベントリスナーを動的に登録
@@ -1876,6 +1879,12 @@ function updateModalPurchaseButtons(user) {
 
 function modalPurchasePack(packId) {
   console.log('🛒 モーダル内購入:', packId);
+  
+  // 緊急対策: 関数実行時にもグローバル公開を確認
+  if (!window.modalPurchasePack) {
+    console.log('⚠️ window.modalPurchasePack が未定義のため、再設定します');
+    window.modalPurchasePack = modalPurchasePack;
+  }
   
   // メール確認チェック
   if (state.user && !state.user.emailVerified && state.user.providerData?.some(provider => provider.providerId === 'password')) {
@@ -2024,9 +2033,11 @@ function showPurchaseConfirmModal(packId) {
   const cancelBtn = document.getElementById('cancelPurchaseBtn');
   const closeBtn = document.getElementById('closePurchaseConfirmModal');
   
-  confirmBtn.onclick = () => processPurchase(packId);
-  cancelBtn.onclick = closePurchaseConfirmModal;
-  closeBtn.onclick = closePurchaseConfirmModal;
+  // onclick属性の代わりにdata属性とイベント委譲を使用
+  confirmBtn.setAttribute('data-action', 'process-purchase');
+  confirmBtn.setAttribute('data-pack-id', packId);
+  cancelBtn.setAttribute('data-action', 'close-purchase-confirm');
+  closeBtn.setAttribute('data-action', 'close-purchase-confirm');
   
   // エスケープキーで閉じる
   document.addEventListener('keydown', handlePurchaseConfirmKeydown);
@@ -2091,17 +2102,11 @@ function completePurchase(packId) {
   const continueBrowsingBtn = document.getElementById('continueBrowsingBtn');
   const closeCompleteBtn = document.getElementById('closePurchaseCompleteModal');
   
-  startLearningBtn.onclick = () => {
-    closePurchaseCompleteModal();
-    openPack(packId);
-  };
-  
-  continueBrowsingBtn.onclick = () => {
-    closePurchaseCompleteModal();
-    openPurchaseModal(); // メイン購入モーダルに戻る
-  };
-  
-  closeCompleteBtn.onclick = closePurchaseCompleteModal;
+  // onclick属性の代わりにdata属性とイベント委譲を使用
+  startLearningBtn.setAttribute('data-action', 'start-learning');
+  startLearningBtn.setAttribute('data-pack-id', packId);
+  continueBrowsingBtn.setAttribute('data-action', 'continue-browsing');
+  closeCompleteBtn.setAttribute('data-action', 'close-purchase-complete');
   
   // エスケープキーで閉じる
   document.addEventListener('keydown', handlePurchaseCompleteKeydown);
@@ -2125,6 +2130,10 @@ async function startup(){
   
   document.getElementById('btnLogin')?.addEventListener('click', loginMock);
   document.getElementById('btnLogout')?.addEventListener('click', logoutMock);
+  
+  // 🚀 グローバルイベント委譲を追加（②本格対応）
+  setupGlobalEventDelegation();
+  
   await loadCatalog();
   window.addEventListener('hashchange', route);
   route();
@@ -2157,6 +2166,16 @@ async function startup(){
       console.log('==================');
     }, 5000);
   }
+  
+  // 緊急対策: startup 完了時にもグローバル公開を確実に実行
+  console.log('🔧 startup完了時のグローバル関数公開');
+  window.modalPurchasePack = modalPurchasePack;
+  window.openPack = openPack;
+  window.setCurrentGrade = setCurrentGrade;
+  console.log('🔍 startup完了時の確認:', {
+    'window.modalPurchasePack': typeof window.modalPurchasePack,
+    'modalPurchasePack': typeof modalPurchasePack
+  });
 }
 startup();
 
@@ -2164,7 +2183,72 @@ startup();
 // ⚠️ 注意: これは暫定対応です。将来的にはイベント委譲に移行予定
 window.modalPurchasePack = modalPurchasePack;
 
-// デバッグ: グローバル公開の確認
+// 🚀 グローバルイベント委譲の設定（②本格対応）
+function setupGlobalEventDelegation() {
+  console.log('🚀 グローバルイベント委譲を設定中...');
+  
+  // document全体でのクリックイベントを監視
+  document.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-action]');
+    if (!button) return;
+    
+    const action = button.getAttribute('data-action');
+    const packId = button.getAttribute('data-pack-id');
+    const grade = button.getAttribute('data-grade');
+    const type = button.getAttribute('data-type');
+    
+    console.log('🎯 イベント委譲でクリック検出:', { action, packId, grade, type });
+    
+    // 各アクションに応じて適切な関数を呼び出し
+    switch (action) {
+      case 'purchase':
+        console.log('🛒 購入アクション実行:', packId);
+        modalPurchasePack(packId);
+        break;
+      case 'open':
+        console.log('📂 開放アクション実行:', packId);
+        openPack(packId);
+        break;
+      case 'set-grade':
+        console.log('🎓 学年設定アクション実行:', grade);
+        setCurrentGrade(parseInt(grade));
+        renderAppView();
+        break;
+      case 'auth-required':
+        console.log('🔒 認証要求アクション実行:', type);
+        handleModalAuthRequired(type);
+        break;
+      case 'process-purchase':
+        console.log('💳 購入処理アクション実行:', packId);
+        processPurchase(packId);
+        break;
+      case 'close-purchase-confirm':
+        console.log('❌ 購入確認クローズアクション実行');
+        closePurchaseConfirmModal();
+        break;
+      case 'start-learning':
+        console.log('📚 学習開始アクション実行:', packId);
+        closePurchaseCompleteModal();
+        openPack(packId);
+        break;
+      case 'continue-browsing':
+        console.log('🔄 閲覧継続アクション実行');
+        closePurchaseCompleteModal();
+        openPurchaseModal();
+        break;
+      case 'close-purchase-complete':
+        console.log('✅ 購入完了クローズアクション実行');
+        closePurchaseCompleteModal();
+        break;
+      default:
+        console.warn('⚠️ 未対応のアクション:', action);
+    }
+  });
+  
+  console.log('✅ グローバルイベント委譲設定完了');
+}
+
+// デバッグ: グローバル公開の確認（暫定対応用）
 console.log('🔍 グローバル関数公開確認:', {
   'window.modalPurchasePack': typeof window.modalPurchasePack,
   'modalPurchasePack': typeof modalPurchasePack,
