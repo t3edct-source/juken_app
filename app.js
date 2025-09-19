@@ -2149,8 +2149,18 @@ async function startup(){
 }
 startup();
 
+// ===== デバッグ用関数の保存 =====
+const originalModalPurchasePack = modalPurchasePack;
+
 // ===== HTML から呼び出される関数のグローバル公開 =====
-window.modalPurchasePack = modalPurchasePack;
+window.modalPurchasePack = function(packId) {
+  console.error('🚨 modalPurchasePack が直接呼び出されました！この関数は使用廃止予定です。');
+  console.error('🚨 呼び出し元:', new Error().stack);
+  console.error('🚨 packId:', packId);
+  
+  // 実際の関数を呼び出し
+  return originalModalPurchasePack(packId);
+};
 window.openPack = openPack;
 window.setCurrentGrade = setCurrentGrade;
 window.showPurchaseConfirmModal = showPurchaseConfirmModal;
