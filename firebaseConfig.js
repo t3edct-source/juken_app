@@ -35,3 +35,13 @@ console.log('🔥 Firebase初期化完了:', {
 
 // 他ファイルから利用できるようエクスポート
 export { onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, createUserWithEmailAndPassword, sendEmailVerification, collection, doc, getDoc, getDocs, onSnapshot };
+
+// 暫定的にFirestore関数もグローバル公開（ES Module読み込み問題の回避用）
+window.firebaseConfig = {
+  db,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  onSnapshot
+};

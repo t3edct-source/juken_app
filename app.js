@@ -1,7 +1,16 @@
 // Firebase認証基盤統合版 - メインアプリケーション
 
 // Firebase Firestore 関数のインポート（entitlements チェック用）
-import { db, collection, doc, getDoc, getDocs, onSnapshot } from './firebaseConfig.js';
+// 暫定的にコメントアウト - ES Module読み込みエラー回避のため
+// import { db, collection, doc, getDoc, getDocs, onSnapshot } from './firebaseConfig.js';
+
+// 暫定的にFirebaseConfigから直接参照
+const db = window.firebaseConfig?.db;
+const collection = window.firebaseConfig?.collection;
+const doc = window.firebaseConfig?.doc;
+const getDoc = window.firebaseConfig?.getDoc;
+const getDocs = window.firebaseConfig?.getDocs;
+const onSnapshot = window.firebaseConfig?.onSnapshot;
 
 // 🎉 Stripe Checkout 成功・キャンセル処理
 function handleCheckoutResult() {
