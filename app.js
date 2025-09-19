@@ -312,9 +312,9 @@ function logoutMock(){
     window.firebaseAuth.signOut(window.firebaseAuth.auth);
   } else {
     // フォールバック：従来のモック機能
-    state.user = null;
-    document.getElementById('btnLogin')?.classList.remove('hidden');
-    document.getElementById('btnLogout')?.classList.add('hidden');
+  state.user = null;
+  document.getElementById('btnLogin')?.classList.remove('hidden');
+  document.getElementById('btnLogout')?.classList.add('hidden');
   }
 }
 
@@ -1411,8 +1411,8 @@ function renderResult(id){
     const key=`progress:${id}`;
     let p=null; try{ p=JSON.parse(localStorage.getItem(key)||'null'); }catch{}
     
-    if(p){
-      const d=p.detail||{};
+  if(p){
+    const d=p.detail||{};
       const scorePercent = d.total > 0 ? Math.round((d.correct / d.total) * 100) : 0;
       
       box.innerHTML = `
@@ -2097,3 +2097,12 @@ async function startup(){
   }
 }
 startup();
+
+// ===== HTML から呼び出される関数のグローバル公開 =====
+window.modalPurchasePack = modalPurchasePack;
+window.openPack = openPack;
+window.setCurrentGrade = setCurrentGrade;
+window.showPurchaseConfirmModal = showPurchaseConfirmModal;
+window.closePurchaseConfirmModal = closePurchaseConfirmModal;
+window.processPurchase = processPurchase;
+window.renderAppView = renderAppView;
