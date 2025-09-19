@@ -494,6 +494,12 @@ async function startPurchase(productId, packLabel) {
   console.log('✅ 認証チェック完了 - Stripe Checkoutを開始');
   
   try {
+    console.log('📡 Netlify Functions へリクエスト送信中...', {
+      productId,
+      uid: user.uid,
+      packLabel
+    });
+
     // Netlify Functions経由でStripe Checkoutセッションを作成
     const response = await fetch("/.netlify/functions/create-checkout-session", {
       method: "POST",
@@ -503,10 +509,39 @@ async function startPurchase(productId, packLabel) {
       body: JSON.stringify({
         productId: productId,     // 例: "shakai_gakushu_5"
         uid: user.uid,           // Firebaseユーザー ID
-        userEmail: user.email,   // ユーザーメールアドレス
-        packLabel: packLabel     // UI表示用
+        userEmail: user.email,   // ユーザーメールアドレス（使用されないが互換性のため）
+        packLabel: packLabel     // UI表示用（使用されないが互換性のため）
       }),
     });
+    
+    console.log('📡 レスポンス受信:', {
+      status: response.status,
+      statusText: response.statusText,
+      ok: response.ok
+    });
+
+    // レスポンスが正常でない場合
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('❌ HTTP エラー:', {
+        status: response.status,
+        statusText: response.statusText,
+        body: errorText
+      });
+      
+      let errorMessage = `サーバーエラー (${response.status})`;
+      try {
+        const errorData = JSON.parse(errorText);
+        if (errorData.error) {
+          errorMessage = errorData.error;
+        }
+      } catch (e) {
+        console.error('エラーレスポンスのJSON解析失敗:', e);
+      }
+      
+      alert("購入処理の開始に失敗しました: " + errorMessage);
+      return;
+    }
     
     const result = await response.json();
     console.log('💳 Checkout セッション作成結果:', result);
@@ -527,7 +562,13 @@ async function startPurchase(productId, packLabel) {
     }
   } catch (error) {
     console.error('❌ 購入開始エラー:', error);
-    alert("購入処理中にエラーが発生しました: " + error.message);
+    
+    // ネットワークエラーかFunction未デプロイかを判別
+    if (error.name === 'TypeError' && error.message.includes('fetch')) {
+      alert("サーバーに接続できませんでした。\n\n考えられる原因:\n- Netlify Functionsがデプロイされていない\n- ネットワーク接続の問題\n\n管理者にお問い合わせください。");
+    } else {
+      alert("購入処理中にエラーが発生しました: " + error.message);
+    }
   }
 }
 
