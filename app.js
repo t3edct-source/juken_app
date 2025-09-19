@@ -1672,7 +1672,7 @@ function handlePurchaseConfirmKeydown(e) {
   }
 }
 
-function processPurchase(packId) {
+async function processPurchase(packId) {
   // 確認モーダルを閉じる
   closePurchaseConfirmModal();
   
@@ -1680,10 +1680,21 @@ function processPurchase(packId) {
   const processingModal = document.getElementById('purchaseProcessingModal');
   processingModal.classList.remove('hidden');
   
-  // 2秒後に購入完了
-  setTimeout(() => {
-    completePurchase(packId);
-  }, 2000);
+  try {
+    // パック情報を取得
+    const pack = PACKS.find(p => p.id === packId);
+    if (!pack) {
+      throw new Error('パック情報が見つかりません: ' + packId);
+    }
+    
+    // 実際のStripe Checkout連携
+    await startPurchase(pack.productId, pack.label);
+  } catch (error) {
+    // エラーの場合は処理中モーダルを閉じてエラー表示
+    processingModal.classList.add('hidden');
+    console.error('Purchase failed:', error);
+    alert('決済の開始に失敗しました：' + error.message);
+  }
 }
 
 function completePurchase(packId) {
