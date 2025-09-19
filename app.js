@@ -1718,17 +1718,11 @@ function ensureGradeBanner(){
 
 // ===== 購入モーダル関連 =====
 function openPurchaseModal() {
-  console.log('🔍 openPurchaseModal 開始');
   const modal = document.getElementById('purchaseModal');
-  if (!modal) {
-    console.error('❌ purchaseModal が見つかりません');
-    return;
-  }
+  if (!modal) return;
   
-  console.log('✅ purchaseModal 要素が見つかりました');
   renderModalContent();
   modal.classList.remove('hidden');
-  console.log('✅ purchaseModal を表示しました');
   
   // エスケープキーでモーダルを閉じる
   document.addEventListener('keydown', handleModalKeydown);
@@ -1749,14 +1743,8 @@ function handleModalKeydown(e) {
 }
 
 function renderModalContent() {
-  console.log('🔍 renderModalContent 開始');
   const grid = document.getElementById('modalPackGrid');
-  if (!grid) {
-    console.error('❌ modalPackGrid が見つかりません');
-    return;
-  }
-  
-  console.log('✅ modalPackGrid 要素が見つかりました');
+  if (!grid) return;
   
   const purchased = new Set(loadPurchases());
   const user = state.user;
@@ -1805,7 +1793,6 @@ function renderModalContent() {
     `;
   }).join('');
   
-  console.log('🔍 生成されたHTML:', htmlContent);
   grid.innerHTML = htmlContent;
   
   // イベントリスナーを動的に登録
@@ -2164,18 +2151,9 @@ async function startup(){
 }
 startup();
 
-// ===== デバッグ用関数の保存 =====
-const originalModalPurchasePack = modalPurchasePack;
-
-// ===== HTML から呼び出される関数のグローバル公開 =====
-window.modalPurchasePack = function(packId) {
-  console.error('🚨 modalPurchasePack が直接呼び出されました！この関数は使用廃止予定です。');
-  console.error('🚨 呼び出し元:', new Error().stack);
-  console.error('🚨 packId:', packId);
-  
-  // 実際の関数を呼び出し
-  return originalModalPurchasePack(packId);
-};
+// ===== HTML から呼び出される関数のグローバル公開（暫定対応） =====
+// ⚠️ 注意: これは暫定対応です。将来的にはイベント委譲に移行予定
+window.modalPurchasePack = modalPurchasePack;
 window.openPack = openPack;
 window.setCurrentGrade = setCurrentGrade;
 window.showPurchaseConfirmModal = showPurchaseConfirmModal;
