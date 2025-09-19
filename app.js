@@ -1613,7 +1613,7 @@ function renderLP(){
 
   // イベントハンドラの設定
   grid.querySelectorAll('button[data-act="buy"]').forEach(btn=>{
-    btn.onclick = () => startRealPurchase(btn.getAttribute('data-pack'));
+    btn.onclick = () => showPurchaseConfirmModal(btn.getAttribute('data-pack'));
   });
   
   grid.querySelectorAll('button[data-act="open"]').forEach(btn=>{
@@ -1821,9 +1821,8 @@ function modalPurchasePack(packId) {
     return;
   }
   
-  // 購入モーダルを閉じてから実際の購入を開始
-  closePurchaseModal();
-  startRealPurchase(packId);
+  // 購入確認モーダルを表示
+  showPurchaseConfirmModal(packId);
 }
 
 function setupPurchaseModal() {
