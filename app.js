@@ -2269,3 +2269,38 @@ window.showPurchaseConfirmModal = showPurchaseConfirmModal;
 window.closePurchaseConfirmModal = closePurchaseConfirmModal;
 window.processPurchase = processPurchase;
 window.renderAppView = renderAppView;
+
+// 🧪 完全性テスト: onclick属性チェック
+setTimeout(() => {
+  console.log('🧪 完全性テスト開始');
+  
+  // 1. ページ内の全onclick属性をチェック
+  const elementsWithOnclick = document.querySelectorAll('[onclick]');
+  if (elementsWithOnclick.length > 0) {
+    console.warn('⚠️ onclick属性が残っています:', elementsWithOnclick);
+    elementsWithOnclick.forEach((el, i) => {
+      console.log(`  ${i+1}. ${el.tagName}: onclick="${el.getAttribute('onclick')}"`);
+    });
+  } else {
+    console.log('✅ onclick属性は見つかりませんでした');
+  }
+  
+  // 2. グローバル関数の存在確認
+  const globalFunctions = ['modalPurchasePack', 'openPack', 'setCurrentGrade', 'renderAppView'];
+  globalFunctions.forEach(fnName => {
+    if (typeof window[fnName] === 'function') {
+      console.log(`✅ window.${fnName} は正常に公開されています`);
+    } else {
+      console.error(`❌ window.${fnName} が未定義です`);
+    }
+  });
+  
+  // 3. イベント委譲の確認
+  if (document.querySelectorAll('[data-action]').length > 0) {
+    console.log('✅ data-action属性のボタンが見つかりました');
+  } else {
+    console.warn('⚠️ data-action属性のボタンが見つかりません');
+  }
+  
+  console.log('🧪 完全性テスト完了');
+}, 2000);
