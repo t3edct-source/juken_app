@@ -21,12 +21,108 @@ document.addEventListener('DOMContentLoaded', async () => {
     sendEmailVerification, onAuthStateChanged 
   };
   
-  // イベント委譲を最初に設定
+  // syncFirebaseAuth関数を定義してグローバルに公開
+  window.syncFirebaseAuth = function(user) {
+    console.log('🔄 syncFirebaseAuth 開始:', user ? `uid: ${user.uid}` : 'ログアウト');
+    state.user = user || null;
+    
+    if (user) {
+      console.log('✅ ユーザー情報を state に保存:', {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName
+      });
+    }
+    
+    // UI更新処理があればここに追加
+    try {
+      if (typeof updateHeaderButtons === 'function') {
+        updateHeaderButtons(user);
+      }
+      if (typeof updatePurchaseButtons === 'function') {
+        updatePurchaseButtons(user);
+      }
+    } catch (error) {
+      console.warn('⚠️ UI更新中にエラー:', error);
+    }
+  };
+  
+  // Firebase認証状態の監視を設定
+  onAuthStateChanged(auth, window.syncFirebaseAuth);
+  
+  // イベント委譲を設定
   console.log('🚀 DOMContentLoaded: イベント委譲を設定します');
   setupGlobalEventDelegation();
   
   // アプリケーションの初期化を実行
   await startup();
+  
+  // ===== ビュー切替制御とタブイベントリスナーを追加 =====
+  console.log('🎯 ビュー切替制御を初期化');
+  
+  // ビュー切替関数
+  const homeView = document.getElementById("homeView");
+  const lessonView = document.getElementById("lessonView");
+  
+  function showHomeView() {
+    if (homeView) {
+      homeView.classList.remove("hidden");
+      homeView.style.display = "block";
+    }
+    if (lessonView) {
+      lessonView.classList.add("hidden");
+    }
+    console.log('📱 ホームビューを表示');
+  }
+  
+  function showLessonView() {
+    if (lessonView) {
+      lessonView.classList.remove("hidden");
+      lessonView.style.display = "block";
+    }
+    if (homeView) {
+      homeView.classList.add("hidden");
+    }
+    console.log('📚 レッスンビューを表示');
+  }
+  
+  // タブイベントリスナーを設定
+  const subjectTabs = document.querySelectorAll(".subject-tab");
+  console.log('🎯 タブ要素数:', subjectTabs.length);
+  
+  subjectTabs.forEach(tab => {
+    tab.addEventListener("click", (e) => {
+      console.log('📌 タブクリック:', tab.dataset.subject || tab.textContent);
+      
+      // アクティブタブの切り替え
+      subjectTabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+      
+      // ホームビューを表示
+      showHomeView();
+      
+      // currentSubjectを更新
+      const subject = tab.dataset.subject || 'recommended';
+      window.currentSubject = subject;
+      
+      // ホーム画面を再描画
+      if (typeof renderHome === 'function') {
+        renderHome();
+      }
+    });
+  });
+  
+  // 初期起動時にホームを表示
+  showHomeView();
+  
+  // ビュー切替関数をグローバルに公開
+  window.showHomeView = showHomeView;
+  window.showLessonView = showLessonView;
+  
+  console.log('✅ DOMContentLoaded: app.js 初期化完了');
+});
+
+// 🎉 Stripe Checkout 成功・キャンセル処理
 function handleCheckoutResult() {
   const urlParams = new URLSearchParams(window.location.search);
   const success = urlParams.get('success');
@@ -2581,77 +2677,6 @@ async function startup(){
   window.showLessonView = showLessonView;
 }
 // DOMContentLoadedでアプリケーション全体を初期化
-document.addEventListener('DOMContentLoaded', async () => {
-  console.log('🚀 DOMContentLoaded: app.js 初期化開始');
-  
-  // アプリケーションの初期化を実行
-  await startup();
-  
-  // ===== ビュー切替制御とタブイベントリスナーを追加 =====
-  console.log('🎯 ビュー切替制御を初期化');
-  
-  // ビュー切替関数
-  const homeView = document.getElementById("homeView");
-  const lessonView = document.getElementById("lessonView");
-  
-  function showHomeView() {
-    if (homeView) {
-      homeView.classList.remove("hidden");
-      homeView.style.display = "block";
-    }
-    if (lessonView) {
-      lessonView.classList.add("hidden");
-    }
-    console.log('📱 ホームビューを表示');
-  }
-  
-  function showLessonView() {
-    if (lessonView) {
-      lessonView.classList.remove("hidden");
-      lessonView.style.display = "block";
-    }
-    if (homeView) {
-      homeView.classList.add("hidden");
-    }
-    console.log('📚 レッスンビューを表示');
-  }
-  
-  // タブイベントリスナーを設定
-  const subjectTabs = document.querySelectorAll(".subject-tab");
-  console.log('🎯 タブ要素数:', subjectTabs.length);
-  
-  subjectTabs.forEach(tab => {
-    tab.addEventListener("click", (e) => {
-      console.log('📌 タブクリック:', tab.dataset.subject || tab.textContent);
-      
-      // アクティブタブの切り替え
-      subjectTabs.forEach(t => t.classList.remove("active"));
-      tab.classList.add("active");
-      
-      // ホームビューを表示
-      showHomeView();
-      
-      // currentSubjectを更新
-      const subject = tab.dataset.subject || 'recommended';
-      window.currentSubject = subject;
-      
-      // ホーム画面を再描画
-      if (typeof renderHome === 'function') {
-        renderHome();
-      }
-    });
-  });
-  
-  // 初期起動時にホームを表示
-  showHomeView();
-  
-  // ビュー切替関数をグローバルに公開
-  window.showHomeView = showHomeView;
-  window.showLessonView = showLessonView;
-  
-  console.log('✅ DOMContentLoaded: app.js 初期化完了');
-});
-
 // ===== HTML から呼び出される関数のグローバル公開（暫定対応） =====
 // ⚠️ 注意: これは暫定対応です。将来的にはイベント委譲に移行予定
 window.modalPurchasePack = modalPurchasePack;
@@ -4246,5 +4271,3 @@ function escapeHtml(str = '') {
 }
 
 // ==== 追補コードここまで ====
-
-}); // ← DOMContentLoaded の閉じ
