@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   window.syncFirebaseAuth = function(user) {
     console.log('🔄 syncFirebaseAuth 開始:', user ? `uid: ${user.uid}` : 'ログアウト');
     state.user = user || null;
+    const isIn = !!user;
     
     if (user) {
       console.log('✅ ユーザー情報を state に保存:', {
@@ -32,6 +33,39 @@ document.addEventListener('DOMContentLoaded', async () => {
         email: user.email,
         displayName: user.displayName
       });
+    }
+    
+    // 1) 画面の表示/非表示トグル（クラスで切替）
+    document.documentElement.classList.toggle('is-auth', isIn);
+    
+    // 2) ログインカードを隠す
+    const loginPanel = document.querySelector('#authBox, .login-card, .auth-container');
+    if (loginPanel) {
+      loginPanel.classList.toggle('hidden', isIn);
+      if (isIn) {
+        loginPanel.style.display = 'none';
+      } else {
+        loginPanel.style.display = 'block';
+      }
+    }
+    
+    // 3) ヘッダのボタン切り替え
+    const loginBtn = document.querySelector('[data-role="loginButton"], .login-button, #loginBtn');
+    const logoutBtn = document.querySelector('[data-role="logoutButton"], .logout-button, #logoutBtn');
+    
+    if (loginBtn) {
+      if (isIn) {
+        loginBtn.textContent = 'ログアウト';
+        loginBtn.dataset.action = 'logout';
+      } else {
+        loginBtn.textContent = 'ログイン';
+        loginBtn.dataset.action = 'openLogin';
+      }
+    }
+    
+    // 4) ログアウトボタンの表示切り替え
+    if (logoutBtn) {
+      logoutBtn.style.display = isIn ? 'inline-block' : 'none';
     }
     
     // UI更新処理があればここに追加
@@ -42,9 +76,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (typeof updatePurchaseButtons === 'function') {
         updatePurchaseButtons(user);
       }
+      if (typeof renderAppView === 'function') {
+        renderAppView();
+      }
     } catch (error) {
       console.warn('⚠️ UI更新中にエラー:', error);
     }
+    
+    console.log('🎯 UI切り替え完了:', isIn ? 'ログイン状態' : 'ログアウト状態');
   };
   
   // Firebase認証状態の監視を設定

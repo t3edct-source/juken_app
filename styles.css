@@ -1514,9 +1514,9 @@ button[disabled].cursor-not-allowed {
  } 
  
  
-/* ===== •œKƒŒƒbƒXƒ“ƒVƒXƒeƒ€ ===== */
+/* ===== ï¿½ï¿½ï¿½Kï¿½ï¿½ï¿½bï¿½Xï¿½ï¿½ï¿½Vï¿½Xï¿½eï¿½ï¿½ ===== */
 
-/* •œKƒŒƒbƒXƒ“ˆê——•\¦ */
+/* ï¿½ï¿½ï¿½Kï¿½ï¿½ï¿½bï¿½Xï¿½ï¿½ï¿½ê——ï¿½\ï¿½ï¿½ */
 .review-lesson-container {
   max-width: 800px;
   margin: 0 auto;
@@ -1587,7 +1587,7 @@ button[disabled].cursor-not-allowed {
   justify-content: flex-end;
 }
 
-/* •œK–â‘è‰æ–Ê */
+/* ï¿½ï¿½ï¿½Kï¿½ï¿½ï¿½ï¿½ï¿½ */
 .review-question-container {
   max-width: 800px;
   margin: 0 auto;
@@ -1712,7 +1712,7 @@ button[disabled].cursor-not-allowed {
   line-height: 1.5;
 }
 
-/* ‰ñ“šŒ‹‰Ê•\¦ */
+/* ï¿½ñ“šŒï¿½ï¿½Ê•\ï¿½ï¿½ */
 .answer-result {
   margin-top: 2rem;
   padding: 1.5rem;
@@ -1770,7 +1770,7 @@ button[disabled].cursor-not-allowed {
   background: #2563eb;
 }
 
-/* •œKŠ®—¹‰æ–Ê */
+/* ï¿½ï¿½ï¿½Kï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 .review-complete-container {
   max-width: 600px;
   margin: 0 auto;
@@ -1862,7 +1862,7 @@ button[disabled].cursor-not-allowed {
   justify-content: center;
   flex-wrap: wrap;
 }
-/* •œKƒŒƒbƒXƒ“ƒVƒXƒeƒ€ */
+/* ï¿½ï¿½ï¿½Kï¿½ï¿½ï¿½bï¿½Xï¿½ï¿½ï¿½Vï¿½Xï¿½eï¿½ï¿½ */
 .review-lesson-container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; }
 .review-lesson-header { background: linear-gradient(135deg, #f0f9ff, #dbeafe); border: 1px solid #3b82f6; border-radius: 16px; padding: 2rem; margin-bottom: 2rem; }
 .review-lesson-title { font-size: 1.75rem; font-weight: 700; color: #1e40af; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
@@ -1916,7 +1916,7 @@ button[disabled].cursor-not-allowed {
 .perfect-score-message { background: #ecfdf5; border: 1px solid #10b981; border-radius: 8px; padding: 1.5rem; color: #059669; }
 .retry-message { background: #fef3c7; border: 1px solid #f59e0b; border-radius: 8px; padding: 1.5rem; color: #92400e; }
 .review-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-/* å¾©ç¿’ãƒ¬ãƒE‚¹ãƒ³ã‚·ã‚¹ãƒEƒ  */
+/* å¾©ç¿’ãƒ¬ãƒEï¿½ï¿½ãƒ³ã‚·ã‚¹ãƒEï¿½ï¿½ */
 .review-lesson-container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; }
 .review-lesson-header { background: linear-gradient(135deg, #f0f9ff, #dbeafe); border: 1px solid #3b82f6; border-radius: 16px; padding: 2rem; margin-bottom: 2rem; }
 .review-lesson-title { font-size: 1.75rem; font-weight: 700; color: #1e40af; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
@@ -1970,7 +1970,7 @@ button[disabled].cursor-not-allowed {
 .perfect-score-message { background: #ecfdf5; border: 1px solid #10b981; border-radius: 8px; padding: 1.5rem; color: #059669; }
 .retry-message { background: #fef3c7; border: 1px solid #f59e0b; border-radius: 8px; padding: 1.5rem; color: #92400e; }
 .review-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-/* å¾©ç¿’ãƒ€ãƒE‚·ãƒ¥ãƒœãEãƒE*/
+/* å¾©ç¿’ãƒ€ãƒEï¿½ï¿½ãƒ¥ãƒœï¿½EãƒE*/
 .review-dashboard { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
 .review-dashboard-header { text-align: center; margin-bottom: 3rem; }
 .dashboard-title { font-size: 2.5rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 1rem; }
@@ -1984,7 +1984,7 @@ button[disabled].cursor-not-allowed {
 .count-badge { background: #3b82f6; color: white; padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.875rem; font-weight: 600; }
 .section-description { color: #6b7280; font-size: 1rem; }
 
-/* å¾©ç¿’ãƒ¬ãƒE‚¹ãƒ³ä¸€è¦§ */
+/* å¾©ç¿’ãƒ¬ãƒEï¿½ï¿½ãƒ³ä¸€è¦§ */
 .review-lessons-section { margin-bottom: 3rem; }
 .review-lessons-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.5rem; }
 .review-lesson-card { background: white; border: 1px solid #e5e7eb; border-radius: 16px; padding: 1.5rem; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
@@ -2002,7 +2002,7 @@ button[disabled].cursor-not-allowed {
 .lesson-start-btn { background: #3b82f6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s ease; }
 .lesson-start-btn:hover { background: #2563eb; }
 
-/* é–“é•ãE•é¡Œã‚»ã‚¯ã‚·ãƒ§ãƒ³ */
+/* é–“é•ãEï¿½ï¿½é¡Œã‚»ã‚¯ã‚·ãƒ§ãƒ³ */
 .wrong-questions-section { margin-bottom: 3rem; }
 .wrong-questions-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
 .wrong-question-card { background: white; border: 1px solid #fbbf24; border-radius: 12px; padding: 1.25rem; }
@@ -2030,7 +2030,7 @@ button[disabled].cursor-not-allowed {
 .empty-description { color: #6b7280; font-size: 1.125rem; margin-bottom: 2rem; line-height: 1.6; }
 .empty-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
-/* ã‚·ã‚¹ãƒEƒ æƒE ± */
+/* ã‚·ã‚¹ãƒEï¿½ï¿½æƒEï¿½ï¿½ */
 .review-system-info { }
 .info-card { background: linear-gradient(135deg, #f0f9ff, #dbeafe); border: 1px solid #3b82f6; border-radius: 16px; padding: 2rem; }
 .info-title { font-size: 1.25rem; font-weight: 600; color: #1e40af; margin-bottom: 1rem; }
@@ -2049,13 +2049,13 @@ button[disabled].cursor-not-allowed {
   .empty-actions { flex-direction: column; }
   .debug-actions { flex-direction: column; }
 }
-/* ƒGƒ‰[ƒtƒH[ƒ‹ƒoƒbƒN */
+/* ï¿½Gï¿½ï¿½ï¿½[ï¿½tï¿½Hï¿½[ï¿½ï¿½ï¿½oï¿½bï¿½N */
 .error-fallback { text-align: center; padding: 4rem 2rem; background: white; border-radius: 16px; margin: 2rem auto; max-width: 600px; border: 1px solid #f87171; }
 .error-icon { font-size: 4rem; margin-bottom: 1rem; }
 .error-title { font-size: 1.5rem; font-weight: 700; color: #dc2626; margin-bottom: 1rem; }
 .error-description { color: #6b7280; margin-bottom: 2rem; line-height: 1.6; }
 .error-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-/* •œKƒŒƒbƒXƒ“’Ê’mƒ_ƒCƒAƒƒO */
+/* ï¿½ï¿½ï¿½Kï¿½ï¿½ï¿½bï¿½Xï¿½ï¿½ï¿½Ê’mï¿½_ï¿½Cï¿½Aï¿½ï¿½ï¿½O */
 .review-notification-overlay {
   position: fixed;
   top: 0;
@@ -2159,14 +2159,14 @@ button[disabled].cursor-not-allowed {
 .review-notification-actions .btn-primary:hover {
   background: #2563eb;
 }
-/* •œKƒŒƒbƒXƒ“—pƒoƒbƒW */
+/* ï¿½ï¿½ï¿½Kï¿½ï¿½ï¿½bï¿½Xï¿½ï¿½ï¿½pï¿½oï¿½bï¿½W */
 .badge.review {
   background: linear-gradient(135deg, #8b5cf6, #a855f7);
   color: white;
   font-weight: 600;
 }
 
-/* •œKƒŒƒbƒXƒ“ƒJ[ƒh */
+/* ï¿½ï¿½ï¿½Kï¿½ï¿½ï¿½bï¿½Xï¿½ï¿½ï¿½Jï¿½[ï¿½h */
 .card.review {
   border: 2px solid #8b5cf6;
   background: linear-gradient(135deg, #faf5ff, #f3e8ff);
@@ -2188,25 +2188,26 @@ button[disabled].cursor-not-allowed {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(139, 92, 246, 0.15);
 }
-/* LP—v‘f‚ğ‹­§”ñ•\¦ */
+/* LPï¿½vï¿½fï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\ï¿½ï¿½ */
 .pack-card, .pack-grid, #packGrid, #lpGrid, .btn-primary[data-act="buy"], .btn-secondary[data-act="open"] {
   display: none !important;
 }
 
-/* ƒAƒvƒŠƒrƒ…[‚ğ‹­§•\¦ */
+/* ï¿½Aï¿½vï¿½ï¿½ï¿½rï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\ï¿½ï¿½ */
 #homeView {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
 }
 
-/* ‹³‰Èƒ^ƒu‚ğ‹­§•\¦ */
+/* ï¿½ï¿½ï¿½Èƒ^ï¿½uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\ï¿½ï¿½ */
 .subject-tabs, .subject-tab {
   display: flex !important;
   visibility: visible !important;
 }
- 
- /* •œKƒŒƒbƒXƒ“ƒJ[ƒh‚ÌƒNƒŠƒbƒN—Ìˆæ‰ü‘P */
+
+ 
+ /* ï¿½ï¿½ï¿½Kï¿½ï¿½ï¿½bï¿½Xï¿½ï¿½ï¿½Jï¿½[ï¿½hï¿½ÌƒNï¿½ï¿½ï¿½bï¿½Nï¿½Ìˆï¿½ï¿½ï¿½P */
 .review-lesson-card {
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -2215,6 +2216,36 @@ button[disabled].cursor-not-allowed {
 .review-lesson-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ…‹ã§ã®è¡¨ç¤ºåˆ‡æ›¿ç”¨ */
+.guest-only { 
+  display: block; 
+}
+
+.auth-only { 
+  display: none; 
+}
+
+.is-auth .guest-only { 
+  display: none !important; 
+}
+
+.is-auth .auth-only { 
+  display: block !important; 
+}
+
+/* ãƒ­ã‚°ã‚¤ãƒ³ãƒ•ã‚©ãƒ¼ãƒ ã®éè¡¨ç¤º */
+.is-auth #authBox,
+.is-auth .login-card,
+.is-auth .auth-container {
+  display: none !important;
+}
+
+/* èªè¨¼æ¸ˆã¿æ™‚ã®ãƒ¡ã‚¤ãƒ³ã‚³ãƒ³ãƒ†ãƒ³ãƒ„è¡¨ç¤º */
+.is-auth #homeView,
+.is-auth .main-content {
+  display: block !important;
 }
 
 .review-lesson-card * {
