@@ -4230,44 +4230,4 @@ function ensureUniqueReviewLessonId(baseId) {
   return candidate;
 }
 
-// ログイン要求のモーダル代替（最小実装）
-function handleModalAuthRequired() {
-  alert('この操作にはログインが必要です。右上の「ログイン」から認証してください。');
-}
-
-// 教科ヒーローの見た目情報
-function getSubjectHeroInfo(subject) {
-  switch (subject) {
-    case 'sci':            return { title: '理科（わかる編）',   icon: '🔬', bgClass: 'bg-gradient-to-r from-sky-500 to-cyan-500' };
-    case 'science_drill':  return { title: '理科（おぼえる編）', icon: '🧪', bgClass: 'bg-gradient-to-r from-teal-500 to-emerald-500' };
-    case 'soc':            return { title: '社会（わかる編）',   icon: '🌍', bgClass: 'bg-gradient-to-r from-orange-500 to-amber-500' };
-    case 'social_drill':   return { title: '社会（おぼえる編）', icon: '📍', bgClass: 'bg-gradient-to-r from-rose-500 to-pink-500' };
-    default:               return { title: 'おすすめ学習',        icon: '⭐', bgClass: 'bg-gradient-to-r from-indigo-500 to-violet-500' };
-  }
-}
-
-// ヒーロー更新
-function updateSubjectHero(subject) {
-  const info = getSubjectHeroInfo(subject);
-  const hero = document.getElementById('subjectHero');
-  if (!hero) return;
-  hero.className = `w-full h-full ${info.bgClass} flex items-center justify-center`;
-  hero.innerHTML = `
-    <div class="text-white text-center">
-      <div class="text-4xl mb-2">${info.icon}</div>
-      <div class="text-xl font-bold">${info.title}</div>
-    </div>
-  `;
-}
-
-// HTMLエスケープ（最小）
-function escapeHtml(str = '') {
-  return String(str)
-    .replaceAll('&','&amp;')
-    .replaceAll('<','&lt;')
-    .replaceAll('>','&gt;')
-    .replaceAll('"','&quot;')
-    .replaceAll("'","&#39;");
-}
-
 // ==== 追補コードここまで ====
