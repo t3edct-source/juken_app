@@ -2055,3 +2055,172 @@ button[disabled].cursor-not-allowed {
 .error-title { font-size: 1.5rem; font-weight: 700; color: #dc2626; margin-bottom: 1rem; }
 .error-description { color: #6b7280; margin-bottom: 2rem; line-height: 1.6; }
 .error-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+/* 復習レッスン通知ダイアログ */
+.review-notification-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.review-notification-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.review-notification-dialog {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  transform: scale(0.9) translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.review-notification-overlay.show .review-notification-dialog {
+  transform: scale(1) translateY(0);
+}
+
+.review-notification-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.review-notification-icon {
+  font-size: 2rem;
+}
+
+.review-notification-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.review-notification-content {
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  color: #4b5563;
+}
+
+.review-notification-content p {
+  margin: 0.5rem 0;
+}
+
+.review-notification-content strong {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.review-notification-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.review-notification-actions .btn-secondary,
+.review-notification-actions .btn-primary {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.review-notification-actions .btn-secondary {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.review-notification-actions .btn-secondary:hover {
+  background: #e5e7eb;
+  color: #4b5563;
+}
+
+.review-notification-actions .btn-primary {
+  background: #3b82f6;
+  color: white;
+}
+
+.review-notification-actions .btn-primary:hover {
+  background: #2563eb;
+}
+/* 復習レッスン用バッジ */
+.badge.review {
+  background: linear-gradient(135deg, #8b5cf6, #a855f7);
+  color: white;
+  font-weight: 600;
+}
+
+/* 復習レッスンカード */
+.card.review {
+  border: 2px solid #8b5cf6;
+  background: linear-gradient(135deg, #faf5ff, #f3e8ff);
+  position: relative;
+  overflow: hidden;
+}
+
+.card.review::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #8b5cf6, #a855f7, #c084fc);
+}
+
+.card.review:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.15);
+}
+/* LP要素を強制非表示 */
+.pack-card, .pack-grid, #packGrid, #lpGrid, .btn-primary[data-act="buy"], .btn-secondary[data-act="open"] {
+  display: none !important;
+}
+
+/* アプリビューを強制表示 */
+#homeView {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* 教科タブを強制表示 */
+.subject-tabs, .subject-tab {
+  display: flex !important;
+  visibility: visible !important;
+}
+ 
+ /* 復習レッスンカードのクリック領域改善 */
+.review-lesson-card {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.review-lesson-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.review-lesson-card * {
+  pointer-events: none;
+}
+
+.review-lesson-card [data-action] {
+  pointer-events: auto;
+}

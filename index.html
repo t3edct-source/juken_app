@@ -375,11 +375,26 @@
 
   <!-- Firebase認証 + メインアプリケーション -->
   <script type="module">
-  // Firebase認証機能の初期化とイベント登録
-  import { auth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup,
-           signInWithEmailAndPassword, signOut, sendPasswordResetEmail, createUserWithEmailAndPassword, sendEmailVerification } from "./firebaseConfig.js";
-
+  // Firebase認証機能は app.js から取得
   const $ = (s)=>document.querySelector(s);
+
+  // app.js の初期化完了を待つ
+  function waitForFirebaseAuth() {
+    return new Promise((resolve) => {
+      const checkAuth = () => {
+        if (window.firebaseAuth) {
+          resolve(window.firebaseAuth);
+        } else {
+          setTimeout(checkAuth, 100);
+        }
+      };
+      checkAuth();
+    });
+  }
+
+  // 認証機能の初期化
+  waitForFirebaseAuth().then(({ auth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup,
+           signInWithEmailAndPassword, signOut, sendPasswordResetEmail, createUserWithEmailAndPassword, sendEmailVerification }) => {
 
   // 認証モード管理
   let isSignupMode = false;
@@ -959,11 +974,10 @@
     console.error("🚨 onAuthStateChanged 初期化エラー:", error);
   }
 
-  // グローバルにFirebase認証オブジェクトを公開
-  window.firebaseAuth = { auth, signOut, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider };
+  }); // waitForFirebaseAuth().then() の終了
   </script>
 
-<script src="./app.js?v=20241219-001" onload="console.log('✅ app.js 読み込み完了')" onerror="console.error('❌ app.js 読み込み失敗')"></script>
+<script type="module" src="./app.js?v=20241219-001" onload="console.log('✅ app.js 読み込み完了')" onerror="console.error('❌ app.js 読み込み失敗')"></script>
 
 <!-- 開発・テスト用：直接購入ボタン（社会小5） -->
 <div id="devPurchaseSection" style="position: fixed; bottom: 20px; right: 20px; background: rgba(255,255,255,0.95); padding: 15px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 2px solid #e5e7eb; z-index: 1000;">

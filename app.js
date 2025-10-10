@@ -2,26 +2,31 @@
 // Firebase認証基盤統合版 - メインアプリケーション
 console.log('🚀 app.js 読み込み開始 - Version 20241219-001');
 
-// 🚀 緊急対策: DOMContentLoaded でイベント委譲を確実に設定
-document.addEventListener('DOMContentLoaded', () => {
+// Firebase Firestore 関数のインポート（entitlements チェック用）
+import { 
+  db, collection, doc, getDoc, getDocs, onSnapshot, setDoc,
+  auth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup,
+  signInWithEmailAndPassword, signOut, sendPasswordResetEmail, 
+  createUserWithEmailAndPassword, sendEmailVerification 
+} from './firebaseConfig.js';
+
+// DOMContentLoadedでアプリケーション全体を初期化
+document.addEventListener('DOMContentLoaded', async () => {
+  console.log('🚀 DOMContentLoaded: app.js 初期化開始');
+  
+  // Firebase認証オブジェクトをグローバルに公開（index.htmlの認証UI用）
+  window.firebaseAuth = { 
+    auth, signOut, signInWithEmailAndPassword, signInWithPopup, 
+    GoogleAuthProvider, sendPasswordResetEmail, createUserWithEmailAndPassword, 
+    sendEmailVerification, onAuthStateChanged 
+  };
+  
+  // イベント委譲を最初に設定
   console.log('🚀 DOMContentLoaded: イベント委譲を設定します');
   setupGlobalEventDelegation();
-});
-
-// Firebase Firestore 関数のインポート（entitlements チェック用）
-// 暫定的にコメントアウト - ES Module読み込みエラー回避のため
-// import { db, collection, doc, getDoc, getDocs, onSnapshot } from './firebaseConfig.js';
-
-// 暫定的にFirebaseConfigから直接参照
-const db = window.firebaseConfig?.db;
-const collection = window.firebaseConfig?.collection;
-const doc = window.firebaseConfig?.doc;
-const getDoc = window.firebaseConfig?.getDoc;
-const getDocs = window.firebaseConfig?.getDocs;
-const onSnapshot = window.firebaseConfig?.onSnapshot;
-const setDoc = window.firebaseConfig?.setDoc;
-
-// 🎉 Stripe Checkout 成功・キャンセル処理
+  
+  // アプリケーションの初期化を実行
+  await startup();
 function handleCheckoutResult() {
   const urlParams = new URLSearchParams(window.location.search);
   const success = urlParams.get('success');
@@ -284,14 +289,14 @@ function startEntitlementsListener(userId) {
 
 // 📱 entitlements変更後のUI更新
 function updateUIAfterEntitlementsChange() {
-  // LP画面の更新
-  renderLP();
+  console.log('🔄 entitlements変更によりUI更新開始');
+  
+  // 常にアプリビューを表示（LPは無効化）
+  console.log('📚 アプリビューを強制表示');
+  renderAppView();
   
   // モーダルの更新
   renderModalContent();
-  
-  // アプリビューの更新
-  renderAppView();
   
   console.log('🔄 entitlements変更によりUI更新完了');
 }
@@ -793,7 +798,8 @@ function getSubjectName(subject) {
     'social_drill': '社会暗記',
     'math': '算数',
     'jpn': '国語',
-    'eng': '英語'
+    'eng': '英語',
+    'review': '復習レッスン'
   };
   return subjectMap[subject] || subject;
 }
@@ -960,7 +966,29 @@ function getRecommendedLessons() {
   console.log('getRecommendedLessons called');
   const recommendations = [];
   
-  console.log('カタログ:', state.catalog);
+  console.log('カタログ:', state.catalog ? `${state.catalog.length}件` : 'undefined');
+  console.log('復習レッスン:', state.reviewLessons ? `${state.reviewLessons.length}件` : 'undefined');
+  
+  // 1. 復習レッスンを最優先で追加
+  if (state.reviewLessons && state.reviewLessons.length > 0) {
+    console.log('復習レッスンをおすすめに追加:', state.reviewLessons);
+    // 復習レッスンを通常のレッスン形式に変換
+    state.reviewLessons.forEach(reviewLesson => {
+      const reviewEntry = {
+        id: reviewLesson.id,
+        title: reviewLesson.title,
+        subject: 'review', // 復習レッスン専用のsubject
+        grade: '復習',
+        duration_min: Math.ceil(reviewLesson.questions.length * 1.5), // 問題数 × 1.5分
+        sku_required: false,
+        type: 'review',
+        reviewLesson: reviewLesson // 元の復習レッスンデータを保持
+      };
+      recommendations.push(reviewEntry);
+    });
+  } else {
+    console.log('復習レッスンはありません');
+  }
   
   // 理科・社会それぞれで1つずつ推薦
   // 理科：sci（わかる編）→ science_drill（おぼえる編）の順
@@ -1038,7 +1066,7 @@ function getRecommendedLessons() {
     }
   });
   
-  console.log('最終的な推薦リスト:', recommendations);
+  console.log('最終的な推薦リスト（復習レッスン含む）:', recommendations);
   
   return recommendations;
 }
@@ -1072,11 +1100,7 @@ function renderHome(){
   const homeView = document.getElementById('homeView');
   const app = document.getElementById('app');
   
-  // 復習レッスンセクションを表示（最優先）
-  if (currentSubject === 'recommended') {
-    renderReviewLessonsSection();
-    return; // 復習ダッシュボード表示後は他の処理をスキップ
-  }
+  // 復習ダッシュボード専用表示は削除（復習レッスンは通常のおすすめレッスンに統合）
   
   // 理科・社会・おぼえる編の場合は2カラムレイアウトに変更
   if (currentSubject === 'sci' || currentSubject === 'soc' || currentSubject === 'science_drill' || currentSubject === 'social_drill') {
@@ -1147,7 +1171,16 @@ function renderHome(){
   }
   
   const list = document.getElementById('lessonList');
-  if (!list) return;
+  if (!list) {
+    console.error('❌ lessonList要素が見つかりません。基本構造を復元します。');
+    // 基本的なHTML構造を復元
+    homeView.innerHTML = `
+      <div id="lessonList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    `;
+    // 再帰的に呼び出し
+    renderHome();
+    return;
+  }
   list.innerHTML='';
   
   console.log('renderHome called, currentSubject:', currentSubject);
@@ -1203,7 +1236,8 @@ function renderHome(){
     const div=document.createElement('div');
     const isCompleted = isLessonCompleted(entry.id);
     
-    div.className=`card p-4 ${entry.subject} ${isCompleted ? 'completed' : ''}`;
+    const reviewClass = entry.type === 'review' ? 'review' : '';
+    div.className=`card p-4 ${entry.subject} ${reviewClass} ${isCompleted ? 'completed' : ''}`;
     
     const need = entry.sku_required ? `<span class="badge lock">要購入</span>` : `<span class="badge open">無料</span>`;
     const subjectName = getSubjectName(entry.subject);
@@ -1218,8 +1252,14 @@ function renderHome(){
       </div>` : '';
     
     // おすすめタブの場合は特別な表示
-    const recommendationBadge = currentSubject === 'recommended' ? 
-      `<span class="badge recommend">⭐ おすすめ</span>` : '';
+    let recommendationBadge = '';
+    if (currentSubject === 'recommended') {
+      if (entry.type === 'review') {
+        recommendationBadge = `<span class="badge review">🎓 復習</span>`;
+      } else {
+        recommendationBadge = `<span class="badge recommend">⭐ おすすめ</span>`;
+      }
+    }
     
     div.innerHTML = `
       <div class="flex items-start justify-between mb-2">
@@ -1239,7 +1279,14 @@ function renderHome(){
     
     // カード全体をクリック可能にする
     div.style.cursor = 'pointer';
-    div.onclick = () => setHash('lesson', entry.id);
+    
+    // 復習レッスンの場合は専用の処理
+    if (entry.type === 'review') {
+      div.onclick = () => openReviewLesson(entry.id);
+    } else {
+      div.onclick = () => setHash('lesson', entry.id);
+    }
+    
     list.appendChild(div);
   });
   
@@ -1851,7 +1898,9 @@ function updateSubjectHero(subject) {
 
 // ===== LP描画 =====
 function renderLP(){
-  const grid = document.getElementById('lpGrid'); if(!grid) return;
+  console.log('🚫 renderLP() は無効化されています - アプリビューを表示します');
+  renderAppView();
+  return;
   const purchased = new Set(loadPurchases());
   const user = state.user;
   const canPurchase = user && (user.emailVerified || user.providerData?.some(provider => provider.providerId !== 'password'));
@@ -1950,6 +1999,8 @@ function openPack(packId){
 // ===== アプリ（学習画面）側：学年のみ表示＋4/1プロンプト =====
 function renderAppView(){
   const grade = getCurrentGrade();
+  console.log('📱 renderAppView実行 - 学年:', grade);
+  
   // 既存のホーム/レッスン描画は温存：ここでは「見せる学年の制御」と「バナー出し」だけ行う
   const banner = ensureGradeBanner();
   if(grade){
@@ -1967,7 +2018,12 @@ function renderAppView(){
       banner.classList.remove('show');
     }
   }
-  // 既存のレンダリング系（例：renderMathUnits / renderUnits など）はこの直後に既存の呼び出しがある想定
+  
+  // アプリビュー表示後、強制的にホーム画面を描画
+  console.log('🏠 renderHome()を強制実行');
+  setTimeout(() => {
+    renderHome();
+  }, 100);
 }
 
 function ensureGradeBanner(){
@@ -2405,43 +2461,48 @@ async function startup(){
   
   await loadCatalog();
   window.addEventListener('hashchange', route);
+  
+  // 初期ハッシュの設定
+  if (!location.hash) setHash('home');
+  
   route();
   
   // 初期表示時の教科イラストを設定
   updateSubjectHero('recommended');
   
-  // アプリビューの描画
+  // 初期学年設定とアプリビューの描画
+  const currentGrade = getCurrentGrade();
+  if (!currentGrade) {
+    console.log('📚 初期学年を小4に設定');
+    setCurrentGrade(4);
+  }
+  console.log('📱 アプリビューを描画');
   renderAppView();
   
-  // 🚨 強制的に復習ダッシュボードを表示（即座に実行）
-  console.log('🚨 startup完了後、即座に復習ダッシュボードを表示');
-  console.log('🚨 currentSubject:', currentSubject);
-  
-  // 確実に recommended に設定
-  currentSubject = 'recommended';
-  console.log('🚨 currentSubject を recommended に強制設定');
-  
-  // 即座に復習ダッシュボードを表示
+  // 追加の保険：500ms後にもう一度実行
   setTimeout(() => {
-    console.log('🚨 100ms後に復習ダッシュボードを表示');
+    console.log('🔄 500ms後の保険実行');
+    
+    // LP要素を強制削除
+    const lpElements = document.querySelectorAll('.pack-card, .pack-grid, #packGrid, #lpGrid');
+    lpElements.forEach(el => {
+      console.log('🗑️ LP要素を削除:', el.className || el.id);
+      el.remove();
+    });
+    
+    // アプリビューを強制表示
     const homeView = document.getElementById('homeView');
-    console.log('🚨 homeView exists:', !!homeView);
     if (homeView) {
-      console.log('🚨 renderReviewLessonsSection() を実行');
-      renderReviewLessonsSection();
-    } else {
-      console.error('🚨 homeView が見つかりません');
+      homeView.style.display = 'block';
+      homeView.classList.remove('hidden');
+      console.log('🏠 homeView強制表示完了');
     }
-  }, 100);
+    
+    renderAppView();
+    renderHome();
+  }, 500);
   
-  // バックアップ：5秒後にも実行
-  setTimeout(() => {
-    console.log('🚨 5秒後のバックアップ実行');
-    if (document.getElementById('homeView').innerHTML.trim() === '') {
-      console.log('🚨 homeView が空のため、再度実行');
-      renderReviewLessonsSection();
-    }
-  }, 5000);
+  // 初期表示は通常のrenderHome()に任せる（復習レッスンは統合済み）
   
   // 購入モーダルのセットアップ
   setupPurchaseModal();
@@ -2471,12 +2532,125 @@ async function startup(){
   window.modalPurchasePack = modalPurchasePack;
   window.openPack = openPack;
   window.setCurrentGrade = setCurrentGrade;
+  
+  // Firebase認証オブジェクトをグローバルに公開（index.htmlの認証UI用）
+  window.firebaseAuth = { 
+    auth, signOut, signInWithEmailAndPassword, signInWithPopup, 
+    GoogleAuthProvider, sendPasswordResetEmail, createUserWithEmailAndPassword, 
+    sendEmailVerification, onAuthStateChanged 
+  };
+  
   console.log('🔍 startup完了時の確認:', {
     'window.modalPurchasePack': typeof window.modalPurchasePack,
     'modalPurchasePack': typeof modalPurchasePack
   });
+  
+  // ===== ビュー切替制御を初期化 =====
+  console.log('🎯 ビュー切替制御を初期化');
+  
+  const homeView = document.getElementById("homeView");
+  const lessonView = document.getElementById("lessonView");
+  
+  function showHomeView() {
+    if (homeView) {
+      homeView.classList.remove("hidden");
+      homeView.style.display = "block";
+    }
+    if (lessonView) {
+      lessonView.classList.add("hidden");
+    }
+    console.log('📱 ホームビューを表示');
+  }
+  
+  function showLessonView() {
+    if (lessonView) {
+      lessonView.classList.remove("hidden");
+      lessonView.style.display = "block";
+    }
+    if (homeView) {
+      homeView.classList.add("hidden");
+    }
+    console.log('📚 レッスンビューを表示');
+  }
+  
+  // 初期起動時にホームを表示
+  showHomeView();
+  
+  // ビュー切替関数をグローバルに公開
+  window.showHomeView = showHomeView;
+  window.showLessonView = showLessonView;
 }
-startup();
+// DOMContentLoadedでアプリケーション全体を初期化
+document.addEventListener('DOMContentLoaded', async () => {
+  console.log('🚀 DOMContentLoaded: app.js 初期化開始');
+  
+  // アプリケーションの初期化を実行
+  await startup();
+  
+  // ===== ビュー切替制御とタブイベントリスナーを追加 =====
+  console.log('🎯 ビュー切替制御を初期化');
+  
+  // ビュー切替関数
+  const homeView = document.getElementById("homeView");
+  const lessonView = document.getElementById("lessonView");
+  
+  function showHomeView() {
+    if (homeView) {
+      homeView.classList.remove("hidden");
+      homeView.style.display = "block";
+    }
+    if (lessonView) {
+      lessonView.classList.add("hidden");
+    }
+    console.log('📱 ホームビューを表示');
+  }
+  
+  function showLessonView() {
+    if (lessonView) {
+      lessonView.classList.remove("hidden");
+      lessonView.style.display = "block";
+    }
+    if (homeView) {
+      homeView.classList.add("hidden");
+    }
+    console.log('📚 レッスンビューを表示');
+  }
+  
+  // タブイベントリスナーを設定
+  const subjectTabs = document.querySelectorAll(".subject-tab");
+  console.log('🎯 タブ要素数:', subjectTabs.length);
+  
+  subjectTabs.forEach(tab => {
+    tab.addEventListener("click", (e) => {
+      console.log('📌 タブクリック:', tab.dataset.subject || tab.textContent);
+      
+      // アクティブタブの切り替え
+      subjectTabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+      
+      // ホームビューを表示
+      showHomeView();
+      
+      // currentSubjectを更新
+      const subject = tab.dataset.subject || 'recommended';
+      window.currentSubject = subject;
+      
+      // ホーム画面を再描画
+      if (typeof renderHome === 'function') {
+        renderHome();
+      }
+    });
+  });
+  
+  // 初期起動時にホームを表示
+  showHomeView();
+  
+  // ビュー切替関数をグローバルに公開
+  window.showHomeView = showHomeView;
+  window.showLessonView = showLessonView;
+  
+  console.log('✅ DOMContentLoaded: app.js 初期化完了');
+});
 
 // ===== HTML から呼び出される関数のグローバル公開（暫定対応） =====
 // ⚠️ 注意: これは暫定対応です。将来的にはイベント委譲に移行予定
@@ -2564,6 +2738,14 @@ function setupGlobalEventDelegation() {
         console.log('🔄 レッスン再挑戦アクション実行:', lessonId);
         if (lessonId) {
           setHash('lesson', lessonId);
+        }
+        break;
+      case 'open-review':
+        console.log('📝 復習レッスン開始アクション実行');
+        const reviewId = button.getAttribute('data-review-id');
+        if (reviewId) {
+          console.log('🎯 復習レッスンを開く:', reviewId);
+          openReviewLesson(reviewId);
         }
         break;
       default:
@@ -2718,9 +2900,16 @@ const REVIEW_SYSTEM_CONFIG = {
 function recordWrongAnswer(lessonId, questionData, userAnswer) {
   console.log('🔴 間違い問題を記録:', { lessonId, questionData, userAnswer });
   
+  // ID正規化を実施
+  const baseId = normalizeLessonId(lessonId);
+  const key = `${baseId}_${questionData.qnum}`;
+  
+  // 既存に同キーがあれば差し替え（重複しない）
+  state.wrongQuestions = state.wrongQuestions.filter(w => `${w.lessonId}_${w.questionId}` !== key);
+  
   const wrongQuestion = {
-    id: `${lessonId}_${questionData.qnum}_${Date.now()}`,
-    lessonId: lessonId,
+    id: `${key}_${Date.now()}`,
+    lessonId: baseId, // 正規化されたID
     questionId: questionData.qnum,
     questionData: questionData,
     userAnswer: userAnswer,
@@ -2731,6 +2920,8 @@ function recordWrongAnswer(lessonId, questionData, userAnswer) {
   // ローカル状態に追加
   state.wrongQuestions.push(wrongQuestion);
   
+  console.log('📝 正規化されたID:', baseId, '元ID:', lessonId);
+  
   // LocalStorage に保存
   saveWrongQuestionsToLocal();
   
@@ -2739,8 +2930,8 @@ function recordWrongAnswer(lessonId, questionData, userAnswer) {
     saveWrongQuestionsToFirebase(state.user.id);
   }
   
-  // 復習レッスン生成の条件をチェック
-  checkReviewLessonGeneration();
+  // 復習レッスン生成の条件をチェック（正規化されたIDで）
+  checkReviewLessonGeneration(baseId);
   
   console.log(`📝 間違い問題記録完了。現在の間違い問題数: ${state.wrongQuestions.length}`);
 }
@@ -2836,60 +3027,111 @@ async function loadWrongQuestionsFromFirebase(userId) {
 }
 
 // 復習レッスン生成条件をチェック
-function checkReviewLessonGeneration() {
-  const uniqueLessons = new Set(state.wrongQuestions.map(wq => wq.lessonId));
+// 10問選出は「重複除去 → 新しい順に10問」
+function pickForReview(baseId) {
+  const list = state.wrongQuestions
+    .filter(w => w.lessonId === baseId)
+    .sort((a, b) => b.wrongAt - a.wrongAt);
+
+  const seen = new Set();
+  const unique = [];
+  for (const w of list) {
+    const k = `${w.lessonId}_${w.questionId}`;
+    if (!seen.has(k)) { 
+      seen.add(k); 
+      unique.push(w); 
+    }
+    if (unique.length === 10) break;
+  }
+  return unique;
+}
+
+function checkReviewLessonGeneration(baseId) {
+  // 特定のレッスンIDの間違い問題を取得
+  const lessonWrongQuestions = state.wrongQuestions.filter(wq => wq.lessonId === baseId);
   
-  for (const lessonId of uniqueLessons) {
-    const lessonWrongQuestions = state.wrongQuestions.filter(wq => wq.lessonId === lessonId);
+  console.log(`🔍 復習レッスン生成チェック: ${baseId} (${lessonWrongQuestions.length}問)`);
+  
+  if (lessonWrongQuestions.length >= REVIEW_SYSTEM_CONFIG.MIN_WRONG_FOR_GENERATION) {
+    console.log(`🎯 復習レッスン生成条件達成: ${baseId} (${lessonWrongQuestions.length}問)`);
     
-    if (lessonWrongQuestions.length >= REVIEW_SYSTEM_CONFIG.MIN_WRONG_FOR_GENERATION) {
-      console.log(`🎯 復習レッスン生成条件達成: ${lessonId} (${lessonWrongQuestions.length}問)`);
-      generateReviewLesson(lessonId, lessonWrongQuestions);
+    // 10問を選出
+    const selectedQuestions = pickForReview(baseId);
+    console.log(`📝 選出された問題数: ${selectedQuestions.length}問`);
+    
+    // upsertReviewLessonを直接呼び出し
+    const reviewId = upsertReviewLesson(baseId, selectedQuestions);
+    
+    // 生成されたレッスンを取得して通知
+    const reviewLesson = state.reviewLessons.find(r => r.id === reviewId);
+    if (reviewLesson) {
+      showReviewLessonNotification(reviewLesson);
     }
   }
 }
 
 // 復習レッスンを生成
-function generateReviewLesson(originalLessonId, wrongQuestions) {
-  const reviewLessonId = `review_${originalLessonId}_${Date.now()}`;
-  
-  // 復習レッスンオブジェクトを作成
-  const reviewLesson = {
-    id: reviewLessonId,
-    originalLessonId: originalLessonId,
-    title: `復習レッスン - ${getOriginalLessonTitle(originalLessonId)}`,
-    type: 'review',
-    questions: wrongQuestions.slice(0, REVIEW_SYSTEM_CONFIG.MAX_REVIEW_QUESTIONS),
-    createdAt: Date.now(),
-    isActive: true
-  };
-  
-  // 復習レッスンを状態に追加
-  state.reviewLessons.push(reviewLesson);
-  
-  console.log('🎓 復習レッスンを生成:', reviewLesson);
-  
-  // 通知を表示
-  showReviewLessonNotification(reviewLesson);
-  
-  return reviewLesson;
-}
-
-// 元レッスンのタイトルを取得
+// 元レッスンのタイトルを取得（必ず日本語に解決）
 function getOriginalLessonTitle(lessonId) {
-  const lesson = state.catalog.find(l => l.id === lessonId);
-  return lesson ? lesson.title : lessonId;
+  const baseId = normalizeLessonId(lessonId);
+  const hit = state.catalog.find(l => normalizeLessonId(l.id) === baseId);
+  return hit ? hit.title : '復習レッスン';
 }
 
 // 復習レッスン生成の通知を表示
 function showReviewLessonNotification(reviewLesson) {
-  // 簡単なアラート通知（後でモダンなトースト通知に変更予定）
+  console.log('🔔 復習レッスン通知を表示:', reviewLesson);
+  
+  // カスタム通知ダイアログを作成
+  const notificationHTML = `
+    <div id="reviewNotification" class="review-notification-overlay">
+      <div class="review-notification-dialog">
+        <div class="review-notification-header">
+          <span class="review-notification-icon">🎓</span>
+          <h3>復習レッスンが生成されました！</h3>
+        </div>
+        <div class="review-notification-content">
+          <p><strong>${reviewLesson.title}</strong></p>
+          <p>間違えた問題 ${reviewLesson.questions.length}問を集めました。</p>
+          <p>今すぐ復習しますか？</p>
+        </div>
+        <div class="review-notification-actions">
+          <button class="btn-secondary" onclick="closeReviewNotification()">キャンセル</button>
+          <button class="btn-primary" onclick="acceptReviewNotification('${reviewLesson.id}')">OK</button>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  // 通知をDOMに追加
+  document.body.insertAdjacentHTML('beforeend', notificationHTML);
+  
+  // 通知を表示（アニメーション付き）
   setTimeout(() => {
-    if (confirm(`🎓 復習レッスンが生成されました！\n\n${reviewLesson.title}\n\n今すぐ復習しますか？`)) {
-      // 復習レッスンを開く
-      openReviewLesson(reviewLesson.id);
+    const notification = document.getElementById('reviewNotification');
+    if (notification) {
+      notification.classList.add('show');
     }
-  }, 1000);
+  }, 100);
+}
+
+// 復習通知のOKボタン処理
+function acceptReviewNotification(reviewLessonId) {
+  console.log('✅ 復習通知のOKボタンがクリックされました:', reviewLessonId);
+  closeReviewNotification();
+  openReviewLesson(reviewLessonId);
+}
+
+// 復習通知のキャンセルボタン処理
+function closeReviewNotification() {
+  console.log('❌ 復習通知をキャンセル');
+  const notification = document.getElementById('reviewNotification');
+  if (notification) {
+    notification.classList.remove('show');
+    setTimeout(() => {
+      notification.remove();
+    }, 300);
+  }
 }
 
 // 復習レッスンを開く
@@ -2899,9 +3141,12 @@ function openReviewLesson(reviewLessonId) {
   const reviewLesson = state.reviewLessons.find(rl => rl.id === reviewLessonId);
   if (!reviewLesson) {
     console.error('❌ 復習レッスンが見つかりません:', reviewLessonId);
+    console.log('📊 現在の復習レッスン一覧:', state.reviewLessons);
     alert('復習レッスンが見つかりません。');
     return;
   }
+  
+  console.log('✅ 復習レッスンが見つかりました:', reviewLesson);
   
   // 復習レッスン用のURLハッシュを設定
   setHash('review', reviewLessonId);
@@ -3318,9 +3563,9 @@ function renderReviewLessonsSection() {
           </div>
           <div class="review-lessons-grid">
             ${state.reviewLessons.map(lesson => `
-              <div class="review-lesson-card" onclick="openReviewLesson('${lesson.id}')">
+              <div class="review-lesson-card" data-action="open-review" data-review-id="${lesson.id}">
                 <div class="lesson-card-header">
-                  <h3 class="lesson-card-title">${lesson.title}</h3>
+                  <h3 class="lesson-card-title">${escapeHtml(lesson.title)}</h3>
                   <div class="lesson-card-meta">
                     <span class="question-count">${lesson.questions.length}問</span>
                     <span class="created-date">${new Date(lesson.createdAt).toLocaleDateString()}</span>
@@ -3328,17 +3573,17 @@ function renderReviewLessonsSection() {
                 </div>
                 <div class="lesson-card-content">
                   <p class="lesson-card-description">
-                    ${getOriginalLessonTitle(lesson.originalLessonId)} の復習レッスン
+                    復習レッスン / 小復習・${lesson.questions.length}問
                   </p>
                   <div class="lesson-card-preview">
                     <span class="preview-text">
-                      ${lesson.questions[0]?.questionData?.text?.substring(0, 30) || '問題データ'}...
+                      間違えた問題を復習しましょう
                     </span>
                   </div>
                 </div>
                 <div class="lesson-card-actions">
-                  <button class="btn-primary lesson-start-btn">
-                    復習開始
+                  <button class="btn-primary lesson-start-btn" data-action="open-review" data-review-id="${lesson.id}">
+                    復習する
                   </button>
                 </div>
               </div>
@@ -3637,8 +3882,23 @@ function handleQuestionAnswered(messageData) {
 function initializeReviewSystem() {
   console.log('🚀 復習システムを初期化中...');
   
+  // 状態の初期化
+  if (!state.wrongQuestions) {
+    state.wrongQuestions = [];
+  }
+  
+  if (!state.reviewLessons) {
+    state.reviewLessons = [];
+  }
+  
   // LocalStorage から間違い問題を読み込み
   loadWrongQuestionsFromLocal();
+  
+  // 復習レッスンも読み込み
+  loadReviewLessonsFromLocal();
+  
+  // 既存データの正規化マイグレーション
+  migrateWrongQuestionsData();
   
   // ユーザーがログインしている場合、Firebase からも読み込み
   if (state.user && state.user.id) {
@@ -3668,6 +3928,67 @@ function simulateWrongAnswers(lessonId, count = 5) {
   }
   
   console.log(`✅ ${count} 個の間違い問題をシミュレート完了`);
+}
+
+// 既存の間違い問題データを正規化するマイグレーション
+function migrateWrongQuestionsData() {
+  console.log('🔄 間違い問題データのマイグレーションを開始...');
+  
+  let migrationCount = 0;
+  const migratedQuestions = [];
+  const seenKeys = new Set();
+  
+  state.wrongQuestions.forEach(wq => {
+    // 既に正規化されているかチェック
+    const originalId = wq.lessonId;
+    const normalizedId = normalizeLessonId(originalId);
+    
+    if (originalId !== normalizedId) {
+      // 正規化が必要
+      const key = `${normalizedId}_${wq.questionId}`;
+      
+      // 重複チェック
+      if (!seenKeys.has(key)) {
+        seenKeys.add(key);
+        migratedQuestions.push({
+          ...wq,
+          lessonId: normalizedId,
+          id: `${key}_${wq.wrongAt || Date.now()}`
+        });
+        migrationCount++;
+        console.log(`📝 マイグレーション: ${originalId} → ${normalizedId}`);
+      }
+    } else {
+      // 既に正規化済み
+      const key = `${normalizedId}_${wq.questionId}`;
+      if (!seenKeys.has(key)) {
+        seenKeys.add(key);
+        migratedQuestions.push(wq);
+      }
+    }
+  });
+  
+  if (migrationCount > 0) {
+    state.wrongQuestions = migratedQuestions;
+    saveWrongQuestionsToLocal();
+    console.log(`✅ ${migrationCount}件の間違い問題データをマイグレーションしました`);
+  } else {
+    console.log('✅ マイグレーション不要（データは既に正規化済み）');
+  }
+}
+
+// 復習レッスンをLocalStorageから読み込み
+function loadReviewLessonsFromLocal() {
+  try {
+    const stored = localStorage.getItem('reviewLessons');
+    if (stored) {
+      state.reviewLessons = JSON.parse(stored);
+      console.log(`📚 復習レッスンをLocalStorageから読み込み: ${state.reviewLessons.length}件`);
+    }
+  } catch (error) {
+    console.error('❌ 復習レッスンの読み込みエラー:', error);
+    state.reviewLessons = [];
+  }
 }
 
 // 復習システムの状態を確認する関数
@@ -3706,6 +4027,8 @@ window.getReviewSystemStatus = getReviewSystemStatus;
 
 // 復習レッスン関数の露出（Phase 2で追加）
 window.openReviewLesson = openReviewLesson;
+window.acceptReviewNotification = acceptReviewNotification;
+window.closeReviewNotification = closeReviewNotification;
 window.startReviewLesson = startReviewLesson;
 window.selectReviewAnswer = selectReviewAnswer;
 window.proceedToNextReviewQuestion = proceedToNextReviewQuestion;
@@ -3744,5 +4067,182 @@ window.debugCurrentState = function() {
   console.log('state.wrongQuestions:', state.wrongQuestions);
   console.log('homeView exists:', !!document.getElementById('homeView'));
   console.log('app exists:', !!document.getElementById('app'));
+  
+  // ID正規化のテスト
+  const testIds = [
+    'soc.geography.4100_land_topography_climate.oboeru',
+    'soc.geography.4100_land_topography_climate.wakaru',
+    'soc.history.heian_period.quiz',
+    'review_soc.geography.4100_land_topography_climate_1760061690399'
+  ];
+  
+  console.log('=== ID正規化テスト ===');
+  testIds.forEach(id => {
+    console.log(`${id} → ${normalizeLessonId(id)}`);
+  });
+  
+  // catalog.jsonからのタイトル取得テスト
+  console.log('=== タイトル取得テスト ===');
+  testIds.forEach(id => {
+    const normalized = normalizeLessonId(id);
+    const title = getTitleByLessonId(normalized);
+    console.log(`${normalized} → ${title}`);
+  });
+  
+  // 間違い問題の重複チェック
+  console.log('=== 間違い問題の重複チェック ===');
+  const lessonGroups = {};
+  state.wrongQuestions.forEach(wq => {
+    if (!lessonGroups[wq.lessonId]) {
+      lessonGroups[wq.lessonId] = [];
+    }
+    lessonGroups[wq.lessonId].push(wq);
+  });
+  
+  Object.keys(lessonGroups).forEach(lessonId => {
+    const questions = lessonGroups[lessonId];
+    const uniqueQuestions = new Set(questions.map(q => q.questionId));
+    console.log(`${lessonId}: ${questions.length}問 (ユニーク: ${uniqueQuestions.size}問)`);
+  });
+  
+  // 復習レッスンの詳細チェック
+  console.log('=== 復習レッスンの詳細 ===');
+  state.reviewLessons.forEach(lesson => {
+    console.log(`ID: ${lesson.id}`);
+    console.log(`タイトル: ${lesson.title}`);
+    console.log(`元レッスンID: ${lesson.originalLessonId}`);
+    console.log(`問題数: ${lesson.questions.length}`);
+    console.log('---');
+  });
+  
+  // イベント委譲の確認
+  console.log('=== イベント委譲の確認 ===');
+  const reviewCards = document.querySelectorAll('[data-action="open-review"]');
+  console.log(`復習カード数: ${reviewCards.length}`);
+  reviewCards.forEach((card, index) => {
+    const reviewId = card.getAttribute('data-review-id');
+    console.log(`カード${index + 1}: data-review-id="${reviewId}"`);
+  });
+  
   console.log('=================');
 };
+
+// ==== ここから追補コード ====
+
+// ID正規化関数（末尾のモードや付加情報をすべて剥がす）
+function normalizeLessonId(raw) {
+  let id = String(raw);
+
+  // 例: ".wakaru" ".oboeru" ".oboe" ".oboeu" ".drill" ".quiz" ".modular" などを剥がす
+  id = id.replace(/\.(wakaru|oboeru|oboe|oboeu|drill|quiz|modular)(?:_[a-z0-9]+)?$/i, '');
+
+  // 生成時に足すseedやrev番号などの語尾（例: "_1760061690399"）を剥がす
+  id = id.replace(/_[0-9]{6,}$/i, '');
+
+  // 先頭の "review_" は比較時は無視
+  id = id.replace(/^review_/, '');
+
+  return id;
+}
+
+// catalog.jsonからタイトルを取得
+function getTitleByLessonId(baseId) {
+  // catalog.json の id と突き合わせて日本語 title を返す
+  const hit = (state.catalog || []).find(x => x.id === baseId);
+  return hit?.title || '復習レッスン';
+}
+
+// 復習レッスンをLocalStorageに保存
+function saveReviewLessons() {
+  try { 
+    localStorage.setItem('reviewLessons', JSON.stringify(state.reviewLessons)); 
+  } catch(e) { 
+    console.warn('reviewLessons 保存失敗', e); 
+  }
+}
+
+// 多重生成を防止する復習レッスン作成関数
+function upsertReviewLesson(originalLessonId, wrongQuestions) {
+  const baseId = normalizeLessonId(originalLessonId);
+  const title = getTitleByLessonId(baseId); // ← catalog.json から日本語タイトルを得る
+
+  // 既存を検索（normalized で比較）
+  let existing = state.reviewLessons.find(r => normalizeLessonId(r.originalLessonId) === baseId);
+  if (existing) {
+    // 既存があるなら上書きせず、必要なら問題を補充する程度に留める
+    existing.questions = existing.questions.slice(0, 10);
+    saveReviewLessons();
+    console.log('🔄 既存の復習レッスンを更新:', existing.id);
+    return existing.id;
+  }
+
+  // 新規作成（IDは review_<baseId>_<ts> など）
+  const id = `review_${baseId}_${Date.now()}`;
+  const review = {
+    id,
+    originalLessonId: baseId,
+    title: `${title}（復習）`,
+    questions: wrongQuestions.slice(0, 10),
+    createdAt: Date.now(),
+    type: 'review',
+    isActive: true
+  };
+  state.reviewLessons.push(review);
+  saveReviewLessons();
+  console.log('🎓 新しい復習レッスンを作成:', review);
+  return id;
+}
+
+// 一意な復習レッスンIDを生成
+function ensureUniqueReviewLessonId(baseId) {
+  // タイムスタンプだけに頼らず衝突回避
+  let i = 0;
+  let candidate;
+  do {
+    candidate = `review_${normalizeLessonId(baseId)}_${Date.now()}${i ? '_' + i : ''}`;
+    i++;
+  } while (state.reviewLessons.some(r => r.id === candidate));
+  return candidate;
+}
+
+// ログイン要求のモーダル代替（最小実装）
+function handleModalAuthRequired() {
+  alert('この操作にはログインが必要です。右上の「ログイン」から認証してください。');
+}
+
+// 教科ヒーローの見た目情報
+function getSubjectHeroInfo(subject) {
+  switch (subject) {
+    case 'sci':            return { title: '理科（わかる編）',   icon: '🔬', bgClass: 'bg-gradient-to-r from-sky-500 to-cyan-500' };
+    case 'science_drill':  return { title: '理科（おぼえる編）', icon: '🧪', bgClass: 'bg-gradient-to-r from-teal-500 to-emerald-500' };
+    case 'soc':            return { title: '社会（わかる編）',   icon: '🌍', bgClass: 'bg-gradient-to-r from-orange-500 to-amber-500' };
+    case 'social_drill':   return { title: '社会（おぼえる編）', icon: '📍', bgClass: 'bg-gradient-to-r from-rose-500 to-pink-500' };
+    default:               return { title: 'おすすめ学習',        icon: '⭐', bgClass: 'bg-gradient-to-r from-indigo-500 to-violet-500' };
+  }
+}
+
+// ヒーロー更新
+function updateSubjectHero(subject) {
+  const info = getSubjectHeroInfo(subject);
+  const hero = document.getElementById('subjectHero');
+  if (!hero) return;
+  hero.className = `w-full h-full ${info.bgClass} flex items-center justify-center`;
+  hero.innerHTML = `
+    <div class="text-white text-center">
+      <div class="text-4xl mb-2">${info.icon}</div>
+      <div class="text-xl font-bold">${info.title}</div>
+    </div>
+  `;
+}
+
+// HTMLエスケープ（最小）
+function escapeHtml(str = '') {
+  return String(str)
+    .replaceAll('&','&amp;')
+    .replaceAll('<','&lt;')
+    .replaceAll('>','&gt;')
+    .replaceAll('"','&quot;')
+    .replaceAll("'","&#39;");
+}
+
+// ==== 追補コードここまで ====
