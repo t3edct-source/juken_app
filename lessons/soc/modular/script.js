@@ -51,12 +51,20 @@ const prevBtn = document.getElementById("prevBtn");
 function createProgressDisplay() {
   const progressDisplay = document.createElement("div");
   progressDisplay.id = "progress";
-  progressDisplay.style.fontSize = "0.85em";
-  progressDisplay.style.fontWeight = "bold";
-  progressDisplay.style.color = "white";
-  progressDisplay.style.margin = "0.4em 0";
-  progressDisplay.style.textAlign = "center";
-  document.querySelector(".question-box").insertBefore(progressDisplay, sourceEl);
+  progressDisplay.style.position = "absolute";
+  progressDisplay.style.top = "10px";
+  progressDisplay.style.right = "15px";
+  progressDisplay.style.fontSize = "0.75em";
+  progressDisplay.style.fontWeight = "500";
+  progressDisplay.style.color = "#666";
+  progressDisplay.style.background = "transparent";
+  progressDisplay.style.border = "none";
+  progressDisplay.style.boxShadow = "none";
+  
+  // 親要素に相対位置を設定
+  const questionBox = document.querySelector(".question-box");
+  questionBox.style.position = "relative";
+  questionBox.appendChild(progressDisplay);
   return progressDisplay;
 }
 
@@ -96,7 +104,7 @@ function loadQuestion() {
   const progressDisplay = document.getElementById("progress") || createProgressDisplay();
   progressDisplay.textContent = `問題 ${current + 1} / ${questions.length}`;
   
-  questionEl.innerHTML = q.question;
+  questionEl.innerHTML = q.text || q.question;
   sourceEl.innerHTML = mode === "wakaru" ? q.source : "";
   explanationEl.textContent = "";
   nextBtn.style.display = "none";
@@ -107,53 +115,8 @@ function loadQuestion() {
   // 最後の問題に到達した場合、完了メッセージを送信
   if (current === shuffledQuestions.length - 1) {
     console.log('最後の問題に到達しました。完了メッセージを準備中...');
-    // 少し遅延させてから完了メッセージを送信
-    setTimeout(() => {
-      if (window.parent !== window) {
-        try {
-          // 現在のURLから正しいlessonIdを生成
-          const urlParams = new URLSearchParams(window.location.search);
-          const era = urlParams.get("era") || "japan_geo1_front";
-          const mode = urlParams.get("mode") || "wakaru";
-          // catalog.jsonのIDに合わせて正確に実装
-          let lessonId;
-          if (era === 'japan_geo1_front') {
-            lessonId = mode === 'wakaru' ? 'soc.geography.japan_terrain_front' : 'soc.geography.japan_terrain_front_quiz';
-          } else if (era === 'japan_geo1_back') {
-            lessonId = mode === 'wakaru' ? 'soc.geography.japan_terrain_back' : 'soc.geography.japan_terrain_back_quiz';
-          } else {
-            // フォールバック
-            lessonId = `soc.geography.${era}.${mode}`;
-          }
-          
-          console.log('最後の問題完了時にメッセージを送信します:', {
-            type: 'lesson:complete',
-            lessonId: lessonId,
-            detail: {
-              correct: 1,
-              total: 1,
-              timeSec: 0
-            }
-          });
-          
-          window.parent.postMessage({
-            type: 'lesson:complete',
-            lessonId: lessonId,
-            detail: {
-              correct: 1,
-              total: 1,
-              timeSec: 0
-            }
-          }, '*');
-          
-          console.log('最後の問題完了時のメッセージを送信しました');
-        } catch (e) {
-          console.log('完了メッセージの送信に失敗しました:', e);
-        }
-      } else {
-        console.log('iframe内ではないため、完了メッセージを送信しません');
-      }
-    }, 2000); // 2秒後に完了メッセージを送信
+    // 最後の問題では個別の完了メッセージは送信しない
+    // （全問題完了時に一度だけ正しい結果を送信）
   }
 
   // 表示する選択肢の順序を毎回ランダムにする
@@ -213,6 +176,9 @@ function handleAnswer(selected) {
   // 学習履歴に記録（わかる編はタイム計測なしのため 0 秒扱い）
   const spent = mode === "oboeru" ? (20 - timeLeft) : 0;
   learningTracker.recordAnswer(current, selected, q.answer, spent);
+  
+  // 個別問題の回答をメインページに送信（復習システム用）
+  sendQuestionAnswerToParent(q, selected, isCorrect);
 }
 
 // 前の問題へ戻る
@@ -222,6 +188,92 @@ prevBtn.onclick = () => {
     loadQuestion();
   }
 };
+
+// 個別問題の回答をメインページに送信する関数
+function sendQuestionAnswerToParent(questionData, userAnswer, isCorrect) {
+  // レッスンIDを生成
+  const urlParams = new URLSearchParams(window.location.search);
+  const era = urlParams.get("era") || "geo_land_topo";
+  const lessonId = `soc.geography.${era}.${mode}`;
+  
+  const messageData = {
+    type: 'question:answered',
+    lessonId: lessonId,
+    questionData: {
+      qnum: questionData.qnum || current,
+      question: questionData.question,
+      choices: questionData.choices,
+      answer: questionData.answer,
+      explanation: questionData.explanation
+    },
+    userAnswer: userAnswer,
+    correctAnswer: questionData.answer,
+    isCorrect: isCorrect,
+    timestamp: Date.now()
+  };
+  
+  console.log('📝 個別問題回答を送信:', messageData);
+  
+  // 複数の方法でメッセージを送信
+  try {
+    // 方法1: postMessage
+    if (window.parent !== window) {
+      window.parent.postMessage(messageData, '*');
+    }
+    if (window.top !== window) {
+      window.top.postMessage(messageData, '*');
+    }
+    
+    // 方法2: localStorage経由での代替通信
+    const existingAnswers = JSON.parse(localStorage.getItem('questionAnswers') || '[]');
+    existingAnswers.push(messageData);
+    localStorage.setItem('questionAnswers', JSON.stringify(existingAnswers));
+    
+    console.log('✅ 個別問題回答送信完了 (postMessage + localStorage)');
+  } catch (e) {
+    console.log('❌ 個別問題回答送信失敗:', e);
+  }
+}
+
+// 今回のセッション結果を表示する関数
+function showCurrentSessionResult() {
+  const session = learningTracker.currentSession;
+  const scorePercent = session.totalQuestions > 0 ? 
+    Math.round((session.score / session.totalQuestions) * 100) : 0;
+  
+  // 成績に応じたメッセージ
+  let resultMessage = '';
+  if (scorePercent >= 90) {
+    resultMessage = '🎉 素晴らしい成果です！';
+  } else if (scorePercent >= 70) {
+    resultMessage = '👍 よくできました！';
+  } else if (scorePercent >= 50) {
+    resultMessage = '📚 もう少し頑張りましょう！';
+  } else {
+    resultMessage = '💪 復習して再チャレンジしよう！';
+  }
+  
+  const timeMinutes = Math.floor((session.totalTime || 0) / 60);
+  const timeSeconds = (session.totalTime || 0) % 60;
+  const timeDisplay = timeMinutes > 0 ? 
+    `${timeMinutes}分${timeSeconds}秒` : 
+    `${timeSeconds}秒`;
+  
+  return `
+    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 16px; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.3);">
+      <div style="font-size: 1.8rem; font-weight: bold; margin-bottom: 1rem;">学習完了！</div>
+      <div style="font-size: 1.1rem; margin-bottom: 1.5rem;">${resultMessage}</div>
+      <div style="background: rgba(255,255,255,0.2); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem;">
+        <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">${session.score}/${session.totalQuestions}問正解</div>
+        <div style="font-size: 1.5rem; font-weight: 600;">${scorePercent}%</div>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 0.9rem; opacity: 0.9;">
+        <div>学習時間: <strong>${timeDisplay}</strong></div>
+        <div>完了時刻: <strong>${new Date().toLocaleString('ja-JP', {month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})}</strong></div>
+      </div>
+    </div>
+  `;
+}
 
 // 次の問題へ進む
 nextBtn.onclick = () => {
@@ -240,54 +292,153 @@ nextBtn.onclick = () => {
     // 学習履歴を保存
     learningTracker.saveSession();
     
-    // 学習履歴を表示
+    // 今回のセッション結果を表示
     const historyDisplay = document.getElementById("historyDisplay");
-    historyDisplay.innerHTML = learningTracker.showHistory();
+    historyDisplay.innerHTML = showCurrentSessionResult();
 
     // 完了メッセージを親フレームに送信
-    if (window.parent !== window) {
+    console.log('iframe検出チェック:', {
+      'window.parent !== window': window.parent !== window,
+      'window.top !== window': window.top !== window,
+      'window.frameElement': !!window.frameElement,
+      'URL includes lessons': window.location.href.includes('/lessons/')
+    });
+    
+    // 確実にメッセージを送信（iframe検出を強制的に有効化）
+    const isInIframe = window.parent !== window || window.top !== window || window.location.href.includes('/lessons/');
+    console.log('📡 メッセージ送信判定:', isInIframe);
+    
+    if (isInIframe) {
       try {
         // 現在のURLから正しいlessonIdを生成
         const urlParams = new URLSearchParams(window.location.search);
-        const era = urlParams.get("era") || "japan_geo1_front";
-        const mode = urlParams.get("mode") || "wakaru";
-        // catalog.jsonのIDに合わせて正確に実装
-        let lessonId;
-        if (era === 'japan_geo1_front') {
-          lessonId = mode === 'wakaru' ? 'soc.geography.japan_terrain_front' : 'soc.geography.japan_terrain_front_quiz';
-        } else if (era === 'japan_geo1_back') {
-          lessonId = mode === 'wakaru' ? 'soc.geography.japan_terrain_back' : 'soc.geography.japan_terrain_back_quiz';
-        } else {
-          // フォールバック
-          lessonId = `soc.geography.${era}.${mode}`;
+        const era = urlParams.get("era") || "geo_land_topo";
+        // グローバルのmode変数を使用
+        // 新しい地理コンテンツに対応
+        let lessonId = `soc.geography.${era}.${mode}`;
+        
+        const messageData = {
+          type: 'lesson:complete',
+          lessonId: lessonId,
+          detail: {
+            correct: learningTracker.currentSession.score,
+            total: learningTracker.currentSession.totalQuestions,
+            timeSec: learningTracker.currentSession.totalTime || 0
+          }
+        };
+        
+        console.log('🚀 完了メッセージを送信します:', messageData);
+        console.log('🚀 現在のセッション情報:', learningTracker.currentSession);
+        
+        // 複数の方法で確実にメッセージを送信
+        console.log('🔄 複数の方法でメッセージを送信開始');
+        
+        // 方法1: parent
+        try {
+          window.parent.postMessage(messageData, '*');
+          console.log('✅ window.parent.postMessage 送信成功');
+        } catch (e) {
+          console.log('❌ window.parent.postMessage 失敗:', e);
         }
         
-        console.log('完了メッセージを送信します:', {
-          type: 'lesson:complete',
-          lessonId: lessonId,
-          detail: {
+        // 方法2: top
+        try {
+          if (window.top !== window) {
+            window.top.postMessage(messageData, '*');
+            console.log('✅ window.top.postMessage 送信成功');
+          }
+        } catch (e) {
+          console.log('❌ window.top.postMessage 失敗:', e);
+        }
+        
+        // 方法3: 全てのframeに送信
+        try {
+          if (window.frames) {
+            for (let i = 0; i < window.frames.length; i++) {
+              window.frames[i].postMessage(messageData, '*');
+            }
+            console.log('✅ frames への送信完了');
+          }
+        } catch (e) {
+          console.log('❌ frames への送信失敗:', e);
+        }
+        
+        // 方法4: storage eventを使用した代替通信
+        try {
+          localStorage.setItem('lessonCompleteMessage', JSON.stringify({
+            ...messageData,
+            timestamp: Date.now()
+          }));
+          console.log('✅ localStorage での通信設定完了');
+        } catch (e) {
+          console.log('❌ localStorage での通信失敗:', e);
+        }
+        
+        // セッション結果をメインページ用に保存（将来の機能用）
+        try {
+          const sessionResult = {
+            lessonId: lessonId,
             correct: learningTracker.currentSession.score,
             total: learningTracker.currentSession.totalQuestions,
-            timeSec: learningTracker.currentSession.totalTime || 0
-          }
-        });
+            seconds: learningTracker.currentSession.totalTime || 0,
+            completedAt: new Date().toISOString()
+          };
+          
+          sessionStorage.setItem('currentSessionResult', JSON.stringify(sessionResult));
+          console.log('🎯 セッション結果を保存:', sessionResult);
+          
+        } catch (e) {
+          console.log('❌ セッション結果保存失敗:', e);
+        }
         
-        window.parent.postMessage({
-          type: 'lesson:complete',
-          lessonId: lessonId,
-          detail: {
-            correct: learningTracker.currentSession.score,
-            total: learningTracker.currentSession.totalQuestions,
-            timeSec: learningTracker.currentSession.totalTime || 0
-          }
-        }, '*');
-        
-        console.log('完了メッセージを送信しました');
+        console.log('✅ 完了メッセージを送信しました');
       } catch (e) {
         console.log('完了メッセージの送信に失敗しました:', e);
       }
     } else {
-      console.log('iframe内ではないため、完了メッセージを送信しません');
+      console.log('⚠️ iframe検出に失敗しました。手動送信ボタンを追加します。');
+      
+      // 手動でメッセージを送信するボタンを追加
+      const manualSendButton = document.createElement("button");
+      manualSendButton.textContent = "🔄 結果を送信";
+      manualSendButton.style.marginTop = "1rem";
+      manualSendButton.style.padding = "0.75rem 1.5rem";
+      manualSendButton.style.fontSize = "1rem";
+      manualSendButton.style.fontWeight = "600";
+      manualSendButton.style.background = "linear-gradient(135deg, #e53e3e 0%, #c53030 100%)";
+      manualSendButton.style.color = "white";
+      manualSendButton.style.border = "none";
+      manualSendButton.style.borderRadius = "8px";
+      manualSendButton.style.cursor = "pointer";
+      manualSendButton.onclick = () => {
+        try {
+          const urlParams = new URLSearchParams(window.location.search);
+          const era = urlParams.get("era") || "geo_land_topo";
+          let lessonId = `soc.geography.${era}.${mode}`;
+          
+          const messageData = {
+            type: 'lesson:complete',
+            lessonId: lessonId,
+            detail: {
+              correct: learningTracker.currentSession.score,
+              total: learningTracker.currentSession.totalQuestions,
+              timeSec: learningTracker.currentSession.totalTime || 0
+            }
+          };
+          
+          console.log('🔧 手動でメッセージを送信:', messageData);
+          window.parent.postMessage(messageData, '*');
+          window.top.postMessage(messageData, '*');
+          
+          manualSendButton.textContent = "✅ 送信完了";
+          manualSendButton.disabled = true;
+        } catch (e) {
+          console.error('手動送信も失敗:', e);
+          manualSendButton.textContent = "❌ 送信失敗";
+        }
+      };
+      
+      document.querySelector(".question-box").appendChild(manualSendButton);
     }
 
     // 手動でホームに戻るボタン（自動遷移なし）
@@ -306,7 +457,19 @@ nextBtn.onclick = () => {
     homeButton.style.transition = "all 0.3s ease";
     homeButton.style.minHeight = "44px";
     homeButton.onclick = () => {
-      window.location.href = "home_modular.html";
+      // iframe内の場合は、親フレームに戻るメッセージを送信
+      if (window.parent !== window || window.top !== window) {
+        try {
+          window.parent.postMessage({ type: 'lesson:goBack' }, '*');
+          window.top.postMessage({ type: 'lesson:goBack' }, '*');
+          console.log('🏠 ホームに戻るメッセージを送信しました');
+          return;
+        } catch (e) {
+          console.log('ホームに戻るメッセージの送信に失敗:', e);
+        }
+      }
+      // iframe外の場合は直接メインページに戻る
+      window.location.href = "../../../index.html";
     };
     document.querySelector(".question-box").appendChild(homeButton);
 

@@ -32,6 +32,7 @@ body::before {
   z-index: 0;
 }
 
+
 /* メインコンテナ - TOPページのカードスタイルに統一 */
 .question-box {
   background: rgba(255, 255, 255, 0.95);
@@ -47,6 +48,7 @@ body::before {
   z-index: 10;
   transition: all 0.3s ease;
 }
+
 
 .question-box:hover {
   transform: translateY(-2px);
@@ -79,17 +81,9 @@ body::before {
   display: inline-block;
 }
 
-/* 進捗表示 */
+/* 進捗表示（右上に小さく） */
 #progress {
-  background: linear-gradient(135deg, #f97316, #ea580c);
-  color: white;
-  padding: 0.75rem 1.25rem;
-  border-radius: 12px;
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
-  font-size: 0.95rem;
+  /* JavaScriptでインラインスタイルを設定するため、CSSは最小限に */
 }
 
 /* 単元ラベル */
@@ -248,15 +242,20 @@ body::before {
 
 /* タイマー表示 */
 #timer {
-  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+  /* わかる編では表示されないため、覚える編でのみ背景を表示 */
   color: white;
   padding: 0.75rem 1.25rem;
   border-radius: 12px;
   font-weight: 700;
   text-align: center;
   margin-bottom: 1rem;
-  box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
   font-size: 1.1rem;
+}
+
+/* 覚える編でのみタイマー背景を表示 */
+#timer:not(:empty) {
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+  box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
 }
 
 /* 学習履歴表示 */
@@ -326,8 +325,9 @@ body::before {
   }
   
   #progress {
-    font-size: 0.9rem;
-    padding: 0.625rem 1rem;
+    font-size: 0.7rem;
+    top: 8px;
+    right: 12px;
   }
   
   #modeLabel {

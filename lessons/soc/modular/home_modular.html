@@ -210,16 +210,70 @@
   <button id="backBtn" onclick="goBack()" style="position: fixed; top: 20px; left: 20px; z-index: 1000; padding: 12px 18px; background: linear-gradient(135deg, #ea580c, #f97316); color: white; border: none; border-radius: 12px; cursor: pointer; font-size: 14px; font-weight: 600; box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px) scale(1.05)'; this.style.boxShadow='0 6px 16px rgba(234, 88, 12, 0.4)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 4px 12px rgba(234, 88, 12, 0.3)'">← 戻る</button>
 
   <div class="wrap">
-    <h1>🗺️ 中学受験社会：地理分野</h1>
-    <p class="lead">理解（わかる編）と暗記（覚える編）で、入試に向けた確実な知識を身につけよう！</p>
+    <h1>📚 中学受験社会：総合学習</h1>
+    <p class="lead">地理・歴史・公民の全分野をカバー。理解（わかる編）と暗記（覚える編）で、入試に向けた確実な知識を身につけよう！</p>
 
-    <div class="grid" id="eraButtons">
-      <button class="btn unit active" data-era="japan_geo1_front">① 世界の国と日本の地形（前半）</button>
-      <button class="btn unit" data-era="japan_geo1_back">① 世界の国と日本の地形（後半）</button>
-      <!-- これから追加していく単元のプレースホルダ：
-      <button class="btn unit" data-era="geo_climate_front">② 地形と気候と暮らし（前半）</button>
-      <button class="btn unit" data-era="geo_climate_back">② 地形と気候と暮らし（後半）</button>
-      -->
+    <!-- 分野選択タブ -->
+    <div style="margin-bottom: 20px;">
+      <button class="btn unit active" onclick="showField('geo')" id="tab-geo">🗺️ 地理</button>
+      <button class="btn unit" onclick="showField('hist')" id="tab-hist">🏛️ 歴史</button>
+      <button class="btn unit" onclick="showField('civic')" id="tab-civic">🏛️ 公民</button>
+    </div>
+
+    <!-- 地理分野 -->
+    <div class="field-section" id="field-geo">
+      <h3 style="color: #ea580c; margin-bottom: 16px;">🗺️ 地理分野</h3>
+      <div class="grid" id="geoButtons">
+        <button class="btn unit active" data-era="geo_land_topo">地形・気候・地図</button>
+        <button class="btn unit" data-era="geo_agriculture">農業・林業・水産業</button>
+        <button class="btn unit" data-era="geo_prefectures">都道府県・都市</button>
+        <button class="btn unit" data-era="geo_industry">工業・エネルギー</button>
+        <button class="btn unit" data-era="geo_commerce">商業・貿易・交通</button>
+        <button class="btn unit" data-era="geo_environment">環境問題</button>
+        <button class="btn unit" data-era="geo_information">情報産業</button>
+        <button class="btn unit" data-era="geo_maps">地図・地形図記号</button>
+        <button class="btn unit" data-era="geo_hokkaido">北海道地方</button>
+        <button class="btn unit" data-era="geo_tohoku">東北地方</button>
+        <button class="btn unit" data-era="geo_kanto">関東地方（詳細）</button>
+        <button class="btn unit" data-era="geo_chubu">中部地方</button>
+        <button class="btn unit" data-era="geo_kinki">近畿地方</button>
+        <button class="btn unit" data-era="geo_chugoku_shikoku">中国・四国地方</button>
+        <button class="btn unit" data-era="geo_kyushu">九州地方</button>
+        <button class="btn unit" data-era="geo_world">世界地理</button>
+      </div>
+    </div>
+
+    <!-- 歴史分野 -->
+    <div class="field-section" id="field-hist" style="display: none;">
+      <h3 style="color: #ea580c; margin-bottom: 16px;">🏛️ 歴史分野</h3>
+      <div class="grid" id="histButtons">
+        <button class="btn unit" data-era="hist_paleolithic">旧石器・縄文・弥生</button>
+        <button class="btn unit" data-era="hist_kofun">古墳・飛鳥時代</button>
+        <button class="btn unit" data-era="hist_nara">奈良時代</button>
+        <button class="btn unit" data-era="hist_heian">平安時代</button>
+        <button class="btn unit" data-era="hist_kamakura">鎌倉時代</button>
+        <button class="btn unit" data-era="hist_muromachi">室町時代</button>
+        <button class="btn unit" data-era="hist_azuchi">安土桃山時代</button>
+        <button class="btn unit" data-era="hist_edo">江戸時代</button>
+        <button class="btn unit" data-era="hist_meiji">明治時代</button>
+        <button class="btn unit" data-era="hist_taisho">大正・昭和前期</button>
+        <button class="btn unit" data-era="hist_postwar">昭和後期</button>
+        <button class="btn unit" data-era="hist_modern">平成・令和時代</button>
+        <button class="btn unit" data-era="hist_cross">歴史総合問題</button>
+      </div>
+    </div>
+
+    <!-- 公民分野 -->
+    <div class="field-section" id="field-civic" style="display: none;">
+      <h3 style="color: #ea580c; margin-bottom: 16px;">🏛️ 公民分野</h3>
+      <div class="grid" id="civicButtons">
+        <button class="btn unit" data-era="civic_politics">政治・国民生活</button>
+        <button class="btn unit" data-era="civic_constitution">憲法・三原則</button>
+        <button class="btn unit" data-era="civic_government">国会・内閣・裁判所</button>
+        <button class="btn unit" data-era="civic_finance">財政・地方自治</button>
+        <button class="btn unit" data-era="civic_international">国際関係</button>
+        <button class="btn unit" data-era="civic_modern">現代社会問題</button>
+      </div>
     </div>
 
     <div class="row" style="margin-top:12px">
@@ -229,12 +283,12 @@
 
     <div class="desc">
       <h3>📚 わかる編（理解型学習）</h3>
-      <p>具体例とイメージで地理の基礎概念をしっかり理解。中学受験に必要な「なぜ？」を解決します。</p>
+      <p>具体例とイメージで社会科の基礎概念をしっかり理解。中学受験に必要な「なぜ？」を解決します。</p>
       <h3>🧠 覚える編（暗記型学習）</h3>
-      <p>重要ポイントを効率的に暗記。入試で問われる地名・地形・特徴を確実にマスターしよう！</p>
+      <p>重要ポイントを効率的に暗記。入試で問われる地名・人名・年代・制度を確実にマスターしよう！</p>
     </div>
 
-    <p class="footer">単元とモードを選択して、中学受験対策をスタート！</p>
+    <p class="footer">分野・単元・モードを選択して、中学受験社会科対策をスタート！</p>
   </div>
 
   <script>
@@ -262,20 +316,56 @@
       }
     }
 
-    let currentEra = 'japan_geo1_front';
-    const eraButtons = document.querySelectorAll('.btn.unit');
+    let currentEra = 'geo_land_topo';
+    let currentField = 'geo';
+    
+    // 分野切り替え機能
+    function showField(field) {
+      // タブの表示切り替え
+      document.querySelectorAll('.field-section').forEach(section => {
+        section.style.display = 'none';
+      });
+      document.getElementById('field-' + field).style.display = 'block';
+      
+      // タブボタンのアクティブ状態切り替え
+      document.querySelectorAll('#tab-geo, #tab-hist, #tab-civic').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.getElementById('tab-' + field).classList.add('active');
+      
+      currentField = field;
+      
+      // 新しい分野の最初の単元を選択
+      const firstButton = document.querySelector('#field-' + field + ' .btn.unit');
+      if (firstButton) {
+        // 全ボタンの選択状態をリセット
+        document.querySelectorAll('.btn.unit[data-era]').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        firstButton.classList.add('active');
+        currentEra = firstButton.dataset.era;
+        updateLinks();
+      }
+    }
+    
     function updateLinks(){
       document.getElementById('btnWakaru').href = 'index_modular.html?era=' + currentEra + '&mode=wakaru';
       document.getElementById('btnOboeru').href = 'index_modular.html?era=' + currentEra + '&mode=oboeru';
     }
+    
+    // 各単元ボタンのクリックイベント
+    const eraButtons = document.querySelectorAll('.btn.unit[data-era]');
     eraButtons.forEach(btn => {
       btn.addEventListener('click', () => {
-        eraButtons.forEach(b => b.classList.remove('active'));
+        // 同じ分野内のボタンのみactive状態を変更
+        const currentFieldButtons = document.querySelectorAll('#field-' + currentField + ' .btn.unit[data-era]');
+        currentFieldButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentEra = btn.dataset.era;
         updateLinks();
       });
     });
+    
     updateLinks();
   </script>
 </body>

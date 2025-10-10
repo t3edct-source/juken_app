@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, createUserWithEmailAndPassword, sendEmailVerification } 
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, collection, doc, getDoc, getDocs, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, doc, getDoc, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 // あなたのプロジェクト専用の firebaseConfig を貼る
 const firebaseConfig = {
@@ -34,7 +34,7 @@ console.log('🔥 Firebase初期化完了:', {
 });
 
 // 他ファイルから利用できるようエクスポート
-export { onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, createUserWithEmailAndPassword, sendEmailVerification, collection, doc, getDoc, getDocs, onSnapshot, setDoc };
+export { onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, createUserWithEmailAndPassword, sendEmailVerification, collection, doc, getDoc, getDocs, onSnapshot };
 
 // 暫定的にFirestore関数もグローバル公開（ES Module読み込み問題の回避用）
 window.firebaseConfig = {
@@ -43,6 +43,5 @@ window.firebaseConfig = {
   doc,
   getDoc,
   getDocs,
-  onSnapshot,
-  setDoc
+  onSnapshot
 };

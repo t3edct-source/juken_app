@@ -12,8 +12,8 @@
   <div class="question-box">
     <div id="modeLabel"></div>
     <div id="eraLabel" style="margin-bottom: 0.5rem; font-weight:700;"></div>
-    <div class="source" id="source"></div>
     <h2 id="question"></h2>
+    <div class="source" id="source"></div>
     <div class="choices" id="choices"></div>
     <div class="explanation" id="explanation"></div>
     <div class="navigation-buttons">
@@ -27,11 +27,55 @@
   <script src="script.js"></script>
   <script>
     const eraMap = {
-      japan_geo1_front: "① 世界の国と日本の地形（前半）",
-      japan_geo1_back: "① 世界の国と日本の地形（後半）"
+      // 地理分野
+      'geo_land_topo': '地形・気候・地図',
+      'geo_agriculture': '農業・林業・水産業',
+      'geo_prefectures': '都道府県・都市',
+      'geo_industry': '工業・エネルギー',
+      'geo_commerce': '商業・貿易・交通',
+      'geo_environment': '環境問題',
+      'geo_information': '情報産業',
+      'geo_maps': '地図・地形図記号',
+      'geo_hokkaido': '北海道地方',
+      'geo_tohoku': '東北地方',
+      'geo_kanto': '関東地方（詳細）',
+      'geo_kanto_basic': '関東地方（基本）',
+      'geo_chubu': '中部地方',
+      'geo_kinki': '近畿地方',
+      'geo_chugoku_shikoku': '中国・四国地方',
+      'geo_kyushu': '九州地方',
+      'geo_world': '世界地理',
+      
+      // 歴史分野
+      'hist_paleolithic': '旧石器・縄文・弥生時代',
+      'hist_kofun': '古墳・飛鳥時代',
+      'hist_nara': '奈良時代',
+      'hist_heian': '平安時代',
+      'hist_kamakura': '鎌倉時代',
+      'hist_muromachi': '室町時代',
+      'hist_azuchi': '安土桃山時代',
+      'hist_edo': '江戸時代',
+      'hist_meiji': '明治時代',
+      'hist_taisho': '大正・昭和前期',
+      'hist_postwar': '昭和後期',
+      'hist_modern': '平成・令和時代',
+      'hist_cross': '歴史総合問題',
+      
+      // 公民分野
+      'civic_politics': '政治・国民生活',
+      'civic_constitution': '憲法・三原則',
+      'civic_government': '国会・内閣・裁判所',
+      'civic_finance': '財政・地方自治',
+      'civic_international': '国際関係',
+      'civic_modern': '現代社会問題',
+      
+      // 既存の教材（後方互換性） - ダミーファイルは削除済み
     };
-    const era = new URLSearchParams(location.search).get("era") || "japan_geo1_front";
+    const era = new URLSearchParams(location.search).get("era") || "geo_land_topo";
+    const mode = new URLSearchParams(location.search).get("mode") || "wakaru";
+    
     document.getElementById("eraLabel").textContent = "単元：" + (eraMap[era] || era);
+    
   </script>
 </body>
 </html>
