@@ -1,0 +1,5 @@
+﻿# Firebase認証パスをFirebaseにリライト
+/__/auth/*  https://t3ed-a1f61.firebaseapp.com/__/auth/:splat  200
+
+# その他は全てindex.htmlにフォールバック
+/*           /index.html                                              200

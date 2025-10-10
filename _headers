@@ -1,0 +1,12 @@
+﻿# Service Workerのキャッシュを無効化
+/sw.js
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
+
+# その他のJSファイルも短時間キャッシュ
+/app.js
+  Cache-Control: public, max-age=300
+
+/firebaseConfig.js
+  Cache-Control: public, max-age=300

@@ -17,8 +17,9 @@ if ('serviceWorker' in navigator) {
         })
       );
     }).then(function() {
-      console.log(' 全キャッシュ削除完了');
-      console.log(' ページをリロードしてください');
+      console.log('✅ 全キャッシュ削除完了');
+      console.log('🔄 ページをリロードします...');
+      location.reload(); // 自動で最新に切替
     });
   });
 }
