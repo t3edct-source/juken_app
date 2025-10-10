@@ -1,2 +1,15 @@
 [build]
   functions = "netlify/functions"
+
+# Firebase認証パスのリダイレクト設定
+[[redirects]]
+  from = "/__/auth/*"
+  to = "https://t3ed-a1f61.firebaseapp.com/__/auth/:splat"
+  status = 200
+  force = true
+
+# SPA用のフォールバック
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
