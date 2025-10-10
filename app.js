@@ -4246,3 +4246,5 @@ function escapeHtml(str = '') {
 }
 
 // ==== 追補コードここまで ====
+
+}); // ← DOMContentLoaded の閉じ
