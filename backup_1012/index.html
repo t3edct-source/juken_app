@@ -14,11 +14,11 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="ステップナビ" />
-  <!-- アイコンファイルは後で追加予定 -->
+  <link rel="apple-touch-icon" href="icons/icon-192x192.png" />
   
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- ファビコンは後で追加予定 -->
+  <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50 text-slate-800 min-h-screen relative overflow-x-hidden">
@@ -60,19 +60,19 @@
         <p class="auth-subtitle" id="authSubtitle">アカウントにサインインしてください</p>
       </div>
       
-      <form id="authForm" class="auth-form">
+      <form id="login-form" class="auth-form">
         <div class="input-group">
-          <label for="email" class="input-label">メールアドレス</label>
-          <input id="email" type="email" placeholder="example@email.com" 
+          <label for="login-email" class="input-label">メールアドレス</label>
+          <input id="login-email" type="email" placeholder="example@email.com" 
                  class="auth-input" required autocomplete="email"
                  aria-describedby="email-error">
           <div id="email-error" class="input-error hidden"></div>
         </div>
         
         <div class="input-group">
-          <label for="pw" class="input-label">パスワード</label>
+          <label for="login-password" class="input-label">パスワード</label>
           <div class="password-input-wrapper">
-            <input id="pw" type="password" placeholder="パスワードを入力" 
+            <input id="login-password" type="password" placeholder="パスワードを入力" 
                    class="auth-input" required autocomplete="current-password"
                    aria-describedby="pw-error">
             <button type="button" id="togglePassword" class="password-toggle" 
@@ -83,7 +83,7 @@
           <div id="pw-error" class="input-error hidden"></div>
         </div>
         
-        <button type="submit" id="loginEmail" class="auth-btn auth-btn-primary">
+        <button type="submit" id="loginBtn" class="auth-btn auth-btn-primary" data-action="login">
           <span class="btn-content">
             <span class="btn-text" id="submitBtnText">ログイン</span>
             <span class="btn-spinner hidden">⏳</span>
@@ -102,7 +102,7 @@
         <span>または</span>
       </div>
       
-      <button id="loginGoogle" class="auth-btn auth-btn-google">
+      <button type="button" id="loginGoogle" class="auth-btn auth-btn-google" data-action="google-login">
         <span class="btn-content">
           <span class="google-icon">🔍</span>
           <span class="btn-text">Googleでログイン</span>
@@ -375,11 +375,26 @@
 
   <!-- Firebase認証 + メインアプリケーション -->
   <script type="module">
-  // Firebase認証機能の初期化とイベント登録
-  import { auth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup,
-           signInWithEmailAndPassword, signOut, sendPasswordResetEmail, createUserWithEmailAndPassword, sendEmailVerification } from "./firebaseConfig.js";
-
+  // Firebase認証機能は app.js から取得
   const $ = (s)=>document.querySelector(s);
+
+  // app.js の初期化完了を待つ
+  function waitForFirebaseAuth() {
+    return new Promise((resolve) => {
+      const checkAuth = () => {
+        if (window.firebaseAuth) {
+          resolve(window.firebaseAuth);
+        } else {
+          setTimeout(checkAuth, 100);
+        }
+      };
+      checkAuth();
+    });
+  }
+
+  // 認証機能の初期化
+  waitForFirebaseAuth().then(({ auth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup,
+           signInWithEmailAndPassword, signOut, sendPasswordResetEmail, createUserWithEmailAndPassword, sendEmailVerification }) => {
 
   // 認証モード管理
   let isSignupMode = false;
@@ -523,7 +538,7 @@
     } else {
       btn.disabled = false;
       spinner?.classList.add('hidden');
-      if (buttonId === 'loginEmail' && text) text.textContent = 'ログイン';
+      if (buttonId === 'loginBtn' && text) text.textContent = 'ログイン';
       if (buttonId === 'loginGoogle' && text) text.textContent = 'Googleでログイン';
       if (buttonId === 'resendVerificationEmail' && text) text.textContent = '確認メールを再送信';
     }
@@ -584,7 +599,7 @@
   }
 
   // リアルタイムバリデーション
-  $("#email")?.addEventListener("input", (e) => {
+  $("#login-email")?.addEventListener("input", (e) => {
     const email = e.target.value.trim();
     if (email && !validateEmail(email)) {
       showError('email', '正しいメールアドレスを入力してください');
@@ -593,7 +608,7 @@
     }
   });
 
-  $("#pw")?.addEventListener("input", (e) => {
+  $("#login-password")?.addEventListener("input", (e) => {
     const password = e.target.value;
     if (password && password.length < 6) {
       showError('pw', 'パスワードは6文字以上で入力してください');
@@ -604,7 +619,7 @@
 
   // パスワード表示/非表示切り替え
   $("#togglePassword")?.addEventListener("click", () => {
-    const pwInput = $("#pw");
+    const pwInput = $("#login-password");
     const toggle = $("#togglePassword");
     if (pwInput && toggle) {
       if (pwInput.type === "password") {
@@ -663,11 +678,11 @@
   });
 
   // フォーム送信処理
-  $("#authForm")?.addEventListener("submit", async (e) => {
+  $("#login-form")?.addEventListener("submit", async (e) => {
     e.preventDefault();
     
-    const email = $("#email").value.trim();
-    const pw = $("#pw").value;
+    const email = $("#login-email").value.trim();
+    const pw = $("#login-password").value;
     
     // バリデーション
     let hasError = false;
@@ -694,7 +709,7 @@
     
     if (hasError) return;
     
-    setLoading('loginEmail', true);
+    setLoading('loginBtn', true);
     
     try {
       if (isSignupMode) {
@@ -752,7 +767,7 @@
       }
       showError('pw', errorMessage);
     } finally {
-      setLoading('loginEmail', false);
+      setLoading('loginBtn', false);
     }
   });
 
@@ -778,7 +793,7 @@
 
   // パスワードリセット機能
   $("#resetPassword")?.addEventListener("click", async () => {
-    const email = $("#email").value.trim();
+    const email = $("#login-email").value.trim();
     
     if (!email) {
       showError('email', 'メールアドレスを入力してください');
@@ -815,155 +830,15 @@
     }
   });
 
-  $("#logout")?.addEventListener("click", ()=>{
+  $("#btnLogout")?.addEventListener("click", ()=>{
     signOut(auth);
   });
 
-  // Firebase認証状態の監視とUI更新（エラーハンドリング強化）
-  try {
-    onAuthStateChanged(auth, (user)=>{
-      console.log("🔥 Firebase認証状態変化:", user ? "ログイン" : "ログアウト");
-      
-      const authBox = $("#authBox");
-      const verificationBox = $("#emailVerificationBox");
-      
-      if(user){
-        console.log("📋 ユーザー情報:", {
-          uid: user.uid,
-          email: user.email,
-          emailVerified: user.emailVerified,
-          displayName: user.displayName,
-          providerData: user.providerData?.map(p => ({ providerId: p.providerId }))
-        });
-        
-        // メール確認状態をチェック
-        if (!user.emailVerified && !verificationState.isWaitingForVerification) {
-          // 未確認かつ確認待ち画面でない場合は確認画面を表示
-          if (user.providerData.some(provider => provider.providerId === 'password')) {
-            // メール/パスワードログインの場合のみ確認が必要
-            console.log("📧 メール確認画面を表示");
-            showEmailVerificationScreen(user);
-            return;
-          }
-        }
-        
-        // 確認済みまたはGoogleログインの場合
-        $("#who").textContent = `ログイン中: ${user.email || user.displayName}`;
-        $("#logout").style.display = "";
-        
-        // 認証フォームを非表示、確認画面も非表示
-        if(authBox) authBox.style.display = "none";
-        if(verificationBox) verificationBox.classList.add('hidden');
-        
-        // 確認完了の場合は自動チェックを停止
-        if (user.emailVerified && verificationState.isWaitingForVerification) {
-          stopVerificationCheck();
-          verificationState.isWaitingForVerification = false;
-        }
-        
-        // アプリ側の状態も更新（確実に実行されるよう遅延処理）
-        console.log("🔄 syncFirebaseAuth 呼び出し準備...");
-        const syncUser = () => {
-          if (window.syncFirebaseAuth) {
-            console.log("✅ syncFirebaseAuth を呼び出します:", user.uid);
-            try {
-              window.syncFirebaseAuth(user);
-              console.log("✅ syncFirebaseAuth 完了");
-            } catch (error) {
-              console.error("❌ syncFirebaseAuth エラー:", error);
-            }
-          } else {
-            console.error("❌ window.syncFirebaseAuth が見つかりません - 再試行します");
-            // 再試行（最大5回）
-            let retryCount = 0;
-            const retrySync = () => {
-              if (retryCount < 5 && !window.syncFirebaseAuth) {
-                retryCount++;
-                console.log(`🔄 syncFirebaseAuth 再試行 ${retryCount}/5`);
-                setTimeout(retrySync, 200);
-              } else if (window.syncFirebaseAuth) {
-                console.log("✅ syncFirebaseAuth 見つかりました - 呼び出します:", user.uid);
-                try {
-                  window.syncFirebaseAuth(user);
-                  console.log("✅ syncFirebaseAuth 完了（再試行）");
-                } catch (error) {
-                  console.error("❌ syncFirebaseAuth エラー（再試行）:", error);
-                }
-              } else {
-                console.error("❌ syncFirebaseAuth の読み込みに失敗しました");
-              }
-            };
-            retrySync();
-          }
-        };
-        setTimeout(syncUser, 100);
-      } else {
-        console.log("🚪 ログアウト状態");
-        $("#who").textContent = "未ログイン";
-        $("#logout").style.display = "none";
-        
-        // ログアウト時：認証フォームを表示、確認画面は非表示
-        if(authBox) authBox.style.display = "block";
-        if(verificationBox) verificationBox.classList.add('hidden');
-        
-        // 確認状態をリセット
-        stopVerificationCheck();
-        verificationState.user = null;
-        verificationState.isWaitingForVerification = false;
-        
-        // アプリ側の状態も更新
-        const syncLogout = () => {
-          if (window.syncFirebaseAuth) {
-            console.log("🔄 syncFirebaseAuth null を呼び出します");
-            try {
-              window.syncFirebaseAuth(null);
-              console.log("✅ syncFirebaseAuth null 完了");
-            } catch (error) {
-              console.error("❌ syncFirebaseAuth null エラー:", error);
-            }
-          } else {
-            console.error("❌ window.syncFirebaseAuth が見つかりません - 再試行します");
-            // 再試行（最大5回）
-            let retryCount = 0;
-            const retrySync = () => {
-              if (retryCount < 5 && !window.syncFirebaseAuth) {
-                retryCount++;
-                console.log(`🔄 syncFirebaseAuth null 再試行 ${retryCount}/5`);
-                setTimeout(retrySync, 200);
-              } else if (window.syncFirebaseAuth) {
-                console.log("✅ syncFirebaseAuth 見つかりました - null を呼び出します");
-                try {
-                  window.syncFirebaseAuth(null);
-                  console.log("✅ syncFirebaseAuth null 完了（再試行）");
-                } catch (error) {
-                  console.error("❌ syncFirebaseAuth null エラー（再試行）:", error);
-                }
-              } else {
-                console.error("❌ syncFirebaseAuth の読み込みに失敗しました（ログアウト）");
-              }
-            };
-            retrySync();
-          }
-        };
-        setTimeout(syncLogout, 100);
-      }
-    }, (error) => {
-      console.error("🚨 Firebase認証状態監視エラー:", error);
-      // エラーが発生した場合でも基本的なUI状態は設定
-      $("#who").textContent = "認証エラー";
-      const authBox = $("#authBox");
-      if(authBox) authBox.style.display = "block";
-    });
-    console.log("🔥 Firebase認証監視を開始しました");
-  } catch (error) {
-    console.error("🚨 onAuthStateChanged 初期化エラー:", error);
-  }
-
-  // グローバルにFirebase認証オブジェクトを公開
-  window.firebaseAuth = { auth, signOut, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider };
+  }); // waitForFirebaseAuth().then() の終了
   </script>
 
-<script src="./app.js?v=20241219-001" onload="console.log('✅ app.js 読み込み完了')" onerror="console.error('❌ app.js 読み込み失敗')"></script>
+<script type="module" src="./app.js?v=2024-12-19-1" onload="console.log('✅ app.js 読み込み完了')" onerror="console.error('❌ app.js 読み込み失敗')"></script>
+<script type="module" src="./app_optimized.js?v=2024-12-19-1" onload="console.log('✅ app_optimized.js 読み込み完了')" onerror="console.error('❌ app_optimized.js 読み込み失敗')"></script>
 
 <!-- 開発・テスト用：直接購入ボタン（社会小5） -->
 <div id="devPurchaseSection" style="position: fixed; bottom: 20px; right: 20px; background: rgba(255,255,255,0.95); padding: 15px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 2px solid #e5e7eb; z-index: 1000;">

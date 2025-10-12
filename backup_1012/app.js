@@ -1,0 +1,4954 @@
+
+// Firebase認証基盤統合版 - メインアプリケーション
+console.log('🚀 app.js 読み込み開始 - Version 20241219-001');
+
+// Firebase Firestore 関数のインポート（entitlements チェック用）
+import { 
+  db, collection, doc, getDoc, getDocs, onSnapshot, setDoc,
+  auth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup,
+  signInWithEmailAndPassword, signOut, sendPasswordResetEmail, 
+  createUserWithEmailAndPassword, sendEmailVerification,
+  setPersistence, browserLocalPersistence, signInWithRedirect, getRedirectResult
+} from './firebaseConfig.js';
+
+// 復習システムモジュールのインポート
+import { reviewSystem } from './modules/reviewSystem.js';
+
+// DOMContentLoadedでアプリケーション全体を初期化
+document.addEventListener('DOMContentLoaded', async () => {
+  console.log('🚀 DOMContentLoaded: app.js 初期化開始');
+  
+  // 🔧 進捗システム関数を最初に定義・公開（グローバルスコープ）
+  console.log('🔧 進捗システム関数を定義中...');
+  
+  // 進捗ストア関数
+  const PROG_KEY = 'progress-store-v2';
+  const normalizeLessonId = id => (id || '').replace(/\./g, '_');
+
+  function loadProgress() {
+    try { 
+      return JSON.parse(localStorage.getItem(PROG_KEY)) || {}; 
+    } catch { 
+      return {}; 
+    }
+  }
+
+  function saveProgress(obj) {
+    try { 
+      localStorage.setItem(PROG_KEY, JSON.stringify(obj)); 
+    } catch (error) {
+      console.error('❌ 進捗ストア保存エラー:', error);
+    }
+  }
+
+  // 学習完了時に呼ぶ
+  function recordLessonProgress(lessonId, correct, total) {
+    console.log('🔧 recordLessonProgress 開始:', { lessonId, correct, total });
+    
+    const id = normalizeLessonId(lessonId);
+    console.log('🔧 正規化後ID:', id);
+    
+    const store = loadProgress();
+    console.log('🔧 現在のストア:', store);
+    
+    const progressRecord = {
+      done: true,
+      correct: Number(correct) || 0,
+      total: Number(total) || 0,
+      lastAt: Date.now()
+    };
+    
+    store[id] = progressRecord;
+    console.log('🔧 更新後のストア:', store);
+    
+    saveProgress(store);
+    console.log(`📊 進捗を記録完了: ${id} (${correct}/${total})`);
+    
+    // 保存確認
+    const saved = loadProgress();
+    console.log('🔧 保存確認:', saved[id]);
+  }
+
+  // カード描画で使用
+  function isLessonCompleted(lessonId) {
+    const rec = loadProgress()[normalizeLessonId(lessonId)];
+    return !!rec?.done;
+  }
+
+  function getLessonPercent(lessonId) {
+    const rec = loadProgress()[normalizeLessonId(lessonId)];
+    if (!rec || !rec.total) return 0;
+    return Math.round(100 * rec.correct / rec.total);
+  }
+
+  // デバッグ関数
+  function debugProgressSystem() {
+    console.log('=== 進捗システムデバッグ ===');
+    
+    // 1. localStorage の内容確認
+    const progressData = localStorage.getItem(PROG_KEY);
+    console.log('📊 進捗ストア raw:', progressData);
+    
+    try {
+      const parsed = JSON.parse(progressData || '{}');
+      console.log('📊 進捗ストア parsed:', parsed);
+    } catch (e) {
+      console.error('❌ 進捗ストア解析エラー:', e);
+    }
+    
+    // 2. pending-answers の内容確認
+    const pendingData = localStorage.getItem('pending-answers');
+    console.log('📦 未送信キュー raw:', pendingData);
+    
+    try {
+      const pendingParsed = JSON.parse(pendingData || '[]');
+      console.log('📦 未送信キュー parsed:', pendingParsed);
+    } catch (e) {
+      console.error('❌ 未送信キュー解析エラー:', e);
+    }
+    
+    // 3. 現在のURL確認
+    console.log('🌐 現在のURL:', location.href);
+    console.log('🔗 現在のハッシュ:', location.hash);
+    
+    // 4. 関数の存在確認
+    console.log('🔧 関数確認:', {
+      recordLessonProgress: typeof window.recordLessonProgress,
+      isLessonCompleted: typeof window.isLessonCompleted,
+      getLessonPercent: typeof window.getLessonPercent
+    });
+    
+    return {
+      progressData: progressData,
+      pendingAnswers: pendingData,
+      currentHash: location.hash
+    };
+  }
+
+  function testProgressRecord(lessonId = 'test_lesson', correct = 8, total = 10) {
+    console.log('🧪 手動進捗記録テスト:', { lessonId, correct, total });
+    
+    recordLessonProgress(lessonId, correct, total);
+    
+    // 記録後の状態確認
+    setTimeout(() => {
+      const progressData = localStorage.getItem(PROG_KEY);
+      console.log('📊 記録後の進捗 raw:', progressData);
+      console.log('✅ 完了判定:', isLessonCompleted(lessonId));
+      console.log('📈 正答率:', getLessonPercent(lessonId) + '%');
+    }, 100);
+  }
+
+  // 🚨 緊急修正：基本的な表示機能を確保
+  console.log('🚨 緊急修正：基本的な表示機能を確保');
+  
+  // showOnly関数の安全版
+  window.showOnly = function(view) {
+    console.log('🔧 showOnly:', view);
+    const views = ['home', 'lesson', 'purchase'];
+    views.forEach(v => {
+      const element = document.getElementById(v + 'View');
+      if (element) {
+        if (v === view) {
+          element.style.display = 'block';
+          element.classList.remove('hidden');
+        } else {
+          element.style.display = 'none';
+          element.classList.add('hidden');
+        }
+      }
+    });
+  };
+  
+  // renderResult関数の安全版
+  window.renderResult = function(lessonId) {
+    console.log('🔧 renderResult:', lessonId);
+    
+    // 基本的な結果表示
+    const homeView = document.getElementById('homeView');
+    if (homeView) {
+      homeView.style.display = 'block';
+      homeView.classList.remove('hidden');
+      
+      // 結果画面の基本HTML
+      homeView.innerHTML = `
+        <div class="result-container">
+          <h2>学習結果</h2>
+          <div class="result-info">
+            <p>レッスンID: ${lessonId}</p>
+            <p>学習完了！</p>
+            <button onclick="location.hash='#home'" class="btn-primary">ホームに戻る</button>
+          </div>
+        </div>
+      `;
+    }
+  };
+  
+  // route関数の安全版
+  window.route = function() {
+    console.log('🔧 route 開始');
+    const hash = location.hash || '#home';
+    console.log('Current hash:', hash);
+    
+    const matches = hash.match(/#\/(.+?)(?:\/(.+))?/) || hash.match(/#(.+)/);
+    let view, arg;
+    
+    if (matches) {
+      view = matches[1];
+      arg = matches[2];
+    } else {
+      view = 'home';
+    }
+    
+    console.log('Parsed route:', { view, arg });
+    
+    // ビュー表示
+    showOnly(view);
+    
+    // ビュー別処理
+    switch(view) {
+      case 'home':
+        console.log('🏠 ホームビューを表示');
+        if (typeof renderHome === 'function') {
+          renderHome();
+        }
+        break;
+      case 'result':
+        console.log('📊 結果ビューを表示:', arg);
+        renderResult(arg);
+        break;
+      case 'lesson':
+        console.log('📚 レッスンビューを表示:', arg);
+        if (typeof renderLesson === 'function') {
+          renderLesson(arg);
+        }
+        break;
+      default:
+        console.log('🏠 デフォルトでホームを表示');
+        showOnly('home');
+        if (typeof renderHome === 'function') {
+          renderHome();
+        }
+    }
+  };
+  
+  // hashchange イベントリスナー
+  window.addEventListener('hashchange', route);
+  
+  // 初期ルーティング実行
+  setTimeout(() => {
+    console.log('🔧 初期ルーティング実行');
+    route();
+  }, 100);
+  
+  // グローバルに公開（DOMContentLoaded内で実行）
+  window.recordLessonProgress = recordLessonProgress;
+  window.isLessonCompleted = isLessonCompleted;
+  window.getLessonPercent = getLessonPercent;
+  window.debugProgressSystem = debugProgressSystem;
+  window.testProgressRecord = testProgressRecord;
+  
+  // 初期化時に関数存在確認
+  console.log('🔍 関数公開確認:', {
+    recordLessonProgress: typeof window.recordLessonProgress,
+    isLessonCompleted: typeof window.isLessonCompleted,
+    getLessonPercent: typeof window.getLessonPercent,
+    debugProgressSystem: typeof window.debugProgressSystem,
+    testProgressRecord: typeof window.testProgressRecord
+  });
+  
+  // Firebase認証オブジェクトをグローバルに公開（index.htmlの認証UI用）
+  window.firebaseAuth = { 
+    auth, signOut, signInWithEmailAndPassword, signInWithPopup, 
+    GoogleAuthProvider, sendPasswordResetEmail, createUserWithEmailAndPassword, 
+    sendEmailVerification, onAuthStateChanged, setPersistence, browserLocalPersistence,
+    signInWithRedirect, getRedirectResult
+  };
+  
+  console.log('🔍 window.firebaseAuth 公開完了:', {
+    keys: Object.keys(window.firebaseAuth),
+    signInWithRedirect: !!window.firebaseAuth.signInWithRedirect,
+    getRedirectResult: !!window.firebaseAuth.getRedirectResult
+  });
+  
+  // syncFirebaseAuth関数を定義してグローバルに公開
+  window.syncFirebaseAuth = function(user) {
+    console.log('🔄 syncFirebaseAuth 開始:', user ? `uid: ${user.uid}` : 'ログアウト');
+    state.user = user || null;
+    const isIn = !!user;
+    
+    if (user) {
+      console.log('✅ ユーザー情報を state に保存:', {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName
+      });
+    }
+    
+    // 1) 画面の表示/非表示トグル（クラスで切替）
+    document.documentElement.classList.toggle('is-auth', isIn);
+    
+    // 2) ログインカードを隠す
+    const loginPanel = document.querySelector('#authBox, .login-card, .auth-container');
+    if (loginPanel) {
+      loginPanel.classList.toggle('hidden', isIn);
+      if (isIn) {
+        loginPanel.style.display = 'none';
+      } else {
+        loginPanel.style.display = 'block';
+      }
+    }
+    
+    // 3) ヘッダのボタン切り替え
+    const loginBtn = document.querySelector('#btnLogin');
+    const logoutBtn = document.querySelector('#btnLogout');
+    
+    if (loginBtn && logoutBtn) {
+      if (isIn) {
+        loginBtn.style.display = 'none';
+        logoutBtn.style.display = 'inline-block';
+      } else {
+        loginBtn.style.display = 'inline-block';
+        logoutBtn.style.display = 'none';
+      }
+    }
+    
+    // 4) 購入ボタンの状態更新
+    const purchaseBtn = document.querySelector('#purchaseBtn');
+    if (purchaseBtn && isIn) {
+      purchaseBtn.disabled = false;
+      purchaseBtn.textContent = '💳 購入';
+    } else if (purchaseBtn) {
+      purchaseBtn.disabled = true;
+      purchaseBtn.textContent = 'ログイン必要';
+    }
+    
+    // UI更新処理があればここに追加
+    try {
+      if (typeof updateHeaderButtons === 'function') {
+        updateHeaderButtons(user);
+      }
+      if (typeof updatePurchaseButtons === 'function') {
+        updatePurchaseButtons(user);
+      }
+      if (typeof renderAppView === 'function') {
+        renderAppView();
+      }
+    } catch (error) {
+      console.warn('⚠️ UI更新中にエラー:', error);
+    }
+    
+    console.log('🎯 UI切り替え完了:', isIn ? 'ログイン状態' : 'ログアウト状態');
+  };
+  
+  // Firebase認証状態の監視を設定
+  onAuthStateChanged(auth, window.syncFirebaseAuth);
+  
+  // イベント委譲を設定
+  console.log('🚀 DOMContentLoaded: イベント委譲を設定します');
+  setupGlobalEventDelegation();
+  
+  // 既存データのクリーンアップを実行
+  cleanupOldReviewData();
+  
+  // アプリケーションの初期化を実行
+  await startup();
+  
+  // ===== ビュー切替制御とタブイベントリスナーを追加 =====
+  console.log('🎯 ビュー切替制御を初期化');
+  
+  // ビュー切替関数
+  const homeView = document.getElementById("homeView");
+  const lessonView = document.getElementById("lessonView");
+  
+  function showHomeView() {
+    if (homeView) {
+      homeView.classList.remove("hidden");
+      homeView.style.display = "block";
+    }
+    if (lessonView) {
+      lessonView.classList.add("hidden");
+    }
+    console.log('📱 ホームビューを表示');
+  }
+  
+  function showLessonView() {
+    if (lessonView) {
+      lessonView.classList.remove("hidden");
+      lessonView.style.display = "block";
+    }
+    if (homeView) {
+      homeView.classList.add("hidden");
+    }
+    console.log('📚 レッスンビューを表示');
+  }
+  
+  // subject値の正規化関数（綴りミス対応）
+  const normalizeSubject = (s) => {
+    if (!s) return 'recommended';
+    const m = { 
+      recomended: 'recommended', 
+      recommend: 'recommended', 
+      rec: 'recommended' 
+    };
+    return m[s] || s;
+  };
+
+  // タブイベントリスナーを設定
+  const subjectTabs = document.querySelectorAll(".subject-tab");
+  console.log('🎯 タブ要素数:', subjectTabs.length);
+  
+  subjectTabs.forEach(tab => {
+    tab.addEventListener("click", (e) => {
+      const rawSubject = tab.dataset.subject || tab.textContent;
+      const normalizedSubject = normalizeSubject(rawSubject);
+      console.log('📌 タブクリック:', rawSubject, '→', normalizedSubject);
+      
+      // アクティブタブの切り替え
+      subjectTabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+      
+      // ホームビューを表示
+      showHomeView();
+      
+      // currentSubjectを更新
+      const subject = tab.dataset.subject || 'recommended';
+      window.currentSubject = subject;
+      
+      // ホーム画面を再描画
+      if (typeof renderHome === 'function') {
+        renderHome();
+      }
+    });
+  });
+  
+  // 初期起動時にホームを表示
+  showHomeView();
+  
+  // ビュー切替関数をグローバルに公開
+  window.showHomeView = showHomeView;
+  window.showLessonView = showLessonView;
+  
+  console.log('✅ DOMContentLoaded: app.js 初期化完了');
+});
+
+// 🎉 Stripe Checkout 成功・キャンセル処理
+function handleCheckoutResult() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const success = urlParams.get('success');
+  const canceled = urlParams.get('canceled');
+  const productId = urlParams.get('product');
+  
+  if (success === 'true') {
+    console.log('🎉 Stripe Checkout 成功:', { productId });
+    
+    // 購入成功メッセージを表示
+    const pack = PACKS.find(p => p.productId === productId);
+    const packName = pack ? pack.label : 'コンテンツ';
+    
+    // 成功メッセージの表示
+    setTimeout(() => {
+      showPurchaseSuccessMessage(packName);
+      
+      // URLパラメータをクリーンアップ
+      const cleanUrl = window.location.origin + window.location.pathname;
+      window.history.replaceState({}, document.title, cleanUrl);
+      
+      // UI更新（entitlementsが自動で更新されるまで少し待つ）
+      setTimeout(() => {
+        updateUIAfterEntitlementsChange();
+      }, 2000);
+    }, 1000);
+    
+  } else if (canceled === 'true') {
+    console.log('❌ Stripe Checkout キャンセル');
+    
+    // キャンセルメッセージを表示
+    setTimeout(() => {
+      showPurchaseCancelMessage();
+      
+      // URLパラメータをクリーンアップ
+      const cleanUrl = window.location.origin + window.location.pathname;
+      window.history.replaceState({}, document.title, cleanUrl);
+    }, 500);
+  }
+}
+
+// 🎉 購入成功メッセージを表示
+function showPurchaseSuccessMessage(packName) {
+  // 既存のモーダルを確認して非表示にする
+  const existingModals = ['purchaseModal', 'purchaseConfirmModal', 'purchaseProcessingModal'];
+  existingModals.forEach(modalId => {
+    const modal = document.getElementById(modalId);
+    if (modal) modal.classList.add('hidden');
+  });
+  
+  // 購入完了モーダルを表示
+  const completeModal = document.getElementById('purchaseCompleteModal');
+  if (completeModal) {
+    // タイトルを更新
+    const titleEl = completeModal.querySelector('.completed-item-title');
+    if (titleEl) titleEl.textContent = packName;
+    
+    // モーダルを表示
+    completeModal.classList.remove('hidden');
+    
+    // 自動で5秒後に閉じる
+    setTimeout(() => {
+      completeModal.classList.add('hidden');
+    }, 5000);
+  } else {
+    // フォールバック: シンプルなアラート
+    alert(`🎉 購入完了！\n\n${packName}の購入が完了しました。\n教材のロックが解除されました。`);
+  }
+}
+
+// ❌ 購入キャンセルメッセージを表示  
+function showPurchaseCancelMessage() {
+  // シンプルなトーストメッセージを作成
+  const toast = document.createElement('div');
+  toast.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #f56565;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 10000;
+    font-size: 14px;
+    max-width: 300px;
+    animation: slideInRight 0.3s ease-out;
+  `;
+  toast.innerHTML = `
+    <div style="font-weight: bold;">購入がキャンセルされました</div>
+    <div style="font-size: 12px; margin-top: 5px; opacity: 0.9;">
+      再度購入をご希望の場合は、購入ボタンからお手続きください。
+    </div>
+  `;
+  
+  document.body.appendChild(toast);
+  
+  // 4秒後に自動で削除
+  setTimeout(() => {
+    toast.style.animation = 'slideOutRight 0.3s ease-in';
+    setTimeout(() => {
+      if (toast.parentNode) {
+        toast.parentNode.removeChild(toast);
+      }
+    }, 300);
+  }, 4000);
+}
+
+// 親シェル：catalog読込のパス冗長化（./catalog.json → ../catalog.json の順で試行）
+const state = {
+  user: null,
+  catalog: [],
+  current: null,
+  selectedGrade: null,
+  selectedSubject: null,
+  userEntitlements: new Set(), // ユーザーの購入済みコンテンツ
+  // 復習関連の状態は reviewSystem モジュールで管理
+  get wrongQuestions() { return reviewSystem.wrongQuestions; },
+  get reviewLessons() { return reviewSystem.reviewLessons; }
+};
+
+// ===== Packs: 小4/5/6 × 理/社（6パック） =====
+const PACKS = [
+  { id:'g4-sci', grade:4, subject:'理科', label:'小4 理科', productId:'rika_gakushu_4', price:2980 },
+  { id:'g4-soc', grade:4, subject:'社会', label:'小4 社会', productId:'shakai_gakushu_4', price:2980 },
+  { id:'g5-sci', grade:5, subject:'理科', label:'小5 理科', productId:'rika_gakushu_5', price:2980 },
+  { id:'g5-soc', grade:5, subject:'社会', label:'小5 社会', productId:'shakai_gakushu_5', price:2980 },
+  { id:'g6-sci', grade:6, subject:'理科', label:'小6 理科', productId:'rika_gakushu_6', price:2980 },
+  { id:'g6-soc', grade:6, subject:'社会', label:'小6 社会', productId:'shakai_gakushu_6', price:2980 },
+];
+
+// ===== 各パックの詳細コンテンツ定義 =====
+const PACK_DETAILS = {
+  'g4-sci': {
+    label: '小4 理科',
+    subjects: {
+      '🔬 物理': ['物の重さ', '音の性質', '光の性質', '電気の通り道'],
+      '🧪 化学': ['水の状態変化', '金属と温度', '物の溶け方'],
+      '🌱 生物': ['季節と生物', '動物の体のつくり', '植物の育ち方'],
+      '🌍 地学': ['天気の変化', '月と星', '大地のつくり']
+    }
+  },
+  'g4-soc': {
+    label: '小4 社会',
+    subjects: {
+      '🗺️ 地理分野': ['国土・地形・気候', '地図・地形図記号', '都道府県・都市', '農林水産業', '工業・エネルギー', '商業・貿易・交通', '地方別地理'],
+      '📚 歴史分野': ['縄文・弥生時代', '古墳時代', '飛鳥時代', '奈良時代']
+    }
+  },
+  'g5-sci': {
+    label: '小5 理科',
+    subjects: {
+      '🔬 物理': ['振り子の運動', 'てこの原理', '電流と磁石', '音と光の進み方'],
+      '🧪 化学': ['物の燃焼', '水溶液の性質', '金属の性質', '化学変化'],
+      '🌱 生物': ['植物の発芽', '動物の誕生', '食物連鎖', '環境と生物'],
+      '🌍 地学': ['流水の働き', '天気の変化', '台風と天気', '大地の変化']
+    }
+  },
+  'g5-soc': {
+    label: '小5 社会',
+    subjects: {
+      '🗺️ 地理分野': ['国土・地形・気候', '地図・地形図記号', '日本の地域特色', '農林水産業', '工業・エネルギー', '商業・貿易・交通', '地方別地理', '環境問題', '情報・通信'],
+      '📚 歴史分野': ['平安時代', '鎌倉時代', '室町時代', '安土桃山時代'],
+      '🏛️ 公民分野': ['国際協力']
+    }
+  },
+  'g6-sci': {
+    label: '小6 理科',
+    subjects: {
+      '🔬 物理': ['電気の利用', 'てこの計算', '振り子の実験', '音の大きさ'],
+      '🧪 化学': ['燃焼と酸素', '水溶液の区別', '気体の性質', '化学反応'],
+      '🌱 生物': ['人体のつくり', '植物の仕組み', '動物の分類', '生態系'],
+      '🌍 地学': ['月の満ち欠け', '太陽系', '地層と化石', '火山と地震']
+    }
+  },
+  'g6-soc': {
+    label: '小6 社会',
+    subjects: {
+      '🗺️ 地理分野': ['世界の国々', '領土と領海', '資源とエネルギー', '現代の産業', '地球環境', '世界の文化'],
+      '📚 歴史分野': ['江戸時代', '明治維新', '大正・昭和', '現代の日本'],
+      '🏛️ 公民分野': ['日本国憲法', '三権分立', '地方自治', '国際社会']
+    }
+  }
+};
+
+// ===== 購入・学年状態管理 =====
+const LS_KEYS = { purchases:'purchases', currentGrade:'currentGrade' };
+
+// 🔥 Firebase Entitlements をチェックして購入済みコンテンツを取得
+async function loadUserEntitlements(userId) {
+  if (!userId) {
+    console.log('👤 ユーザーIDが無いため、entitlementsをクリアします');
+    state.userEntitlements.clear();
+    return [];
+  }
+  
+  try {
+    console.log('🔍 Firebase entitlementsを取得中...', userId);
+    const entitlementsRef = collection(db, 'users', userId, 'entitlements');
+    const snapshot = await getDocs(entitlementsRef);
+    
+    const activeEntitlements = [];
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+      if (data.active === true) {
+        activeEntitlements.push(doc.id); // productId
+        console.log('✅ アクティブなentitlement:', doc.id, data);
+      } else {
+        console.log('❌ 非アクティブなentitlement:', doc.id, data);
+      }
+    });
+    
+    // state に保存
+    state.userEntitlements = new Set(activeEntitlements);
+    console.log('📦 ユーザーのentitlements更新:', Array.from(state.userEntitlements));
+    
+    return activeEntitlements;
+  } catch (error) {
+    console.error('❌ entitlements取得エラー:', error);
+    state.userEntitlements.clear();
+    return [];
+  }
+}
+
+// 🎧 Firebase Entitlements をリアルタイム監視
+let entitlementsUnsubscribe = null;
+function startEntitlementsListener(userId) {
+  // 既存のリスナーを停止
+  if (entitlementsUnsubscribe) {
+    entitlementsUnsubscribe();
+    entitlementsUnsubscribe = null;
+  }
+  
+  if (!userId) return;
+  
+  try {
+    console.log('🎧 entitlementsリアルタイム監視を開始:', userId);
+    const entitlementsRef = collection(db, 'users', userId, 'entitlements');
+    
+    entitlementsUnsubscribe = onSnapshot(entitlementsRef, (snapshot) => {
+      const activeEntitlements = [];
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        if (data.active === true) {
+          activeEntitlements.push(doc.id);
+        }
+      });
+      
+      console.log('🔄 entitlementsリアルタイム更新:', activeEntitlements);
+      state.userEntitlements = new Set(activeEntitlements);
+      
+      // UI を更新
+      updateUIAfterEntitlementsChange();
+    }, (error) => {
+      console.error('❌ entitlementsリスナーエラー:', error);
+    });
+  } catch (error) {
+    console.error('❌ entitlementsリスナー開始エラー:', error);
+  }
+}
+
+// 📱 entitlements変更後のUI更新
+function updateUIAfterEntitlementsChange() {
+  console.log('🔄 entitlements変更によりUI更新開始');
+  
+  // 常にアプリビューを表示（LPは無効化）
+  console.log('📚 アプリビューを強制表示');
+  renderAppView();
+  
+  // モーダルの更新
+  renderModalContent();
+  
+  console.log('🔄 entitlements変更によりUI更新完了');
+}
+
+// 💾 LocalStorage との互換性（開発・テスト用）
+function loadPurchases(){ 
+  // 認証済みユーザーの場合は Firebase entitlements を使用
+  if (state.user && state.userEntitlements.size > 0) {
+    return Array.from(state.userEntitlements);
+  }
+  
+  // 未認証またはentitlementsが無い場合は LocalStorage を使用（開発用）
+  try{ 
+    return JSON.parse(localStorage.getItem(LS_KEYS.purchases) || '[]'); 
+  } catch { 
+    return []; 
+  } 
+}
+
+function savePurchases(ids){ localStorage.setItem(LS_KEYS.purchases, JSON.stringify(ids)); }
+function getCurrentGrade(){ const g = parseInt(localStorage.getItem(LS_KEYS.currentGrade)||''); return (g>=4 && g<=6) ? g : null; }
+function setCurrentGrade(g){ localStorage.setItem(LS_KEYS.currentGrade, String(g)); }
+function isAfterApril1(d=new Date()){
+  const y = d.getFullYear(); const cutoff = new Date(y, 3, 1, 0,0,0); // 4/1 00:00
+  return d.getTime() >= cutoff.getTime();
+}
+
+function loginMock(){
+  // Firebase認証との連携のため、直接的な状態変更は行わない
+  // Firebase認証の状態変化で自動的にログイン状態が更新される
+  alert('Firebase認証ボックスからログインしてください');
+}
+
+function logoutMock(){
+  // Firebase signOutを呼び出す
+  if (window.firebaseAuth && window.firebaseAuth.signOut) {
+    window.firebaseAuth.signOut(window.firebaseAuth.auth);
+  } else {
+    // フォールバック：従来のモック機能
+  state.user = null;
+  document.getElementById('btnLogin')?.classList.remove('hidden');
+  document.getElementById('btnLogout')?.classList.add('hidden');
+  }
+}
+
+// Firebase認証状態変化をアプリの状態に反映する関数
+function syncFirebaseAuth(user) {
+  console.log('🔥 syncFirebaseAuth 呼び出し:', user ? '認証済み' : '未認証');
+  console.log('🔥 受信したユーザー情報:', user);
+  
+  if (user) {
+    // ログイン状態
+    const newUserState = { 
+      id: user.uid, 
+      name: user.displayName || user.email,
+      email: user.email,
+      emailVerified: user.emailVerified,
+      providerData: user.providerData
+    };
+    
+    console.log('🔄 state.user 更新前:', state.user);
+    state.user = newUserState;
+    console.log('✅ state.user 更新後:', state.user);
+    
+    // UI更新
+    document.getElementById('btnLogin')?.classList.add('hidden');
+    document.getElementById('btnLogout')?.classList.remove('hidden');
+    
+    // 🔥 Firebase Entitlements を読み込み
+    console.log('🔍 ユーザーのentitlementsを読み込み中...');
+    loadUserEntitlements(user.uid).then(() => {
+      console.log('✅ entitlements読み込み完了');
+      
+      // 🎧 リアルタイム監視を開始
+      startEntitlementsListener(user.uid);
+      
+      // 購入ボタンの状態を更新
+      console.log('🔄 購入ボタン状態を更新します...');
+      updatePurchaseButtonsState(user);
+      
+      // UI全体を更新
+      updateUIAfterEntitlementsChange();
+    }).catch(error => {
+      console.error('❌ entitlements読み込みエラー:', error);
+      updatePurchaseButtonsState(user);
+    });
+    
+    // 状態確認用ログ
+    setTimeout(() => {
+      console.log('📊 最終確認 - state.user:', state.user);
+      console.log('📊 最終確認 - window.state:', window.state);
+      console.log('📦 最終確認 - userEntitlements:', Array.from(state.userEntitlements));
+    }, 1000);
+  } else {
+    // ログアウト状態
+    console.log('🚪 ユーザー状態をクリア');
+    console.log('🔄 state.user クリア前:', state.user);
+    state.user = null;
+    console.log('✅ state.user クリア後:', state.user);
+    
+    // 🔥 entitlements をクリア
+    state.userEntitlements.clear();
+    console.log('🧹 userEntitlements クリア完了');
+    
+    // 🎧 entitlements リスナーを停止
+    if (entitlementsUnsubscribe) {
+      entitlementsUnsubscribe();
+      entitlementsUnsubscribe = null;
+      console.log('🛑 entitlementsリスナー停止');
+    }
+    
+    document.getElementById('btnLogin')?.classList.remove('hidden');
+    document.getElementById('btnLogout')?.classList.add('hidden');
+    
+    // 購入ボタンを無効化
+    updatePurchaseButtonsState(null);
+    
+    // UI を更新
+    updateUIAfterEntitlementsChange();
+  }
+  
+  // グローバルステートも確認
+  if (!window.state) {
+    console.log('⚠️ window.state が存在しません。作成します。');
+    window.state = state;
+  }
+}
+
+// 購入ボタンの状態を更新する関数
+function updatePurchaseButtonsState(user) {
+  console.log('updatePurchaseButtonsState 呼び出し:', user ? '認証済み' : '未認証');
+  
+  const headerPurchaseBtn = document.getElementById('purchaseBtn');
+  
+  if (user) {
+    // 認証済みユーザーの場合
+    const isEmailVerified = user.emailVerified || user.providerData?.some(provider => provider.providerId !== 'password');
+    
+    console.log('認証状態詳細:', {
+      emailVerified: user.emailVerified,
+      providerData: user.providerData,
+      isEmailVerified: isEmailVerified
+    });
+    
+    if (headerPurchaseBtn) {
+      if (isEmailVerified) {
+        // メール確認済みまたはソーシャルログイン
+        // 少し遅延してからボタンを有効化（state.user の確実な設定を待つ）
+        setTimeout(() => {
+          headerPurchaseBtn.disabled = false;
+          headerPurchaseBtn.textContent = '💳 購入';
+          headerPurchaseBtn.className = 'px-3 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm transition-colors duration-200';
+          headerPurchaseBtn.title = '';
+          console.log('✅ 購入ボタンを有効化しました（遅延実行）');
+          
+          // state.user の最終確認
+          if (!state.user && user) {
+            console.log('🔄 購入ボタン有効化時に state.user を再設定');
+            state.user = {
+              id: user.uid,
+              name: user.displayName || user.email,
+              email: user.email,
+              emailVerified: user.emailVerified,
+              providerData: user.providerData
+            };
+          }
+        }, 200);
+      } else {
+        // メール未確認
+        headerPurchaseBtn.disabled = true;
+        headerPurchaseBtn.textContent = '📧 メール確認必要';
+        headerPurchaseBtn.className = 'px-3 py-2 rounded-lg bg-gray-400 text-white cursor-not-allowed shadow-sm';
+        headerPurchaseBtn.title = 'メールアドレスの確認が必要です';
+        console.log('購入ボタンを無効化しました（メール未確認）');
+      }
+    } else {
+      console.error('購入ボタンが見つかりません (ID: purchaseBtn)');
+    }
+  } else {
+    // 未ログインユーザーの場合
+    if (headerPurchaseBtn) {
+      headerPurchaseBtn.disabled = true;
+      headerPurchaseBtn.textContent = '🔒 ログイン必要';
+      headerPurchaseBtn.className = 'px-3 py-2 rounded-lg bg-gray-400 text-white cursor-not-allowed shadow-sm';
+      headerPurchaseBtn.title = 'ログインが必要です';
+      console.log('購入ボタンを無効化しました（未ログイン）');
+    } else {
+      console.error('購入ボタンが見つかりません (ID: purchaseBtn)');
+    }
+  }
+  
+  // LP内の購入ボタンも更新
+  updateLPPurchaseButtons(user);
+  
+  // モーダル内の購入ボタンも更新
+  updateModalPurchaseButtons(user);
+}
+
+// syncFirebaseAuth関数をグローバルに公開（即座に実行）
+window.syncFirebaseAuth = syncFirebaseAuth;
+console.log("🚀 syncFirebaseAuth をグローバルに公開しました");
+
+// ===== Stripe Checkout連携機能 =====
+async function startPurchase(productId, packLabel) {
+  console.log('🛒 Stripe購入開始:', { productId, packLabel });
+  
+  // Firebase認証状態を確認
+  const user = window.firebaseAuth?.auth?.currentUser;
+  if (!user) {
+    alert("購入するにはログインが必要です。右上のログインボタンからアカウントを作成またはログインしてください。");
+    return;
+  }
+  
+  if (!user.emailVerified) {
+    alert("購入するにはメールアドレスの確認が必要です。確認メールのリンクをクリックしてから再度お試しください。");
+    return;
+  }
+  
+  console.log('✅ 認証チェック完了 - Stripe Checkoutを開始');
+  
+  try {
+    console.log('📡 Netlify Functions へリクエスト送信中...', {
+      productId,
+      uid: user.uid,
+      packLabel
+    });
+
+    // Netlify Functions経由でStripe Checkoutセッションを作成
+    const response = await fetch("/.netlify/functions/create-checkout-session", {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json" 
+      },
+      body: JSON.stringify({
+        productId: productId,     // 例: "shakai_gakushu_5"
+        uid: user.uid,           // Firebaseユーザー ID
+        userEmail: user.email,   // ユーザーメールアドレス（使用されないが互換性のため）
+        packLabel: packLabel     // UI表示用（使用されないが互換性のため）
+      }),
+    });
+    
+    console.log('📡 レスポンス受信:', {
+      status: response.status,
+      statusText: response.statusText,
+      ok: response.ok
+    });
+
+    // レスポンスが正常でない場合
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('❌ HTTP エラー:', {
+        status: response.status,
+        statusText: response.statusText,
+        body: errorText
+      });
+      
+      let errorMessage = `サーバーエラー (${response.status})`;
+      try {
+        const errorData = JSON.parse(errorText);
+        if (errorData.error) {
+          errorMessage = errorData.error;
+        }
+      } catch (e) {
+        console.error('エラーレスポンスのJSON解析失敗:', e);
+      }
+      
+      alert("購入処理の開始に失敗しました: " + errorMessage);
+      return;
+    }
+    
+    const result = await response.json();
+    console.log('💳 Checkout セッション作成結果:', result);
+    
+    if (result.error) {
+      console.error('❌ Checkout セッション作成エラー:', result.error);
+      alert("購入処理の開始に失敗しました: " + result.error);
+      return;
+    }
+    
+    if (result.url) {
+      console.log('🔄 Stripe Checkoutにリダイレクト:', result.url);
+      // Stripe Checkoutページへリダイレクト
+      window.location.href = result.url;
+    } else {
+      console.error('❌ Checkout URL が見つかりません');
+      alert("購入ページの生成に失敗しました。もう一度お試しください。");
+    }
+  } catch (error) {
+    console.error('❌ 購入開始エラー:', error);
+    
+    // ネットワークエラーかFunction未デプロイかを判別
+    if (error.name === 'TypeError' && error.message.includes('fetch')) {
+      alert("サーバーに接続できませんでした。\n\n考えられる原因:\n- Netlify Functionsがデプロイされていない\n- ネットワーク接続の問題\n\n管理者にお問い合わせください。");
+    } else {
+      alert("購入処理中にエラーが発生しました: " + error.message);
+    }
+  }
+}
+
+// モーダル内から呼び出すためのグローバル関数
+window.handleModalAuthRequired = handleModalAuthRequired;
+window.startPurchase = startPurchase;
+
+// Firebase認証状態変化を監視してアプリ状態を同期
+// (index.htmlのFirebase認証スクリプトから直接呼び出される)
+
+// 🔐 実際のFirestore entitlementsをチェック
+function hasEntitlement(sku) { 
+  if (!sku) return true; // SKU指定なしは常に許可
+  if (!state.user) return false; // 未認証は常に拒否
+  
+  // Firebase entitlements をチェック
+  const hasFirebaseEntitlement = state.userEntitlements.has(sku);
+  
+  // 開発・テスト用: LocalStorage もチェック（フォールバック）
+  const localPurchases = JSON.parse(localStorage.getItem(LS_KEYS.purchases) || '[]');
+  const hasLocalPurchase = localPurchases.includes(sku);
+  
+  const result = hasFirebaseEntitlement || hasLocalPurchase;
+  
+  console.log('🔐 entitlementチェック:', {
+    sku,
+    user: !!state.user,
+    firebaseEntitlements: Array.from(state.userEntitlements),
+    hasFirebaseEntitlement,
+    localPurchases,
+    hasLocalPurchase,
+    result
+  });
+  
+  return result;
+}
+
+function saveProgress(lessonId, score, detail){
+  const key = `progress:${lessonId}`;
+  const payload = { lessonId, score, detail, at: Date.now() };
+  console.log('進捗を保存します:', {key, payload});
+  try{ 
+    localStorage.setItem(key, JSON.stringify(payload));
+    console.log('進捗の保存に成功しました');
+  } catch(e) {
+    console.log('進捗の保存に失敗しました:', e);
+  }
+}
+
+function saveLessonProgress(id, correct, total, seconds){
+  const score = total ? (correct/total) : 1;
+  saveProgress(id, score, { correct, total, timeSec: seconds });
+}
+
+// セッション結果を一時保存する関数
+function saveSessionResult(lessonId, correct, total, seconds) {
+  const sessionResult = {
+    lessonId,
+    correct,
+    total,
+    seconds,
+    completedAt: new Date().toISOString()
+  };
+  
+  try {
+    sessionStorage.setItem('currentSessionResult', JSON.stringify(sessionResult));
+    console.log('セッション結果を保存しました:', sessionResult);
+  } catch (e) {
+    console.error('セッション結果の保存に失敗しました:', e);
+  }
+}
+
+// セッション結果を取得する関数
+function getSessionResult() {
+  try {
+    const result = sessionStorage.getItem('currentSessionResult');
+    return result ? JSON.parse(result) : null;
+  } catch (e) {
+    console.error('セッション結果の取得に失敗しました:', e);
+    return null;
+  }
+}
+
+// セッション結果をクリアする関数
+function clearSessionResult() {
+  try {
+    sessionStorage.removeItem('currentSessionResult');
+  } catch (e) {
+    console.error('セッション結果のクリアに失敗しました:', e);
+  }
+}
+
+// 教材の進捗状況を取得する関数
+function getLessonProgress(lessonId) {
+  const key = `progress:${lessonId}`;
+  try {
+    const progress = localStorage.getItem(key);
+    return progress ? JSON.parse(progress) : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+// 教材が完了しているかチェックする関数
+// isLessonCompleted は進捗ストア版を使用（下部で定義済み）
+
+// 教材の詳細スコア情報を取得する関数
+function getLessonScoreInfo(lessonId) {
+  const progress = getLessonProgress(lessonId);
+  if (!progress || !progress.detail) {
+    return null;
+  }
+  
+  const { correct, total } = progress.detail;
+  const date = new Date(progress.at);
+  
+  return {
+    correct: correct || 0,
+    total: total || 0,
+    date: date,
+    formattedDate: formatDate(date)
+  };
+}
+
+// 日付をフォーマットする関数
+function formatDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}/${month}/${day}`;
+}
+
+async function loadCatalog(){
+  const tryUrls = ['./catalog.json', '../catalog.json'];
+  let lastErr = null;
+  for (const url of tryUrls){
+    try{
+      const res = await fetch(url);
+      if (res.ok){ state.catalog = await res.json(); lastErr=null; break; }
+      lastErr = new Error(`${url} not ok`);
+    }catch(e){ lastErr = e; }
+  }
+  if (lastErr){
+    console.warn('catalog.json が見つからないため、デモデータを使用します。', lastErr);
+    state.catalog = [{
+      id:'demo.sample', title:'デモ教材', grade:5, subject:'math',
+      path:'./output.html', duration_min:8, sku_required:null
+    }];
+  }
+}
+
+function parseHash(){
+  const raw = location.hash.slice(2);
+  const [view, ...rest] = raw.split('/');
+  return { view: view || 'home', arg: decodeURIComponent(rest.join('/')) };
+}
+function setHash(view, arg){ location.hash = arg ? `#/${view}/${encodeURIComponent(arg)}` : `#/${view}`; }
+
+function route(){
+  const { view, arg } = parseHash();
+  showOnly(view);
+  if (view==='home') {
+    clearSessionResult(); // ホームに戻った時にセッション結果をクリア
+    renderHome();
+  }
+  else if (view==='lesson') renderLesson(arg);
+  else if (view==='purchase') renderPurchase(arg);
+  else if (view==='result') {
+    const rawId = arg;
+    console.log('🎯 結果画面に遷移:', rawId);
+    
+    // 直近の回答キューから正答/総数を集計
+    const pendingRaw = localStorage.getItem('pending-answers') || '[]';
+    const pending = JSON.parse(pendingRaw)
+      .filter(a => normalizeLessonId(a.lessonId) === normalizeLessonId(rawId));
+    const correct = pending.filter(a => a.isCorrect === true).length;
+    const total = pending.length;
+    
+    console.log('📦 未送信キューから集計:', { pending: pending.length, correct, total });
+    
+    // セッション結果からも取得を試行（フォールバック）
+    const sessionResult = getSessionResult();
+    const finalCorrect = sessionResult?.correct ?? correct;
+    const finalTotal = sessionResult?.total ?? total;
+    
+    console.log('🎯 最終集計結果:', { 
+      sessionResult, 
+      finalCorrect, 
+      finalTotal,
+      willRecord: finalTotal > 0 
+    });
+    
+    // 誤答フラッシュ（既存処理）
+    if (typeof flushPendingAnswers === 'function') {
+      console.log('🔄 未送信キューをフラッシュ');
+      flushPendingAnswers();
+    }
+    
+    // ★ここが肝：進捗を記録
+    if (finalTotal > 0) {
+      console.log('📊 進捗を記録開始:', { rawId, finalCorrect, finalTotal });
+      recordLessonProgress(rawId, finalCorrect, finalTotal);
+      console.log('✅ 進捗記録完了');
+    } else {
+      console.warn('⚠️ 進捗記録をスキップ（総問題数が0）:', { finalTotal });
+    }
+    
+    // 既存の結果画面描画
+    renderResult(arg);
+  }
+  else if (view==='review') renderReviewLesson(arg);
+  else { 
+    clearSessionResult(); // デフォルトでホームに戻る時もクリア
+    showOnly('home'); 
+    renderHome(); 
+  }
+}
+function showOnly(which){
+  const map = { home:'homeView', lesson:'lessonView', purchase:'purchaseView', result:'resultView', review:'homeView' };
+  for (const k in map){ 
+    const el=document.getElementById(map[k]); 
+    if(el) {
+      el.classList.toggle('hidden', k!==which);
+      
+      // 🚨 homeView が表示される場合は、強制的に表示状態にする
+      if (k === which && map[k] === 'homeView') {
+        el.style.display = 'block';
+        el.style.visibility = 'visible';
+        el.style.opacity = '1';
+        console.log('🚨 showOnly: homeView を強制的に表示状態に設定');
+      }
+    }
+  }
+}
+
+// 教科名を日本語に変換する関数
+function getSubjectName(subject) {
+  const subjectMap = {
+    'sci': '理科',
+    'soc': '社会',
+    'science_drill': '理科暗記',
+    'social_drill': '社会暗記',
+    'math': '算数',
+    'jpn': '国語',
+    'eng': '英語',
+    'review': '復習レッスン'
+  };
+  return subjectMap[subject] || subject;
+}
+
+// 現在選択されている教科
+let currentSubject = 'recommended';
+
+// 現在選択されている単元（算数の場合）
+let selectedUnit = null;
+
+// 理科の分野定義
+const scienceUnits = [
+  {
+    id: 'physics',
+    name: '物理分野',
+    icon: '⚡',
+    lessons: ['sci.physics.motion']
+  },
+  {
+    id: 'chemistry',
+    name: '化学分野',
+    icon: '🧪',
+    lessons: ['sci.chemistry.water_solution']
+  },
+  {
+    id: 'biology',
+    name: '生物分野',
+    icon: '🌱',
+    lessons: ['sci.biology.human_body', 'sci.biology.plants']
+  },
+  {
+    id: 'earth_science',
+    name: '地学分野',
+    icon: '🌍',
+    lessons: ['sci.earth.weather']
+  }
+];
+
+// 社会の分野定義
+const socialUnits = [
+  {
+    id: 'geography',
+    name: '地理分野',
+    icon: '🗺️',
+    lessons: [
+      'soc.geography.land_topography_climate',
+      'soc.geography.maps_symbols',
+      'soc.geography.agriculture_forestry_fishery',
+      'soc.geography.industry_energy',
+      'soc.geography.commerce_trade_transportation',
+      'soc.geography.hokkaido_region',
+      'soc.geography.tohoku_region',
+      'soc.geography.kanto_region',
+      'soc.geography.chubu_region',
+      'soc.geography.kinki_region',
+      'soc.geography.chugoku_shikoku_region',
+      'soc.geography.kyushu_region',
+      'soc.geography.prefectures_cities',
+      'soc.geography.environment',
+      'soc.geography.information',
+      'soc.geography.world_geography'
+    ]
+  },
+  {
+    id: 'history',
+    name: '歴史分野',
+    icon: '📜',
+    lessons: [
+      'soc.history.kofun_asuka',
+      'soc.history.nara_period',
+      'soc.history.heian_period',
+      'soc.history.kamakura_period',
+      'soc.history.muromachi_period',
+      'soc.history.azuchi_momoyama',
+      'soc.history.edo_period',
+      'soc.history.meiji_period',
+      'soc.history.taisho_showa_prewar',
+      'soc.history.showa_postwar',
+      'soc.history.heisei_reiwa',
+      'soc.history.cross_period_problems'
+    ]
+  },
+  {
+    id: 'civics',
+    name: '公民分野',
+    icon: '🏛️',
+    lessons: [
+      'soc.civics.politics_national_life',
+      'soc.civics.constitution_three_principles',
+      'soc.civics.diet_cabinet_judiciary',
+      'soc.civics.finance_local_government',
+      'soc.civics.world_affairs_international',
+      'soc.civics.modern_social_issues'
+    ]
+  }
+];
+
+// 理科おぼえる編の分野定義
+const scienceDrillUnits = [
+  // 理科のおぼえる編教材が少ないため、今後追加予定
+];
+
+// 社会おぼえる編の分野定義
+const socialDrillUnits = [
+  {
+    id: 'geography_drill',
+    name: '地理分野',
+    icon: '🗺️',
+    lessons: [
+      'soc.geography.land_topography_climate_quiz',
+      'soc.geography.agriculture_forestry_fishery_quiz',
+      'soc.geography.prefectures_cities_quiz',
+      'soc.geography.industry_energy_quiz',
+      'soc.geography.regions_quiz',
+      'soc.geography.tohoku_region_quiz',
+      'soc.geography.kanto_region_quiz',
+      'soc.geography.chubu_region_quiz',
+      'soc.geography.kinki_region_quiz',
+      'soc.geography.chugoku_shikoku_region_quiz',
+      'soc.geography.kyushu_region_quiz',
+      'soc.geography.commerce_trade_transportation_quiz',
+      'soc.geography.environment_quiz',
+      'soc.geography.information_quiz',
+      'soc.geography.maps_symbols_quiz',
+      'soc.geography.world_geography_quiz'
+    ]
+  },
+  {
+    id: 'history_drill',
+    name: '歴史分野',
+    icon: '📜',
+    lessons: [
+      'soc.history.kofun_asuka_quiz',
+      'soc.history.nara_period_quiz',
+      'soc.history.heian_period_quiz',
+      'soc.history.kamakura_period_quiz',
+      'soc.history.muromachi_period_quiz',
+      'soc.history.azuchi_momoyama_quiz',
+      'soc.history.edo_period_quiz',
+      'soc.history.meiji_period_quiz',
+      'soc.history.taisho_showa_prewar_quiz',
+      'soc.history.showa_postwar_quiz',
+      'soc.history.heisei_reiwa_quiz',
+      'soc.history.cross_period_problems_quiz'
+    ]
+  },
+  {
+    id: 'civics_drill',
+    name: '公民分野',
+    icon: '🏛️',
+    lessons: [
+      'soc.civics.constitution_quiz',
+      'soc.civics.government_quiz',
+      'soc.civics.politics_national_life_quiz',
+      'soc.civics.finance_local_government_quiz',
+      'soc.civics.world_affairs_international_quiz',
+      'soc.civics.modern_social_issues_quiz'
+    ]
+  }
+];
+
+// おすすめ教材を選択する関数
+function getRecommendedLessons() {
+  console.log('getRecommendedLessons called');
+  const recommendations = [];
+  
+  console.log('カタログ:', state.catalog ? `${state.catalog.length}件` : 'undefined');
+  console.log('復習レッスン:', state.reviewLessons ? `${state.reviewLessons.length}件` : 'undefined');
+  
+  // 1. 復習レッスンを最優先で追加
+  if (state.reviewLessons && state.reviewLessons.length > 0) {
+    console.log('復習レッスンをおすすめに追加:', state.reviewLessons);
+    // 復習レッスンを通常のレッスン形式に変換
+    state.reviewLessons.forEach(reviewLesson => {
+      const reviewEntry = {
+        id: reviewLesson.id,
+        title: reviewLesson.title,
+        subject: 'review', // 復習レッスン専用のsubject
+        grade: '復習',
+        duration_min: Math.ceil(reviewLesson.questions.length * 1.5), // 問題数 × 1.5分
+        sku_required: false,
+        type: 'review',
+        reviewLesson: reviewLesson // 元の復習レッスンデータを保持
+      };
+      recommendations.push(reviewEntry);
+    });
+  } else {
+    console.log('復習レッスンはありません');
+  }
+  
+  // 理科・社会それぞれで1つずつ推薦
+  // 理科：sci（わかる編）→ science_drill（おぼえる編）の順
+  // 社会：soc（わかる編）→ social_drill（おぼえる編）の順
+  const subjectGroups = [
+    { name: '理科', subjects: ['sci', 'science_drill'] },
+    { name: '社会', subjects: ['soc', 'social_drill'] }
+  ];
+  
+  subjectGroups.forEach(group => {
+    console.log(`${group.name}分野の処理開始`);
+    let recommendedLesson = null;
+    
+    // わかる編→おぼえる編の順で処理
+    for (const subject of group.subjects) {
+    console.log(`${subject}教科の処理開始`);
+      
+      // カタログからその教科の教材を取得し、IDでソート（番号順）
+      const subjectLessons = state.catalog
+        .filter(entry => entry.subject === subject)
+        .sort((a, b) => a.id.localeCompare(b.id));
+      
+    console.log(`${subject}教科の教材:`, subjectLessons);
+    
+    if (subjectLessons.length === 0) {
+      console.log(`${subject}教科の教材がありません`);
+        continue;
+      }
+      
+      // 最後に取り組んだ教材を特定（時系列順）
+    const completedLessons = subjectLessons
+      .filter(entry => isLessonCompleted(entry.id))
+      .sort((a, b) => {
+        const progressA = getLessonProgress(a.id);
+        const progressB = getLessonProgress(b.id);
+        return (progressB?.at || 0) - (progressA?.at || 0);
+      });
+    
+    console.log(`${subject}教科の完了済み教材:`, completedLessons);
+      
+      let nextLesson = null;
+    
+    if (completedLessons.length > 0) {
+        // 最後に完了した教材の次の教材を探す
+      const lastCompleted = completedLessons[0];
+      const lastCompletedIndex = subjectLessons.findIndex(entry => entry.id === lastCompleted.id);
+      console.log(`${subject}教科の最後に完了した教材:`, lastCompleted, 'インデックス:', lastCompletedIndex);
+      
+      if (lastCompletedIndex < subjectLessons.length - 1) {
+        nextLesson = subjectLessons[lastCompletedIndex + 1];
+        console.log(`${subject}教科の次の教材:`, nextLesson);
+      } else {
+          console.log(`${subject}教科はすべて完了済み`);
+      }
+    } else {
+      // 完了した教材がない場合は最初の教材を推薦
+      nextLesson = subjectLessons[0];
+      console.log(`${subject}教科の最初の教材を推薦:`, nextLesson);
+    }
+    
+      // 未完了の教材が見つかったら推薦として採用
+    if (nextLesson && !isLessonCompleted(nextLesson.id)) {
+        console.log(`${group.name}分野の推薦教材:`, nextLesson);
+        recommendedLesson = nextLesson;
+        break; // わかる編で見つかったらおぼえる編は見ない
+      }
+    }
+    
+    // その分野の推薦教材があれば追加
+    if (recommendedLesson) {
+      console.log(`${group.name}分野の教材を推薦リストに追加:`, recommendedLesson);
+      recommendations.push(recommendedLesson);
+    } else {
+      console.log(`${group.name}分野に推薦できる教材がありません`);
+    }
+  });
+  
+  console.log('最終的な推薦リスト（復習レッスン含む）:', recommendations);
+  
+  return recommendations;
+}
+
+// 教科別タブのイベントリスナーを設定
+function setupSubjectTabs() {
+  const subjectTabs = document.querySelectorAll('.subject-tab');
+  subjectTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      console.log('📌 タブクリック:', tab.dataset.subject);
+      
+      // アクティブなタブを更新
+      subjectTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      
+      // 選択された教科を更新
+      currentSubject = tab.dataset.subject;
+      console.log('📌 currentSubject更新:', currentSubject);
+      
+      // 教科に応じたイラストを更新
+      updateSubjectHero(currentSubject);
+      
+      // 教材一覧を再描画
+      console.log('📌 renderHome()を呼び出し');
+      renderHome();
+    });
+  });
+}
+
+function renderHome(){
+  const homeView = document.getElementById('homeView');
+  const app = document.getElementById('app');
+  
+  // 復習ダッシュボード専用表示は削除（復習レッスンは通常のおすすめレッスンに統合）
+  
+  // 理科・社会・おぼえる編の場合は2カラムレイアウトに変更
+  if (currentSubject === 'sci' || currentSubject === 'soc' || currentSubject === 'science_drill' || currentSubject === 'social_drill') {
+    homeView.classList.add('math-full-width');
+    app.classList.add('math-full-width');
+    
+    // homeView の基本構造を復元（復習ダッシュボードから切り替えた場合）
+    if (!document.getElementById('lessonList')) {
+      console.log('🔧 lessonList要素が見つからないため、基本構造を復元します');
+      
+      // 現在の教科に応じたヒーロー情報を取得
+      const subjectInfo = getSubjectHeroInfo(currentSubject);
+      
+      homeView.innerHTML = `
+        <!-- 横長イラストエリア -->
+        <div class="w-full h-44 mb-6 overflow-hidden relative">
+          <!-- イラスト表示エリア -->
+          <div id="subjectHero" class="w-full h-full ${subjectInfo.bgClass} flex items-center justify-center">
+            <div class="text-white text-center">
+              <div class="text-4xl mb-2">${subjectInfo.icon}</div>
+              <div class="text-xl font-bold">${subjectInfo.title}</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 教科別タブ -->
+        <div class="subject-tabs mb-6">
+          <button class="subject-tab" data-subject="recommended">⭐ おすすめ学習</button>
+          <button class="subject-tab" data-subject="sci">🔬 理科わかる</button>
+          <button class="subject-tab" data-subject="science_drill">🧪 理科おぼえる</button>
+          <button class="subject-tab" data-subject="soc">🌍 社会わかる</button>
+          <button class="subject-tab" data-subject="social_drill">📍 社会おぼえる</button>
+        </div>
+        
+        <div id="lessonList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      `;
+      
+      // タブのイベントリスナーを再設定
+      setupSubjectTabs();
+      
+      // アクティブなタブを設定
+      const tabs = document.querySelectorAll('.subject-tab');
+      tabs.forEach(tab => {
+        tab.classList.remove('active');
+        if (tab.dataset.subject === currentSubject) {
+          tab.classList.add('active');
+        }
+      });
+      
+      // ヒーローを現在の教科に合わせて更新
+      updateSubjectHero(currentSubject);
+    }
+    
+    if (currentSubject === 'sci') {
+      renderScienceUnits();
+    } else if (currentSubject === 'soc') {
+      renderSocialUnits();
+    } else if (currentSubject === 'science_drill') {
+      renderScienceDrillUnits();
+    } else if (currentSubject === 'social_drill') {
+      renderSocialDrillUnits();
+    }
+    return;
+  } else {
+    // 他の教科の場合は通常レイアウトに戻す
+    homeView.classList.remove('math-full-width');
+    app.classList.remove('math-full-width');
+  }
+  
+  const list = document.getElementById('lessonList');
+  if (!list) {
+    console.error('❌ lessonList要素が見つかりません。基本構造を復元します。');
+    // 基本的なHTML構造を復元
+    homeView.innerHTML = `
+      <div id="lessonList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    `;
+    // 再帰的に呼び出し
+    renderHome();
+    return;
+  }
+  list.innerHTML='';
+  
+  console.log('renderHome called, currentSubject:', currentSubject);
+  
+  let displayCatalog;
+  
+  if (currentSubject === 'recommended') {
+    // おすすめ教材を取得
+    displayCatalog = getRecommendedLessons();
+    console.log('おすすめ教材:', displayCatalog);
+    
+    // おすすめ教材がない場合のメッセージ
+    if (displayCatalog.length === 0) {
+      console.log('おすすめ教材がありません');
+      list.innerHTML = `
+        <div class="col-span-full text-center py-8">
+          <div class="text-slate-500">
+            <p class="text-lg mb-2">🎉 素晴らしい！</p>
+            <p>すべての教材を完了しました。</p>
+            <p class="text-sm mt-2">完了した教材を「再学習」して復習しましょう。</p>
+          </div>
+        </div>
+      `;
+      setupSubjectTabs();
+      return;
+    }
+  } else {
+    // 特定の教科の教材をフィルタリング
+    displayCatalog = state.catalog.filter(entry => entry.subject === currentSubject);
+    console.log(`${currentSubject}の教材:`, displayCatalog);
+    
+    // 完了した教材を下に表示するようにソート
+    displayCatalog = displayCatalog.sort((a, b) => {
+      const aCompleted = isLessonCompleted(a.id);
+      const bCompleted = isLessonCompleted(b.id);
+      
+      if (aCompleted === bCompleted) {
+        // 両方とも完了している、または両方とも未完了の場合は元の順序を維持
+        return 0;
+      } else if (aCompleted) {
+        // aが完了している場合は下に移動
+        return 1;
+      } else {
+        // bが完了している場合は下に移動
+        return -1;
+      }
+    });
+  }
+  
+  console.log('表示する教材:', displayCatalog);
+  
+  displayCatalog.forEach(entry=>{
+    const div=document.createElement('div');
+    const isCompleted = isLessonCompleted(entry.id);
+    
+    const reviewClass = entry.type === 'review' ? 'review' : '';
+    div.className=`card p-4 ${entry.subject} ${reviewClass} ${isCompleted ? 'completed' : ''}`;
+    
+    const need = entry.sku_required ? `<span class="badge lock">要購入</span>` : `<span class="badge open">無料</span>`;
+    const subjectName = getSubjectName(entry.subject);
+    const completionBadge = isCompleted ? `<span class="badge complete">完了</span>` : '';
+    
+    // スコア情報を取得
+    const scoreInfo = getLessonScoreInfo(entry.id);
+    const scoreDisplay = scoreInfo ? 
+      `<div class="text-xs text-slate-600 mb-1 flex items-center justify-between">
+        <span class="font-bold text-orange-600">${scoreInfo.correct}/${scoreInfo.total}問正解</span>
+        <span class="text-slate-500">${scoreInfo.formattedDate}</span>
+      </div>` : '';
+    
+    // おすすめタブの場合は特別な表示
+    let recommendationBadge = '';
+    if (currentSubject === 'recommended') {
+      if (entry.type === 'review') {
+        recommendationBadge = `<span class="badge review">🎓 復習</span>`;
+      } else {
+        recommendationBadge = `<span class="badge recommend">⭐ おすすめ</span>`;
+      }
+    }
+    
+    div.innerHTML = `
+      <div class="flex items-start justify-between mb-2">
+        <h3 class="font-semibold flex-1">${escapeHtml(entry.title)}</h3>
+        <div class="flex gap-1">
+          ${recommendationBadge}
+          ${completionBadge}
+          ${need}
+        </div>
+      </div>
+      <div class="text-sm text-slate-500 mb-2">${subjectName} / 小${entry.grade} ・ ${entry.duration_min||'?'}分</div>
+      ${scoreDisplay}
+      <div class="text-center">
+        <span class="inline-block px-3 py-2 rounded-lg bg-indigo-600 text-white text-sm font-medium">${isCompleted ? '再学習' : '開く'}</span>
+      </div>
+    `;
+    
+    // カード全体をクリック可能にする
+    div.style.cursor = 'pointer';
+    
+    // 復習レッスンの場合は専用の処理
+    if (entry.type === 'review') {
+      div.onclick = () => openReviewLesson(entry.id);
+    } else {
+      div.onclick = () => setHash('lesson', entry.id);
+    }
+    
+    list.appendChild(div);
+  });
+  
+  // 教科別タブのイベントリスナーを設定
+  setupSubjectTabs();
+}
+
+// 理科の単元別表示を実装
+function renderScienceUnits() {
+  renderSubjectUnits(scienceUnits, '理科');
+}
+
+// 社会の単元別表示を実装
+function renderSocialUnits() {
+  renderSubjectUnits(socialUnits, '社会');
+}
+
+// 理科おぼえる編の単元別表示を実装
+function renderScienceDrillUnits() {
+  renderSubjectUnits(scienceDrillUnits, '理科おぼえる');
+}
+
+// 社会おぼえる編の単元別表示を実装
+function renderSocialDrillUnits() {
+  renderSubjectUnits(socialDrillUnits, '社会おぼえる');
+}
+
+// 汎用的な単元別表示関数
+function renderSubjectUnits(units, subjectName) {
+  console.log('renderSubjectUnits called for', subjectName);
+  const homeView = document.getElementById('homeView');
+  if (!homeView) {
+    console.error('homeView element not found');
+    return;
+  }
+  
+  // ヒーローイメージと教科別タブは残し、lessonListだけを置き換え
+  const list = document.getElementById('lessonList');
+  if (!list) {
+    console.error('lessonList element not found');
+    return;
+  }
+  list.className = 'w-full';
+  
+  list.innerHTML = `
+    <div class="math-two-column">
+      <!-- 左側：単元一覧 -->
+      <div class="units-column">
+        <div id="unitsContainer"></div>
+      </div>
+      
+      <!-- 右側：選択された単元のレッスン -->
+      <div class="lessons-column">
+        <div id="lessonsContainer">
+          <div class="lessons-placeholder">
+            <div class="placeholder-icon">📖</div>
+            <h3 class="placeholder-title">単元を選択してください</h3>
+            <p class="placeholder-text">左側の単元一覧から学習したい単元をクリックしてください。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  console.log('HTML structure created, calling renderUnits');
+  renderUnits(units);
+  setupSubjectTabs();
+  
+  // モバイル（<=768px）は単元一覧をアイコン帯に縮約（リサイズにも追随）
+  const unitsWrap = document.getElementById('unitsContainer');
+  const mq = window.matchMedia('(max-width: 768px)');
+  const applyCompact = () => {
+    if (!unitsWrap) return;
+    if (mq.matches) unitsWrap.classList.add('compact-units');
+    else unitsWrap.classList.remove('compact-units');
+  };
+  applyCompact();
+  mq.addEventListener?.('change', applyCompact);
+}
+
+// 単元一覧を描画
+function renderUnits(units) {
+  console.log('renderUnits called');
+  const container = document.getElementById('unitsContainer');
+  if (!container) {
+    console.error('unitsContainer element not found');
+    return;
+  }
+  
+  container.innerHTML = '';
+  console.log('units:', units.length, 'units');
+  
+  units.forEach((unit, index) => {
+    console.log(`Processing unit ${index + 1}:`, unit.name);
+    // その単元のレッスンを取得
+    const unitLessons = state.catalog.filter(lesson => 
+      unit.lessons.includes(lesson.id)
+    );
+    
+    // 進捗計算
+    const completedCount = unitLessons.filter(lesson => isLessonCompleted(lesson.id)).length;
+    const progressPercent = unitLessons.length > 0 ? Math.round((completedCount / unitLessons.length) * 100) : 0;
+    
+    const unitElement = document.createElement('div');
+    unitElement.className = `unit-item ${selectedUnit === unit.id ? 'selected' : ''} ${unitLessons.length === 0 ? 'no-lessons' : ''}`;
+    unitElement.title = `${unit.name}`;  // モバイルではこのtitleが活きる
+    unitElement.setAttribute('aria-label', unit.name);
+    const shortLabel = (unit.shortName || unit.name || '').slice(0, 8);
+    unitElement.innerHTML = `
+      <div class="unit-item-content">
+        <div class="unit-item-icon">${unit.icon}</div>
+        <div class="unit-item-short" aria-hidden="true">${shortLabel}</div>
+        <div class="unit-item-info">
+          <h4 class="unit-item-title">${unit.name}</h4>
+          <div class="unit-item-meta">
+            <span class="unit-item-count">${unitLessons.length > 0 ? `${unitLessons.length}個のレッスン` : '準備中'}</span>
+            ${unitLessons.length > 0 ? `<span class="unit-item-progress">${progressPercent}%</span>` : '<span class="unit-item-progress">-</span>'}
+          </div>
+          ${unitLessons.length > 0 ? `
+            <div class="unit-item-progress-bar">
+              <div class="unit-item-progress-fill" style="width: ${progressPercent}%"></div>
+            </div>
+          ` : '<div class="unit-item-coming-soon">近日公開予定</div>'}
+        </div>
+      </div>
+    `;
+    
+    if (unitLessons.length > 0) {
+      unitElement.onclick = () => selectUnit(unit.id);
+    } else {
+      unitElement.style.cursor = 'not-allowed';
+      unitElement.style.opacity = '0.6';
+    }
+    
+    container.appendChild(unitElement);
+  });
+}
+
+// 単元を選択
+function selectUnit(unitId) {
+  selectedUnit = unitId;
+  
+  // 現在の教科に応じて適切な単元配列を選択
+  let currentUnits;
+  if (currentSubject === 'sci') {
+    currentUnits = scienceUnits;
+  } else if (currentSubject === 'soc') {
+    currentUnits = socialUnits;
+  } else if (currentSubject === 'science_drill') {
+    currentUnits = scienceDrillUnits;
+  } else if (currentSubject === 'social_drill') {
+    currentUnits = socialDrillUnits;
+  } else {
+    currentUnits = [];
+  }
+  
+  renderUnits(currentUnits); // 単元一覧を再描画（選択状態を更新）
+  renderUnitLessons(unitId); // 選択された単元のレッスンを表示
+
+  // モバイルでは選択後にレッスン領域へスムーズスクロール
+  if (window.matchMedia('(max-width: 768px)').matches) {
+    const target = document.getElementById('lessonsContainer');
+    if (target) {
+      // レイアウト再計算のタイミングを合わせる
+      setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0);
+    }
+  }
+}
+
+// 選択された単元のレッスンを表示
+function renderUnitLessons(unitId) {
+  const container = document.getElementById('lessonsContainer');
+  if (!container) return;
+  
+  // 現在の教科に応じて適切な単元配列を選択
+  let currentUnits;
+  if (currentSubject === 'sci') {
+    currentUnits = scienceUnits;
+  } else if (currentSubject === 'soc') {
+    currentUnits = socialUnits;
+  } else if (currentSubject === 'science_drill') {
+    currentUnits = scienceDrillUnits;
+  } else if (currentSubject === 'social_drill') {
+    currentUnits = socialDrillUnits;
+  } else {
+    // デフォルトは空配列
+    currentUnits = [];
+  }
+  
+  const unit = currentUnits.find(u => u.id === unitId);
+  if (!unit) return;
+  
+  // その単元のレッスンを取得
+  const unitLessons = state.catalog.filter(lesson => 
+    unit.lessons.includes(lesson.id)
+  );
+  
+  if (unitLessons.length === 0) {
+    container.innerHTML = `
+      <div class="lessons-placeholder">
+        <div class="placeholder-icon">⚠️</div>
+        <h3 class="placeholder-title">レッスンが見つかりません</h3>
+        <p class="placeholder-text">この単元のレッスンデータが見つかりませんでした。</p>
+      </div>
+    `;
+    return;
+  }
+  
+  // 完了した教材を下に表示するようにソート
+  const sortedLessons = unitLessons.sort((a, b) => {
+    const aCompleted = isLessonCompleted(a.id);
+    const bCompleted = isLessonCompleted(b.id);
+    
+    if (aCompleted === bCompleted) {
+      return 0;
+    } else if (aCompleted) {
+      return 1;
+    } else {
+      return -1;
+    }
+  });
+  
+  container.innerHTML = `
+    <div class="lessons-header">
+      <h3 class="lessons-title">${unit.icon} ${unit.name}</h3>
+      <span class="lessons-count">${unitLessons.length}個のレッスン</span>
+    </div>
+    
+    <!-- シンプルなリスト表示 -->
+    <div class="lessons-list-container" id="lessonsListContainer">
+    </div>
+  `;
+  
+  const listContainer = document.getElementById('lessonsListContainer');
+  
+  if (!listContainer) {
+    console.error('List container not found');
+    return;
+  }
+  
+  sortedLessons.forEach((lesson, index) => {
+    const isCompleted = isLessonCompleted(lesson.id);
+    const scorePercent = getLessonPercent(lesson.id);
+    const scoreText = scorePercent > 0 ? `${scorePercent}%` : '-';
+    
+    // リストアイテムを作成
+    const listItem = document.createElement('div');
+    listItem.className = `lesson-list-item ${isCompleted ? 'completed' : 'pending'}`;
+    
+    // 各要素を個別に作成して確実に横書きにする
+    const numberSpan = document.createElement('div');
+    numberSpan.className = 'lesson-number';
+    numberSpan.textContent = String(index + 1).padStart(2, '0');
+    
+    const titleSpan = document.createElement('div');
+    titleSpan.className = 'lesson-title';
+    titleSpan.textContent = lesson.title;
+    
+    const metaDiv = document.createElement('div');
+    metaDiv.className = 'lesson-meta';
+    
+    const durationSpan = document.createElement('span');
+    durationSpan.className = 'lesson-duration';
+    durationSpan.textContent = `${lesson.duration_min}分`;
+    
+    const statusSpan = document.createElement('span');
+    statusSpan.className = `lesson-status ${isCompleted ? 'completed' : 'pending'}`;
+    statusSpan.textContent = isCompleted ? '完了' : '未完了';
+    
+    // スコア情報を追加
+    const scoreInfo = getLessonScoreInfo(lesson.id);
+    
+    // メタ行に時間とステータスを追加
+    metaDiv.appendChild(durationSpan);
+    metaDiv.appendChild(statusSpan);
+    
+    // スコア表示を追加
+    if (scoreInfo) {
+      const scoreSpan = document.createElement('span');
+      scoreSpan.className = 'lesson-score';
+      scoreSpan.textContent = `${scoreInfo.correct}/${scoreInfo.total}問`;
+      scoreSpan.style.cssText = 'background: linear-gradient(135deg, #ea580c, #f97316); color: white; padding: 0.25rem 0.5rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600;';
+      metaDiv.appendChild(scoreSpan);
+      
+      const dateSpan = document.createElement('span');
+      dateSpan.className = 'lesson-date';
+      dateSpan.textContent = scoreInfo.formattedDate;
+      dateSpan.style.cssText = 'color: #6b7280; font-size: 0.75rem;';
+      metaDiv.appendChild(dateSpan);
+    }
+    
+    const actionBtn = document.createElement('button');
+    actionBtn.className = 'lesson-action-btn';
+    actionBtn.textContent = isCompleted ? '復習' : '開始';
+    actionBtn.addEventListener('click', () => setHash('lesson', lesson.id));
+    
+    // コンテナに追加
+    listItem.appendChild(numberSpan);
+    listItem.appendChild(titleSpan);
+    listItem.appendChild(metaDiv);
+    listItem.appendChild(actionBtn);
+    
+    listContainer.appendChild(listItem);
+  });
+}
+
+function renderLesson(id){
+  const l = state.catalog.find(x=>x.id===id);
+  if(!l){ alert('レッスンが見つかりません'); return setHash('home'); }
+  if(l.sku_required && !hasEntitlement(l.sku_required)) return setHash('purchase', l.sku_required);
+  
+  // 教材を単体ページとして開く
+  if(l.path){
+    window.location.href = l.path;
+  } else {
+    alert('教材ファイルが見つかりません');
+    setHash('home');
+  }
+}
+
+function renderPurchase(sku){
+  const el=document.getElementById('purchaseText');
+  if(el) el.textContent=`この教材は「${sku||'不明'}」の購入が必要です。`;
+}
+
+function renderResult(id){
+  const box=document.getElementById('resultBox');
+  if(!box) return;
+  
+  // セッション結果を優先的に取得
+  const sessionResult = getSessionResult();
+  
+  console.log('🔍 結果画面デバッグ情報:');
+  console.log('  要求されたレッスンID:', id);
+  console.log('  セッション結果:', sessionResult);
+  console.log('  セッション結果のレッスンID:', sessionResult?.lessonId);
+  console.log('  IDマッチ:', sessionResult?.lessonId === id);
+  
+  // より柔軟なID照合（部分一致も含む）
+  const isMatchingLesson = sessionResult && (
+    sessionResult.lessonId === id ||
+    sessionResult.lessonId.includes(id.replace(/_/g, '.')) ||
+    id.includes(sessionResult.lessonId.replace(/\./g, '_')) ||
+    // 地理コンテンツの新旧ID形式に対応
+    (sessionResult.lessonId.includes('soc.geography') && id.includes('4100')) ||
+    (sessionResult.lessonId.includes('4100') && id.includes('land_topography_climate'))
+  );
+  
+  console.log('  ID照合結果:', isMatchingLesson);
+  
+  if (isMatchingLesson) {
+    // セッション結果がある場合（今回の学習結果）
+    const { correct, total, seconds, completedAt } = sessionResult;
+    const scorePercent = total > 0 ? Math.round((correct / total) * 100) : 0;
+    const timeMinutes = Math.floor(seconds / 60);
+    const timeSecondsRemainder = seconds % 60;
+    const timeDisplay = timeMinutes > 0 ? 
+      `${timeMinutes}分${timeSecondsRemainder}秒` : 
+      `${seconds}秒`;
+    
+    // 完了時刻を日本時間でフォーマット
+    const completedTime = new Date(completedAt).toLocaleString('ja-JP', {
+      month: 'numeric',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    
+    // 結果に応じたメッセージとスタイル
+    let resultMessage = '';
+    let resultClass = '';
+    if (scorePercent >= 90) {
+      resultMessage = '🎉 素晴らしい成果です！';
+      resultClass = 'text-green-600 font-bold';
+    } else if (scorePercent >= 70) {
+      resultMessage = '👍 よくできました！';
+      resultClass = 'text-blue-600 font-bold';
+    } else if (scorePercent >= 50) {
+      resultMessage = '📚 もう少し頑張りましょう！';
+      resultClass = 'text-orange-600 font-bold';
+    } else {
+      resultMessage = '💪 復習して再チャレンジしよう！';
+      resultClass = 'text-red-600 font-bold';
+    }
+    
+    box.innerHTML = `
+      <div class="max-w-md mx-auto">
+        <div class="card p-6 text-center">
+          <div class="mb-4">
+            <div class="text-2xl font-bold text-slate-800 mb-2">学習完了！</div>
+            <div class="${resultClass} text-lg mb-3">${resultMessage}</div>
+          </div>
+          
+          <div class="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-lg p-4 mb-4">
+            <div class="text-3xl font-bold text-orange-600 mb-1">${correct}/${total}問正解</div>
+            <div class="text-lg text-orange-700 font-semibold">${scorePercent}%</div>
+          </div>
+          
+          <div class="flex justify-between text-sm text-slate-600 mb-4">
+            <div>学習時間: <span class="font-semibold">${timeDisplay}</span></div>
+            <div>完了時刻: <span class="font-semibold">${completedTime}</span></div>
+          </div>
+          
+          <div class="flex gap-3">
+            <button data-action="go-home" class="flex-1 px-4 py-3 rounded-lg bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold text-center transition-all duration-200">
+              ホームへ
+            </button>
+            <button data-action="retry-lesson" data-lesson-id="${id}" class="flex-1 px-4 py-3 rounded-lg border-2 border-orange-500 text-orange-500 hover:bg-orange-50 font-semibold transition-all duration-200">
+              再挑戦
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+    
+  } else {
+    // セッション結果がない場合（従来の累積データを表示）
+    const key=`progress:${id}`;
+    let p=null; try{ p=JSON.parse(localStorage.getItem(key)||'null'); }catch{}
+    
+  if(p){
+    const d=p.detail||{};
+      const scorePercent = d.total > 0 ? Math.round((d.correct / d.total) * 100) : 0;
+      
+      box.innerHTML = `
+        <div class="max-w-md mx-auto">
+          <div class="card p-6 text-center">
+            <div class="mb-4">
+              <div class="text-xl font-bold text-slate-800 mb-2">過去の学習結果</div>
+            </div>
+            
+            <div class="bg-gradient-to-r from-slate-50 to-slate-100 rounded-lg p-4 mb-4">
+              <div class="text-2xl font-bold text-slate-600 mb-1">${d.correct ?? '-'}/${d.total ?? '-'}問正解</div>
+              <div class="text-lg text-slate-700">${scorePercent}%</div>
+            </div>
+            
+            <div class="text-sm text-slate-600 mb-4">
+              学習時間: <span class="font-semibold">${d.timeSec ?? '-'}秒</span>
+            </div>
+            
+            <div class="flex gap-3">
+              <button data-action="go-home" class="flex-1 px-4 py-3 rounded-lg bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold text-center">
+                ホームへ
+              </button>
+              <a href="#/lesson/${id}" class="flex-1 px-4 py-3 rounded-lg border-2 border-orange-500 text-orange-500 hover:bg-orange-50 font-semibold text-center">
+                再学習
+              </a>
+            </div>
+          </div>
+        </div>
+      `;
+    } else {
+      box.innerHTML = `
+        <div class="max-w-md mx-auto">
+          <div class="card p-6 text-center">
+            <div class="text-xl font-bold text-slate-800 mb-4">結果データが見つかりません</div>
+            <button data-action="go-home" class="inline-block px-6 py-3 rounded-lg bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold">
+              ホームへ
+            </button>
+          </div>
+        </div>
+      `;
+    }
+  }
+}
+
+window.addEventListener('message', (ev)=>{
+  console.log('🔔 メッセージを受信しました:', ev.data);
+  console.log('🔔 送信元オリジン:', ev.origin);
+  console.log('🔔 現在のオリジン:', location.origin);
+  
+  // オリジンチェックを無効化（ローカル開発用）
+  console.log('✅ オリジンチェックをスキップ:', ev.origin);
+  const d=ev.data||{};
+  
+  // 個別問題の回答記録（復習システム用）
+  if (d.type === 'question:answered') {
+    console.log('問題回答メッセージを受信:', d);
+    handleQuestionAnswered(d);
+    return;
+  }
+  
+  // レッスン完了処理
+  if (d.type==='lesson:complete'){
+    console.log('完了メッセージを受信しました:', d);
+    const id=d.lessonId || (state.current && state.current.id);
+    const correct=d.detail?.correct ?? 0;
+    const total=d.detail?.total ?? 0;
+    const seconds=d.detail?.timeSec ?? 0;
+    console.log('進捗を保存します:', {id, correct, total, seconds});
+    
+    // 長期保存用の進捗データを保存
+    saveLessonProgress(id, correct, total, seconds);
+    
+    // セッション結果を一時保存（結果画面用）
+    console.log('💾 セッション結果を保存中:', { id, correct, total, seconds });
+    saveSessionResult(id, correct, total, seconds);
+    console.log('💾 セッション結果保存完了:', getSessionResult());
+    
+    setHash('result', id);
+  } else if (d.type==='lesson:goBack'){
+    console.log('戻るメッセージを受信しました');
+    // iframe内から戻るボタンが押された場合、ホーム画面に戻る
+    setHash('home');
+  }
+});
+
+function escapeHtml(s){return String(s).replace(/[&<>"']/g, m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]))}
+
+// PWAインストール機能
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  // インストールプロンプトを延期
+  e.preventDefault();
+  deferredPrompt = e;
+  
+  // インストールボタンを表示
+  const installBtn = document.getElementById('installBtn');
+  if (installBtn) {
+    installBtn.classList.remove('hidden');
+  }
+});
+
+// インストールボタンのクリックイベント
+document.addEventListener('DOMContentLoaded', () => {
+  const installBtn = document.getElementById('installBtn');
+  if (installBtn) {
+    installBtn.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        // インストールプロンプトを表示
+        deferredPrompt.prompt();
+        
+        // ユーザーの選択を待つ
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log('インストール結果:', outcome);
+        
+        // プロンプトをクリア
+        deferredPrompt = null;
+        
+        // インストールボタンを非表示
+        installBtn.classList.add('hidden');
+      }
+    });
+  }
+});
+
+// 教科別イラスト切り替えの機能
+function updateSubjectHero(subject) {
+  const heroImg = document.getElementById('subjectHero');
+  const heroMessage = document.getElementById('subjectMessage');
+  
+  // 新しいgetSubjectHeroInfo関数を使ってヒーロー要素を更新
+  if (heroImg) {
+    const subjectInfo = getSubjectHeroInfo(subject);
+    heroImg.className = `w-full h-full ${subjectInfo.bgClass} flex items-center justify-center`;
+    heroImg.innerHTML = `
+      <div class="text-white text-center">
+        <div class="text-4xl mb-2">${subjectInfo.icon}</div>
+        <div class="text-xl font-bold">${subjectInfo.title}</div>
+      </div>
+    `;
+  }
+  
+  if (!heroMessage) return;
+  
+  const subjectData = {
+    recommended: {
+      image: './images/subjects/recommended.png',
+      message: '⭐ おすすめ学習で、中学受験合格への道筋をつかもう！'
+    },
+    sci: {
+      image: './images/subjects/science.png',
+      message: '🔬 理科わかる編で自然現象を理解し、入試で勝利しよう！'
+    },
+    soc: {
+      image: './images/subjects/social.png',
+      message: '🌍 社会わかる編で歴史・地理・公民をマスターしよう！'
+    },
+    science_drill: {
+      image: './images/subjects/science.png',
+      message: '🧪 理科おぼえる編で重要事項を徹底暗記しよう！'
+    },
+    social_drill: {
+      image: './images/subjects/social.png',
+      message: '📍 社会おぼえる編で重要事項を徹底暗記しよう！'
+    },
+    math: {
+      image: './images/subjects/math.png',
+      message: '🔢 算数で論理的思考力を身につけよう！'
+    },
+    jpn: {
+      image: './images/subjects/japanese.png',
+      message: '📚 国語で豊かな表現力を身につけよう！'
+    },
+    eng: {
+      image: './images/subjects/english.png',
+      message: '🌏 英語で世界とつながろう！'
+    }
+  };
+  
+  const data = subjectData[subject] || subjectData.recommended;
+  if (data) {
+    heroImg.src = data.image;
+    heroImg.alt = `${subject}の学習イラスト`;
+    heroMessage.textContent = data.message;
+  }
+}
+
+// ===== LP描画 =====
+function renderLP(){
+  console.log('🚫 renderLP() は無効化されています - アプリビューを表示します');
+  renderAppView();
+  return;
+  const purchased = new Set(loadPurchases());
+  const user = state.user;
+  const canPurchase = user && (user.emailVerified || user.providerData?.some(provider => provider.providerId !== 'password'));
+  
+  grid.innerHTML = PACKS.map(p => {
+    const unlocked = purchased.has(p.id);
+    
+    let purchaseButton = '';
+    if (unlocked) {
+      purchaseButton = `<button class="btn-secondary" data-act="open" data-pack="${p.id}">開く</button>`;
+    } else if (!user) {
+      purchaseButton = `<button class="btn-primary disabled" data-act="login-required" data-pack="${p.id}" disabled title="ログインが必要です">🔒 ログイン必要</button>`;
+    } else if (!canPurchase) {
+      purchaseButton = `<button class="btn-primary disabled" data-act="verify-required" data-pack="${p.id}" disabled title="メールアドレスの確認が必要です">📧 メール確認必要</button>`;
+    } else {
+      purchaseButton = `<button class="btn-primary" data-act="buy" data-pack="${p.id}">購入</button>`;
+    }
+    
+    return `
+      <div class="pack-card ${unlocked ? 'unlocked':''}" data-pack="${p.id}">
+        <span class="lock-badge">🔒</span>
+      <div class="pack-title">${p.label}</div>
+      <div class="pack-meta">学年：小${p.grade} ／ 教科：${p.subject}</div>
+      <div class="pack-price">¥${p.price.toLocaleString()}</div>
+        <div class="pack-actions">
+          ${purchaseButton}
+          <button class="btn-secondary" data-act="set-grade" data-grade="${p.grade}">学年に設定</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // イベントハンドラの設定
+  grid.querySelectorAll('button[data-act="buy"]').forEach(btn=>{
+    btn.onclick = () => showPurchaseConfirmModal(btn.getAttribute('data-pack'));
+  });
+  
+  grid.querySelectorAll('button[data-act="open"]').forEach(btn=>{
+    btn.onclick = () => openPack(btn.getAttribute('data-pack'));
+  });
+  
+  grid.querySelectorAll('button[data-act="login-required"]').forEach(btn=>{
+    btn.onclick = () => {
+      alert('購入機能を利用するには、ログインが必要です。\n右上の「ログイン」ボタンからアカウントを作成またはログインしてください。');
+    };
+  });
+  
+  grid.querySelectorAll('button[data-act="verify-required"]').forEach(btn=>{
+    btn.onclick = () => {
+      alert('購入機能を利用するには、メールアドレスの確認が必要です。\n確認メールのリンクをクリックしてから再度お試しください。');
+    };
+  });
+  
+  grid.querySelectorAll('button[data-act="set-grade"]').forEach(btn=>{
+    btn.onclick = () => { setCurrentGrade(parseInt(btn.getAttribute('data-grade'))); renderAppView(); window.scrollTo({top:0, behavior:'smooth'}); };
+  });
+
+  const start = document.getElementById('startLearningBtn');
+  if(start){ start.onclick = () => { if(!getCurrentGrade()) setCurrentGrade(4); renderAppView(); window.scrollTo({top:0, behavior:'smooth'}); }; }
+}
+
+// LP内の購入ボタン状態を更新
+function updateLPPurchaseButtons(user) {
+  // LP再描画で対応
+  renderLP();
+}
+
+// ダミー購入（サンプル）
+// 実際の購入開始（Stripe Checkout）
+function startRealPurchase(packId){
+  const pack = PACKS.find(p => p.id === packId);
+  if (!pack) {
+    console.error('❌ パックが見つかりません:', packId);
+    alert('指定された商品が見つかりません。');
+    return;
+  }
+  
+  console.log('🛒 実際の購入を開始:', pack);
+  startPurchase(pack.productId, pack.label);
+}
+
+// ダミー購入（開発・テスト用）
+function fakePurchase(packId){
+  const arr = loadPurchases(); if(!arr.includes(packId)){ arr.push(packId); savePurchases(arr); }
+  renderAppView();
+}
+
+// パックを開く（必要に応じて教科別ビューへ）
+function openPack(packId){
+  const pack = PACKS.find(p=>p.id===packId); if(!pack) return;
+  setCurrentGrade(pack.grade);
+  renderAppView();
+  // ここで必要なら教科タブ切替などのハンドリングを追加
+}
+
+// ===== アプリ（学習画面）側：学年のみ表示＋4/1プロンプト =====
+function renderAppView(){
+  const grade = getCurrentGrade();
+  console.log('📱 renderAppView実行 - 学年:', grade);
+  
+  // 既存のホーム/レッスン描画は温存：ここでは「見せる学年の制御」と「バナー出し」だけ行う
+  const banner = ensureGradeBanner();
+  if(grade){
+    // 4/1以降に次学年未購入ならバナー表示
+    const next = Math.min(6, grade+1);
+    const needed = [`g${next}-sci`, `g${next}-soc`]; // 次学年の理社
+    const have = new Set(loadPurchases());
+    const missing = needed.filter(id => !have.has(id));
+    if(isAfterApril1() && grade < 6 && missing.length > 0){
+      banner.classList.add('show');
+      banner.querySelector('[data-role="text"]').innerHTML = `新年度（小${next}）のコンテンツが利用できます。<b>購入して開く</b>？`;
+      const buyBtn = banner.querySelector('button[data-role="buy-next"]');
+      buyBtn.onclick = () => { missing.forEach(id => fakePurchase(id)); banner.classList.remove('show'); };
+    }else{
+      banner.classList.remove('show');
+    }
+  }
+  
+  // アプリビュー表示後、強制的にホーム画面を描画
+  console.log('🏠 renderHome()を強制実行');
+  setTimeout(() => {
+    renderHome();
+  }, 100);
+}
+
+function ensureGradeBanner(){
+  let el = document.getElementById('gradeBanner');
+  if(!el){
+    const container = document.getElementById('homeView') || document.body;
+    el = document.createElement('div');
+    el.id = 'gradeBanner';
+    el.className = 'grade-banner';
+    el.innerHTML = `
+      <div data-role="text">新年度コンテンツのご案内</div>
+      <div class="actions">
+        <button class="btn-secondary" data-role="dismiss">閉じる</button>
+        <button class="btn-primary" data-role="buy-next">購入</button>
+      </div>`;
+    container.prepend(el);
+    el.querySelector('button[data-role="dismiss"]').onclick = ()=> el.classList.remove('show');
+  }
+  return el;
+}
+
+// ===== 購入モーダル関連 =====
+function openPurchaseModal() {
+  const modal = document.getElementById('purchaseModal');
+  if (!modal) return;
+  
+  renderModalContent();
+  modal.classList.remove('hidden');
+  
+  // エスケープキーでモーダルを閉じる
+  document.addEventListener('keydown', handleModalKeydown);
+}
+
+function closePurchaseModal() {
+  const modal = document.getElementById('purchaseModal');
+  if (!modal) return;
+  
+  modal.classList.add('hidden');
+  document.removeEventListener('keydown', handleModalKeydown);
+}
+
+function handleModalKeydown(e) {
+  if (e.key === 'Escape') {
+    closePurchaseModal();
+  }
+}
+
+function renderModalContent() {
+  const grid = document.getElementById('modalPackGrid');
+  if (!grid) return;
+  
+  const purchased = new Set(loadPurchases());
+  const user = state.user;
+  const canPurchase = user && (user.emailVerified || user.providerData?.some(provider => provider.providerId !== 'password'));
+  
+  const htmlContent = PACKS.map(pack => {
+    const details = PACK_DETAILS[pack.id];
+    const isPurchased = purchased.has(pack.id);
+    
+    const subjectsHTML = Object.entries(details.subjects).map(([subjectName, topics]) => `
+      <div class="modal-subject-card">
+        <div class="modal-subject-title">${subjectName}</div>
+        <div class="modal-subject-topics">${topics.join('・')}</div>
+      </div>
+    `).join('');
+    
+    let actionButton = '';
+    if (isPurchased) {
+      actionButton = `<button class="btn-secondary" data-action="open" data-pack-id="${pack.id}">学習開始</button>`;
+    } else if (!user) {
+      actionButton = `<button class="btn-primary disabled" disabled title="ログインが必要です" data-action="auth-required" data-type="login">🔒 ログイン必要</button>`;
+    } else if (!canPurchase) {
+      actionButton = `<button class="btn-primary disabled" disabled title="メールアドレスの確認が必要です" data-action="auth-required" data-type="verify">📧 メール確認必要</button>`;
+    } else {
+      actionButton = `<button class="btn-primary" data-action="purchase" data-pack-id="${pack.id}">購入する</button>`;
+    }
+    
+    return `
+      <div class="modal-pack-card ${isPurchased ? 'purchased' : ''}">
+        <div class="modal-pack-header">
+          <div class="modal-pack-title">${details.label}</div>
+          <div class="modal-pack-status ${isPurchased ? 'purchased' : 'unpurchased'}">
+            ${isPurchased ? '✅ 購入済み' : '🔒 未購入'}
+          </div>
+        </div>
+        <div class="modal-pack-content">
+          <div class="modal-pack-subjects">
+            ${subjectsHTML}
+          </div>
+        </div>
+        <div class="modal-pack-actions">
+          ${actionButton}
+          <button class="btn-secondary" data-action="set-grade" data-grade="${pack.grade}">学年に設定</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+  
+  grid.innerHTML = htmlContent;
+  
+  // イベントリスナーを動的に登録
+  // 注意: ②本格対応のイベント委譲により、この関数は不要になりました
+  // attachModalEventListeners();
+  console.log('📝 モーダルコンテンツを生成しました。イベントはグローバル委譲で処理されます。');
+}
+
+// モーダル内のイベントリスナーを動的に登録
+function attachModalEventListeners() {
+  const grid = document.getElementById('modalPackGrid');
+  if (!grid) return;
+  
+  // すべてのボタンにイベントリスナーを追加
+  grid.querySelectorAll('button[data-action]').forEach(button => {
+    const action = button.getAttribute('data-action');
+    const packId = button.getAttribute('data-pack-id');
+    const grade = button.getAttribute('data-grade');
+    const type = button.getAttribute('data-type');
+    
+    // 既存のイベントリスナーを削除（重複防止）
+    button.replaceWith(button.cloneNode(true));
+    const newButton = grid.querySelector(`button[data-action="${action}"]${packId ? `[data-pack-id="${packId}"]` : ''}${grade ? `[data-grade="${grade}"]` : ''}${type ? `[data-type="${type}"]` : ''}`);
+    
+    if (newButton) {
+      switch (action) {
+        case 'purchase':
+          newButton.addEventListener('click', () => {
+            console.log('🛒 購入ボタンクリック (addEventListener):', packId);
+            modalPurchasePack(packId);
+          });
+          break;
+        case 'open':
+          newButton.addEventListener('click', () => {
+            console.log('📂 パック開放ボタンクリック:', packId);
+            openPack(packId);
+          });
+          break;
+        case 'set-grade':
+          newButton.addEventListener('click', () => {
+            console.log('🎓 学年設定ボタンクリック:', grade);
+            setCurrentGrade(parseInt(grade));
+            renderAppView();
+          });
+          break;
+        case 'auth-required':
+          newButton.addEventListener('click', () => {
+            console.log('🔒 認証要求ボタンクリック:', type);
+            handleModalAuthRequired(type);
+          });
+          break;
+      }
+    }
+  });
+}
+
+// モーダル内の認証要求ハンドラ
+function handleModalAuthRequired(type) {
+  if (type === 'login') {
+    alert('購入機能を利用するには、ログインが必要です。\nモーダルを閉じて、右上の「ログイン」ボタンからアカウントを作成またはログインしてください。');
+  } else if (type === 'verify') {
+    alert('購入機能を利用するには、メールアドレスの確認が必要です。\n確認メールのリンクをクリックしてから再度お試しください。');
+  }
+}
+
+// モーダル内の購入ボタン状態を更新
+function updateModalPurchaseButtons(user) {
+  // モーダルが開いている場合のみ再描画
+  const modal = document.getElementById('purchaseModal');
+  if (modal && !modal.classList.contains('hidden')) {
+    renderModalContent();
+  }
+}
+
+function modalPurchasePack(packId) {
+  console.log('🛒 モーダル内購入:', packId);
+  
+  // 緊急対策: 関数実行時にもグローバル公開を確認
+  if (!window.modalPurchasePack) {
+    console.log('⚠️ window.modalPurchasePack が未定義のため、再設定します');
+    window.modalPurchasePack = modalPurchasePack;
+  }
+  
+  // メール確認チェック
+  if (state.user && !state.user.emailVerified && state.user.providerData?.some(provider => provider.providerId === 'password')) {
+    alert('購入機能を利用するには、メールアドレスの確認が必要です。\n確認メールのリンクをクリックしてから再度お試しください。');
+    return;
+  }
+  
+  // 購入確認モーダルを表示
+  showPurchaseConfirmModal(packId);
+}
+
+function setupPurchaseModal() {
+  // 購入ボタンのクリックイベント
+  const purchaseBtn = document.getElementById('purchaseBtn');
+  if (purchaseBtn) {
+    purchaseBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      // ボタンが無効化されている場合はクリックを無視
+      if (purchaseBtn.disabled) {
+        console.log('購入ボタンは無効化されています。クリックを無視します。');
+        return;
+      }
+      
+      // デバッグ情報を出力
+      console.log('🛒 購入ボタンクリック - 認証状態:', state.user);
+      console.log('🛒 購入ボタンクリック - ボタン状態:', {
+        disabled: purchaseBtn.disabled,
+        textContent: purchaseBtn.textContent,
+        className: purchaseBtn.className
+      });
+      console.log('🛒 購入ボタンクリック - ユーザー情報:', {
+        user: !!state.user,
+        emailVerified: state.user?.emailVerified,
+        providerData: state.user?.providerData
+      });
+      console.log('🛒 購入ボタンクリック - window.state:', window.state);
+      console.log('🛒 購入ボタンクリック - グローバル確認:', {
+        hasState: !!window.state,
+        hasUser: !!window.state?.user,
+        stateUserSame: state.user === window.state?.user
+      });
+      
+      // Firebase認証の現在の状態を直接確認
+      let currentUser = state.user || window.state?.user;
+      
+      // Firebase auth から直接ユーザー情報を取得（最新状態を確認）
+      if (!currentUser && window.firebaseAuth?.auth?.currentUser) {
+        console.log('🔄 Firebase auth.currentUser から状態を取得します');
+        const firebaseUser = window.firebaseAuth.auth.currentUser;
+        currentUser = {
+          id: firebaseUser.uid,
+          name: firebaseUser.displayName || firebaseUser.email,
+          email: firebaseUser.email,
+          emailVerified: firebaseUser.emailVerified,
+          providerData: firebaseUser.providerData
+        };
+        
+        // state.user も更新
+        state.user = currentUser;
+        console.log('✅ Firebase currentUser から state.user を更新:', currentUser);
+      }
+      
+      if (!currentUser) {
+        console.error('❌ 認証エラー: ユーザーが見つかりません');
+        console.error('❌ デバッグ詳細:', {
+          'state.user': state.user,
+          'window.state?.user': window.state?.user,
+          'firebase.currentUser': window.firebaseAuth?.auth?.currentUser,
+          'state === window.state': state === window.state
+        });
+        alert('購入機能を利用するには、ログインが必要です。\n右上の「ログイン」ボタンからアカウントを作成またはログインしてください。');
+        return;
+      }
+      
+      // 状態を統一
+      if (!state.user && currentUser) {
+        console.log('🔄 state.user を設定します');
+        state.user = currentUser;
+      }
+      
+      // メール確認状態をチェック
+      const isEmailVerified = currentUser.emailVerified || currentUser.providerData?.some(provider => provider.providerId !== 'password');
+      if (!isEmailVerified) {
+        console.error('❌ メール確認エラー:', {
+          emailVerified: currentUser.emailVerified,
+          providerData: currentUser.providerData
+        });
+        alert('購入機能を利用するには、メールアドレスの確認が必要です。\n確認メールのリンクをクリックしてから再度お試しください。');
+        return;
+      }
+      
+      console.log('認証チェック完了 - 購入モーダルを開きます');
+      // 認証済みの場合のみモーダルを開く
+      openPurchaseModal();
+    });
+  }
+  
+  // モーダル閉じるボタンのイベント
+  const closeBtn = document.getElementById('closePurchaseModal');
+  const modalCloseBtn = document.getElementById('modalCloseBtn');
+  
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closePurchaseModal);
+  }
+  if (modalCloseBtn) {
+    modalCloseBtn.addEventListener('click', closePurchaseModal);
+  }
+  
+  // オーバーレイクリックで閉じる
+  const modal = document.getElementById('purchaseModal');
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closePurchaseModal();
+      }
+    });
+  }
+}
+
+// ===== 購入フロー関連 =====
+function showPurchaseConfirmModal(packId) {
+  const pack = PACKS.find(p => p.id === packId);
+  const details = PACK_DETAILS[packId];
+  if (!pack || !details) return;
+  
+  // 購入アイテム情報を設定
+  document.getElementById('purchaseItemTitle').textContent = details.label;
+  
+  // パックの種類に応じて説明文を設定
+  const isScience = pack.subject === '理科';
+  const description = isScience 
+    ? '物理・化学・生物・地学の全分野を学習できます'
+    : '地理・歴史・公民の全分野を学習できます';
+  document.getElementById('purchaseItemDescription').textContent = description;
+  
+  // メインの購入モーダルを非表示
+  closePurchaseModal();
+  
+  // 購入確認モーダルを表示
+  const confirmModal = document.getElementById('purchaseConfirmModal');
+  confirmModal.classList.remove('hidden');
+  
+  // 確認ボタンのイベント設定
+  const confirmBtn = document.getElementById('confirmPurchaseBtn');
+  const cancelBtn = document.getElementById('cancelPurchaseBtn');
+  const closeBtn = document.getElementById('closePurchaseConfirmModal');
+  
+  // onclick属性の代わりにdata属性とイベント委譲を使用
+  confirmBtn.setAttribute('data-action', 'process-purchase');
+  confirmBtn.setAttribute('data-pack-id', packId);
+  cancelBtn.setAttribute('data-action', 'close-purchase-confirm');
+  closeBtn.setAttribute('data-action', 'close-purchase-confirm');
+  
+  // エスケープキーで閉じる
+  document.addEventListener('keydown', handlePurchaseConfirmKeydown);
+}
+
+function closePurchaseConfirmModal() {
+  const modal = document.getElementById('purchaseConfirmModal');
+  modal.classList.add('hidden');
+  document.removeEventListener('keydown', handlePurchaseConfirmKeydown);
+}
+
+function handlePurchaseConfirmKeydown(e) {
+  if (e.key === 'Escape') {
+    closePurchaseConfirmModal();
+  }
+}
+
+async function processPurchase(packId) {
+  // 確認モーダルを閉じる
+  closePurchaseConfirmModal();
+  
+  // 処理中モーダルを表示
+  const processingModal = document.getElementById('purchaseProcessingModal');
+  processingModal.classList.remove('hidden');
+  
+  try {
+    // パック情報を取得
+    const pack = PACKS.find(p => p.id === packId);
+    if (!pack) {
+      throw new Error('パック情報が見つかりません: ' + packId);
+    }
+    
+    // 実際のStripe Checkout連携
+    await startPurchase(pack.productId, pack.label);
+  } catch (error) {
+    // エラーの場合は処理中モーダルを閉じてエラー表示
+    processingModal.classList.add('hidden');
+    console.error('Purchase failed:', error);
+    alert('決済の開始に失敗しました：' + error.message);
+  }
+}
+
+function completePurchase(packId) {
+  // 実際の購入処理
+  fakePurchase(packId);
+  
+  // 処理中モーダルを閉じる
+  const processingModal = document.getElementById('purchaseProcessingModal');
+  processingModal.classList.add('hidden');
+  
+  // 完了モーダルの内容を設定
+  const pack = PACKS.find(p => p.id === packId);
+  const details = PACK_DETAILS[packId];
+  document.getElementById('completedItemTitle').textContent = details.label;
+  
+  // 完了モーダルを表示
+  const completeModal = document.getElementById('purchaseCompleteModal');
+  completeModal.classList.remove('hidden');
+  
+  // 完了モーダルのボタンイベント設定
+  const startLearningBtn = document.getElementById('startLearningFromPurchase');
+  const continueBrowsingBtn = document.getElementById('continueBrowsingBtn');
+  const closeCompleteBtn = document.getElementById('closePurchaseCompleteModal');
+  
+  // onclick属性の代わりにdata属性とイベント委譲を使用
+  startLearningBtn.setAttribute('data-action', 'start-learning');
+  startLearningBtn.setAttribute('data-pack-id', packId);
+  continueBrowsingBtn.setAttribute('data-action', 'continue-browsing');
+  closeCompleteBtn.setAttribute('data-action', 'close-purchase-complete');
+  
+  // エスケープキーで閉じる
+  document.addEventListener('keydown', handlePurchaseCompleteKeydown);
+}
+
+function closePurchaseCompleteModal() {
+  const modal = document.getElementById('purchaseCompleteModal');
+  modal.classList.add('hidden');
+  document.removeEventListener('keydown', handlePurchaseCompleteKeydown);
+}
+
+function handlePurchaseCompleteKeydown(e) {
+  if (e.key === 'Escape') {
+    closePurchaseCompleteModal();
+  }
+}
+
+async function startup(){
+  // 🎉 Stripe Checkout 結果をチェック（最初に実行）
+  handleCheckoutResult();
+  
+  document.getElementById('btnLogin')?.addEventListener('click', loginMock);
+  document.getElementById('btnLogout')?.addEventListener('click', logoutMock);
+  
+  // 🚀 グローバルイベント委譲を追加（②本格対応）
+  setupGlobalEventDelegation();
+  
+  // 📌 教科タブのイベントリスナーを設定
+  setupSubjectTabs();
+  
+  await loadCatalog();
+  window.addEventListener('hashchange', route);
+  
+  // 初期ハッシュの設定
+  if (!location.hash) setHash('home');
+  
+  route();
+  
+  // 初期表示時の教科イラストを設定
+  updateSubjectHero('recommended');
+  
+  // 初期学年設定とアプリビューの描画
+  const currentGrade = getCurrentGrade();
+  if (!currentGrade) {
+    console.log('📚 初期学年を小4に設定');
+    setCurrentGrade(4);
+  }
+  console.log('📱 アプリビューを描画');
+  renderAppView();
+  
+  // 追加の保険：500ms後にもう一度実行
+  setTimeout(() => {
+    console.log('🔄 500ms後の保険実行');
+    
+    // LP要素を強制削除
+    const lpElements = document.querySelectorAll('.pack-card, .pack-grid, #packGrid, #lpGrid');
+    lpElements.forEach(el => {
+      console.log('🗑️ LP要素を削除:', el.className || el.id);
+      el.remove();
+    });
+    
+    // アプリビューを強制表示
+    const homeView = document.getElementById('homeView');
+    if (homeView) {
+      homeView.style.display = 'block';
+      homeView.classList.remove('hidden');
+      console.log('🏠 homeView強制表示完了');
+    }
+    
+    renderAppView();
+    renderHome();
+  }, 500);
+  
+  // 初期表示は通常のrenderHome()に任せる（復習レッスンは統合済み）
+  
+  // 購入モーダルのセットアップ
+  setupPurchaseModal();
+  
+  // 初期状態で購入ボタンを無効化（未ログイン状態）
+  updatePurchaseButtonsState(null);
+  
+  // デバッグ用: 5秒間隔で状態を表示
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    setInterval(() => {
+      console.log('=== 現在の状態 ===');
+      console.log('state.user:', state.user);
+      const purchaseBtn = document.getElementById('purchaseBtn');
+      if (purchaseBtn) {
+        console.log('購入ボタン状態:', {
+          disabled: purchaseBtn.disabled,
+          textContent: purchaseBtn.textContent,
+          className: purchaseBtn.className
+        });
+      }
+      console.log('==================');
+    }, 5000);
+  }
+  
+  // 緊急対策: startup 完了時にもグローバル公開を確実に実行
+  console.log('🔧 startup完了時のグローバル関数公開');
+  window.modalPurchasePack = modalPurchasePack;
+  window.openPack = openPack;
+  window.setCurrentGrade = setCurrentGrade;
+  
+  console.log('🔍 startup完了時の確認:', {
+    'window.modalPurchasePack': typeof window.modalPurchasePack,
+    'modalPurchasePack': typeof modalPurchasePack
+  });
+  
+  // ===== ビュー切替制御を初期化 =====
+  console.log('🎯 ビュー切替制御を初期化');
+  
+  const homeView = document.getElementById("homeView");
+  const lessonView = document.getElementById("lessonView");
+  
+  function showHomeView() {
+    if (homeView) {
+      homeView.classList.remove("hidden");
+      homeView.style.display = "block";
+    }
+    if (lessonView) {
+      lessonView.classList.add("hidden");
+    }
+    console.log('📱 ホームビューを表示');
+  }
+  
+  function showLessonView() {
+    if (lessonView) {
+      lessonView.classList.remove("hidden");
+      lessonView.style.display = "block";
+    }
+    if (homeView) {
+      homeView.classList.add("hidden");
+    }
+    console.log('📚 レッスンビューを表示');
+  }
+  
+  // 初期起動時にホームを表示
+  showHomeView();
+  
+  // ビュー切替関数をグローバルに公開
+  window.showHomeView = showHomeView;
+  window.showLessonView = showLessonView;
+}
+// DOMContentLoadedでアプリケーション全体を初期化
+// ===== HTML から呼び出される関数のグローバル公開（暫定対応） =====
+// ⚠️ 注意: これは暫定対応です。将来的にはイベント委譲に移行予定
+window.modalPurchasePack = modalPurchasePack;
+window.openPack = openPack;
+window.setCurrentGrade = setCurrentGrade;
+window.renderAppView = renderAppView;
+
+// 🚀 グローバルイベント委譲の設定（②本格対応）
+function setupGlobalEventDelegation() {
+  console.log('🚀 グローバルイベント委譲を設定中...');
+  
+  // クリック委譲（対象外は即 return）
+  document.addEventListener('click', (e) => {
+    const el = e.target.closest('[data-action]');
+    if (!el) return;                 // ← これでタブ等の通常ボタンは拾わない
+
+    const action = el.dataset.action;
+    const reviewId = el.dataset.reviewId;
+    const lessonId = el.dataset.lessonId;
+    const packId = el.dataset.packId;
+    const grade = el.getAttribute('data-grade');
+    const type = el.getAttribute('data-type');
+    const subject = el.getAttribute('data-subject');
+    
+    // 開発時のみデバッグログ（本番では無効化）
+    if (process?.env?.NODE_ENV === 'development') {
+      console.log('🎯 イベント委譲でクリック検出:', { action, packId, reviewId, lessonId, grade, type, subject });
+    }
+
+    // 復習レッスンを開く（最優先）
+    if (action === 'open-review' && reviewId) {
+      console.log('📂 復習レッスンを開く:', reviewId);
+      openReviewLesson(reviewId);
+      return;
+    }
+    
+    // 通常レッスンを開く
+    if (action === 'open-lesson' && lessonId) {
+      console.log('📚 レッスンを開く:', lessonId);
+      setHash('lesson', lessonId);
+      return;
+    }
+    
+    // パック（購入）を開く
+    if (action === 'open-pack' && packId) {
+      console.log('🛒 パックを開く:', packId);
+      setHash('purchase', packId);
+      return;
+    }
+    
+    // 各アクションに応じて適切な関数を呼び出し
+    switch (action) {
+      case 'purchase':
+        console.log('🛒 購入アクション実行:', packId);
+        modalPurchasePack(packId);
+        break;
+      case 'open':
+        console.log('📂 開放アクション実行:', packId);
+        if (packId) openPack(packId);
+        break;
+      case 'set-grade':
+        console.log('🎓 学年設定アクション実行:', grade);
+        setCurrentGrade(parseInt(grade));
+        renderAppView();
+        break;
+      case 'auth-required':
+        console.log('🔒 認証要求アクション実行:', type);
+        handleModalAuthRequired(type);
+        break;
+      case 'process-purchase':
+        console.log('💳 購入処理アクション実行:', packId);
+        processPurchase(packId);
+        break;
+      case 'close-purchase-confirm':
+        console.log('❌ 購入確認クローズアクション実行');
+        closePurchaseConfirmModal();
+        break;
+      case 'start-learning':
+        console.log('📚 学習開始アクション実行:', packId);
+        closePurchaseCompleteModal();
+        openPack(packId);
+        break;
+      case 'continue-browsing':
+        console.log('🔄 閲覧継続アクション実行');
+        closePurchaseCompleteModal();
+        openPurchaseModal();
+        break;
+      case 'close-purchase-complete':
+        console.log('✅ 購入完了クローズアクション実行');
+        closePurchaseCompleteModal();
+        break;
+      case 'select-subject':
+        console.log('📚 教科選択アクション実行:', subject);
+        selectSubject(subject);
+        break;
+      case 'review-status':
+        console.log('📊 復習状況確認アクション実行');
+        getReviewSystemStatus();
+        break;
+      case 'review-debug':
+        console.log('🔧 復習デバッグアクション実行');
+        showReviewSystemDebugInfo();
+        break;
+      case 'go-home':
+        console.log('🏠 ホームに戻るアクション実行');
+        setHash('home');
+        break;
+      case 'retry-lesson':
+        console.log('🔄 レッスン再挑戦アクション実行:', lessonId);
+        if (lessonId) {
+          setHash('lesson', lessonId);
+        }
+        break;
+      default:
+        // 未対応ログは開発時のみ
+        if (process?.env?.NODE_ENV === 'development') {
+          console.debug('未対応のアクション:', { action, reviewId, lessonId, packId });
+        }
+    }
+  });
+  
+  console.log('✅ グローバルイベント委譲設定完了');
+}
+
+// localStorage を定期的にチェックして未処理メッセージを処理
+function checkPendingLessonMessages() {
+  try {
+    const messageData = localStorage.getItem('lessonCompleteMessage');
+    if (messageData) {
+      console.log('📦 localStorage から未処理メッセージを発見:', messageData);
+      
+      const parsedData = JSON.parse(messageData);
+      
+      // 通常のメッセージ処理と同じ処理を実行
+      if (parsedData.type === 'lesson:complete') {
+        const id = parsedData.lessonId;
+        const correct = parsedData.detail?.correct ?? 0;
+        const total = parsedData.detail?.total ?? 0;
+        const seconds = parsedData.detail?.timeSec ?? 0;
+        
+        console.log('📦 localStorage経由での完了処理:', {id, correct, total, seconds});
+        
+        // 長期保存用の進捗データを保存
+        saveLessonProgress(id, correct, total, seconds);
+        
+        // セッション結果を一時保存（結果画面用）
+        console.log('💾 セッション結果を保存中:', { id, correct, total, seconds });
+        saveSessionResult(id, correct, total, seconds);
+        console.log('💾 セッション結果保存完了:', getSessionResult());
+        
+        // 結果画面に遷移
+        setHash('result', id);
+        
+        // 使用済みメッセージを削除
+        localStorage.removeItem('lessonCompleteMessage');
+        
+        return true; // 処理済み
+      }
+    }
+  } catch (e) {
+    console.error('localStorage メッセージ処理エラー:', e);
+  }
+  return false; // 未処理
+}
+
+// 未送信キューを安全に処理する関数
+function flushPendingAnswers() {
+  let queue = [];
+  try { 
+    queue = JSON.parse(localStorage.getItem('pending-answers')) || []; 
+  } catch (error) {
+    console.warn('⚠️ pending-answers 読み込みエラー:', error);
+  }
+  
+  if (!Array.isArray(queue) || queue.length === 0) return false;
+
+  console.log(`📦 未送信キューから${queue.length}件の回答を処理`);
+  
+  queue.forEach(a => {
+    // isCorrect が false のものだけ誤答記録
+    if (a && a.isCorrect === false) {
+      recordWrongAnswer({
+        lessonId: a.lessonId,
+        questionData: a.questionData || a.question,
+        userAnswer: a.userAnswer || a.selectedAnswer,
+        correctAnswer: a.correctAnswer
+      });
+    }
+  });
+
+  localStorage.removeItem('pending-answers');
+  console.log('✅ 未送信キューの処理完了');
+  return true;
+}
+
+// localStorage の個別問題回答をチェック
+function checkPendingQuestionAnswers() {
+  try {
+    // 旧形式のキューも処理（互換性）
+    const questionAnswers = localStorage.getItem('questionAnswers');
+    let processed = false;
+    
+    if (questionAnswers) {
+      const answers = JSON.parse(questionAnswers);
+      console.log(`📦 localStorage から${answers.length}件の問題回答を発見`);
+      
+      answers.forEach(answerData => {
+        console.log('📝 localStorage経由で問題回答を処理:', answerData);
+        handleQuestionAnswered(answerData);
+      });
+      
+      // 処理済みデータを削除
+      localStorage.removeItem('questionAnswers');
+      console.log('✅ localStorage の問題回答を処理完了');
+      processed = true;
+    }
+    
+    // 新形式の未送信キューも処理
+    const flushed = flushPendingAnswers();
+    
+    return processed || flushed;
+  } catch (e) {
+    console.error('localStorage 問題回答処理エラー:', e);
+  }
+  return false;
+}
+
+// 定期的にチェック
+setInterval(checkPendingLessonMessages, 1000);
+setInterval(checkPendingQuestionAnswers, 1000);
+
+// ページロード時にもチェック
+window.addEventListener('load', checkPendingLessonMessages);
+window.addEventListener('focus', checkPendingLessonMessages);
+
+// localStorage イベントでの代替通信を監視（フォールバック）
+window.addEventListener('storage', (e) => {
+  if (e.key === 'lessonCompleteMessage' && e.newValue) {
+    console.log('📦 storage イベントでメッセージを受信');
+    checkPendingLessonMessages();
+  }
+});
+
+// デバッグ: グローバル公開の確認（暫定対応用）
+console.log('🔍 グローバル関数公開確認:', {
+  'window.modalPurchasePack': typeof window.modalPurchasePack,
+  'modalPurchasePack': typeof modalPurchasePack,
+  '関数の中身': window.modalPurchasePack?.toString().substring(0, 100) + '...'
+});
+window.openPack = openPack;
+window.setCurrentGrade = setCurrentGrade;
+window.showPurchaseConfirmModal = showPurchaseConfirmModal;
+window.closePurchaseConfirmModal = closePurchaseConfirmModal;
+window.processPurchase = processPurchase;
+window.renderAppView = renderAppView;
+
+// 🧪 完全性テスト: onclick属性チェック
+setTimeout(() => {
+  console.log('🧪 完全性テスト開始');
+  
+  // 1. ページ内の全onclick属性をチェック
+  const elementsWithOnclick = document.querySelectorAll('[onclick]');
+  if (elementsWithOnclick.length > 0) {
+    console.warn('⚠️ onclick属性が残っています:', elementsWithOnclick);
+    elementsWithOnclick.forEach((el, i) => {
+      console.log(`  ${i+1}. ${el.tagName}: onclick="${el.getAttribute('onclick')}"`);
+    });
+  } else {
+    console.log('✅ onclick属性は見つかりませんでした');
+  }
+  
+  // 2. グローバル関数の存在確認
+  const globalFunctions = ['modalPurchasePack', 'openPack', 'setCurrentGrade', 'renderAppView'];
+  globalFunctions.forEach(fnName => {
+    if (typeof window[fnName] === 'function') {
+      console.log(`✅ window.${fnName} は正常に公開されています`);
+    } else {
+      console.error(`❌ window.${fnName} が未定義です`);
+    }
+  });
+  
+  // 3. イベント委譲の確認
+  if (document.querySelectorAll('[data-action]').length > 0) {
+    console.log('✅ data-action属性のボタンが見つかりました');
+  } else {
+    console.warn('⚠️ data-action属性のボタンが見つかりません');
+  }
+  
+  console.log('🧪 完全性テスト完了');
+}, 2000);
+
+// === 安全な誤答ストア（localStorage専用）===
+const WRONG_KEY = 'wrong-store-v2';
+
+function loadWrongStore() {
+  try { 
+    return JSON.parse(localStorage.getItem(WRONG_KEY)) || {}; 
+  } catch { 
+    return {}; 
+  }
+}
+
+function saveWrongStore(store) {
+  try { 
+    localStorage.setItem(WRONG_KEY, JSON.stringify(store)); 
+  } catch (error) {
+    console.error('❌ 誤答ストア保存エラー:', error);
+  }
+}
+
+// === 進捗ストア（localStorage専用）===
+const PROG_KEY = 'progress-store-v2';
+const normalizeLessonId = id => (id || '').replace(/\./g, '_');
+
+function loadProgress() {
+  try { 
+    return JSON.parse(localStorage.getItem(PROG_KEY)) || {}; 
+  } catch { 
+    return {}; 
+  }
+}
+
+function saveProgress(obj) {
+  try { 
+    localStorage.setItem(PROG_KEY, JSON.stringify(obj)); 
+  } catch (error) {
+    console.error('❌ 進捗ストア保存エラー:', error);
+  }
+}
+
+// 学習完了時に呼ぶ
+function recordLessonProgress(lessonId, correct, total) {
+  console.log('🔧 recordLessonProgress 開始:', { lessonId, correct, total });
+  
+  const id = normalizeLessonId(lessonId);
+  console.log('🔧 正規化後ID:', id);
+  
+  const store = loadProgress();
+  console.log('🔧 現在のストア:', store);
+  
+  const progressRecord = {
+    done: true,
+    correct: Number(correct) || 0,
+    total: Number(total) || 0,
+    lastAt: Date.now()
+  };
+  
+  store[id] = progressRecord;
+  console.log('🔧 更新後のストア:', store);
+  
+  saveProgress(store);
+  console.log(`📊 進捗を記録完了: ${id} (${correct}/${total})`);
+  
+  // 保存確認
+  const saved = loadProgress();
+  console.log('🔧 保存確認:', saved[id]);
+}
+
+// カード描画で使用
+function isLessonCompleted(lessonId) {
+  const rec = loadProgress()[normalizeLessonId(lessonId)];
+  return !!rec?.done;
+}
+
+function getLessonPercent(lessonId) {
+  const rec = loadProgress()[normalizeLessonId(lessonId)];
+  if (!rec || !rec.total) return 0;
+  return Math.round(100 * rec.correct / rec.total);
+}
+
+// 文字列安全化＆省略（substring落ち防止）
+const toStr = v => v == null ? '' : String(v);
+const trunc = (v, n = 80) => { 
+  const s = toStr(v); 
+  return s.length > n ? s.slice(0, n) + '…' : s; 
+};
+
+// 復習システムの設定
+const REVIEW_SYSTEM_CONFIG = {
+  MIN_WRONG_FOR_GENERATION: 5, // 復習レッスン生成に必要な最小間違い数（10→5に改善）
+  MAX_REVIEW_QUESTIONS: 30, // 復習レッスンに含める最大問題数（全問を含む）
+  STORAGE_KEY: 'wrong_questions', // LocalStorage のキー（旧版・互換性用）
+  FIRESTORE_COLLECTION: 'user_wrong_questions', // Firestore のコレクション名
+  // 新機能：難易度別復習設定
+  DIFFICULTY_LEVELS: {
+    BASIC: { threshold: 3, label: '基本問題復習' },
+    STANDARD: { threshold: 5, label: '標準問題復習' },
+    ADVANCED: { threshold: 7, label: '応用問題復習' }
+  }
+};
+
+// 間違えた問題を記録する
+// 安全な誤答記録関数（localStorage専用ストアに保存）
+function recordWrongAnswer(entry) {
+  // 旧形式の引数もサポート（後方互換性）
+  let lessonId, questionData, userAnswer, correctAnswer;
+  
+  if (typeof entry === 'object' && entry.lessonId) {
+    // 新形式: recordWrongAnswer({ lessonId, questionData, userAnswer, correctAnswer })
+    ({ lessonId, questionData, userAnswer, correctAnswer } = entry);
+  } else {
+    // 旧形式: recordWrongAnswer(lessonId, questionData, userAnswer)
+    lessonId = arguments[0];
+    questionData = arguments[1];
+    userAnswer = arguments[2];
+    correctAnswer = questionData?.answer;
+  }
+  
+  console.log('🔴 間違い問題を記録:', { lessonId, questionData, userAnswer, correctAnswer });
+  
+  if (!lessonId || !questionData) {
+    console.warn('⚠️ 記録に必要な情報が不足しています');
+    return;
+  }
+
+  const store = loadWrongStore();
+  const rec = store[lessonId] || { createdAt: Date.now(), questions: [] };
+
+  // 一意なIDを決める（既存構造に合わせて調整）
+  const qid = questionData.id || questionData.qid || questionData.questionId || 
+              questionData.qnum || toStr(questionData.title || questionData.text).slice(0, 40);
+
+  // 二重登録防止
+  if (!rec.questions.some(q => q.id === qid)) {
+    rec.questions.unshift({
+      id: qid,
+      title: trunc(questionData.title || questionData.text || questionData.prompt, 80),
+      userAnswer: userAnswer,
+      correctAnswer: correctAnswer,
+      at: Date.now(),
+      reviewCount: 0,
+      lastReviewAt: null,
+      // 元のquestionDataも保持（互換性用）
+      questionData: questionData
+    });
+    
+    // 30件に丸め（メモリ節約）
+    if (rec.questions.length > 30) rec.questions.length = 30;
+    
+    console.log(`➕ 新しい間違い記録を追加: ${lessonId}/${qid}`);
+  } else {
+    console.log(`📝 既存の間違い記録をスキップ: ${lessonId}/${qid}`);
+  }
+
+  store[lessonId] = rec;
+  saveWrongStore(store);
+  
+  console.log(`📊 現在の間違い問題数: ${rec.questions.length}`);
+  
+  // 復習レッスン生成をチェック
+  setTimeout(() => {
+    checkReviewLessonGeneration(lessonId);
+  }, 100);
+}
+
+// 正解した問題を処理する（復習レッスンで）
+function recordCorrectAnswer(lessonId, questionData) {
+  console.log('✅ 正解を記録:', { lessonId, questionData });
+  
+  // 間違い問題リストから該当の問題を削除
+  const questionIndex = state.wrongQuestions.findIndex(wq => 
+    wq.lessonId === lessonId && wq.questionId === questionData.qnum
+  );
+  
+  if (questionIndex !== -1) {
+    state.wrongQuestions.splice(questionIndex, 1);
+    console.log(`✅ 間違い問題リストから削除: ${lessonId}_${questionData.qnum}`);
+    
+    // ストレージを更新
+    saveWrongQuestionsToLocal();
+    if (state.user && state.user.id) {
+      saveWrongQuestionsToFirebase(state.user.id);
+    }
+  }
+}
+
+// LocalStorage に間違い問題を保存
+function saveWrongQuestionsToLocal() {
+  try {
+    localStorage.setItem(REVIEW_SYSTEM_CONFIG.STORAGE_KEY, JSON.stringify(state.wrongQuestions));
+    console.log('💾 間違い問題をLocalStorageに保存完了');
+  } catch (error) {
+    console.error('❌ LocalStorage保存エラー:', error);
+  }
+}
+
+// LocalStorage から間違い問題を読み込み
+function loadWrongQuestionsFromLocal() {
+  try {
+    const stored = localStorage.getItem(REVIEW_SYSTEM_CONFIG.STORAGE_KEY);
+    if (stored) {
+      state.wrongQuestions = JSON.parse(stored);
+      console.log(`📖 LocalStorageから間違い問題を読み込み: ${state.wrongQuestions.length}問`);
+    }
+  } catch (error) {
+    console.error('❌ LocalStorage読み込みエラー:', error);
+    state.wrongQuestions = [];
+  }
+}
+
+// Firebase に間違い問題を保存
+async function saveWrongQuestionsToFirebase(userId) {
+  if (!window.firebaseConfig || !db || !doc || !setDoc) {
+    console.warn('⚠️ Firebase未初期化のため、同期をスキップ');
+    return;
+  }
+  
+  try {
+    const userDocRef = doc(db, REVIEW_SYSTEM_CONFIG.FIRESTORE_COLLECTION, userId);
+    await setDoc(userDocRef, {
+      wrongQuestions: state.wrongQuestions,
+      lastUpdated: Date.now()
+    });
+    console.log('☁️ Firebaseに間違い問題を同期完了');
+  } catch (error) {
+    console.error('❌ Firebase同期エラー:', error);
+  }
+}
+
+// Firebase から間違い問題を読み込み
+async function loadWrongQuestionsFromFirebase(userId) {
+  if (!window.firebaseConfig || !db || !doc || !getDoc) {
+    console.warn('⚠️ Firebase未初期化のため、同期をスキップ');
+    return;
+  }
+  
+  try {
+    const userDocRef = doc(db, REVIEW_SYSTEM_CONFIG.FIRESTORE_COLLECTION, userId);
+    const docSnap = await getDoc(userDocRef);
+    
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      if (data.wrongQuestions && Array.isArray(data.wrongQuestions)) {
+        state.wrongQuestions = data.wrongQuestions;
+        console.log(`☁️ Firebaseから間違い問題を読み込み: ${state.wrongQuestions.length}問`);
+        
+        // LocalStorage も更新
+        saveWrongQuestionsToLocal();
+      }
+    }
+  } catch (error) {
+    console.error('❌ Firebase読み込みエラー:', error);
+  }
+}
+
+// 復習レッスン生成条件をチェック
+// 10問選出は「重複除去 → 新しい順にlimit問」
+function pickForReview(baseId) {
+  const list = state.wrongQuestions
+    .filter(w => w.lessonId === baseId)
+    .sort((a, b) => b.wrongAt - a.wrongAt);
+
+  const seen = new Set();
+  const unique = [];
+  const limit = Math.min(REVIEW_SYSTEM_CONFIG.MAX_REVIEW_QUESTIONS || 30, 10); // デフォルト10、将来拡張可
+  
+  for (const w of list) {
+    const k = `${w.lessonId}_${w.questionId}`;
+    if (!seen.has(k)) { 
+      seen.add(k); 
+      unique.push(w); 
+    }
+    if (unique.length === limit) break;
+  }
+  return unique;
+}
+
+function checkReviewLessonGeneration(baseId) {
+  // 特定のレッスンIDの間違い問題を取得
+  const lessonWrongQuestions = state.wrongQuestions.filter(wq => wq.lessonId === baseId);
+  
+  console.log(`🔍 復習レッスン生成チェック: ${baseId} (${lessonWrongQuestions.length}問)`);
+  
+  if (lessonWrongQuestions.length >= REVIEW_SYSTEM_CONFIG.MIN_WRONG_FOR_GENERATION) {
+    console.log(`🎯 復習レッスン生成条件達成: ${baseId} (${lessonWrongQuestions.length}問)`);
+    
+    // 10問を選出
+    const selectedQuestions = pickForReview(baseId);
+    console.log(`📝 選出された問題数: ${selectedQuestions.length}問`);
+    
+    // upsertReviewLessonを直接呼び出し
+    const reviewId = upsertReviewLesson(baseId, selectedQuestions);
+    
+    // 生成されたレッスンを取得して通知
+    const reviewLesson = state.reviewLessons.find(r => r.id === reviewId);
+    if (reviewLesson) {
+      showReviewLessonNotification(reviewLesson);
+    }
+  }
+}
+
+// 復習レッスンを生成
+// 元レッスンのタイトルを取得（必ず日本語に解決）
+function getOriginalLessonTitle(lessonId) {
+  const baseId = normalizeLessonId(lessonId);
+  const hit = state.catalog.find(l => normalizeLessonId(l.id) === baseId);
+  return hit ? hit.title : '復習レッスン';
+}
+
+// 復習レッスン生成の通知を表示
+function showReviewLessonNotification(reviewLesson) {
+  console.log('🔔 復習レッスン通知を表示:', reviewLesson);
+  
+  // カスタム通知ダイアログを作成
+  const notificationHTML = `
+    <div id="reviewNotification" class="review-notification-overlay">
+      <div class="review-notification-dialog">
+        <div class="review-notification-header">
+          <span class="review-notification-icon">🎓</span>
+          <h3>復習レッスンが生成されました！</h3>
+        </div>
+        <div class="review-notification-content">
+          <p><strong>${reviewLesson.title}</strong></p>
+          <p>間違えた問題 ${reviewLesson.questions.length}問を集めました。</p>
+          <p>今すぐ復習しますか？</p>
+        </div>
+        <div class="review-notification-actions">
+          <button class="btn-secondary" onclick="closeReviewNotification()">キャンセル</button>
+          <button class="btn-primary" onclick="acceptReviewNotification('${reviewLesson.id}')">OK</button>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  // 通知をDOMに追加
+  document.body.insertAdjacentHTML('beforeend', notificationHTML);
+  
+  // 通知を表示（アニメーション付き）
+  setTimeout(() => {
+    const notification = document.getElementById('reviewNotification');
+    if (notification) {
+      notification.classList.add('show');
+    }
+  }, 100);
+}
+
+// 復習通知のOKボタン処理
+function acceptReviewNotification(reviewLessonId) {
+  console.log('✅ 復習通知のOKボタンがクリックされました:', reviewLessonId);
+  closeReviewNotification();
+  openReviewLesson(reviewLessonId);
+}
+
+// 復習通知のキャンセルボタン処理
+function closeReviewNotification() {
+  console.log('❌ 復習通知をキャンセル');
+  const notification = document.getElementById('reviewNotification');
+  if (notification) {
+    notification.classList.remove('show');
+    setTimeout(() => {
+      notification.remove();
+    }, 300);
+  }
+}
+
+// 復習レッスンを開く
+function openReviewLesson(reviewLessonId) {
+  console.log('📖 復習レッスンを開きます:', reviewLessonId);
+  
+  const reviewLesson = state.reviewLessons.find(rl => rl.id === reviewLessonId);
+  if (!reviewLesson) {
+    console.error('❌ 復習レッスンが見つかりません:', reviewLessonId);
+    console.log('📊 現在の復習レッスン一覧:', state.reviewLessons);
+    alert('復習レッスンが見つかりません。');
+    return;
+  }
+  
+  console.log('✅ 復習レッスンが見つかりました:', reviewLesson);
+  
+  // 復習レッスン用のURLハッシュを設定
+  location.hash = `#/review/${reviewLessonId}`;
+  
+  // 直接描画も実行（ハッシュ監視のフォールバック）
+  if (typeof renderReviewLesson === 'function') {
+    renderReviewLesson(reviewLessonId);
+  }
+}
+
+// 復習レッスンのビューを表示
+function renderReviewLesson(reviewLessonId) {
+  console.log('🎓 復習レッスンビューを表示:', reviewLessonId);
+  
+  const reviewLesson = state.reviewLessons.find(rl => rl.id === reviewLessonId);
+  if (!reviewLesson) {
+    console.error('❌ 復習レッスンが見つかりません:', reviewLessonId);
+    return;
+  }
+  
+  // 安全性チェック：問題データの存在確認
+  if (!Array.isArray(reviewLesson.questions) || reviewLesson.questions.length === 0) {
+    console.warn('⚠️ レビューに表示できる問題がありません:', reviewLessonId, reviewLesson);
+    alert('復習レッスンに問題データがありません。ホーム画面に戻ります。');
+    setHash('home');
+    return;
+  }
+  
+  // 復習レッスン用の問題データを準備
+  const reviewQuestions = reviewLesson.questions.map(wq => wq.questionData);
+  
+  console.log(`📝 復習レッスン問題数: ${reviewQuestions.length}問`);
+  
+  // 復習レッスン専用のHTMLを生成
+  renderReviewLessonHTML(reviewLesson, reviewQuestions);
+}
+
+// 復習レッスン用のHTMLを生成・表示
+function renderReviewLessonHTML(reviewLesson, questions) {
+  const homeView = document.getElementById('homeView');
+  const app = document.getElementById('app');
+  
+  // 通常レイアウトに戻す
+  homeView.classList.remove('math-full-width');
+  app.classList.remove('math-full-width');
+  
+  // 復習レッスン用のHTMLを生成
+  homeView.innerHTML = `
+    <div class="review-lesson-container">
+      <div class="review-lesson-header">
+        <div class="review-lesson-info">
+          <h1 class="review-lesson-title">
+            <span class="review-icon">🎓</span>
+            ${reviewLesson.title}
+          </h1>
+          <div class="review-lesson-meta">
+            <span class="review-badge">復習レッスン</span>
+            <span class="review-count">${questions.length}問</span>
+            <span class="review-date">作成: ${new Date(reviewLesson.createdAt).toLocaleDateString()}</span>
+          </div>
+          <p class="review-lesson-description">
+            間違えた問題を集めた復習レッスンです。満点を取ると自動的に削除されます。
+          </p>
+        </div>
+        <div class="review-lesson-actions">
+          <button class="btn-secondary review-back-btn" onclick="goBackFromReview()">
+            ← 戻る
+          </button>
+          <button class="btn-primary review-start-btn" onclick="startReviewLesson('${reviewLesson.id}')">
+            復習開始
+          </button>
+        </div>
+      </div>
+      
+      <div class="review-questions-preview">
+        <h3 class="preview-title">復習問題一覧</h3>
+        <div class="questions-grid">
+          ${questions.map((q, index) => `
+            <div class="question-preview-card">
+              <div class="question-number">問${index + 1}</div>
+              <div class="question-text">${trunc(q.text || q.title || q.prompt || q.question || '問題文が見つかりません', 50)}</div>
+              <div class="question-source">${trunc(q.source || q.origin || '出典不明', 30)}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+  
+  console.log('✅ 復習レッスンHTML生成完了');
+}
+
+// 復習レッスンを実際に開始
+function startReviewLesson(reviewLessonId) {
+  console.log('🚀 復習レッスン開始:', reviewLessonId);
+  
+  const reviewLesson = state.reviewLessons.find(rl => rl.id === reviewLessonId);
+  if (!reviewLesson) {
+    console.error('❌ 復習レッスンが見つかりません:', reviewLessonId);
+    return;
+  }
+  
+  // 復習レッスン用の問題セッションを開始
+  startReviewQuestionSession(reviewLesson);
+}
+
+// 復習問題セッションを開始
+function startReviewQuestionSession(reviewLesson) {
+  console.log('📝 復習問題セッション開始:', reviewLesson.id);
+  
+  // 復習セッション状態を初期化
+  const reviewSession = {
+    reviewLessonId: reviewLesson.id,
+    originalLessonId: reviewLesson.originalLessonId,
+    questions: reviewLesson.questions.map(wq => wq.questionData),
+    currentQuestionIndex: 0,
+    correctAnswers: 0,
+    wrongAnswers: 0,
+    startTime: Date.now(),
+    isReviewMode: true
+  };
+  
+  // グローバル状態に保存
+  window.currentReviewSession = reviewSession;
+  
+  // 最初の問題を表示
+  displayReviewQuestion(reviewSession);
+}
+
+// 復習問題を表示
+function displayReviewQuestion(reviewSession) {
+  const homeView = document.getElementById('homeView');
+  const currentQ = reviewSession.questions[reviewSession.currentQuestionIndex];
+  
+  if (!currentQ) {
+    // 全問題完了
+    completeReviewSession(reviewSession);
+    return;
+  }
+  
+  // 問題データの安全性チェック
+  if (!currentQ.text && !currentQ.title && !currentQ.prompt && !currentQ.question) {
+    console.warn('⚠️ 問題データに表示可能なテキストがありません:', currentQ);
+    // 次の問題にスキップ
+    reviewSession.currentQuestionIndex++;
+    displayReviewQuestion(reviewSession);
+    return;
+  }
+  
+  // 選択肢の安全性チェック
+  if (!Array.isArray(currentQ.choices) || currentQ.choices.length === 0) {
+    console.warn('⚠️ 問題に選択肢がありません:', currentQ);
+    // 次の問題にスキップ
+    reviewSession.currentQuestionIndex++;
+    displayReviewQuestion(reviewSession);
+    return;
+  }
+  
+  const progress = reviewSession.currentQuestionIndex + 1;
+  const total = reviewSession.questions.length;
+  
+  homeView.innerHTML = `
+    <div class="review-question-container">
+      <div class="review-question-header">
+        <div class="review-progress">
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: ${(progress / total) * 100}%"></div>
+          </div>
+          <div class="progress-text">問題 ${progress} / ${total}</div>
+        </div>
+        <div class="review-stats">
+          <span class="correct-count">正解: ${reviewSession.correctAnswers}</span>
+          <span class="wrong-count">不正解: ${reviewSession.wrongAnswers}</span>
+        </div>
+      </div>
+      
+      <div class="question-content">
+        <h2 class="question-text">${trunc(currentQ.text || currentQ.title || currentQ.prompt || currentQ.question || '問題文', 200)}</h2>
+        <div class="choices-container">
+          ${(currentQ.choices || []).map((choice, index) => `
+            <button class="choice-btn" onclick="selectReviewAnswer(${index})">
+              <span class="choice-label">${String.fromCharCode(65 + index)}</span>
+              <span class="choice-text">${trunc(choice || `選択肢${index + 1}`, 100)}</span>
+            </button>
+          `).join('')}
+        </div>
+      </div>
+      
+      <div class="question-footer">
+        <div class="question-source">出典: ${trunc(currentQ.source || currentQ.origin || '不明', 40)}</div>
+        <button class="btn-secondary" onclick="exitReviewSession()">復習を終了</button>
+      </div>
+    </div>
+  `;
+}
+
+// 復習問題の回答を選択
+function selectReviewAnswer(selectedIndex) {
+  const session = window.currentReviewSession;
+  if (!session) return;
+  
+  const currentQ = session.questions[session.currentQuestionIndex];
+  const isCorrect = selectedIndex === currentQ.answer;
+  
+  console.log(`📝 復習問題回答: 問${session.currentQuestionIndex + 1}, 選択: ${selectedIndex}, 正解: ${currentQ.answer}, 結果: ${isCorrect ? '正解' : '不正解'}`);
+  
+  // 結果を記録
+  if (isCorrect) {
+    session.correctAnswers++;
+    // 正解した場合、間違い問題リストから削除
+    recordCorrectAnswer(session.originalLessonId, currentQ);
+  } else {
+    session.wrongAnswers++;
+    // 不正解の場合、記録を更新（復習回数を増やす）
+    updateWrongQuestionReviewCount(session.originalLessonId, currentQ);
+  }
+  
+  // 回答結果を表示
+  showReviewAnswerResult(isCorrect, currentQ, selectedIndex);
+}
+
+// 復習問題の回答結果を表示
+function showReviewAnswerResult(isCorrect, question, selectedIndex) {
+  // 安全性チェック
+  const choices = question.choices || [];
+  const correctAnswer = question.answer;
+  const correctChoice = choices[correctAnswer] || '選択肢が見つかりません';
+  
+  const resultHTML = `
+    <div class="answer-result ${isCorrect ? 'correct' : 'incorrect'}">
+      <div class="result-icon">${isCorrect ? '✅' : '❌'}</div>
+      <div class="result-text">${isCorrect ? '正解！' : '不正解'}</div>
+      ${!isCorrect && correctAnswer != null ? `
+        <div class="correct-answer">
+          正解: ${String.fromCharCode(65 + correctAnswer)} ${trunc(correctChoice, 80)}
+        </div>
+      ` : ''}
+      <button class="btn-primary next-question-btn" onclick="proceedToNextReviewQuestion()">
+        次の問題へ
+      </button>
+    </div>
+  `;
+  
+  // 既存のコンテンツに結果を追加
+  const container = document.querySelector('.review-question-container');
+  container.innerHTML += resultHTML;
+  
+  // 選択肢を無効化
+  document.querySelectorAll('.choice-btn').forEach(btn => {
+    btn.disabled = true;
+    btn.style.opacity = '0.6';
+  });
+}
+
+// 次の復習問題に進む
+function proceedToNextReviewQuestion() {
+  const session = window.currentReviewSession;
+  if (!session) return;
+  
+  session.currentQuestionIndex++;
+  displayReviewQuestion(session);
+}
+
+// 復習セッションを完了
+function completeReviewSession(reviewSession) {
+  console.log('🎉 復習セッション完了:', reviewSession);
+  
+  const score = Math.round((reviewSession.correctAnswers / reviewSession.questions.length) * 100);
+  const duration = Math.round((Date.now() - reviewSession.startTime) / 1000);
+  
+  const homeView = document.getElementById('homeView');
+  homeView.innerHTML = `
+    <div class="review-complete-container">
+      <div class="review-complete-header">
+        <div class="complete-icon">${score === 100 ? '🎉' : '📊'}</div>
+        <h1 class="complete-title">復習完了！</h1>
+      </div>
+      
+      <div class="review-results">
+        <div class="score-display">
+          <div class="score-number">${score}%</div>
+          <div class="score-label">正解率</div>
+        </div>
+        
+        <div class="results-grid">
+          <div class="result-item">
+            <div class="result-value">${reviewSession.correctAnswers}</div>
+            <div class="result-label">正解</div>
+          </div>
+          <div class="result-item">
+            <div class="result-value">${reviewSession.wrongAnswers}</div>
+            <div class="result-label">不正解</div>
+          </div>
+          <div class="result-item">
+            <div class="result-value">${reviewSession.questions.length}</div>
+            <div class="result-label">総問題数</div>
+          </div>
+          <div class="result-item">
+            <div class="result-value">${duration}秒</div>
+            <div class="result-label">所要時間</div>
+          </div>
+        </div>
+        
+        ${score === 100 ? `
+          <div class="perfect-score-message">
+            <h3>🌟 満点おめでとうございます！</h3>
+            <p>この復習レッスンは自動的に削除されます。</p>
+          </div>
+        ` : `
+          <div class="retry-message">
+            <h3>📚 もう一度復習しませんか？</h3>
+            <p>間違えた問題は引き続き復習できます。</p>
+          </div>
+        `}
+      </div>
+      
+      <div class="review-actions">
+        <button class="btn-secondary" onclick="goBackFromReview()">ホームに戻る</button>
+        ${score < 100 ? `<button class="btn-primary" onclick="startReviewLesson('${reviewSession.reviewLessonId}')">再度復習</button>` : ''}
+      </div>
+    </div>
+  `;
+  
+  // 満点の場合、復習レッスンを削除
+  if (score === 100) {
+    removeReviewLesson(reviewSession.reviewLessonId);
+  }
+  
+  // セッションをクリア
+  window.currentReviewSession = null;
+}
+
+// 復習レッスンから戻る
+function goBackFromReview() {
+  console.log('🔙 復習レッスンから戻る');
+  setHash('home');
+}
+
+// 復習セッションを途中で終了
+function exitReviewSession() {
+  console.log('❌ 復習セッションを終了');
+  if (confirm('復習を途中で終了しますか？進捗は保存されません。')) {
+    window.currentReviewSession = null;
+    setHash('home');
+  }
+}
+
+// 間違い問題の復習回数を更新
+function updateWrongQuestionReviewCount(lessonId, questionData) {
+  const baseId = normalizeLessonId(lessonId);
+  const key = `${baseId}_${questionData.qnum}`;
+  
+  const wrongQuestion = state.wrongQuestions.find(wq => 
+    `${wq.lessonId}_${wq.questionId}` === key
+  );
+  
+  if (wrongQuestion) {
+    wrongQuestion.reviewCount = (wrongQuestion.reviewCount || 0) + 1;
+    wrongQuestion.lastReviewAt = Date.now();
+    
+    // LocalStorage に保存
+    saveWrongQuestionsToLocal();
+    
+    // Firebase に同期（ユーザーがログインしている場合）
+    if (state.user && state.user.id) {
+      saveWrongQuestionsToFirebase(state.user.id);
+    }
+    
+    console.log(`📝 復習回数を更新: ${key} (${wrongQuestion.reviewCount}回目)`);
+  }
+}
+
+// 復習レッスンを削除
+function removeReviewLesson(reviewLessonId) {
+  console.log('🗑️ 復習レッスンを削除:', reviewLessonId);
+  
+  const index = state.reviewLessons.findIndex(rl => rl.id === reviewLessonId);
+  if (index !== -1) {
+    state.reviewLessons.splice(index, 1);
+    saveReviewLessons();
+    console.log('✅ 復習レッスン削除完了');
+  }
+}
+
+// === 復習システム終了 ===
+
+// 復習レッスンセクションを描画
+function renderReviewLessonsSection() {
+  try {
+    console.log('📚 復習レッスンセクション描画開始');
+    
+    const homeView = document.getElementById('homeView');
+    const app = document.getElementById('app');
+    
+    if (!homeView) {
+      console.error('❌ homeView要素が見つかりません');
+      return;
+    }
+    
+    if (!app) {
+      console.error('❌ app要素が見つかりません');
+      return;
+    }
+    
+    // 通常レイアウトに戻す
+    homeView.classList.remove('math-full-width');
+    app.classList.remove('math-full-width');
+    
+    // 🚨 強制的に homeView を表示状態にする
+    homeView.classList.remove('hidden');
+    homeView.style.display = 'block';
+    homeView.style.visibility = 'visible';
+    homeView.style.opacity = '1';
+    console.log('🚨 renderReviewLessonsSection: homeView を表示状態に設定');
+    
+    // state の初期化確認
+    if (!state.reviewLessons) {
+      console.warn('⚠️ state.reviewLessons が未初期化。空配列で初期化します。');
+      state.reviewLessons = [];
+    }
+    
+    if (!state.wrongQuestions) {
+      console.warn('⚠️ state.wrongQuestions が未初期化。空配列で初期化します。');
+      state.wrongQuestions = [];
+    }
+    
+    // 復習レッスンがあるかチェック
+    const hasReviewLessons = state.reviewLessons && state.reviewLessons.length > 0;
+    const hasWrongQuestions = state.wrongQuestions && state.wrongQuestions.length > 0;
+  
+  console.log('📚 復習レッスンセクション描画:', {
+    hasReviewLessons,
+    reviewLessonsCount: state.reviewLessons?.length || 0,
+    hasWrongQuestions,
+    wrongQuestionsCount: state.wrongQuestions?.length || 0
+  });
+  
+  homeView.innerHTML = `
+    <div class="review-dashboard">
+      <div class="review-dashboard-header">
+        <h1 class="dashboard-title">
+          <span class="dashboard-icon">🎓</span>
+          復習ダッシュボード
+        </h1>
+        <p class="dashboard-subtitle">間違えた問題を復習して、確実にマスターしましょう</p>
+      </div>
+      
+      ${hasReviewLessons ? `
+        <div class="review-lessons-section">
+          <div class="section-header">
+            <h2 class="section-title">
+              <span class="section-icon">📝</span>
+              復習レッスン
+              <span class="count-badge">${state.reviewLessons.length}</span>
+            </h2>
+            <p class="section-description">間違えた問題を集めた復習レッスンです</p>
+          </div>
+          <div class="review-lessons-grid">
+            ${state.reviewLessons.map(lesson => `
+              <div class="review-lesson-card" data-action="open-review" data-review-id="${lesson.id}">
+                <div class="lesson-card-header">
+                  <h3 class="lesson-card-title">${escapeHtml(lesson.title)}</h3>
+                  <div class="lesson-card-meta">
+                    <span class="question-count">${lesson.questions.length}問</span>
+                    <span class="created-date">${new Date(lesson.createdAt).toLocaleDateString()}</span>
+                  </div>
+                </div>
+                <div class="lesson-card-content">
+                  <p class="lesson-card-description">
+                    復習レッスン / 小復習・${lesson.questions.length}問
+                  </p>
+                  <div class="lesson-card-preview">
+                    <span class="preview-text">
+                      間違えた問題を復習しましょう
+                    </span>
+                  </div>
+                </div>
+                <div class="lesson-card-actions">
+                  <button type="button" 
+                          class="btn-primary lesson-start-btn open-btn" 
+                          data-action="open-review" 
+                          data-review-id="${lesson.id}">
+                    復習する
+                  </button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      ` : ''}
+      
+      ${hasWrongQuestions ? `
+        <div class="wrong-questions-section">
+          <div class="section-header">
+            <h2 class="section-title">
+              <span class="section-icon">❌</span>
+              間違い問題の状況
+              <span class="count-badge">${state.wrongQuestions.length}</span>
+            </h2>
+            <p class="section-description">レッスン別の間違い問題数</p>
+          </div>
+          <div class="wrong-questions-grid">
+            ${renderWrongQuestionsByLesson()}
+          </div>
+        </div>
+      ` : ''}
+      
+      ${!hasReviewLessons && !hasWrongQuestions ? `
+        <div class="empty-state">
+          <div class="empty-icon">🌟</div>
+          <h2 class="empty-title">素晴らしい！</h2>
+          <p class="empty-description">
+            現在、復習が必要な問題はありません。<br>
+            レッスンを進めて新しい知識を身につけましょう。
+          </p>
+          <div class="empty-actions">
+            <button class="btn-primary" data-action="select-subject" data-subject="sci">理科を学習</button>
+            <button class="btn-primary" data-action="select-subject" data-subject="soc">社会を学習</button>
+          </div>
+        </div>
+      ` : ''}
+      
+      <div class="review-system-info">
+        <div class="info-card">
+          <h3 class="info-title">💡 復習システムについて</h3>
+          <ul class="info-list">
+            <li>問題を10問間違えると、自動的に復習レッスンが生成されます</li>
+            <li>復習レッスンで満点を取ると、自動的に削除されます</li>
+            <li>復習データはローカルとクラウドに同期保存されます</li>
+          </ul>
+          <div class="debug-actions">
+            <button class="btn-secondary debug-btn" data-action="review-status">
+              システム状況を確認
+            </button>
+            <button class="btn-secondary debug-btn" data-action="review-debug">
+              詳細情報
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+    console.log('✅ 復習レッスンセクション描画完了');
+  } catch (error) {
+    console.error('❌ 復習レッスンセクション描画エラー:', error);
+    
+    // フォールバック表示
+    const homeView = document.getElementById('homeView');
+    if (homeView) {
+      homeView.innerHTML = `
+        <div class="error-fallback">
+          <div class="error-icon">⚠️</div>
+          <h2 class="error-title">復習ダッシュボードの読み込みに失敗しました</h2>
+          <p class="error-description">
+            申し訳ございません。復習ダッシュボードの読み込み中にエラーが発生しました。<br>
+            ページを再読み込みしてください。
+          </p>
+          <div class="error-actions">
+            <button class="btn-primary" onclick="location.reload()">ページを再読み込み</button>
+            <button class="btn-secondary" data-action="select-subject" data-subject="sci">理科を学習</button>
+            <button class="btn-secondary" data-action="select-subject" data-subject="soc">社会を学習</button>
+          </div>
+        </div>
+      `;
+    }
+  }
+}
+
+// レッスン別の間違い問題を描画
+function renderWrongQuestionsByLesson() {
+  const questionsByLesson = {};
+  
+  // レッスン別にグループ化
+  state.wrongQuestions.forEach(wq => {
+    if (!questionsByLesson[wq.lessonId]) {
+      questionsByLesson[wq.lessonId] = [];
+    }
+    questionsByLesson[wq.lessonId].push(wq);
+  });
+  
+  return Object.entries(questionsByLesson).map(([lessonId, questions]) => {
+    const lessonTitle = getOriginalLessonTitle(lessonId);
+    const maxWrong = Math.max(...questions.map(q => q.wrongCount || 1));
+    const progress = Math.min(questions.length / REVIEW_SYSTEM_CONFIG.MIN_WRONG_FOR_GENERATION * 100, 100);
+    
+    return `
+      <div class="wrong-question-card">
+        <div class="wrong-card-header">
+          <h4 class="wrong-card-title">${lessonTitle}</h4>
+          <span class="wrong-count-badge">${questions.length}問</span>
+        </div>
+        <div class="wrong-card-progress">
+          <div class="progress-label">復習レッスン生成まで</div>
+          <div class="progress-bar-wrapper">
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" style="width: ${progress}%"></div>
+            </div>
+            <span class="progress-text">${questions.length}/${REVIEW_SYSTEM_CONFIG.MIN_WRONG_FOR_GENERATION}</span>
+          </div>
+        </div>
+        <div class="wrong-card-details">
+          <div class="detail-item">
+            <span class="detail-label">最多間違い回数:</span>
+            <span class="detail-value">${maxWrong}回</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">最新の間違い:</span>
+            <span class="detail-value">${new Date(Math.max(...questions.map(q => q.timestamp || 0))).toLocaleDateString()}</span>
+          </div>
+        </div>
+        ${questions.length >= REVIEW_SYSTEM_CONFIG.MIN_WRONG_FOR_GENERATION ? `
+          <div class="wrong-card-action">
+            <button class="btn-warning generate-review-btn" onclick="generateReviewLesson('${lessonId}', ${JSON.stringify(questions).replace(/"/g, '&quot;')})">
+              復習レッスンを生成
+            </button>
+          </div>
+        ` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+// 復習システムのデバッグ情報を表示
+function showReviewSystemDebugInfo() {
+  const info = {
+    '復習レッスン数': state.reviewLessons?.length || 0,
+    '間違い問題数': state.wrongQuestions?.length || 0,
+    'ユーザーログイン状態': !!state.user,
+    'Firebase同期状態': !!(state.user && window.firebaseConfig),
+    'LocalStorage使用量': JSON.stringify(state.wrongQuestions || []).length + ' bytes'
+  };
+  
+  console.table(info);
+  alert(`復習システム情報:\n${Object.entries(info).map(([k, v]) => `${k}: ${v}`).join('\n')}`);
+}
+
+// 🔧 デバッグ用：復習レッスン生成を強制実行
+function forceCheckReviewGeneration() {
+  console.log('🔧 復習レッスン生成を強制チェック開始');
+  console.log('現在の間違い問題数:', state.wrongQuestions.length);
+  
+  // レッスン別にグループ化
+  const questionsByLesson = {};
+  state.wrongQuestions.forEach(wq => {
+    if (!questionsByLesson[wq.lessonId]) {
+      questionsByLesson[wq.lessonId] = [];
+    }
+    questionsByLesson[wq.lessonId].push(wq);
+  });
+  
+  console.log('レッスン別間違い問題:', questionsByLesson);
+  
+  // 各レッスンの間違い数をチェック
+  Object.entries(questionsByLesson).forEach(([lessonId, questions]) => {
+    console.log(`📊 ${lessonId}: ${questions.length}問 (必要: ${REVIEW_SYSTEM_CONFIG.MIN_WRONG_FOR_GENERATION}問)`);
+    
+    if (questions.length >= REVIEW_SYSTEM_CONFIG.MIN_WRONG_FOR_GENERATION) {
+      console.log(`🎯 ${lessonId} は生成条件を満たしています。復習レッスンを生成します。`);
+      
+      // 既に復習レッスンが存在するかチェック
+      const existingReview = state.reviewLessons.find(rl => rl.originalLessonId === lessonId);
+      if (existingReview) {
+        console.log('⚠️ 既に復習レッスンが存在します:', existingReview.id);
+      } else {
+        generateReviewLesson(lessonId, questions);
+      }
+    } else {
+      console.log(`📝 ${lessonId} はまだ生成条件を満たしていません (${questions.length}/${REVIEW_SYSTEM_CONFIG.MIN_WRONG_FOR_GENERATION})`);
+    }
+  });
+  
+  console.log('🔧 復習レッスン生成チェック完了');
+}
+
+// 教科に応じたヒーロー情報を取得
+function getSubjectHeroInfo(subject) {
+  const heroData = {
+    'sci': {
+      icon: '🔬',
+      title: '理科の学習',
+      bgClass: 'bg-gradient-to-r from-blue-400 to-purple-500'
+    },
+    'soc': {
+      icon: '🌍',
+      title: '社会の学習',
+      bgClass: 'bg-gradient-to-r from-green-400 to-blue-500'
+    },
+    'science_drill': {
+      icon: '🧪',
+      title: '理科おぼえる',
+      bgClass: 'bg-gradient-to-r from-blue-500 to-indigo-600'
+    },
+    'social_drill': {
+      icon: '📍',
+      title: '社会おぼえる',
+      bgClass: 'bg-gradient-to-r from-green-500 to-teal-600'
+    },
+    'recommended': {
+      icon: '🎓',
+      title: '復習ダッシュボード',
+      bgClass: 'bg-gradient-to-r from-yellow-400 to-orange-500'
+    }
+  };
+  
+  return heroData[subject] || heroData['sci']; // デフォルトは理科
+}
+
+// 教科を選択する関数
+function selectSubject(subject) {
+  console.log('📌 教科選択:', subject);
+  
+  // currentSubject を更新
+  currentSubject = subject;
+  
+  // アクティブなタブを更新
+  const tabs = document.querySelectorAll('.subject-tab');
+  tabs.forEach(tab => {
+    tab.classList.remove('active');
+    if (tab.dataset.subject === subject) {
+      tab.classList.add('active');
+    }
+  });
+  
+  // 教科に応じたイラストを更新
+  updateSubjectHero(subject);
+  
+  // ホーム画面を再描画
+  renderHome();
+  
+  console.log('✅ 教科選択完了:', subject);
+}
+
+// 個別問題の回答を処理（レッスンiframeからのメッセージ受信）
+function handleQuestionAnswered(messageData) {
+  console.log('📝 問題回答を処理中:', messageData);
+  
+  const {
+    lessonId,
+    questionData,
+    userAnswer,
+    correctAnswer,
+    isCorrect,
+    timestamp
+  } = messageData;
+  
+  // レッスンIDが不明な場合は現在のレッスンから取得
+  const actualLessonId = lessonId || (state.current && state.current.id);
+  
+  if (!actualLessonId) {
+    console.warn('⚠️ レッスンIDが特定できません。間違い問題記録をスキップします。');
+    return;
+  }
+  
+  console.log('📊 問題回答詳細:', {
+    actualLessonId,
+    isCorrect,
+    questionData: questionData ? '✅' : '❌',
+    userAnswer,
+    correctAnswer
+  });
+  
+  // 間違えた場合のみ記録
+  if (!isCorrect && questionData) {
+    console.log('❌ 間違い問題として記録します');
+    recordWrongAnswer(actualLessonId, questionData, userAnswer);
+    
+    // 復習レッスン生成条件をチェック
+    setTimeout(() => {
+      checkReviewLessonGeneration();
+    }, 100);
+  } else if (isCorrect && questionData) {
+    console.log('✅ 正解：復習リストから削除をチェック');
+    recordCorrectAnswer(actualLessonId, questionData);
+  }
+}
+
+// 復習システムの初期化
+function initializeReviewSystem() {
+  console.log('🚀 復習システムを初期化中...');
+  
+  // 状態の初期化
+  if (!state.wrongQuestions) {
+    state.wrongQuestions = [];
+  }
+  
+  if (!state.reviewLessons) {
+    state.reviewLessons = [];
+  }
+  
+  // LocalStorage から間違い問題を読み込み
+  loadWrongQuestionsFromLocal();
+  
+  // 復習レッスンも読み込み
+  loadReviewLessonsFromLocal();
+  
+  // 既存データの正規化マイグレーション
+  migrateWrongQuestionsData();
+  
+  // ユーザーがログインしている場合、Firebase からも読み込み
+  if (state.user && state.user.id) {
+    loadWrongQuestionsFromFirebase(state.user.id);
+  }
+  
+  console.log('✅ 復習システム初期化完了');
+}
+
+// テスト用: 間違い問題をシミュレートする関数
+function simulateWrongAnswers(lessonId, count = 5) {
+  console.log(`🧪 テスト用: ${lessonId} で ${count} 個の間違い問題をシミュレート`);
+  
+  for (let i = 1; i <= count; i++) {
+    const mockQuestionData = {
+      qnum: i,
+      text: `テスト問題 ${i}`,
+      choices: ['選択肢A', '選択肢B', '選択肢C', '選択肢D'],
+      answer: 2,
+      source: 'テスト用',
+      tags: ['テスト'],
+      difficulty: 1,
+      asof: new Date().toISOString().split('T')[0]
+    };
+    
+    recordWrongAnswer(lessonId, mockQuestionData, 1); // 常に不正解として記録
+  }
+  
+  console.log(`✅ ${count} 個の間違い問題をシミュレート完了`);
+}
+
+// 既存の間違い問題データを正規化するマイグレーション
+function migrateWrongQuestionsData() {
+  console.log('🔄 間違い問題データのマイグレーションを開始...');
+  
+  let migrationCount = 0;
+  const migratedQuestions = [];
+  const seenKeys = new Set();
+  
+  state.wrongQuestions.forEach(wq => {
+    // 既に正規化されているかチェック
+    const originalId = wq.lessonId;
+    const normalizedId = normalizeLessonId(originalId);
+    
+    if (originalId !== normalizedId) {
+      // 正規化が必要
+      const key = `${normalizedId}_${wq.questionId}`;
+      
+      // 重複チェック
+      if (!seenKeys.has(key)) {
+        seenKeys.add(key);
+        migratedQuestions.push({
+          ...wq,
+          lessonId: normalizedId,
+          id: `${key}_${wq.wrongAt || Date.now()}`
+        });
+        migrationCount++;
+        console.log(`📝 マイグレーション: ${originalId} → ${normalizedId}`);
+      }
+    } else {
+      // 既に正規化済み
+      const key = `${normalizedId}_${wq.questionId}`;
+      if (!seenKeys.has(key)) {
+        seenKeys.add(key);
+        migratedQuestions.push(wq);
+      }
+    }
+  });
+  
+  if (migrationCount > 0) {
+    state.wrongQuestions = migratedQuestions;
+    saveWrongQuestionsToLocal();
+    console.log(`✅ ${migrationCount}件の間違い問題データをマイグレーションしました`);
+  } else {
+    console.log('✅ マイグレーション不要（データは既に正規化済み）');
+  }
+}
+
+// 復習レッスンをLocalStorageから読み込み
+function loadReviewLessonsFromLocal() {
+  try {
+    const stored = localStorage.getItem('reviewLessons');
+    if (stored) {
+      state.reviewLessons = JSON.parse(stored);
+      console.log(`📚 復習レッスンをLocalStorageから読み込み: ${state.reviewLessons.length}件`);
+    }
+  } catch (error) {
+    console.error('❌ 復習レッスンの読み込みエラー:', error);
+    state.reviewLessons = [];
+  }
+}
+
+// 復習システムの状態を確認する関数
+function getReviewSystemStatus() {
+  const status = {
+    wrongQuestionsCount: state.wrongQuestions.length,
+    wrongQuestionsByLesson: {},
+    reviewLessonsCount: state.reviewLessons.length,
+    reviewLessons: state.reviewLessons.map(rl => ({
+      id: rl.id,
+      title: rl.title,
+      originalLessonId: rl.originalLessonId,
+      questionsCount: rl.questions.length,
+      createdAt: new Date(rl.createdAt).toLocaleString()
+    }))
+  };
+  
+  // レッスン別の間違い数を集計
+  state.wrongQuestions.forEach(wq => {
+    if (!status.wrongQuestionsByLesson[wq.lessonId]) {
+      status.wrongQuestionsByLesson[wq.lessonId] = 0;
+    }
+    status.wrongQuestionsByLesson[wq.lessonId]++;
+  });
+  
+  console.table(status.wrongQuestionsByLesson);
+  return status;
+}
+
+// ===== グローバル関数として公開 =====
+window.recordWrongAnswer = recordWrongAnswer;
+window.recordCorrectAnswer = recordCorrectAnswer;
+window.initializeReviewSystem = initializeReviewSystem;
+window.simulateWrongAnswers = simulateWrongAnswers;
+window.getReviewSystemStatus = getReviewSystemStatus;
+
+// 復習レッスン関数の露出（Phase 2で追加）
+window.openReviewLesson = openReviewLesson;
+window.acceptReviewNotification = acceptReviewNotification;
+window.closeReviewNotification = closeReviewNotification;
+window.startReviewLesson = startReviewLesson;
+window.selectReviewAnswer = selectReviewAnswer;
+window.proceedToNextReviewQuestion = proceedToNextReviewQuestion;
+window.goBackFromReview = goBackFromReview;
+window.exitReviewSession = exitReviewSession;
+
+// 復習ダッシュボード関数の露出（Phase 3で追加）
+window.showReviewSystemDebugInfo = showReviewSystemDebugInfo;
+window.handleQuestionAnswered = handleQuestionAnswered;
+window.selectSubject = selectSubject;
+window.forceCheckReviewGeneration = forceCheckReviewGeneration;
+
+// 🚨 デバッグ用：強制的に復習ダッシュボードを表示
+window.forceShowReviewDashboard = function() {
+  console.log('🚨 強制的に復習ダッシュボードを表示');
+  currentSubject = 'recommended';
+  
+  // 強制的に homeView を表示状態にする
+  const homeView = document.getElementById('homeView');
+  if (homeView) {
+    homeView.classList.remove('hidden');
+    homeView.style.display = 'block';
+    homeView.style.visibility = 'visible';
+    homeView.style.opacity = '1';
+    console.log('🚨 homeView を強制的に表示状態に設定');
+  }
+  
+  renderReviewLessonsSection();
+};
+
+// 🚨 デバッグ用：復習機能のテスト
+window.testReviewSystem = function() {
+  try {
+    console.log('🧪 復習システムのテストを開始');
+    
+    // テスト用の間違い問題を生成（安全なデータ構造）
+    const testLessonId = '4200_paleolithic_jomon_yayoi';
+    const testQuestions = [
+      { qnum: 1, text: '縄文時代の特徴は？', choices: ['狩猟採集', '農業', '工業', '商業'], answer: 0, source: 'テスト問題', title: '縄文時代' },
+      { qnum: 2, text: '弥生時代の特徴は？', choices: ['狩猟採集', '稲作', '工業', '商業'], answer: 1, source: 'テスト問題', title: '弥生時代' },
+      { qnum: 3, text: '旧石器時代の特徴は？', choices: ['石器使用', '金属使用', '農業', '商業'], answer: 0, source: 'テスト問題', title: '旧石器時代' },
+      { qnum: 4, text: '縄文土器の特徴は？', choices: ['無文', '縄目文様', '絵画', '文字'], answer: 1, source: 'テスト問題', title: '縄文土器' },
+      { qnum: 5, text: '弥生土器の特徴は？', choices: ['縄目文様', '薄手で実用的', '厚手', '装飾的'], answer: 1, source: 'テスト問題', title: '弥生土器' }
+    ];
+    
+    // 間違い問題として記録
+    testQuestions.forEach(q => {
+      recordWrongAnswer(testLessonId, q, 'テスト回答');
+    });
+    
+    console.log('✅ テスト用間違い問題を5問記録しました');
+    console.log('📊 現在の間違い問題数:', state.wrongQuestions.length);
+    console.log('📚 復習レッスン数:', state.reviewLessons.length);
+    
+    // 復習レッスン生成をチェック
+    setTimeout(() => {
+      try {
+        checkReviewLessonGeneration(testLessonId);
+        console.log('🎓 復習レッスン生成チェック完了');
+        
+        // ホーム画面を更新して復習レッスンを表示
+        setTimeout(() => {
+          try {
+            renderHome();
+            console.log('🏠 ホーム画面を更新しました');
+          } catch (error) {
+            console.error('❌ ホーム画面更新エラー:', error);
+          }
+        }, 500);
+      } catch (error) {
+        console.error('❌ 復習レッスン生成エラー:', error);
+      }
+    }, 100);
+  } catch (error) {
+    console.error('❌ 復習システムテストエラー:', error);
+  }
+};
+
+// 🚨 デバッグ用：復習システムをリセット
+window.resetReviewSystem = function() {
+  console.log('🔄 復習システムをリセット');
+  
+  // 旧データをクリーンアップ
+  localStorage.removeItem('wrongQuestions');     // 旧キー
+  localStorage.removeItem('wrong-store');        // 旧試作キー
+  localStorage.removeItem(REVIEW_SYSTEM_CONFIG.STORAGE_KEY);
+  localStorage.removeItem('reviewLessons');
+  localStorage.removeItem('questionAnswers');    // 旧キュー
+  localStorage.removeItem('pending-answers');    // 新キュー
+  
+  // 新しい安全ストアもリセット
+  localStorage.removeItem(WRONG_KEY);
+  
+  console.log('✅ 復習システムリセット完了（全データクリア）');
+  renderHome();
+};
+
+// 🚨 デバッグ用：進捗システムの状況を確認
+window.debugProgressSystem = function() {
+  console.log('=== 進捗システムデバッグ ===');
+  
+  // 1. localStorage の内容確認
+  const progressData = localStorage.getItem(PROG_KEY);
+  console.log('📊 進捗ストア raw:', progressData);
+  console.log('📊 進捗ストア parsed:', loadProgress());
+  
+  // 2. pending-answers の内容確認
+  const pendingData = localStorage.getItem('pending-answers');
+  console.log('📦 未送信キュー raw:', pendingData);
+  console.log('📦 未送信キュー parsed:', JSON.parse(pendingData || '[]'));
+  
+  // 3. セッション結果確認
+  const sessionResult = getSessionResult();
+  console.log('🎯 セッション結果:', sessionResult);
+  
+  // 4. 現在のURL確認
+  console.log('🌐 現在のURL:', location.href);
+  console.log('🔗 現在のハッシュ:', location.hash);
+  
+  // 5. 関数の存在確認
+  console.log('🔧 関数確認:', {
+    recordLessonProgress: typeof recordLessonProgress,
+    isLessonCompleted: typeof isLessonCompleted,
+    getLessonPercent: typeof getLessonPercent,
+    flushPendingAnswers: typeof flushPendingAnswers,
+    getSessionResult: typeof getSessionResult
+  });
+  
+  return {
+    progressData: loadProgress(),
+    pendingAnswers: JSON.parse(pendingData || '[]'),
+    sessionResult: sessionResult,
+    currentHash: location.hash
+  };
+};
+
+// 🚨 デバッグ用：手動で進捗を記録
+window.testProgressRecord = function(lessonId = 'test_lesson', correct = 8, total = 10) {
+  console.log('🧪 手動進捗記録テスト:', { lessonId, correct, total });
+  recordLessonProgress(lessonId, correct, total);
+  
+  // 記録後の状態確認
+  setTimeout(() => {
+    console.log('📊 記録後の進捗:', loadProgress());
+    console.log('✅ 完了判定:', isLessonCompleted(lessonId));
+    console.log('📈 正答率:', getLessonPercent(lessonId) + '%');
+  }, 100);
+};
+
+// 🔧 既存データの後始末（一度だけ実行）
+function cleanupOldReviewData() {
+  try {
+    const hasOldData = localStorage.getItem('wrongQuestions') || 
+                      localStorage.getItem('wrong-store') ||
+                      localStorage.getItem('questionAnswers');
+    
+    if (hasOldData) {
+      console.log('🧹 古い復習データを検出、クリーンアップ中...');
+      
+      // 旧データを新形式に移行（可能な場合）
+      try {
+        const oldWrongQuestions = JSON.parse(localStorage.getItem('wrongQuestions') || '[]');
+        if (Array.isArray(oldWrongQuestions) && oldWrongQuestions.length > 0) {
+          console.log(`📦 ${oldWrongQuestions.length}件の旧データを新形式に移行`);
+          
+          oldWrongQuestions.forEach(wq => {
+            if (wq.lessonId && wq.questionData) {
+              recordWrongAnswer({
+                lessonId: wq.lessonId,
+                questionData: wq.questionData,
+                userAnswer: wq.userAnswer,
+                correctAnswer: wq.questionData.answer
+              });
+            }
+          });
+        }
+      } catch (migrationError) {
+        console.warn('⚠️ データ移行エラー（スキップ）:', migrationError);
+      }
+      
+      // 旧データを削除
+      localStorage.removeItem('wrongQuestions');
+      localStorage.removeItem('wrong-store');
+      localStorage.removeItem('questionAnswers');
+      
+      console.log('✅ 古いデータのクリーンアップ完了');
+    }
+  } catch (error) {
+    console.warn('⚠️ データクリーンアップエラー:', error);
+  }
+}
+
+// 🚨 デバッグ用：現在の状態を詳細表示
+window.debugCurrentState = function() {
+  console.log('=== デバッグ情報 ===');
+  console.log('currentSubject:', currentSubject);
+  console.log('state.reviewLessons:', state.reviewLessons);
+  console.log('state.wrongQuestions:', state.wrongQuestions);
+  console.log('homeView exists:', !!document.getElementById('homeView'));
+  console.log('app exists:', !!document.getElementById('app'));
+  
+  // ID正規化のテスト
+  const testIds = [
+    'soc.geography.4100_land_topography_climate.oboeru',
+    'soc.geography.4100_land_topography_climate.wakaru',
+    'soc.history.heian_period.quiz',
+    'review_soc.geography.4100_land_topography_climate_1760061690399'
+  ];
+  
+  console.log('=== ID正規化テスト ===');
+  testIds.forEach(id => {
+    console.log(`${id} → ${normalizeLessonId(id)}`);
+  });
+  
+  // catalog.jsonからのタイトル取得テスト
+  console.log('=== タイトル取得テスト ===');
+  testIds.forEach(id => {
+    const normalized = normalizeLessonId(id);
+    const title = getTitleByLessonId(normalized);
+    console.log(`${normalized} → ${title}`);
+  });
+  
+  // 間違い問題の重複チェック
+  console.log('=== 間違い問題の重複チェック ===');
+  const lessonGroups = {};
+  state.wrongQuestions.forEach(wq => {
+    if (!lessonGroups[wq.lessonId]) {
+      lessonGroups[wq.lessonId] = [];
+    }
+    lessonGroups[wq.lessonId].push(wq);
+  });
+  
+  Object.keys(lessonGroups).forEach(lessonId => {
+    const questions = lessonGroups[lessonId];
+    const uniqueQuestions = new Set(questions.map(q => q.questionId));
+    console.log(`${lessonId}: ${questions.length}問 (ユニーク: ${uniqueQuestions.size}問)`);
+  });
+  
+  // 復習レッスンの詳細チェック
+  console.log('=== 復習レッスンの詳細 ===');
+  state.reviewLessons.forEach(lesson => {
+    console.log(`ID: ${lesson.id}`);
+    console.log(`タイトル: ${lesson.title}`);
+    console.log(`元レッスンID: ${lesson.originalLessonId}`);
+    console.log(`問題数: ${lesson.questions.length}`);
+    console.log('---');
+  });
+  
+  // イベント委譲の確認
+  console.log('=== イベント委譲の確認 ===');
+  const reviewCards = document.querySelectorAll('[data-action="open-review"]');
+  console.log(`復習カード数: ${reviewCards.length}`);
+  reviewCards.forEach((card, index) => {
+    const reviewId = card.getAttribute('data-review-id');
+    console.log(`カード${index + 1}: data-review-id="${reviewId}"`);
+  });
+  
+  console.log('=================');
+};
+
+// ==== ここから追補コード ====
+
+// ID正規化関数（末尾のモードや付加情報をすべて剥がす）
+function normalizeLessonId(raw) {
+  let id = String(raw);
+
+  // 例: ".wakaru" ".oboeru" ".oboe" ".oboeu" ".drill" ".quiz" ".modular" などを剥がす
+  id = id.replace(/\.(wakaru|oboeru|oboe|oboeu|drill|quiz|modular)(?:_[a-z0-9]+)?$/i, '');
+
+  // 生成時に足すseedやrev番号などの語尾（例: "_1760061690399"）を剥がす
+  id = id.replace(/_[0-9]{6,}$/i, '');
+
+  // 先頭の "review_" は比較時は無視
+  id = id.replace(/^review_/, '');
+
+  return id;
+}
+
+// catalog.jsonからタイトルを取得
+function getTitleByLessonId(baseId) {
+  // catalog.json の id と突き合わせて日本語 title を返す
+  const hit = (state.catalog || []).find(x => x.id === baseId);
+  return hit?.title || '復習レッスン';
+}
+
+// 復習レッスンをLocalStorageに保存
+function saveReviewLessons() {
+  try { 
+    localStorage.setItem('reviewLessons', JSON.stringify(state.reviewLessons)); 
+  } catch(e) { 
+    console.warn('reviewLessons 保存失敗', e); 
+  }
+}
+
+// 多重生成を防止する復習レッスン作成関数
+function upsertReviewLesson(originalLessonId, wrongQuestions) {
+  const baseId = normalizeLessonId(originalLessonId);
+  const title = getTitleByLessonId(baseId); // ← catalog.json から日本語タイトルを得る
+
+  // 既存を検索（normalized で比較）
+  let existing = state.reviewLessons.find(r => normalizeLessonId(r.originalLessonId) === baseId);
+  if (existing) {
+    // 既存があるなら上書きせず、必要なら問題を補充する程度に留める
+    existing.questions = existing.questions.slice(0, 10);
+    saveReviewLessons();
+    console.log('🔄 既存の復習レッスンを更新:', existing.id);
+    return existing.id;
+  }
+
+  // 新規作成（IDは review_<baseId>_<ts> など）
+  const id = `review_${baseId}_${Date.now()}`;
+  const review = {
+    id,
+    originalLessonId: baseId,
+    title: `${title}（復習）`,
+    questions: wrongQuestions.slice(0, 10),
+    createdAt: Date.now(),
+    type: 'review',
+    isActive: true
+  };
+  state.reviewLessons.push(review);
+  saveReviewLessons();
+  console.log('🎓 新しい復習レッスンを作成:', review);
+  return id;
+}
+
+// 一意な復習レッスンIDを生成
+function ensureUniqueReviewLessonId(baseId) {
+  // タイムスタンプだけに頼らず衝突回避
+  let i = 0;
+  let candidate;
+  do {
+    candidate = `review_${normalizeLessonId(baseId)}_${Date.now()}${i ? '_' + i : ''}`;
+    i++;
+  } while (state.reviewLessons.some(r => r.id === candidate));
+  return candidate;
+}
+
+// ==== 追補コードここまで ====
