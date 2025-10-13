@@ -77,6 +77,56 @@ timerDisplay.style.color = "#d00";
 timerDisplay.style.margin = "0.5em 0";
 document.querySelector(".question-box").insertBefore(timerDisplay, sourceEl);
 
+// 戻るボタンを初期化時に追加
+function addBackButton() {
+  const backButton = document.createElement("button");
+  backButton.textContent = "🏠 ホームに戻る";
+  backButton.style.position = "fixed";
+  backButton.style.top = "20px";
+  backButton.style.left = "20px";
+  backButton.style.zIndex = "1000";
+  backButton.style.padding = "12px 18px";
+  backButton.style.background = "linear-gradient(135deg, #ea580c, #f97316)";
+  backButton.style.color = "white";
+  backButton.style.border = "none";
+  backButton.style.borderRadius = "12px";
+  backButton.style.cursor = "pointer";
+  backButton.style.fontSize = "14px";
+  backButton.style.fontWeight = "600";
+  backButton.style.boxShadow = "0 4px 12px rgba(234, 88, 12, 0.3)";
+  backButton.style.transition = "all 0.3s ease";
+  backButton.onclick = () => {
+    // iframe内の場合は、親フレームに戻るメッセージを送信
+    if (window.parent !== window || window.top !== window) {
+      try {
+        window.parent.postMessage({ type: 'lesson:goBack' }, '*');
+        window.top.postMessage({ type: 'lesson:goBack' }, '*');
+        console.log('🏠 ホームに戻るメッセージを送信しました');
+        return;
+      } catch (e) {
+        console.log('ホームに戻るメッセージの送信に失敗:', e);
+      }
+    }
+    // iframe外の場合は直接メインページに戻る
+    window.location.href = "../../../index.html";
+  };
+  
+  // ホバー効果
+  backButton.onmouseover = () => {
+    backButton.style.transform = 'translateY(-2px) scale(1.05)';
+    backButton.style.boxShadow = '0 6px 16px rgba(234, 88, 12, 0.4)';
+  };
+  backButton.onmouseout = () => {
+    backButton.style.transform = 'translateY(0) scale(1)';
+    backButton.style.boxShadow = '0 4px 12px rgba(234, 88, 12, 0.3)';
+  };
+  
+  document.body.appendChild(backButton);
+}
+
+// 初期化時に戻るボタンを追加
+addBackButton();
+
 // ランダム出題用のシャッフル関数
 function shuffleQuestions() {
   const shuffled = [...questions];
@@ -456,6 +506,7 @@ nextBtn.onclick = () => {
     homeButton.style.boxShadow = "0 8px 25px rgba(74, 144, 226, 0.3)";
     homeButton.style.transition = "all 0.3s ease";
     homeButton.style.minHeight = "44px";
+    homeButton.style.width = "100%";
     homeButton.onclick = () => {
       // iframe内の場合は、親フレームに戻るメッセージを送信
       if (window.parent !== window || window.top !== window) {

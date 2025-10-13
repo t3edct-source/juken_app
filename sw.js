@@ -1,8 +1,7 @@
 const CACHE_NAME = 'manabi-step-v10'; // バージョン必ず更新
 const urlsToCache = [
-  '/', '/index.html', '/app.js', '/app_optimized.js', '/styles.css', '/manifest.json',
+  '/', '/index.html', '/app.js', '/styles.css', '/manifest.json',
   '/firebaseConfig.js', '/catalog.json',
-  '/modules/reviewSystem.js',
   '/lessons/soc/modular/index_modular.html',
   '/lessons/soc/modular/home_modular.html',
   '/lessons/soc/modular/script.js',
