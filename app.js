@@ -508,7 +508,7 @@ function showModernNotification(title, message, type = 'info') {
   }, 100);
 
   // 自動削除（5秒後）
-  setTimeout(() => {
+    setTimeout(() => {
     if (notification.parentElement) {
       notification.style.transform = 'translateX(100%)';
       setTimeout(() => {
@@ -811,6 +811,17 @@ function saveLessonProgress(id, correct, total, seconds){
   saveProgress(id, score, { correct, total, timeSec: seconds });
 }
 
+// 開発/手動テスト用にグローバルへ公開
+if (typeof window !== 'undefined') {
+  try {
+    window.saveLessonProgress = saveLessonProgress;
+    window.getLessonProgress = getLessonProgress;
+    window.isLessonCompleted = isLessonCompleted;
+  } catch (e) {
+    // noop
+  }
+}
+
 // セッション結果を一時保存する関数
 function saveSessionResult(lessonId, correct, total, seconds) {
   const sessionResult = {
@@ -849,9 +860,37 @@ function clearSessionResult() {
   }
 }
 
+// 進捗キーの解決（base ID と _quiz ID の相互参照に対応）
+function getProgressStorageKey(lessonId) {
+  const directKey = `progress:${lessonId}`;
+  try {
+    if (localStorage.getItem(directKey)) return directKey;
+  } catch (e) {
+    // noop
+  }
+  // base → quiz のフォールバック
+  if (!lessonId.endsWith('_quiz')) {
+    const quizKey = `progress:${lessonId}_quiz`;
+    try {
+      if (localStorage.getItem(quizKey)) return quizKey;
+    } catch (e) {
+      // noop
+    }
+  } else {
+    // quiz → base のフォールバック（互換)
+    const baseKey = `progress:${lessonId.replace(/_quiz$/, '')}`;
+    try {
+      if (localStorage.getItem(baseKey)) return baseKey;
+    } catch (e) {
+      // noop
+    }
+  }
+  return directKey; // 何も無ければそのまま
+}
+
 // 教材の進捗状況を取得する関数
 function getLessonProgress(lessonId) {
-  const key = `progress:${lessonId}`;
+  const key = getProgressStorageKey(lessonId);
   try {
     const progress = localStorage.getItem(key);
     return progress ? JSON.parse(progress) : null;
@@ -1129,7 +1168,7 @@ socialUnits = [
 ];
 
 // 理科おぼえる編の分野定義
-// 理科のおぼえる編教材が少ないため、今後追加予定
+  // 理科のおぼえる編教材が少ないため、今後追加予定
 
 // 社会おぼえる編の分野定義
 socialDrillUnits = [
@@ -1318,24 +1357,24 @@ function setupSubjectTabs() {
 // タブクリックハンドラーを分離
 async function handleTabClick(event) {
   const tab = event.currentTarget;
-  console.log('📌 タブクリック:', tab.dataset.subject);
+      console.log('📌 タブクリック:', tab.dataset.subject);
   
   const subjectTabs = document.querySelectorAll('.subject-tab');
-  
-  // アクティブなタブを更新
-  subjectTabs.forEach(t => t.classList.remove('active'));
-  tab.classList.add('active');
-  
-  // 選択された教科を更新
+      
+      // アクティブなタブを更新
+      subjectTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      
+      // 選択された教科を更新
   const newSubject = tab.dataset.subject || 'recommended';
   window.currentSubject = newSubject;
   console.log('📌 currentSubject更新:', window.currentSubject);
-  
-  // 教科に応じたイラストを更新
+      
+      // 教科に応じたイラストを更新
   updateSubjectHero(window.currentSubject);
-  
-  // 教材一覧を再描画
-  console.log('📌 renderHome()を呼び出し');
+      
+      // 教材一覧を再描画
+      console.log('📌 renderHome()を呼び出し');
   await renderHome();
 }
 
@@ -1745,9 +1784,9 @@ async function renderSocialDrillUnits() {
       if (title && title.textContent.includes('地理分野')) {
         console.log(`✅ 地理分野の要素を発見 (インデックス: ${index})`);
         
-        // 進捗を計算
+        // 進捗を計算（クイズIDを対象に集計）
         const geographyLessons = state.catalog ? state.catalog.filter(lesson => 
-          lesson.id.includes('soc.geography') && !lesson.id.includes('_quiz')
+          lesson.id.includes('soc.geography') && lesson.id.includes('_quiz')
         ) : [];
         
         const completedCount = geographyLessons.filter(lesson => {
@@ -2374,82 +2413,9 @@ function renderResult(id){
   }
 }
 
-window.addEventListener('message', (ev)=>{
-  console.log('🔔 メッセージを受信しました:', ev.data);
-  console.log('🔔 送信元オリジン:', ev.origin);
-  console.log('🔔 現在のオリジン:', location.origin);
-  
-  // オリジンチェックを無効化（ローカル開発用）
-  console.log('✅ オリジンチェックをスキップ:', ev.origin);
-  const d=ev.data||{};
-  
-  // 個別問題の回答記録（復習システム用）
-  if (d.type === 'question:answered') {
-    console.log('問題回答メッセージを受信:', d);
-    handleQuestionAnswered(d);
-    return;
-  }
-  
-  // レッスン完了処理
-  if (d.type==='lesson:complete'){
-    console.log('完了メッセージを受信しました:', d);
-    let id=d.lessonId || (state.current && state.current.id);
-    const correct=d.detail?.correct ?? 0;
-    const total=d.detail?.total ?? 0;
-    const seconds=d.detail?.timeSec ?? 0;
-    
-    // レッスンIDの統一処理（旧IDを新IDに変換）
-    const idMigrationMap = {
-      'soc.geography.land_topography_climate': 'soc.geography.land_topography_climate_quiz',
-      'soc.geography.agriculture_forestry_fishery': 'soc.geography.agriculture_forestry_fishery_quiz',
-      'soc.geography.prefectures_cities': 'soc.geography.prefectures_cities_quiz',
-      'soc.geography.industry_energy': 'soc.geography.industry_energy_quiz',
-      'soc.geography.commerce_trade_transportation': 'soc.geography.commerce_trade_transportation_quiz',
-      'soc.geography.environment': 'soc.geography.environment_quiz',
-      'soc.geography.information': 'soc.geography.information_quiz',
-      'soc.geography.maps_symbols': 'soc.geography.maps_symbols_quiz',
-      'soc.geography.hokkaido_region': 'soc.geography.hokkaido_region_quiz',
-      'soc.geography.tohoku_region': 'soc.geography.tohoku_region_quiz',
-      'soc.geography.kanto_region': 'soc.geography.kanto_region_quiz',
-      'soc.geography.chubu_region': 'soc.geography.chubu_region_quiz',
-      'soc.geography.kinki_region': 'soc.geography.kinki_region_quiz',
-      'soc.geography.chugoku_shikoku_region': 'soc.geography.chugoku_shikoku_region_quiz',
-      'soc.geography.kyushu_region': 'soc.geography.kyushu_region_quiz',
-      'soc.geography.world_geography': 'soc.geography.world_geography_quiz'
-    };
-    
-    if (idMigrationMap[id]) {
-      console.log(`🔄 レッスンIDを統一: ${id} → ${idMigrationMap[id]}`);
-      id = idMigrationMap[id];
-    }
-    
-    console.log('進捗を保存します:', {id, correct, total, seconds});
-    
-    // 長期保存用の進捗データを保存
-    saveLessonProgress(id, correct, total, seconds);
-    
-    // セッション結果を一時保存（結果画面用）
-    console.log('💾 セッション結果を保存中:', { id, correct, total, seconds });
-    saveSessionResult(id, correct, total, seconds);
-    console.log('💾 セッション結果保存完了:', getSessionResult());
-    
-    setHash('result', id);
-  } else if (d.type==='lesson:goBack'){
-    console.log('🔙 戻るメッセージを受信しました');
-    // iframe内から戻るボタンが押された場合、ホーム画面に戻る
-    console.log('🏠 ホーム画面に戻ります');
-    
-    // 確実にホーム画面に戻るための処理
-    setHash('home');
-    
-    // 追加の安全措置：少し遅延してから再度ホーム画面を表示
-    setTimeout(() => {
-      console.log('🔄 ホーム画面表示を再確認');
-      showOnly('home');
-      renderHome();
-    }, 100);
-  }
-});
+// 旧メッセージリスナー（重複防止のため無効化）
+// registerProgressAPI()で統一管理されているため、こちらは無効化
+console.log('⚠️ 旧メッセージリスナーは無効化されています。registerProgressAPI()を使用してください。');
 
 function escapeHtml(s){return String(s).replace(/[&<>"']/g, m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]))}
 
@@ -3180,6 +3146,9 @@ async function startup(){
     renderAppView();
     renderHome();
   }, 500);
+
+  // 恒久対応: 進捗API公開と message リスナーを最後に必ず登録
+  registerProgressAPI();
   
   // 初期表示は通常のrenderHome()に任せる（復習レッスンは統合済み）
   
@@ -3495,6 +3464,165 @@ window.showPurchaseConfirmModal = showPurchaseConfirmModal;
 window.closePurchaseConfirmModal = closePurchaseConfirmModal;
 window.processPurchase = processPurchase;
 window.renderAppView = renderAppView;
+
+// 恒久対応: 進捗APIのグローバル公開と message リスナー登録を一本化
+function registerProgressAPI() {
+  try {
+    // グローバル公開（何度呼ばれても安全）
+    window.getLessonProgress = getLessonProgress;
+    window.isLessonCompleted = isLessonCompleted;
+    window.saveLessonProgress = saveLessonProgress;
+    window.renderHome = renderHome;
+    
+    // テスト用関数も公開
+    window.testLessonComplete = function(lessonId = 'soc.geography.land_topography_climate', correct = 8, total = 10, seconds = 300) {
+      console.log('🧪 テスト用 lesson:complete メッセージを送信');
+      const testMessage = {
+        type: 'lesson:complete',
+        lessonId: lessonId,
+        detail: {
+          correct: correct,
+          total: total,
+          timeSec: seconds
+        }
+      };
+      
+      console.log('📤 送信メッセージ:', testMessage);
+      window.postMessage(testMessage, '*');
+      
+      // 結果確認
+      setTimeout(() => {
+        const progress = getLessonProgress(lessonId);
+        console.log('📊 保存結果確認:', progress);
+      }, 500);
+    };
+    
+    console.log('✅ 進捗API公開済み（テスト関数含む）');
+  } catch (e) { /* noop */ }
+
+  // lesson:complete 受信ハンドラ（重複登録防止）
+  if (!window._lessonCompleteHandlerInstalled) {
+    const handler = (ev) => {
+      console.log('🔔 [新リスナー] メッセージを受信:', ev.data, '送信元:', ev.origin);
+      console.log('🔔 メッセージ詳細:', {
+        type: ev.data?.type,
+        lessonId: ev.data?.lessonId,
+        hasDetail: !!ev.data?.detail
+      });
+      console.log('🔔 受信時刻:', new Date().toLocaleTimeString());
+      console.log('🔔 メッセージ完全な内容:', JSON.stringify(ev.data, null, 2));
+      const d = ev?.data || {};
+      
+      if (d && d.type === 'lesson:complete' && d.lessonId) {
+        console.log('🎯 lesson:complete メッセージを検出:', d);
+        console.log('🎯 受信したレッスンID:', d.lessonId);
+        console.log('🎯 受信した詳細情報:', d.detail);
+        let id = d.lessonId;
+        const correct = d.detail?.correct ?? 0;
+        const total = d.detail?.total ?? 0;
+        const seconds = d.detail?.timeSec ?? 0;
+
+        // 既存の移行マップを利用（base→_quiz などを吸収）
+        const idMigrationMap = {
+          'soc.geography.land_topography_climate': 'soc.geography.land_topography_climate_quiz',
+          'soc.geography.agriculture_forestry_fishery': 'soc.geography.agriculture_forestry_fishery_quiz',
+          'soc.geography.prefectures_cities': 'soc.geography.prefectures_cities_quiz',
+          'soc.geography.industry_energy': 'soc.geography.industry_energy_quiz',
+          'soc.geography.commerce_trade_transportation': 'soc.geography.commerce_trade_transportation_quiz',
+          'soc.geography.environment': 'soc.geography.environment_quiz',
+          'soc.geography.information': 'soc.geography.information_quiz',
+          'soc.geography.maps_symbols': 'soc.geography.maps_symbols_quiz',
+          'soc.geography.hokkaido_region': 'soc.geography.hokkaido_region_quiz',
+          'soc.geography.tohoku_region': 'soc.geography.tohoku_region_quiz',
+          'soc.geography.kanto_region': 'soc.geography.kanto_region_quiz',
+          'soc.geography.chubu_region': 'soc.geography.chubu_region_quiz',
+          'soc.geography.kinki_region': 'soc.geography.kinki_region_quiz',
+          'soc.geography.chugoku_shikoku_region': 'soc.geography.chugoku_shikoku_region_quiz',
+          'soc.geography.kyushu_region': 'soc.geography.kyushu_region_quiz',
+          'soc.geography.world_geography': 'soc.geography.world_geography_quiz'
+        };
+        if (idMigrationMap[id]) {
+          console.log(`🔄 ID変換: ${id} → ${idMigrationMap[id]}`);
+          id = idMigrationMap[id];
+        }
+
+        // 保存
+        try {
+          saveLessonProgress(id, correct, total, seconds);
+          console.log('💾 lesson:complete 受信→進捗保存成功', { id, correct, total, seconds });
+          
+          // UI更新を強制実行
+          setTimeout(() => {
+            console.log('🔄 UI更新を実行');
+            if (typeof renderHome === 'function') {
+              renderHome();
+            }
+          }, 100);
+        } catch (e) {
+          console.error('❌ 進捗保存に失敗:', e);
+        }
+      } else if (d && d.type === 'question:answered') {
+        console.log('📝 question:answered メッセージを検出:', d);
+        if (typeof handleQuestionAnswered === 'function') {
+          handleQuestionAnswered(d);
+        }
+      } else if (d && d.type === 'lesson:goBack') {
+        console.log('🔙 lesson:goBack メッセージを検出');
+        setHash('home');
+      }
+    };
+    window.addEventListener('message', handler);
+    window._lessonCompleteHandlerInstalled = true;
+    console.log('✅ lesson:complete リスナー登録済み（デバッグ強化版）');
+    
+    // localStorage経由での代替通信も監視
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'lessonCompleteMessage' && e.newValue) {
+        try {
+          const messageData = JSON.parse(e.newValue);
+          console.log('📦 localStorage経由でメッセージを受信:', messageData);
+          if (messageData.type === 'lesson:complete') {
+            // メッセージイベントをシミュレート
+            const syntheticEvent = {
+              data: messageData,
+              origin: window.location.origin
+            };
+            handler(syntheticEvent);
+          }
+        } catch (err) {
+          console.log('❌ localStorageメッセージ解析失敗:', err);
+        }
+      }
+    });
+    
+    // 定期的にlocalStorageをチェック（代替手段）
+    setInterval(() => {
+      try {
+        const storedMessage = localStorage.getItem('lessonCompleteMessage');
+        if (storedMessage) {
+          const messageData = JSON.parse(storedMessage);
+          const messageAge = Date.now() - (messageData.timestamp || 0);
+          if (messageAge < 5000) { // 5秒以内のメッセージのみ処理
+            console.log('⏰ 定期的チェックでメッセージを発見:', messageData);
+            if (messageData.type === 'lesson:complete') {
+              const syntheticEvent = {
+                data: messageData,
+                origin: window.location.origin
+              };
+              handler(syntheticEvent);
+              // 処理後は削除
+              localStorage.removeItem('lessonCompleteMessage');
+            }
+          }
+        }
+      } catch (err) {
+        // 無視
+      }
+    }, 1000);
+  }
+}
+
+// テスト用関数は registerProgressAPI() 内で定義済み
 
 // 🧪 完全性テスト: onclick属性チェック
 setTimeout(() => {

@@ -327,10 +327,13 @@ function showCurrentSessionResult() {
 
 // 次の問題へ進む
 nextBtn.onclick = () => {
+  console.log('🔄 nextBtn.onclick 実行:', { current, totalQuestions: questions.length });
   current++;
   if (current < questions.length) {
+    console.log('📝 次の問題を読み込み:', current + 1);
     loadQuestion();
   } else {
+    console.log('🎯 レッスン完了！メッセージ送信処理を開始');
     questionEl.textContent = "終了！おつかれさまでした。";
     sourceEl.textContent = "";
     timerDisplay.textContent = "";
@@ -347,6 +350,7 @@ nextBtn.onclick = () => {
     historyDisplay.innerHTML = showCurrentSessionResult();
 
     // 完了メッセージを親フレームに送信
+    console.log('🎯 メッセージ送信処理開始');
     console.log('iframe検出チェック:', {
       'window.parent !== window': window.parent !== window,
       'window.top !== window': window.top !== window,
@@ -358,14 +362,37 @@ nextBtn.onclick = () => {
     const isInIframe = window.parent !== window || window.top !== window || window.location.href.includes('/lessons/');
     console.log('📡 メッセージ送信判定:', isInIframe);
     
-    if (isInIframe) {
-      try {
+    // 強制的にメッセージ送信を実行（iframe判定に関係なく）
+    console.log('🚀 強制的にメッセージ送信を実行');
+    
+    // iframe判定に関係なく、常にメッセージを送信
+    try {
         // 現在のURLから正しいlessonIdを生成
         const urlParams = new URLSearchParams(window.location.search);
         const era = urlParams.get("era") || "geo_land_topo";
-        // グローバルのmode変数を使用
-        // 新しい地理コンテンツに対応
-        let lessonId = `soc.geography.${era}.${mode}`;
+        
+        // レッスンIDの正規化（eraから正しいIDに変換）
+        const eraToLessonIdMap = {
+          '4100_land_topography_climate_with_sources': 'soc.geography.land_topography_climate_quiz',
+          '4101_agriculture_forestry_fishery_with_sources': 'soc.geography.agriculture_forestry_fishery_quiz',
+          '4102_prefectures_cities_with_sources': 'soc.geography.prefectures_cities_quiz',
+          '4103_industry_energy_with_sources': 'soc.geography.industry_energy_quiz',
+          '4104_commerce_trade_transportation_with_sources': 'soc.geography.commerce_trade_transportation_quiz',
+          '4106_environment_with_sources': 'soc.geography.environment_quiz',
+          '4107_information_with_sources': 'soc.geography.information_quiz',
+          '4108_maps_topographic_symbols_with_sources': 'soc.geography.maps_symbols_quiz',
+          '4109_hokkaido_region_with_sources': 'soc.geography.hokkaido_region_quiz',
+          '4110_tohoku_region_with_sources': 'soc.geography.tohoku_region_quiz',
+          '4111_kanto_region_with_sources': 'soc.geography.kanto_region_quiz',
+          '4112_chubu_region_with_sources': 'soc.geography.chubu_region_quiz',
+          '4113_kinki_region_with_sources': 'soc.geography.kinki_region_quiz',
+          '4114_chugoku_shikoku_region_with_sources': 'soc.geography.chugoku_shikoku_region_quiz',
+          '4115_kyushu_region_with_sources': 'soc.geography.kyushu_region_quiz',
+          '4116_world_geography_with_sources': 'soc.geography.world_geography_quiz'
+        };
+        
+        let lessonId = eraToLessonIdMap[era] || `soc.geography.${era}.${mode}`;
+        console.log('🔄 レッスンID変換:', era, '→', lessonId);
         
         const messageData = {
           type: 'lesson:complete',
@@ -379,6 +406,11 @@ nextBtn.onclick = () => {
         
         console.log('🚀 完了メッセージを送信します:', messageData);
         console.log('🚀 現在のセッション情報:', learningTracker.currentSession);
+        console.log('🚀 送信前の状態確認:', {
+          'window.parent !== window': window.parent !== window,
+          'window.top !== window': window.top !== window,
+          'current URL': window.location.href
+        });
         
         // 複数の方法で確実にメッセージを送信
         console.log('🔄 複数の方法でメッセージを送信開始');
@@ -413,13 +445,20 @@ nextBtn.onclick = () => {
           console.log('❌ frames への送信失敗:', e);
         }
         
-        // 方法4: storage eventを使用した代替通信
+        // 方法4: storage eventを使用した代替通信（強化版）
         try {
-          localStorage.setItem('lessonCompleteMessage', JSON.stringify({
+          const storageMessage = {
             ...messageData,
             timestamp: Date.now()
-          }));
-          console.log('✅ localStorage での通信設定完了');
+          };
+          localStorage.setItem('lessonCompleteMessage', JSON.stringify(storageMessage));
+          console.log('✅ localStorage での通信設定完了:', storageMessage);
+          
+          // 追加: 直接メインページの関数を呼び出し
+          if (window.parent && window.parent.saveLessonProgress) {
+            console.log('🔄 直接メインページの関数を呼び出し');
+            window.parent.saveLessonProgress(messageData.lessonId, messageData.detail.correct, messageData.detail.total, messageData.detail.timeSec);
+          }
         } catch (e) {
           console.log('❌ localStorage での通信失敗:', e);
         }
@@ -445,51 +484,6 @@ nextBtn.onclick = () => {
       } catch (e) {
         console.log('完了メッセージの送信に失敗しました:', e);
       }
-    } else {
-      console.log('⚠️ iframe検出に失敗しました。手動送信ボタンを追加します。');
-      
-      // 手動でメッセージを送信するボタンを追加
-      const manualSendButton = document.createElement("button");
-      manualSendButton.textContent = "🔄 結果を送信";
-      manualSendButton.style.marginTop = "1rem";
-      manualSendButton.style.padding = "0.75rem 1.5rem";
-      manualSendButton.style.fontSize = "1rem";
-      manualSendButton.style.fontWeight = "600";
-      manualSendButton.style.background = "linear-gradient(135deg, #e53e3e 0%, #c53030 100%)";
-      manualSendButton.style.color = "white";
-      manualSendButton.style.border = "none";
-      manualSendButton.style.borderRadius = "8px";
-      manualSendButton.style.cursor = "pointer";
-      manualSendButton.onclick = () => {
-        try {
-          const urlParams = new URLSearchParams(window.location.search);
-          const era = urlParams.get("era") || "geo_land_topo";
-          let lessonId = `soc.geography.${era}.${mode}`;
-          
-          const messageData = {
-            type: 'lesson:complete',
-            lessonId: lessonId,
-            detail: {
-              correct: learningTracker.currentSession.score,
-              total: learningTracker.currentSession.totalQuestions,
-              timeSec: learningTracker.currentSession.totalTime || 0
-            }
-          };
-          
-          console.log('🔧 手動でメッセージを送信:', messageData);
-          window.parent.postMessage(messageData, '*');
-          window.top.postMessage(messageData, '*');
-          
-          manualSendButton.textContent = "✅ 送信完了";
-          manualSendButton.disabled = true;
-        } catch (e) {
-          console.error('手動送信も失敗:', e);
-          manualSendButton.textContent = "❌ 送信失敗";
-        }
-      };
-      
-      document.querySelector(".question-box").appendChild(manualSendButton);
-    }
 
     // 手動でホームに戻るボタン（自動遷移なし）
     const homeButton = document.createElement("button");

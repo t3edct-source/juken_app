@@ -1,4 +1,4 @@
-const CACHE_NAME = 'manabi-step-v10'; // バージョン必ず更新
+const CACHE_NAME = 'manabi-step-v19'; // バージョン必ず更新
 const urlsToCache = [
   '/', '/index.html', '/app.js', '/styles.css', '/manifest.json',
   '/firebaseConfig.js', '/catalog.json',
