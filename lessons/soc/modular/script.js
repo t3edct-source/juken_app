@@ -30,6 +30,7 @@ function goBack() {
 
 const urlParams = new URLSearchParams(window.location.search);
 const mode = urlParams.get("mode") || "wakaru"; // デフォルトはわかる編
+const era = urlParams.get("era") || "4100_land_topography_climate_with_sources"; // レッスンID生成用
 const eraKey = urlParams.get("era") || "kodai"; // 単元キー（OK判定に使用）
 
 document.getElementById("modeLabel").textContent = 
@@ -303,11 +304,21 @@ function showCurrentSessionResult() {
     resultMessage = '💪 復習して再チャレンジしよう！';
   }
   
-  const timeMinutes = Math.floor((session.totalTime || 0) / 60);
-  const timeSeconds = (session.totalTime || 0) % 60;
+  // totalTimeを正しく計算
+  const totalTime = Date.now() - session.startTime;
+  const timeMinutes = Math.floor(totalTime / 60000);
+  const timeSeconds = Math.floor((totalTime % 60000) / 1000);
   const timeDisplay = timeMinutes > 0 ? 
     `${timeMinutes}分${timeSeconds}秒` : 
     `${timeSeconds}秒`;
+  
+  console.log('📊 セッション結果表示:', {
+    score: session.score,
+    totalQuestions: session.totalQuestions,
+    scorePercent: scorePercent,
+    totalTime: totalTime,
+    timeDisplay: timeDisplay
+  });
   
   return `
     <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 16px; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.3);">
@@ -367,31 +378,60 @@ nextBtn.onclick = () => {
     
     // iframe判定に関係なく、常にメッセージを送信
     try {
-        // 現在のURLから正しいlessonIdを生成
-        const urlParams = new URLSearchParams(window.location.search);
-        const era = urlParams.get("era") || "geo_land_topo";
+        // 現在のURLから正しいlessonIdを生成（eraは既にグローバルで定義済み）
         
-        // レッスンIDの正規化（eraから正しいIDに変換）
-        const eraToLessonIdMap = {
-          '4100_land_topography_climate_with_sources': 'soc.geography.land_topography_climate_quiz',
-          '4101_agriculture_forestry_fishery_with_sources': 'soc.geography.agriculture_forestry_fishery_quiz',
-          '4102_prefectures_cities_with_sources': 'soc.geography.prefectures_cities_quiz',
-          '4103_industry_energy_with_sources': 'soc.geography.industry_energy_quiz',
-          '4104_commerce_trade_transportation_with_sources': 'soc.geography.commerce_trade_transportation_quiz',
-          '4106_environment_with_sources': 'soc.geography.environment_quiz',
-          '4107_information_with_sources': 'soc.geography.information_quiz',
-          '4108_maps_topographic_symbols_with_sources': 'soc.geography.maps_symbols_quiz',
-          '4109_hokkaido_region_with_sources': 'soc.geography.hokkaido_region_quiz',
-          '4110_tohoku_region_with_sources': 'soc.geography.tohoku_region_quiz',
-          '4111_kanto_region_with_sources': 'soc.geography.kanto_region_quiz',
-          '4112_chubu_region_with_sources': 'soc.geography.chubu_region_quiz',
-          '4113_kinki_region_with_sources': 'soc.geography.kinki_region_quiz',
-          '4114_chugoku_shikoku_region_with_sources': 'soc.geography.chugoku_shikoku_region_quiz',
-          '4115_kyushu_region_with_sources': 'soc.geography.kyushu_region_quiz',
-          '4116_world_geography_with_sources': 'soc.geography.world_geography_quiz'
-        };
+        // modeパラメータを考慮したレッスンID変換処理
+        // 覚える編とわかる編で異なるID体系を使用
+        let lessonId;
         
-        let lessonId = eraToLessonIdMap[era] || `soc.geography.${era}.${mode}`;
+        // パターンマッチングでID変換
+        if (era.includes('land_topography_climate')) {
+          lessonId = 'soc.geography.land_topography_climate';
+        } else if (era.includes('agriculture_forestry_fishery')) {
+          lessonId = 'soc.geography.agriculture_forestry_fishery';
+        } else if (era.includes('prefectures_cities')) {
+          lessonId = 'soc.geography.prefectures_cities';
+        } else if (era.includes('industry_energy')) {
+          lessonId = 'soc.geography.industry_energy';
+        } else if (era.includes('commerce_trade_transportation')) {
+          lessonId = 'soc.geography.commerce_trade_transportation';
+        } else if (era.includes('environment')) {
+          lessonId = 'soc.geography.environment';
+        } else if (era.includes('information')) {
+          lessonId = 'soc.geography.information';
+        } else if (era.includes('maps_symbols') || era.includes('maps_topographic_symbols')) {
+          lessonId = 'soc.geography.maps_symbols';
+        } else if (era.includes('hokkaido_region')) {
+          lessonId = 'soc.geography.hokkaido_region';
+        } else if (era.includes('tohoku_region')) {
+          lessonId = 'soc.geography.tohoku_region';
+        } else if (era.includes('kanto_region')) {
+          lessonId = 'soc.geography.kanto_region';
+        } else if (era.includes('chubu_region')) {
+          lessonId = 'soc.geography.chubu_region';
+        } else if (era.includes('kinki_region')) {
+          lessonId = 'soc.geography.kinki_region';
+        } else if (era.includes('chugoku_shikoku_region')) {
+          lessonId = 'soc.geography.chugoku_shikoku_region';
+        } else if (era.includes('kyushu_region')) {
+          lessonId = 'soc.geography.kyushu_region';
+        } else if (era.includes('world_geography')) {
+          lessonId = 'soc.geography.world_geography';
+        } else {
+          // その他の場合はデフォルト形式
+          lessonId = `soc.geography.${era}`;
+        }
+        
+        // modeパラメータによるID分離
+        if (mode === 'oboeru') {
+          // 覚える編: 既存のIDを維持（既存の進捗を保護）
+          console.log('🔍 覚える編のID変換:', lessonId);
+        } else {
+          // わかる編: 独立したID体系を使用
+          lessonId = lessonId + '_understand';
+          console.log('🔍 わかる編のID変換:', lessonId);
+        }
+        
         console.log('🔄 レッスンID変換:', era, '→', lessonId);
         
         const messageData = {
@@ -461,6 +501,23 @@ nextBtn.onclick = () => {
           }
         } catch (e) {
           console.log('❌ localStorage での通信失敗:', e);
+        }
+        
+        // 方法5: 強制的にstorage eventを発火
+        try {
+          const storageEvent = new StorageEvent('storage', {
+            key: 'lessonCompleteMessage',
+            newValue: JSON.stringify({
+              ...messageData,
+              timestamp: Date.now()
+            }),
+            oldValue: null,
+            storageArea: localStorage
+          });
+          window.dispatchEvent(storageEvent);
+          console.log('✅ 強制的なstorage event発火完了');
+        } catch (e) {
+          console.log('❌ 強制的なstorage event発火失敗:', e);
         }
         
         // セッション結果をメインページ用に保存（将来の機能用）
@@ -588,18 +645,32 @@ class LearningTracker {
       // 既存の履歴を読み込み
       const existingHistory = this.loadHistory();
       
+      // totalTimeを正しく計算
+      const totalTime = Date.now() - this.currentSession.startTime;
+      this.currentSession.totalTime = totalTime;
+      
       // 新しいセッションを追加
-      existingHistory.sessions.push({
+      const sessionToSave = {
         ...this.currentSession,
         endTime: Date.now(),
-        duration: Date.now() - this.currentSession.startTime
-      });
+        duration: totalTime,
+        totalTime: totalTime
+      };
+      
+      existingHistory.sessions.push(sessionToSave);
 
       // 統計情報を更新
       existingHistory.stats = this.calculateStats(existingHistory.sessions);
       
       // 保存
       localStorage.setItem('learningHistory', JSON.stringify(existingHistory));
+      
+      console.log('✅ セッション保存完了:', {
+        score: this.currentSession.score,
+        totalQuestions: this.currentSession.totalQuestions,
+        totalTime: totalTime,
+        mode: this.currentSession.mode
+      });
       
       return true;
     } catch (error) {

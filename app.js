@@ -659,9 +659,8 @@ function updatePurchaseButtonsState(user) {
   updateModalPurchaseButtons(user);
 }
 
-// syncFirebaseAuth関数をグローバルに公開（即座に実行）
-window.syncFirebaseAuth = syncFirebaseAuth;
-console.log("🚀 syncFirebaseAuth をグローバルに公開しました");
+// syncFirebaseAuth関数は既にwindow.syncFirebaseAuthとして定義済み
+console.log("🚀 syncFirebaseAuth は既にグローバルに公開済み");
 
 // ===== Stripe Checkout連携機能 =====
 async function startPurchase(productId, packLabel) {
@@ -808,7 +807,17 @@ function saveProgress(lessonId, score, detail){
 
 function saveLessonProgress(id, correct, total, seconds){
   const score = total ? (correct/total) : 1;
-  saveProgress(id, score, { correct, total, timeSec: seconds });
+  const detail = { correct, total, timeSec: seconds };
+  
+  console.log('💾 進捗保存詳細:', {
+    id: id,
+    correct: correct,
+    total: total,
+    score: score,
+    detail: detail
+  });
+  
+  saveProgress(id, score, detail);
 }
 
 // 開発/手動テスト用にグローバルへ公開
@@ -868,6 +877,7 @@ function getProgressStorageKey(lessonId) {
   } catch (e) {
     // noop
   }
+  
   // base → quiz のフォールバック
   if (!lessonId.endsWith('_quiz')) {
     const quizKey = `progress:${lessonId}_quiz`;
@@ -885,6 +895,45 @@ function getProgressStorageKey(lessonId) {
       // noop
     }
   }
+  
+  // 拡張ID変換: カタログIDから実際の進捗IDへの変換
+  if (lessonId.includes('land_topography_climate')) {
+    const extendedKey = `progress:soc.geography.4100_land_topography_climate.oboeru`;
+    try {
+      if (localStorage.getItem(extendedKey)) {
+        console.log(`🔄 ID変換成功: ${lessonId} → ${extendedKey}`);
+        return extendedKey;
+      }
+    } catch (e) {
+      // noop
+    }
+  }
+  
+  // その他の地理教材の変換パターンを追加
+  const geographyPatterns = [
+    { from: 'agriculture_forestry_fishery', to: 'soc.geography.4200_agriculture_forestry_fishery.oboeru' },
+    { from: 'prefectures_cities', to: 'soc.geography.4300_prefectures_cities.oboeru' },
+    { from: 'industry_energy', to: 'soc.geography.4400_industry_energy.oboeru' },
+    { from: 'commerce_trade_transportation', to: 'soc.geography.4500_commerce_trade_transportation.oboeru' },
+    { from: 'environment', to: 'soc.geography.4600_environment.oboeru' },
+    { from: 'information', to: 'soc.geography.4700_information.oboeru' },
+    { from: 'maps_symbols', to: 'soc.geography.4800_maps_symbols.oboeru' }
+  ];
+  
+  for (const pattern of geographyPatterns) {
+    if (lessonId.includes(pattern.from)) {
+      const extendedKey = `progress:${pattern.to}`;
+      try {
+        if (localStorage.getItem(extendedKey)) {
+          console.log(`🔄 ID変換成功: ${lessonId} → ${extendedKey}`);
+          return extendedKey;
+        }
+      } catch (e) {
+        // noop
+      }
+    }
+  }
+  
   return directKey; // 何も無ければそのまま
 }
 
@@ -893,8 +942,18 @@ function getLessonProgress(lessonId) {
   const key = getProgressStorageKey(lessonId);
   try {
     const progress = localStorage.getItem(key);
-    return progress ? JSON.parse(progress) : null;
+    const result = progress ? JSON.parse(progress) : null;
+    
+    console.log(`🔍 進捗データ取得: ${lessonId}`, {
+      key: key,
+      raw: progress,
+      parsed: result,
+      hasData: !!result
+    });
+    
+    return result;
   } catch (e) {
+    console.error(`❌ 進捗データ取得エラー: ${lessonId}`, e);
     return null;
   }
 }
@@ -902,7 +961,34 @@ function getLessonProgress(lessonId) {
 // 教材が完了しているかチェックする関数
 function isLessonCompleted(lessonId) {
   const progress = getLessonProgress(lessonId);
-  return progress && progress.score > 0;
+  
+  console.log(`🔍 進捗データ確認: ${lessonId}`, {
+    progress: progress,
+    hasProgress: !!progress,
+    progressKeys: progress ? Object.keys(progress) : []
+  });
+  
+  if (!progress) {
+    console.log(`❌ 進捗データなし: ${lessonId}`);
+    return false;
+  }
+  
+  // 正解数が1問以上あれば完了とみなす
+  const correctAnswers = progress.detail?.correct || 0;
+  const totalQuestions = progress.detail?.total || 0;
+  
+  // 最低1問正解していれば完了
+  const isCompleted = correctAnswers > 0;
+  
+  console.log(`📊 完了判定: ${lessonId}`, {
+    correct: correctAnswers,
+    total: totalQuestions,
+    score: progress.score,
+    detail: progress.detail,
+    isCompleted: isCompleted
+  });
+  
+  return isCompleted;
 }
 
 // レッスンIDの移行処理（旧IDから新IDへの移行）
@@ -1288,7 +1374,11 @@ function getRecommendedLessons() {
       
       // 最後に取り組んだ教材を特定（時系列順）
     const completedLessons = subjectLessons
-      .filter(entry => isLessonCompleted(entry.id))
+      .filter(entry => {
+        const isCompleted = isLessonCompleted(entry.id);
+        console.log(`🔍 推薦システム完了チェック: ${entry.id} → ${isCompleted ? '完了' : '未完了'}`);
+        return isCompleted;
+      })
       .sort((a, b) => {
         const progressA = getLessonProgress(a.id);
         const progressB = getLessonProgress(b.id);
@@ -1683,6 +1773,53 @@ async function renderSocialUnits() {
   
   console.log('🔍 socialUnits:', socialUnits);
   renderSubjectUnits(socialUnits, '社会');
+  
+  // わかる編の進捗表示を強制更新
+  console.log('🔄 わかる編の進捗表示を強制更新');
+  setTimeout(() => {
+    const unitItems = document.querySelectorAll('.unit-item');
+    unitItems.forEach((item, index) => {
+      const title = item.querySelector('.unit-item-title');
+      if (title && title.textContent.includes('地理分野')) {
+        console.log(`✅ 地理分野の要素を発見 (インデックス: ${index})`);
+        
+        // わかる編の進捗を計算（_understandサフィックス付きIDを対象に集計）
+        const geographyLessons = state.catalog ? state.catalog.filter(lesson => 
+          lesson.id.includes('soc.geography') && !lesson.id.includes('_quiz')
+        ) : [];
+        
+        const completedCount = geographyLessons.filter(lesson => {
+          // わかる編のIDに_understandサフィックスを追加
+          const wakaruId = lesson.id + '_understand';
+          const progressData = localStorage.getItem(`progress:${wakaruId}`);
+          if (progressData) {
+            const parsed = JSON.parse(progressData);
+            const isCompleted = parsed.detail?.correct > 0;
+            console.log(`🔍 わかる編進捗チェック: ${lesson.id} → ${wakaruId} → ${isCompleted ? '完了' : '未完了'}`);
+            return isCompleted;
+          }
+          return false;
+        }).length;
+        
+        const progressPercent = Math.round((completedCount / geographyLessons.length) * 100);
+        console.log(`計算されたわかる編進捗: ${progressPercent}%`);
+        
+        // 進捗パーセンテージを更新
+        const progressElement = item.querySelector('.unit-item-progress');
+        if (progressElement) {
+          progressElement.textContent = progressPercent + '%';
+          console.log('✅ 地理分野のわかる編進捗を更新しました:', progressPercent + '%');
+        }
+        
+        // 進捗バーも更新
+        const progressBar = item.querySelector('.unit-item-progress-fill');
+        if (progressBar) {
+          progressBar.style.width = progressPercent + '%';
+          console.log('✅ わかる編進捗バーを更新しました:', progressPercent + '%');
+        }
+      }
+    });
+  }, 200);
 }
 
 // 理科おぼえる編の単元別表示を実装
@@ -1790,8 +1927,16 @@ async function renderSocialDrillUnits() {
         ) : [];
         
         const completedCount = geographyLessons.filter(lesson => {
-          const progressData = localStorage.getItem(`progress:${lesson.id}`);
-          return progressData && JSON.parse(progressData).score > 0;
+          // ID変換処理を適用
+          const progressKey = getProgressStorageKey(lesson.id);
+          const progressData = localStorage.getItem(progressKey);
+          if (progressData) {
+            const parsed = JSON.parse(progressData);
+            const isCompleted = parsed.detail?.correct > 0;
+            console.log(`🔍 進捗チェック: ${lesson.id} → ${progressKey} → ${isCompleted ? '完了' : '未完了'}`);
+            return isCompleted;
+          }
+          return false;
         }).length;
         
         const progressPercent = Math.round((completedCount / geographyLessons.length) * 100);
@@ -3373,6 +3518,14 @@ function checkPendingLessonMessages() {
         // 使用済みメッセージを削除
         localStorage.removeItem('lessonCompleteMessage');
         
+        // UI更新を強制実行
+        setTimeout(() => {
+          console.log('🔄 UI更新を実行');
+          if (typeof renderHome === 'function') {
+            renderHome();
+          }
+        }, 100);
+        
         return true; // 処理済み
       }
     }
@@ -3386,26 +3539,41 @@ function checkPendingLessonMessages() {
 function testProgressSystem() {
   console.log('🧪 進捗システムのテストを開始');
   
-  // テスト用のレッスンID
-  const testLessonId = 'soc.geography.geo_land_topo.oboeru';
-  
-  // テスト用の進捗データを保存
-  saveLessonProgress(testLessonId, 8, 10, 300);
-  
-  // 保存されたデータを確認
-  const savedProgress = getLessonProgress(testLessonId);
-  console.log('🧪 保存された進捗:', savedProgress);
-  
-  // 完了状態を確認
-  const isCompleted = isLessonCompleted(testLessonId);
-  console.log('🧪 完了状態:', isCompleted);
-  
-  // UIを強制的に再描画
-  if (window.currentSubject === 'social') {
-    renderHome();
+  // 1. 現在の進捗データを確認
+  console.log('📊 現在の進捗データ:');
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith('progress:')) {
+      const data = JSON.parse(localStorage.getItem(key));
+      console.log(`  ${key}:`, data);
+    }
   }
   
-  console.log('🧪 テスト完了');
+  // 2. 特定のレッスンの進捗を確認
+  const testLessonId = 'soc.geography.4100_land_topography_climate.oboeru';
+  const progress = getLessonProgress(testLessonId);
+  console.log(`🔍 テストレッスン進捗: ${testLessonId}`, progress);
+  
+  // 3. 完了判定をテスト
+  const isCompleted = isLessonCompleted(testLessonId);
+  console.log(`✅ 完了判定結果: ${isCompleted}`);
+  
+  // 4. 手動で進捗データを確認
+  console.log('🔍 手動進捗データ確認:');
+  const manualKey = `progress:${testLessonId}`;
+  const manualData = localStorage.getItem(manualKey);
+  console.log(`  キー: ${manualKey}`);
+  console.log(`  データ: ${manualData}`);
+  if (manualData) {
+    try {
+      const parsed = JSON.parse(manualData);
+      console.log(`  解析結果:`, parsed);
+    } catch (e) {
+      console.error(`  解析エラー:`, e);
+    }
+  }
+  
+  console.log('🧪 進捗システムテスト完了');
 }
 
 // グローバルに公開（デバッグ用）
@@ -3661,13 +3829,8 @@ setTimeout(() => {
 
 // ===== 復習レッスンシステム =====
 
-// 復習システムの設定
-const REVIEW_SYSTEM_CONFIG = {
-  MIN_WRONG_FOR_GENERATION: 10, // 復習レッスン生成に必要な最小間違い数
-  MAX_REVIEW_QUESTIONS: 30, // 復習レッスンに含める最大問題数（全問を含む）
-  STORAGE_KEY: 'wrong_questions', // LocalStorage のキー
-  FIRESTORE_COLLECTION: 'user_wrong_questions' // Firestore のコレクション名
-};
+// 復習システムの設定（modules/reviewSystem.jsで定義済みのため削除）
+// const REVIEW_SYSTEM_CONFIG = { ... }; // 重複定義を削除
 
 // 間違えた問題を記録する
 function recordWrongAnswer(lessonId, questionData, userAnswer) {
@@ -3733,7 +3896,12 @@ function recordCorrectAnswer(lessonId, questionData) {
 // LocalStorage に間違い問題を保存
 function saveWrongQuestionsToLocal() {
   try {
-    localStorage.setItem(REVIEW_SYSTEM_CONFIG.STORAGE_KEY, JSON.stringify(state.wrongQuestions));
+    // REVIEW_SYSTEM_CONFIGが未定義の場合はデフォルト値を使用
+    const storageKey = (typeof REVIEW_SYSTEM_CONFIG !== 'undefined' && REVIEW_SYSTEM_CONFIG.STORAGE_KEY) 
+      ? REVIEW_SYSTEM_CONFIG.STORAGE_KEY 
+      : 'wrong_questions';
+    
+    localStorage.setItem(storageKey, JSON.stringify(state.wrongQuestions));
     console.log('💾 間違い問題をLocalStorageに保存完了');
   } catch (error) {
     console.error('❌ LocalStorage保存エラー:', error);
@@ -3743,7 +3911,12 @@ function saveWrongQuestionsToLocal() {
 // LocalStorage から間違い問題を読み込み
 function loadWrongQuestionsFromLocal() {
   try {
-    const stored = localStorage.getItem(REVIEW_SYSTEM_CONFIG.STORAGE_KEY);
+    // REVIEW_SYSTEM_CONFIGが未定義の場合はデフォルト値を使用
+    const storageKey = (typeof REVIEW_SYSTEM_CONFIG !== 'undefined' && REVIEW_SYSTEM_CONFIG.STORAGE_KEY) 
+      ? REVIEW_SYSTEM_CONFIG.STORAGE_KEY 
+      : 'wrong_questions';
+    
+    const stored = localStorage.getItem(storageKey);
     if (stored) {
       state.wrongQuestions = JSON.parse(stored);
       console.log(`📖 LocalStorageから間違い問題を読み込み: ${state.wrongQuestions.length}問`);
@@ -3762,7 +3935,12 @@ async function saveWrongQuestionsToFirebase(userId) {
   }
   
   try {
-    const userDocRef = doc(db, REVIEW_SYSTEM_CONFIG.FIRESTORE_COLLECTION, userId);
+    // REVIEW_SYSTEM_CONFIGが未定義の場合はデフォルト値を使用
+    const collectionName = (typeof REVIEW_SYSTEM_CONFIG !== 'undefined' && REVIEW_SYSTEM_CONFIG.FIRESTORE_COLLECTION) 
+      ? REVIEW_SYSTEM_CONFIG.FIRESTORE_COLLECTION 
+      : 'user_wrong_questions';
+    
+    const userDocRef = doc(db, collectionName, userId);
     await setDoc(userDocRef, {
       wrongQuestions: state.wrongQuestions,
       lastUpdated: Date.now()
@@ -3781,7 +3959,12 @@ async function loadWrongQuestionsFromFirebase(userId) {
   }
   
   try {
-    const userDocRef = doc(db, REVIEW_SYSTEM_CONFIG.FIRESTORE_COLLECTION, userId);
+    // REVIEW_SYSTEM_CONFIGが未定義の場合はデフォルト値を使用
+    const collectionName = (typeof REVIEW_SYSTEM_CONFIG !== 'undefined' && REVIEW_SYSTEM_CONFIG.FIRESTORE_COLLECTION) 
+      ? REVIEW_SYSTEM_CONFIG.FIRESTORE_COLLECTION 
+      : 'user_wrong_questions';
+    
+    const userDocRef = doc(db, collectionName, userId);
     const docSnap = await getDoc(userDocRef);
     
     if (docSnap.exists()) {
