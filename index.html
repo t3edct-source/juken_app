@@ -262,19 +262,40 @@
 
   <!-- Service Worker登録 -->
   <script>
-    // Service Worker登録
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        console.log('🔧 Service Worker登録開始');
-        navigator.serviceWorker.register('/sw.js')
-          .then((registration) => {
-            console.log('✅ Service Worker登録成功:', registration.scope);
-            console.log('✅ Service Workerバージョン:', registration.active?.scriptURL);
-          })
-          .catch((error) => {
-            console.log('❌ Service Worker登録失敗:', error);
+    // ローカル開発時のService Worker無効化
+    const isLocalDev = location.hostname === 'localhost' || 
+                      location.hostname === '127.0.0.1' || 
+                      location.hostname === '0.0.0.0' ||
+                      location.port === '5500' ||
+                      location.port === '3000' ||
+                      location.port === '8080';
+    
+    if (isLocalDev) {
+      console.log('🚫 ローカル開発環境: Service Workerを無効化');
+      // 既存のService Workerをアン登録
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+          registrations.forEach(registration => {
+            console.log('🗑️ 既存のService Workerをアン登録:', registration.scope);
+            registration.unregister();
           });
-      });
+        });
+      }
+    } else {
+      // 本番環境でのService Worker登録
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          console.log('🔧 Service Worker登録開始');
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('✅ Service Worker登録成功:', registration.scope);
+              console.log('✅ Service Workerバージョン:', registration.active?.scriptURL);
+            })
+            .catch((error) => {
+              console.log('❌ Service Worker登録失敗:', error);
+            });
+        });
+      }
     }
   </script>
 

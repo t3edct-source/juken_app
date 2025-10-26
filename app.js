@@ -256,8 +256,7 @@ const state = {
   selectedGrade: null,
   selectedSubject: null,
   userEntitlements: new Set(), // ユーザーの購入済みコンテンツ
-  wrongQuestions: [], // 間違えた問題の記録
-  reviewLessons: [] // 動的に生成された復習レッスン
+  wrongQuestions: [] // 間違えた問題の記録（復習システム無効化のため）
 };
 
 // ===== Packs: 小4/5/6 × 理/社（6パック） =====
@@ -1236,8 +1235,8 @@ function getRecommendedLessons() {
   console.log('カタログ:', state.catalog ? `${state.catalog.length}件` : 'undefined');
   console.log('復習レッスン:', state.reviewLessons ? `${state.reviewLessons.length}件` : 'undefined');
   
-  // 1. 復習レッスンを最優先で追加
-  if (state.reviewLessons && state.reviewLessons.length > 0) {
+  // 1. 復習レッスンを最優先で追加（復習システム無効化のためスキップ）
+  if (false && state.reviewLessons && state.reviewLessons.length > 0) {
     console.log('復習レッスンをおすすめに追加:', state.reviewLessons);
     // 復習レッスンを通常のレッスン形式に変換
     state.reviewLessons.forEach(reviewLesson => {
@@ -1254,7 +1253,7 @@ function getRecommendedLessons() {
       recommendations.push(reviewEntry);
     });
   } else {
-    console.log('復習レッスンはありません');
+    console.log('復習レッスンはありません（復習システム無効化のため）');
   }
   
   // 理科・社会それぞれで1つずつ推薦
@@ -1496,7 +1495,7 @@ async function renderHome(){
           <div class="text-slate-500">
             <p class="text-lg mb-2">🎉 素晴らしい！</p>
             <p>すべての教材を完了しました。</p>
-            <p class="text-sm mt-2">完了した教材を「再学習」して復習しましょう。</p>
+            <p class="text-sm mt-2">完了した教材を「再学習」して理解を深めましょう。</p>
           </div>
         </div>
       `;
@@ -1557,7 +1556,7 @@ async function renderHome(){
     // おすすめタブの場合は特別な表示
     let recommendationBadge = '';
     if (safeCurrentSubject === 'recommended') {
-      if (entry.type === 'review') {
+      if (false && entry.type === 'review') {
         recommendationBadge = `<span class="badge review">🎓 復習</span>`;
       } else {
         recommendationBadge = `<span class="badge recommend">⭐ おすすめ</span>`;
@@ -1583,8 +1582,8 @@ async function renderHome(){
     // カード全体をクリック可能にする
     div.style.cursor = 'pointer';
     
-    // 復習レッスンの場合は専用の処理
-    if (entry.type === 'review') {
+    // 復習レッスンの場合は専用の処理（復習システム無効化のためスキップ）
+    if (false && entry.type === 'review') {
       div.onclick = () => openReviewLesson(entry.id);
     } else {
       div.onclick = () => setHash('lesson', entry.id);
@@ -2340,7 +2339,7 @@ function renderUnitLessons(unitId) {
     
     const actionBtn = document.createElement('button');
     actionBtn.className = 'lesson-action-btn';
-    actionBtn.textContent = isCompleted ? '復習' : '開始';
+    actionBtn.textContent = isCompleted ? '再学習' : '開始';
     actionBtn.addEventListener('click', () => setHash('lesson', lesson.id));
     
     // コンテナに追加
@@ -2428,7 +2427,7 @@ function renderResult(id){
       resultMessage = '📚 もう少し頑張りましょう！';
       resultClass = 'text-orange-600 font-bold';
     } else {
-      resultMessage = '💪 復習して再チャレンジしよう！';
+      resultMessage = '💪 もう一度チャレンジしよう！';
       resultClass = 'text-red-600 font-bold';
     }
     
@@ -3170,8 +3169,8 @@ async function startup(){
   // 🎉 Stripe Checkout 結果をチェック（最初に実行）
   handleCheckoutResult();
   
-  // 🎓 復習システムを初期化
-  initializeReviewSystem();
+  // 🎓 復習システムを初期化（復習システム無効化のためスキップ）
+  console.log('🚫 復習システムは無効化されています');
   
   document.getElementById('btnLogin')?.addEventListener('click', loginMock);
   document.getElementById('btnLogout')?.addEventListener('click', logoutMock);
@@ -3407,12 +3406,10 @@ function setupGlobalEventDelegation() {
         selectSubject(subject);
         break;
       case 'review-status':
-        console.log('📊 復習状況確認アクション実行');
-        getReviewSystemStatus();
+        console.log('📊 復習状況確認アクション実行（復習システム無効化のためスキップ）');
         break;
       case 'review-debug':
-        console.log('🔧 復習デバッグアクション実行');
-        showReviewSystemDebugInfo();
+        console.log('🔧 復習デバッグアクション実行（復習システム無効化のためスキップ）');
         break;
       case 'go-home':
         console.log('🏠 ホームに戻るアクション実行');
@@ -3426,12 +3423,7 @@ function setupGlobalEventDelegation() {
         }
         break;
       case 'open-review':
-        console.log('📝 復習レッスン開始アクション実行');
-        const reviewId = button.getAttribute('data-review-id');
-        if (reviewId) {
-          console.log('🎯 復習レッスンを開く:', reviewId);
-          openReviewLesson(reviewId);
-        }
+        console.log('📝 復習レッスン開始アクション実行（復習システム無効化のためスキップ）');
         break;
       default:
         console.warn('⚠️ 未対応のアクション:', action);
@@ -3760,25 +3752,16 @@ setTimeout(() => {
   
   console.log('🧪 完全性テスト完了');
 }, 2000);
-
 // ===== 復習レッスンシステム =====
 
-// 復習システムの設定
-const REVIEW_SYSTEM_CONFIG = {
-  MIN_WRONG_FOR_GENERATION: 5, // 復習レッスン生成に必要な最小間違い数
-  MAX_REVIEW_QUESTIONS: 30, // 復習レッスンに含める最大問題数
-  STORAGE_KEY: 'wrong_questions', // LocalStorage のキー
-  FIRESTORE_COLLECTION: 'user_wrong_questions', // Firestore のコレクション名
-  // 新機能：難易度別復習設定
-  DIFFICULTY_LEVELS: {
-    BASIC: { threshold: 3, label: '基本問題復習' },
-    STANDARD: { threshold: 5, label: '標準問題復習' },
-    ADVANCED: { threshold: 7, label: '応用問題復習' }
-  }
-};
+// 復習システムの設定（削除済み - 復習システム無効化のため）
 
-// 間違えた問題を記録する
+// 間違えた問題を記録する（復習システム無効化のため機能停止）
 function recordWrongAnswer(lessonId, questionData, userAnswer) {
+  // 復習システムが無効化されているため、何もしない
+  console.log('🚫 復習システムが無効化されているため、間違い問題の記録をスキップします');
+  return;
+  
   console.log('🔴 間違い問題を記録:', { lessonId, questionData, userAnswer });
   
   // ID正規化を実施
@@ -3927,9 +3910,10 @@ async function loadWrongQuestionsFromFirebase(userId) {
   }
 }
 
-// 復習レッスン生成条件をチェック
-// 10問選出は「重複除去 → 新しい順に10問」
+// 復習レッスン生成条件をチェック（復習システム無効化のため機能停止）
 function pickForReview(baseId) {
+  // 復習システムが無効化されているため、何もしない
+  return [];
   const list = state.wrongQuestions
     .filter(w => w.lessonId === baseId)
     .sort((a, b) => b.wrongAt - a.wrongAt);
@@ -3948,6 +3932,9 @@ function pickForReview(baseId) {
 }
 
 function checkReviewLessonGeneration(baseId) {
+  // 復習システムが無効化されているため、何もしない
+  return;
+  
   // 特定のレッスンIDの間違い問題を取得
   const lessonWrongQuestions = state.wrongQuestions.filter(wq => wq.lessonId === baseId);
   
@@ -3979,98 +3966,13 @@ function getOriginalLessonTitle(lessonId) {
   return hit ? hit.title : '復習レッスン';
 }
 
-// 復習レッスン生成の通知を表示
-function showReviewLessonNotification(reviewLesson) {
-  console.log('🔔 復習レッスン通知を表示:', reviewLesson);
-  
-  // カスタム通知ダイアログを作成
-  const notificationHTML = `
-    <div id="reviewNotification" class="review-notification-overlay">
-      <div class="review-notification-dialog">
-        <div class="review-notification-header">
-          <span class="review-notification-icon">🎓</span>
-          <h3>復習レッスンが生成されました！</h3>
-        </div>
-        <div class="review-notification-content">
-          <p><strong>${reviewLesson.title}</strong></p>
-          <p>間違えた問題 ${reviewLesson.questions.length}問を集めました。</p>
-          <p>今すぐ復習しますか？</p>
-        </div>
-        <div class="review-notification-actions">
-          <button class="btn-secondary" onclick="closeReviewNotification()">キャンセル</button>
-          <button class="btn-primary" onclick="acceptReviewNotification('${reviewLesson.id}')">OK</button>
-        </div>
-      </div>
-    </div>
-  `;
-  
-  // 通知をDOMに追加
-  document.body.insertAdjacentHTML('beforeend', notificationHTML);
-  
-  // 通知を表示（アニメーション付き）
-  setTimeout(() => {
-    const notification = document.getElementById('reviewNotification');
-    if (notification) {
-      notification.classList.add('show');
-    }
-  }, 100);
-}
+// 復習レッスン生成の通知を表示（削除済み - 復習システム無効化のため）
 
-// 復習通知のOKボタン処理
-function acceptReviewNotification(reviewLessonId) {
-  console.log('✅ 復習通知のOKボタンがクリックされました:', reviewLessonId);
-  closeReviewNotification();
-  openReviewLesson(reviewLessonId);
-}
+// 復習通知関連の関数（削除済み - 復習システム無効化のため）
 
-// 復習通知のキャンセルボタン処理
-function closeReviewNotification() {
-  console.log('❌ 復習通知をキャンセル');
-  const notification = document.getElementById('reviewNotification');
-  if (notification) {
-    notification.classList.remove('show');
-    setTimeout(() => {
-      notification.remove();
-    }, 300);
-  }
-}
+// 復習レッスンを開く（削除済み - 復習システム無効化のため）
 
-// 復習レッスンを開く
-function openReviewLesson(reviewLessonId) {
-  console.log('📖 復習レッスンを開きます:', reviewLessonId);
-  
-  const reviewLesson = state.reviewLessons.find(rl => rl.id === reviewLessonId);
-  if (!reviewLesson) {
-    console.error('❌ 復習レッスンが見つかりません:', reviewLessonId);
-    console.log('📊 現在の復習レッスン一覧:', state.reviewLessons);
-    alert('復習レッスンが見つかりません。');
-    return;
-  }
-  
-  console.log('✅ 復習レッスンが見つかりました:', reviewLesson);
-  
-  // 復習レッスン用のURLハッシュを設定
-  setHash('review', reviewLessonId);
-}
-
-// 復習レッスンのビューを表示
-function renderReviewLesson(reviewLessonId) {
-  console.log('🎓 復習レッスンビューを表示:', reviewLessonId);
-  
-  const reviewLesson = state.reviewLessons.find(rl => rl.id === reviewLessonId);
-  if (!reviewLesson) {
-    console.error('❌ 復習レッスンが見つかりません:', reviewLessonId);
-    return;
-  }
-  
-  // 復習レッスン用の問題データを準備
-  const reviewQuestions = reviewLesson.questions.map(wq => wq.questionData);
-  
-  console.log(`📝 復習レッスン問題数: ${reviewQuestions.length}問`);
-  
-  // 復習レッスン専用のHTMLを生成
-  renderReviewLessonHTML(reviewLesson, reviewQuestions);
-}
+// 復習レッスンのビューを表示（削除済み - 復習システム無効化のため）
 
 // 復習レッスン用のHTMLを生成・表示
 function renderReviewLessonHTML(reviewLesson, questions) {
@@ -5336,3 +5238,4 @@ function ensureUniqueReviewLessonId(baseId) {
 }
 
 // ==== 追補コードここまで ====
+

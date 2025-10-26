@@ -347,7 +347,7 @@
     "title": "古墳・飛鳥時代",
     "duration_min": 18,
     "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=hist_kofun&mode=wakaru",
+    "path": "lessons/soc/modular/index_modular.html?era=4201_kofun_asuka_with_sources&mode=wakaru",
     "format": "modular",
     "tags": [
       "歴史",
@@ -362,7 +362,7 @@
     "title": "奈良時代",
     "duration_min": 16,
     "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=hist_nara&mode=wakaru",
+    "path": "lessons/soc/modular/index_modular.html?era=4202_nara_period_with_sources&mode=wakaru",
     "format": "modular",
     "tags": [
       "歴史",
@@ -377,7 +377,7 @@
     "title": "平安時代",
     "duration_min": 20,
     "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=hist_heian&mode=wakaru",
+    "path": "lessons/soc/modular/index_modular.html?era=4203_heian_period&mode=wakaru",
     "format": "modular",
     "tags": [
       "歴史",
@@ -392,7 +392,7 @@
     "title": "鎌倉時代",
     "duration_min": 18,
     "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=hist_kamakura&mode=wakaru",
+    "path": "lessons/soc/modular/index_modular.html?era=4204_kamakura_period&mode=wakaru",
     "format": "modular",
     "tags": [
       "歴史",
@@ -407,7 +407,7 @@
     "title": "室町時代",
     "duration_min": 17,
     "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=hist_muromachi&mode=wakaru",
+    "path": "lessons/soc/modular/index_modular.html?era=4205_muromachi_period&mode=wakaru",
     "format": "modular",
     "tags": [
       "歴史",
@@ -422,7 +422,7 @@
     "title": "安土桃山時代",
     "duration_min": 19,
     "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=hist_azuchi&mode=wakaru",
+    "path": "lessons/soc/modular/index_modular.html?era=4206_azuchi_momoyama&mode=wakaru",
     "format": "modular",
     "tags": [
       "歴史",
@@ -438,7 +438,7 @@
     "title": "江戸時代",
     "duration_min": 22,
     "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=hist_edo&mode=wakaru",
+    "path": "lessons/soc/modular/index_modular.html?era=4207_edo_period&mode=wakaru",
     "format": "modular",
     "tags": [
       "歴史",
@@ -453,7 +453,7 @@
     "title": "明治時代",
     "duration_min": 20,
     "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=hist_meiji&mode=wakaru",
+    "path": "lessons/soc/modular/index_modular.html?era=4208_meiji_period&mode=wakaru",
     "format": "modular",
     "tags": [
       "歴史",
@@ -468,7 +468,7 @@
     "title": "大正・昭和前期",
     "duration_min": 18,
     "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=hist_taisho&mode=wakaru",
+    "path": "lessons/soc/modular/index_modular.html?era=4209_taisho_showa_prewar&mode=wakaru",
     "format": "modular",
     "tags": [
       "歴史",
@@ -483,7 +483,7 @@
     "title": "昭和後期",
     "duration_min": 17,
     "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=hist_postwar&mode=wakaru",
+    "path": "lessons/soc/modular/index_modular.html?era=4210_showa_postwar&mode=wakaru",
     "format": "modular",
     "tags": [
       "歴史",
@@ -498,7 +498,7 @@
     "title": "平成・令和時代",
     "duration_min": 15,
     "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=hist_modern&mode=wakaru",
+    "path": "lessons/soc/modular/index_modular.html?era=4211_heisei_reiwa&mode=wakaru",
     "format": "modular",
     "tags": [
       "歴史",
@@ -514,7 +514,7 @@
     "title": "歴史総合問題",
     "duration_min": 25,
     "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=hist_cross&mode=wakaru",
+    "path": "lessons/soc/modular/index_modular.html?era=4212_cross_period_problems&mode=wakaru",
     "format": "modular",
     "tags": [
       "歴史",
@@ -913,7 +913,7 @@
     "title": "古墳・飛鳥時代〈覚える編〉",
     "duration_min": 14,
     "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=4201_kofun_asuka&mode=oboeru",
+    "path": "lessons/soc/modular/index_modular.html?era=4201_kofun_asuka_with_sources&mode=oboeru",
     "format": "drill",
     "tags": [
       "暗記",
@@ -929,7 +929,7 @@
     "title": "奈良時代〈覚える編〉",
     "duration_min": 13,
     "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=4202_nara_period&mode=oboeru",
+    "path": "lessons/soc/modular/index_modular.html?era=4202_nara_period_with_sources&mode=oboeru",
     "format": "drill",
     "tags": [
       "暗記",

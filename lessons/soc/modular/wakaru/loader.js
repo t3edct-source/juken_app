@@ -25,9 +25,24 @@
     'geo_world': '4116_world_geography.js',
     
     // 歴史分野 (42xx)
-    'hist_paleolithic': '4200_paleolithic_jomon_yayoi.js',
-    'hist_kofun': '4201_kofun_asuka.js',
-    'hist_nara': '4202_nara_period.js',
+    '4200_paleolithic_jomon_yayoi_with_sources': '4200_paleolithic_jomon_yayoi_with_sources.js',
+    '4201_kofun_asuka_with_sources': '4201_kofun_asuka_with_sources.js',
+    '4202_nara_period_with_sources': '4202_nara_period_with_sources.js',
+    '4203_heian_period': '4203_heian_period.js',
+    '4204_kamakura_period': '4204_kamakura_period.js',
+    '4205_muromachi_period': '4205_muromachi_period.js',
+    '4206_azuchi_momoyama': '4206_azuchi_momoyama.js',
+    '4207_edo_period': '4207_edo_period.js',
+    '4208_meiji_period': '4208_meiji_period.js',
+    '4209_taisho_showa_prewar': '4209_taisho_showa_prewar.js',
+    '4210_showa_postwar': '4210_showa_postwar.js',
+    '4211_heisei_reiwa': '4211_heisei_reiwa.js',
+    '4212_cross_period_problems': '4212_cross_period_problems.js',
+    
+    // 後方互換性のための古い形式も保持
+    'hist_paleolithic': '4200_paleolithic_jomon_yayoi_with_sources.js',
+    'hist_kofun': '4201_kofun_asuka_with_sources.js',
+    'hist_nara': '4202_nara_period_with_sources.js',
     'hist_heian': '4203_heian_period.js',
     'hist_kamakura': '4204_kamakura_period.js',
     'hist_muromachi': '4205_muromachi_period.js',

@@ -214,8 +214,7 @@ function handleAnswer(selected) {
   const spent = mode === "oboeru" ? (20 - timeLeft) : 0;
   learningTracker.recordAnswer(current, selected, q.answer, spent);
   
-  // 個別問題の回答をメインページに送信（復習システム用）
-  sendQuestionAnswerToParent(q, selected, isCorrect);
+  // 個別問題の回答をメインページに送信（復習システム無効化のため削除）
 }
 
 // 前の問題へ戻る
@@ -287,7 +286,7 @@ function showCurrentSessionResult() {
   } else if (scorePercent >= 50) {
     resultMessage = '📚 もう少し頑張りましょう！';
   } else {
-    resultMessage = '💪 復習して再チャレンジしよう！';
+    resultMessage = '💪 もう一度チャレンジしよう！';
   }
   
   // totalTimeを正しく計算

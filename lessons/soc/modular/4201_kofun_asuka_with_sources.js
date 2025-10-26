@@ -1,4 +1,4 @@
-export const questions = [
+window.questions = [
   {
     "qnum": 1,
     "text": "古墳時代の代表的な墳丘の形はどれですか。",
