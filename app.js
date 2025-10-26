@@ -820,11 +820,34 @@ function saveLessonProgress(id, correct, total, seconds){
   saveProgress(id, score, detail);
 }
 
+// 学習履歴の保存処理を追加
+function saveLearningHistory(lessonId, mode, sessionData) {
+  try {
+    const historyKey = `learningHistory_${mode}`;
+    const existingHistory = JSON.parse(localStorage.getItem(historyKey) || '{"sessions":[]}');
+    
+    // 新しいセッションを追加
+    existingHistory.sessions.push({
+      lessonId: lessonId,
+      mode: mode,
+      timestamp: Date.now(),
+      ...sessionData
+    });
+    
+    // 履歴を保存
+    localStorage.setItem(historyKey, JSON.stringify(existingHistory));
+    console.log(`✅ 学習履歴を保存しました: ${historyKey}`);
+  } catch (e) {
+    console.error('❌ 学習履歴の保存に失敗しました:', e);
+  }
+}
+
 // 開発/手動テスト用にグローバルへ公開
 if (typeof window !== 'undefined') {
   try {
     window.saveLessonProgress = saveLessonProgress;
     window.getLessonProgress = getLessonProgress;
+    window.saveLearningHistory = saveLearningHistory;
     window.isLessonCompleted = isLessonCompleted;
   } catch (e) {
     // noop
@@ -869,72 +892,14 @@ function clearSessionResult() {
   }
 }
 
-// 進捗キーの解決（base ID と _quiz ID の相互参照に対応）
+// getCurrentMode()関数は削除（分離されたIDにより不要）
+
+// 進捗キーの解決（分離されたID用）
 function getProgressStorageKey(lessonId) {
-  const directKey = `progress:${lessonId}`;
-  try {
-    if (localStorage.getItem(directKey)) return directKey;
-  } catch (e) {
-    // noop
-  }
-  
-  // base → quiz のフォールバック
-  if (!lessonId.endsWith('_quiz')) {
-    const quizKey = `progress:${lessonId}_quiz`;
-    try {
-      if (localStorage.getItem(quizKey)) return quizKey;
-    } catch (e) {
-      // noop
-    }
-  } else {
-    // quiz → base のフォールバック（互換)
-    const baseKey = `progress:${lessonId.replace(/_quiz$/, '')}`;
-    try {
-      if (localStorage.getItem(baseKey)) return baseKey;
-    } catch (e) {
-      // noop
-    }
-  }
-  
-  // 拡張ID変換: カタログIDから実際の進捗IDへの変換
-  if (lessonId.includes('land_topography_climate')) {
-    const extendedKey = `progress:soc.geography.4100_land_topography_climate.oboeru`;
-    try {
-      if (localStorage.getItem(extendedKey)) {
-        console.log(`🔄 ID変換成功: ${lessonId} → ${extendedKey}`);
-        return extendedKey;
-      }
-    } catch (e) {
-      // noop
-    }
-  }
-  
-  // その他の地理教材の変換パターンを追加
-  const geographyPatterns = [
-    { from: 'agriculture_forestry_fishery', to: 'soc.geography.4200_agriculture_forestry_fishery.oboeru' },
-    { from: 'prefectures_cities', to: 'soc.geography.4300_prefectures_cities.oboeru' },
-    { from: 'industry_energy', to: 'soc.geography.4400_industry_energy.oboeru' },
-    { from: 'commerce_trade_transportation', to: 'soc.geography.4500_commerce_trade_transportation.oboeru' },
-    { from: 'environment', to: 'soc.geography.4600_environment.oboeru' },
-    { from: 'information', to: 'soc.geography.4700_information.oboeru' },
-    { from: 'maps_symbols', to: 'soc.geography.4800_maps_symbols.oboeru' }
-  ];
-  
-  for (const pattern of geographyPatterns) {
-    if (lessonId.includes(pattern.from)) {
-      const extendedKey = `progress:${pattern.to}`;
-      try {
-        if (localStorage.getItem(extendedKey)) {
-          console.log(`🔄 ID変換成功: ${lessonId} → ${extendedKey}`);
-          return extendedKey;
-        }
-      } catch (e) {
-        // noop
-      }
-    }
-  }
-  
-  return directKey; // 何も無ければそのまま
+  // 分離されたIDを使用（mode判定不要）
+  const progressKey = `progress:${lessonId}`;
+  console.log(`🔍 進捗キー生成: ${lessonId} → ${progressKey}`);
+  return progressKey;
 }
 
 // 教材の進捗状況を取得する関数
@@ -958,86 +923,34 @@ function getLessonProgress(lessonId) {
   }
 }
 
-// 教材が完了しているかチェックする関数
+// 教材が完了しているかチェックする関数（分離されたID用）
 function isLessonCompleted(lessonId) {
-  const progress = getLessonProgress(lessonId);
+  // 分離されたIDを使用（mode判定不要）
+  const progressKey = `progress:${lessonId}`;
+  const progressData = localStorage.getItem(progressKey);
   
-  console.log(`🔍 進捗データ確認: ${lessonId}`, {
-    progress: progress,
-    hasProgress: !!progress,
-    progressKeys: progress ? Object.keys(progress) : []
-  });
-  
-  if (!progress) {
-    console.log(`❌ 進捗データなし: ${lessonId}`);
+  if (!progressData) {
+    console.log(`❌ 進捗データなし: ${lessonId} → ${progressKey}`);
     return false;
   }
   
-  // 正解数が1問以上あれば完了とみなす
-  const correctAnswers = progress.detail?.correct || 0;
-  const totalQuestions = progress.detail?.total || 0;
-  
-  // 最低1問正解していれば完了
-  const isCompleted = correctAnswers > 0;
-  
-  console.log(`📊 完了判定: ${lessonId}`, {
-    correct: correctAnswers,
-    total: totalQuestions,
-    score: progress.score,
-    detail: progress.detail,
-    isCompleted: isCompleted
-  });
-  
-  return isCompleted;
+  try {
+    const progress = JSON.parse(progressData);
+    const correctAnswers = progress.detail?.correct || 0;
+    const isCompleted = correctAnswers > 0;
+    
+    console.log(`📊 完了判定: ${lessonId} → ${isCompleted ? '完了' : '未完了'}`);
+    return isCompleted;
+  } catch (e) {
+    console.error(`❌ 進捗データ解析エラー: ${lessonId}`, e);
+    return false;
+  }
 }
 
-// レッスンIDの移行処理（旧IDから新IDへの移行）
+// レッスンIDの移行処理（分離されたIDを使用するため不要）
 function migrateLessonProgress() {
-  console.log('🔄 レッスンIDの移行処理を開始');
-  
-  // 移行マッピング（旧ID → 新ID）
-  const migrationMap = {
-    'soc.geography.land_topography_climate': 'soc.geography.land_topography_climate_quiz',
-    'soc.geography.agriculture_forestry_fishery': 'soc.geography.agriculture_forestry_fishery_quiz',
-    'soc.geography.prefectures_cities': 'soc.geography.prefectures_cities_quiz',
-    'soc.geography.industry_energy': 'soc.geography.industry_energy_quiz',
-    'soc.geography.commerce_trade_transportation': 'soc.geography.commerce_trade_transportation_quiz',
-    'soc.geography.environment': 'soc.geography.environment_quiz',
-    'soc.geography.information': 'soc.geography.information_quiz',
-    'soc.geography.maps_symbols': 'soc.geography.maps_symbols_quiz',
-    'soc.geography.hokkaido_region': 'soc.geography.hokkaido_region_quiz',
-    'soc.geography.tohoku_region': 'soc.geography.tohoku_region_quiz',
-    'soc.geography.kanto_region': 'soc.geography.kanto_region_quiz',
-    'soc.geography.chubu_region': 'soc.geography.chubu_region_quiz',
-    'soc.geography.kinki_region': 'soc.geography.kinki_region_quiz',
-    'soc.geography.chugoku_shikoku_region': 'soc.geography.chugoku_shikoku_region_quiz',
-    'soc.geography.kyushu_region': 'soc.geography.kyushu_region_quiz',
-    'soc.geography.world_geography': 'soc.geography.world_geography_quiz'
-  };
-  
-  let migratedCount = 0;
-  
-  // 各移行をチェック
-  for (const [oldId, newId] of Object.entries(migrationMap)) {
-    const oldProgress = localStorage.getItem(`progress:${oldId}`);
-    const newProgress = localStorage.getItem(`progress:${newId}`);
-    
-    // 旧IDにデータがあり、新IDにデータがない場合のみ移行
-    if (oldProgress && !newProgress) {
-      try {
-        const progressData = JSON.parse(oldProgress);
-        progressData.lessonId = newId; // IDを更新
-        localStorage.setItem(`progress:${newId}`, JSON.stringify(progressData));
-        console.log(`✅ 移行完了: ${oldId} → ${newId}`);
-        migratedCount++;
-      } catch (e) {
-        console.log(`❌ 移行失敗: ${oldId} → ${newId}`, e);
-      }
-    }
-  }
-  
-  console.log(`🔄 移行処理完了: ${migratedCount}件の進捗データを移行しました`);
-  return migratedCount > 0;
+  console.log('🔄 分離されたIDを使用するため移行処理は不要');
+  return false;
 }
 
 // 教材の詳細スコア情報を取得する関数
@@ -1200,24 +1113,24 @@ socialUnits = [
     id: 'geography',
     name: '地理分野',
     icon: '🗺️',
-    lessons: [
-      'soc.geography.land_topography_climate',
-      'soc.geography.maps_symbols',
-      'soc.geography.agriculture_forestry_fishery',
-      'soc.geography.industry_energy',
-      'soc.geography.commerce_trade_transportation',
-      'soc.geography.hokkaido_region',
-      'soc.geography.tohoku_region',
-      'soc.geography.kanto_region',
-      'soc.geography.chubu_region',
-      'soc.geography.kinki_region',
-      'soc.geography.chugoku_shikoku_region',
-      'soc.geography.kyushu_region',
-      'soc.geography.prefectures_cities',
-      'soc.geography.environment',
-      'soc.geography.information',
-      'soc.geography.world_geography'
-    ]
+        lessons: [
+          'soc.geography.land_topography_climate_wakaru',
+          'soc.geography.agriculture_forestry_fishery_wakaru',
+          'soc.geography.prefectures_cities_wakaru',
+          'soc.geography.industry_energy_wakaru',
+          'soc.geography.commerce_trade_transportation_wakaru',
+          'soc.geography.environment_wakaru',
+          'soc.geography.information_wakaru',
+          'soc.geography.maps_symbols_wakaru',
+          'soc.geography.hokkaido_region_wakaru',
+          'soc.geography.tohoku_region_wakaru',
+          'soc.geography.kanto_region_wakaru',
+          'soc.geography.chubu_region_wakaru',
+          'soc.geography.kinki_region_wakaru',
+          'soc.geography.chugoku_shikoku_region_wakaru',
+          'soc.geography.kyushu_region_wakaru',
+          'soc.geography.world_geography_wakaru'
+        ]
   },
   {
     id: 'history',
@@ -1263,22 +1176,22 @@ socialDrillUnits = [
     name: '地理分野',
     icon: '🗺️',
     lessons: [
-      'soc.geography.land_topography_climate_quiz',
-      'soc.geography.agriculture_forestry_fishery_quiz',
-      'soc.geography.prefectures_cities_quiz',
-      'soc.geography.industry_energy_quiz',
-      'soc.geography.regions_quiz',
-      'soc.geography.tohoku_region_quiz',
-      'soc.geography.kanto_region_quiz',
-      'soc.geography.chubu_region_quiz',
-      'soc.geography.kinki_region_quiz',
-      'soc.geography.chugoku_shikoku_region_quiz',
-      'soc.geography.kyushu_region_quiz',
-      'soc.geography.commerce_trade_transportation_quiz',
-      'soc.geography.environment_quiz',
-      'soc.geography.information_quiz',
-      'soc.geography.maps_symbols_quiz',
-      'soc.geography.world_geography_quiz'
+      'soc.geography.land_topography_climate_oboeru',
+      'soc.geography.agriculture_forestry_fishery_oboeru',
+      'soc.geography.prefectures_cities_oboeru',
+      'soc.geography.industry_energy_oboeru',
+      'soc.geography.environment_oboeru',
+      'soc.geography.information_oboeru',
+      'soc.geography.maps_symbols_oboeru',
+      'soc.geography.hokkaido_region_oboeru',
+      'soc.geography.tohoku_region_oboeru',
+      'soc.geography.kanto_region_oboeru',
+      'soc.geography.chubu_region_oboeru',
+      'soc.geography.kinki_region_oboeru',
+      'soc.geography.chugoku_shikoku_region_oboeru',
+      'soc.geography.kyushu_region_oboeru',
+      'soc.geography.world_geography_oboeru',
+      'soc.geography.commerce_trade_transportation_oboeru'
     ]
   },
   {
@@ -1286,18 +1199,18 @@ socialDrillUnits = [
     name: '歴史分野',
     icon: '📜',
     lessons: [
-      'soc.history.kofun_asuka_quiz',
-      'soc.history.nara_period_quiz',
-      'soc.history.heian_period_quiz',
-      'soc.history.kamakura_period_quiz',
-      'soc.history.muromachi_period_quiz',
-      'soc.history.azuchi_momoyama_quiz',
-      'soc.history.edo_period_quiz',
-      'soc.history.meiji_period_quiz',
-      'soc.history.taisho_showa_prewar_quiz',
-      'soc.history.showa_postwar_quiz',
-      'soc.history.heisei_reiwa_quiz',
-      'soc.history.cross_period_problems_quiz'
+      'soc.history.kofun_asuka_oboeru',
+      'soc.history.nara_period_oboeru',
+      'soc.history.heian_period_oboeru',
+      'soc.history.kamakura_period_oboeru',
+      'soc.history.muromachi_period_oboeru',
+      'soc.history.azuchi_momoyama_oboeru',
+      'soc.history.edo_period_oboeru',
+      'soc.history.meiji_period_oboeru',
+      'soc.history.taisho_showa_prewar_oboeru',
+      'soc.history.showa_postwar_oboeru',
+      'soc.history.heisei_reiwa_oboeru',
+      'soc.history.cross_period_problems_oboeru'
     ]
   },
   {
@@ -1305,12 +1218,12 @@ socialDrillUnits = [
     name: '公民分野',
     icon: '🏛️',
     lessons: [
-      'soc.civics.constitution_quiz',
-      'soc.civics.government_quiz',
-      'soc.civics.politics_national_life_quiz',
-      'soc.civics.finance_local_government_quiz',
-      'soc.civics.world_affairs_international_quiz',
-      'soc.civics.modern_social_issues_quiz'
+      'soc.civics.constitution_oboeru',
+      'soc.civics.government_oboeru',
+      'soc.civics.politics_national_life_oboeru',
+      'soc.civics.finance_local_government_oboeru',
+      'soc.civics.world_affairs_international_oboeru',
+      'soc.civics.modern_social_issues_oboeru'
     ]
   }
 ];
@@ -1717,22 +1630,22 @@ async function renderSocialUnits() {
         name: '地理分野',
         icon: '🗺️',
         lessons: [
-          'soc.geography.land_topography_climate',
-          'soc.geography.agriculture_forestry_fishery',
-          'soc.geography.prefectures_cities',
-          'soc.geography.industry_energy',
-          'soc.geography.commerce_trade_transportation',
-          'soc.geography.environment',
-          'soc.geography.information',
-          'soc.geography.maps_symbols',
-          'soc.geography.hokkaido_region',
-          'soc.geography.tohoku_region',
-          'soc.geography.kanto_region',
-          'soc.geography.chubu_region',
-          'soc.geography.kinki_region',
-          'soc.geography.chugoku_shikoku_region',
-          'soc.geography.kyushu_region',
-          'soc.geography.world_geography'
+          'soc.geography.land_topography_climate_wakaru',
+          'soc.geography.agriculture_forestry_fishery_wakaru',
+          'soc.geography.prefectures_cities_wakaru',
+          'soc.geography.industry_energy_wakaru',
+          'soc.geography.commerce_trade_transportation_wakaru',
+          'soc.geography.environment_wakaru',
+          'soc.geography.information_wakaru',
+          'soc.geography.maps_symbols_wakaru',
+          'soc.geography.hokkaido_region_wakaru',
+          'soc.geography.tohoku_region_wakaru',
+          'soc.geography.kanto_region_wakaru',
+          'soc.geography.chubu_region_wakaru',
+          'soc.geography.kinki_region_wakaru',
+          'soc.geography.chugoku_shikoku_region_wakaru',
+          'soc.geography.kyushu_region_wakaru',
+          'soc.geography.world_geography_wakaru'
         ]
       },
       {
@@ -1740,18 +1653,18 @@ async function renderSocialUnits() {
         name: '歴史分野',
         icon: '📜',
         lessons: [
-          'soc.history.kofun_asuka',
-          'soc.history.nara_period',
-          'soc.history.heian_period',
-          'soc.history.kamakura_period',
-          'soc.history.muromachi_period',
-          'soc.history.azuchi_momoyama',
-          'soc.history.edo_period',
-          'soc.history.meiji_period',
-          'soc.history.taisho_showa_prewar',
-          'soc.history.showa_postwar',
-          'soc.history.heisei_reiwa',
-          'soc.history.cross_period_problems'
+          'soc.history.kofun_asuka_wakaru',
+          'soc.history.nara_period_wakaru',
+          'soc.history.heian_period_wakaru',
+          'soc.history.kamakura_period_wakaru',
+          'soc.history.muromachi_period_wakaru',
+          'soc.history.azuchi_momoyama_wakaru',
+          'soc.history.edo_period_wakaru',
+          'soc.history.meiji_period_wakaru',
+          'soc.history.taisho_showa_prewar_wakaru',
+          'soc.history.showa_postwar_wakaru',
+          'soc.history.heisei_reiwa_wakaru',
+          'soc.history.cross_period_problems_wakaru'
         ]
       },
       {
@@ -1759,12 +1672,12 @@ async function renderSocialUnits() {
         name: '公民分野',
         icon: '🏛️',
         lessons: [
-          'soc.civics.politics_national_life',
-          'soc.civics.constitution_three_principles',
-          'soc.civics.diet_cabinet_judiciary',
-          'soc.civics.finance_local_government',
-          'soc.civics.world_affairs_international',
-          'soc.civics.modern_social_issues'
+          'soc.civics.politics_national_life_wakaru',
+          'soc.civics.constitution_three_principles_wakaru',
+          'soc.civics.diet_cabinet_judiciary_wakaru',
+          'soc.civics.finance_local_government_wakaru',
+          'soc.civics.world_affairs_international_wakaru',
+          'soc.civics.modern_social_issues_wakaru'
         ]
       }
     ];
@@ -1783,23 +1696,61 @@ async function renderSocialUnits() {
       if (title && title.textContent.includes('地理分野')) {
         console.log(`✅ 地理分野の要素を発見 (インデックス: ${index})`);
         
-        // わかる編の進捗を計算（_understandサフィックス付きIDを対象に集計）
-        const geographyLessons = state.catalog ? state.catalog.filter(lesson => 
-          lesson.id.includes('soc.geography') && !lesson.id.includes('_quiz')
+        // わかる編の進捗を計算（分離されたIDを使用）
+        let geographyLessons = state.catalog ? state.catalog.filter(lesson => 
+          lesson.id.includes('soc.geography') && lesson.id.includes('_wakaru')
         ) : [];
         
+        console.log('🔍 地理分野ボタンクリック時のデバッグ情報:');
+        console.log('🔍 state.catalog:', state.catalog ? state.catalog.length : 'null');
+        console.log('🔍 geographyLessons:', geographyLessons.length);
+        console.log('🔍 geographyLessons詳細:', geographyLessons.map(l => l.id));
+        
+        // わかる編のレッスン数が正しくない場合のデバッグ
+        if (geographyLessons.length !== 16) {
+          console.warn('⚠️ わかる編の地理分野レッスン数が正しくありません:', geographyLessons.length, '/ 16');
+          console.warn('⚠️ state.catalogの内容:', state.catalog);
+          
+          // ハードコードされたレッスンリストを使用
+          const hardcodedLessons = [
+            'soc.geography.land_topography_climate_wakaru',
+            'soc.geography.agriculture_forestry_fishery_wakaru',
+            'soc.geography.prefectures_cities_wakaru',
+            'soc.geography.industry_energy_wakaru',
+            'soc.geography.commerce_trade_transportation_wakaru',
+            'soc.geography.environment_wakaru',
+            'soc.geography.information_wakaru',
+            'soc.geography.maps_symbols_wakaru',
+            'soc.geography.hokkaido_region_wakaru',
+            'soc.geography.tohoku_region_wakaru',
+            'soc.geography.kanto_region_wakaru',
+            'soc.geography.chubu_region_wakaru',
+            'soc.geography.kinki_region_wakaru',
+            'soc.geography.chugoku_shikoku_region_wakaru',
+            'soc.geography.kyushu_region_wakaru',
+            'soc.geography.world_geography_wakaru'
+          ];
+          
+          console.log('🔧 ハードコードされたレッスンリストを使用:', hardcodedLessons.length);
+          geographyLessons = hardcodedLessons.map(id => ({ id: id }));
+        }
+        
         const completedCount = geographyLessons.filter(lesson => {
-          // わかる編のIDに_understandサフィックスを追加
-          const wakaruId = lesson.id + '_understand';
-          const progressData = localStorage.getItem(`progress:${wakaruId}`);
+          // 分離されたIDを使用（mode判定不要）
+          const progressKey = `progress:${lesson.id}`;
+          const progressData = localStorage.getItem(progressKey);
           if (progressData) {
             const parsed = JSON.parse(progressData);
+            console.log(`🔍 わかる編データ確認: ${lesson.id} → ${progressKey}`);
             const isCompleted = parsed.detail?.correct > 0;
-            console.log(`🔍 わかる編進捗チェック: ${lesson.id} → ${wakaruId} → ${isCompleted ? '完了' : '未完了'}`);
+            console.log(`🔍 わかる編進捗チェック: ${lesson.id} → ${isCompleted ? '完了' : '未完了'}`);
             return isCompleted;
           }
           return false;
         }).length;
+        
+        console.log(`🔍 わかる編完了レッスン数: ${completedCount} / ${geographyLessons.length}`);
+        console.log(`🔍 わかる編進捗計算: ${completedCount} / ${geographyLessons.length} = ${Math.round((completedCount / geographyLessons.length) * 100)}%`);
         
         const progressPercent = Math.round((completedCount / geographyLessons.length) * 100);
         console.log(`計算されたわかる編進捗: ${progressPercent}%`);
@@ -1809,6 +1760,8 @@ async function renderSocialUnits() {
         if (progressElement) {
           progressElement.textContent = progressPercent + '%';
           console.log('✅ 地理分野のわかる編進捗を更新しました:', progressPercent + '%');
+        } else {
+          console.warn('⚠️ 進捗要素が見つかりません');
         }
         
         // 進捗バーも更新
@@ -1855,22 +1808,22 @@ async function renderSocialDrillUnits() {
         name: '地理分野',
         icon: '🗺️',
         lessons: [
-          'soc.geography.land_topography_climate_quiz',
-          'soc.geography.agriculture_forestry_fishery_quiz',
-          'soc.geography.prefectures_cities_quiz',
-          'soc.geography.industry_energy_quiz',
-          'soc.geography.regions_quiz',
-          'soc.geography.tohoku_region_quiz',
-          'soc.geography.kanto_region_quiz',
-          'soc.geography.chubu_region_quiz',
-          'soc.geography.kinki_region_quiz',
-          'soc.geography.chugoku_shikoku_region_quiz',
-          'soc.geography.kyushu_region_quiz',
-          'soc.geography.commerce_trade_transportation_quiz',
-          'soc.geography.environment_quiz',
-          'soc.geography.information_quiz',
-          'soc.geography.maps_symbols_quiz',
-          'soc.geography.world_geography_quiz'
+          'soc.geography.land_topography_climate_oboeru',
+          'soc.geography.agriculture_forestry_fishery_oboeru',
+          'soc.geography.prefectures_cities_oboeru',
+          'soc.geography.industry_energy_oboeru',
+          'soc.geography.environment_oboeru',
+          'soc.geography.information_oboeru',
+          'soc.geography.maps_symbols_oboeru',
+          'soc.geography.hokkaido_region_oboeru',
+          'soc.geography.tohoku_region_oboeru',
+          'soc.geography.kanto_region_oboeru',
+          'soc.geography.chubu_region_oboeru',
+          'soc.geography.kinki_region_oboeru',
+          'soc.geography.chugoku_shikoku_region_oboeru',
+          'soc.geography.kyushu_region_oboeru',
+          'soc.geography.world_geography_oboeru',
+          'soc.geography.commerce_trade_transportation_oboeru'
         ]
       },
       {
@@ -1878,18 +1831,18 @@ async function renderSocialDrillUnits() {
         name: '歴史分野',
         icon: '📜',
         lessons: [
-          'soc.history.kofun_asuka_quiz',
-          'soc.history.nara_period_quiz',
-          'soc.history.heian_period_quiz',
-          'soc.history.kamakura_period_quiz',
-          'soc.history.muromachi_period_quiz',
-          'soc.history.azuchi_momoyama_quiz',
-          'soc.history.edo_period_quiz',
-          'soc.history.meiji_period_quiz',
-          'soc.history.taisho_showa_prewar_quiz',
-          'soc.history.showa_postwar_quiz',
-          'soc.history.heisei_reiwa_quiz',
-          'soc.history.cross_period_problems_quiz'
+          'soc.history.kofun_asuka_oboeru',
+          'soc.history.nara_period_oboeru',
+          'soc.history.heian_period_oboeru',
+          'soc.history.kamakura_period_oboeru',
+          'soc.history.muromachi_period_oboeru',
+          'soc.history.azuchi_momoyama_oboeru',
+          'soc.history.edo_period_oboeru',
+          'soc.history.meiji_period_oboeru',
+          'soc.history.taisho_showa_prewar_oboeru',
+          'soc.history.showa_postwar_oboeru',
+          'soc.history.heisei_reiwa_oboeru',
+          'soc.history.cross_period_problems_oboeru'
         ]
       },
       {
@@ -1897,12 +1850,12 @@ async function renderSocialDrillUnits() {
         name: '公民分野',
         icon: '🏛️',
         lessons: [
-          'soc.civics.constitution_quiz',
-          'soc.civics.government_quiz',
-          'soc.civics.politics_national_life_quiz',
-          'soc.civics.finance_local_government_quiz',
-          'soc.civics.world_affairs_international_quiz',
-          'soc.civics.modern_social_issues_quiz'
+          'soc.civics.constitution_oboeru',
+          'soc.civics.government_oboeru',
+          'soc.civics.politics_national_life_oboeru',
+          'soc.civics.finance_local_government_oboeru',
+          'soc.civics.world_affairs_international_oboeru',
+          'soc.civics.modern_social_issues_oboeru'
         ]
       }
     ];
@@ -1923,7 +1876,7 @@ async function renderSocialDrillUnits() {
         
         // 進捗を計算（クイズIDを対象に集計）
         const geographyLessons = state.catalog ? state.catalog.filter(lesson => 
-          lesson.id.includes('soc.geography') && lesson.id.includes('_quiz')
+          lesson.id.includes('soc.geography') && lesson.id.includes('_oboeru')
         ) : [];
         
         const completedCount = geographyLessons.filter(lesson => {
@@ -2113,24 +2066,24 @@ function selectUnit(unitId) {
           id: 'geography',
           name: '地理分野',
           icon: '🗺️',
-          lessons: [
-            'soc.geography.land_topography_climate',
-            'soc.geography.agriculture_forestry_fishery',
-            'soc.geography.prefectures_cities',
-            'soc.geography.industry_energy',
-            'soc.geography.commerce_trade_transportation',
-            'soc.geography.environment',
-            'soc.geography.information',
-            'soc.geography.maps_symbols',
-            'soc.geography.hokkaido_region',
-            'soc.geography.tohoku_region',
-            'soc.geography.kanto_region',
-            'soc.geography.chubu_region',
-            'soc.geography.kinki_region',
-            'soc.geography.chugoku_shikoku_region',
-            'soc.geography.kyushu_region',
-            'soc.geography.world_geography'
-          ]
+        lessons: [
+          'soc.geography.land_topography_climate_oboeru',
+          'soc.geography.agriculture_forestry_fishery_oboeru',
+          'soc.geography.prefectures_cities_oboeru',
+          'soc.geography.industry_energy_oboeru',
+          'soc.geography.environment_oboeru',
+          'soc.geography.information_oboeru',
+          'soc.geography.maps_symbols_oboeru',
+          'soc.geography.hokkaido_region_oboeru',
+          'soc.geography.tohoku_region_oboeru',
+          'soc.geography.kanto_region_oboeru',
+          'soc.geography.chubu_region_oboeru',
+          'soc.geography.kinki_region_oboeru',
+          'soc.geography.chugoku_shikoku_region_oboeru',
+          'soc.geography.kyushu_region_oboeru',
+          'soc.geography.world_geography_oboeru',
+          'soc.geography.commerce_trade_transportation_oboeru'
+        ]
         },
         {
           id: 'history',
@@ -2178,22 +2131,22 @@ function selectUnit(unitId) {
           name: '地理分野',
           icon: '🗺️',
           lessons: [
-            'soc.geography.land_topography_climate_quiz',
-            'soc.geography.agriculture_forestry_fishery_quiz',
-            'soc.geography.prefectures_cities_quiz',
-            'soc.geography.industry_energy_quiz',
-            'soc.geography.regions_quiz',
-            'soc.geography.tohoku_region_quiz',
-            'soc.geography.kanto_region_quiz',
-            'soc.geography.chubu_region_quiz',
-            'soc.geography.kinki_region_quiz',
-            'soc.geography.chugoku_shikoku_region_quiz',
-            'soc.geography.kyushu_region_quiz',
-            'soc.geography.commerce_trade_transportation_quiz',
-            'soc.geography.environment_quiz',
-            'soc.geography.information_quiz',
-            'soc.geography.maps_symbols_quiz',
-            'soc.geography.world_geography_quiz'
+            'soc.geography.land_topography_climate_oboeru',
+            'soc.geography.agriculture_forestry_fishery_oboeru',
+            'soc.geography.prefectures_cities_oboeru',
+            'soc.geography.industry_energy_oboeru',
+            'soc.geography.environment_oboeru',
+            'soc.geography.information_oboeru',
+            'soc.geography.maps_symbols_oboeru',
+            'soc.geography.hokkaido_region_oboeru',
+            'soc.geography.tohoku_region_oboeru',
+            'soc.geography.kanto_region_oboeru',
+            'soc.geography.chubu_region_oboeru',
+            'soc.geography.kinki_region_oboeru',
+            'soc.geography.chugoku_shikoku_region_oboeru',
+            'soc.geography.kyushu_region_oboeru',
+            'soc.geography.world_geography_oboeru',
+            'soc.geography.commerce_trade_transportation_oboeru'
           ]
         },
         {
@@ -2201,18 +2154,18 @@ function selectUnit(unitId) {
           name: '歴史分野',
           icon: '📜',
           lessons: [
-            'soc.history.kofun_asuka_quiz',
-            'soc.history.nara_period_quiz',
-            'soc.history.heian_period_quiz',
-            'soc.history.kamakura_period_quiz',
-            'soc.history.muromachi_period_quiz',
-            'soc.history.azuchi_momoyama_quiz',
-            'soc.history.edo_period_quiz',
-            'soc.history.meiji_period_quiz',
-            'soc.history.taisho_showa_prewar_quiz',
-            'soc.history.showa_postwar_quiz',
-            'soc.history.heisei_reiwa_quiz',
-            'soc.history.cross_period_problems_quiz'
+            'soc.history.kofun_asuka_oboeru',
+            'soc.history.nara_period_oboeru',
+            'soc.history.heian_period_oboeru',
+            'soc.history.kamakura_period_oboeru',
+            'soc.history.muromachi_period_oboeru',
+            'soc.history.azuchi_momoyama_oboeru',
+            'soc.history.edo_period_oboeru',
+            'soc.history.meiji_period_oboeru',
+            'soc.history.taisho_showa_prewar_oboeru',
+            'soc.history.showa_postwar_oboeru',
+            'soc.history.heisei_reiwa_oboeru',
+            'soc.history.cross_period_problems_oboeru'
           ]
         },
         {
@@ -2220,12 +2173,12 @@ function selectUnit(unitId) {
           name: '公民分野',
           icon: '🏛️',
           lessons: [
-            'soc.civics.constitution_quiz',
-            'soc.civics.government_quiz',
-            'soc.civics.politics_national_life_quiz',
-            'soc.civics.finance_local_government_quiz',
-            'soc.civics.world_affairs_international_quiz',
-            'soc.civics.modern_social_issues_quiz'
+            'soc.civics.constitution_oboeru',
+            'soc.civics.government_oboeru',
+            'soc.civics.politics_national_life_oboeru',
+            'soc.civics.finance_local_government_oboeru',
+            'soc.civics.world_affairs_international_oboeru',
+            'soc.civics.modern_social_issues_oboeru'
           ]
         }
       ];
@@ -2336,6 +2289,8 @@ function renderUnitLessons(unitId) {
     const isCompleted = isLessonCompleted(lesson.id);
     const progress = getLessonProgress(lesson.id);
     const scoreText = progress ? `${Math.round(progress.score * 100)}%` : '-';
+    
+    console.log(`🔍 わかる編学習済み判定: ${lesson.id} → ${isCompleted ? '完了' : '未完了'}`);
     
     // リストアイテムを作成
     const listItem = document.createElement('div');
@@ -3690,29 +3645,8 @@ function registerProgressAPI() {
         const total = d.detail?.total ?? 0;
         const seconds = d.detail?.timeSec ?? 0;
 
-        // 既存の移行マップを利用（base→_quiz などを吸収）
-        const idMigrationMap = {
-          'soc.geography.land_topography_climate': 'soc.geography.land_topography_climate_quiz',
-          'soc.geography.agriculture_forestry_fishery': 'soc.geography.agriculture_forestry_fishery_quiz',
-          'soc.geography.prefectures_cities': 'soc.geography.prefectures_cities_quiz',
-          'soc.geography.industry_energy': 'soc.geography.industry_energy_quiz',
-          'soc.geography.commerce_trade_transportation': 'soc.geography.commerce_trade_transportation_quiz',
-          'soc.geography.environment': 'soc.geography.environment_quiz',
-          'soc.geography.information': 'soc.geography.information_quiz',
-          'soc.geography.maps_symbols': 'soc.geography.maps_symbols_quiz',
-          'soc.geography.hokkaido_region': 'soc.geography.hokkaido_region_quiz',
-          'soc.geography.tohoku_region': 'soc.geography.tohoku_region_quiz',
-          'soc.geography.kanto_region': 'soc.geography.kanto_region_quiz',
-          'soc.geography.chubu_region': 'soc.geography.chubu_region_quiz',
-          'soc.geography.kinki_region': 'soc.geography.kinki_region_quiz',
-          'soc.geography.chugoku_shikoku_region': 'soc.geography.chugoku_shikoku_region_quiz',
-          'soc.geography.kyushu_region': 'soc.geography.kyushu_region_quiz',
-          'soc.geography.world_geography': 'soc.geography.world_geography_quiz'
-        };
-        if (idMigrationMap[id]) {
-          console.log(`🔄 ID変換: ${id} → ${idMigrationMap[id]}`);
-          id = idMigrationMap[id];
-        }
+        // 分離されたIDを使用（ID変換不要）
+        console.log(`🔍 分離されたIDを使用: ${id}`);
 
         // 保存
         try {
@@ -3829,8 +3763,19 @@ setTimeout(() => {
 
 // ===== 復習レッスンシステム =====
 
-// 復習システムの設定（modules/reviewSystem.jsで定義済みのため削除）
-// const REVIEW_SYSTEM_CONFIG = { ... }; // 重複定義を削除
+// 復習システムの設定
+const REVIEW_SYSTEM_CONFIG = {
+  MIN_WRONG_FOR_GENERATION: 5, // 復習レッスン生成に必要な最小間違い数
+  MAX_REVIEW_QUESTIONS: 30, // 復習レッスンに含める最大問題数
+  STORAGE_KEY: 'wrong_questions', // LocalStorage のキー
+  FIRESTORE_COLLECTION: 'user_wrong_questions', // Firestore のコレクション名
+  // 新機能：難易度別復習設定
+  DIFFICULTY_LEVELS: {
+    BASIC: { threshold: 3, label: '基本問題復習' },
+    STANDARD: { threshold: 5, label: '標準問題復習' },
+    ADVANCED: { threshold: 7, label: '応用問題復習' }
+  }
+};
 
 // 間違えた問題を記録する
 function recordWrongAnswer(lessonId, questionData, userAnswer) {
@@ -4996,6 +4941,235 @@ window.showReviewSystemDebugInfo = showReviewSystemDebugInfo;
 window.handleQuestionAnswered = handleQuestionAnswered;
 window.selectSubject = selectSubject;
 window.forceCheckReviewGeneration = forceCheckReviewGeneration;
+
+// 🚨 デバッグ用：強制的にキャッシュクリア
+window.forceCacheClear = function() {
+  console.log('🧹 強制キャッシュクリア実行');
+  
+  // Service Workerの登録解除
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+      for(let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+  
+  // 全キャッシュの削除
+  if ('caches' in window) {
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.map(function(cacheName) {
+          return caches.delete(cacheName);
+        })
+      );
+    });
+  }
+  
+  // 全ストレージのクリア
+  localStorage.clear();
+  sessionStorage.clear();
+  
+  // キャッシュ無効化付きリロード
+  const timestamp = Date.now();
+  const randomId = Math.random().toString(36).substring(7);
+  window.location.replace(window.location.origin + window.location.pathname + `?v=${timestamp}&r=${randomId}&cb=${Math.random()}`);
+};
+
+// 🚨 デバッグ用：Service Worker v28強制更新
+window.forceServiceWorkerV28Update = function() {
+  console.log('🔄 Service Worker v28 強制更新実行');
+  
+  // 1. 全てのService Workerを削除
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+      console.log('🔍 登録済みService Worker:', registrations.length);
+      
+      // 全てのService Workerを削除
+      for(let registration of registrations) {
+        console.log('🗑️ Service Worker削除:', registration.scope);
+        registration.unregister();
+      }
+      
+      // 2. 全キャッシュを削除
+      if ('caches' in window) {
+        caches.keys().then(function(cacheNames) {
+          console.log('🔍 キャッシュ名一覧:', cacheNames);
+          return Promise.all(
+            cacheNames.map(function(cacheName) {
+              console.log('🗑️ キャッシュ削除:', cacheName);
+              return caches.delete(cacheName);
+            })
+          );
+        }).then(function() {
+          console.log('✅ 全キャッシュ削除完了');
+          
+          // 3. ページをリロード
+          console.log('🔄 ページリロード実行');
+          setTimeout(function() {
+            window.location.reload(true);
+          }, 1000);
+        });
+      }
+    });
+  }
+};
+
+// 🚨 デバッグ用：Service Worker v27強制更新
+window.forceServiceWorkerV27Update = function() {
+  console.log('🔄 Service Worker v27 強制更新実行');
+  
+  // 1. 全てのService Workerを削除
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+      console.log('🔍 登録済みService Worker:', registrations.length);
+      
+      // 全てのService Workerを削除
+      for(let registration of registrations) {
+        console.log('🗑️ Service Worker削除:', registration.scope);
+        registration.unregister();
+      }
+      
+      // 2. 全キャッシュを削除
+      if ('caches' in window) {
+        caches.keys().then(function(cacheNames) {
+          console.log('🔍 キャッシュ名一覧:', cacheNames);
+          return Promise.all(
+            cacheNames.map(function(cacheName) {
+              console.log('🗑️ キャッシュ削除:', cacheName);
+              return caches.delete(cacheName);
+            })
+          );
+        }).then(function() {
+          console.log('✅ 全キャッシュ削除完了');
+          
+          // 3. ページをリロード
+          console.log('🔄 ページリロード実行');
+          setTimeout(function() {
+            window.location.reload(true);
+          }, 1000);
+        });
+      }
+    });
+  }
+};
+
+// 🚨 デバッグ用：Service Worker v26強制更新
+window.forceServiceWorkerV26Update = function() {
+  console.log('🔄 Service Worker v26 強制更新実行');
+  
+  // 1. 全てのService Workerを削除
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+      console.log('🔍 登録済みService Worker:', registrations.length);
+      
+      // 全てのService Workerを削除
+      for(let registration of registrations) {
+        console.log('🗑️ Service Worker削除:', registration.scope);
+        registration.unregister();
+      }
+      
+      // 2. 全キャッシュを削除
+      if ('caches' in window) {
+        caches.keys().then(function(cacheNames) {
+          console.log('🔍 キャッシュ名一覧:', cacheNames);
+          return Promise.all(
+            cacheNames.map(function(cacheName) {
+              console.log('🗑️ キャッシュ削除:', cacheName);
+              return caches.delete(cacheName);
+            })
+          );
+        }).then(function() {
+          console.log('✅ 全キャッシュ削除完了');
+          
+          // 3. ページをリロード
+          console.log('🔄 ページリロード実行');
+          setTimeout(function() {
+            window.location.reload(true);
+          }, 1000);
+        });
+      }
+    });
+  }
+};
+
+// 🚨 デバッグ用：Service Worker v25強制更新
+window.forceServiceWorkerV25Update = function() {
+  console.log('🔄 Service Worker v25 強制更新実行');
+  
+  // 1. 全てのService Workerを削除
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+      console.log('🔍 登録済みService Worker:', registrations.length);
+      
+      // 全てのService Workerを削除
+      for(let registration of registrations) {
+        console.log('🗑️ Service Worker削除:', registration.scope);
+        registration.unregister();
+      }
+      
+      // 2. 全キャッシュを削除
+      if ('caches' in window) {
+        caches.keys().then(function(cacheNames) {
+          console.log('🔍 キャッシュ名一覧:', cacheNames);
+          return Promise.all(
+            cacheNames.map(function(cacheName) {
+              console.log('🗑️ キャッシュ削除:', cacheName);
+              return caches.delete(cacheName);
+            })
+          );
+        }).then(function() {
+          console.log('✅ 全キャッシュ削除完了');
+          
+          // 3. ページをリロード
+          console.log('🔄 ページリロード実行');
+          setTimeout(function() {
+            window.location.reload(true);
+          }, 1000);
+        });
+      }
+    });
+  }
+};
+
+// 🚨 デバッグ用：Service Worker強制更新
+window.forceServiceWorkerUpdate = function() {
+  console.log('🔄 Service Worker強制更新実行');
+  
+  // 既存のService Workerを全て削除
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+      console.log('🔍 登録済みService Worker:', registrations.length);
+      
+      // 全てのService Workerを削除
+      for(let registration of registrations) {
+        console.log('🗑️ Service Worker削除:', registration.scope);
+        registration.unregister();
+      }
+      
+      // 全キャッシュを削除
+      if ('caches' in window) {
+        caches.keys().then(function(cacheNames) {
+          console.log('🔍 キャッシュ名一覧:', cacheNames);
+          return Promise.all(
+            cacheNames.map(function(cacheName) {
+              console.log('🗑️ キャッシュ削除:', cacheName);
+              return caches.delete(cacheName);
+            })
+          );
+        }).then(function() {
+          console.log('✅ 全キャッシュ削除完了');
+          
+          // ページをリロード
+          console.log('🔄 ページリロード実行');
+          setTimeout(function() {
+            window.location.reload(true);
+          }, 1000);
+        });
+      }
+    });
+  }
+};
 
 // 🚨 デバッグ用：強制的に復習ダッシュボードを表示
 window.forceShowReviewDashboard = function() {

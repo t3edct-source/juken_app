@@ -1,4 +1,4 @@
-const CACHE_NAME = 'manabi-step-v19'; // バージョン必ず更新
+const CACHE_NAME = 'manabi-step-v28'; // バージョン必ず更新（最終強制更新版）
 const urlsToCache = [
   '/', '/index.html', '/app.js', '/styles.css', '/manifest.json',
   '/firebaseConfig.js', '/catalog.json',
@@ -6,14 +6,34 @@ const urlsToCache = [
   '/lessons/soc/modular/home_modular.html',
   '/lessons/soc/modular/script.js',
   '/lessons/soc/modular/style.css',
-  '/lessons/soc/modular/loader.js'
+  '/lessons/soc/modular/loader.js',
+  '/lessons/soc/modular/wakaru/index_modular.html',
+  '/lessons/soc/modular/wakaru/script.js',
+  '/lessons/soc/modular/wakaru/style.css',
+  '/lessons/soc/modular/wakaru/loader.js',
+  '/lessons/soc/modular/oboeru/index_modular.html',
+  '/lessons/soc/modular/oboeru/script.js',
+  '/lessons/soc/modular/oboeru/style.css',
+  '/lessons/soc/modular/oboeru/loader.js',
+  '/lessons/soc/modular/common-home-button.js'
 ];
 
 // 即時有効化
 self.addEventListener('install', (event) => {
+  console.log('🔄 Service Worker v28 インストール開始');
   event.waitUntil((async () => {
+    // 全ての古いキャッシュを削除
+    const cacheNames = await caches.keys();
+    console.log('🔍 既存キャッシュ:', cacheNames);
+    await Promise.all(
+      cacheNames.map(cacheName => {
+        console.log('🗑️ 古いキャッシュを削除:', cacheName);
+        return caches.delete(cacheName);
+      })
+    );
+    
     const cache = await caches.open(CACHE_NAME);
-    console.log('キャッシュを開きました:', CACHE_NAME);
+    console.log('✅ キャッシュを開きました:', CACHE_NAME);
     
     // 404等はスキップして続行
     await Promise.all(urlsToCache.map(async (url) => {
@@ -36,12 +56,22 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
+  console.log('🔄 Service Worker v28 アクティベート開始');
   event.waitUntil((async () => {
+    // 全ての古いキャッシュを削除
     const keys = await caches.keys();
-    await Promise.all(keys.map(k => k !== CACHE_NAME ? caches.delete(k) : undefined));
-    console.log('古いキャッシュを削除完了');
+    console.log('🔍 既存キャッシュキー:', keys);
+    await Promise.all(keys.map(k => {
+      if (k !== CACHE_NAME) {
+        console.log('🗑️ 古いキャッシュを削除:', k);
+        return caches.delete(k);
+      }
+    }));
+    console.log('✅ 古いキャッシュを削除完了');
+    
+    // 全てのクライアントを制御
     await self.clients.claim();
-    console.log('Service Worker有効化完了');
+    console.log('✅ Service Worker v28 有効化完了');
   })());
 });
 

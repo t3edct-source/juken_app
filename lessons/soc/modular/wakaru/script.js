@@ -1,30 +1,16 @@
-// 戻るボタンの機能
+// シンプルな戻るボタンの機能
 function goBack() {
-  // iframe内で実行されているかチェック
-  if (window.parent !== window) {
-    // iframe内の場合、親フレームに戻るメッセージを送信
-    try {
-      window.parent.postMessage({ type: 'lesson:goBack' }, '*');
-      return;
-    } catch (e) {
-      console.log('postMessage failed, falling back to direct navigation');
-    }
-  }
+  console.log('🏠 ホームボタンクリック');
   
-  // メインページがある場合は戻る、ない場合は前のページに戻る
-  if (window.opener && !window.opener.closed) {
-    window.close();
-  } else if (document.referrer) {
-    // 前のページが社会のホームページの場合は、そこに戻る
-    if (document.referrer.includes('home_modular.html')) {
-      window.history.back();
-    } else {
-      // それ以外の場合はメインページに移動
-      window.location.href = '../../../index.html';
-    }
-  } else {
-    // メインページに移動
-    window.location.href = '../../../index.html';
+  // 相対パスでメインページに移動
+  console.log('🏠 ホームに移動: /index.html');
+  
+  try {
+    window.location.href = '/index.html';
+  } catch (e) {
+    console.error('❌ ホーム移動エラー:', e);
+    // フォールバック: 相対パス
+    window.location.href = './index.html';
   }
 }
 
@@ -109,7 +95,7 @@ function addBackButton() {
       }
     }
     // iframe外の場合は直接メインページに戻る
-    window.location.href = "../../../index.html";
+    window.location.href = "/index.html";
   };
   
   // ホバー効果
@@ -572,7 +558,7 @@ nextBtn.onclick = () => {
         }
       }
       // iframe外の場合は直接メインページに戻る
-      window.location.href = "../../../index.html";
+      window.location.href = "/index.html";
     };
     document.querySelector(".question-box").appendChild(homeButton);
 
@@ -611,8 +597,8 @@ nextBtn.onclick = () => {
 // 学習履歴管理クラス
 class LearningTracker {
   constructor() {
-    this.mode = mode; // mode別の履歴キー用
-    this.historyKey = `learningHistory_${this.mode}`;
+    this.mode = 'wakaru'; // わかる編専用
+    this.historyKey = `learningHistory_wakaru`;
     
     this.currentSession = {
       startTime: Date.now(),

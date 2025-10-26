@@ -105,13 +105,13 @@
     ]
   },
   {
-    "id": "soc.geography.land_topography_climate",
+    "id": "soc.geography.land_topography_climate_wakaru",
     "grade": 5,
     "subject": "soc",
     "title": "国土・地形・気候",
     "duration_min": 20,
     "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=4100_land_topography_climate&mode=wakaru",
+    "path": "lessons/soc/modular/wakaru/index_modular.html?era=4100_land_topography_climate",
     "format": "modular",
     "tags": [
       "地理",
@@ -121,7 +121,7 @@
     ]
   },
   {
-    "id": "soc.geography.agriculture_forestry_fishery",
+    "id": "soc.geography.agriculture_forestry_fishery_wakaru",
     "grade": 5,
     "subject": "soc",
     "title": "農林水産業",
@@ -137,7 +137,7 @@
     ]
   },
   {
-    "id": "soc.geography.prefectures_cities",
+    "id": "soc.geography.prefectures_cities_wakaru",
     "grade": 5,
     "subject": "soc",
     "title": "都道府県・都市",
@@ -152,7 +152,7 @@
     ]
   },
   {
-    "id": "soc.geography.industry_energy",
+    "id": "soc.geography.industry_energy_wakaru",
     "grade": 5,
     "subject": "soc",
     "title": "工業・エネルギー",
@@ -167,23 +167,7 @@
     ]
   },
   {
-    "id": "soc.geography.commerce_trade_transportation",
-    "grade": 5,
-    "subject": "soc",
-    "title": "商業・貿易・交通",
-    "duration_min": 18,
-    "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=4104_commerce_trade_transportation_with_sources&mode=wakaru",
-    "format": "modular",
-    "tags": [
-      "地理",
-      "商業",
-      "貿易",
-      "交通"
-    ]
-  },
-  {
-    "id": "soc.geography.environment",
+    "id": "soc.geography.environment_wakaru",
     "grade": 5,
     "subject": "soc",
     "title": "環境問題",
@@ -198,7 +182,7 @@
     ]
   },
   {
-    "id": "soc.geography.information",
+    "id": "soc.geography.information_wakaru",
     "grade": 5,
     "subject": "soc",
     "title": "情報・通信",
@@ -213,139 +197,147 @@
     ]
   },
   {
-    "id": "soc.geography.maps_symbols",
+    "id": "soc.geography.maps_symbols_wakaru",
     "grade": 5,
     "subject": "soc",
     "title": "地図・地形図記号",
-    "duration_min": 15,
+    "duration_min": 10,
     "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=4108_maps_topographic_symbols_with_sources&mode=wakaru",
+    "path": "lessons/soc/modular/index_modular.html?era=4108_maps_topographic_symbols&mode=wakaru",
     "format": "modular",
     "tags": [
       "地理",
       "地図",
-      "地形図記号"
+      "記号"
     ]
   },
   {
-    "id": "soc.geography.hokkaido_region",
+    "id": "soc.geography.hokkaido_region_wakaru",
     "grade": 5,
     "subject": "soc",
     "title": "北海道地方",
     "duration_min": 18,
     "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=4109_hokkaido_region_with_sources&mode=wakaru",
+    "path": "lessons/soc/modular/index_modular.html?era=4109_hokkaido_region&mode=wakaru",
     "format": "modular",
     "tags": [
       "地理",
-      "北海道",
-      "地方"
+      "北海道"
     ]
   },
   {
-    "id": "soc.geography.tohoku_region",
+    "id": "soc.geography.tohoku_region_wakaru",
     "grade": 5,
     "subject": "soc",
     "title": "東北地方",
     "duration_min": 18,
     "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=4110_tohoku_region_with_sources&mode=wakaru",
+    "path": "lessons/soc/modular/index_modular.html?era=4110_tohoku_region&mode=wakaru",
     "format": "modular",
     "tags": [
       "地理",
-      "東北",
-      "地方"
+      "東北地方"
     ]
   },
   {
-    "id": "soc.geography.kanto_region",
+    "id": "soc.geography.kanto_region_wakaru",
     "grade": 5,
     "subject": "soc",
     "title": "関東地方",
     "duration_min": 20,
     "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=4111_kanto_region_with_sources&mode=wakaru",
+    "path": "lessons/soc/modular/index_modular.html?era=4111_kanto_region&mode=wakaru",
     "format": "modular",
     "tags": [
       "地理",
-      "関東",
-      "地方"
+      "関東地方"
     ]
   },
   {
-    "id": "soc.geography.chubu_region",
+    "id": "soc.geography.chubu_region_wakaru",
     "grade": 5,
     "subject": "soc",
     "title": "中部地方",
-    "duration_min": 18,
+    "duration_min": 19,
     "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=4112_chubu_region_with_sources&mode=wakaru",
+    "path": "lessons/soc/modular/index_modular.html?era=4112_chubu_region&mode=wakaru",
     "format": "modular",
     "tags": [
       "地理",
-      "中部",
-      "地方"
+      "中部地方"
     ]
   },
   {
-    "id": "soc.geography.kinki_region",
+    "id": "soc.geography.kinki_region_wakaru",
     "grade": 5,
     "subject": "soc",
     "title": "近畿地方",
-    "duration_min": 18,
+    "duration_min": 17,
     "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=4113_kinki_region_with_sources&mode=wakaru",
+    "path": "lessons/soc/modular/index_modular.html?era=4113_kinki_region&mode=wakaru",
     "format": "modular",
     "tags": [
       "地理",
-      "近畿",
-      "地方"
+      "近畿地方"
     ]
   },
   {
-    "id": "soc.geography.chugoku_shikoku_region",
+    "id": "soc.geography.chugoku_shikoku_region_wakaru",
     "grade": 5,
     "subject": "soc",
     "title": "中国・四国地方",
-    "duration_min": 18,
+    "duration_min": 16,
     "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=4114_chugoku_shikoku_region_with_sources&mode=wakaru",
+    "path": "lessons/soc/modular/index_modular.html?era=4114_chugoku_shikoku_region&mode=wakaru",
     "format": "modular",
     "tags": [
       "地理",
-      "中国",
-      "四国",
-      "地方"
+      "中国地方",
+      "四国地方"
     ]
   },
   {
-    "id": "soc.geography.kyushu_region",
+    "id": "soc.geography.kyushu_region_wakaru",
     "grade": 5,
     "subject": "soc",
     "title": "九州地方",
     "duration_min": 18,
     "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=4115_kyushu_region_with_sources&mode=wakaru",
+    "path": "lessons/soc/modular/index_modular.html?era=4115_kyushu_region&mode=wakaru",
     "format": "modular",
     "tags": [
       "地理",
-      "九州",
-      "地方"
+      "九州地方"
     ]
   },
   {
-    "id": "soc.geography.world_geography",
-    "grade": 6,
+    "id": "soc.geography.world_geography_wakaru",
+    "grade": 5,
     "subject": "soc",
     "title": "世界地理",
-    "duration_min": 25,
+    "duration_min": 20,
     "sku_required": null,
     "path": "lessons/soc/modular/index_modular.html?era=4116_world_geography&mode=wakaru",
     "format": "modular",
     "tags": [
       "地理",
-      "世界",
-      "国際"
+      "世界"
+    ]
+  },
+  {
+    "id": "soc.geography.commerce_trade_transportation_wakaru",
+    "grade": 5,
+    "subject": "soc",
+    "title": "商業・貿易・交通",
+    "duration_min": 22,
+    "sku_required": null,
+    "path": "lessons/soc/modular/index_modular.html?era=4104_commerce_trade_transportation&mode=wakaru",
+    "format": "modular",
+    "tags": [
+      "地理",
+      "商業",
+      "貿易",
+      "交通"
     ]
   },
   {
@@ -623,13 +615,13 @@
     ]
   },
   {
-    "id": "soc.geography.land_topography_climate_quiz",
+    "id": "soc.geography.land_topography_climate_oboeru",
     "grade": 5,
     "subject": "social_drill",
     "title": "国土・地形・気候〈覚える編〉",
     "duration_min": 15,
     "sku_required": null,
-    "path": "lessons/soc/modular/index_modular.html?era=4100_land_topography_climate&mode=oboeru",
+    "path": "lessons/soc/modular/oboeru/index_modular.html?era=4100_land_topography_climate&mode=oboeru",
     "format": "drill",
     "tags": [
       "暗記",
@@ -639,7 +631,7 @@
     ]
   },
   {
-    "id": "soc.geography.agriculture_forestry_fishery_quiz",
+    "id": "soc.geography.agriculture_forestry_fishery_oboeru",
     "grade": 5,
     "subject": "social_drill",
     "title": "農林水産業〈覚える編〉",
@@ -655,7 +647,7 @@
     ]
   },
   {
-    "id": "soc.geography.prefectures_cities_quiz",
+    "id": "soc.geography.prefectures_cities_oboeru",
     "grade": 5,
     "subject": "social_drill",
     "title": "都道府県・都市〈覚える編〉",
@@ -670,7 +662,7 @@
     ]
   },
   {
-    "id": "soc.geography.industry_energy_quiz",
+    "id": "soc.geography.industry_energy_oboeru",
     "grade": 5,
     "subject": "social_drill",
     "title": "工業・エネルギー〈覚える編〉",
@@ -685,7 +677,7 @@
     ]
   },
   {
-    "id": "soc.geography.regions_quiz",
+    "id": "soc.geography.regions_oboeru",
     "grade": 5,
     "subject": "social_drill",
     "title": "日本の地方〈覚える編〉",
@@ -700,7 +692,7 @@
     ]
   },
   {
-    "id": "soc.civics.constitution_quiz",
+    "id": "soc.civics.constitution_oboeru",
     "grade": 6,
     "subject": "social_drill",
     "title": "憲法・政治〈覚える編〉",
@@ -715,7 +707,7 @@
     ]
   },
   {
-    "id": "soc.civics.government_quiz",
+    "id": "soc.civics.government_oboeru",
     "grade": 6,
     "subject": "social_drill",
     "title": "三権分立〈覚える編〉",
@@ -730,7 +722,7 @@
     ]
   },
   {
-    "id": "soc.geography.tohoku_region_quiz",
+    "id": "soc.geography.tohoku_region_oboeru",
     "grade": 5,
     "subject": "social_drill",
     "title": "東北地方〈覚える編〉",
@@ -745,7 +737,7 @@
     ]
   },
   {
-    "id": "soc.geography.kanto_region_quiz",
+    "id": "soc.geography.kanto_region_oboeru",
     "grade": 5,
     "subject": "social_drill",
     "title": "関東地方〈覚える編〉",
@@ -760,7 +752,7 @@
     ]
   },
   {
-    "id": "soc.geography.chubu_region_quiz",
+    "id": "soc.geography.chubu_region_oboeru",
     "grade": 5,
     "subject": "social_drill",
     "title": "中部地方〈覚える編〉",
@@ -775,7 +767,7 @@
     ]
   },
   {
-    "id": "soc.geography.kinki_region_quiz",
+    "id": "soc.geography.kinki_region_oboeru",
     "grade": 5,
     "subject": "social_drill",
     "title": "近畿地方〈覚える編〉",
@@ -790,7 +782,7 @@
     ]
   },
   {
-    "id": "soc.geography.chugoku_shikoku_region_quiz",
+    "id": "soc.geography.chugoku_shikoku_region_oboeru",
     "grade": 5,
     "subject": "social_drill",
     "title": "中国・四国地方〈覚える編〉",
@@ -806,7 +798,7 @@
     ]
   },
   {
-    "id": "soc.geography.kyushu_region_quiz",
+    "id": "soc.geography.kyushu_region_oboeru",
     "grade": 5,
     "subject": "social_drill",
     "title": "九州地方〈覚える編〉",
@@ -821,7 +813,7 @@
     ]
   },
   {
-    "id": "soc.geography.commerce_trade_transportation_quiz",
+    "id": "soc.geography.commerce_trade_transportation_oboeru",
     "grade": 5,
     "subject": "social_drill",
     "title": "商業・貿易・交通〈覚える編〉",
@@ -838,7 +830,7 @@
     ]
   },
   {
-    "id": "soc.geography.environment_quiz",
+    "id": "soc.geography.environment_oboeru",
     "grade": 5,
     "subject": "social_drill",
     "title": "環境問題〈覚える編〉",
@@ -853,7 +845,7 @@
     ]
   },
   {
-    "id": "soc.geography.information_quiz",
+    "id": "soc.geography.information_oboeru",
     "grade": 5,
     "subject": "social_drill",
     "title": "情報・通信〈覚える編〉",
@@ -869,7 +861,7 @@
     ]
   },
   {
-    "id": "soc.geography.maps_symbols_quiz",
+    "id": "soc.geography.maps_symbols_oboeru",
     "grade": 5,
     "subject": "social_drill",
     "title": "地図・地形図記号〈覚える編〉",
@@ -885,7 +877,7 @@
     ]
   },
   {
-    "id": "soc.geography.world_geography_quiz",
+    "id": "soc.geography.world_geography_oboeru",
     "grade": 5,
     "subject": "social_drill",
     "title": "世界地理〈覚える編〉",
@@ -900,7 +892,22 @@
     ]
   },
   {
-    "id": "soc.history.kofun_asuka_quiz",
+    "id": "soc.geography.hokkaido_region_oboeru",
+    "grade": 5,
+    "subject": "social_drill",
+    "title": "北海道地方〈覚える編〉",
+    "duration_min": 18,
+    "sku_required": null,
+    "path": "lessons/soc/modular/index_modular.html?era=4109_hokkaido_region_with_sources&mode=oboeru",
+    "format": "drill",
+    "tags": [
+      "暗記",
+      "地理",
+      "北海道"
+    ]
+  },
+  {
+    "id": "soc.history.kofun_asuka_oboeru",
     "grade": 6,
     "subject": "social_drill",
     "title": "古墳・飛鳥時代〈覚える編〉",
@@ -916,7 +923,7 @@
     ]
   },
   {
-    "id": "soc.history.nara_period_quiz",
+    "id": "soc.history.nara_period_oboeru",
     "grade": 6,
     "subject": "social_drill",
     "title": "奈良時代〈覚える編〉",
@@ -931,7 +938,7 @@
     ]
   },
   {
-    "id": "soc.history.heian_period_quiz",
+    "id": "soc.history.heian_period_oboeru",
     "grade": 6,
     "subject": "social_drill",
     "title": "平安時代〈覚える編〉",
@@ -946,7 +953,7 @@
     ]
   },
   {
-    "id": "soc.history.kamakura_period_quiz",
+    "id": "soc.history.kamakura_period_oboeru",
     "grade": 6,
     "subject": "social_drill",
     "title": "鎌倉時代〈覚える編〉",
@@ -961,7 +968,7 @@
     ]
   },
   {
-    "id": "soc.history.muromachi_period_quiz",
+    "id": "soc.history.muromachi_period_oboeru",
     "grade": 6,
     "subject": "social_drill",
     "title": "室町時代〈覚える編〉",
@@ -976,7 +983,7 @@
     ]
   },
   {
-    "id": "soc.history.azuchi_momoyama_quiz",
+    "id": "soc.history.azuchi_momoyama_oboeru",
     "grade": 6,
     "subject": "social_drill",
     "title": "安土桃山時代〈覚える編〉",
@@ -991,7 +998,7 @@
     ]
   },
   {
-    "id": "soc.history.edo_period_quiz",
+    "id": "soc.history.edo_period_oboeru",
     "grade": 6,
     "subject": "social_drill",
     "title": "江戸時代〈覚える編〉",
@@ -1006,7 +1013,7 @@
     ]
   },
   {
-    "id": "soc.history.meiji_period_quiz",
+    "id": "soc.history.meiji_period_oboeru",
     "grade": 6,
     "subject": "social_drill",
     "title": "明治時代〈覚える編〉",
@@ -1021,7 +1028,7 @@
     ]
   },
   {
-    "id": "soc.history.taisho_showa_prewar_quiz",
+    "id": "soc.history.taisho_showa_prewar_oboeru",
     "grade": 6,
     "subject": "social_drill",
     "title": "大正・昭和戦前〈覚える編〉",
@@ -1037,7 +1044,7 @@
     ]
   },
   {
-    "id": "soc.history.showa_postwar_quiz",
+    "id": "soc.history.showa_postwar_oboeru",
     "grade": 6,
     "subject": "social_drill",
     "title": "昭和戦後〈覚える編〉",
@@ -1053,7 +1060,7 @@
     ]
   },
   {
-    "id": "soc.history.heisei_reiwa_quiz",
+    "id": "soc.history.heisei_reiwa_oboeru",
     "grade": 6,
     "subject": "social_drill",
     "title": "平成・令和時代〈覚える編〉",
@@ -1069,7 +1076,7 @@
     ]
   },
   {
-    "id": "soc.history.cross_period_problems_quiz",
+    "id": "soc.history.cross_period_problems_oboeru",
     "grade": 6,
     "subject": "social_drill",
     "title": "時代横断問題〈覚える編〉",
@@ -1084,7 +1091,7 @@
     ]
   },
   {
-    "id": "soc.civics.politics_national_life_quiz",
+    "id": "soc.civics.politics_national_life_oboeru",
     "grade": 6,
     "subject": "social_drill",
     "title": "政治・国民生活〈覚える編〉",
@@ -1100,7 +1107,7 @@
     ]
   },
   {
-    "id": "soc.civics.finance_local_government_quiz",
+    "id": "soc.civics.finance_local_government_oboeru",
     "grade": 6,
     "subject": "social_drill",
     "title": "財政・地方自治〈覚える編〉",
@@ -1116,7 +1123,7 @@
     ]
   },
   {
-    "id": "soc.civics.world_affairs_international_quiz",
+    "id": "soc.civics.world_affairs_international_oboeru",
     "grade": 6,
     "subject": "social_drill",
     "title": "国際関係〈覚える編〉",
@@ -1131,7 +1138,7 @@
     ]
   },
   {
-    "id": "soc.civics.modern_social_issues_quiz",
+    "id": "soc.civics.modern_social_issues_oboeru",
     "grade": 6,
     "subject": "social_drill",
     "title": "現代社会問題〈覚える編〉",

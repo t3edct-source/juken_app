@@ -34,7 +34,7 @@
 
   <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-orange-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="#/home" class="flex items-center gap-2 group">
+      <a href="#/home" class="flex items-center gap-2 group" onclick="navigateToHome(event)">
         <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-orange-400 to-pink-500 shadow-md transform group-hover:scale-105 transition-transform duration-200 flex items-center justify-center text-lg">🎮</div>
         <span class="font-bold text-xl text-slate-800">ステップナビ</span>
       </a>
@@ -262,14 +262,17 @@
 
   <!-- Service Worker登録 -->
   <script>
+    // Service Worker登録
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
+        console.log('🔧 Service Worker登録開始');
         navigator.serviceWorker.register('/sw.js')
           .then((registration) => {
-            console.log('Service Worker登録成功:', registration.scope);
+            console.log('✅ Service Worker登録成功:', registration.scope);
+            console.log('✅ Service Workerバージョン:', registration.active?.scriptURL);
           })
           .catch((error) => {
-            console.log('Service Worker登録失敗:', error);
+            console.log('❌ Service Worker登録失敗:', error);
           });
       });
     }

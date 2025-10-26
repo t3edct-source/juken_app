@@ -1,30 +1,28 @@
-// 戻るボタンの機能
+// デバッグ用: ホームボタンの状態を確認
+function debugHomeButton() {
+  console.log('🔍 ホームボタンデバッグ情報:');
+  console.log('🔍 現在のURL:', window.location.href);
+  console.log('🔍 現在のパス:', window.location.pathname);
+  console.log('🔍 現在のオリジン:', window.location.origin);
+  console.log('🔍 document.referrer:', document.referrer);
+  console.log('🔍 window.parent !== window:', window.parent !== window);
+  console.log('🔍 window.opener:', window.opener);
+  console.log('🔍 window.opener.closed:', window.opener ? window.opener.closed : 'N/A');
+}
+
+// シンプルな戻るボタンの機能
 function goBack() {
-  // iframe内で実行されているかチェック
-  if (window.parent !== window) {
-    // iframe内の場合、親フレームに戻るメッセージを送信
-    try {
-      window.parent.postMessage({ type: 'lesson:goBack' }, '*');
-      return;
-    } catch (e) {
-      console.log('postMessage failed, falling back to direct navigation');
-    }
-  }
+  console.log('🏠 ホームボタンクリック');
   
-  // メインページがある場合は戻る、ない場合は前のページに戻る
-  if (window.opener && !window.opener.closed) {
-    window.close();
-  } else if (document.referrer) {
-    // 前のページが社会のホームページの場合は、そこに戻る
-    if (document.referrer.includes('home_modular.html')) {
-      window.history.back();
-    } else {
-      // それ以外の場合はメインページに移動
-      window.location.href = '../../../index.html';
-    }
-  } else {
-    // メインページに移動
-    window.location.href = '../../../index.html';
+  // 相対パスでメインページに移動
+  console.log('🏠 ホームに移動: /index.html');
+  
+  try {
+    window.location.href = '/index.html';
+  } catch (e) {
+    console.error('❌ ホーム移動エラー:', e);
+    // フォールバック: 相対パス
+    window.location.href = './index.html';
   }
 }
 
@@ -109,7 +107,7 @@ function addBackButton() {
       }
     }
     // iframe外の場合は直接メインページに戻る
-    window.location.href = "../../../index.html";
+    window.location.href = "/index.html";
   };
   
   // ホバー効果
@@ -422,16 +420,9 @@ nextBtn.onclick = () => {
           lessonId = `soc.geography.${era}`;
         }
         
-        // modeパラメータによるID分離（catalog.jsonと一致させる）
-        if (mode === 'oboeru') {
-          // 覚える編: _oboeruサフィックスを追加
-          lessonId = lessonId + '_oboeru';
-          console.log('🔍 覚える編のID変換:', lessonId);
-        } else {
-          // わかる編: _wakaruサフィックスを追加
-          lessonId = lessonId + '_wakaru';
-          console.log('🔍 わかる編のID変換:', lessonId);
-        }
+        // 覚える編専用: 常に_oboeruサフィックスを追加
+        lessonId = lessonId + '_oboeru';
+        console.log('🔍 覚える編のID変換:', lessonId);
         
         console.log('🔄 レッスンID変換:', era, '→', lessonId);
         
@@ -572,7 +563,7 @@ nextBtn.onclick = () => {
         }
       }
       // iframe外の場合は直接メインページに戻る
-      window.location.href = "../../../index.html";
+      window.location.href = "/index.html";
     };
     document.querySelector(".question-box").appendChild(homeButton);
 
