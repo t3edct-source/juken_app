@@ -73,10 +73,10 @@
       
       // 既存の教材（後方互換性） - ダミーファイルは削除済み
     };
-    const era = new URLSearchParams(location.search).get("era") || "geo_land_topo";
-    const mode = new URLSearchParams(location.search).get("mode") || "wakaru";
+    const currentEra = new URLSearchParams(location.search).get("era") || "geo_land_topo";
+    const currentMode = new URLSearchParams(location.search).get("mode") || "wakaru";
     
-    document.getElementById("eraLabel").textContent = "単元：" + (eraMap[era] || era);
+    document.getElementById("eraLabel").textContent = "単元：" + (eraMap[currentEra] || currentEra);
     
   </script>
 </body>

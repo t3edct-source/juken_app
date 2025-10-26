@@ -1128,7 +1128,8 @@ socialUnits = [
           'soc.geography.kinki_region_wakaru',
           'soc.geography.chugoku_shikoku_region_wakaru',
           'soc.geography.kyushu_region_wakaru',
-          'soc.geography.world_geography_wakaru'
+          'soc.geography.world_geography_wakaru',
+          'soc.geography.map_hokkaido_integrated_wakaru'
         ]
   },
   {
@@ -1584,7 +1585,7 @@ async function renderHome(){
     
     // 復習レッスンの場合は専用の処理（復習システム無効化のためスキップ）
     if (false && entry.type === 'review') {
-      div.onclick = () => openReviewLesson(entry.id);
+      div.onclick = () => console.log('復習システムは無効化されています');
     } else {
       div.onclick = () => setHash('lesson', entry.id);
     }
@@ -1644,7 +1645,8 @@ async function renderSocialUnits() {
           'soc.geography.kinki_region_wakaru',
           'soc.geography.chugoku_shikoku_region_wakaru',
           'soc.geography.kyushu_region_wakaru',
-          'soc.geography.world_geography_wakaru'
+          'soc.geography.world_geography_wakaru',
+          'soc.geography.map_hokkaido_integrated_wakaru'
         ]
       },
       {
@@ -4829,7 +4831,7 @@ window.simulateWrongAnswers = simulateWrongAnswers;
 window.getReviewSystemStatus = getReviewSystemStatus;
 
 // 復習レッスン関数の露出（Phase 2で追加）
-window.openReviewLesson = openReviewLesson;
+// window.openReviewLesson = openReviewLesson; // 復習システム無効化のためコメントアウト
 window.acceptReviewNotification = acceptReviewNotification;
 window.closeReviewNotification = closeReviewNotification;
 window.startReviewLesson = startReviewLesson;

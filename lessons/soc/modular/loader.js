@@ -24,20 +24,23 @@
     'geo_kyushu': '4115_kyushu_region_with_sources.js',
     'geo_world': '4116_world_geography.js',
     
+    // 地図学習分野 (42xx)
+    '4200_map_hokkaido_with_sources': '4200_map_hokkaido_with_sources.js',
+    
     // 歴史分野 (42xx)
-    '4200_paleolithic_jomon_yayoi_with_sources': '4200_paleolithic_jomon_yayoi_with_sources.js',
-    '4201_kofun_asuka_with_sources': '4201_kofun_asuka_with_sources.js',
-    '4202_nara_period_with_sources': '4202_nara_period_with_sources.js',
-    '4203_heian_period': '4203_heian_period.js',
-    '4204_kamakura_period': '4204_kamakura_period.js',
-    '4205_muromachi_period': '4205_muromachi_period.js',
-    '4206_azuchi_momoyama': '4206_azuchi_momoyama.js',
-    '4207_edo_period': '4207_edo_period.js',
-    '4208_meiji_period': '4208_meiji_period.js',
-    '4209_taisho_showa_prewar': '4209_taisho_showa_prewar.js',
-    '4210_showa_postwar': '4210_showa_postwar.js',
-    '4211_heisei_reiwa': '4211_heisei_reiwa.js',
-    '4212_cross_period_problems': '4212_cross_period_problems.js',
+    '4201_paleolithic_jomon_yayoi_with_sources': '4200_paleolithic_jomon_yayoi_with_sources.js',
+    '4202_kofun_asuka_with_sources': '4201_kofun_asuka_with_sources.js',
+    '4203_nara_period_with_sources': '4202_nara_period_with_sources.js',
+    '4204_heian_period': '4203_heian_period.js',
+    '4205_kamakura_period': '4204_kamakura_period.js',
+    '4206_muromachi_period': '4205_muromachi_period.js',
+    '4207_azuchi_momoyama': '4206_azuchi_momoyama.js',
+    '4208_edo_period': '4207_edo_period.js',
+    '4209_meiji_period': '4208_meiji_period.js',
+    '4210_taisho_showa_prewar': '4209_taisho_showa_prewar.js',
+    '4211_showa_postwar': '4210_showa_postwar.js',
+    '4212_heisei_reiwa': '4211_heisei_reiwa.js',
+    '4213_cross_period_problems': '4212_cross_period_problems.js',
     
     // 後方互換性のための古い形式も保持
     'hist_paleolithic': '4200_paleolithic_jomon_yayoi_with_sources.js',

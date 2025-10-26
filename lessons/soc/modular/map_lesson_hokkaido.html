@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地図で学ぶ地理 - 北海道地方</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hiragino Sans', 'Yu Gothic', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .home-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .home-btn:hover {
+            background: #ff5252;
+            transform: translateY(-1px);
+        }
+
+        .lesson-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+        }
+
+        .map-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            margin-bottom: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .map-header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .map-header h2 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .map-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .map-area {
+            height: 300px;
+            position: relative;
+            background: #f8f9fa;
+            overflow: hidden;
+        }
+
+        .japan-map {
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .region-highlight {
+            fill: #ff6b6b;
+            stroke: #fff;
+            stroke-width: 2;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .region-highlight:hover {
+            fill: #ff5252;
+            transform: scale(1.05);
+        }
+
+        .info-panel {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            margin-bottom: 15px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .info-panel.show {
+            transform: translateY(0);
+        }
+
+        .info-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .info-content {
+            padding: 20px;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .info-value {
+            color: #666;
+            font-size: 14px;
+            text-align: right;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #666;
+            border: 2px solid #e9ecef;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+
+        .question-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            padding: 20px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .question-container.show {
+            display: block;
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .choice {
+            padding: 12px 15px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .choice:hover {
+            background: #e9ecef;
+            border-color: #667eea;
+        }
+
+        .choice.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .choice.correct {
+            background: #28a745;
+            color: white;
+            border-color: #28a745;
+        }
+
+        .choice.incorrect {
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+
+        .explanation {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .explanation-text {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .next-btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+        }
+
+        .next-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        @media (max-width: 480px) {
+            .main-container {
+                padding: 10px;
+            }
+            
+            .map-area {
+                height: 250px;
+            }
+            
+            .lesson-title {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <button class="home-btn" onclick="goHome()">ホームに戻る</button>
+        <div class="lesson-title">地図で学ぶ地理 - 北海道地方</div>
+        <div></div>
+    </div>
+
+    <div class="main-container">
+        <div class="map-container">
+            <div class="map-header">
+                <h2>🗺️ 北海道地方をタップしてください</h2>
+                <p>地図上の北海道をタップして、地域の情報を確認しましょう</p>
+            </div>
+            <div class="map-area">
+                <svg class="japan-map" viewBox="0 0 800 1000" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 日本列島の本格的な地図 -->
+                    <defs>
+                        <pattern id="hokkaido-pattern" patternUnits="userSpaceOnUse" width="20" height="20">
+                            <rect width="20" height="20" fill="#ff6b6b" opacity="0.1"/>
+                            <circle cx="10" cy="10" r="2" fill="#ff6b6b" opacity="0.3"/>
+                        </pattern>
+                    </defs>
+                    
+                    <g id="japan-outline">
+                        <!-- 北海道（詳細版） -->
+                        <path id="hokkaido" class="region-highlight" 
+                              d="M400,50 L500,45 L520,60 L530,80 L525,100 L515,120 L500,130 L480,125 L460,115 L440,100 L420,85 L400,70 Z" 
+                              fill="#ff6b6b" stroke="#fff" stroke-width="3"/>
+                        
+                        <!-- 本州（詳細版） -->
+                        <path d="M350,200 L600,180 L650,200 L680,250 L670,300 L650,350 L600,380 L550,390 L500,385 L450,375 L400,360 L350,340 L320,300 L330,250 L350,200 Z" 
+                              fill="#e9ecef" stroke="#333" stroke-width="2"/>
+                        
+                        <!-- 四国 -->
+                        <path d="M400,500 L450,490 L470,510 L460,530 L430,540 L410,530 Z" 
+                              fill="#e9ecef" stroke="#333" stroke-width="2"/>
+                        
+                        <!-- 九州 -->
+                        <path d="M400,550 L500,540 L520,570 L510,590 L480,600 L420,590 L400,570 Z" 
+                              fill="#e9ecef" stroke="#333" stroke-width="2"/>
+                        
+                        <!-- 沖縄諸島 -->
+                        <circle cx="200" cy="700" r="8" fill="#e9ecef" stroke="#333" stroke-width="1"/>
+                        <circle cx="220" cy="720" r="6" fill="#e9ecef" stroke="#333" stroke-width="1"/>
+                        <circle cx="240" cy="710" r="5" fill="#e9ecef" stroke="#333" stroke-width="1"/>
+                    </g>
+                    
+                    <!-- 主要都市のマーク -->
+                    <g id="cities">
+                        <!-- 北海道の主要都市 -->
+                        <circle cx="450" cy="90" r="5" fill="#fff" stroke="#333" stroke-width="2"/>
+                        <text x="460" y="95" font-size="14" fill="#333" font-weight="bold">札幌</text>
+                        
+                        <circle cx="420" cy="110" r="4" fill="#fff" stroke="#333" stroke-width="1"/>
+                        <text x="430" y="115" font-size="12" fill="#333">旭川</text>
+                        
+                        <circle cx="480" cy="100" r="4" fill="#fff" stroke="#333" stroke-width="1"/>
+                        <text x="490" y="105" font-size="12" fill="#333">函館</text>
+                        
+                        <!-- 本州の主要都市 -->
+                        <circle cx="500" cy="250" r="5" fill="#fff" stroke="#333" stroke-width="2"/>
+                        <text x="510" y="255" font-size="14" fill="#333" font-weight="bold">東京</text>
+                        
+                        <circle cx="450" cy="300" r="4" fill="#fff" stroke="#333" stroke-width="1"/>
+                        <text x="460" y="305" font-size="12" fill="#333">大阪</text>
+                        
+                        <circle cx="400" cy="280" r="4" fill="#fff" stroke="#333" stroke-width="1"/>
+                        <text x="410" y="285" font-size="12" fill="#333">名古屋</text>
+                    </g>
+                    
+                    <!-- 地理的要素 -->
+                    <g id="geographic-features">
+                        <!-- 山脈の表示 -->
+                        <path d="M350,250 L400,240 L450,250 L500,240 L550,250" 
+                              stroke="#8B4513" stroke-width="3" fill="none" stroke-dasharray="5,5"/>
+                        <text x="450" y="245" font-size="10" fill="#8B4513">中央山脈</text>
+                        
+                        <!-- 主要河川 -->
+                        <path d="M500,200 L500,250 L500,300 L500,350" 
+                              stroke="#0066CC" stroke-width="2" fill="none"/>
+                        <text x="510" y="275" font-size="10" fill="#0066CC">利根川</text>
+                        
+                        <path d="M450,300 L450,350 L450,400" 
+                              stroke="#0066CC" stroke-width="2" fill="none"/>
+                        <text x="460" y="350" font-size="10" fill="#0066CC">淀川</text>
+                    </g>
+                    
+                    <!-- 気候区分の表示 -->
+                    <g id="climate-zones">
+                        <!-- 北海道の気候帯 -->
+                        <rect x="350" y="50" width="200" height="100" 
+                              fill="none" stroke="#ff6b6b" stroke-width="2" stroke-dasharray="10,5"/>
+                        <text x="360" y="40" font-size="12" fill="#ff6b6b" font-weight="bold">亜寒帯</text>
+                    </g>
+                </svg>
+            </div>
+        </div>
+
+        <div class="info-panel" id="infoPanel">
+            <div class="info-header">
+                <h3>🏔️ 北海道地方の情報</h3>
+            </div>
+            <div class="info-content">
+                <div class="info-item">
+                    <span class="info-label">気候</span>
+                    <span class="info-value">亜寒帯</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">年平均気温</span>
+                    <span class="info-value">8℃</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">年降水量</span>
+                    <span class="info-value">1000mm</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">人口</span>
+                    <span class="info-value">約530万人</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">面積</span>
+                    <span class="info-value">83,424km²</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">主要都市</span>
+                    <span class="info-value">札幌(197万)、旭川(32万)、函館(26万)</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">主要山脈</span>
+                    <span class="info-value">大雪山、日高山脈、石狩山地</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">主要河川</span>
+                    <span class="info-value">石狩川、天塩川、十勝川</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">主要平野</span>
+                    <span class="info-value">石狩平野、十勝平野、根釧台地</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">特産物</span>
+                    <span class="info-value">じゃがいも、乳製品、甜菜、水産物</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">主要産業</span>
+                    <span class="info-value">農業、水産業、観光業、製造業</span>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="startLearning()">学習を開始</button>
+                    <button class="btn btn-secondary" onclick="hideInfo()">閉じる</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-container" id="questionContainer">
+            <div class="question-text" id="questionText"></div>
+            <div class="choices" id="choices"></div>
+            <div class="explanation" id="explanation">
+                <div class="explanation-text" id="explanationText"></div>
+            </div>
+            <button class="next-btn" id="nextBtn" onclick="nextQuestion()" disabled>次の問題へ</button>
+        </div>
+    </div>
+
+    <script>
+        // 北海道の詳細地図データ
+        const hokkaidoData = {
+            name: '北海道地方',
+            climate: '亜寒帯',
+            temperature: '年平均気温8℃',
+            precipitation: '年降水量1000mm',
+            cities: [
+                { name: '札幌', population: '197万人', position: { x: 450, y: 90 } },
+                { name: '旭川', population: '32万人', position: { x: 420, y: 110 } },
+                { name: '函館', population: '26万人', position: { x: 480, y: 100 } },
+                { name: '釧路', population: '17万人', position: { x: 520, y: 120 } }
+            ],
+            products: ['じゃがいも', '乳製品', '甜菜', '水産物'],
+            geography: {
+                mountains: ['大雪山', '日高山脈', '石狩山地'],
+                rivers: ['石狩川', '天塩川', '十勝川'],
+                plains: ['石狩平野', '十勝平野', '根釧台地']
+            },
+            industries: ['農業', '水産業', '観光業', '製造業'],
+            questions: [
+                {
+                    text: '北海道の気候はどれですか？',
+                    choices: ['亜寒帯', '温帯', '冷帯', '熱帯'],
+                    answer: 0,
+                    explanation: '北海道は亜寒帯気候で、冬は寒く夏は涼しい気候です。'
+                },
+                {
+                    text: '北海道の道庁所在地はどこですか？',
+                    choices: ['旭川', '札幌', '函館', '釧路'],
+                    answer: 1,
+                    explanation: '札幌市が北海道の道庁所在地で、人口約197万人の最大都市です。'
+                },
+                {
+                    text: '北海道の特産物はどれですか？',
+                    choices: ['みかん', 'じゃがいも', 'りんご', 'ぶどう'],
+                    answer: 1,
+                    explanation: '北海道はじゃがいもの生産が盛んで、全国の約8割を生産しています。'
+                },
+                {
+                    text: '北海道で最も長い川はどれですか？',
+                    choices: ['石狩川', '天塩川', '十勝川', '釧路川'],
+                    answer: 0,
+                    explanation: '石狩川は北海道で最も長い川で、全長268kmです。'
+                },
+                {
+                    text: '北海道の主要産業はどれですか？',
+                    choices: ['重工業', '農業', '金融業', 'IT産業'],
+                    answer: 1,
+                    explanation: '北海道は農業が主要産業で、じゃがいも、甜菜、乳製品の生産が盛んです。'
+                }
+            ]
+        };
+
+        let currentQuestion = 0;
+        let selectedAnswer = null;
+        let isAnswered = false;
+
+        // 地図のクリックイベント
+        document.getElementById('hokkaido').addEventListener('click', function() {
+            showInfo();
+        });
+
+        // 情報パネルを表示
+        function showInfo() {
+            const panel = document.getElementById('infoPanel');
+            panel.classList.add('show');
+        }
+
+        // 情報パネルを非表示
+        function hideInfo() {
+            const panel = document.getElementById('infoPanel');
+            panel.classList.remove('show');
+        }
+
+        // 学習開始
+        function startLearning() {
+            hideInfo();
+            showQuestion();
+        }
+
+        // 問題を表示
+        function showQuestion() {
+            const questionContainer = document.getElementById('questionContainer');
+            const questionText = document.getElementById('questionText');
+            const choices = document.getElementById('choices');
+            const explanation = document.getElementById('explanation');
+            const nextBtn = document.getElementById('nextBtn');
+
+            questionContainer.classList.add('show');
+            
+            const question = hokkaidoData.questions[currentQuestion];
+            questionText.textContent = question.text;
+            
+            choices.innerHTML = '';
+            question.choices.forEach((choice, index) => {
+                const choiceElement = document.createElement('div');
+                choiceElement.className = 'choice';
+                choiceElement.textContent = choice;
+                choiceElement.onclick = () => selectAnswer(index);
+                choices.appendChild(choiceElement);
+            });
+
+            explanation.classList.remove('show');
+            nextBtn.disabled = true;
+            nextBtn.textContent = '次の問題へ';
+            isAnswered = false;
+            selectedAnswer = null;
+        }
+
+        // 答えを選択
+        function selectAnswer(index) {
+            if (isAnswered) return;
+
+            selectedAnswer = index;
+            const choices = document.querySelectorAll('.choice');
+            choices.forEach((choice, i) => {
+                choice.classList.remove('selected');
+                if (i === index) {
+                    choice.classList.add('selected');
+                }
+            });
+
+            const nextBtn = document.getElementById('nextBtn');
+            nextBtn.disabled = false;
+            nextBtn.textContent = '答えを確認';
+        }
+
+        // 答えを確認
+        function checkAnswer() {
+            if (selectedAnswer === null) return;
+
+            isAnswered = true;
+            const question = hokkaidoData.questions[currentQuestion];
+            const choices = document.querySelectorAll('.choice');
+            const explanation = document.getElementById('explanation');
+            const explanationText = document.getElementById('explanationText');
+            const nextBtn = document.getElementById('nextBtn');
+
+            choices.forEach((choice, index) => {
+                choice.classList.remove('selected');
+                if (index === question.answer) {
+                    choice.classList.add('correct');
+                } else if (index === selectedAnswer && index !== question.answer) {
+                    choice.classList.add('incorrect');
+                }
+            });
+
+            explanationText.textContent = question.explanation;
+            explanation.classList.add('show');
+            nextBtn.textContent = currentQuestion < hokkaidoData.questions.length - 1 ? '次の問題へ' : '学習完了';
+        }
+
+        // 次の問題へ
+        function nextQuestion() {
+            if (!isAnswered) {
+                checkAnswer();
+                return;
+            }
+
+            currentQuestion++;
+            if (currentQuestion < hokkaidoData.questions.length) {
+                showQuestion();
+            } else {
+                // 学習完了
+                alert('🎉 北海道地方の学習が完了しました！\n\n地図で学ぶ地理の学習効果：\n・視覚的な理解が深まりました\n・地域の特徴を覚えやすくなりました\n・地理的な位置関係が分かりました');
+                goHome();
+            }
+        }
+
+        // ホームに戻る
+        function goHome() {
+            window.location.href = '../../index.html';
+        }
+
+        // 初期化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 地図のアニメーション効果
+            const hokkaido = document.getElementById('hokkaido');
+            hokkaido.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05)';
+            });
+            hokkaido.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

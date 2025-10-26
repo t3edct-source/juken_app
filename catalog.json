@@ -1152,5 +1152,54 @@
       "現代社会",
       "社会問題"
     ]
+  },
+  {
+    "id": "soc.geography.map_hokkaido_wakaru",
+    "grade": 6,
+    "subject": "soc",
+    "title": "地図で学ぶ地理① - 北海道地方〈わかる編〉",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/soc/modular/index_modular.html?era=4200_map_hokkaido_with_sources&mode=wakaru",
+    "format": "modular",
+    "tags": [
+      "地図学習",
+      "地理",
+      "北海道",
+      "インタラクティブ"
+    ]
+  },
+  {
+    "id": "soc.geography.map_hokkaido_gsi_wakaru",
+    "grade": 6,
+    "subject": "soc",
+    "title": "地図で学ぶ地理 - 北海道地方〈地理院地図版〉",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/soc/modular/map_lesson_hokkaido_gsi.html",
+    "format": "map_lesson_gsi",
+    "tags": [
+      "地図学習",
+      "地理",
+      "北海道",
+      "地理院地図",
+      "インタラクティブ"
+    ]
+  },
+  {
+    "id": "soc.geography.map_hokkaido_integrated_wakaru",
+    "grade": 5,
+    "subject": "soc",
+    "title": "地図で学ぶ地理 - 北海道地方〈統合版〉",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/soc/modular/map_lesson_hokkaido_integrated.html",
+    "format": "modular",
+    "tags": [
+      "地理",
+      "地図",
+      "北海道",
+      "インタラクティブ"
+    ]
   }
 ]
