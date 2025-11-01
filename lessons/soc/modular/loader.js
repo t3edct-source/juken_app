@@ -98,23 +98,37 @@
 
   const file = map[era];
   if (!file) {
+    console.error('未対応の単元キーです: ' + era);
     alert('未対応の単元キーです: ' + era);
     return;
   }
+  
+  console.log('📚 loader.js: era=', era, 'mode=', mode, 'file=', file);
   
   // wakaruモードの場合はwakaruディレクトリ内のファイルを読み込む
   let filePath = file;
   if (mode === 'wakaru' && (file.startsWith('41') || file.startsWith('42') || file.startsWith('43'))) {
     filePath = 'wakaru/' + file;
+    console.log('📚 wakaruモード: パスを変更', filePath);
   }
+  
+  console.log('📚 読み込むファイルパス:', filePath);
   
   const s = document.createElement('script');
   s.src = filePath;
   s.onload = () => {
+    console.log('📚 スクリプト読み込み完了:', filePath);
+    console.log('📚 window.questions の状態:', window.questions ? `${window.questions.length}個の質問` : 'undefined');
     if (!window.questions) {
-      console.error('学習データの読み込みに失敗しました: ' + filePath);
+      console.error('❌ 学習データの読み込みに失敗しました: ' + filePath);
+      console.error('❌ window.questions が undefined です');
+    } else {
+      console.log('✅ 学習データの読み込み成功:', filePath, '質問数:', window.questions.length);
     }
   };
-  s.onerror = () => console.error('学習データを読み込めませんでした: ' + filePath);
+  s.onerror = () => {
+    console.error('❌ スクリプトの読み込みエラー:', filePath);
+    console.error('❌ ファイルが見つかりませんでした');
+  };
   document.head.appendChild(s);
 })();
