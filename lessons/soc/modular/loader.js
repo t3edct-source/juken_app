@@ -77,12 +77,19 @@
     '4107_information_with_sources': '4107_information_with_sources.js',
     '4108_maps_topographic_symbols_with_sources': '4108_maps_topographic_symbols_with_sources.js',
     '4109_hokkaido_region_with_sources': '4109_hokkaido_region_with_sources.js',
+    '4109_hokkaido_region': '4109_hokkaido_region_with_sources.js',
     '4110_tohoku_region_with_sources': '4110_tohoku_region_with_sources.js',
+    '4110_tohoku_region': '4110_tohoku_region_with_sources.js',
     '4111_kanto_region_with_sources': '4111_kanto_region_with_sources.js',
+    '4111_kanto_region': '4111_kanto_region_with_sources.js',
     '4112_chubu_region_with_sources': '4112_chubu_region_with_sources.js',
+    '4112_chubu_region': '4112_chubu_region_with_sources.js',
     '4113_kinki_region_with_sources': '4113_kinki_region_with_sources.js',
+    '4113_kinki_region': '4113_kinki_region_with_sources.js',
     '4114_chugoku_shikoku_region_with_sources': '4114_chugoku_shikoku_region_with_sources.js',
+    '4114_chugoku_shikoku_region': '4114_chugoku_shikoku_region_with_sources.js',
     '4115_kyushu_region_with_sources': '4115_kyushu_region_with_sources.js',
+    '4115_kyushu_region': '4115_kyushu_region_with_sources.js',
     '4116_world_geography': '4116_world_geography.js'
   };
 

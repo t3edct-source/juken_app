@@ -1,3 +1,24 @@
+// 説明テキスト（わかる編の特色：最初に読むべき説明）
+window.introduction = `
+  <div style="text-align: left; line-height: 1.8; font-size: 1rem;">
+    <h3 style="color: #ea580c; margin-bottom: 1rem; font-size: 1.25rem;">📚 東北地方について</h3>
+    <p style="margin-bottom: 1rem;">
+      東北地方は本州の北東部に位置し、6つの県からなる地方です。日本海側と太平洋側で気候が異なり、豊かな自然と伝統的な産業が特徴です。
+    </p>
+    <p style="margin-bottom: 1rem;">
+      <strong>このレッスンで学ぶ内容：</strong><br>
+      • 山地を境にした日本海側と太平洋側の気候の違い<br>
+      • 主要な平野と農業の特色<br>
+      • 気候を活かした果樹栽培の特徴<br>
+      • 伝統的な産業と近代的な工業の両立<br>
+      • 主要都市の位置と役割
+    </p>
+    <p style="margin-bottom: 1rem;">
+      日本海側と太平洋側の気候差が、農業や生活にどのように影響しているか、理由を考えながら理解しましょう。
+    </p>
+  </div>
+`;
+
 window.questions = [
   {
     "qnum": 1,

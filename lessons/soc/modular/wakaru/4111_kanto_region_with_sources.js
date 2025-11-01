@@ -1,3 +1,24 @@
+// 説明テキスト（わかる編の特色：最初に読むべき説明）
+window.introduction = `
+  <div style="text-align: left; line-height: 1.8; font-size: 1rem;">
+    <h3 style="color: #ea580c; margin-bottom: 1rem; font-size: 1.25rem;">📚 関東地方について</h3>
+    <p style="margin-bottom: 1rem;">
+      関東地方は日本最大の人口と経済規模をもつ地方で、1都6県からなります。首都を中心に、高度な都市機能と多様な産業が集積しています。
+    </p>
+    <p style="margin-bottom: 1rem;">
+      <strong>このレッスンで学ぶ内容：</strong><br>
+      • 広大な平野と主要な河川の特徴<br>
+      • 大都市圏の形成とその広がり<br>
+      • 沿岸部に発達した工業地帯の特色<br>
+      • 都市近郊の農業の特徴<br>
+      • 国際的な交通拠点の役割
+    </p>
+    <p style="margin-bottom: 1rem;">
+      日本の中心地としての関東地方の役割を、地形、気候、産業、交通などの視点から理解しましょう。
+    </p>
+  </div>
+`;
+
 window.questions = [
   {
     "qnum": 1,

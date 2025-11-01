@@ -34,7 +34,7 @@ const era = urlParams.get("era") || "4100_land_topography_climate_with_sources";
 const eraKey = urlParams.get("era") || "kodai"; // 単元キー（OK判定に使用）
 
 document.getElementById("modeLabel").textContent = 
-  mode === "oboeru" ? "覚える編（タイマー付き）" : "わかる編（年代順）";
+  mode === "oboeru" ? "覚える編（タイマー付き）" : "わかる編";
 
 let current = 0;
 let timer = null;
@@ -42,6 +42,7 @@ let timeLeft = 20;
 let shuffledQuestions = []; // 出題用（わかる編=そのまま, 覚える編=ランダム）
 
 const questionEl = document.getElementById("question");
+const visualEl = document.getElementById("visual");
 const sourceEl = document.getElementById("source");
 const choicesEl = document.getElementById("choices");
 const explanationEl = document.getElementById("explanation");
@@ -151,11 +152,23 @@ function generateShuffledIndices(length) {
 function loadQuestion() {
   const q = shuffledQuestions[current];
   
-  // 進捗表示を追加
+  // 進捗表示を追加（説明テキスト表示後は表示）
   const progressDisplay = document.getElementById("progress") || createProgressDisplay();
-  progressDisplay.textContent = `問題 ${current + 1} / ${questions.length}`;
+  if (progressDisplay) {
+    progressDisplay.style.display = "block";
+    progressDisplay.textContent = `問題 ${current + 1} / ${questions.length}`;
+  }
   
   questionEl.innerHTML = q.text || q.question;
+  
+  // 図解の表示（visualフィールドがある場合）
+  if (q.visual && mode === "wakaru") {
+    visualEl.textContent = q.visual;
+    visualEl.style.display = "block";
+  } else {
+    visualEl.style.display = "none";
+  }
+  
   sourceEl.innerHTML = mode === "wakaru" ? q.source : "";
   explanationEl.textContent = "";
   nextBtn.style.display = "none";
@@ -754,20 +767,95 @@ class LearningTracker {
 // 学習履歴管理インスタンスを作成
 const learningTracker = new LearningTracker();
 
+// 説明テキストを表示する関数
+function showIntroduction() {
+  if (mode !== "wakaru") {
+    loadQuestion();
+    return;
+  }
+  
+  // window.introduction のチェック（空文字列や空白のみの場合はスキップ）
+  const introValue = window.introduction;
+  const introTrimmed = introValue ? introValue.trim() : '';
+  
+  if (typeof introValue === 'undefined' || !introValue || introTrimmed === '' || introTrimmed.length < 10) {
+    loadQuestion();
+    return;
+  }
+  
+  // 進捗表示を非表示
+  const progressDisplay = document.getElementById("progress");
+  if (progressDisplay) {
+    progressDisplay.style.display = "none";
+  }
+  
+  // 説明テキストを表示
+  if (!questionEl) {
+    return;
+  }
+  
+  questionEl.innerHTML = window.introduction;
+  sourceEl.innerHTML = "";
+  explanationEl.textContent = "";
+  choicesEl.innerHTML = "";
+  nextBtn.style.display = "none";
+  prevBtn.style.display = "none";
+  
+  // 「学習を開始」ボタンを追加
+  const startButton = document.createElement("button");
+  startButton.textContent = "学習を開始";
+  startButton.className = "choice";
+  startButton.style.cssText = "background: linear-gradient(135deg, #ea580c, #f97316); color: white; border: none; padding: 1rem 2rem; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 1.5rem; box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3); transition: all 0.3s ease;";
+  startButton.onmouseover = function() {
+    this.style.transform = 'translateY(-2px) scale(1.02)';
+    this.style.boxShadow = '0 6px 16px rgba(234, 88, 12, 0.4)';
+  };
+  startButton.onmouseout = function() {
+    this.style.transform = 'translateY(0) scale(1)';
+    this.style.boxShadow = '0 4px 12px rgba(234, 88, 12, 0.3)';
+  };
+  startButton.onclick = () => {
+    // 説明テキスト表示フラグを設定
+    window._introductionShown = true;
+    // 最初の問題を表示
+    loadQuestion();
+  };
+  
+  choicesEl.appendChild(startButton);
+}
+
 // 初期化：わかる編は配列順、覚える編はランダム
 function startApp() {
   if (mode === "oboeru") {
     shuffledQuestions = shuffleQuestions();
+    loadQuestion();
   } else {
     // わかる編は questions をそのまま
-    shuffledQuestions = [...questions];
+    // window.questions または questions のいずれかを使用
+    const questionsArray = window.questions || questions;
+    if (!questionsArray || !Array.isArray(questionsArray)) {
+      return;
+    }
+    shuffledQuestions = [...questionsArray];
+    // 説明テキストがあれば表示、なければ問題を表示
+    showIntroduction();
   }
-  loadQuestion();
 }
 
 // データ到着後に開始（loader.js が questions を読み込むため）
 (function waitForQuestions(){
-  if (typeof questions !== 'undefined' && Array.isArray(questions) && questions.length > 0) {
+  // 既に実行済みの場合は再実行しない
+  if (window._appStarted) {
+    return;
+  }
+  
+  // window.questions または questions のいずれかが読み込まれているかチェック
+  const questionsLoaded = (typeof window.questions !== 'undefined' && Array.isArray(window.questions) && window.questions.length > 0) ||
+                         (typeof questions !== 'undefined' && Array.isArray(questions) && questions.length > 0);
+  
+  if (questionsLoaded) {
+    // 実行済みフラグを設定
+    window._appStarted = true;
     startApp();
   } else {
     setTimeout(waitForQuestions, 50);

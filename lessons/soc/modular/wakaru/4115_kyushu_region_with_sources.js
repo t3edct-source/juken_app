@@ -1,4 +1,25 @@
-export const questions = [
+// 説明テキスト（わかる編の特色：最初に読むべき説明）
+window.introduction = `
+  <div style="text-align: left; line-height: 1.8; font-size: 1rem;">
+    <h3 style="color: #ea580c; margin-bottom: 1rem; font-size: 1.25rem;">📚 九州地方について</h3>
+    <p style="margin-bottom: 1rem;">
+      九州地方は日本列島の南西部に位置し、7つの県（沖縄を含む）からなる地方です。温暖な気候と豊かな自然に恵まれ、アジアとの交流の窓口でもあります。
+    </p>
+    <p style="margin-bottom: 1rem;">
+      <strong>このレッスンで学ぶ内容：</strong><br>
+      • 各地域に広がる主要な平野の特徴<br>
+      • 北部に発達した工業地帯の特色<br>
+      • 温暖な気候を活かした特産品の生産<br>
+      • 火山地形とその影響<br>
+      • 各地域の主要都市の特色と役割
+    </p>
+    <p style="margin-bottom: 1rem;">
+      温暖な気候とアジアとのつながりを意識しながら、九州地方（沖縄を含む）の地形、気候、産業、交通、都市などについて理解しましょう。
+    </p>
+  </div>
+`;
+
+window.questions = [
   {
     "qnum": 1,
     "text": "九州地方の政令指定都市で、玄界灘に面するのはどれですか。",

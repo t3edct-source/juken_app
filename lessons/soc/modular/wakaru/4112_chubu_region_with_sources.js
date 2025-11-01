@@ -1,4 +1,25 @@
-export const questions = [
+// 説明テキスト（わかる編の特色：最初に読むべき説明）
+window.introduction = `
+  <div style="text-align: left; line-height: 1.8; font-size: 1rem;">
+    <h3 style="color: #ea580c; margin-bottom: 1rem; font-size: 1.25rem;">📚 中部地方について</h3>
+    <p style="margin-bottom: 1rem;">
+      中部地方は本州の中央部に位置し、高い山々と広い平野をもつ地方です。北陸、中央高地、東海の3つの地域に分かれ、それぞれ特色があります。
+    </p>
+    <p style="margin-bottom: 1rem;">
+      <strong>このレッスンで学ぶ内容：</strong><br>
+      • 日本を代表する高い山脈とその影響<br>
+      • 各地域に広がる主要な平野の特徴<br>
+      • 大都市を中心とした工業地帯の発達<br>
+      • 気候や地形を活かした特産品の生産<br>
+      • 各地域の主要都市の特色と役割
+    </p>
+    <p style="margin-bottom: 1rem;">
+      3つの地域（北陸、中央高地、東海）の違いを、地形、気候、産業、都市などの視点から理解しましょう。
+    </p>
+  </div>
+`;
+
+window.questions = [
   {
     "qnum": 1,
     "text": "日本最長の川が流れる県をまたぐ地方区分に含まれるのはどれですか。",

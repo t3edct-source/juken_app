@@ -15,6 +15,7 @@
     <div id="modeLabel"></div>
     <div id="eraLabel" style="margin-bottom: 0.5rem; font-weight:700;"></div>
     <h2 id="question"></h2>
+    <div id="visual" class="visual-diagram" style="display: none; margin: 1rem 0; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe; font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; font-size: 0.95rem;"></div>
     <div class="source" id="source"></div>
     <div class="choices" id="choices"></div>
     <div class="explanation" id="explanation"></div>
@@ -48,6 +49,34 @@
       'geo_kyushu': '九州地方',
       'geo_world': '世界地理',
       
+      // 地理分野（数値ID形式）
+      '4100_land_topography_climate': '国土・地形・気候',
+      '4101_agriculture_forestry_fishery_with_sources': '農林水産業',
+      '4102_prefectures_cities_with_sources': '都道府県・都市',
+      '4103_industry_energy_with_sources': '工業・エネルギー',
+      '4104_commerce_trade_transportation_with_sources': '商業・貿易・交通',
+      '4104_commerce_trade_transportation': '商業・貿易・交通',
+      '4106_environment_with_sources': '環境問題',
+      '4107_information_with_sources': '情報・通信',
+      '4108_maps_topographic_symbols_with_sources': '地図・地形図記号',
+      '4108_maps_topographic_symbols': '地図・地形図記号',
+      '4109_hokkaido_region_with_sources': '北海道地方',
+      '4109_hokkaido_region': '北海道地方',
+      '4110_tohoku_region_with_sources': '東北地方',
+      '4110_tohoku_region': '東北地方',
+      '4111_kanto_region_with_sources': '関東地方',
+      '4111_kanto_region': '関東地方',
+      '4112_chubu_region_with_sources': '中部地方',
+      '4112_chubu_region': '中部地方',
+      '4113_kinki_region_with_sources': '近畿地方',
+      '4113_kinki_region': '近畿地方',
+      '4114_chugoku_shikoku_region_with_sources': '中国・四国地方',
+      '4114_chugoku_shikoku_region': '中国・四国地方',
+      '4115_kyushu_region_with_sources': '九州地方',
+      '4115_kyushu_region': '九州地方',
+      '4116_world_geography': '世界地理',
+      '4116_world_geography_with_sources': '世界地理',
+      
       // 歴史分野
       'hist_paleolithic': '旧石器・縄文・弥生時代',
       'hist_kofun': '古墳・飛鳥時代',
@@ -63,6 +92,21 @@
       'hist_modern': '平成・令和時代',
       'hist_cross': '歴史総合問題',
       
+      // 歴史分野（数値ID形式）
+      '4200_paleolithic_jomon_yayoi_with_sources': '旧石器・縄文・弥生時代',
+      '4201_kofun_asuka_with_sources': '古墳・飛鳥時代',
+      '4202_nara_period_with_sources': '奈良時代',
+      '4203_heian_period': '平安時代',
+      '4204_kamakura_period': '鎌倉時代',
+      '4205_muromachi_period': '室町時代',
+      '4206_azuchi_momoyama': '安土桃山時代',
+      '4207_edo_period': '江戸時代',
+      '4208_meiji_period': '明治時代',
+      '4209_taisho_showa_prewar': '大正・昭和前期',
+      '4210_showa_postwar': '昭和後期',
+      '4211_heisei_reiwa': '平成・令和時代',
+      '4212_cross_period_problems': '歴史総合問題',
+      
       // 公民分野
       'civic_politics': '政治・国民生活',
       'civic_constitution': '憲法・三原則',
@@ -71,12 +115,23 @@
       'civic_international': '国際関係',
       'civic_modern': '現代社会問題',
       
+      // 公民分野（数値ID形式）
+      '4300_politics_national_life': '政治・国民生活',
+      '4301_constitution_three_principles': '憲法・三原則',
+      '4302_diet_cabinet_judiciary': '国会・内閣・裁判所',
+      '4303_finance_local_government': '財政・地方自治',
+      '4304_world_affairs_international': '国際関係',
+      '4305_modern_social_issues': '現代社会問題',
+      
+      // 地図学習分野
+      '4200_map_hokkaido_with_sources': '地図で学ぶ地理① - 北海道地方',
+      
       // 既存の教材（後方互換性） - ダミーファイルは削除済み
     };
-    const era = new URLSearchParams(location.search).get("era") || "geo_land_topo";
-    const mode = new URLSearchParams(location.search).get("mode") || "wakaru";
+    const currentEra = new URLSearchParams(location.search).get("era") || "geo_land_topo";
+    const currentMode = new URLSearchParams(location.search).get("mode") || "wakaru";
     
-    document.getElementById("eraLabel").textContent = "単元：" + (eraMap[era] || era);
+    document.getElementById("eraLabel").textContent = eraMap[currentEra] || currentEra;
     
   </script>
 </body>

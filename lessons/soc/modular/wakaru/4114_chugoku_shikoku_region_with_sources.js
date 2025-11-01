@@ -1,4 +1,25 @@
-export const questions = [
+// 説明テキスト（わかる編の特色：最初に読むべき説明）
+window.introduction = `
+  <div style="text-align: left; line-height: 1.8; font-size: 1rem;">
+    <h3 style="color: #ea580c; margin-bottom: 1rem; font-size: 1.25rem;">📚 中国・四国地方について</h3>
+    <p style="margin-bottom: 1rem;">
+      中国地方と四国地方は本州の西端と、本州の南に浮かぶ四国の2つの地方です。瀬戸内海を挟んで向かい合い、温暖な気候と豊かな海の幸に恵まれています。
+    </p>
+    <p style="margin-bottom: 1rem;">
+      <strong>このレッスンで学ぶ内容：</strong><br>
+      • 山地に囲まれた瀬戸内海の特徴<br>
+      • 瀬戸内海沿岸に発達した工業地域の特色<br>
+      • 温暖な気候を活かした特産品の生産<br>
+      • 本州と四国を結ぶ交通網の役割<br>
+      • 各地域の主要都市の特色と役割
+    </p>
+    <p style="margin-bottom: 1rem;">
+      瀬戸内海を中心とした中国・四国地方の特色を、地形、気候、産業、交通などの視点から理解しましょう。
+    </p>
+  </div>
+`;
+
+window.questions = [
   {
     "qnum": 1,
     "text": "山陰地方の県庁所在地で、日本海側に位置するのはどれですか。",

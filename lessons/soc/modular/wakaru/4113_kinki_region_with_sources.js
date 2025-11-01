@@ -1,4 +1,25 @@
-export const questions = [
+// 説明テキスト（わかる編の特色：最初に読むべき説明）
+window.introduction = `
+  <div style="text-align: left; line-height: 1.8; font-size: 1rem;">
+    <h3 style="color: #ea580c; margin-bottom: 1rem; font-size: 1.25rem;">📚 近畿地方について</h3>
+    <p style="margin-bottom: 1rem;">
+      近畿地方は日本の中央部に位置し、2府5県からなる地方です。かつての都があった歴史と文化の中心地で、現在も経済活動が盛んです。
+    </p>
+    <p style="margin-bottom: 1rem;">
+      <strong>このレッスンで学ぶ内容：</strong><br>
+      • 歴史的な古都の位置とその特色<br>
+      • 大都市を中心とした工業地帯の特徴<br>
+      • 国際的な交通拠点の役割と立地条件<br>
+      • 気候や地形を活かした特産品の生産<br>
+      • 主要都市の特色と役割
+    </p>
+    <p style="margin-bottom: 1rem;">
+      歴史と現代が共存する近畿地方の特色を、地形、気候、産業、交通などの視点から理解しましょう。
+    </p>
+  </div>
+`;
+
+window.questions = [
   {
     "qnum": 1,
     "text": "近畿地方で最大の湖はどれですか。",

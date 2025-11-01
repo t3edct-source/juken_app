@@ -32,7 +32,7 @@ const era = urlParams.get("era") || "4100_land_topography_climate_with_sources";
 const eraKey = urlParams.get("era") || "kodai"; // 単元キー（OK判定に使用）
 
 document.getElementById("modeLabel").textContent = 
-  mode === "oboeru" ? "覚える編（タイマー付き）" : "わかる編（年代順）";
+  mode === "oboeru" ? "覚える編（タイマー付き）" : "わかる編";
 
 let current = 0;
 let timer = null;

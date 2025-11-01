@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>地図で学ぶ地理 - 北海道地方（統合版）</title>
+    <title>地図で学ぶ地理 - 近畿地方（統合版）</title>
     
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -211,7 +211,7 @@
             animation: wrongShake 0.6s ease;
         }
 
-        /* アニメーション効果（通常のわかる編と同様） */
+        /* アニメーション効果 */
         @keyframes correctPulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
@@ -522,7 +522,7 @@
 <body>
     <div class="header">
         <button class="home-btn" onclick="goHome()">🏠 ホーム</button>
-        <div class="lesson-title">地図で学ぶ地理 - 北海道地方</div>
+        <div class="lesson-title">地図で学ぶ地理 - 近畿地方</div>
         <div style="width: 80px;"></div> <!-- スペーサー（flexboxのバランス用） -->
     </div>
 
@@ -530,8 +530,8 @@
         <!-- 地図エリア -->
         <div class="map-container">
             <div class="map-header">
-                <h2>🗺️ 北海道地方の地図</h2>
-                <p>地理院地図で北海道の地理を学習しましょう</p>
+                <h2>🗺️ 近畿地方の地図</h2>
+                <p>地理院地図で近畿地方の地理を学習しましょう</p>
             </div>
             <div class="map-area">
                 <div id="gsi-map"></div>
@@ -540,23 +540,23 @@
 
         <!-- 地域情報パネル -->
         <div class="info-panel show" id="info-panel">
-            <h3>📊 北海道地方の基本情報</h3>
+            <h3>📊 近畿地方の基本情報</h3>
             <div class="info-grid">
                 <div class="info-item">
-                    <h4>面積・人口</h4>
-                    <p>面積: 83,424 km²<br>人口: 約530万人</p>
+                    <h4>都道府県</h4>
+                    <p>大阪、京都、兵庫、滋賀、奈良、和歌山（2府4県）</p>
                 </div>
                 <div class="info-item">
                     <h4>気候</h4>
-                    <p>亜寒帯気候<br>年平均気温8℃</p>
+                    <p>瀬戸内海式気候<br>年間を通じて温暖</p>
                 </div>
                 <div class="info-item">
                     <h4>主要都市</h4>
-                    <p>札幌、旭川、函館、釧路</p>
+                    <p>大阪、京都、神戸、奈良、和歌山、大津</p>
                 </div>
                 <div class="info-item">
                     <h4>主要産業</h4>
-                    <p>農業、水産業、観光業</p>
+                    <p>製造業、サービス業、観光業、農業</p>
                 </div>
             </div>
             <button class="start-learning-btn" onclick="startLearning()">学習を開始する</button>
@@ -583,111 +583,110 @@
     <script>
         // 地理院地図の初期化
         let map;
-        let hokkaidoLayer;
+        let kinkiLayer;
         
-        // 北海道のGeoJSONデータ（簡略版）
-        const hokkaidoGeoJSON = {
+        // 近畿地方のGeoJSONデータ（簡略版）
+        const kinkiGeoJSON = {
             "type": "FeatureCollection",
             "features": [
                 {
                     "type": "Feature",
                     "properties": {
-                        "name": "北海道",
-                        "pref_code": "01"
+                        "name": "近畿地方",
+                        "region": "kinki"
                     },
                     "geometry": {
                         "type": "Polygon",
                         "coordinates": [[
-                            [139.0, 45.0], [146.0, 45.0], [146.0, 41.0], [139.0, 41.0], [139.0, 45.0]
+                            [134.5, 35.8], [136.5, 35.8], [136.5, 33.5], [134.5, 33.5], [134.5, 35.8]
                         ]]
                     }
                 }
             ]
         };
 
-        // 北海道の詳細データ
-        const hokkaidoData = {
-            name: '北海道地方',
-            climate: '亜寒帯',
-            temperature: '年平均気温8℃',
-            precipitation: '年降水量1000mm',
+        // 近畿地方の詳細データ
+        const kinkiData = {
+            name: '近畿地方',
+            climate: '瀬戸内海式気候、年間を通じて温暖',
             cities: [
-                { name: '札幌', population: '197万人', lat: 43.064, lng: 141.346 },
-                { name: '旭川', population: '32万人', lat: 43.770, lng: 142.365 },
-                { name: '函館', population: '26万人', lat: 41.768, lng: 140.728 },
-                { name: '釧路', population: '17万人', lat: 42.984, lng: 144.384 }
+                { name: '大阪', population: '275万人', lat: 34.694, lng: 135.502 },
+                { name: '京都', population: '146万人', lat: 35.011, lng: 135.768 },
+                { name: '神戸', population: '153万人', lat: 34.690, lng: 135.196 },
+                { name: '奈良', population: '36万人', lat: 34.685, lng: 135.805 },
+                { name: '和歌山', population: '36万人', lat: 34.226, lng: 135.167 },
+                { name: '大津', population: '34万人', lat: 35.004, lng: 135.868 }
             ],
-            products: ['じゃがいも', '乳製品', '甜菜', '水産物'],
             geography: {
-                mountains: ['大雪山', '日高山脈', '石狩山地'],
-                rivers: ['石狩川', '天塩川', '十勝川'],
-                plains: ['石狩平野', '十勝平野', '根釧台地']
+                mountains: ['紀伊山地', '六甲山地', '比良山地'],
+                rivers: ['淀川', '木曽川', '紀ノ川', '由良川'],
+                plains: ['大阪平野', '京都盆地', '奈良盆地']
             },
-            industries: ['農業', '水産業', '観光業', '製造業'],
+            industries: ['製造業', 'サービス業', '観光業', '農業'],
             questions: [
                 {
                     id: 1,
-                    question: "地図で確認すると、北海道で最も人口が多い都市はどれですか？",
-                    choices: ["札幌", "旭川", "函館", "釧路"],
+                    question: "地図で確認すると、近畿地方で最も人口が多い都市はどれですか？",
+                    choices: ["大阪", "京都", "神戸", "奈良"],
                     correct: 0,
-                    explanation: "札幌は地図上で最大の都市マーカーが表示されており、北海道の道庁所在地で人口約197万人の北海道最大の都市です。地図で確認すると、石狩平野の中央部に位置しています。"
+                    explanation: "大阪は地図上で最大の都市マーカーが表示されており、大阪府の府庁所在地で人口約275万人の近畿地方最大の都市です。地図で確認すると、大阪平野の中央部に位置しています。"
                 },
                 {
                     id: 2,
-                    question: "地図で確認すると、北海道の中央部にある山脈はどれですか？",
-                    choices: ["大雪山", "日高山脈", "石狩山地", "知床連山"],
-                    correct: 0,
-                    explanation: "大雪山は地図上で北海道の中央部に位置する山岳地帯として表示されています。旭岳（2,291m）が北海道の最高峰です。"
+                    question: "地図で確認すると、神戸はどの海に面していますか？",
+                    choices: ["日本海", "太平洋", "瀬戸内海", "東京湾"],
+                    correct: 2,
+                    explanation: "神戸は地図上で瀬戸内海に面した位置にあります。地図で確認すると、兵庫県の南部に位置し、大阪湾に面した港湾都市として表示されています。"
                 },
                 {
                     id: 3,
-                    question: "地図で確認すると、北海道で最も長い川はどれですか？",
-                    choices: ["石狩川", "天塩川", "十勝川", "釧路川"],
+                    question: "地図で確認すると、京都は大阪のどの位置にありますか？",
+                    choices: ["東", "西", "南", "北"],
                     correct: 0,
-                    explanation: "石狩川は地図上で最も長く表示されている川で、全長268kmで北海道最長の川です。大雪山から石狩平野を流れて日本海に注いでいます。"
+                    explanation: "京都は地図上で大阪の東に位置しています。地図で確認すると、京都盆地に位置し、大阪から東北方向にあることがわかります。"
                 },
                 {
                     id: 4,
-                    question: "地図で確認すると、札幌は北海道のどの位置にありますか？",
-                    choices: ["中央部", "北部", "南部", "東部"],
+                    question: "地図で確認すると、奈良は大阪のどの位置にありますか？",
+                    choices: ["東", "西", "南", "北"],
                     correct: 0,
-                    explanation: "札幌は地図上で北海道の中央部に位置しており、石狩平野の中央部にあります。地図で確認すると、北海道の地理的中心に位置していることがわかります。"
+                    explanation: "奈良は地図上で大阪の東に位置しています。地図で確認すると、奈良盆地に位置し、大阪から東南方向にあることがわかります。"
                 },
                 {
                     id: 5,
-                    question: "地図で確認すると、函館は北海道のどの位置にありますか？",
-                    choices: ["中央部", "北部", "南部", "東部"],
-                    correct: 2,
-                    explanation: "函館は地図上で北海道の南部に位置しており、本州に最も近い位置にあります。地図で確認すると、津軽海峡に面した港湾都市として表示されています。"
+                    question: "地図で確認すると、和歌山は近畿地方のどの位置にありますか？",
+                    choices: ["東部", "西部", "北部", "南部"],
+                    correct: 3,
+                    explanation: "和歌山は地図上で近畿地方の南部に位置しており、紀伊半島の南西部にあります。地図で確認すると、太平洋に面した位置にあります。"
                 },
                 {
                     id: 6,
-                    question: "地図で確認すると、旭川は北海道のどの位置にありますか？",
-                    choices: ["中央部", "北部", "南部", "東部"],
+                    question: "地図で確認すると、大津はどの都道府県にありますか？",
+                    choices: ["滋賀県", "京都府", "大阪府", "奈良県"],
                     correct: 0,
-                    explanation: "旭川は地図上で北海道の中央部に位置しており、内陸部の主要都市です。地図で確認すると、石狩川流域の内陸部に位置していることがわかります。"
+                    explanation: "大津は地図上で滋賀県の南部に位置しており、滋賀県の県庁所在地です。地図で確認すると、琵琶湖の南岸に位置していることがわかります。"
                 },
                 {
                     id: 7,
-                    question: "地図で確認すると、釧路は北海道のどの位置にありますか？",
-                    choices: ["中央部", "北部", "南部", "東部"],
-                    correct: 3,
-                    explanation: "釧路は地図上で北海道の東部に位置しており、太平洋に面した港湾都市です。地図で確認すると、北海道の東端部に位置していることがわかります。"
+                    question: "地図で確認すると、近畿地方で最も長い川はどれですか？",
+                    choices: ["淀川", "木曽川", "紀ノ川", "由良川"],
+                    correct: 0,
+                    explanation: "淀川は地図上で最も長く表示されている川で、全長75kmです。滋賀県の琵琶湖から流れ出し、大阪湾に注いでいます。"
                 },
                 {
                     id: 8,
-                    question: "地図で確認すると、北海道の形状はどのようですか？",
-                    choices: ["細長い", "丸い", "四角い", "三角形"],
-                    correct: 1,
-                    explanation: "北海道は地図上で丸い形状をしており、本州と比べてコンパクトな形状です。地図で確認すると、東西南北の距離がほぼ等しい丸みを帯びた形状であることがわかります。"
+                    question: "地図で確認すると、大阪と神戸はどのように位置していますか？",
+                    choices: ["東西に並ぶ", "南北に並ぶ", "大阪が神戸の北", "神戸が大阪の北"],
+                    correct: 0,
+                    explanation: "大阪と神戸は地図上で東西に並んでいます。地図で確認すると、大阪が東、神戸が西に位置し、大阪湾をはさんで向かい合っていることがわかります。"
                 }
             ]
         };
 
         // 地図の初期化
         function initMap() {
-            // 地理院地図の初期化
-            map = L.map('gsi-map').setView([43.5, 142.5], 6);
+            // 地理院地図の初期化（近畿地方の中心：大阪付近）
+            map = L.map('gsi-map').setView([34.8, 135.5], 8);
             
             // 地理院地図タイルの追加
             L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
@@ -695,8 +694,8 @@
                 maxZoom: 18
             }).addTo(map);
             
-            // 北海道の境界を追加
-            hokkaidoLayer = L.geoJSON(hokkaidoGeoJSON, {
+            // 近畿地方の境界を追加
+            kinkiLayer = L.geoJSON(kinkiGeoJSON, {
                 style: {
                     color: '#4facfe',
                     weight: 2,
@@ -706,7 +705,7 @@
             }).addTo(map);
             
             // 都市マーカーの追加
-            hokkaidoData.cities.forEach(city => {
+            kinkiData.cities.forEach(city => {
                 L.marker([city.lat, city.lng])
                     .addTo(map)
                     .bindPopup(`<b>${city.name}</b><br>人口: ${city.population}`);
@@ -735,7 +734,6 @@
                 };
             }
 
-            // 問題回答を記録
             recordAnswer(questionId, selectedAnswer, correctAnswer, timeSpent) {
                 this.currentSession.questions.push({
                     questionId,
@@ -752,7 +750,6 @@
                 this.currentSession.totalQuestions++;
             }
 
-            // セッションを保存
             saveSession() {
                 try {
                     const existingHistory = this.loadHistory();
@@ -783,7 +780,6 @@
                 }
             }
 
-            // 履歴を読み込み
             loadHistory() {
                 try {
                     const data = localStorage.getItem(this.historyKey);
@@ -806,7 +802,6 @@
                 };
             }
 
-            // 統計を計算
             calculateStats(sessions) {
                 const stats = {
                     totalSessions: sessions.length,
@@ -830,15 +825,12 @@
             }
         }
 
-        // 学習履歴トラッカーのインスタンス化
         const learningTracker = new LearningTracker();
 
-        // 問題表示
         let currentQuestion = 0;
         let score = 0;
         let questionStartTime = Date.now();
 
-        // 選択肢インデックスをシャッフル（通常のわかる編と同様）
         function generateShuffledIndices(length) {
             const indices = Array.from({ length }, (_, i) => i);
             for (let i = indices.length - 1; i > 0; i--) {
@@ -849,10 +841,9 @@
         }
 
         function showQuestion(index) {
-            const question = hokkaidoData.questions[index];
-            questionStartTime = Date.now(); // 問題開始時刻を記録
+            const question = kinkiData.questions[index];
+            questionStartTime = Date.now();
             
-            // 解説を非表示
             document.getElementById('explanation').classList.remove('show');
             
             document.getElementById('question-text').textContent = question.question;
@@ -860,7 +851,6 @@
             const choicesContainer = document.getElementById('choices');
             choicesContainer.innerHTML = '';
             
-            // 選択肢の順序を毎回ランダムにする（通常のわかる編と同様）
             const shuffledChoiceIndices = generateShuffledIndices(question.choices.length);
             shuffledChoiceIndices.forEach((originalIndex) => {
                 const choiceElement = document.createElement('div');
@@ -871,15 +861,12 @@
                 choicesContainer.appendChild(choiceElement);
             });
             
-            // 進捗バーの更新
-            const progress = ((index + 1) / hokkaidoData.questions.length) * 100;
+            const progress = ((index + 1) / kinkiData.questions.length) * 100;
             document.getElementById('progress-fill').style.width = progress + '%';
             
-            // ナビゲーションボタンの更新
             const nextBtn = document.getElementById('next-btn');
             document.getElementById('prev-btn').disabled = index === 0;
-            if (index === hokkaidoData.questions.length - 1) {
-                // 最後の問題の場合は、答えを選択するまでボタンを無効化
+            if (index === kinkiData.questions.length - 1) {
                 nextBtn.disabled = true;
                 nextBtn.textContent = '次の問題';
             } else {
@@ -888,9 +875,8 @@
             }
         }
 
-        // 個別問題の回答をメインページに送信する関数
         function sendQuestionAnswerToParent(questionData, userAnswer, isCorrect) {
-            const lessonId = 'soc.geography.map_hokkaido_integrated_wakaru';
+            const lessonId = 'soc.geography.map_kinki_integrated_wakaru';
             
             const messageData = {
                 type: 'question:answered',
@@ -910,7 +896,6 @@
             
             console.log('📝 個別問題回答を送信:', messageData);
             
-            // 複数の方法でメッセージを送信
             try {
                 if (window.parent !== window) {
                     window.parent.postMessage(messageData, '*');
@@ -919,7 +904,6 @@
                     window.top.postMessage(messageData, '*');
                 }
                 
-                // localStorage経由での代替通信
                 const existingAnswers = JSON.parse(localStorage.getItem('questionAnswers') || '[]');
                 existingAnswers.push(messageData);
                 localStorage.setItem('questionAnswers', JSON.stringify(existingAnswers));
@@ -930,13 +914,11 @@
             }
         }
 
-        // 答え選択
         function selectAnswer(choiceIndex) {
-            const question = hokkaidoData.questions[currentQuestion];
+            const question = kinkiData.questions[currentQuestion];
             const choices = document.querySelectorAll('.choice');
             const timeSpent = Date.now() - questionStartTime;
             
-            // 選択肢を無効化
             choices.forEach(choice => {
                 choice.style.pointerEvents = 'none';
             });
@@ -949,7 +931,6 @@
                 }
             });
             
-            // 正解表示
             setTimeout(() => {
                 const isCorrect = choiceIndex === question.correct;
                 
@@ -962,7 +943,6 @@
                     }
                 });
                 
-                // 解説表示
                 const explanation = document.getElementById('explanation');
                 explanation.innerHTML = `<h4>解説</h4><p>${question.explanation}</p>`;
                 explanation.classList.add('show');
@@ -971,27 +951,23 @@
                     score++;
                 }
                 
-                // 学習履歴に記録
                 learningTracker.recordAnswer(
                     question.id || currentQuestion,
                     choiceIndex,
                     question.correct,
-                    Math.round(timeSpent / 1000) // 秒単位に変換
+                    Math.round(timeSpent / 1000)
                 );
                 
-                // 個別問題の回答を親ウィンドウに送信
                 sendQuestionAnswerToParent(question, choiceIndex, isCorrect);
                 
-                // 最後の問題の場合、ボタンを「学習完了」に変更
                 const nextBtn = document.getElementById('next-btn');
-                if (currentQuestion === hokkaidoData.questions.length - 1) {
+                if (currentQuestion === kinkiData.questions.length - 1) {
                     nextBtn.textContent = '学習完了';
                     nextBtn.disabled = false;
                 }
             }, 500);
         }
 
-        // 前の問題
         function previousQuestion() {
             if (currentQuestion > 0) {
                 currentQuestion--;
@@ -1000,28 +976,24 @@
             }
         }
 
-        // 次の問題
         function nextQuestion() {
-            // 最後の問題の場合は学習完了処理
-            if (currentQuestion === hokkaidoData.questions.length - 1) {
+            if (currentQuestion === kinkiData.questions.length - 1) {
                 completeLesson();
                 return;
             }
             
-            if (currentQuestion < hokkaidoData.questions.length - 1) {
+            if (currentQuestion < kinkiData.questions.length - 1) {
                 currentQuestion++;
                 showQuestion(currentQuestion);
                 document.getElementById('explanation').classList.remove('show');
             }
         }
         
-        // 今回のセッション結果を表示する関数（通常のわかる編と同様）
         function showCurrentSessionResult() {
             const session = learningTracker.currentSession;
             const scorePercent = session.totalQuestions > 0 ? 
                 Math.round((session.score / session.totalQuestions) * 100) : 0;
             
-            // 成績に応じたメッセージ
             let resultMessage = '';
             if (scorePercent >= 90) {
                 resultMessage = '🎉 素晴らしい成果です！';
@@ -1033,7 +1005,6 @@
                 resultMessage = '💪 もう一度チャレンジしよう！';
             }
             
-            // totalTimeを正しく計算
             const totalTime = Date.now() - session.startTime;
             const timeMinutes = Math.floor(totalTime / 60000);
             const timeSeconds = Math.floor((totalTime % 60000) / 1000);
@@ -1065,17 +1036,13 @@
             `;
         }
 
-        // 学習完了処理
         function completeLesson() {
-            const totalQuestions = hokkaidoData.questions.length;
+            const totalQuestions = kinkiData.questions.length;
             
-            // 学習履歴を保存
             learningTracker.saveSession();
             
-            // レッスンID（catalog.jsonと一致させる）
-            const lessonId = 'soc.geography.map_hokkaido_integrated_wakaru';
+            const lessonId = 'soc.geography.map_kinki_integrated_wakaru';
             
-            // 完了メッセージを親フレームに送信
             const messageData = {
                 type: 'lesson:complete',
                 lessonId: lessonId,
@@ -1088,16 +1055,13 @@
             
             console.log('🚀 完了メッセージを送信します:', messageData);
             
-            // 複数の方法で確実にメッセージを送信
             try {
-                // 方法1: parent
                 window.parent.postMessage(messageData, '*');
                 console.log('✅ window.parent.postMessage 送信成功');
             } catch (e) {
                 console.log('❌ window.parent.postMessage 失敗:', e);
             }
             
-            // 方法2: top
             try {
                 if (window.top !== window) {
                     window.top.postMessage(messageData, '*');
@@ -1107,7 +1071,6 @@
                 console.log('❌ window.top.postMessage 失敗:', e);
             }
             
-            // 方法3: localStorage経由
             try {
                 const storageMessage = {
                     ...messageData,
@@ -1116,7 +1079,6 @@
                 localStorage.setItem('lessonCompleteMessage', JSON.stringify(storageMessage));
                 console.log('✅ localStorage での通信設定完了');
                 
-                // 直接メインページの関数を呼び出し
                 if (window.parent && window.parent.saveLessonProgress) {
                     window.parent.saveLessonProgress(
                         messageData.lessonId,
@@ -1130,22 +1092,18 @@
                 console.log('❌ localStorage/storage event 失敗:', e);
             }
             
-            // 問題コンテナを非表示にして、結果を表示
             document.getElementById('question-container').style.display = 'none';
             
-            // 結果表示エリアを作成
             const resultContainer = document.createElement('div');
             resultContainer.className = 'question-container';
             resultContainer.style.display = 'block';
             resultContainer.innerHTML = showCurrentSessionResult();
             
-            // ホームに戻るボタンを追加
             const homeButton = document.createElement('button');
             homeButton.textContent = '🏠 ホームに戻る';
             homeButton.className = 'start-learning-btn';
             homeButton.style.marginTop = '1.5rem';
             homeButton.onclick = () => {
-                // iframe内の場合は、親フレームに戻るメッセージを送信
                 if (window.parent !== window || window.top !== window) {
                     try {
                         window.parent.postMessage({ type: 'lesson:goBack' }, '*');
@@ -1163,26 +1121,14 @@
             document.querySelector('.main-container').appendChild(resultContainer);
         }
 
-        // ホームに戻る
         function goHome() {
             window.location.href = '/';
         }
 
-        // 地図に戻る
-        function focusOnHokkaido() {
-            map.setView([43.5, 142.5], 6);
-            hokkaidoLayer.setStyle({
-                color: '#4facfe',
-                weight: 3,
-                fillColor: '#4facfe',
-                fillOpacity: 0.2
-            });
-        }
-
-        // ページ読み込み時の初期化
         document.addEventListener('DOMContentLoaded', function() {
             initMap();
         });
     </script>
 </body>
 </html>
+

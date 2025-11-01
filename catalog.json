@@ -1190,7 +1190,7 @@
     "id": "soc.geography.map_hokkaido_integrated_wakaru",
     "grade": 5,
     "subject": "soc",
-    "title": "地図で学ぶ地理 - 北海道地方〈統合版〉",
+    "title": "地図で学ぶ地理① - 北海道地方",
     "duration_min": 20,
     "sku_required": null,
     "path": "lessons/soc/modular/map_lesson_hokkaido_integrated.html",
@@ -1199,6 +1199,103 @@
       "地理",
       "地図",
       "北海道",
+      "インタラクティブ"
+    ]
+  },
+  {
+    "id": "soc.geography.map_tohoku_integrated_wakaru",
+    "grade": 5,
+    "subject": "soc",
+    "title": "地図で学ぶ地理② - 東北地方",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/soc/modular/map_lesson_tohoku_integrated.html",
+    "format": "modular",
+    "tags": [
+      "地理",
+      "地図",
+      "東北地方",
+      "インタラクティブ"
+    ]
+  },
+  {
+    "id": "soc.geography.map_kanto_integrated_wakaru",
+    "grade": 5,
+    "subject": "soc",
+    "title": "地図で学ぶ地理③ - 関東地方",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/soc/modular/map_lesson_kanto_integrated.html",
+    "format": "modular",
+    "tags": [
+      "地理",
+      "地図",
+      "関東地方",
+      "インタラクティブ"
+    ]
+  },
+  {
+    "id": "soc.geography.map_chubu_integrated_wakaru",
+    "grade": 5,
+    "subject": "soc",
+    "title": "地図で学ぶ地理④ - 中部地方",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/soc/modular/map_lesson_chubu_integrated.html",
+    "format": "modular",
+    "tags": [
+      "地理",
+      "地図",
+      "中部地方",
+      "インタラクティブ"
+    ]
+  },
+  {
+    "id": "soc.geography.map_kinki_integrated_wakaru",
+    "grade": 5,
+    "subject": "soc",
+    "title": "地図で学ぶ地理⑤ - 近畿地方",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/soc/modular/map_lesson_kinki_integrated.html",
+    "format": "modular",
+    "tags": [
+      "地理",
+      "地図",
+      "近畿地方",
+      "インタラクティブ"
+    ]
+  },
+  {
+    "id": "soc.geography.map_chugoku_shikoku_integrated_wakaru",
+    "grade": 5,
+    "subject": "soc",
+    "title": "地図で学ぶ地理⑥ - 中国・四国地方",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/soc/modular/map_lesson_chugoku_shikoku_integrated.html",
+    "format": "modular",
+    "tags": [
+      "地理",
+      "地図",
+      "中国地方",
+      "四国地方",
+      "インタラクティブ"
+    ]
+  },
+  {
+    "id": "soc.geography.map_kyushu_integrated_wakaru",
+    "grade": 5,
+    "subject": "soc",
+    "title": "地図で学ぶ地理⑦ - 九州地方",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/soc/modular/map_lesson_kyushu_integrated.html",
+    "format": "modular",
+    "tags": [
+      "地理",
+      "地図",
+      "九州地方",
       "インタラクティブ"
     ]
   }

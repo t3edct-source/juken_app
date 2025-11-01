@@ -1129,7 +1129,13 @@ socialUnits = [
           'soc.geography.chugoku_shikoku_region_wakaru',
           'soc.geography.kyushu_region_wakaru',
           'soc.geography.world_geography_wakaru',
-          'soc.geography.map_hokkaido_integrated_wakaru'
+          'soc.geography.map_hokkaido_integrated_wakaru',
+          'soc.geography.map_tohoku_integrated_wakaru',
+          'soc.geography.map_kanto_integrated_wakaru',
+          'soc.geography.map_chubu_integrated_wakaru',
+          'soc.geography.map_kinki_integrated_wakaru',
+          'soc.geography.map_chugoku_shikoku_integrated_wakaru',
+          'soc.geography.map_kyushu_integrated_wakaru'
         ]
   },
   {
@@ -1337,9 +1343,118 @@ function getRecommendedLessons() {
     }
   });
   
+  // 3. おさらいレッスンを1つ追加
+  const reviewLesson = getReviewLesson();
+  if (reviewLesson) {
+    console.log('おさらいレッスンを推薦リストに追加:', reviewLesson);
+    recommendations.push({
+      ...reviewLesson,
+      type: 'review',
+      reviewType: 'osaarai' // おさらい専用のタイプ
+    });
+  } else {
+    console.log('おさらいレッスンがありません');
+  }
+  
   console.log('最終的な推薦リスト（復習レッスン含む）:', recommendations);
   
   return recommendations;
+}
+
+// おさらいレッスンを取得する関数
+function getReviewLesson() {
+  console.log('getReviewLesson called');
+  
+  // 全教科（理科・社会のわかる編・おぼえる編）から完了済みレッスンを取得
+  const reviewCandidates = [];
+  
+  const allSubjects = ['sci', 'science_drill', 'soc', 'social_drill'];
+  
+  allSubjects.forEach(subject => {
+    const subjectLessons = state.catalog.filter(lesson => lesson.subject === subject);
+    
+    subjectLessons.forEach(lesson => {
+      if (!isLessonCompleted(lesson.id)) {
+        return; // 未完了のレッスンはスキップ
+      }
+      
+      const progress = getLessonProgress(lesson.id);
+      if (!progress || !progress.detail) {
+        return;
+      }
+      
+      const score = progress.score || 0;
+      const lastStudyDate = progress.at ? new Date(progress.at) : null;
+      
+      if (!lastStudyDate) {
+        return;
+      }
+      
+      const daysSince = Math.floor((Date.now() - lastStudyDate.getTime()) / (1000 * 60 * 60 * 24));
+      
+      // 満点は除外（ただし30日以上経過していれば含める）
+      if (score >= 1.0 && daysSince < 30) {
+        return;
+      }
+      
+      // 優先度を計算
+      const priority = calculateReviewPriority(score, daysSince);
+      
+      if (priority <= 3) { // 優先度1-3のもののみ候補に
+        reviewCandidates.push({
+          lesson,
+          score,
+          lastStudyDate,
+          daysSince,
+          priority,
+          progress
+        });
+      }
+    });
+  });
+  
+  if (reviewCandidates.length === 0) {
+    console.log('おさらい候補が見つかりませんでした');
+    return null;
+  }
+  
+  // 優先度でソート（優先度の低い順→日数の多い順）
+  reviewCandidates.sort((a, b) => {
+    if (a.priority !== b.priority) {
+      return a.priority - b.priority; // 優先度の低い順（1が最優先）
+    }
+    return b.daysSince - a.daysSince; // 同じ優先度なら古い順
+  });
+  
+  const selected = reviewCandidates[0].lesson;
+  console.log('選ばれたおさらいレッスン:', selected, {
+    score: reviewCandidates[0].score,
+    daysSince: reviewCandidates[0].daysSince,
+    priority: reviewCandidates[0].priority
+  });
+  
+  return selected;
+}
+
+// おさらいの優先度を計算する関数
+function calculateReviewPriority(score, daysSince) {
+  // 優先1: スコア85%未満 かつ 3日以上経過
+  if (score < 0.85 && daysSince >= 3) {
+    return 1;
+  }
+  
+  // 優先2: スコア90%未満 かつ 7日以上経過
+  if (score < 0.90 && daysSince >= 7) {
+    return 2;
+  }
+  
+  // 優先3: 満点以外 かつ 14日以上経過
+  if (score < 1.0 && daysSince >= 14) {
+    return 3;
+  }
+  
+  // 条件外
+  return 99;
 }
 
 // 教科別タブのイベントリスナーを設定
@@ -1556,8 +1671,23 @@ async function renderHome(){
     
     // おすすめタブの場合は特別な表示
     let recommendationBadge = '';
+    let reviewInfo = '';
     if (safeCurrentSubject === 'recommended') {
-      if (false && entry.type === 'review') {
+      if (entry.reviewType === 'osaarai') {
+        // おさらいレッスンの場合
+        recommendationBadge = `<span class="badge review" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">🔄 おさらい</span>`;
+        
+        // おさらい情報を取得
+        const reviewProgress = getLessonProgress(entry.id);
+        if (reviewProgress) {
+          const scorePercent = Math.round((reviewProgress.score || 0) * 100);
+          const lastStudyDate = reviewProgress.at ? new Date(reviewProgress.at) : null;
+          if (lastStudyDate) {
+            const daysSince = Math.floor((Date.now() - lastStudyDate.getTime()) / (1000 * 60 * 60 * 24));
+            reviewInfo = `<div class="text-xs text-purple-600 mb-1">前回のスコア: ${scorePercent}% ・ ${daysSince}日前に学習</div>`;
+          }
+        }
+      } else if (false && entry.type === 'review') {
         recommendationBadge = `<span class="badge review">🎓 復習</span>`;
       } else {
         recommendationBadge = `<span class="badge recommend">⭐ おすすめ</span>`;
@@ -1574,6 +1704,7 @@ async function renderHome(){
         </div>
       </div>
       <div class="text-sm text-slate-500 mb-2">${subjectName} / 小${entry.grade} ・ ${entry.duration_min||'?'}分</div>
+      ${reviewInfo}
       ${scoreDisplay}
       <div class="text-center">
         <span class="inline-block px-3 py-2 rounded-lg bg-indigo-600 text-white text-sm font-medium">${isCompleted ? '再学習' : '開く'}</span>
@@ -1646,7 +1777,13 @@ async function renderSocialUnits() {
           'soc.geography.chugoku_shikoku_region_wakaru',
           'soc.geography.kyushu_region_wakaru',
           'soc.geography.world_geography_wakaru',
-          'soc.geography.map_hokkaido_integrated_wakaru'
+          'soc.geography.map_hokkaido_integrated_wakaru',
+          'soc.geography.map_tohoku_integrated_wakaru',
+          'soc.geography.map_kanto_integrated_wakaru',
+          'soc.geography.map_chubu_integrated_wakaru',
+          'soc.geography.map_kinki_integrated_wakaru',
+          'soc.geography.map_chugoku_shikoku_integrated_wakaru',
+          'soc.geography.map_kyushu_integrated_wakaru'
         ]
       },
       {
@@ -1687,6 +1824,15 @@ async function renderSocialUnits() {
   
   console.log('🔍 socialUnits:', socialUnits);
   renderSubjectUnits(socialUnits, '社会');
+  
+  // 地理分野を自動選択（初期表示）
+  setTimeout(() => {
+    const geographyUnit = socialUnits.find(u => u.id === 'geography');
+    if (geographyUnit) {
+      console.log('✅ 地理分野を自動選択します');
+      selectUnit('geography');
+    }
+  }, 100);
   
   // わかる編の進捗表示を強制更新
   console.log('🔄 わかる編の進捗表示を強制更新');
@@ -1865,6 +2011,15 @@ async function renderSocialDrillUnits() {
   console.log('🔍 socialDrillUnits:', socialDrillUnits);
   console.log('🔍 state.catalog after load:', state.catalog);
   renderSubjectUnits(socialDrillUnits, '社会おぼえる');
+  
+  // 地理分野を自動選択（初期表示）
+  setTimeout(() => {
+    const geographyUnit = socialDrillUnits.find(u => u.id === 'geography_drill');
+    if (geographyUnit) {
+      console.log('✅ 地理分野を自動選択します（覚える編）');
+      selectUnit('geography_drill');
+    }
+  }, 100);
   
   // 進捗表示を強制更新
   console.log('🔄 進捗表示を強制更新');
@@ -2239,11 +2394,20 @@ function renderUnitLessons(unitId) {
   if (!unit) return;
   
   // その単元のレッスンを取得
-  const unitLessons = state.catalog.filter(lesson => 
-    unit.lessons.includes(lesson.id)
-  );
+  // unit.lessonsの順序を保持するために、配列の順序に基づいてソート
+  const unitLessonsMap = new Map();
+  state.catalog.forEach(lesson => {
+    if (unit.lessons.includes(lesson.id)) {
+      unitLessonsMap.set(lesson.id, lesson);
+    }
+  });
   
-  if (unitLessons.length === 0) {
+  // unit.lessonsの順序に従ってレッスンを並べる
+  const sortedLessons = unit.lessons
+    .map(lessonId => unitLessonsMap.get(lessonId))
+    .filter(lesson => lesson !== undefined);
+  
+  if (sortedLessons.length === 0) {
     container.innerHTML = `
       <div class="lessons-placeholder">
         <div class="placeholder-icon">⚠️</div>
@@ -2254,24 +2418,9 @@ function renderUnitLessons(unitId) {
     return;
   }
   
-  // 完了した教材を下に表示するようにソート
-  const sortedLessons = unitLessons.sort((a, b) => {
-    const aCompleted = isLessonCompleted(a.id);
-    const bCompleted = isLessonCompleted(b.id);
-    
-    if (aCompleted === bCompleted) {
-      return 0;
-    } else if (aCompleted) {
-      return 1;
-    } else {
-      return -1;
-    }
-  });
-  
   container.innerHTML = `
     <div class="lessons-header">
-      <h3 class="lessons-title">${unit.icon} ${unit.name}</h3>
-      <span class="lessons-count">${unitLessons.length}個のレッスン</span>
+      <h3 class="lessons-title">${sortedLessons.length}個のレッスン</h3>
     </div>
     
     <!-- シンプルなリスト表示 -->
@@ -2297,17 +2446,31 @@ function renderUnitLessons(unitId) {
     const listItem = document.createElement('div');
     listItem.className = `lesson-list-item ${isCompleted ? 'completed' : 'pending'}`;
     
-    // 各要素を個別に作成して確実に横書きにする
-    const numberSpan = document.createElement('div');
+    // コンパクトな2行表示に変更
+    // 1行目: 番号 + タイトル + ボタン
+    const firstRow = document.createElement('div');
+    firstRow.className = 'lesson-row-first';
+    
+    const numberSpan = document.createElement('span');
     numberSpan.className = 'lesson-number';
     numberSpan.textContent = String(index + 1).padStart(2, '0');
     
-    const titleSpan = document.createElement('div');
+    const titleSpan = document.createElement('span');
     titleSpan.className = 'lesson-title';
     titleSpan.textContent = lesson.title;
     
-    const metaDiv = document.createElement('div');
-    metaDiv.className = 'lesson-meta';
+    const actionBtn = document.createElement('button');
+    actionBtn.className = 'lesson-action-btn';
+    actionBtn.textContent = isCompleted ? '再学習' : '開始';
+    actionBtn.addEventListener('click', () => setHash('lesson', lesson.id));
+    
+    firstRow.appendChild(numberSpan);
+    firstRow.appendChild(titleSpan);
+    firstRow.appendChild(actionBtn);
+    
+    // 2行目: メタ情報（時間、ステータス、スコア）
+    const secondRow = document.createElement('div');
+    secondRow.className = 'lesson-row-second';
     
     const durationSpan = document.createElement('span');
     durationSpan.className = 'lesson-duration';
@@ -2317,38 +2480,31 @@ function renderUnitLessons(unitId) {
     statusSpan.className = `lesson-status ${isCompleted ? 'completed' : 'pending'}`;
     statusSpan.textContent = isCompleted ? '完了' : '未完了';
     
+    secondRow.appendChild(durationSpan);
+    secondRow.appendChild(statusSpan);
+    
     // スコア情報を追加
     const scoreInfo = getLessonScoreInfo(lesson.id);
-    
-    // メタ行に時間とステータスを追加
-    metaDiv.appendChild(durationSpan);
-    metaDiv.appendChild(statusSpan);
-    
-    // スコア表示を追加
     if (scoreInfo) {
       const scoreSpan = document.createElement('span');
       scoreSpan.className = 'lesson-score';
       scoreSpan.textContent = `${scoreInfo.correct}/${scoreInfo.total}問`;
-      scoreSpan.style.cssText = 'background: linear-gradient(135deg, #ea580c, #f97316); color: white; padding: 0.25rem 0.5rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600;';
-      metaDiv.appendChild(scoreSpan);
+      secondRow.appendChild(scoreSpan);
       
       const dateSpan = document.createElement('span');
       dateSpan.className = 'lesson-date';
       dateSpan.textContent = scoreInfo.formattedDate;
-      dateSpan.style.cssText = 'color: #6b7280; font-size: 0.75rem;';
-      metaDiv.appendChild(dateSpan);
+      secondRow.appendChild(dateSpan);
+    } else {
+      // スコア情報がない場合はスペーサーを追加してレイアウトを調整
+      const spacer = document.createElement('span');
+      spacer.style.flex = '1';
+      secondRow.appendChild(spacer);
     }
     
-    const actionBtn = document.createElement('button');
-    actionBtn.className = 'lesson-action-btn';
-    actionBtn.textContent = isCompleted ? '再学習' : '開始';
-    actionBtn.addEventListener('click', () => setHash('lesson', lesson.id));
-    
     // コンテナに追加
-    listItem.appendChild(numberSpan);
-    listItem.appendChild(titleSpan);
-    listItem.appendChild(metaDiv);
-    listItem.appendChild(actionBtn);
+    listItem.appendChild(firstRow);
+    listItem.appendChild(secondRow);
     
     listContainer.appendChild(listItem);
   });
