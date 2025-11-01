@@ -22,7 +22,7 @@
     'geo_kinki': '4113_kinki_region_with_sources.js',
     'geo_chugoku_shikoku': '4114_chugoku_shikoku_region_with_sources.js',
     'geo_kyushu': '4115_kyushu_region_with_sources.js',
-    'geo_world': '4116_world_geography.js',
+    'geo_world': '4116_world_geography_with_sources.js',
     
     // 地図学習分野 (42xx)
     '4200_map_hokkaido_with_sources': '4200_map_hokkaido_with_sources.js',
@@ -76,6 +76,7 @@
     '4106_environment_with_sources': '4106_environment_with_sources.js',
     '4107_information_with_sources': '4107_information_with_sources.js',
     '4108_maps_topographic_symbols_with_sources': '4108_maps_topographic_symbols_with_sources.js',
+    '4108_maps_topographic_symbols': '4108_maps_topographic_symbols_with_sources.js',
     '4109_hokkaido_region_with_sources': '4109_hokkaido_region_with_sources.js',
     '4109_hokkaido_region': '4109_hokkaido_region_with_sources.js',
     '4110_tohoku_region_with_sources': '4110_tohoku_region_with_sources.js',
@@ -90,7 +91,8 @@
     '4114_chugoku_shikoku_region': '4114_chugoku_shikoku_region_with_sources.js',
     '4115_kyushu_region_with_sources': '4115_kyushu_region_with_sources.js',
     '4115_kyushu_region': '4115_kyushu_region_with_sources.js',
-    '4116_world_geography': '4116_world_geography.js'
+    '4116_world_geography_with_sources': '4116_world_geography_with_sources.js',
+    '4116_world_geography': '4116_world_geography_with_sources.js'
   };
 
   const file = map[era];

@@ -2,6 +2,7 @@
 (function() {
   const params = new URLSearchParams(window.location.search);
   const era = params.get('era') || 'geo_land_topo'; // デフォルト：地形・気候
+  const mode = params.get('mode') || 'wakaru'; // モード取得
 
   // 中学受験社会：教材マップ
   const map = {
@@ -22,7 +23,7 @@
     'geo_kinki': '4113_kinki_region_with_sources.js',
     'geo_chugoku_shikoku': '4114_chugoku_shikoku_region_with_sources.js',
     'geo_kyushu': '4115_kyushu_region_with_sources.js',
-    'geo_world': '4116_world_geography.js',
+    'geo_world': '4116_world_geography_with_sources.js',
     
     // 地図学習分野 (42xx)
     '4200_map_hokkaido_with_sources': '4200_map_hokkaido_with_sources.js',
@@ -76,6 +77,7 @@
     '4106_environment_with_sources': '4106_environment_with_sources.js',
     '4107_information_with_sources': '4107_information_with_sources.js',
     '4108_maps_topographic_symbols_with_sources': '4108_maps_topographic_symbols_with_sources.js',
+    '4108_maps_topographic_symbols': '4108_maps_topographic_symbols_with_sources.js',
     '4109_hokkaido_region_with_sources': '4109_hokkaido_region_with_sources.js',
     '4109_hokkaido_region': '4109_hokkaido_region_with_sources.js',
     '4110_tohoku_region_with_sources': '4110_tohoku_region_with_sources.js',
@@ -90,7 +92,8 @@
     '4114_chugoku_shikoku_region': '4114_chugoku_shikoku_region_with_sources.js',
     '4115_kyushu_region_with_sources': '4115_kyushu_region_with_sources.js',
     '4115_kyushu_region': '4115_kyushu_region_with_sources.js',
-    '4116_world_geography': '4116_world_geography.js'
+    '4116_world_geography_with_sources': '4116_world_geography_with_sources.js',
+    '4116_world_geography': '4116_world_geography_with_sources.js'
   };
 
   const file = map[era];
@@ -98,13 +101,20 @@
     alert('未対応の単元キーです: ' + era);
     return;
   }
+  
+  // wakaruモードの場合はwakaruディレクトリ内のファイルを読み込む
+  let filePath = file;
+  if (mode === 'wakaru' && (file.startsWith('41') || file.startsWith('42') || file.startsWith('43'))) {
+    filePath = 'wakaru/' + file;
+  }
+  
   const s = document.createElement('script');
-  s.src = file;
+  s.src = filePath;
   s.onload = () => {
     if (!window.questions) {
-      console.error('学習データの読み込みに失敗しました: ' + file);
+      console.error('学習データの読み込みに失敗しました: ' + filePath);
     }
   };
-  s.onerror = () => console.error('学習データを読み込めませんでした: ' + file);
+  s.onerror = () => console.error('学習データを読み込めませんでした: ' + filePath);
   document.head.appendChild(s);
 })();

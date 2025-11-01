@@ -30,7 +30,7 @@ window.questions = [
       "高松市"
     ],
     "answer": 0,
-    "source": "中国山地は西日本を横切る長い山並みで、古くから鉱山や棚田のくらしが育ちました。四国山地や阿蘇山、飛騨山脈も山地ですが位置や特徴が異なります。中国山地は“西日本の背骨”のように各県を分け、雨の多い日本海側と温暖な瀬戸内側を生み出しました。山と人の関係を考えると、地域のくらしが見えてきます。",
+    "source": "山陰地方には、県庁所在地となる都市があります。この都市は日本海側に位置し、山陰地方の行政や経済の中心地となっています。日本海に面した立地で、海運や漁業とも結びついています。この都市は鳥取市と呼ばれ、山陰地方の県庁所在地として知られています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">鳥取市（山陰地方）\n\n🌊 日本海側に位置\n    ↓\n🏙️ 山陰地方の中心地\n    ↓\n🏛️ 行政・経済の中心\n    ↓\n🚢 海運・漁業とも結びつく\n    ↓\n🏙️ 鳥取市（県庁所在地）</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -45,7 +45,7 @@ window.questions = [
       "九十九里浜"
     ],
     "answer": 0,
-    "source": "瀬戸内海は波が静かで、多くの島々と港町に囲まれています。太平洋や日本海、オホーツク海も大きな海ですが、性格が違います。瀬戸内は“内側の湖のような海”で、古代から航路と交易を支えました。温暖な気候と海の幸は、人々の生活や文化を豊かにしています。",
+    "source": "鳥取県には、日本最大の面積を誇る砂丘があります。この砂丘は風によって運ばれた砂が堆積してできた地形で、独特の景観を見せています。砂丘には風紋ができ、観光地としても人気があります。この砂丘は鳥取砂丘と呼ばれ、鳥取県の代表的な地形として知られています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">鳥取砂丘（日本最大）\n\n💨 風によって運ばれた砂\n    ↓\n🏜️ 堆積してできた地形\n    ↓\n🏜️ 鳥取砂丘（日本最大の面積）\n    ↓\n💨 風紋ができる\n    ↓\n🗺️ 観光地として人気</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -60,7 +60,7 @@ window.questions = [
       "断層湖"
     ],
     "answer": 0,
-    "source": "出雲大社は縁結びの神で知られる古い神社です。伊勢神宮や厳島神社、明治神宮も立派ですが、祭る神や役割は異なります。出雲では“神々が集まる国”とされ、10月には全国の神が集まると伝えられます。大きな注連縄や本殿の姿は、日本神話と人々の信仰を今に伝えています。",
+    "source": "島根県には、宍道湖と中海と呼ばれる水域があります。これらの水域は、海と川の水が混じり合った特徴的な環境を持っています。海水と淡水が混ざることで、独特の生態系が育まれています。これらの水域は汽水湖と呼ばれ、島根県の代表的な地形として知られています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">宍道湖・中海（汽水湖）\n\n🌊 海の水\n🌊 川の水\n    ↓\n💧 混じり合う\n    ↓\n💧 宍道湖・中海（汽水湖）\n    ↓\n🐟 独特の生態系が育まれる\n    ↓\n📍 島根県</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -75,7 +75,7 @@ window.questions = [
       "十勝岳"
     ],
     "answer": 0,
-    "source": "鳥取砂丘は日本最大の砂丘で、風と砂が作る“自然の大舞台”です。九十九里浜や弓ヶ浜も砂浜ですが、広さや地形が異なります。砂丘には風紋やラクダも見られ、海外の砂漠を思わせます。農業や観光に利用され、人と自然のつながりを体感できます。",
+    "source": "山口県には、石灰岩が長い年月をかけて溶食されてできた台地地形があります。この台地は地下に鍾乳洞が発達し、独特の景観を作り出しています。カルスト地形として知られ、観光地としても人気があります。この台地地形は秋吉台と呼ばれ、山口県の代表的な地形です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">秋吉台（カルスト地形）\n\n🪨 石灰岩\n    ↓\n💧 長い年月をかけて溶食\n    ↓\n🏞️ 台地地形ができる\n    ↓\n🕳️ 地下に鍾乳洞が発達\n    ↓\n🏞️ 秋吉台（カルスト地形）</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -90,7 +90,7 @@ window.questions = [
       "来島海峡大橋"
     ],
     "answer": 0,
-    "source": "愛媛県宇和島は真珠の養殖で知られます。伊勢志摩や有明海も海産業が盛んですが、真珠は宇和島の特産です。入り組んだ湾が“静かな宝石箱”となり、波を防ぎ真珠を育てます。自然と人の工夫が一体になった成果が、世界に誇る宝石として輝いています。",
+    "source": "本州と四国を結ぶ連絡橋があります。この橋は児島と坂出を結び、鉄道と道路の両方を通す二階建ての構造となっています。島々を飛び石のように渡る長大な橋で、交通の要衝として重要な役割を果たしています。この橋は瀬戸大橋と呼ばれ、本州四国連絡橋の一つです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">瀬戸大橋\n\n🏝️ 本州（児島）\n    ↓\n🌉 島々を飛び石のように渡る\n    ↓\n🌉 瀬戸大橋（二階建て）\n    ↓\n🚄 鉄道・🛣️ 道路\n    ↓\n🏝️ 四国（坂出）へ</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -105,7 +105,7 @@ window.questions = [
       "筑紫平野"
     ],
     "answer": 0,
-    "source": "広島の宮島に立つ厳島神社は、海に浮かぶ赤い大鳥居で有名です。出雲大社や金刀比羅宮も有名ですが、立地や神の性格が違います。潮の満ち引きで姿を変える景色は“海に浮かぶ舞台”。人と自然と信仰が見事に調和した世界遺産です。",
+    "source": "岡山県南部には、広大な平野が広がっています。この平野では、海を埋め立てて土地を拡張する干拓が進められ、農地や工業用地として利用されています。古くから干拓による土地利用が行われ、農業と工業が発達してきました。この平野は吉備平野と呼ばれ、岡山県南部に位置しています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">吉備平野（干拓）\n\n🌊 海を埋め立て\n    ↓\n🏗️ 干拓が進められる\n    ↓\n🏞️ 土地を拡張\n    ↓\n🌾 農地として利用\n🏭 工業用地として利用\n    ↓\n🏞️ 吉備平野</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -120,7 +120,7 @@ window.questions = [
       "新居浜周辺"
     ],
     "answer": 0,
-    "source": "四国山地は四国の真ん中を東西に走る高い山々です。中国山地や紀伊山地も有名ですが、位置や気候への影響が違います。四国山地は“島の背骨”のように雨を分け、南北で気候を変えます。険しい地形が人々のくらしや交通に大きな影響を与えました。",
+    "source": "広島県には、臨海部に発達した工業地域があります。この工業地域では、重化学工業が盛んで、石油化学や鉄鋼業などが立地しています。臨海部に立地し、港と一体となって発展してきました。この臨海工業地域は福山・水島周辺と呼ばれ、広島県の代表的な工業地域です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">福山・水島周辺（臨海工業地域）\n\n🌊 臨海部\n    ↓\n🏭 重化学工業が盛ん\n    ↓\n🏭 石油化学・鉄鋼業が立地\n    ↓\n🚢 港と一体となって発展\n    ↓\n🏙️ 福山・水島周辺</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -135,7 +135,7 @@ window.questions = [
       "徳島市"
     ],
     "answer": 0,
-    "source": "徳島を流れる吉野川は四国三郎と呼ばれる大河です。淀川や信濃川も有名ですが、流域や地域が異なります。吉野川は“暴れ川”として洪水も多かった一方、豊かな水を田畑に運びました。人々は堤や水路を作り、自然と向き合いながら共に暮らしてきました。",
+    "source": "愛媛県には、瀬戸内海に面した都市があります。この都市は港湾と造船業で発達し、古くから海運の拠点として栄えてきました。瀬戸内海の好立地を活かし、造船業が盛んです。この都市は今治市と呼ばれ、愛媛県の代表的な港湾都市です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">今治市（港湾・造船）\n\n🌊 瀬戸内海に面\n    ↓\n🏙️ 今治市（愛媛県）\n    ↓\n🚢 港湾が発達\n    ↓\n🚢 造船業が盛ん\n    ↓\n🚢 海運の拠点として栄える</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -150,7 +150,7 @@ window.questions = [
       "関門橋"
     ],
     "answer": 0,
-    "source": "島根の石見銀山は中世から近世にかけて世界有数の銀産地でした。佐渡金山や足尾銅山も鉱山ですが、採れる金属や場所が異なります。石見銀山は“世界に光る鉱脈”として、日本と海外をつなぎました。坑道跡や町並みは、鉱山の歴史を今に伝えています。",
+    "source": "広島県尾道市と愛媛県今治市を結ぶ道路があります。この道路は瀬戸内海に浮かぶ島々を橋でつなぎ、島伝いに結んでいます。美しい瀬戸内の景色を楽しみながら通行できる観光道路としても人気があります。この道路はしまなみ海道と呼ばれ、広島県と愛媛県を島伝いに結んでいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">しまなみ海道\n\n🏙️ 広島県尾道市\n    ↓\n🌉 島々を橋でつなぐ\n    ↓\n🌉 しまなみ海道\n    ↓\n🏝️ 島伝いに結ぶ\n    ↓\n🏙️ 愛媛県今治市へ</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -165,7 +165,7 @@ window.questions = [
       "紀淡海峡"
     ],
     "answer": 0,
-    "source": "高知平野は温暖で雨が多く、ナスやピーマンなどの施設園芸が盛んです。濃尾平野や筑紫平野も広いけれど、作物や気候は違います。高知平野では“ビニールの屋根”で雨をよけて野菜を育て、全国に出荷します。自然と人の知恵が合わさった農業地帯です。",
+    "source": "徳島県と兵庫県淡路島の間には、潮流の速い海峡があります。この海峡では、潮の干満によって大きな渦潮が発生し、世界的にも有名な観光スポットとなっています。潮流が速いため、古くから難所として知られてきました。この海峡は鳴門海峡と呼ばれ、徳島県と兵庫県淡路島の間にあります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">鳴門海峡（渦潮）\n\n🌊 徳島県・兵庫県淡路島の間\n    ↓\n🌊 鳴門海峡\n    ↓\n🌊 潮流が速い\n    ↓\n🌀 潮の干満で渦潮が発生\n    ↓\n🗺️ 世界的に有名な観光スポット</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -180,7 +180,7 @@ window.questions = [
       "石狩平野"
     ],
     "answer": 0,
-    "source": "瀬戸大橋は岡山と香川を結ぶ長大な橋です。明石海峡大橋や青函トンネルも有名ですが、場所や目的が違います。瀬戸大橋は鉄道と道路を通す“二階建ての橋”として、島々を飛び石のようにつなぎました。海を越える道が、人や物の往来を大きく変えたのです。",
+    "source": "香川県には、ため池を利用した稲作が行われる平野があります。この平野は降水量が少ないため、ため池に水を貯めて農業用水として利用してきました。古くからため池の建設が進められ、効率的な農業が行われています。この平野は讃岐平野と呼ばれ、香川県の代表的な農業地帯です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">讃岐平野（ため池の利用）\n\n💧 降水量が少ない\n    ↓\n💧 ため池に水を貯める\n    ↓\n💧 農業用水として利用\n    ↓\n🌾 ため池を利用した稲作\n    ↓\n🏞️ 讃岐平野（香川県）</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -195,7 +195,7 @@ window.questions = [
       "ナシ"
     ],
     "answer": 0,
-    "source": "広島には原爆の悲惨さを伝える資料館があります。長崎や沖縄も戦争の記憶を伝えますが、内容や歴史の背景は異なります。広島の資料館は“平和の教室”のように、未来へ戦争の悲しみと平和の願いを伝えます。過去を学ぶことで、平和を守る心を育てる場所です。",
+    "source": "香川県には、特産の果樹として知られる地域があります。この地域では温暖な気候を活かした果樹栽培が行われ、特に小豆島で栽培される果樹が有名です。瀬戸内の温暖な気候が栽培に適しており、品質の高い果物が生産されています。この特産の果樹はオリーブと呼ばれ、小豆島で栽培されています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">小豆島（オリーブ）\n\n🌡️ 瀬戸内の温暖な気候\n    ↓\n🏝️ 小豆島（香川県）\n    ↓\n🌡️ 温暖な気候を活かす\n    ↓\n🫒 果樹栽培が行われる\n    ↓\n🫒 オリーブ（高品質）</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -210,7 +210,7 @@ window.questions = [
       "東京湾"
     ],
     "answer": 0,
-    "source": "山口県岩国の錦帯橋は五連の木造アーチ橋です。瀬戸大橋や明石海峡大橋も有名ですが、材質や構造が違います。錦帯橋は“木のリボン”のように川にかかり、技術と美しさを両立しました。自然の流れに逆らわず、調和を保つ工夫が光ります。",
+    "source": "高知県の太平洋側には、大きく開いた湾があります。この湾は太平洋に面しており、海運や漁業の拠点となっています。温暖な気候で知られる地域にあり、水産業が盛んです。この湾は土佐湾と呼ばれ、高知県の太平洋側に位置します。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">土佐湾\n\n📍 高知県の太平洋側\n    ↓\n🌊 大きく開いた湾\n    ↓\n🌊 土佐湾（太平洋に面）\n    ↓\n🚢 海運・漁業の拠点\n    ↓\n🐟 水産業が盛ん</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -225,7 +225,7 @@ window.questions = [
       "ソバ"
     ],
     "answer": 0,
-    "source": "徳島の阿波踊りは「踊る阿呆に見る阿呆」で知られる祭りです。ねぶたや竿燈も有名ですが、地域の特徴が違います。阿波踊りは町じゅうが踊りの波に包まれる“動く舞台”のよう。人々のエネルギーが音と動きで表現されます。",
+    "source": "高知県では、冬春期に促成栽培が行われる作物があります。この作物は施設園芸により、冬から春にかけて出荷されます。温暖な気候を活かし、ビニールハウスなどで栽培が行われています。促成栽培が行われる作物として、ピーマンが知られており、高知県の代表的な農産物です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">高知県（促成栽培・ピーマン）\n\n🌡️ 温暖な気候\n    ↓\n🏗️ ビニールハウスで施設園芸\n    ↓\n🌾 冬春期に促成栽培\n    ↓\n🌶️ 冬から春にかけて出荷\n    ↓\n🌶️ ピーマン（高知県の代表）</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -240,7 +240,7 @@ window.questions = [
       "伊勢湾"
     ],
     "answer": 0,
-    "source": "島根の出雲そばは黒っぽい麺と独特の食べ方で知られます。信州そばや更科そばも有名ですが、産地や味わいが異なります。出雲そばは“そばの重ね弁当”のような割子そばが特徴で、地元の文化を伝えています。土地の水や風土が生んだ味わいです。",
+    "source": "愛媛県南部には、リアス海岸が発達した海があります。この海では、入り組んだ海岸を利用した海面養殖が盛んです。波が静かな環境で、魚介類の養殖が行われています。この海は宇和海と呼ばれ、愛媛県南部のリアス海岸で海面養殖が盛んな海域です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">宇和海（海面養殖）\n\n🌊 愛媛県南部\n    ↓\n🌊 リアス海岸が発達\n    ↓\n🌊 宇和海（入り組んだ海岸）\n    ↓\n🌊 波が静かな環境\n    ↓\n🐟 海面養殖が盛ん</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -255,7 +255,7 @@ window.questions = [
       "信濃川"
     ],
     "answer": 0,
-    "source": "香川は“うどん県”とも呼ばれるほど讃岐うどんが有名です。稲庭うどんや水沢うどんもありますが、それぞれの土地の味わいです。讃岐うどんはコシの強さとだしのうまさが特徴で、“麺の王様”のように親しまれています。安くて気軽に食べられるのも人気の理由です。",
+    "source": "島根県東部には、出雲平野と呼ばれる平野があります。この平野を流れる河川があり、平野の形成や農業に重要な役割を果たしています。この河川は出雲平野に含まれる主要な川で、島根県東部を流れています。この河川は斐伊川と呼ばれ、出雲平野の形成に関わっています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">斐伊川（出雲平野）\n\n⛰️ 上流\n    ↓\n🌊 斐伊川\n    ↓\n🏞️ 島根県東部を流れる\n    ↓\n🏞️ 出雲平野の形成に関わる\n    ↓\n🌾 農業に重要な役割</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -270,7 +270,7 @@ window.questions = [
       "鹿島臨海"
     ],
     "answer": 0,
-    "source": "広島東洋カープは市民球団として親しまれてきました。阪神や巨人も人気球団ですが、成り立ちや雰囲気は違います。カープは“市民の希望の旗”として戦後復興を支え、赤いユニフォームが町を染めました。野球を通して地域の絆を強めた存在です。",
+    "source": "岡山県倉敷市の臨海部には、大規模な工業集積が形成されています。この工業集積では、石油化学工業を中心とした重化学工業が立地しています。臨海部に立地し、港と一体となって発展してきました。この工業集積は水島コンビナートと呼ばれ、岡山県倉敷市の臨海部にあります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">水島コンビナート（工業集積）\n\n🌊 岡山県倉敷市の臨海部\n    ↓\n🏭 大規模な工業集積\n    ↓\n🏭 石油化学工業を中心\n    ↓\n🏭 重化学工業が立地\n    ↓\n🚢 水島コンビナート（港と一体）</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -285,7 +285,7 @@ window.questions = [
       "対馬海峡"
     ],
     "answer": 0,
-    "source": "瀬戸内は温暖で雨が少なく、みかんやレモンがよく育ちます。有田みかんや愛媛みかんも有名ですが、それぞれ産地が異なります。瀬戸内の段々畑は“太陽の階段”。海からの反射光も加わり、果物は甘く香り高くなります。自然と人の知恵が合わさった農業です。",
+    "source": "山口県と福岡県の間には、本州と九州を分ける海峡があります。この海峡は古くから交通の要衝として重要で、多くの船舶が通行しています。海峡の両岸には都市が発展し、関門トンネルや関門橋が架かっています。この海峡は関門海峡と呼ばれ、山口県と福岡県の間にあります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">関門海峡\n\n🏝️ 本州（山口県）\n    ↓\n🌊 関門海峡\n    ↓\n🌊 本州と九州を分ける\n    ↓\n🚢 交通の要衝\n🛤️ 関門トンネル・橋が架かる\n    ↓\n🏝️ 九州（福岡県）</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -300,7 +300,7 @@ window.questions = [
       "氷河地形"
     ],
     "answer": 0,
-    "source": "鳥取の二十世紀梨は全国的に知られています。長野のリンゴや山形のサクランボも有名ですが、果物の種類が違います。二十世紀梨はみずみずしく、シャリッとした食感が特徴。“水の玉”のような果物として愛され、山陰の特産になっています。",
+    "source": "広島県の三原・尾道周辺では、瀬戸内海に浮かぶ多くの島々が特徴的な景観を作り出しています。島々が点在する美しい景観で、観光地としても人気があります。この地域に見られる地形として、多島海景観が知られています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">三原・尾道周辺（多島海景観）\n\n🌊 瀬戸内海\n    ↓\n🏝️ 多くの島々が浮かぶ\n    ↓\n🏝️ 島々が点在\n    ↓\n🗺️ 美しい景観\n    ↓\n🗺️ 多島海景観（観光地として人気）</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -315,7 +315,7 @@ window.questions = [
       "旭川"
     ],
     "answer": 0,
-    "source": "香川の讃岐平野はため池が多く、昔から水を工夫して農業をしてきました。濃尾平野や関東平野は大河に恵まれていますが、讃岐は小さなため池を“水の貯金箱”にして活用しました。限られた資源を大切に使う知恵が詰まった農業地帯です。",
+    "source": "徳島県を東西に横断する河川があります。この河川は四国最大の川で、流域の農業や生活を支えています。上流から下流まで長い距離を流れ、下流では平野を形成しています。この河川は吉野川と呼ばれ、徳島県を東西に横断する四国最大の川です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">吉野川（四国最大の川）\n\n⛰️ 上流\n    ↓\n🌊 吉野川\n    ↓\n🌊 徳島県を東西に横断\n    ↓\n🏞️ 下流で平野を形成\n    ↓\n🌾 流域の農業・生活を支える</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -330,7 +330,7 @@ window.questions = [
       "有田焼"
     ],
     "answer": 0,
-    "source": "松江城は黒い外観から「千鳥城」とも呼ばれます。姫路城や大阪城も名城ですが、色や構造が違います。松江城は“山陰の守り神”として城下町を見守り、堀に船が行き交う姿も残ります。素朴で力強い美しさが、地域の歴史を伝えています。",
+    "source": "愛媛県東部には、陶磁器の産地として知られる地域があります。この地域では古くから陶磁器が生産され、伝統的な技術が受け継がれています。品質の高い陶磁器が作られ、全国的に知られています。この産地は砥部焼と呼ばれ、愛媛県東部の陶磁器産地として知られています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">砥部焼（陶磁器産地）\n\n🏺 愛媛県東部\n    ↓\n🏺 古くから陶磁器が生産\n    ↓\n🏺 伝統的な技術が受け継がれる\n    ↓\n🏺 品質の高い陶磁器\n    ↓\n🏺 砥部焼（全国的に有名）</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -345,7 +345,7 @@ window.questions = [
       "東シナ海"
     ],
     "answer": 0,
-    "source": "倉敷の美観地区は白壁の蔵や川沿いの町並みが保存された観光地です。金沢や川越の古い町並みも有名ですが、景観や歴史が異なります。倉敷は“白壁のアルバム”のように商人のくらしを残し、美術館とともに文化を発信しています。",
+    "source": "島根県の大社町は、ある海に面した町です。この町は古くから信仰の地として知られ、重要な神社があります。日本海側に位置し、海運や漁業とも結びついています。大社町が面する海は日本海と呼ばれ、島根県の日本海側に位置しています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">大社町（日本海）\n\n🏛️ 島根県の大社町\n    ↓\n🏛️ 古くから信仰の地\n    ↓\n🌊 日本海側に位置\n    ↓\n🚢 海運・漁業とも結びつく\n    ↓\n🌊 日本海に面</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -360,7 +360,7 @@ window.questions = [
       "信濃川"
     ],
     "answer": 0,
-    "source": "徳島の鳴門海峡では世界三大潮流に数えられる渦潮が見られます。瀬戸内海のほかの場所や黒潮の流れも速いですが、渦の迫力は特別です。鳴門の渦潮は“海の洗濯機”のようにぐるぐる回り、自然の力を間近に感じられます。観光船から見ると圧巻です。",
+    "source": "高知県西部を流れる河川があります。この河川は上流から下流まで清らかな水を保ち、「清流」として全国的に知られています。ダムが少なく、自然の流れが保たれているため、清らかな水質が特徴です。この河川は四万十川と呼ばれ、高知県西部を流れる「清流」として知られています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">四万十川（清流）\n\n⛰️ 高知県西部を流れる\n    ↓\n🌊 四万十川\n    ↓\n💧 ダムが少ない\n    ↓\n💧 自然の流れが保たれる\n    ↓\n💧 「清流」として全国的に有名</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -375,7 +375,7 @@ window.questions = [
       "高知市"
     ],
     "answer": 0,
-    "source": "山口県の秋吉台は石灰岩が広がるカルスト台地です。阿蘇の草原や富士山の溶岩原も有名ですが、でき方が違います。秋吉台は“石の草原”のようで、地下には秋芳洞が広がります。地球の歴史を感じられる大地として守られています。",
+    "source": "香川県には、県庁所在地となる都市があります。この都市は瀬戸内海に面し、四国の政治・経済の中心地となっています。古くから交通の要衝として発展し、現在も県の行政の中心地です。この都市は高松市と呼ばれ、香川県の県庁所在地として知られています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">高松市（県庁所在地）\n\n🌊 瀬戸内海に面\n    ↓\n🏙️ 四国の政治・経済の中心地\n    ↓\n🛣️ 古くから交通の要衝\n    ↓\n🏛️ 県の行政の中心地\n    ↓\n🏙️ 高松市（香川県）</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -390,7 +390,7 @@ window.questions = [
       "松江市"
     ],
     "answer": 0,
-    "source": "しまなみ海道は広島と愛媛を結ぶ橋の連なりです。瀬戸大橋や明石海峡大橋も有名ですが、通る場所が違います。しまなみ海道は“海の自転車道”としても人気で、島々を渡りながら自然とふれあえます。人と自然が共生する道です。",
+    "source": "広島県には、県庁所在地となる都市があります。この都市は中国地方最大の都市で、政治・経済・文化の中心地となっています。古くから商都として発展し、現在も中国地方の中心都市として機能しています。この都市は広島市と呼ばれ、広島県の県庁所在地として知られています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">広島市（県庁所在地）\n\n🏙️ 中国地方最大の都市\n    ↓\n🏙️ 政治・経済・文化の中心地\n    ↓\n🏪 古くから商都として発展\n    ↓\n🏛️ 中国地方の中心都市\n    ↓\n🏙️ 広島市（広島県）</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -405,7 +405,7 @@ window.questions = [
       "坂出市"
     ],
     "answer": 0,
-    "source": "高知のよさこい祭りは鳴子を手に踊るにぎやかな祭りです。阿波踊りやねぶた祭りも有名ですが、踊り方や雰囲気が違います。よさこいは“自由な踊りの大合奏”のように、チームごとに工夫をこらします。町全体が踊りの舞台になるのです。",
+    "source": "山口県の日本海側には、城下町として発展した都市があります。この都市は古くから藩の中心地として栄え、現在も歴史的な街並みが残っています。江戸時代の武家屋敷や町屋が保存され、観光地としても人気があります。この城下町は萩市と呼ばれ、山口県の日本海側に位置しています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">萩市（城下町）\n\n🌊 山口県の日本海側\n    ↓\n🏰 城下町として発展\n    ↓\n🏛️ 藩の中心地として栄える\n    ↓\n🏘️ 江戸時代の武家屋敷・町屋が保存\n    ↓\n🏙️ 萩市（観光地として人気）</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -420,7 +420,7 @@ window.questions = [
       "下北半島"
     ],
     "answer": 0,
-    "source": "山陰本線は日本海沿いを長く走る鉄道です。東海道本線や中央本線も幹線ですが、通る地域が違います。山陰本線は“海と並走する道”として、のんびりした景色を楽しめます。地域を結び、観光や生活を支えてきました。",
+    "source": "島根県には、半島があります。この半島は弓ヶ浜と砂州によって中海と隔てられており、独特の地形を形成しています。半島の先端には港があり、古くから海運の拠点となってきました。この半島は美保関（島根半島）と呼ばれ、弓ヶ浜と砂州で中海と隔てられています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">美保関（島根半島）\n\n📍 島根県の半島\n    ↓\n🏖️ 弓ヶ浜と砂州\n    ↓\n💧 中海と隔てられる\n    ↓\n🚢 半島の先端に港\n    ↓\n📍 美保関（島根半島）</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -435,7 +435,7 @@ window.questions = [
       "飛騨山脈"
     ],
     "answer": 0,
-    "source": "高知県の室戸岬は黒潮があたる岬で、荒波と断崖が特徴です。足摺岬や知床岬も有名ですが、場所や自然環境が異なります。室戸は“海の展望台”のように太平洋を望み、地球の活動を感じさせる景観です。台風の通り道としても知られています。",
+    "source": "岡山県北部から鳥取県にかけては、長く続く山地が広がっています。この山地は中国地方を東西に横切る山並みで、各地域の気候に大きな影響を与えています。険しい地形で知られ、古くから交通の障害となってきました。この山地は中国山地と呼ばれ、岡山県北部から鳥取県にかけて広がっています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">中国山地\n\n⛰️ 岡山県北部～鳥取県\n    ↓\n⛰️ 長く続く山地\n    ↓\n⛰️ 中国地方を東西に横切る\n    ↓\n🌡️ 各地域の気候に大きな影響\n    ↓\n⛰️ 中国山地（交通の障害）</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -450,7 +450,7 @@ window.questions = [
       "松島湾"
     ],
     "answer": 0,
-    "source": "愛媛の石鎚山は西日本最高峰です。富士山や立山、阿蘇山も名峰ですが、位置や高さが違います。石鎚山は“西日本の屋根”として信仰を集め、登山者に親しまれています。険しい岩場と美しい自然が調和した山です。",
+    "source": "広島県には、工業港湾が発達している湾があります。この湾は臨海部に工業地帯が形成され、多くの工場が立地しています。港は工業港として機能し、物流の拠点となっています。この湾は広島湾と呼ばれ、広島県の工業港湾が発達している湾です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">広島湾（工業港湾）\n\n🌊 広島県の湾\n    ↓\n🌊 広島湾\n    ↓\n🏭 臨海部に工業地帯が形成\n    ↓\n🚢 工業港として機能\n    ↓\n📦 物流の拠点</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -465,7 +465,7 @@ window.questions = [
       "徳島市（紀伊水道）"
     ],
     "answer": 0,
-    "source": "広島のお好み焼きは麺や野菜を重ねて焼くのが特徴です。大阪風やもんじゃ焼きも有名ですが、作り方が異なります。広島のお好み焼きは“食べる層のケーキ”のようで、地元の味として愛されています。人々の工夫が料理に表れています。",
+    "source": "四国地方には、県庁所在地となる都市があります。この都市は瀬戸内海に面し、四国の政治・経済の中心地の一つとなっています。瀬戸内海に面した好立地を活かし、商業や観光が発達しています。この都市は高松市と呼ばれ、四国地方の県庁所在地で瀬戸内海に面する都市です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">高松市（瀬戸内海に面）\n\n🌊 瀬戸内海に面\n    ↓\n🏙️ 四国の政治・経済の中心地\n    ↓\n🏪 商業が発達\n🗺️ 観光が発達\n    ↓\n🏛️ 県庁所在地\n    ↓\n🏙️ 高松市（好立地）</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
