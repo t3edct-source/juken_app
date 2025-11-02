@@ -1,4 +1,4 @@
-﻿[
+[
   {
     "id": "sci.physics.motion",
     "grade": 6,
@@ -76,11 +76,11 @@
   },
   {
     "id": "soc.history.heian",
-    "grade": 6,
+    "grade": 5,
     "subject": "soc",
     "title": "平安時代の文化と政治",
     "duration_min": 18,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/history/heian/output.html",
     "format": "html",
     "tags": [
@@ -91,11 +91,11 @@
   },
   {
     "id": "soc.history.kamakura",
-    "grade": 6,
+    "grade": 5,
     "subject": "soc",
     "title": "鎌倉時代の武士の世の中",
     "duration_min": 16,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/history/kamakura/output.html",
     "format": "html",
     "tags": [
@@ -106,11 +106,11 @@
   },
   {
     "id": "soc.geography.land_topography_climate_wakaru",
-    "grade": 5,
+    "grade": 4,
     "subject": "soc",
     "title": "国土・地形・気候",
     "duration_min": 20,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/wakaru/index_modular.html?era=4100_land_topography_climate",
     "format": "modular",
     "tags": [
@@ -122,11 +122,11 @@
   },
   {
     "id": "soc.geography.agriculture_forestry_fishery_wakaru",
-    "grade": 5,
+    "grade": 4,
     "subject": "soc",
     "title": "農林水産業",
     "duration_min": 25,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4101_agriculture_forestry_fishery_with_sources&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -138,11 +138,11 @@
   },
   {
     "id": "soc.geography.prefectures_cities_wakaru",
-    "grade": 5,
+    "grade": 4,
     "subject": "soc",
     "title": "都道府県・都市",
     "duration_min": 20,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4102_prefectures_cities_with_sources&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -153,11 +153,11 @@
   },
   {
     "id": "soc.geography.industry_energy_wakaru",
-    "grade": 5,
+    "grade": 4,
     "subject": "soc",
     "title": "工業・エネルギー",
     "duration_min": 22,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4103_industry_energy_with_sources&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -168,11 +168,11 @@
   },
   {
     "id": "soc.geography.environment_wakaru",
-    "grade": 5,
+    "grade": 4,
     "subject": "soc",
     "title": "環境問題",
     "duration_min": 15,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4106_environment_with_sources&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -183,11 +183,11 @@
   },
   {
     "id": "soc.geography.information_wakaru",
-    "grade": 5,
+    "grade": 4,
     "subject": "soc",
     "title": "情報・通信",
     "duration_min": 12,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4107_information_with_sources&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -198,11 +198,11 @@
   },
   {
     "id": "soc.geography.maps_symbols_wakaru",
-    "grade": 5,
+    "grade": 4,
     "subject": "soc",
     "title": "地図・地形図記号",
     "duration_min": 10,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4108_maps_topographic_symbols&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -213,11 +213,11 @@
   },
   {
     "id": "soc.geography.hokkaido_region_wakaru",
-    "grade": 5,
+    "grade": 4,
     "subject": "soc",
     "title": "北海道地方",
     "duration_min": 18,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4109_hokkaido_region&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -227,11 +227,11 @@
   },
   {
     "id": "soc.geography.tohoku_region_wakaru",
-    "grade": 5,
+    "grade": 4,
     "subject": "soc",
     "title": "東北地方",
     "duration_min": 18,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4110_tohoku_region&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -241,11 +241,11 @@
   },
   {
     "id": "soc.geography.kanto_region_wakaru",
-    "grade": 5,
+    "grade": 4,
     "subject": "soc",
     "title": "関東地方",
     "duration_min": 20,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4111_kanto_region&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -255,11 +255,11 @@
   },
   {
     "id": "soc.geography.chubu_region_wakaru",
-    "grade": 5,
+    "grade": 4,
     "subject": "soc",
     "title": "中部地方",
     "duration_min": 19,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4112_chubu_region&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -269,11 +269,11 @@
   },
   {
     "id": "soc.geography.kinki_region_wakaru",
-    "grade": 5,
+    "grade": 4,
     "subject": "soc",
     "title": "近畿地方",
     "duration_min": 17,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4113_kinki_region&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -283,11 +283,11 @@
   },
   {
     "id": "soc.geography.chugoku_shikoku_region_wakaru",
-    "grade": 5,
+    "grade": 4,
     "subject": "soc",
     "title": "中国・四国地方",
     "duration_min": 16,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4114_chugoku_shikoku_region&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -298,11 +298,11 @@
   },
   {
     "id": "soc.geography.kyushu_region_wakaru",
-    "grade": 5,
+    "grade": 4,
     "subject": "soc",
     "title": "九州地方",
     "duration_min": 18,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4115_kyushu_region&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -312,11 +312,11 @@
   },
   {
     "id": "soc.geography.world_geography_wakaru",
-    "grade": 5,
+    "grade": 4,
     "subject": "soc",
     "title": "世界地理",
     "duration_min": 20,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4116_world_geography&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -326,11 +326,11 @@
   },
   {
     "id": "soc.geography.commerce_trade_transportation_wakaru",
-    "grade": 5,
+    "grade": 4,
     "subject": "soc",
     "title": "商業・貿易・交通",
     "duration_min": 22,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4104_commerce_trade_transportation&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -342,11 +342,11 @@
   },
   {
     "id": "soc.history.kofun_asuka",
-    "grade": 6,
+    "grade": 5,
     "subject": "soc",
     "title": "古墳・飛鳥時代",
     "duration_min": 18,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4201_kofun_asuka_with_sources&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -357,11 +357,11 @@
   },
   {
     "id": "soc.history.nara_period",
-    "grade": 6,
+    "grade": 5,
     "subject": "soc",
     "title": "奈良時代",
     "duration_min": 16,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4202_nara_period_with_sources&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -372,11 +372,11 @@
   },
   {
     "id": "soc.history.heian_period",
-    "grade": 6,
+    "grade": 5,
     "subject": "soc",
     "title": "平安時代",
     "duration_min": 20,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4203_heian_period&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -387,11 +387,11 @@
   },
   {
     "id": "soc.history.kamakura_period",
-    "grade": 6,
+    "grade": 5,
     "subject": "soc",
     "title": "鎌倉時代",
     "duration_min": 18,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4204_kamakura_period&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -402,11 +402,11 @@
   },
   {
     "id": "soc.history.muromachi_period",
-    "grade": 6,
+    "grade": 5,
     "subject": "soc",
     "title": "室町時代",
     "duration_min": 17,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4205_muromachi_period&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -417,11 +417,11 @@
   },
   {
     "id": "soc.history.azuchi_momoyama",
-    "grade": 6,
+    "grade": 5,
     "subject": "soc",
     "title": "安土桃山時代",
     "duration_min": 19,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4206_azuchi_momoyama&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -433,11 +433,11 @@
   },
   {
     "id": "soc.history.edo_period",
-    "grade": 6,
+    "grade": 5,
     "subject": "soc",
     "title": "江戸時代",
     "duration_min": 22,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4207_edo_period&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -448,11 +448,11 @@
   },
   {
     "id": "soc.history.meiji_period",
-    "grade": 6,
+    "grade": 5,
     "subject": "soc",
     "title": "明治時代",
     "duration_min": 20,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4208_meiji_period&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -463,11 +463,11 @@
   },
   {
     "id": "soc.history.taisho_showa_prewar",
-    "grade": 6,
+    "grade": 5,
     "subject": "soc",
     "title": "大正・昭和前期",
     "duration_min": 18,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4209_taisho_showa_prewar&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -478,11 +478,11 @@
   },
   {
     "id": "soc.history.showa_postwar",
-    "grade": 6,
+    "grade": 5,
     "subject": "soc",
     "title": "昭和後期",
     "duration_min": 17,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4210_showa_postwar&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -493,11 +493,11 @@
   },
   {
     "id": "soc.history.heisei_reiwa",
-    "grade": 6,
+    "grade": 5,
     "subject": "soc",
     "title": "平成・令和時代",
     "duration_min": 15,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4211_heisei_reiwa&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -509,11 +509,11 @@
   },
   {
     "id": "soc.history.cross_period_problems",
-    "grade": 6,
+    "grade": 5,
     "subject": "soc",
     "title": "歴史総合問題",
     "duration_min": 25,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4212_cross_period_problems&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -523,12 +523,268 @@
     ]
   },
   {
+    "id": "soc.history.theme_politics_economy_wakaru",
+    "grade": 5,
+    "subject": "soc",
+    "title": "テーマ史① 政治・経済",
+    "duration_min": 22,
+    "sku_required": "g5-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4213_theme_politics_economy&mode=wakaru",
+    "format": "modular",
+    "tags": [
+      "歴史",
+      "テーマ史",
+      "政治",
+      "経済",
+      "制度"
+    ]
+  },
+  {
+    "id": "soc.history.theme_people_wakaru",
+    "grade": 5,
+    "subject": "soc",
+    "title": "テーマ史② 人物",
+    "duration_min": 20,
+    "sku_required": "g5-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4214_theme_people&mode=wakaru",
+    "format": "modular",
+    "tags": [
+      "歴史",
+      "テーマ史",
+      "人物",
+      "業績"
+    ]
+  },
+  {
+    "id": "soc.history.theme_diplomacy_wakaru",
+    "grade": 5,
+    "subject": "soc",
+    "title": "テーマ史③ 外交",
+    "duration_min": 20,
+    "sku_required": "g5-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4215_theme_diplomacy&mode=wakaru",
+    "format": "modular",
+    "tags": [
+      "歴史",
+      "テーマ史",
+      "外交",
+      "条約",
+      "戦争"
+    ]
+  },
+  {
+    "id": "soc.history.theme_culture_wakaru",
+    "grade": 5,
+    "subject": "soc",
+    "title": "テーマ史④ 文化",
+    "duration_min": 22,
+    "sku_required": "g5-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4216_theme_culture&mode=wakaru",
+    "format": "modular",
+    "tags": [
+      "歴史",
+      "テーマ史",
+      "文化",
+      "文学",
+      "美術"
+    ]
+  },
+  {
+    "id": "soc.comprehensive.geography_theme_cross",
+    "grade": 6,
+    "subject": "soc",
+    "title": "地理総合① テーマ横断",
+    "duration_min": 25,
+    "sku_required": "g6-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4217_geography_theme_cross&mode=wakaru",
+    "format": "modular",
+    "tags": [
+      "総合",
+      "地理総合",
+      "テーマ横断",
+      "知識統合"
+    ]
+  },
+  {
+    "id": "soc.comprehensive.geography_region_comprehensive",
+    "grade": 6,
+    "subject": "soc",
+    "title": "地理総合② 地域総合",
+    "duration_min": 25,
+    "sku_required": "g6-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4218_geography_region_comprehensive&mode=wakaru",
+    "format": "modular",
+    "tags": [
+      "総合",
+      "地理総合",
+      "地域総合",
+      "比較"
+    ]
+  },
+  {
+    "id": "soc.comprehensive.history_theme_integration",
+    "grade": 6,
+    "subject": "soc",
+    "title": "歴史総合① テーマ統合",
+    "duration_min": 25,
+    "sku_required": "g6-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4219_history_theme_integration&mode=wakaru",
+    "format": "modular",
+    "tags": [
+      "総合",
+      "歴史総合",
+      "テーマ統合",
+      "知識統合"
+    ]
+  },
+  {
+    "id": "soc.comprehensive.history_period_flow",
+    "grade": 6,
+    "subject": "soc",
+    "title": "歴史総合② 時代の流れ",
+    "duration_min": 25,
+    "sku_required": "g6-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4220_history_period_flow&mode=wakaru",
+    "format": "modular",
+    "tags": [
+      "総合",
+      "歴史総合",
+      "時代の流れ",
+      "変化・発展"
+    ]
+  },
+  {
+    "id": "soc.comprehensive.civics_system_composite",
+    "grade": 6,
+    "subject": "soc",
+    "title": "公民総合① 制度の複合",
+    "duration_min": 25,
+    "sku_required": "g6-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4221_civics_system_composite&mode=wakaru",
+    "format": "modular",
+    "tags": [
+      "総合",
+      "公民総合",
+      "制度の複合",
+      "関連性"
+    ]
+  },
+  {
+    "id": "soc.comprehensive.civics_modern_issues",
+    "grade": 6,
+    "subject": "soc",
+    "title": "公民総合② 現代社会の課題",
+    "duration_min": 25,
+    "sku_required": "g6-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4222_civics_modern_issues&mode=wakaru",
+    "format": "modular",
+    "tags": [
+      "総合",
+      "公民総合",
+      "現代社会",
+      "課題"
+    ]
+  },
+  {
+    "id": "soc.comprehensive.basic_integration",
+    "grade": 6,
+    "subject": "soc",
+    "title": "総合① 基礎統合問題",
+    "duration_min": 30,
+    "sku_required": "g6-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4223_basic_integration&mode=wakaru",
+    "format": "modular",
+    "tags": [
+      "総合",
+      "全分野横断",
+      "基礎統合",
+      "知識統合"
+    ]
+  },
+  {
+    "id": "soc.comprehensive.advanced_integration",
+    "grade": 6,
+    "subject": "soc",
+    "title": "総合② 応用統合問題",
+    "duration_min": 30,
+    "sku_required": "g6-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4224_advanced_integration&mode=wakaru",
+    "format": "modular",
+    "tags": [
+      "総合",
+      "全分野横断",
+      "応用統合",
+      "高度な知識統合"
+    ]
+  },
+  {
+    "id": "soc.comprehensive.practice_a",
+    "grade": 6,
+    "subject": "soc",
+    "title": "演習① 実力確認A",
+    "duration_min": 25,
+    "sku_required": "g6-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4225_practice_a&mode=wakaru",
+    "format": "modular",
+    "tags": [
+      "演習",
+      "実力確認",
+      "基礎～標準"
+    ]
+  },
+  {
+    "id": "soc.comprehensive.practice_b",
+    "grade": 6,
+    "subject": "soc",
+    "title": "演習② 実力確認B",
+    "duration_min": 25,
+    "sku_required": "g6-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4226_practice_b&mode=wakaru",
+    "format": "modular",
+    "tags": [
+      "演習",
+      "実力確認",
+      "標準～応用"
+    ]
+  },
+  {
+    "id": "soc.comprehensive.practice_c",
+    "grade": 6,
+    "subject": "soc",
+    "title": "演習③ 総合演習A",
+    "duration_min": 30,
+    "sku_required": "g6-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4227_practice_c&mode=wakaru",
+    "format": "modular",
+    "tags": [
+      "演習",
+      "総合演習",
+      "全分野横断"
+    ]
+  },
+  {
+    "id": "soc.comprehensive.practice_d",
+    "grade": 6,
+    "subject": "soc",
+    "title": "演習④ 総合演習B",
+    "duration_min": 30,
+    "sku_required": "g6-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4228_practice_d&mode=wakaru",
+    "format": "modular",
+    "tags": [
+      "演習",
+      "総合演習",
+      "全分野横断",
+      "応用"
+    ]
+  },
+  {
     "id": "soc.civics.politics_national_life",
     "grade": 6,
     "subject": "soc",
     "title": "政治・国民生活",
     "duration_min": 18,
-    "sku_required": null,
+    "sku_required": "g6-soc",
     "path": "lessons/soc/modular/index_modular.html?era=civic_politics&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -543,7 +799,7 @@
     "subject": "soc",
     "title": "憲法・三原則",
     "duration_min": 16,
-    "sku_required": null,
+    "sku_required": "g6-soc",
     "path": "lessons/soc/modular/index_modular.html?era=civic_constitution&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -558,7 +814,7 @@
     "subject": "soc",
     "title": "国会・内閣・裁判所",
     "duration_min": 20,
-    "sku_required": null,
+    "sku_required": "g6-soc",
     "path": "lessons/soc/modular/index_modular.html?era=civic_government&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -575,7 +831,7 @@
     "subject": "soc",
     "title": "財政・地方自治",
     "duration_min": 17,
-    "sku_required": null,
+    "sku_required": "g6-soc",
     "path": "lessons/soc/modular/index_modular.html?era=civic_finance&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -590,7 +846,7 @@
     "subject": "soc",
     "title": "国際関係",
     "duration_min": 19,
-    "sku_required": null,
+    "sku_required": "g6-soc",
     "path": "lessons/soc/modular/index_modular.html?era=civic_international&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -605,7 +861,7 @@
     "subject": "soc",
     "title": "現代社会問題",
     "duration_min": 18,
-    "sku_required": null,
+    "sku_required": "g6-soc",
     "path": "lessons/soc/modular/index_modular.html?era=civic_modern&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -616,11 +872,11 @@
   },
   {
     "id": "soc.geography.land_topography_climate_oboeru",
-    "grade": 5,
+    "grade": 4,
     "subject": "social_drill",
     "title": "国土・地形・気候〈覚える編〉",
     "duration_min": 15,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/oboeru/index_modular.html?era=4100_land_topography_climate&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -632,11 +888,11 @@
   },
   {
     "id": "soc.geography.agriculture_forestry_fishery_oboeru",
-    "grade": 5,
+    "grade": 4,
     "subject": "social_drill",
     "title": "農林水産業〈覚える編〉",
     "duration_min": 20,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4101_agriculture_forestry_fishery_with_sources&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -648,11 +904,11 @@
   },
   {
     "id": "soc.geography.prefectures_cities_oboeru",
-    "grade": 5,
+    "grade": 4,
     "subject": "social_drill",
     "title": "都道府県・都市〈覚える編〉",
     "duration_min": 15,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4102_prefectures_cities_with_sources&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -663,11 +919,11 @@
   },
   {
     "id": "soc.geography.industry_energy_oboeru",
-    "grade": 5,
+    "grade": 4,
     "subject": "social_drill",
     "title": "工業・エネルギー〈覚える編〉",
     "duration_min": 18,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4103_industry_energy_with_sources&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -678,11 +934,11 @@
   },
   {
     "id": "soc.geography.regions_oboeru",
-    "grade": 5,
+    "grade": 4,
     "subject": "social_drill",
     "title": "日本の地方〈覚える編〉",
     "duration_min": 25,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4109_hokkaido_region_with_sources&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -697,7 +953,7 @@
     "subject": "social_drill",
     "title": "憲法・政治〈覚える編〉",
     "duration_min": 16,
-    "sku_required": null,
+    "sku_required": "g6-soc",
     "path": "lessons/soc/modular/index_modular.html?era=civic_constitution&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -712,7 +968,7 @@
     "subject": "social_drill",
     "title": "三権分立〈覚える編〉",
     "duration_min": 18,
-    "sku_required": null,
+    "sku_required": "g6-soc",
     "path": "lessons/soc/modular/index_modular.html?era=civic_government&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -723,11 +979,11 @@
   },
   {
     "id": "soc.geography.tohoku_region_oboeru",
-    "grade": 5,
+    "grade": 4,
     "subject": "social_drill",
     "title": "東北地方〈覚える編〉",
     "duration_min": 18,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4110_tohoku_region_with_sources&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -738,11 +994,11 @@
   },
   {
     "id": "soc.geography.kanto_region_oboeru",
-    "grade": 5,
+    "grade": 4,
     "subject": "social_drill",
     "title": "関東地方〈覚える編〉",
     "duration_min": 20,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4111_kanto_region_with_sources&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -753,11 +1009,11 @@
   },
   {
     "id": "soc.geography.chubu_region_oboeru",
-    "grade": 5,
+    "grade": 4,
     "subject": "social_drill",
     "title": "中部地方〈覚える編〉",
     "duration_min": 19,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4112_chubu_region_with_sources&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -768,11 +1024,11 @@
   },
   {
     "id": "soc.geography.kinki_region_oboeru",
-    "grade": 5,
+    "grade": 4,
     "subject": "social_drill",
     "title": "近畿地方〈覚える編〉",
     "duration_min": 17,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4113_kinki_region_with_sources&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -783,11 +1039,11 @@
   },
   {
     "id": "soc.geography.chugoku_shikoku_region_oboeru",
-    "grade": 5,
+    "grade": 4,
     "subject": "social_drill",
     "title": "中国・四国地方〈覚える編〉",
     "duration_min": 16,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4114_chugoku_shikoku_region_with_sources&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -799,11 +1055,11 @@
   },
   {
     "id": "soc.geography.kyushu_region_oboeru",
-    "grade": 5,
+    "grade": 4,
     "subject": "social_drill",
     "title": "九州地方〈覚える編〉",
     "duration_min": 18,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4115_kyushu_region_with_sources&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -814,11 +1070,11 @@
   },
   {
     "id": "soc.geography.commerce_trade_transportation_oboeru",
-    "grade": 5,
+    "grade": 4,
     "subject": "social_drill",
     "title": "商業・貿易・交通〈覚える編〉",
     "duration_min": 22,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4104_commerce_trade_transportation_with_sources&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -831,11 +1087,11 @@
   },
   {
     "id": "soc.geography.environment_oboeru",
-    "grade": 5,
+    "grade": 4,
     "subject": "social_drill",
     "title": "環境問題〈覚える編〉",
     "duration_min": 15,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4106_environment_with_sources&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -846,11 +1102,11 @@
   },
   {
     "id": "soc.geography.information_oboeru",
-    "grade": 5,
+    "grade": 4,
     "subject": "social_drill",
     "title": "情報・通信〈覚える編〉",
     "duration_min": 12,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4107_information_with_sources&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -862,11 +1118,11 @@
   },
   {
     "id": "soc.geography.maps_symbols_oboeru",
-    "grade": 5,
+    "grade": 4,
     "subject": "social_drill",
     "title": "地図・地形図記号〈覚える編〉",
     "duration_min": 10,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4108_maps_topographic_symbols_with_sources&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -878,11 +1134,11 @@
   },
   {
     "id": "soc.geography.world_geography_oboeru",
-    "grade": 5,
+    "grade": 4,
     "subject": "social_drill",
     "title": "世界地理〈覚える編〉",
     "duration_min": 20,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4116_world_geography_with_sources&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -893,11 +1149,11 @@
   },
   {
     "id": "soc.geography.hokkaido_region_oboeru",
-    "grade": 5,
+    "grade": 4,
     "subject": "social_drill",
     "title": "北海道地方〈覚える編〉",
     "duration_min": 18,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4109_hokkaido_region_with_sources&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -908,11 +1164,11 @@
   },
   {
     "id": "soc.history.kofun_asuka_oboeru",
-    "grade": 6,
+    "grade": 5,
     "subject": "social_drill",
     "title": "古墳・飛鳥時代〈覚える編〉",
     "duration_min": 14,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4201_kofun_asuka_with_sources&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -924,11 +1180,11 @@
   },
   {
     "id": "soc.history.nara_period_oboeru",
-    "grade": 6,
+    "grade": 5,
     "subject": "social_drill",
     "title": "奈良時代〈覚える編〉",
     "duration_min": 13,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4202_nara_period_with_sources&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -939,11 +1195,11 @@
   },
   {
     "id": "soc.history.heian_period_oboeru",
-    "grade": 6,
+    "grade": 5,
     "subject": "social_drill",
     "title": "平安時代〈覚える編〉",
     "duration_min": 18,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4203_heian_period&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -954,11 +1210,11 @@
   },
   {
     "id": "soc.history.kamakura_period_oboeru",
-    "grade": 6,
+    "grade": 5,
     "subject": "social_drill",
     "title": "鎌倉時代〈覚える編〉",
     "duration_min": 16,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4204_kamakura_period&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -969,11 +1225,11 @@
   },
   {
     "id": "soc.history.muromachi_period_oboeru",
-    "grade": 6,
+    "grade": 5,
     "subject": "social_drill",
     "title": "室町時代〈覚える編〉",
     "duration_min": 15,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4205_muromachi_period&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -984,11 +1240,11 @@
   },
   {
     "id": "soc.history.azuchi_momoyama_oboeru",
-    "grade": 6,
+    "grade": 5,
     "subject": "social_drill",
     "title": "安土桃山時代〈覚える編〉",
     "duration_min": 14,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4206_azuchi_momoyama&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -999,11 +1255,11 @@
   },
   {
     "id": "soc.history.edo_period_oboeru",
-    "grade": 6,
+    "grade": 5,
     "subject": "social_drill",
     "title": "江戸時代〈覚える編〉",
     "duration_min": 22,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4207_edo_period&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -1014,11 +1270,11 @@
   },
   {
     "id": "soc.history.meiji_period_oboeru",
-    "grade": 6,
+    "grade": 5,
     "subject": "social_drill",
     "title": "明治時代〈覚える編〉",
     "duration_min": 19,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4208_meiji_period&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -1029,11 +1285,11 @@
   },
   {
     "id": "soc.history.taisho_showa_prewar_oboeru",
-    "grade": 6,
+    "grade": 5,
     "subject": "social_drill",
     "title": "大正・昭和戦前〈覚える編〉",
     "duration_min": 17,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4209_taisho_showa_prewar&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -1045,11 +1301,11 @@
   },
   {
     "id": "soc.history.showa_postwar_oboeru",
-    "grade": 6,
+    "grade": 5,
     "subject": "social_drill",
     "title": "昭和戦後〈覚える編〉",
     "duration_min": 15,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4210_showa_postwar&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -1061,11 +1317,11 @@
   },
   {
     "id": "soc.history.heisei_reiwa_oboeru",
-    "grade": 6,
+    "grade": 5,
     "subject": "social_drill",
     "title": "平成・令和時代〈覚える編〉",
     "duration_min": 12,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4211_heisei_reiwa&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -1077,11 +1333,11 @@
   },
   {
     "id": "soc.history.cross_period_problems_oboeru",
-    "grade": 6,
+    "grade": 5,
     "subject": "social_drill",
     "title": "時代横断問題〈覚える編〉",
     "duration_min": 20,
-    "sku_required": null,
+    "sku_required": "g5-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4212_cross_period_problems&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -1091,12 +1347,265 @@
     ]
   },
   {
+    "id": "soc.history.theme_politics_economy_oboeru",
+    "grade": 5,
+    "subject": "social_drill",
+    "title": "テーマ史① 政治・経済〈覚える編〉",
+    "duration_min": 18,
+    "sku_required": "g5-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4213_theme_politics_economy&mode=oboeru",
+    "format": "drill",
+    "tags": [
+      "暗記",
+      "歴史",
+      "テーマ史",
+      "政治",
+      "経済"
+    ]
+  },
+  {
+    "id": "soc.history.theme_people_oboeru",
+    "grade": 5,
+    "subject": "social_drill",
+    "title": "テーマ史② 人物〈覚える編〉",
+    "duration_min": 17,
+    "sku_required": "g5-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4214_theme_people&mode=oboeru",
+    "format": "drill",
+    "tags": [
+      "暗記",
+      "歴史",
+      "テーマ史",
+      "人物"
+    ]
+  },
+  {
+    "id": "soc.history.theme_diplomacy_oboeru",
+    "grade": 5,
+    "subject": "social_drill",
+    "title": "テーマ史③ 外交〈覚える編〉",
+    "duration_min": 17,
+    "sku_required": "g5-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4215_theme_diplomacy&mode=oboeru",
+    "format": "drill",
+    "tags": [
+      "暗記",
+      "歴史",
+      "テーマ史",
+      "外交"
+    ]
+  },
+  {
+    "id": "soc.history.theme_culture_oboeru",
+    "grade": 5,
+    "subject": "social_drill",
+    "title": "テーマ史④ 文化〈覚える編〉",
+    "duration_min": 18,
+    "sku_required": "g5-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4216_theme_culture&mode=oboeru",
+    "format": "drill",
+    "tags": [
+      "暗記",
+      "歴史",
+      "テーマ史",
+      "文化"
+    ]
+  },
+  {
+    "id": "soc.comprehensive.geography_theme_cross_oboeru",
+    "grade": 6,
+    "subject": "social_drill",
+    "title": "地理総合① テーマ横断〈覚える編〉",
+    "duration_min": 20,
+    "sku_required": "g6-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4217_geography_theme_cross&mode=oboeru",
+    "format": "drill",
+    "tags": [
+      "暗記",
+      "総合",
+      "地理総合",
+      "テーマ横断"
+    ]
+  },
+  {
+    "id": "soc.comprehensive.geography_region_comprehensive_oboeru",
+    "grade": 6,
+    "subject": "social_drill",
+    "title": "地理総合② 地域総合〈覚える編〉",
+    "duration_min": 20,
+    "sku_required": "g6-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4218_geography_region_comprehensive&mode=oboeru",
+    "format": "drill",
+    "tags": [
+      "暗記",
+      "総合",
+      "地理総合",
+      "地域総合"
+    ]
+  },
+  {
+    "id": "soc.comprehensive.history_theme_integration_oboeru",
+    "grade": 6,
+    "subject": "social_drill",
+    "title": "歴史総合① テーマ統合〈覚える編〉",
+    "duration_min": 20,
+    "sku_required": "g6-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4219_history_theme_integration&mode=oboeru",
+    "format": "drill",
+    "tags": [
+      "暗記",
+      "総合",
+      "歴史総合",
+      "テーマ統合"
+    ]
+  },
+  {
+    "id": "soc.comprehensive.history_period_flow_oboeru",
+    "grade": 6,
+    "subject": "social_drill",
+    "title": "歴史総合② 時代の流れ〈覚える編〉",
+    "duration_min": 20,
+    "sku_required": "g6-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4220_history_period_flow&mode=oboeru",
+    "format": "drill",
+    "tags": [
+      "暗記",
+      "総合",
+      "歴史総合",
+      "時代の流れ"
+    ]
+  },
+  {
+    "id": "soc.comprehensive.civics_system_composite_oboeru",
+    "grade": 6,
+    "subject": "social_drill",
+    "title": "公民総合① 制度の複合〈覚える編〉",
+    "duration_min": 20,
+    "sku_required": "g6-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4221_civics_system_composite&mode=oboeru",
+    "format": "drill",
+    "tags": [
+      "暗記",
+      "総合",
+      "公民総合",
+      "制度の複合"
+    ]
+  },
+  {
+    "id": "soc.comprehensive.civics_modern_issues_oboeru",
+    "grade": 6,
+    "subject": "social_drill",
+    "title": "公民総合② 現代社会の課題〈覚える編〉",
+    "duration_min": 20,
+    "sku_required": "g6-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4222_civics_modern_issues&mode=oboeru",
+    "format": "drill",
+    "tags": [
+      "暗記",
+      "総合",
+      "公民総合",
+      "現代社会"
+    ]
+  },
+  {
+    "id": "soc.comprehensive.basic_integration_oboeru",
+    "grade": 6,
+    "subject": "social_drill",
+    "title": "総合① 基礎統合問題〈覚える編〉",
+    "duration_min": 25,
+    "sku_required": "g6-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4223_basic_integration&mode=oboeru",
+    "format": "drill",
+    "tags": [
+      "暗記",
+      "総合",
+      "全分野横断",
+      "基礎統合"
+    ]
+  },
+  {
+    "id": "soc.comprehensive.advanced_integration_oboeru",
+    "grade": 6,
+    "subject": "social_drill",
+    "title": "総合② 応用統合問題〈覚える編〉",
+    "duration_min": 25,
+    "sku_required": "g6-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4224_advanced_integration&mode=oboeru",
+    "format": "drill",
+    "tags": [
+      "暗記",
+      "総合",
+      "全分野横断",
+      "応用統合"
+    ]
+  },
+  {
+    "id": "soc.comprehensive.practice_a_oboeru",
+    "grade": 6,
+    "subject": "social_drill",
+    "title": "演習① 実力確認A〈覚える編〉",
+    "duration_min": 20,
+    "sku_required": "g6-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4225_practice_a&mode=oboeru",
+    "format": "drill",
+    "tags": [
+      "暗記",
+      "演習",
+      "実力確認"
+    ]
+  },
+  {
+    "id": "soc.comprehensive.practice_b_oboeru",
+    "grade": 6,
+    "subject": "social_drill",
+    "title": "演習② 実力確認B〈覚える編〉",
+    "duration_min": 20,
+    "sku_required": "g6-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4226_practice_b&mode=oboeru",
+    "format": "drill",
+    "tags": [
+      "暗記",
+      "演習",
+      "実力確認"
+    ]
+  },
+  {
+    "id": "soc.comprehensive.practice_c_oboeru",
+    "grade": 6,
+    "subject": "social_drill",
+    "title": "演習③ 総合演習A〈覚える編〉",
+    "duration_min": 25,
+    "sku_required": "g6-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4227_practice_c&mode=oboeru",
+    "format": "drill",
+    "tags": [
+      "暗記",
+      "演習",
+      "総合演習"
+    ]
+  },
+  {
+    "id": "soc.comprehensive.practice_d_oboeru",
+    "grade": 6,
+    "subject": "social_drill",
+    "title": "演習④ 総合演習B〈覚える編〉",
+    "duration_min": 25,
+    "sku_required": "g6-soc",
+    "path": "lessons/soc/modular/index_modular.html?era=4228_practice_d&mode=oboeru",
+    "format": "drill",
+    "tags": [
+      "暗記",
+      "演習",
+      "総合演習"
+    ]
+  },
+  {
     "id": "soc.civics.politics_national_life_oboeru",
     "grade": 6,
     "subject": "social_drill",
     "title": "政治・国民生活〈覚える編〉",
     "duration_min": 16,
-    "sku_required": null,
+    "sku_required": "g6-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4300_politics_national_life&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -1112,7 +1621,7 @@
     "subject": "social_drill",
     "title": "財政・地方自治〈覚える編〉",
     "duration_min": 17,
-    "sku_required": null,
+    "sku_required": "g6-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4303_finance_local_government&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -1128,7 +1637,7 @@
     "subject": "social_drill",
     "title": "国際関係〈覚える編〉",
     "duration_min": 19,
-    "sku_required": null,
+    "sku_required": "g6-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4304_world_affairs_international&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -1143,7 +1652,7 @@
     "subject": "social_drill",
     "title": "現代社会問題〈覚える編〉",
     "duration_min": 18,
-    "sku_required": null,
+    "sku_required": "g6-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4305_modern_social_issues&mode=oboeru",
     "format": "drill",
     "tags": [
@@ -1155,11 +1664,11 @@
   },
   {
     "id": "soc.geography.map_hokkaido_wakaru",
-    "grade": 6,
+    "grade": 4,
     "subject": "soc",
     "title": "地図で学ぶ地理① - 北海道地方〈わかる編〉",
     "duration_min": 20,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/index_modular.html?era=4200_map_hokkaido_with_sources&mode=wakaru",
     "format": "modular",
     "tags": [
@@ -1171,11 +1680,11 @@
   },
   {
     "id": "soc.geography.map_hokkaido_gsi_wakaru",
-    "grade": 6,
+    "grade": 4,
     "subject": "soc",
     "title": "地図で学ぶ地理 - 北海道地方〈地理院地図版〉",
     "duration_min": 20,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/map_lesson_hokkaido_gsi.html",
     "format": "map_lesson_gsi",
     "tags": [
@@ -1188,11 +1697,11 @@
   },
   {
     "id": "soc.geography.map_hokkaido_integrated_wakaru",
-    "grade": 5,
+    "grade": 4,
     "subject": "soc",
     "title": "地図で学ぶ地理① - 北海道地方",
     "duration_min": 20,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/map_lesson_hokkaido_integrated.html",
     "format": "modular",
     "tags": [
@@ -1204,11 +1713,11 @@
   },
   {
     "id": "soc.geography.map_tohoku_integrated_wakaru",
-    "grade": 5,
+    "grade": 4,
     "subject": "soc",
     "title": "地図で学ぶ地理② - 東北地方",
     "duration_min": 20,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/map_lesson_tohoku_integrated.html",
     "format": "modular",
     "tags": [
@@ -1220,11 +1729,11 @@
   },
   {
     "id": "soc.geography.map_kanto_integrated_wakaru",
-    "grade": 5,
+    "grade": 4,
     "subject": "soc",
     "title": "地図で学ぶ地理③ - 関東地方",
     "duration_min": 20,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/map_lesson_kanto_integrated.html",
     "format": "modular",
     "tags": [
@@ -1236,11 +1745,11 @@
   },
   {
     "id": "soc.geography.map_chubu_integrated_wakaru",
-    "grade": 5,
+    "grade": 4,
     "subject": "soc",
     "title": "地図で学ぶ地理④ - 中部地方",
     "duration_min": 20,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/map_lesson_chubu_integrated.html",
     "format": "modular",
     "tags": [
@@ -1252,11 +1761,11 @@
   },
   {
     "id": "soc.geography.map_kinki_integrated_wakaru",
-    "grade": 5,
+    "grade": 4,
     "subject": "soc",
     "title": "地図で学ぶ地理⑤ - 近畿地方",
     "duration_min": 20,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/map_lesson_kinki_integrated.html",
     "format": "modular",
     "tags": [
@@ -1268,11 +1777,11 @@
   },
   {
     "id": "soc.geography.map_chugoku_shikoku_integrated_wakaru",
-    "grade": 5,
+    "grade": 4,
     "subject": "soc",
     "title": "地図で学ぶ地理⑥ - 中国・四国地方",
     "duration_min": 20,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/map_lesson_chugoku_shikoku_integrated.html",
     "format": "modular",
     "tags": [
@@ -1285,11 +1794,11 @@
   },
   {
     "id": "soc.geography.map_kyushu_integrated_wakaru",
-    "grade": 5,
+    "grade": 4,
     "subject": "soc",
     "title": "地図で学ぶ地理⑦ - 九州地方",
     "duration_min": 20,
-    "sku_required": null,
+    "sku_required": "g4-soc",
     "path": "lessons/soc/modular/map_lesson_kyushu_integrated.html",
     "format": "modular",
     "tags": [

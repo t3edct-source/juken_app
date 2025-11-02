@@ -319,6 +319,30 @@ html{scroll-behavior:smooth}
   background-color: #f0f9ff;
 }
 
+.lesson-list-item.locked {
+  opacity: 0.65;
+  background-color: #f9fafb;
+  position: relative;
+}
+
+.lesson-list-item.locked::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(0, 0, 0, 0.03) 10px,
+    rgba(0, 0, 0, 0.03) 20px
+  );
+  pointer-events: none;
+  border-radius: 8px;
+}
+
 .lesson-row-first {
   display: flex;
   align-items: center;
@@ -349,6 +373,20 @@ html{scroll-behavior:smooth}
   flex-shrink: 0;
 }
 
+.lesson-list-item .lesson-grade-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2rem 0.5rem;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+  border-radius: 5px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
 .lesson-list-item .lesson-title {
   flex: 1;
   font-weight: 500;
@@ -356,6 +394,10 @@ html{scroll-behavior:smooth}
   font-size: 0.9375rem;
   line-height: 1.4;
   min-width: 0;
+}
+
+.lesson-list-item .lesson-title.locked-title {
+  color: #9ca3af;
 }
 
 .lesson-list-item .lesson-duration {
@@ -440,6 +482,30 @@ html{scroll-behavior:smooth}
   background: linear-gradient(135deg, #2563eb, #1d4ed8);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.lesson-list-item .lesson-action-btn.locked-btn {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+}
+
+.lesson-list-item .lesson-action-btn.locked-btn:hover {
+  background: linear-gradient(135deg, #d97706, #b45309);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+
+.lesson-list-item .lesson-lock-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.5rem;
+  background: #fee2e2;
+  color: #dc2626;
+  border-radius: 5px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 /* ===== リスト表示のレスポンシブ対応 ===== */
@@ -1113,6 +1179,75 @@ html{scroll-behavior:smooth}
 .purchase-confirm-modal .modal-footer button,
 .purchase-complete-modal .modal-footer button {
   min-width: 120px;
+}
+
+/* チェックポイント関連スタイル */
+.lesson-checkpoint-badge {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-left: 0.5rem;
+  animation: checkpointPulse 2s infinite;
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+@keyframes checkpointPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.05);
+  }
+}
+
+.lesson-checkpoint-info {
+  color: #8b5cf6;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-right: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.lesson-checkpoint-info::before {
+  content: '📌';
+  font-size: 0.9rem;
+}
+
+.lesson-list-item.has-checkpoint {
+  border-left: 3px solid #8b5cf6;
+  background: linear-gradient(90deg, rgba(139, 92, 246, 0.05), transparent);
+  position: relative;
+}
+
+.lesson-list-item.has-checkpoint::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #8b5cf6, #7c3aed);
+  animation: checkpointGlow 2s infinite;
+}
+
+@keyframes checkpointGlow {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(139, 92, 246, 0.6);
+  }
 }
 
 /* レスポンシブ対応 */

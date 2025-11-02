@@ -9,7 +9,7 @@ window.questions = [
       "足利尊氏"
     ],
     "answer": 0,
-    "source": "",
+    "source": "1603年、新しい幕府が開かれました。関ヶ原の戦いに勝利した**徳川家康（とくがわいえやす）**が、征夷大将軍に任命され、江戸に幕府を開いたのです。  \nこれが江戸幕府で、約260年間続く長い平和の時代の始まりでした。豊臣秀吉・織田信長・足利尊氏は別の時代の人物です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">江戸幕府の成立\n\n      👤 徳川家康\n           │\n           │ 関ヶ原の戦いに勝利\n           │ 1603年\n           │ 征夷大将軍に任命\n           ↓\n      🏛️ 江戸幕府\n           │\n           │ 約260年間続く\n           │ 長い平和の時代</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -24,7 +24,7 @@ window.questions = [
       "兵農分離"
     ],
     "answer": 0,
-    "source": "",
+    "source": "江戸幕府は、大名が江戸と自分の領地（国元）を行ったり来たりする制度を作りました。この制度を**参勤交代（さんきんこうたい）**といいます。  \n一年おきに江戸と国元を行き来することで、大名の力を弱め、幕府への忠誠を確かめるのが目的でした。郷宿制・石高制・兵農分離は別の制度です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">参勤交代のしくみ\n\n      👤 大名\n           │\n           │ 一年おきに\n           ↓\n      ┌─────┴─────┐\n      │               │\n    🏛️ 江戸        🏡 国元\n      │               │\n      │ 行ったり来たり\n      ↓\n  大名の力を弱める\n  幕府への忠誠を確かめる</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -39,7 +39,7 @@ window.questions = [
       "僧侶"
     ],
     "answer": 0,
-    "source": "",
+    "source": "江戸幕府は、武士を統制するための法律を作りました。これを武家諸法度といいます。武家諸法度は主に**大名（だいみょう）**を統制する法令です。  \n城を新しく作るな、大きな船を持つななど、大名の行動を制限する内容でした。百姓・町人・僧侶は別の身分です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">武家諸法度の内容\n\n      📋 武家諸法度\n           │\n           │ 大名を統制\n           ↓\n      ┌─────┴─────┐\n      │               │\n    🚫 城を新しく    🚫 大きな船を\n       作るな          持つな\n      │               │\n      │ 大名の行動を制限</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -54,7 +54,7 @@ window.questions = [
       "伏見"
     ],
     "answer": 0,
-    "source": "",
+    "source": "江戸時代、幕府は鎖国政策を取り、外国との貿易を限られた場所に限定しました。その唯一の窓口となったのが**長崎（ながさき）**です。  \nここで中国（清）とオランダだけが貿易を許され、出島という特別な場所で取引が行われました。堺・大阪・伏見は別の都市です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">鎖国と長崎\n\n      🚫 鎖国政策\n           │\n           │ 貿易を限られた場所に\n           ↓\n      🏙️ 長崎（唯一の窓口）\n           │\n      ┌─────┴─────┐\n      │               │\n    🇨🇳 中国（清）  🇳🇱 オランダ\n      │               │\n      │ 出島で取引</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -69,7 +69,7 @@ window.questions = [
       "前田氏"
     ],
     "answer": 0,
-    "source": "",
+    "source": "江戸時代、朝鮮とは正式な国交がありました。その外交を担ったのが、対馬（つしま）という島の領主の**宗氏（そうし）**です。  \n対馬は朝鮮に近いため、この家が外交の仲立ちをしました。島津氏は薩摩、松前氏は蝦夷地、前田氏は加賀の大名です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">朝鮮との外交\n\n      🏝️ 対馬\n           │\n           │ 朝鮮に近い\n           ↓\n      👤 宗氏（領主）\n           │\n           │ 外交の仲立ち\n           ↓\n      🇰🇷 朝鮮との国交</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -84,7 +84,7 @@ window.questions = [
       "台湾"
     ],
     "answer": 0,
-    "source": "",
+    "source": "江戸時代、薩摩藩は琉球（現在の沖縄）を支配し、そこを中国（清）との交易の窓口として利用しました。薩摩藩が支配して交易の窓口としたのは**琉球王国（りゅうきゅうおうこく）**です。  \n琉球を通じて、日本の産物が中国に輸出されました。樺太・蝦夷地は松前藩、台湾は別の地域です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">薩摩藩と琉球\n\n      👤 薩摩藩\n           │\n           │ 支配する\n           ↓\n      🏝️ 琉球王国\n           │\n           │ 交易の窓口\n           ↓\n      🇨🇳 中国（清）との交易</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -99,7 +99,7 @@ window.questions = [
       "対馬"
     ],
     "answer": 0,
-    "source": "",
+    "source": "江戸時代、北海道（当時は蝦夷地と呼ばれました）との交易を担ったのが、**松前藩（まつまえはん）**です。松前藩が交易を担った地域は**蝦夷地（えぞち）**です。  \n松前藩はアイヌの人々との交易を行い、特産品を取り扱いました。奄美群島は薩摩藩、壱岐・対馬は別の島です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">松前藩と蝦夷地\n\n      👤 松前藩\n           │\n           │ 交易を担う\n           ↓\n      🏔️ 蝦夷地（北海道）\n           │\n           │ アイヌの人々との交易\n           │ 特産品を取り扱う</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -114,7 +114,7 @@ window.questions = [
       "徳川吉宗"
     ],
     "answer": 0,
-    "source": "",
+    "source": "1637年、キリスト教徒が中心となって起こした一揆が、島原・天草一揆です。この時、幕府の将軍は**徳川家光（とくがわいえみつ）**でした。  \n家光は大軍を送ってこの一揆を鎮圧し、その後キリスト教の取り締まりをさらに強めました。家康・綱吉・吉宗は別の時代の将軍です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">島原・天草一揆\n\n      ⚔️ 1637年\n           │\n      👥 キリスト教徒が中心\n           │ 一揆を起こす\n           ↓\n      👤 徳川家光（将軍）\n           │\n           │ 大軍を送って鎮圧\n           ↓\n      🚫 キリスト教の取り締まり\n          がさらに強まる</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -129,7 +129,7 @@ window.questions = [
       "錦帯橋"
     ],
     "answer": 0,
-    "source": "",
+    "source": "江戸時代、主要な街道が整備されました。その起点となったのが、江戸の中心にある**日本橋（にほんばし）**です。  \n東海道・中山道・日光街道・奥州街道・甲州街道の五つの街道がここから始まりました。三条大橋・難波橋・錦帯橋は別の場所の橋です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">五街道の起点\n\n      🌉 日本橋（江戸の中心）\n           │\n           │ 起点\n           ↓\n      ┌─────┬─────┬─────┬─────┐\n      │       │       │       │       │\n    🛤️ 東海道 🛤️ 中山道 🛤️ 日光  🛤️ 奥州  🛤️ 甲州\n      │       │       │ 街道   │ 街道   │ 街道\n      │       │       │       │       │\n      │ 五つの街道がここから始まる</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -144,7 +144,7 @@ window.questions = [
       "三関"
     ],
     "answer": 0,
-    "source": "",
+    "source": "江戸時代、最も大きな三つの都市がありました。江戸（政治の中心）、大坂（経済の中心）、京都（文化の中心）の三つです。これらを**三都（さんと）**といいます。  \nそれぞれが異なる役割を担い、日本の中心となっていました。三藩・三職・三関は別の概念です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">三都の役割\n\n      ┌─────┬─────┬─────┐\n      │       │       │       │\n    🏛️ 江戸  🏙️ 大坂  🏰 京都\n      │       │       │\n   政治の中心 経済の中心 文化の中心\n      │       │       │\n      └─────┴─────┴─────┘\n           │\n           │ 三都\n           │ 日本の中心</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -159,7 +159,7 @@ window.questions = [
       "小林一茶"
     ],
     "answer": 0,
-    "source": "",
+    "source": "江戸時代の前期、元禄文化という華やかな文化が栄えました。その中で俳句を芸術の域まで高めたのが**松尾芭蕉（まつおばしょう）**です。  \n『奥の細道』など、旅をしながら俳句を詠み、その精神は「わび・さび」とも言われました。与謝蕪村・小林一茶は後の時代、正岡子規は明治時代の俳人です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">松尾芭蕉の活躍\n\n      👤 松尾芭蕉\n           │\n           │ 元禄文化\n           ↓\n      📖 『奥の細道』\n           │\n           │ 旅をしながら俳句を詠む\n           │ 「わび・さび」の精神\n           ↓\n      🎨 俳句を芸術の域まで高める</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -174,7 +174,7 @@ window.questions = [
       "国学"
     ],
     "answer": 0,
-    "source": "",
+    "source": "元禄文化の時代、**近松門左衛門（ちかまつもんざえもん）**という人が活躍しました。近松門左衛門が活躍した分野は**浄瑠璃・歌舞伎台本（じょうるり・かぶきだいほん）**です。  \n人形浄瑠璃や歌舞伎の脚本を書き、多くの名作を残しました。水墨画・蘭学・国学は別の分野です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">近松門左衛門の活躍\n\n      👤 近松門左衛門\n           │\n           │ 元禄文化\n           ↓\n      ┌─────┴─────┐\n      │               │\n    🎭 人形浄瑠璃  🎬 歌舞伎\n      │               │\n      │ 脚本を書く\n      │ 多くの名作を残す</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -189,7 +189,7 @@ window.questions = [
       "長谷川等伯"
     ],
     "answer": 0,
-    "source": "",
+    "source": "江戸時代の後期、化政文化の時代には、浮世絵が大きく発展しました。その中で、『富嶽三十六景』などの作品で知られるのが**葛飾北斎（かつしかほくさい）**です。  \n北斎は大胆な構図と色彩で、日本の風景を描き出しました。狩野永徳は安土桃山時代、雪舟は室町時代、長谷川等伯は別の時代の絵師です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">葛飾北斎の浮世絵\n\n      👤 葛飾北斎\n           │\n           │ 化政文化期\n           ↓\n      🖼️ 『富嶽三十六景』など\n           │\n           │ 大胆な構図と色彩\n           │ 日本の風景を描く\n           ↓\n      🎨 浮世絵が大きく発展</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -204,7 +204,16 @@ window.questions = [
       "禁中並公家諸法度"
     ],
     "answer": 0,
-    "source": "",
+    "source": "江戸時代の中期、田沼意次（たぬまおきつぐ）は積極的な経済政策を進めました。その一つが、商人の組織である**株仲間の公認（かぶなかまのこうにん）**です。  \n株仲間を認めることで、貿易や商売を管理し、幕府の収入を増やそうとしました。検地の徹底・刀狩・禁中並公家諸法度は別の政策です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">株仲間の公認\n\n      👤 田沼意次
+           │
+           │ 積極的な経済政策
+           ↓
+      📋 株仲間の公認
+           │
+           │ 商人の組織を認める
+           │ 貿易・商売を管理
+           ↓
+      💰 幕府の収入を増やす</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -219,7 +228,18 @@ window.questions = [
       "新井白石"
     ],
     "answer": 0,
-    "source": "",
+    "source": "1787年、老中として政治改革を進めたのが**松平定信（まつだいらさだのぶ）**です。寛政の改革を主導した人物は**松平定信**です。  \n倹約を奨励し、学問を重視するなど、厳しい政治を行いました。徳川吉宗は享保の改革、水野忠邦は天保の改革、新井白石は別の時代の政治家です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">寛政の改革\n\n      👤 松平定信
+           │
+           │ 1787年
+           │ 老中として
+           ↓
+      📋 寛政の改革
+           │
+      ┌─────┴─────┐
+      │               │
+    💰 倹約を奨励  📚 学問を重視
+      │               │
+      │ 厳しい政治を行う</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -234,7 +254,17 @@ window.questions = [
       "徳川家光"
     ],
     "answer": 0,
-    "source": "",
+    "source": "1716年、新しい将軍が政治改革を始めました。享保の改革を主導した将軍は**徳川吉宗（とくがわよしむね）**です。  \n倹約を進め、目安箱を設置して民意を聞くなど、様々な改革を行いました。家斉・綱吉・家光は別の時代の将軍です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">享保の改革\n\n      👤 徳川吉宗
+           │
+           │ 1716年
+           │ 将軍として
+           ↓
+      📋 享保の改革
+           │
+      ┌─────┴─────┐
+      │               │
+    💰 倹約を進める  📮 目安箱を設置
+      │               │ 民意を聞く</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -249,7 +279,17 @@ window.questions = [
       "新井白石"
     ],
     "answer": 0,
-    "source": "",
+    "source": "1841年、幕府は再び政治改革に取り組みました。天保の改革を主導した老中は**水野忠邦（みずのただくに）**です。  \n株仲間を解散させ、物価を下げようとするなど、緊迫した政治を行いました。松平定信は寛政の改革、田沼意次・新井白石は別の時代の政治家です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">天保の改革\n\n      👤 水野忠邦
+           │
+           │ 1841年
+           │ 老中として
+           ↓
+      📋 天保の改革
+           │
+      ┌─────┴─────┐
+      │               │
+    📦 株仲間を    💵 物価を下げよう
+       解散させる    とする</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -264,7 +304,14 @@ window.questions = [
       "本草綱目啓蒙"
     ],
     "answer": 0,
-    "source": "",
+    "source": "江戸時代の後期、伊能忠敬（いのうただたか）は全国を歩いて測量しました。その結果、日本の正確な地図を作りました。伊能忠敬が完成させたのは**大日本沿海輿地全図（だいにっぽんえんかいよちぜんず）**です。  \nこれは日本で初めて作られた実測による正確な地図でした。解体新書は杉田玄白、日本書紀は古代の書物、本草綱目啓蒙は別の本です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">大日本沿海輿地全図\n\n      👤 伊能忠敬
+           │
+           │ 全国を歩いて測量
+           ↓
+      🗺️ 大日本沿海輿地全図
+           │
+           │ 日本で初めて作られた
+           │ 実測による正確な地図</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -279,7 +326,15 @@ window.questions = [
       "寺子屋師匠"
     ],
     "answer": 0,
-    "source": "",
+    "source": "江戸時代、オランダ語の医学書を日本語に翻訳した本が作られました。それが『解体新書』で、中心となった人物が**杉田玄白（すぎたげんぱく）**です。  \nオランダの医学を学び、人体の仕組みを正確に理解しようとしました。本居宣長は国学、平賀源内は蘭学者ですが別の業績、寺子屋師匠は教育者です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">解体新書の作成\n\n      👤 杉田玄白
+           │
+           │ オランダ語の医学書を
+           │ 日本語に翻訳
+           ↓
+      📖 『解体新書』
+           │
+           │ オランダの医学を学ぶ
+           │ 人体の仕組みを理解</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -294,7 +349,15 @@ window.questions = [
       "山鹿素行"
     ],
     "answer": 0,
-    "source": "",
+    "source": "江戸時代の後期、日本の古典を研究する学問が発展しました。その中で、『古事記』を詳しく研究したのが**本居宣長（もとおりのりなが）**です。国学を大成し『古事記伝』を著したのは**本居宣長**です。  \n日本の古代の精神を研究し、国学を完成させました。賀茂真淵・新井白石・山鹿素行は別の学者です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">国学の大成\n\n      👤 本居宣長
+           │
+           │ 日本の古典を研究
+           │ 『古事記』を詳しく
+           ↓
+      📖 『古事記伝』
+           │
+           │ 日本の古代の精神を研究
+           │ 国学を完成させる</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -309,7 +372,7 @@ window.questions = [
       "倭寇船"
     ],
     "answer": 0,
-    "source": "",
+    "source": "江戸時代、日本海側を回る海運が発達しました。大阪から東回り・西回りで日本海を進む商船を**北前船（きたまえぶね）**といいます。  \nこれにより、各地の特産品が運ばれ、経済が活性化しました。黒船はアメリカの船、朱印船は江戸初期の海外貿易船、倭寇船は海賊の船です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">北前船の航路\n\n      🚢 大阪\n           │\n           │ 東回り・西回り\n           ↓\n      🌊 日本海を進む\n           │\n           ↓\n      🚢 北前船\n           │\n           │ 各地の特産品を運ぶ\n           │ 経済が活性化</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -324,7 +387,17 @@ window.questions = [
       "後藤新平"
     ],
     "answer": 0,
-    "source": "",
+    "source": "明治時代、足尾銅山から流れ出た鉱毒が川を汚染し、大きな問題となりました。この問題を追及した政治家が**田中正造（たなかしょうぞう）**です。  \n衆議院議員としてこの問題を取り上げ、後に議員を辞めてでも被害地の救済を訴えました。大隈重信・伊藤博文・後藤新平は別の政治家です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">足尾銅山鉱毒事件\n\n      ⛰️ 足尾銅山
+           │
+           │ 鉱毒が川を汚染
+           ↓
+      ⚠️ 大きな問題
+           │
+           ↓
+      👤 田中正造
+           │
+           │ 問題を追及
+           │ 被害地の救済を訴える</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -339,7 +412,15 @@ window.questions = [
       "憲法学"
     ],
     "answer": 0,
-    "source": "",
+    "source": "江戸時代、庶民の子どもたちが学んだ場所を寺子屋といいます。寺子屋で主に学ばれた内容として適切なのは**読み・書き・そろばん（よみ・かき・そろばん）**です。  \n日常の生活に必要な知識を身につける場所でした。戦術・ラテン語・憲法学は別の時代や別の場所で学ぶ内容です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">寺子屋での学習\n\n      🏛️ 寺子屋
+           │
+           │ 庶民の子どもたちが学ぶ
+           ↓
+      ┌─────┬─────┬─────┐
+      │       │       │       │
+    📖 読み  ✍️ 書き  🧮 そろばん
+      │       │       │
+      │ 日常の生活に必要な知識</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -354,7 +435,16 @@ window.questions = [
       "奉行"
     ],
     "answer": 0,
-    "source": "",
+    "source": "江戸時代、木造の家が多かったため、火事が大きな問題でした。そこで町人たちが組織した消防団を**町火消（まちびけし）**といいます。  \n都市の衛生や消防に関わった組織として適切なのは**町火消**です。与力・目付・奉行は幕府の役職です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">町火消の役割\n\n      👥 町人たち
+           │
+           │ 組織する
+           ↓
+      🚒 町火消（消防団）
+           │
+           │ 木造の家が多い
+           │ 火事への対策
+           ↓
+      🏙️ 都市の衛生・消防</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -369,7 +459,12 @@ window.questions = [
       "金本位のみ"
     ],
     "answer": 0,
-    "source": "",
+    "source": "江戸時代、統一的な貨幣制度が整えられました。貨幣制度で、江戸時代に並行して流通したのは**金・銀・銭の三貨（きん・ぎん・せんのさんか）**です。  \n地域によって使い分けられ、それぞれの交換比率が定められていました。紙幣のみ・銀本位のみ・金本位のみは明治以降の制度です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">三貨制度\n\n      ┌─────┬─────┬─────┐
+      │       │       │       │
+    🪙 金    🪙 銀    🪙 銭
+      │       │       │
+      │ 地域によって使い分け
+      │ 交換比率が定められる</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -384,7 +479,16 @@ window.questions = [
       "用水路不要"
     ],
     "answer": 0,
-    "source": "",
+    "source": "江戸時代、人口が増える中で、食料を増やす必要がありました。そのために進められたのが**新田開発・肥料の利用（しんでんかいはつ・ひりょうのりよう）**です。  \n新しい田畑を開き、より良い肥料を使うことで、収穫量を増やしました。化学肥料・機械化は近現代、用水路は古代から使われています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">農業技術の向上\n\n      📈 人口が増える
+           │
+           │ 食料を増やす必要
+           ↓
+      ┌─────┴─────┐
+      │               │
+    🌾 新田開発    💩 肥料の利用
+    (新しい田畑)   (より良い肥料)
+      │               │
+      │ 収穫量を増やす</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -399,7 +503,16 @@ window.questions = [
       "国学のみ"
     ],
     "answer": 0,
-    "source": "",
+    "source": "江戸時代、鎖国が行われていましたが、オランダだけは貿易を許されていました。そのため、オランダ語を通じて学ぶ学問が発達しました。鎖国下でも海外との学問交流が続いた学問は**蘭学（らんがく）**です。  \n医学や科学などの新しい知識が、オランダを通じて日本に入ってきました。朱子学・陽明学・国学は国内の学問です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">蘭学の発達\n\n      🚫 鎖国
+           │
+           │ オランダだけは
+           │ 貿易を許される
+           ↓
+      📚 蘭学
+           │
+           │ オランダ語を通じて学ぶ
+           │ 医学・科学などの
+           │ 新しい知識</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -414,7 +527,13 @@ window.questions = [
       "明治の改革"
     ],
     "answer": 0,
-    "source": "",
+    "source": "江戸時代、政治の立て直しのために行われた改革を「三大改革」といいます。その中で、1841年に始まった**天保の改革（てんぽうのかいかく）**では、倹約令や株仲間解散などを行いました。  \n享保の改革・寛政の改革は別の時代の改革、明治の改革は別の時代です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">天保の改革の内容\n\n      📋 天保の改革（1841年）
+           │
+      ┌─────┴─────┐
+      │               │
+    💰 倹約令    📦 株仲間解散
+      │               │
+      │ 政治の立て直し</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -429,7 +548,16 @@ window.questions = [
       "長崎"
     ],
     "answer": 0,
-    "source": "",
+    "source": "江戸時代の三都（江戸・大坂・京都）の中で、商業と物流の中心となったのが**大坂（おおさか）**です。  \n全国から物資が集まり、再び各地へと運ばれる場所として、「天下の台所」と呼ばれました。江戸は政治の中心、京都は文化の中心、長崎は貿易の窓口です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">「天下の台所」\n\n      🏙️ 大坂
+           │
+           │ 商業・物流の中心
+           ↓
+      ┌─────┴─────┐
+      │               │
+    📦 全国から    📦 各地へ
+    物資が集まる    運ばれる
+      │               │
+      │ 「天下の台所」</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -444,7 +572,18 @@ window.questions = [
       "承久の乱"
     ],
     "answer": 0,
-    "source": "",
+    "source": "1867年、江戸幕府は長く続いた政治の実権を朝廷に返すことを決めました。これを**大政奉還（たいせいほうかん）**といいます。  \nこれが直接のきっかけとなって、江戸幕府が倒れ、明治新政府が樹立されました。島原の乱・応仁の乱・承久の乱は別の時代の出来事です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #6366f1;\">大政奉還\n\n      🏛️ 江戸幕府
+           │
+           │ 1867年
+           │ 政治の実権を
+           │ 朝廷に返す
+           ↓
+      📋 大政奉還
+           │
+           │ 直接のきっかけ
+           ↓
+      ❌ 江戸幕府が倒れる
+      ✅ 明治新政府が樹立</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"

@@ -9,7 +9,7 @@ window.questions = [
       "大津宮"
     ],
     "answer": 0,
-    "source": "奈良時代の都は**平城京（へいじょうきょう）**です。まっすぐな大通りと四角い区画で町をならべ、国の中心として役所やお寺が集まりました。  \n長岡京・平安京・大津宮は別の時代の都です。まず「奈良＝平城京」とセットで覚えましょう。",
+    "source": "奈良時代の都は**平城京（へいじょうきょう）**です。まっすぐな大通りと四角い区画で町をならべ、国の中心として役所やお寺が集まりました。  \n長岡京・平安京・大津宮は別の時代の都です。まず「奈良＝平城京」とセットで覚えましょう。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">平城京の都市計画\n\n  ┌─────────────────────┐\n  │  ┃  ┃  ┃  ┃  ┃  ┃  │\n  │  ┃  ┃  ┃  ┃  ┃  ┃  │\n  │  ┃  ┃  ┃  ┃  ┃  ┃  │\n  │  ┃  ┃  ┃  ┃  ┃  ┃  │\n  │  ┃  ┃  ┃  ┃  ┃  ┃  │\n  └─────────────────────┘\n\n  条坊制：まっすぐな道路で\n  四角い区画に分ける</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -24,7 +24,7 @@ window.questions = [
       "公事方御定書"
     ],
     "answer": 0,
-    "source": "**大宝律令（たいほうりつりょう）**は、役所のしくみや決まりごと、きまりにそむいたときの決め方までまとめた法律です。国の運転ルールを一本化しました。  \n養老律令はのちの整理、他の二つはずっと後の時代です。奈良の国づくりの土台になりました。",
+    "source": "**大宝律令（たいほうりつりょう）**は、役所のしくみや決まりごと、きまりにそむいたときの決め方までまとめた法律です。国の運転ルールを一本化しました。  \n養老律令はのちの整理、他の二つはずっと後の時代です。奈良の国づくりの土台になりました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">大宝律令の構成\n\n  ┌─────────────────┐\n  │ 律（りつ）       │\n  │ 犯罪の決め方     │\n  └─────────────────┘\n  ┌─────────────────┐\n  │ 令（りょう）     │\n  │ 役所のしくみ     │\n  │ 税の取り方など   │\n  └─────────────────┘\n\n  701年制定：国の運転ルール</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -39,7 +39,7 @@ window.questions = [
       "富本銭"
     ],
     "answer": 0,
-    "source": "お金として広く使うことを目指したのが**和同開珎（わどうかいちん）**です。人から人へ、とり引きに使えるように作られました。  \n「富本銭（ふほんせん）」はとても古い銭ですが、広い流通の中心にはなりませんでした。ここでは**和同開珎**を選びます。",
+    "source": "お金として広く使うことを目指したのが**和同開珎（わどうかいちん）**です。人から人へ、とり引きに使えるように作られました。  \n「富本銭（ふほんせん）」はとても古い銭ですが、広い流通の中心にはなりませんでした。ここでは**和同開珎**を選びます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">和同開珎の流通\n\n    🪙 和同開珎\n       (708年)\n         │\n         │ 広く流通\n         ↓\n    👤 → 👤 → 👤\n    (人から人へ)\n         │\n         │ とり引きに使う\n         ↓\n    💰 貨幣として機能</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -54,7 +54,7 @@ window.questions = [
       "五箇条の御誓文"
     ],
     "answer": 0,
-    "source": "国ごとにお寺を建てよ、という命令が**国分寺建立の詔（みことのり）**です。お寺を学びと祈りの場所にして、国を落ちつかせようとしました。  \n改新の詔や他の法は別の内容です。国分寺＝学びと祈りのネットワーク、と覚えましょう。",
+    "source": "国ごとにお寺を建てよ、という命令が**国分寺建立の詔（みことのり）**です。お寺を学びと祈りの場所にして、国を落ちつかせようとしました。  \n改新の詔や他の法は別の内容です。国分寺＝学びと祈りのネットワーク、と覚えましょう。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">国分寺建立のしくみ\n\n      👑 聖武天皇\n          │\n          │ 詔\n          ↓\n  ┌───────┴───────┐\n  │                   │\n🏛️国分寺  🏛️国分尼寺\n(各地)     (各地)\n  │                   │\n  │ 📚 学び           │\n  │ 🙏 祈り           │\n  └───────────────────┘\n     国を落ちつかせる</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -69,7 +69,7 @@ window.questions = [
       "室町時代"
     ],
     "answer": 0,
-    "source": "**奈良時代**に、東大寺の**大仏さま**の目に魂を入れる祈り（開眼供養）が行われました。たくさんの人が力を合わせた大事業でした。  \n平安・鎌倉・室町ではありません。奈良の「大きな祈り」の象徴です。",
+    "source": "**奈良時代**に、東大寺の**大仏さま**の目に魂を入れる祈り（開眼供養）が行われました。たくさんの人が力を合わせた大事業でした。  \n平安・鎌倉・室町ではありません。奈良の「大きな祈り」の象徴です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">東大寺大仏の建立\n\n      👑 聖武天皇\n          │\n          │ 大仏建立を命じる\n          ↓\n    ┌─────┐\n    │  🙏   │\n    │ 大仏  │\n    │       │\n    └─────┘\n          │\n          │ 開眼供養\n          ↓\n    ✨ 魂を入れる\n\n  奈良時代の大事業</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -84,7 +84,7 @@ window.questions = [
       "延暦寺"
     ],
     "answer": 0,
-    "source": "各国に置かれたお寺で学び、修行したのが**国分寺**です。お坊さんが教え、みんなの心のよりどころにもなりました。  \n禅林寺・金閣寺・延暦寺は別の寺院名です。国分寺＝各地の学びの拠点、とおさえましょう。",
+    "source": "各国に置かれたお寺で学び、修行したのが**国分寺**です。お坊さんが教え、みんなの心のよりどころにもなりました。  \n禅林寺・金閣寺・延暦寺は別の寺院名です。国分寺＝各地の学びの拠点、とおさえましょう。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">国分寺の役割\n\n    🏛️ 国分寺（各国）\n         │\n    ┌────┴────┐\n    │             │\n  📚 学問    🧘 修行\n    │             │\n    │         🙏 祈り\n    └─────────────┘\n     心のよりどころ</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -99,7 +99,7 @@ window.questions = [
       "太閤検地"
     ],
     "answer": 0,
-    "source": "**墾田永年私財法（こんでんえいねんしざいほう）**は、開いた土地をいつまでも自分のものにしてよい、という決まりです。  \nこれで私有地がふえ、のちの**荘園（しょうえん）**が生まれる流れができました。班田収授・公地公民は別の考えです。",
+    "source": "**墾田永年私財法（こんでんえいねんしざいほう）**は、開いた土地をいつまでも自分のものにしてよい、という決まりです。  \nこれで私有地がふえ、のちの**荘園（しょうえん）**が生まれる流れができました。班田収授・公地公民は別の考えです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">墾田永年私財法の影響\n\n  🌾 土地を開く\n       │\n       │ 墾田永年私財法\n       ↓\n  ✅ 自分のものにできる\n       │\n       │ 私有地が増える\n       ↓\n  🏡 荘園が生まれる流れ</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -114,7 +114,7 @@ window.questions = [
       "『源氏物語』"
     ],
     "answer": 0,
-    "source": "日本でもっとも古い歴史書は**『古事記』**（こじき）です。神話や昔の出来事をまとめ、国のはじまりを語りました。  \n『日本書紀』も大切ですが、最古ではありません。歌集や物語は別ジャンルです。",
+    "source": "日本でもっとも古い歴史書は**『古事記』**（こじき）です。神話や昔の出来事をまとめ、国のはじまりを語りました。  \n『日本書紀』も大切ですが、最古ではありません。歌集や物語は別ジャンルです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">古事記の編さん\n\n      📝 712年完成\n           │\n           │ 日本最古の歴史書\n           ↓\n      📖 古事記\n           │\n      ┌────┴────┐\n      │             │\n    🏛️ 神話      📜 出来事\n      │             │\n      │       👑 国の始まり\n      └─────────────┘</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -129,7 +129,7 @@ window.questions = [
       "『日本文徳天皇実録』"
     ],
     "answer": 0,
-    "source": "奈良の国史として大切なのが**『日本書紀』**です。国のあゆみを公式にまとめ、のちの歴史書作りの出発点になりました。  \n（流れとしては『日本書紀』のあとに『続日本紀』が続き、六国史とよばれる一連の歴史書がつくられていきます。）",
+    "source": "奈良の国史として大切なのが**『日本書紀』**です。国のあゆみを公式にまとめ、のちの歴史書作りの出発点になりました。  \n（流れとしては『日本書紀』のあとに『続日本紀』が続き、六国史とよばれる一連の歴史書がつくられていきます。）<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">六国史の流れ\n\n  📖 古事記（最古）\n       │\n       ↓\n  📖 日本書紀（第一）\n       │\n       ↓\n  📖 続日本紀（第二）\n       │\n       ↓\n  ...六国史へ</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -144,7 +144,7 @@ window.questions = [
       "『懐風藻』"
     ],
     "answer": 0,
-    "source": "日本最古の歌集は**『万葉集』（まんようしゅう）**です。身分をこえて多くの人の歌が集まり、自然や気持ちをまっすぐに歌いました。  \n『古今』『新古今』はのちの時代、『懐風藻（かいふうそう）』は漢詩の本です。",
+    "source": "日本最古の歌集は**『万葉集』（まんようしゅう）**です。身分をこえて多くの人の歌が集まり、自然や気持ちをまっすぐに歌いました。  \n『古今』『新古今』はのちの時代、『懐風藻（かいふうそう）』は漢詩の本です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">万葉集の特徴\n\n      📖 万葉集\n      (日本最古の歌集)\n           │\n      ┌────┴────┐\n      │             │\n    👥 身分を超えた  🌿 自然や気持ち\n      多くの人の歌     を歌う</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -159,7 +159,7 @@ window.questions = [
       "金閣"
     ],
     "answer": 0,
-    "source": "**正倉院（しょうそういん）**は、東大寺の宝物をおさめた校倉造（あぜくらづくり）の建物です。遠い国の品もあり、交流の広さがわかります。  \n三十三間堂・夢殿・金閣は別の建物です。正倉院＝宝物の倉、と覚えましょう。",
+    "source": "**正倉院（しょうそういん）**は、東大寺の宝物をおさめた校倉造（あぜくらづくり）の建物です。遠い国の品もあり、交流の広さがわかります。  \n三十三間堂・夢殿・金閣は別の建物です。正倉院＝宝物の倉、と覚えましょう。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">正倉院の構造\n\n    🏛️ 東大寺\n         │\n         │ 宝物を保管\n         ↓\n    📦 正倉院\n    (校倉造)\n         │\n    ┌────┴────┐\n    │             │\n  💎 宝物      🌍 遠い国の品</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -174,7 +174,7 @@ window.questions = [
       "道元"
     ],
     "answer": 0,
-    "source": "**鑑真（がんじん）**は、遠い中国からたくさんの苦難をこえて日本に来て、**戒律（かいりつ）**を正しく伝えました。  \n最澄・空海・道元は別の時代・宗派の人です。鑑真は**唐招提寺（とうしょうだいじ）**とも関わります。",
+    "source": "**鑑真（がんじん）**は、遠い中国からたくさんの苦難をこえて日本に来て、**戒律（かいりつ）**を正しく伝えました。  \n最澄・空海・道元は別の時代・宗派の人です。鑑真は**唐招提寺（とうしょうだいじ）**とも関わります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">鑑真の来日\n\n  🇨🇳 中国（唐）\n       │\n       │ 👤 鑑真\n       │ 🚢 苦難を経て\n       │    5回目の航海で\n       ↓\n  🇯🇵 日本到着\n       │\n       │ 📚 戒律を伝える\n       ↓\n  🏛️ 唐招提寺</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -189,7 +189,7 @@ window.questions = [
       "問屋場"
     ],
     "answer": 0,
-    "source": "都と地方をつなぐ道には、役所のある**郡衙（ぐんが）**、人や荷物の中継をする**駅家（うまや）**、困った人を助ける**悲田院（ひでんいん）**が整えられました。  \nどれも旅やくらしを支える大事な施設です。蔵人所・奉行所・問屋場は別の時代の言葉です。",
+    "source": "都と地方をつなぐ道には、役所のある**郡衙（ぐんが）**、人や荷物の中継をする**駅家（うまや）**、困った人を助ける**悲田院（ひでんいん）**が整えられました。  \nどれも旅やくらしを支える大事な施設です。蔵人所・奉行所・問屋場は別の時代の言葉です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">地方の施設\n\n  ┌─────────────────┐\n  │ 🏛️ 郡衙（ぐんが）│\n  │   役所のある場所  │\n  └─────────────────┘\n  ┌─────────────────┐\n  │ 🐎 駅家（うまや）│\n  │   人・荷物の中継 │\n  └─────────────────┘\n  ┌─────────────────┐\n  │ 🏥 悲田院       │\n  │   困った人を助ける│\n  └─────────────────┘</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -204,7 +204,7 @@ window.questions = [
       "二毛作"
     ],
     "answer": 0,
-    "source": "**班田収授法（はんでんしゅうじゅほう）**は、戸籍で人を数え、**口分田（くぶんでん）**という田んぼを分け、年ごとに税を取るしくみです。  \n検地や二毛作は別内容です。人と田を「数えて・分けて・返す」がポイント。",
+    "source": "**班田収授法（はんでんしゅうじゅほう）**は、戸籍で人を数え、**口分田（くぶんでん）**という田んぼを分け、年ごとに税を取るしくみです。  \n検地や二毛作は別内容です。人と田を「数えて・分けて・返す」がポイント。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">班田収授法のしくみ\n\n  📋 戸籍で人を数える\n       │\n       │ 口分田を分ける\n       ↓\n  🌾 🌾 🌾\n  (田んぼ)\n       │\n       │ 6年に1回やり直す\n       ↓\n  💰 税を取る</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -219,7 +219,7 @@ window.questions = [
       "公事"
     ],
     "answer": 0,
-    "source": "田んぼの収穫からおさめる基本の税が**租（そ）**です。お米で国におさめ、都や地方の運営に使われました。  \n**調（ちょう）**は布など、**庸（よう）**は労役のかわり、**雑徭（ぞうよう）**は地方の仕事などです。",
+    "source": "田んぼの収穫からおさめる基本の税が**租（そ）**です。お米で国におさめ、都や地方の運営に使われました。  \n**調（ちょう）**は布など、**庸（よう）**は労役のかわり、**雑徭（ぞうよう）**は地方の仕事などです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">租・調・庸のしくみ\n\n  🌾 租（そ）\n     │\n     │ 米で納める\n     ↓\n  💰 基本税\n\n  🧵 調（ちょう）\n     │\n     │ 布など特産品\n     ↓\n  💰 税\n\n  ⚒️ 庸（よう）\n     │\n     │ 労役の代わりに布\n     ↓\n  💰 税</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -234,7 +234,7 @@ window.questions = [
       "雑徭"
     ],
     "answer": 0,
-    "source": "**調（ちょう）**は、絹や布など**特産品**をおさめる税です。地域の得意な品を国に送ります。  \n**租**は米、**庸**は都での仕事のかわりに布など、**雑徭**は地方の共同作業です。",
+    "source": "**調（ちょう）**は、絹や布など**特産品**をおさめる税です。地域の得意な品を国に送ります。  \n**租**は米、**庸**は都での仕事のかわりに布など、**雑徭**は地方の共同作業です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">調の納め方\n\n    🏞️ 各地の特産品\n         │\n         │ 調として\n         ↓\n    🧵 絹・布など\n         │\n         │ 国に送る\n         ↓\n    📦 都へ運ばれる</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -249,7 +249,7 @@ window.questions = [
       "雑徭"
     ],
     "answer": 0,
-    "source": "**庸（よう）**は、都での労働のかわりに**布など**をおさめる税です。行き来の負担を軽くする工夫でした。  \n**租**は米、**調**は特産品、**雑徭**は地方の仕事です。三つをセットで覚えるとスッキリします。",
+    "source": "**庸（よう）**は、都での労働のかわりに**布など**をおさめる税です。行き来の負担を軽くする工夫でした。  \n**租**は米、**調**は特産品、**雑徭**は地方の仕事です。三つをセットで覚えるとスッキリします。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">庸のしくみ\n\n    👤 都での労働\n    (本来の義務)\n         │\n         │ 代わりに\n         ↓\n    🧵 布などを納める\n         │\n         │ 庸として\n         ↓\n    💰 税</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -264,7 +264,7 @@ window.questions = [
       "守護地頭"
     ],
     "answer": 0,
-    "source": "**鎮護国家（ちんごこっか）**は、「仏教の力で国をしずめ、みんなの安心を守る」という考えです。大仏や国分寺の建立もその一つでした。  \n武家政権・守護地頭は後の時代、南都仏教は奈良の寺の呼び名です。",
+    "source": "**鎮護国家（ちんごこっか）**は、「仏教の力で国をしずめ、みんなの安心を守る」という考えです。大仏や国分寺の建立もその一つでした。  \n武家政権・守護地頭は後の時代、南都仏教は奈良の寺の呼び名です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">鎮護国家の考え\n\n      👑 聖武天皇\n          │\n          │ 仏教の力で\n          │ 国をしずめる\n          ↓\n    ┌─────┴─────┐\n    │               │\n  🙏 大仏      🏛️ 国分寺\n    │               │\n    └───────┘\n       国を守る</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -279,7 +279,7 @@ window.questions = [
       "元"
     ],
     "answer": 0,
-    "source": "**遣唐使（けんとうし）**は、中国の**唐（とう）**へわたって、制度や学問・仏教・技術を学び、日本にもたらしました。  \n宋・明・元は別の時代の王朝です。外から学び、内をととのえる動きが続きます。",
+    "source": "**遣唐使（けんとうし）**は、中国の**唐（とう）**へわたって、制度や学問・仏教・技術を学び、日本にもたらしました。  \n宋・明・元は別の時代の王朝です。外から学び、内をととのえる動きが続きます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">遣唐使のルート\n\n    🇯🇵 日本（奈良）\n         │\n         │ 👥 遣唐使\n         │ 🚢 船で\n         ↓\n    🇨🇳 中国（唐）\n         │\n         │ 📚 制度・学問\n         │ 🙏 仏教\n         │ ⚒️ 技術\n         ↓\n    🇯🇵 日本へ持ち帰る</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -294,7 +294,7 @@ window.questions = [
       "興福寺"
     ],
     "answer": 0,
-    "source": "奈良の大仏さまがまつられているのは**東大寺**です。大きな本堂（大仏殿）におさまり、人々の祈りの中心になりました。  \n薬師寺・唐招提寺・興福寺も大切なお寺ですが、大仏で有名なのは東大寺です。",
+    "source": "奈良の大仏さまがまつられているのは**東大寺**です。大きな本堂（大仏殿）におさまり、人々の祈りの中心になりました。  \n薬師寺・唐招提寺・興福寺も大切なお寺ですが、大仏で有名なのは東大寺です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">東大寺の大仏\n\n    🏛️ 東大寺\n         │\n         │ 大仏殿\n         ↓\n    ┌───────┐\n    │   🙏    │\n    │  大仏   │\n    │         │\n    └───────┘\n         │\n         │ 人々の祈り\n         ↓\n    ✨ 中心</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -309,7 +309,7 @@ window.questions = [
       "荘園制"
     ],
     "answer": 0,
-    "source": "まっすぐな道路で町を四角く分ける**条坊制（じょうぼうせい）**が使われました。都を分かりやすく整える方法です。  \n条里制は田んぼの区画、班田制・荘園制は別の内容です。都＝条坊、田＝条里、とセットで。",
+    "source": "まっすぐな道路で町を四角く分ける**条坊制（じょうぼうせい）**が使われました。都を分かりやすく整える方法です。  \n条里制は田んぼの区画、班田制・荘園制は別の内容です。都＝条坊、田＝条里、とセットで。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">条坊制のしくみ\n\n  ┌─────────────────┐\n  │  ┃  ┃  ┃  ┃  ┃  │  ← 条（南北）\n  │  ┃  ┃  ┃  ┃  ┃  │\n  │  ┃  ┃  ┃  ┃  ┃  │\n  │━━━━━━━━━━━━━│  ← 坊（東西）\n  │  ┃  ┃  ┃  ┃  ┃  │\n  │  ┃  ┃  ┃  ┃  ┃  │\n  └─────────────────┘\n\n  まっすぐな道路で\n  四角く区画する</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -324,7 +324,7 @@ window.questions = [
       "書院造"
     ],
     "answer": 0,
-    "source": "奈良のお寺は**塔・金堂・講堂**を中心に置き、回廊で囲む形が多く見られます。祈り・学び・集まりの場を分け、行き来しやすくしました。  \n禅宗様・寝殿造・書院造は別の時代・用途の建築です。",
+    "source": "奈良のお寺は**塔・金堂・講堂**を中心に置き、回廊で囲む形が多く見られます。祈り・学び・集まりの場を分け、行き来しやすくしました。  \n禅宗様・寝殿造・書院造は別の時代・用途の建築です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">奈良時代の寺院配置\n\n  ┌───────────────┐\n  │     回廊         │\n  │ ┌──┐ ┌──┐ ┌──┐ │\n  │ │ 塔 │ │金堂│ │講堂│ │\n  │ │(仏)│ │(仏)│ │(学)│ │\n  │ └──┘ └──┘ └──┘ │\n  │     回廊         │\n  └───────────────┘\n\n  塔：仏をまつる\n  金堂：本尊\n  講堂：学びの場</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -339,7 +339,7 @@ window.questions = [
       "浄土宗"
     ],
     "answer": 0,
-    "source": "奈良の主要なお寺の教えをまとめて**南都六宗（なんとろくしゅう）**といいます。**法相・華厳・三論・成実・倶舎・律**の六つです。  \n天台・真言・浄土はのちの時代に広がる宗派です。まず六宗の名前に親しみましょう。",
+    "source": "奈良の主要なお寺の教えをまとめて**南都六宗（なんとろくしゅう）**といいます。**法相・華厳・三論・成実・倶舎・律**の六つです。  \n天台・真言・浄土はのちの時代に広がる宗派です。まず六宗の名前に親しみましょう。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">南都六宗\n\n  ┌─────────────────┐\n  │ 法相宗           │\n  │ 華厳宗           │\n  │ 三論宗           │\n  │ 成実宗           │\n  │ 倶舎宗           │\n  │ 律宗             │\n  └─────────────────┘\n\n  奈良時代の\n  6つの宗派</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -354,7 +354,7 @@ window.questions = [
       "大学寮のみ"
     ],
     "answer": 0,
-    "source": "各地の国府のそばに、役人を育てる学校**国学（こくがく）**が置かれました。読み書きや法律、礼儀を学びます。  \n藩校・寺子屋は後の時代、大学寮だけでは全国をおおえません。国学＝地方の学校です。",
+    "source": "各地の国府のそばに、役人を育てる学校**国学（こくがく）**が置かれました。読み書きや法律、礼儀を学びます。  \n藩校・寺子屋は後の時代、大学寮だけでは全国をおおえません。国学＝地方の学校です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">国学の役割\n\n    🏛️ 国府（地方の役所）\n         │\n         │ 周辺に\n         ↓\n    📚 国学\n         │\n    ┌────┴────┐\n    │             │\n  📖 読み書き  📋 法律\n    │             │\n    │         🎭 礼儀\n    └─────────────┘\n     役人を育てる</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -369,7 +369,7 @@ window.questions = [
       "武士団"
     ],
     "answer": 0,
-    "source": "地方の人から選ばれて兵のつとめをしたのが**健児（こんでい）**や**防人（さきもり）**です（時期や役目にはちがいがあります）。  \n侍・足軽・武士団は後の武士の時代の言葉です。国を守る仕組みは時代により変わります。",
+    "source": "地方の人から選ばれて兵のつとめをしたのが**健児（こんでい）**や**防人（さきもり）**です（時期や役目にはちがいがあります）。  \n侍・足軽・武士団は後の武士の時代の言葉です。国を守る仕組みは時代により変わります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">奈良時代の兵制\n\n    🏞️ 地方から選ばれる\n         │\n    ┌────┴────┐\n    │             │\n  ⚔️ 健児    🛡️ 防人\n  (国内)    (九州など)\n         │\n         │ 国を守る</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -384,7 +384,7 @@ window.questions = [
       "幕府"
     ],
     "answer": 0,
-    "source": "都で国の仕事をまとめた役所の中心が**太政官（だいじょうかん）**です。各部局の上に立って、政治を動かしました。  \n政所・評定所・幕府は後の時代の機関名です。",
+    "source": "都で国の仕事をまとめた役所の中心が**太政官（だいじょうかん）**です。各部局の上に立って、政治を動かしました。  \n政所・評定所・幕府は後の時代の機関名です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">太政官の位置\n\n        👑 天皇\n         │\n         │ 政治の中心\n         ↓\n    ┌─────────┐\n    │  太政官  │\n    │  (だいじょうかん)│\n    └─────────┘\n         │\n         │ 各部局を統括\n         ↓\n    📋 政治を動かす</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -399,7 +399,7 @@ window.questions = [
       "寺領没収"
     ],
     "answer": 0,
-    "source": "病や災いが続いたとき、国をしずめようと**仏教による鎮護国家**が強まりました。大きなお寺を建て、祈りを国の力にしました。  \n神仏分離・廃仏毀釈・寺領没収は別の時代の動きです。",
+    "source": "病や災いが続いたとき、国をしずめようと**仏教による鎮護国家**が強まりました。大きなお寺を建て、祈りを国の力にしました。  \n神仏分離・廃仏毀釈・寺領没収は別の時代の動きです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">鎮護国家の強化\n\n  😷 疫病・災い\n       │\n       │ 社会不安\n       ↓\n  🙏 仏教の力で\n       │\n       │ 国をしずめる\n       ↓\n  🏛️ 大寺建立\n  🏛️ 国分寺\n       │\n       │ 祈りを国の力に</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -414,7 +414,7 @@ window.questions = [
       "一遍"
     ],
     "answer": 0,
-    "source": "**鑑真（がんじん）**が開いたのが**唐招提寺（とうしょうだいじ）**です。正しい戒律を学ぶ場として大切にされました。  \n最澄・空海・一遍は別の宗派・時代の人物です。",
+    "source": "**鑑真（がんじん）**が開いたのが**唐招提寺（とうしょうだいじ）**です。正しい戒律を学ぶ場として大切にされました。  \n最澄・空海・一遍は別の宗派・時代の人物です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">唐招提寺の建立\n\n      👤 鑑真\n          │\n          │ 日本に来て\n          │ 開く\n          ↓\n      🏛️ 唐招提寺\n          │\n          │ 📚 正しい戒律\n          │    を学ぶ場</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -429,14 +429,14 @@ window.questions = [
       "検非違使"
     ],
     "answer": 0,
-    "source": "都と地方をつなぐ**官道（かんどう）**には、馬や人を手配する宿駅のしくみ**駅制（えきせい）**がありました。公の荷や人をすばやく運びます。  \n関所制・番所制・検非違使は別の内容・時代です。",
+    "source": "都と地方をつなぐ**官道（かんどう）**には、馬や人を手配する宿駅のしくみ**駅制（えきせい）**がありました。公の荷や人をすばやく運びます。  \n関所制・番所制・検非違使は別の内容・時代です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">駅制のしくみ\n\n    🏛️ 平城京（都）\n         │\n         │ 官道\n         ↓\n    🐎 駅（宿駅）\n         │\n         │ 駅馬を用意\n         ↓\n    📦 荷・👤 人を運ぶ\n         │\n         │ 次の駅へ\n         ↓\n    🏞️ 地方</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
   {
     "qnum": 30,
-    "text": "奈良時代の文学で、漢詩文の集成として成立したのはどれですか。\n続けて 4203 平安時代 → 4204 鎌倉時代 → 4205 室町時代… と出力していきます。次のブロックもこの調子でいきますね。\nあなた:\nお願いします。\nChatGPT:\n思考時間: 1m 2s\n了解です。基準（簡潔・一意解・教科書レベルの近似肢・時事依存回避・必要な限定で曖昧さ排除）で、4203 平安 → 4204 鎌倉 → 4205 室町 を続けて作成します（hardthinkerモード）。",
+    "text": "奈良時代の文学で、漢詩文の集成として成立したのはどれですか。",
     "choices": [
       "『懐風藻』",
       "『更級日記』",
@@ -444,7 +444,7 @@ window.questions = [
       "『徒然草』"
     ],
     "answer": 0,
-    "source": "奈良時代の**漢詩文**をまとめたのが**『懐風藻（かいふうそう）』**です。中国の文の形で、日本の人びとがことばの力をたしかめました。  \n日記・随筆・和歌集は別ジャンルです。『懐風藻』は漢文の世界への入口になりました。",
+    "source": "奈良時代の**漢詩文**をまとめたのが**『懐風藻（かいふうそう）』**です。中国の文の形で、日本の人びとがことばの力をたしかめました。  \n日記・随筆・和歌集は別ジャンルです。『懐風藻』は漢文の世界への入口になりました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">懐風藻の内容\n\n      📖 懐風藻\n      (奈良時代)\n           │\n           │ 漢詩文をまとめる\n           ↓\n      ┌─────┐\n      │ 漢文  │\n      │ (中国の文)│\n      └─────┘\n           │\n           │ 言葉の力を\n           │ 確かめる</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"

@@ -11,9 +11,6 @@
   <!-- 戻るボタン（画面左上に固定） -->
   <button id="backBtn" onclick="goBack()" style="position: fixed; top: 20px; left: 20px; z-index: 1000; padding: 12px 18px; background: linear-gradient(135deg, #ea580c, #f97316); color: white; border: none; border-radius: 12px; cursor: pointer; font-size: 14px; font-weight: 600; box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px) scale(1.05)'; this.style.boxShadow='0 6px 16px rgba(234, 88, 12, 0.4)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 4px 12px rgba(234, 88, 12, 0.3)'">← 戻る</button>
   
-  <!-- デバッグ用ボタン -->
-  <button onclick="debugHomeButton()" style="position: fixed; top: 20px; right: 20px; z-index: 1000; padding: 8px 12px; background: #dc2626; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 12px;">デバッグ</button>
-
   <div class="question-box">
     <div id="modeLabel"></div>
     <div id="eraLabel" style="margin-bottom: 0.5rem; font-weight:700;"></div>
@@ -22,7 +19,6 @@
     <div class="choices" id="choices"></div>
     <div class="explanation" id="explanation"></div>
     <div class="navigation-buttons">
-      <button id="prevBtn" style="display: none;">前の問題へ</button>
       <button id="nextBtn">次の問題へ</button>
     </div>
     <div id="historyDisplay"></div>

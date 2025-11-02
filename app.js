@@ -283,8 +283,7 @@ const PACK_DETAILS = {
   'g4-soc': {
     label: '小4 社会',
     subjects: {
-      '🗺️ 地理分野': ['国土・地形・気候', '地図・地形図記号', '都道府県・都市', '農林水産業', '工業・エネルギー', '商業・貿易・交通', '地方別地理'],
-      '📚 歴史分野': ['縄文・弥生時代', '古墳時代', '飛鳥時代', '奈良時代']
+      '🗺️ 地理分野': ['国土・地形・気候', '都道府県・都市', '農林水産業', '工業・エネルギー', '商業・貿易・交通', '環境問題', '情報・通信', '地図・地形図記号', '北海道地方', '東北地方', '関東地方', '中部地方', '近畿地方', '中国・四国地方', '九州地方', '世界地理', '地図学習シリーズ（7地方）']
     }
   },
   'g5-sci': {
@@ -299,9 +298,9 @@ const PACK_DETAILS = {
   'g5-soc': {
     label: '小5 社会',
     subjects: {
-      '🗺️ 地理分野': ['国土・地形・気候', '地図・地形図記号', '日本の地域特色', '農林水産業', '工業・エネルギー', '商業・貿易・交通', '地方別地理', '環境問題', '情報・通信'],
-      '📚 歴史分野': ['平安時代', '鎌倉時代', '室町時代', '安土桃山時代'],
-      '🏛️ 公民分野': ['国際協力']
+      '📚 歴史分野（通史）': ['古墳・飛鳥時代', '奈良時代', '平安時代', '鎌倉時代', '室町時代', '安土桃山時代', '江戸時代', '明治時代', '大正・昭和前期', '昭和後期', '平成・令和時代'],
+      '📖 テーマ史': ['政治・経済', '人物', '外交', '文化'],
+      '🔄 時代横断問題': ['歴史総合問題']
     }
   },
   'g6-sci': {
@@ -316,9 +315,8 @@ const PACK_DETAILS = {
   'g6-soc': {
     label: '小6 社会',
     subjects: {
-      '🗺️ 地理分野': ['世界の国々', '領土と領海', '資源とエネルギー', '現代の産業', '地球環境', '世界の文化'],
-      '📚 歴史分野': ['江戸時代', '明治維新', '大正・昭和', '現代の日本'],
-      '🏛️ 公民分野': ['日本国憲法', '三権分立', '地方自治', '国際社会']
+      '🏛️ 公民分野': ['政治・国民生活', '憲法・三原則', '国会・内閣・裁判所', '財政・地方自治', '国際関係', '現代社会問題'],
+      '📊 総合分野': ['地理総合①・②', '歴史総合①・②', '公民総合①・②', '総合①・②（基礎・応用）', '演習①～④（実力確認・総合演習）']
     }
   }
 };
@@ -770,8 +768,14 @@ function hasEntitlement(sku) {
   if (!sku) return true; // SKU指定なしは常に許可
   if (!state.user) return false; // 未認証は常に拒否
   
-  // Firebase entitlements をチェック
-  const hasFirebaseEntitlement = state.userEntitlements.has(sku);
+  // sku（packId、例：g5-soc）から対応するproductId（例：shakai_gakushu_5）を取得
+  const pack = PACKS.find(p => p.id === sku);
+  const productId = pack ? pack.productId : null;
+  
+  // Firebase entitlements をチェック（packIdとproductIdの両方をチェック）
+  const hasFirebaseEntitlementByPackId = state.userEntitlements.has(sku);
+  const hasFirebaseEntitlementByProductId = productId ? state.userEntitlements.has(productId) : false;
+  const hasFirebaseEntitlement = hasFirebaseEntitlementByPackId || hasFirebaseEntitlementByProductId;
   
   // 開発・テスト用: LocalStorage もチェック（フォールバック）
   const localPurchases = JSON.parse(localStorage.getItem(LS_KEYS.purchases) || '[]');
@@ -781,8 +785,11 @@ function hasEntitlement(sku) {
   
   console.log('🔐 entitlementチェック:', {
     sku,
+    productId,
     user: !!state.user,
     firebaseEntitlements: Array.from(state.userEntitlements),
+    hasFirebaseEntitlementByPackId,
+    hasFirebaseEntitlementByProductId,
     hasFirebaseEntitlement,
     localPurchases,
     hasLocalPurchase,
@@ -943,6 +950,23 @@ function isLessonCompleted(lessonId) {
   } catch (e) {
     console.error(`❌ 進捗データ解析エラー: ${lessonId}`, e);
     return false;
+  }
+}
+
+// チェックポイントがあるかチェックする関数
+function hasCheckpoint(lessonId) {
+  const checkpointKey = `checkpoint:${lessonId}`;
+  try {
+    const checkpointData = localStorage.getItem(checkpointKey);
+    if (checkpointData) {
+      const data = JSON.parse(checkpointData);
+      console.log(`📌 チェックポイント検出: ${lessonId}`, data);
+      return data;
+    }
+    return null;
+  } catch (e) {
+    console.error(`❌ チェックポイント取得エラー: ${lessonId}`, e);
+    return null;
   }
 }
 
@@ -1154,7 +1178,11 @@ socialUnits = [
       'soc.history.taisho_showa_prewar',
       'soc.history.showa_postwar',
       'soc.history.heisei_reiwa',
-      'soc.history.cross_period_problems'
+      'soc.history.cross_period_problems',
+      'soc.history.theme_politics_economy_wakaru',
+      'soc.history.theme_people_wakaru',
+      'soc.history.theme_diplomacy_wakaru',
+      'soc.history.theme_culture_wakaru'
     ]
   },
   {
@@ -1168,6 +1196,25 @@ socialUnits = [
       'soc.civics.finance_local_government',
       'soc.civics.world_affairs_international',
       'soc.civics.modern_social_issues'
+    ]
+  },
+  {
+    id: 'comprehensive',
+    name: '総合',
+    icon: '🎯',
+    lessons: [
+      'soc.comprehensive.geography_theme_cross',
+      'soc.comprehensive.geography_region_comprehensive',
+      'soc.comprehensive.history_theme_integration',
+      'soc.comprehensive.history_period_flow',
+      'soc.comprehensive.civics_system_composite',
+      'soc.comprehensive.civics_modern_issues',
+      'soc.comprehensive.basic_integration',
+      'soc.comprehensive.advanced_integration',
+      'soc.comprehensive.practice_a',
+      'soc.comprehensive.practice_b',
+      'soc.comprehensive.practice_c',
+      'soc.comprehensive.practice_d'
     ]
   }
 ];
@@ -1216,7 +1263,11 @@ socialDrillUnits = [
       'soc.history.taisho_showa_prewar_oboeru',
       'soc.history.showa_postwar_oboeru',
       'soc.history.heisei_reiwa_oboeru',
-      'soc.history.cross_period_problems_oboeru'
+      'soc.history.cross_period_problems_oboeru',
+      'soc.history.theme_politics_economy_oboeru',
+      'soc.history.theme_people_oboeru',
+      'soc.history.theme_diplomacy_oboeru',
+      'soc.history.theme_culture_oboeru'
     ]
   },
   {
@@ -1230,6 +1281,25 @@ socialDrillUnits = [
       'soc.civics.finance_local_government_oboeru',
       'soc.civics.world_affairs_international_oboeru',
       'soc.civics.modern_social_issues_oboeru'
+    ]
+  },
+  {
+    id: 'comprehensive_drill',
+    name: '総合',
+    icon: '🎯',
+    lessons: [
+      'soc.comprehensive.geography_theme_cross_oboeru',
+      'soc.comprehensive.geography_region_comprehensive_oboeru',
+      'soc.comprehensive.history_theme_integration_oboeru',
+      'soc.comprehensive.history_period_flow_oboeru',
+      'soc.comprehensive.civics_system_composite_oboeru',
+      'soc.comprehensive.civics_modern_issues_oboeru',
+      'soc.comprehensive.basic_integration_oboeru',
+      'soc.comprehensive.advanced_integration_oboeru',
+      'soc.comprehensive.practice_a_oboeru',
+      'soc.comprehensive.practice_b_oboeru',
+      'soc.comprehensive.practice_c_oboeru',
+      'soc.comprehensive.practice_d_oboeru'
     ]
   }
 ];
@@ -1791,18 +1861,22 @@ async function renderSocialUnits() {
         name: '歴史分野',
         icon: '📜',
         lessons: [
-          'soc.history.kofun_asuka_wakaru',
-          'soc.history.nara_period_wakaru',
-          'soc.history.heian_period_wakaru',
-          'soc.history.kamakura_period_wakaru',
-          'soc.history.muromachi_period_wakaru',
-          'soc.history.azuchi_momoyama_wakaru',
-          'soc.history.edo_period_wakaru',
-          'soc.history.meiji_period_wakaru',
-          'soc.history.taisho_showa_prewar_wakaru',
-          'soc.history.showa_postwar_wakaru',
-          'soc.history.heisei_reiwa_wakaru',
-          'soc.history.cross_period_problems_wakaru'
+          'soc.history.kofun_asuka',
+          'soc.history.nara_period',
+          'soc.history.heian_period',
+          'soc.history.kamakura_period',
+          'soc.history.muromachi_period',
+          'soc.history.azuchi_momoyama',
+          'soc.history.edo_period',
+          'soc.history.meiji_period',
+          'soc.history.taisho_showa_prewar',
+          'soc.history.showa_postwar',
+          'soc.history.heisei_reiwa',
+          'soc.history.cross_period_problems',
+          'soc.history.theme_politics_economy_wakaru',
+          'soc.history.theme_people_wakaru',
+          'soc.history.theme_diplomacy_wakaru',
+          'soc.history.theme_culture_wakaru'
         ]
       },
       {
@@ -1816,6 +1890,25 @@ async function renderSocialUnits() {
           'soc.civics.finance_local_government_wakaru',
           'soc.civics.world_affairs_international_wakaru',
           'soc.civics.modern_social_issues_wakaru'
+        ]
+      },
+      {
+        id: 'comprehensive',
+        name: '総合',
+        icon: '🎯',
+        lessons: [
+          'soc.comprehensive.geography_theme_cross',
+          'soc.comprehensive.geography_region_comprehensive',
+          'soc.comprehensive.history_theme_integration',
+          'soc.comprehensive.history_period_flow',
+          'soc.comprehensive.civics_system_composite',
+          'soc.comprehensive.civics_modern_issues',
+          'soc.comprehensive.basic_integration',
+          'soc.comprehensive.advanced_integration',
+          'soc.comprehensive.practice_a',
+          'soc.comprehensive.practice_b',
+          'soc.comprehensive.practice_c',
+          'soc.comprehensive.practice_d'
         ]
       }
     ];
@@ -1989,7 +2082,11 @@ async function renderSocialDrillUnits() {
           'soc.history.taisho_showa_prewar_oboeru',
           'soc.history.showa_postwar_oboeru',
           'soc.history.heisei_reiwa_oboeru',
-          'soc.history.cross_period_problems_oboeru'
+          'soc.history.cross_period_problems_oboeru',
+          'soc.history.theme_politics_economy_oboeru',
+          'soc.history.theme_people_oboeru',
+          'soc.history.theme_diplomacy_oboeru',
+          'soc.history.theme_culture_oboeru'
         ]
       },
       {
@@ -2003,6 +2100,25 @@ async function renderSocialDrillUnits() {
           'soc.civics.finance_local_government_oboeru',
           'soc.civics.world_affairs_international_oboeru',
           'soc.civics.modern_social_issues_oboeru'
+        ]
+      },
+      {
+        id: 'comprehensive_drill',
+        name: '総合',
+        icon: '🎯',
+        lessons: [
+          'soc.comprehensive.geography_theme_cross_oboeru',
+          'soc.comprehensive.geography_region_comprehensive_oboeru',
+          'soc.comprehensive.history_theme_integration_oboeru',
+          'soc.comprehensive.history_period_flow_oboeru',
+          'soc.comprehensive.civics_system_composite_oboeru',
+          'soc.comprehensive.civics_modern_issues_oboeru',
+          'soc.comprehensive.basic_integration_oboeru',
+          'soc.comprehensive.advanced_integration_oboeru',
+          'soc.comprehensive.practice_a_oboeru',
+          'soc.comprehensive.practice_b_oboeru',
+          'soc.comprehensive.practice_c_oboeru',
+          'soc.comprehensive.practice_d_oboeru'
         ]
       }
     ];
@@ -2223,22 +2339,29 @@ function selectUnit(unitId) {
           name: '地理分野',
           icon: '🗺️',
         lessons: [
-          'soc.geography.land_topography_climate_oboeru',
-          'soc.geography.agriculture_forestry_fishery_oboeru',
-          'soc.geography.prefectures_cities_oboeru',
-          'soc.geography.industry_energy_oboeru',
-          'soc.geography.environment_oboeru',
-          'soc.geography.information_oboeru',
-          'soc.geography.maps_symbols_oboeru',
-          'soc.geography.hokkaido_region_oboeru',
-          'soc.geography.tohoku_region_oboeru',
-          'soc.geography.kanto_region_oboeru',
-          'soc.geography.chubu_region_oboeru',
-          'soc.geography.kinki_region_oboeru',
-          'soc.geography.chugoku_shikoku_region_oboeru',
-          'soc.geography.kyushu_region_oboeru',
-          'soc.geography.world_geography_oboeru',
-          'soc.geography.commerce_trade_transportation_oboeru'
+          'soc.geography.land_topography_climate_wakaru',
+          'soc.geography.agriculture_forestry_fishery_wakaru',
+          'soc.geography.prefectures_cities_wakaru',
+          'soc.geography.industry_energy_wakaru',
+          'soc.geography.commerce_trade_transportation_wakaru',
+          'soc.geography.environment_wakaru',
+          'soc.geography.information_wakaru',
+          'soc.geography.maps_symbols_wakaru',
+          'soc.geography.hokkaido_region_wakaru',
+          'soc.geography.tohoku_region_wakaru',
+          'soc.geography.kanto_region_wakaru',
+          'soc.geography.chubu_region_wakaru',
+          'soc.geography.kinki_region_wakaru',
+          'soc.geography.chugoku_shikoku_region_wakaru',
+          'soc.geography.kyushu_region_wakaru',
+          'soc.geography.world_geography_wakaru',
+          'soc.geography.map_hokkaido_integrated_wakaru',
+          'soc.geography.map_tohoku_integrated_wakaru',
+          'soc.geography.map_kanto_integrated_wakaru',
+          'soc.geography.map_chubu_integrated_wakaru',
+          'soc.geography.map_kinki_integrated_wakaru',
+          'soc.geography.map_chugoku_shikoku_integrated_wakaru',
+          'soc.geography.map_kyushu_integrated_wakaru'
         ]
         },
         {
@@ -2257,7 +2380,11 @@ function selectUnit(unitId) {
             'soc.history.taisho_showa_prewar',
             'soc.history.showa_postwar',
             'soc.history.heisei_reiwa',
-            'soc.history.cross_period_problems'
+            'soc.history.cross_period_problems',
+            'soc.history.theme_politics_economy_wakaru',
+            'soc.history.theme_people_wakaru',
+            'soc.history.theme_diplomacy_wakaru',
+            'soc.history.theme_culture_wakaru'
           ]
         },
         {
@@ -2271,6 +2398,25 @@ function selectUnit(unitId) {
             'soc.civics.finance_local_government',
             'soc.civics.world_affairs_international',
             'soc.civics.modern_social_issues'
+          ]
+        },
+        {
+          id: 'comprehensive',
+          name: '総合',
+          icon: '🎯',
+          lessons: [
+            'soc.comprehensive.geography_theme_cross',
+            'soc.comprehensive.geography_region_comprehensive',
+            'soc.comprehensive.history_theme_integration',
+            'soc.comprehensive.history_period_flow',
+            'soc.comprehensive.civics_system_composite',
+            'soc.comprehensive.civics_modern_issues',
+            'soc.comprehensive.basic_integration',
+            'soc.comprehensive.advanced_integration',
+            'soc.comprehensive.practice_a',
+            'soc.comprehensive.practice_b',
+            'soc.comprehensive.practice_c',
+            'soc.comprehensive.practice_d'
           ]
         }
       ];
@@ -2321,7 +2467,11 @@ function selectUnit(unitId) {
             'soc.history.taisho_showa_prewar_oboeru',
             'soc.history.showa_postwar_oboeru',
             'soc.history.heisei_reiwa_oboeru',
-            'soc.history.cross_period_problems_oboeru'
+            'soc.history.cross_period_problems_oboeru',
+            'soc.history.theme_politics_economy_oboeru',
+            'soc.history.theme_people_oboeru',
+            'soc.history.theme_diplomacy_oboeru',
+            'soc.history.theme_culture_oboeru'
           ]
         },
         {
@@ -2335,6 +2485,25 @@ function selectUnit(unitId) {
             'soc.civics.finance_local_government_oboeru',
             'soc.civics.world_affairs_international_oboeru',
             'soc.civics.modern_social_issues_oboeru'
+          ]
+        },
+        {
+          id: 'comprehensive_drill',
+          name: '総合',
+          icon: '🎯',
+          lessons: [
+            'soc.comprehensive.geography_theme_cross_oboeru',
+            'soc.comprehensive.geography_region_comprehensive_oboeru',
+            'soc.comprehensive.history_theme_integration_oboeru',
+            'soc.comprehensive.history_period_flow_oboeru',
+            'soc.comprehensive.civics_system_composite_oboeru',
+            'soc.comprehensive.civics_modern_issues_oboeru',
+            'soc.comprehensive.basic_integration_oboeru',
+            'soc.comprehensive.advanced_integration_oboeru',
+            'soc.comprehensive.practice_a_oboeru',
+            'soc.comprehensive.practice_b_oboeru',
+            'soc.comprehensive.practice_c_oboeru',
+            'soc.comprehensive.practice_d_oboeru'
           ]
         }
       ];
@@ -2440,32 +2609,79 @@ function renderUnitLessons(unitId) {
     const progress = getLessonProgress(lesson.id);
     const scoreText = progress ? `${Math.round(progress.score * 100)}%` : '-';
     
+    // チェックポイントをチェック
+    const checkpoint = hasCheckpoint(lesson.id);
+    
+    // 購入状態をチェック
+    const hasAccess = !lesson.sku_required || hasEntitlement(lesson.sku_required);
+    const isLocked = lesson.sku_required && !hasAccess;
+    
     console.log(`🔍 わかる編学習済み判定: ${lesson.id} → ${isCompleted ? '完了' : '未完了'}`);
+    if (checkpoint) {
+      console.log(`📌 チェックポイントあり: ${lesson.id} → ${checkpoint.current}問目まで完了`);
+    }
     
     // リストアイテムを作成
     const listItem = document.createElement('div');
-    listItem.className = `lesson-list-item ${isCompleted ? 'completed' : 'pending'}`;
+    listItem.className = `lesson-list-item ${isCompleted ? 'completed' : 'pending'} ${isLocked ? 'locked' : ''} ${checkpoint ? 'has-checkpoint' : ''}`;
     
     // コンパクトな2行表示に変更
-    // 1行目: 番号 + タイトル + ボタン
+    // 1行目: 番号 + 学年バッジ + タイトル + ボタン
     const firstRow = document.createElement('div');
     firstRow.className = 'lesson-row-first';
     
     const numberSpan = document.createElement('span');
     numberSpan.className = 'lesson-number';
     numberSpan.textContent = String(index + 1).padStart(2, '0');
+    firstRow.appendChild(numberSpan);
+    
+    // 学年バッジを追加（社会のみ）
+    if (lesson.subject === 'soc' && lesson.grade) {
+      const gradeBadge = document.createElement('span');
+      gradeBadge.className = 'lesson-grade-badge';
+      gradeBadge.textContent = `小${lesson.grade}`;
+      firstRow.appendChild(gradeBadge);
+    }
+    
+    // チェックポイントバッジを追加
+    if (checkpoint) {
+      const checkpointBadge = document.createElement('span');
+      checkpointBadge.className = 'lesson-checkpoint-badge';
+      checkpointBadge.textContent = '📌 途中';
+      checkpointBadge.title = `${checkpoint.current}問目まで完了（続きから再開可能）`;
+      firstRow.appendChild(checkpointBadge);
+    }
     
     const titleSpan = document.createElement('span');
     titleSpan.className = 'lesson-title';
     titleSpan.textContent = lesson.title;
+    if (isLocked) {
+      titleSpan.classList.add('locked-title');
+    }
+    firstRow.appendChild(titleSpan);
     
     const actionBtn = document.createElement('button');
-    actionBtn.className = 'lesson-action-btn';
-    actionBtn.textContent = isCompleted ? '再学習' : '開始';
-    actionBtn.addEventListener('click', () => setHash('lesson', lesson.id));
-    
-    firstRow.appendChild(numberSpan);
-    firstRow.appendChild(titleSpan);
+    actionBtn.className = `lesson-action-btn ${isLocked ? 'locked-btn' : ''}`;
+    if (isLocked) {
+      actionBtn.textContent = '🔒 購入';
+      actionBtn.disabled = false;
+      actionBtn.addEventListener('click', () => {
+        if (lesson.sku_required) {
+          // 購入モーダルを開く
+          if (window.modalPurchasePack) {
+            window.modalPurchasePack(lesson.sku_required);
+          } else {
+            // モーダルが利用できない場合は購入モーダル全体を開く
+            if (window.openPurchaseModal) {
+              window.openPurchaseModal();
+            }
+          }
+        }
+      });
+    } else {
+      actionBtn.textContent = isCompleted ? '再学習' : '開始';
+      actionBtn.addEventListener('click', () => setHash('lesson', lesson.id));
+    }
     firstRow.appendChild(actionBtn);
     
     // 2行目: メタ情報（時間、ステータス、スコア）
@@ -2479,6 +2695,22 @@ function renderUnitLessons(unitId) {
     const statusSpan = document.createElement('span');
     statusSpan.className = `lesson-status ${isCompleted ? 'completed' : 'pending'}`;
     statusSpan.textContent = isCompleted ? '完了' : '未完了';
+    
+    // チェックポイント情報を表示
+    if (checkpoint) {
+      const checkpointInfo = document.createElement('span');
+      checkpointInfo.className = 'lesson-checkpoint-info';
+      checkpointInfo.textContent = `${checkpoint.current}問まで完了`;
+      secondRow.appendChild(checkpointInfo);
+    }
+    
+    // 購入状態の表示
+    if (isLocked) {
+      const lockSpan = document.createElement('span');
+      lockSpan.className = 'lesson-lock-status';
+      lockSpan.textContent = '🔒 未購入';
+      secondRow.appendChild(lockSpan);
+    }
     
     secondRow.appendChild(durationSpan);
     secondRow.appendChild(statusSpan);
@@ -2513,7 +2745,18 @@ function renderUnitLessons(unitId) {
 function renderLesson(id){
   const l = state.catalog.find(x=>x.id===id);
   if(!l){ alert('レッスンが見つかりません'); return setHash('home'); }
-  if(l.sku_required && !hasEntitlement(l.sku_required)) return setHash('purchase', l.sku_required);
+  if(l.sku_required && !hasEntitlement(l.sku_required)) {
+    // 購入が必要な場合は購入モーダルを開く
+    if (window.modalPurchasePack) {
+      window.modalPurchasePack(l.sku_required);
+    } else {
+      // モーダルが利用できない場合は購入モーダル全体を開く
+      if (window.openPurchaseModal) {
+        window.openPurchaseModal();
+      }
+    }
+    return setHash('home');
+  }
   
   // 教材を単体ページとして開く
   if(l.path){
@@ -2525,8 +2768,20 @@ function renderLesson(id){
 }
 
 function renderPurchase(sku){
-  const el=document.getElementById('purchaseText');
-  if(el) el.textContent=`この教材は「${sku||'不明'}」の購入が必要です。`;
+  // 購入画面（purchaseView）は使用しないため、購入モーダルを開いてホームに戻る
+  if (sku) {
+    // sku（例：g4-soc）をpackIdとして購入モーダルを開く
+    if (window.modalPurchasePack) {
+      window.modalPurchasePack(sku);
+    } else {
+      // モーダルが利用できない場合は購入モーダル全体を開く
+      if (window.openPurchaseModal) {
+        window.openPurchaseModal();
+      }
+    }
+  }
+  // ホームに戻る
+  setHash('home');
 }
 
 function renderResult(id){
@@ -2865,8 +3120,15 @@ function startRealPurchase(packId){
 // ダミー購入（開発・テスト用）
 function fakePurchase(packId){
   const arr = loadPurchases(); if(!arr.includes(packId)){ arr.push(packId); savePurchases(arr); }
+  // Firebase entitlementsにも反映（開発・テスト用）
+  if (state.user && state.userEntitlements) {
+    state.userEntitlements.add(packId);
+  }
   renderAppView();
 }
+
+// 開発・テスト用：すべてのパックをオープン（本番公開時に削除予定）
+window.fakePurchase = fakePurchase; // グローバルスコープに公開
 
 // パックを開く（必要に応じて教科別ビューへ）
 function openPack(packId){
@@ -3215,9 +3477,21 @@ function showPurchaseConfirmModal(packId) {
   
   // パックの種類に応じて説明文を設定
   const isScience = pack.subject === '理科';
-  const description = isScience 
-    ? '物理・化学・生物・地学の全分野を学習できます'
-    : '地理・歴史・公民の全分野を学習できます';
+  let description = '';
+  if (isScience) {
+    description = '物理・化学・生物・地学の全分野を学習できます';
+  } else {
+    // 社会の場合、学年別の説明を設定
+    if (pack.grade === 4) {
+      description = '地理分野の全コンテンツを学習できます（地図学習シリーズ含む）';
+    } else if (pack.grade === 5) {
+      description = '歴史分野の全コンテンツを学習できます（テーマ史・時代横断問題含む）';
+    } else if (pack.grade === 6) {
+      description = '公民分野と総合分野の全コンテンツを学習できます（入試対策含む）';
+    } else {
+      description = '地理・歴史・公民の全分野を学習できます';
+    }
+  }
   document.getElementById('purchaseItemDescription').textContent = description;
   
   // メインの購入モーダルを非表示
@@ -3492,6 +3766,7 @@ window.modalPurchasePack = modalPurchasePack;
 window.openPack = openPack;
 window.setCurrentGrade = setCurrentGrade;
 window.renderAppView = renderAppView;
+window.openPurchaseModal = openPurchaseModal;
 
 // 🚀 グローバルイベント委譲の設定（②本格対応）
 function setupGlobalEventDelegation() {

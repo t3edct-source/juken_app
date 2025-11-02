@@ -42,6 +42,26 @@
     '4212_heisei_reiwa': '4211_heisei_reiwa.js',
     '4213_cross_period_problems': '4212_cross_period_problems.js',
     
+    // テーマ史 (4213-4216)
+    '4213_theme_politics_economy': '4213_theme_politics_economy.js',
+    '4214_theme_people': '4214_theme_people.js',
+    '4215_theme_diplomacy': '4215_theme_diplomacy.js',
+    '4216_theme_culture': '4216_theme_culture.js',
+    
+    // 総合分野 (4217-4228)
+    '4217_geography_theme_cross': '4217_geography_theme_cross.js',
+    '4218_geography_region_comprehensive': '4218_geography_region_comprehensive.js',
+    '4219_history_theme_integration': '4219_history_theme_integration.js',
+    '4220_history_period_flow': '4220_history_period_flow.js',
+    '4221_civics_system_composite': '4221_civics_system_composite.js',
+    '4222_civics_modern_issues': '4222_civics_modern_issues.js',
+    '4223_basic_integration': '4223_basic_integration.js',
+    '4224_advanced_integration': '4224_advanced_integration.js',
+    '4225_practice_a': '4225_practice_a.js',
+    '4226_practice_b': '4226_practice_b.js',
+    '4227_practice_c': '4227_practice_c.js',
+    '4228_practice_d': '4228_practice_d.js',
+    
     // 後方互換性のための古い形式も保持
     'hist_paleolithic': '4200_paleolithic_jomon_yayoi_with_sources.js',
     'hist_kofun': '4201_kofun_asuka_with_sources.js',
@@ -83,7 +103,27 @@
     '4113_kinki_region_with_sources': '4113_kinki_region_with_sources.js',
     '4114_chugoku_shikoku_region_with_sources': '4114_chugoku_shikoku_region_with_sources.js',
     '4115_kyushu_region_with_sources': '4115_kyushu_region_with_sources.js',
-    '4116_world_geography': '4116_world_geography.js'
+    '4116_world_geography': '4116_world_geography.js',
+    
+    // テーマ史の直接ファイル名でのアクセス
+    '4213_theme_politics_economy': '4213_theme_politics_economy.js',
+    '4214_theme_people': '4214_theme_people.js',
+    '4215_theme_diplomacy': '4215_theme_diplomacy.js',
+    '4216_theme_culture': '4216_theme_culture.js',
+    
+    // 総合分野の直接ファイル名でのアクセス
+    '4217_geography_theme_cross': '4217_geography_theme_cross.js',
+    '4218_geography_region_comprehensive': '4218_geography_region_comprehensive.js',
+    '4219_history_theme_integration': '4219_history_theme_integration.js',
+    '4220_history_period_flow': '4220_history_period_flow.js',
+    '4221_civics_system_composite': '4221_civics_system_composite.js',
+    '4222_civics_modern_issues': '4222_civics_modern_issues.js',
+    '4223_basic_integration': '4223_basic_integration.js',
+    '4224_advanced_integration': '4224_advanced_integration.js',
+    '4225_practice_a': '4225_practice_a.js',
+    '4226_practice_b': '4226_practice_b.js',
+    '4227_practice_c': '4227_practice_c.js',
+    '4228_practice_d': '4228_practice_d.js'
   };
 
   const file = map[era];

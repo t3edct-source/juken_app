@@ -1,15 +1,3 @@
-// デバッグ用: ホームボタンの状態を確認
-function debugHomeButton() {
-  console.log('🔍 ホームボタンデバッグ情報:');
-  console.log('🔍 現在のURL:', window.location.href);
-  console.log('🔍 現在のパス:', window.location.pathname);
-  console.log('🔍 現在のオリジン:', window.location.origin);
-  console.log('🔍 document.referrer:', document.referrer);
-  console.log('🔍 window.parent !== window:', window.parent !== window);
-  console.log('🔍 window.opener:', window.opener);
-  console.log('🔍 window.opener.closed:', window.opener ? window.opener.closed : 'N/A');
-}
-
 // シンプルな戻るボタンの機能
 function goBack() {
   console.log('🏠 ホームボタンクリック');
@@ -32,7 +20,7 @@ const era = urlParams.get("era") || "4100_land_topography_climate_with_sources";
 const eraKey = urlParams.get("era") || "kodai"; // 単元キー（OK判定に使用）
 
 document.getElementById("modeLabel").textContent = 
-  mode === "oboeru" ? "覚える編（タイマー付き）" : "わかる編";
+  mode === "oboeru" ? "覚える編" : "わかる編";
 
 let current = 0;
 let timer = null;
@@ -44,7 +32,6 @@ const sourceEl = document.getElementById("source");
 const choicesEl = document.getElementById("choices");
 const explanationEl = document.getElementById("explanation");
 const nextBtn = document.getElementById("nextBtn");
-const prevBtn = document.getElementById("prevBtn");
 
 // 進捗表示用
 function createProgressDisplay() {
@@ -67,14 +54,15 @@ function createProgressDisplay() {
   return progressDisplay;
 }
 
-// タイマー表示用
+// タイマー表示用（モダンなデザイン）
 const timerDisplay = document.createElement("div");
 timerDisplay.id = "timer";
-timerDisplay.style.fontSize = "1em";
-timerDisplay.style.fontWeight = "bold";
-timerDisplay.style.color = "#d00";
-timerDisplay.style.margin = "0.5em 0";
 document.querySelector(".question-box").insertBefore(timerDisplay, sourceEl);
+
+// oboeruモードではsource要素を初期状態で非表示
+if (mode === "oboeru") {
+  sourceEl.style.display = "none";
+}
 
 // 戻るボタンを初期化時に追加
 function addBackButton() {
@@ -155,9 +143,23 @@ function loadQuestion() {
   
   questionEl.innerHTML = q.text || q.question;
   sourceEl.innerHTML = mode === "wakaru" ? q.source : "";
-  explanationEl.textContent = "";
+  // oboeruモードではsource要素を非表示
+  if (mode === "oboeru") {
+    sourceEl.style.display = "none";
+    // oboeruモードでは下部の枠囲みに単元名を表示
+    const eraLabelElement = document.getElementById("eraLabel");
+    if (eraLabelElement && eraLabelElement.textContent) {
+      explanationEl.textContent = eraLabelElement.textContent;
+      explanationEl.style.display = "block";
+    } else {
+      explanationEl.textContent = "";
+      explanationEl.style.display = "none";
+    }
+  } else {
+    sourceEl.style.display = "";
+    explanationEl.textContent = "";
+  }
   nextBtn.style.display = "none";
-  prevBtn.style.display = current > 0 ? "inline-block" : "none";
   choicesEl.innerHTML = "";
   timerDisplay.textContent = "";
   
@@ -180,16 +182,35 @@ function loadQuestion() {
 
   if (mode === "oboeru") {
     timeLeft = 20;
-    timerDisplay.textContent = `のこり ${timeLeft} 秒`;
+    timerDisplay.innerHTML = `<span style="opacity: 0.7;">残り</span> <span style="font-weight: 700;">${timeLeft}</span><span style="opacity: 0.7;">秒</span>`;
     timer = setInterval(() => {
       timeLeft--;
-      timerDisplay.textContent = `のこり ${timeLeft} 秒`;
+      timerDisplay.innerHTML = `<span style="opacity: 0.7;">残り</span> <span style="font-weight: 700;">${timeLeft}</span><span style="opacity: 0.7;">秒</span>`;
       if (timeLeft <= 0) {
         clearInterval(timer);
         handleAnswer(-1); // 時間切れ → 不正解処理
       }
     }, 1000);
   }
+  
+  // 画面を上部にスクロール（次の問題を上部から表示）
+  setTimeout(() => {
+    // question-boxまたはquestion要素にスクロール
+    const questionBox = document.querySelector('.question-box');
+    const questionElement = document.getElementById('question');
+    const scrollTarget = questionBox || questionElement || document.body;
+    
+    if (scrollTarget) {
+      scrollTarget.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start',
+        inline: 'nearest'
+      });
+    } else {
+      // フォールバック: ページの先頭にスクロール
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, 100); // 少し遅延させてDOM更新後に実行
 }
 
 function handleAnswer(selected) {
@@ -218,7 +239,18 @@ function handleAnswer(selected) {
     "🎉 正解です！素晴らしい！" : 
     `❌ 不正解です。正解は「${q.choices[q.answer]}」でした。`;
   
-  explanationEl.textContent = message;
+  // oboeruモードでは単元名も一緒に表示
+  if (mode === "oboeru") {
+    const eraLabelElement = document.getElementById("eraLabel");
+    const unitName = eraLabelElement && eraLabelElement.textContent ? eraLabelElement.textContent : "";
+    if (unitName) {
+      explanationEl.innerHTML = `${message}<br><br><span style="opacity: 0.7; font-size: 0.9em;">${unitName}</span>`;
+    } else {
+      explanationEl.textContent = message;
+    }
+  } else {
+    explanationEl.textContent = message;
+  }
   explanationEl.style.animation = isCorrect ? "correctPulse 0.6s ease" : "wrongShake 0.6s ease";
   nextBtn.style.display = "inline-block";
   
@@ -228,14 +260,6 @@ function handleAnswer(selected) {
   
   // 個別問題の回答をメインページに送信（復習システム無効化のため削除）
 }
-
-// 前の問題へ戻る
-prevBtn.onclick = () => {
-  if (current > 0) {
-    current--;
-    loadQuestion();
-  }
-};
 
 // 個別問題の回答をメインページに送信する関数
 function sendQuestionAnswerToParent(questionData, userAnswer, isCorrect) {
@@ -348,7 +372,6 @@ nextBtn.onclick = () => {
     choicesEl.innerHTML = "";
     explanationEl.textContent = "";
     nextBtn.style.display = "none";
-    prevBtn.style.display = "none";
     
     // 学習履歴を保存
     learningTracker.saveSession();

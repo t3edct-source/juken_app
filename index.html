@@ -863,23 +863,40 @@
 
 <script type="module" src="./app.js?v=20241219-016" onload="console.log('✅ app.js 読み込み完了')" onerror="console.error('❌ app.js 読み込み失敗')"></script>
 
-<!-- 開発・テスト用：直接購入ボタン（社会小5） -->
+<!-- ===== 開発・テスト用：すべてをオープン（本番公開時に削除予定） ===== -->
 <div id="devPurchaseSection" style="position: fixed; bottom: 20px; right: 20px; background: rgba(255,255,255,0.95); padding: 15px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 2px solid #e5e7eb; z-index: 1000;">
   <div style="margin-bottom: 10px; font-size: 0.875rem; color: #6b7280;">開発・テスト用</div>
-  <button id="buy-shakai" style="background: #2563eb; color: white; padding: 10px 15px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.875rem;">社会小5（¥2,980）を購入</button>
+  <button id="unlock-all" style="background: #dc2626; color: white; padding: 10px 15px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.875rem; font-weight: 600;">すべてをオープン</button>
 </div>
 
 <script type="module">
-  // 開発・テスト用の直接購入ボタン
-  document.getElementById("buy-shakai")?.addEventListener("click", () => {
-    if (window.startPurchase) {
-      window.startPurchase("shakai_gakushu_5", "社会小5");
+  // 開発・テスト用：すべてのパックを購入済みにする（本番公開時に削除予定）
+  document.getElementById("unlock-all")?.addEventListener("click", () => {
+    // すべてのパックIDを取得
+    const allPackIds = ['g4-sci', 'g4-soc', 'g5-sci', 'g5-soc', 'g6-sci', 'g6-soc'];
+    
+    // LocalStorageから現在の購入済みリストを取得
+    const currentPurchases = JSON.parse(localStorage.getItem('purchases') || '[]');
+    
+    // すべてのパックを追加（重複を避ける）
+    const updatedPurchases = [...new Set([...currentPurchases, ...allPackIds])];
+    
+    // LocalStorageに保存
+    localStorage.setItem('purchases', JSON.stringify(updatedPurchases));
+    
+    // 画面を再描画（app.jsの関数を使用）
+    if (window.renderAppView) {
+      // renderAppView関数が利用可能な場合はそれを使用
+      window.renderAppView();
     } else {
-      console.error("startPurchase 関数が見つかりません");
+      // ページをリロードして反映
+      window.location.reload();
     }
+    
+    alert('✅ すべてのコンテンツがオープンされました！');
   });
   
-  // 開発環境でのみ表示
+  // 開発環境でのみ表示（本番公開時に削除予定）
   if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
     document.getElementById("devPurchaseSection").style.display = "block";
   }

@@ -208,7 +208,7 @@ body::before {
   margin-bottom: 1rem;
 }
 
-#nextBtn, #prevBtn {
+#nextBtn {
   padding: 0.75rem 2rem;
   font-size: 1rem;
   font-weight: 600;
@@ -219,24 +219,16 @@ body::before {
   position: relative;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-#nextBtn {
   background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
   color: white;
 }
 
-#prevBtn {
-  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
-  color: white;
-}
-
-#nextBtn:hover, #prevBtn:hover {
+#nextBtn:hover {
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
 
-#nextBtn:active, #prevBtn:active {
+#nextBtn:active {
   transform: translateY(0) scale(1.02);
 }
 
@@ -309,7 +301,7 @@ body::before {
     gap: 0.75rem;
   }
   
-  #nextBtn, #prevBtn {
+  #nextBtn {
     padding: 0.875rem 1.5rem;
     font-size: 0.95rem;
   }
@@ -337,7 +329,7 @@ body::before {
 }
 
 /* タッチ操作の最適化 */
-.choices button, #nextBtn, #prevBtn {
+.choices button, #nextBtn {
   min-height: 48px;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
