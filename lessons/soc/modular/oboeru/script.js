@@ -16,7 +16,8 @@ function goBack() {
 
 const urlParams = new URLSearchParams(window.location.search);
 const mode = urlParams.get("mode") || "wakaru"; // デフォルトはわかる編
-const era = urlParams.get("era") || "4100_land_topography_climate_with_sources"; // レッスンID生成用
+// era変数はindex_modular.htmlで既に宣言されるが、script.jsが先に実行される可能性があるため、直接取得
+const era = urlParams.get("era") || window.era || "4100_land_topography_climate_with_sources"; // レッスンID生成用
 const eraKey = urlParams.get("era") || "kodai"; // 単元キー（OK判定に使用）
 
 document.getElementById("modeLabel").textContent = 
@@ -116,7 +117,13 @@ addBackButton();
 
 // ランダム出題用のシャッフル関数
 function shuffleQuestions() {
-  const shuffled = [...questions];
+  // window.questions または questions のいずれかを使用
+  const questionsArray = window.questions || questions;
+  if (!questionsArray || !Array.isArray(questionsArray)) {
+    console.error('❌ 問題データが読み込まれていません');
+    return [];
+  }
+  const shuffled = [...questionsArray];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
@@ -139,7 +146,9 @@ function loadQuestion() {
   
   // 進捗表示を追加
   const progressDisplay = document.getElementById("progress") || createProgressDisplay();
-  progressDisplay.textContent = `問題 ${current + 1} / ${questions.length}`;
+  const questionsArray = window.questions || questions;
+  const totalQuestions = questionsArray ? questionsArray.length : 0;
+  progressDisplay.textContent = `問題 ${current + 1} / ${totalQuestions}`;
   
   questionEl.innerHTML = q.text || q.question;
   sourceEl.innerHTML = mode === "wakaru" ? q.source : "";
@@ -147,9 +156,21 @@ function loadQuestion() {
   if (mode === "oboeru") {
     sourceEl.style.display = "none";
     // oboeruモードでは下部の枠囲みに単元名を表示
+    let unitName = "";
     const eraLabelElement = document.getElementById("eraLabel");
     if (eraLabelElement && eraLabelElement.textContent) {
-      explanationEl.textContent = eraLabelElement.textContent;
+      unitName = eraLabelElement.textContent;
+    } else if (window.eraMap && era) {
+      // eraLabelがまだ設定されていない場合は、直接eraMapから取得
+      unitName = window.eraMap[era] || era;
+      // eraLabelにも設定しておく
+      if (eraLabelElement) {
+        eraLabelElement.textContent = unitName;
+      }
+    }
+    
+    if (unitName) {
+      explanationEl.textContent = unitName;
       explanationEl.style.display = "block";
     } else {
       explanationEl.textContent = "";
@@ -241,8 +262,15 @@ function handleAnswer(selected) {
   
   // oboeruモードでは単元名も一緒に表示
   if (mode === "oboeru") {
+    let unitName = "";
     const eraLabelElement = document.getElementById("eraLabel");
-    const unitName = eraLabelElement && eraLabelElement.textContent ? eraLabelElement.textContent : "";
+    if (eraLabelElement && eraLabelElement.textContent) {
+      unitName = eraLabelElement.textContent;
+    } else if (window.eraMap && era) {
+      // eraLabelがまだ設定されていない場合は、直接eraMapから取得
+      unitName = window.eraMap[era] || era;
+    }
+    
     if (unitName) {
       explanationEl.innerHTML = `${message}<br><br><span style="opacity: 0.7; font-size: 0.9em;">${unitName}</span>`;
     } else {
@@ -359,9 +387,11 @@ function showCurrentSessionResult() {
 
 // 次の問題へ進む
 nextBtn.onclick = () => {
-  console.log('🔄 nextBtn.onclick 実行:', { current, totalQuestions: questions.length });
+  const questionsArray = window.questions || questions;
+  const totalQuestions = questionsArray ? questionsArray.length : 0;
+  console.log('🔄 nextBtn.onclick 実行:', { current, totalQuestions: totalQuestions });
   current++;
-  if (current < questions.length) {
+  if (current < totalQuestions) {
     console.log('📝 次の問題を読み込み:', current + 1);
     loadQuestion();
   } else {
@@ -770,18 +800,36 @@ const learningTracker = new LearningTracker();
 
 // 初期化：わかる編は配列順、覚える編はランダム
 function startApp() {
+  // window.questions または questions のいずれかを使用
+  const questionsArray = window.questions || questions;
+  if (!questionsArray || !Array.isArray(questionsArray) || questionsArray.length === 0) {
+    console.error('❌ 問題データが読み込まれていません');
+    return;
+  }
+  
   if (mode === "oboeru") {
     shuffledQuestions = shuffleQuestions();
   } else {
     // わかる編は questions をそのまま
-    shuffledQuestions = [...questions];
+    shuffledQuestions = [...questionsArray];
   }
   loadQuestion();
 }
 
 // データ到着後に開始（loader.js が questions を読み込むため）
 (function waitForQuestions(){
-  if (typeof questions !== 'undefined' && Array.isArray(questions) && questions.length > 0) {
+  // 既に実行済みの場合は再実行しない
+  if (window._appStarted) {
+    return;
+  }
+  
+  // window.questions または questions のいずれかが読み込まれているかチェック
+  const questionsLoaded = (typeof window.questions !== 'undefined' && Array.isArray(window.questions) && window.questions.length > 0) ||
+                         (typeof questions !== 'undefined' && Array.isArray(questions) && questions.length > 0);
+  
+  if (questionsLoaded) {
+    // 実行済みフラグを設定
+    window._appStarted = true;
     startApp();
   } else {
     setTimeout(waitForQuestions, 50);

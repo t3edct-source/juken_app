@@ -56,14 +56,31 @@ function createProgressDisplay() {
   return progressDisplay;
 }
 
-// タイマー表示用
-const timerDisplay = document.createElement("div");
-timerDisplay.id = "timer";
-timerDisplay.style.fontSize = "1em";
-timerDisplay.style.fontWeight = "bold";
-timerDisplay.style.color = "#d00";
-timerDisplay.style.margin = "0.5em 0";
-document.querySelector(".question-box").insertBefore(timerDisplay, sourceEl);
+// タイマー表示用（覚える編でのみ作成・表示）
+let timerDisplay = null;
+if (mode === "oboeru") {
+  timerDisplay = document.createElement("div");
+  timerDisplay.id = "timer";
+  timerDisplay.style.fontSize = "1em";
+  timerDisplay.style.fontWeight = "bold";
+  timerDisplay.style.color = "#d00";
+  timerDisplay.style.margin = "0.5em 0";
+  timerDisplay.style.display = "block"; // 覚える編では表示
+  document.querySelector(".question-box").insertBefore(timerDisplay, sourceEl);
+} else {
+  // わかる編の場合、もしタイマー要素が存在していたら完全に非表示にする
+  const existingTimer = document.getElementById("timer");
+  if (existingTimer) {
+    existingTimer.style.display = "none";
+    existingTimer.style.visibility = "hidden";
+    existingTimer.style.height = "0";
+    existingTimer.style.minHeight = "0";
+    existingTimer.style.padding = "0";
+    existingTimer.style.margin = "0";
+    existingTimer.style.overflow = "hidden";
+    existingTimer.remove(); // DOMから完全に削除
+  }
+}
 
 // 戻るボタンを初期化時に追加
 function addBackButton() {
@@ -117,7 +134,13 @@ addBackButton();
 
 // ランダム出題用のシャッフル関数
 function shuffleQuestions() {
-  const shuffled = [...questions];
+  // window.questions または questions のいずれかを使用
+  const questionsArray = window.questions || questions;
+  if (!questionsArray || !Array.isArray(questionsArray)) {
+    console.error('❌ 問題データが読み込まれていません');
+    return [];
+  }
+  const shuffled = [...questionsArray];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
@@ -142,7 +165,9 @@ function loadQuestion() {
   const progressDisplay = document.getElementById("progress") || createProgressDisplay();
   if (progressDisplay) {
     progressDisplay.style.display = "block";
-    progressDisplay.textContent = `問題 ${current + 1} / ${questions.length}`;
+    const questionsArray = window.questions || questions;
+    const totalQuestions = questionsArray ? questionsArray.length : 0;
+    progressDisplay.textContent = `問題 ${current + 1} / ${totalQuestions}`;
   }
   
   questionEl.innerHTML = q.text || q.question;
@@ -153,13 +178,24 @@ function loadQuestion() {
     visualEl.style.display = "block";
   } else {
     visualEl.style.display = "none";
+    visualEl.innerHTML = ""; // 内容もクリア
   }
   
   sourceEl.innerHTML = mode === "wakaru" ? q.source : "";
+  
+  // wakaruモードでタイマー要素が存在する場合は確実に削除
+  if (mode === "wakaru") {
+    const timerEl = document.getElementById("timer");
+    if (timerEl) {
+      timerEl.remove();
+    }
+  }
   explanationEl.textContent = "";
   nextBtn.style.display = "none";
   choicesEl.innerHTML = "";
-  timerDisplay.textContent = "";
+  if (timerDisplay) {
+    timerDisplay.textContent = "";
+  }
   
   // 最後の問題に到達した場合、完了メッセージを送信
   if (current === shuffledQuestions.length - 1) {
@@ -178,12 +214,14 @@ function loadQuestion() {
     choicesEl.appendChild(btn);
   });
 
-  if (mode === "oboeru") {
+  if (mode === "oboeru" && timerDisplay) {
     timeLeft = 20;
     timerDisplay.textContent = `のこり ${timeLeft} 秒`;
     timer = setInterval(() => {
       timeLeft--;
-      timerDisplay.textContent = `のこり ${timeLeft} 秒`;
+      if (timerDisplay) {
+        timerDisplay.textContent = `のこり ${timeLeft} 秒`;
+      }
       if (timeLeft <= 0) {
         clearInterval(timer);
         handleAnswer(-1); // 時間切れ → 不正解処理
@@ -347,11 +385,13 @@ function showCurrentSessionResult() {
 
 // 次の問題へ進む
 nextBtn.onclick = () => {
-  console.log('🔄 nextBtn.onclick 実行:', { current, totalQuestions: questions.length });
+  const questionsArray = window.questions || questions;
+  const totalQuestions = questionsArray ? questionsArray.length : 0;
+  console.log('🔄 nextBtn.onclick 実行:', { current, totalQuestions: totalQuestions });
   current++;
   
   // チェックポイント検出（10問、20問完了時）
-  if (current > 0 && current % 10 === 0 && current < questions.length) {
+  if (current > 0 && current % 10 === 0 && current < totalQuestions) {
     console.log(`✅ チェックポイント到達: ${current}問完了`);
     // チェックポイントを自動保存
     saveCheckpoint();
@@ -360,14 +400,16 @@ nextBtn.onclick = () => {
     return; // ユーザーが選択するまで待つ
   }
   
-  if (current < questions.length) {
+  if (current < totalQuestions) {
     console.log('📝 次の問題を読み込み:', current + 1);
     loadQuestion();
   } else {
     console.log('🎯 レッスン完了！メッセージ送信処理を開始');
     questionEl.textContent = "終了！おつかれさまでした。";
     sourceEl.textContent = "";
-    timerDisplay.textContent = "";
+    if (timerDisplay) {
+      timerDisplay.textContent = "";
+    }
     choicesEl.innerHTML = "";
     explanationEl.textContent = "";
     nextBtn.style.display = "none";
@@ -998,7 +1040,9 @@ function showResumeDialog(checkpoint) {
       position: relative;
     `;
     
-    const progressPercent = Math.round((checkpoint.current / questions.length) * 100);
+    const questionsArray = window.questions || questions;
+    const totalQuestions = questionsArray ? questionsArray.length : 0;
+    const progressPercent = totalQuestions > 0 ? Math.round((checkpoint.current / totalQuestions) * 100) : 0;
     const scorePercent = checkpoint.session.totalQuestions > 0 ? 
       Math.round((checkpoint.session.score / checkpoint.session.totalQuestions) * 100) : 0;
     
@@ -1070,7 +1114,7 @@ function showResumeDialog(checkpoint) {
             font-weight: 700;
             color: #166534;
             margin-bottom: 0.75rem;
-          ">${checkpoint.current} / ${questions.length}問完了</div>
+          ">${checkpoint.current} / ${totalQuestions}問完了</div>
           <div style="
             height: 8px;
             background: #dcfce7;
@@ -1231,7 +1275,8 @@ function showCheckpointDialog(questionNum) {
   if (checkpointMode) return;
   
   checkpointMode = true;
-  const totalQuestions = questions.length;
+  const questionsArray = window.questions || questions;
+  const totalQuestions = questionsArray ? questionsArray.length : 0;
   const completedQuestions = questionNum;
   const session = learningTracker.currentSession;
   const scorePercent = session.totalQuestions > 0 ? 
@@ -1560,7 +1605,13 @@ async function startApp() {
     }
   } else {
     // わかる編は questions をそのまま
-    shuffledQuestions = [...questions];
+    // window.questions または questions のいずれかを使用
+    const questionsArray = window.questions || questions;
+    if (!questionsArray || !Array.isArray(questionsArray) || questionsArray.length === 0) {
+      console.error('❌ 問題データが読み込まれていません');
+      return;
+    }
+    shuffledQuestions = [...questionsArray];
     
     // 再開時は説明テキストをスキップして直接問題を表示
     if (current > 0) {
@@ -1574,7 +1625,18 @@ async function startApp() {
 
 // データ到着後に開始（loader.js が questions を読み込むため）
 (function waitForQuestions(){
-  if (typeof questions !== 'undefined' && Array.isArray(questions) && questions.length > 0) {
+  // 既に実行済みの場合は再実行しない
+  if (window._appStarted) {
+    return;
+  }
+  
+  // window.questions または questions のいずれかが読み込まれているかチェック
+  const questionsLoaded = (typeof window.questions !== 'undefined' && Array.isArray(window.questions) && window.questions.length > 0) ||
+                         (typeof questions !== 'undefined' && Array.isArray(questions) && questions.length > 0);
+  
+  if (questionsLoaded) {
+    // 実行済みフラグを設定
+    window._appStarted = true;
     startApp();
   } else {
     setTimeout(waitForQuestions, 50);

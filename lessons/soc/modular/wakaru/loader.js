@@ -128,6 +128,7 @@
     '4116_world_geography': '4116_world_geography_with_sources.js',
     
     // 歴史分野の直接ファイル名でのアクセス（catalog.jsonから）
+    '4200_paleolithic_jomon_yayoi_with_sources': '4200_paleolithic_jomon_yayoi_with_sources.js',
     '4201_kofun_asuka_with_sources': '4201_kofun_asuka_with_sources.js',
     '4202_nara_period_with_sources': '4202_nara_period_with_sources.js',
     '4203_heian_period': '4203_heian_period.js',
@@ -140,6 +141,16 @@
     '4210_showa_postwar': '4210_showa_postwar.js',
     '4211_heisei_reiwa': '4211_heisei_reiwa.js',
     '4212_cross_period_problems': '4212_cross_period_problems.js',
+    
+    // 公民分野の直接ファイル名でのアクセス（catalog.jsonから）
+    '4300_politics_national_life': '4300_politics_national_life.js',
+    '4301_constitution_three_principles': '4301_constitution_three_principles.js',
+    '4302_diet_cabinet_judiciary': '4302_diet_cabinet_judiciary.js',
+    '4303_finance_local_government': '4303_finance_local_government.js',
+    '4304_world_affairs_international': '4304_world_affairs_international.js',
+    '4305_modern_social_issues': '4305_modern_social_issues.js',
+    
+    // テーマ史の直接ファイル名でのアクセス
     '4213_theme_politics_economy': '4213_theme_politics_economy.js',
     '4214_theme_people': '4214_theme_people.js',
     '4215_theme_diplomacy': '4215_theme_diplomacy.js',

@@ -339,7 +339,7 @@ window.questions = [
       "陶器"
     ],
     "answer": 0,
-    "source": ""プラからプラ”に戻すのも大切ですが、**ペットボトルは繊維（フリース衣料）**にも再生できます。ボトル→糸→布へと生まれ変わる道を作ると、石油から新しく作る量を減らせます。分別は“資源のパスポート”。正しい箱へ旅立たせましょう。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">ペットボトルの再資源化\n\n🥤 ペットボトル\n    ↓\n♻️ リサイクル\n    ↓\n🧵 糸\n    ↓\n👕 フリース衣料・カーペット\n\nボトルから糸へ生まれ変わる</div>",
+    "source": "\"プラからプラ\"に戻すのも大切ですが、**ペットボトルは繊維（フリース衣料）**にも再生できます。ボトル→糸→布へと生まれ変わる道を作ると、石油から新しく作る量を減らせます。分別は\"資源のパスポート\"。正しい箱へ旅立たせましょう。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">ペットボトルの再資源化\n\n🥤 ペットボトル\n    ↓\n♻️ リサイクル\n    ↓\n🧵 糸\n    ↓\n👕 フリース衣料・カーペット\n\nボトルから糸へ生まれ変わる</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -369,7 +369,7 @@ window.questions = [
       "リフレッシュ"
     ],
     "answer": 0,
-    "source": ""たくさん作ってたくさん捨てる”は逆方向。リサイクルや代替素材も大切ですが、まずは**リデュース（使う量を減らす）**が根本対策。ストローより“ストップ”。いらない袋や過剰包装を断るのが、いちばんの近道です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">プラスチックごみの根本対策\n\n📦 プラスチック\n    ↓\n1️⃣ リデュース（使う量を減らす）\n    ↓\n🚫 いらない袋・過剰包装を断る\n    ↓\n📉 ごみの発生を根本から減らす\n\nストローよりストップ</div>",
+    "source": "\"たくさん作ってたくさん捨てる\"は逆方向。リサイクルや代替素材も大切ですが、まずは**リデュース（使う量を減らす）**が根本対策。ストローより\"ストップ\"。いらない袋や過剰包装を断るのが、いちばんの近道です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">プラスチックごみの根本対策\n\n📦 プラスチック\n    ↓\n1️⃣ リデュース（使う量を減らす）\n    ↓\n🚫 いらない袋・過剰包装を断る\n    ↓\n📉 ごみの発生を根本から減らす\n\nストローよりストップ</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -444,7 +444,7 @@ window.questions = [
       "大量生産・大量廃棄"
     ],
     "answer": 0,
-    "source": ""大量生産・大量廃棄”や“化石燃料たくさん”は逆方向。日本がめざすのは**3Rの推進**。まず減らし、くり返し使い、資源に戻す“ぐるぐる回る社会”です。作る・運ぶ・捨てるの流れを小さくして、豊かさと環境の両立をねらいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">循環型社会（3Rの推進）\n\n1️⃣ リデュース（減らす）\n    ↓\n2️⃣ リユース（くり返し使う）\n    ↓\n3️⃣ リサイクル（資源に戻す）\n    ↓\n🔄 ぐるぐる回る社会\n\n作る・運ぶ・捨てるの流れを小さく\n豊かさと環境の両立</div>",
+    "source": "\"大量生産・大量廃棄\"や\"化石燃料たくさん\"は逆方向。日本がめざすのは**3Rの推進**。まず減らし、くり返し使い、資源に戻す\"ぐるぐる回る社会\"です。作る・運ぶ・捨てるの流れを小さくして、豊かさと環境の両立をねらいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">循環型社会（3Rの推進）\n\n1️⃣ リデュース（減らす）\n    ↓\n2️⃣ リユース（くり返し使う）\n    ↓\n3️⃣ リサイクル（資源に戻す）\n    ↓\n🔄 ぐるぐる回る社会\n\n作る・運ぶ・捨てるの流れを小さく\n豊かさと環境の両立</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"

@@ -9,8 +9,8 @@ window.questions = [
       "特権身分制"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -24,8 +24,8 @@ window.questions = [
       "検閲の推奨"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -39,8 +39,8 @@ window.questions = [
       "軍政"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -54,8 +54,8 @@ window.questions = [
       "租税法律主義"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -69,8 +69,8 @@ window.questions = [
       "法外に制限できる"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -84,8 +84,8 @@ window.questions = [
       "第76条"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -99,8 +99,8 @@ window.questions = [
       "外交の優越"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -114,8 +114,8 @@ window.questions = [
       "暴力の自由"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -129,8 +129,8 @@ window.questions = [
       "絶対王政"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -144,8 +144,8 @@ window.questions = [
       "宗教で差別する"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -159,8 +159,8 @@ window.questions = [
       "社会権"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -174,8 +174,8 @@ window.questions = [
       "裁判を受ける権利"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -189,8 +189,8 @@ window.questions = [
       "信書の秘密"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -204,8 +204,8 @@ window.questions = [
       "首長の命令"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -219,8 +219,8 @@ window.questions = [
       "三権分立"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -234,8 +234,8 @@ window.questions = [
       "身分制を強化する"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -249,8 +249,8 @@ window.questions = [
       "教育は国民の権利ではない"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -264,8 +264,8 @@ window.questions = [
       "宗派優越"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -279,8 +279,8 @@ window.questions = [
       "軍の統制"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -294,8 +294,8 @@ window.questions = [
       "選挙管理委員会"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -309,8 +309,8 @@ window.questions = [
       "全会一致"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -324,8 +324,8 @@ window.questions = [
       "閣議決定"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -339,8 +339,8 @@ window.questions = [
       "強者の利益優先"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -354,8 +354,8 @@ window.questions = [
       "出所秘匿"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -369,8 +369,8 @@ window.questions = [
       "いずれも保障されない"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -384,8 +384,8 @@ window.questions = [
       "農村のみ禁止"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -399,8 +399,8 @@ window.questions = [
       "教授の自由"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -414,8 +414,8 @@ window.questions = [
       "投票だけで救済"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -429,8 +429,8 @@ window.questions = [
       "課税できない"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -444,8 +444,8 @@ window.questions = [
       "宗派優越"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   }

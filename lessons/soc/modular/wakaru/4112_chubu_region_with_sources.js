@@ -285,7 +285,7 @@ window.questions = [
       "リンゴ"
     ],
     "answer": 0,
-    "source": "富山平野では用水路や圃場整備などの土地改良が進み、広い田んぼで**米**づくりが安定しました。茶・ミカン・リンゴは気候や地形が異なる地域の主作物。北アルプスの雪どけ水が"田んぼの命の線"になっている、と考えると覚えやすいです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">富山平野（米づくり）\n\n⛰️ 北アルプスの雪どけ水\n    ↓\n💧 用水路・圃場整備\n    ↓\n🏞️ 土地改良が進む\n    ↓\n🌾 広い田んぼで米づくりが安定\n    ↓\n🌾 米（富山平野の主作物）</div>",
+    "source": "富山平野では用水路や圃場整備などの土地改良が進み、広い田んぼで**米**づくりが安定しました。茶・ミカン・リンゴは気候や地形が異なる地域の主作物。北アルプスの雪どけ水が\"田んぼの命の線\"になっている、と考えると覚えやすいです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">富山平野（米づくり）\n\n⛰️ 北アルプスの雪どけ水\n    ↓\n💧 用水路・圃場整備\n    ↓\n🏞️ 土地改良が進む\n    ↓\n🌾 広い田んぼで米づくりが安定\n    ↓\n🌾 米（富山平野の主作物）</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"

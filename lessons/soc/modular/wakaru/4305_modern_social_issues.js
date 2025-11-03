@@ -9,8 +9,8 @@ window.questions = [
       "高齢者の激減"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -24,8 +24,8 @@ window.questions = [
       "就学の禁止"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -39,8 +39,8 @@ window.questions = [
       "誹謗中傷の容認"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -54,8 +54,8 @@ window.questions = [
       "排出増加の奨励"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -69,8 +69,8 @@ window.questions = [
       "育児休業の禁止"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -84,8 +84,8 @@ window.questions = [
       "勧誘への無条件同意"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -99,8 +99,8 @@ window.questions = [
       "暴力容認"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -114,8 +114,8 @@ window.questions = [
       "単一価値の押し付け"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -129,8 +129,8 @@ window.questions = [
       "労働三権の否定"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -144,8 +144,8 @@ window.questions = [
       "情報非公開"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -159,8 +159,8 @@ window.questions = [
       "需要急増の放置"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -174,8 +174,8 @@ window.questions = [
       "感情優先"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -189,8 +189,8 @@ window.questions = [
       "資源の浪費"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -204,8 +204,8 @@ window.questions = [
       "情報遮断"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -219,8 +219,8 @@ window.questions = [
       "教育機会の制限"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -234,8 +234,8 @@ window.questions = [
       "医療の自己責任化のみ"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -249,8 +249,8 @@ window.questions = [
       "交通網の縮小のみ"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -264,8 +264,8 @@ window.questions = [
       "記録の隠蔽"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -279,8 +279,8 @@ window.questions = [
       "差別的運用"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -294,8 +294,8 @@ window.questions = [
       "備蓄不要"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -309,8 +309,8 @@ window.questions = [
       "消費期限の無視"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -324,8 +324,8 @@ window.questions = [
       "排除の正当化"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -339,8 +339,8 @@ window.questions = [
       "法令無視"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -354,8 +354,8 @@ window.questions = [
       "偏見の固定化"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -369,8 +369,8 @@ window.questions = [
       "フィッシングへの無対応"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -384,8 +384,8 @@ window.questions = [
       "なりすまし"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -399,8 +399,8 @@ window.questions = [
       "大量廃棄推奨"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -414,8 +414,8 @@ window.questions = [
       "情報遮断"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -429,8 +429,8 @@ window.questions = [
       "料金の高騰"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -444,8 +444,8 @@ window.questions = [
       "過度な浪費"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   }

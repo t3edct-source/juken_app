@@ -232,9 +232,10 @@ body::before {
   transform: translateY(0) scale(1.02);
 }
 
-/* タイマー表示 */
+/* タイマー表示（覚える編でのみ表示） */
 #timer {
-  /* わかる編では表示されないため、覚える編でのみ背景を表示 */
+  /* wakaruモードでは完全に非表示 */
+  display: none !important;
   color: white;
   padding: 0.75rem 1.25rem;
   border-radius: 12px;
@@ -242,6 +243,21 @@ body::before {
   text-align: center;
   margin-bottom: 1rem;
   font-size: 1.1rem;
+  min-height: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* 覚える編（oboeruモード）でのみタイマーを表示 */
+body:has([data-mode="oboeru"]) #timer,
+body.oboeru-mode #timer {
+  display: block !important;
+  min-height: auto;
+  height: auto;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
 }
 
 /* 覚える編でのみタイマー背景を表示 */

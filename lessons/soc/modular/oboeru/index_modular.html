@@ -123,10 +123,24 @@
       
       // 既存の教材（後方互換性） - ダミーファイルは削除済み
     };
-    const era = new URLSearchParams(location.search).get("era") || "geo_land_topo";
-    const mode = new URLSearchParams(location.search).get("mode") || "wakaru";
+    // eraMapをグローバルに公開（script.jsからアクセス可能にする）
+    window.eraMap = eraMap;
     
-    document.getElementById("eraLabel").textContent = eraMap[era] || era;
+    // era変数はscript.jsで既に宣言されているため、ここではwindow.eraのみ設定
+    // script.jsより後に実行されるため、eraLabelの設定を行う
+    (function() {
+      const era = new URLSearchParams(location.search).get("era") || window.era || "geo_land_topo";
+      const mode = new URLSearchParams(location.search).get("mode") || window.mode || "wakaru";
+      
+      // era変数をグローバルに公開（他のスクリプトから参照可能にする）
+      window.era = era;
+      window.mode = mode;
+      
+      const eraLabelElement = document.getElementById("eraLabel");
+      if (eraLabelElement && eraMap[era]) {
+        eraLabelElement.textContent = eraMap[era] || era;
+      }
+    })();
     
   </script>
 </body>

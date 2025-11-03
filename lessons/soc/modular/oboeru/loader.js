@@ -2,6 +2,7 @@
 (function() {
   const params = new URLSearchParams(window.location.search);
   const era = params.get('era') || 'geo_land_topo'; // デフォルト：地形・気候
+  const mode = params.get('mode') || 'oboeru'; // モード取得
 
   // 中学受験社会：教材マップ
   const map = {
@@ -22,12 +23,13 @@
     'geo_kinki': '4113_kinki_region_with_sources.js',
     'geo_chugoku_shikoku': '4114_chugoku_shikoku_region_with_sources.js',
     'geo_kyushu': '4115_kyushu_region_with_sources.js',
-    'geo_world': '4116_world_geography.js',
+    'geo_world': '4116_world_geography_with_sources.js',
     
     // 地図学習分野 (42xx)
     '4200_map_hokkaido_with_sources': '4200_map_hokkaido_with_sources.js',
     
     // 歴史分野 (42xx)
+    '4200_paleolithic_jomon_yayoi_with_sources': '4200_paleolithic_jomon_yayoi_with_sources.js',
     '4201_paleolithic_jomon_yayoi_with_sources': '4200_paleolithic_jomon_yayoi_with_sources.js',
     '4202_kofun_asuka_with_sources': '4201_kofun_asuka_with_sources.js',
     '4203_nara_period_with_sources': '4202_nara_period_with_sources.js',
@@ -93,23 +95,56 @@
     '4102_prefectures_cities_with_sources': '4102_prefectures_cities_with_sources.js',
     '4103_industry_energy_with_sources': '4103_industry_energy_with_sources.js',
     '4104_commerce_trade_transportation_with_sources': '4104_commerce_trade_transportation_with_sources.js',
+    '4104_commerce_trade_transportation': '4104_commerce_trade_transportation_with_sources.js',
     '4106_environment_with_sources': '4106_environment_with_sources.js',
     '4107_information_with_sources': '4107_information_with_sources.js',
     '4108_maps_topographic_symbols_with_sources': '4108_maps_topographic_symbols_with_sources.js',
+    '4108_maps_topographic_symbols': '4108_maps_topographic_symbols_with_sources.js',
     '4109_hokkaido_region_with_sources': '4109_hokkaido_region_with_sources.js',
+    '4109_hokkaido_region': '4109_hokkaido_region_with_sources.js',
     '4110_tohoku_region_with_sources': '4110_tohoku_region_with_sources.js',
+    '4110_tohoku_region': '4110_tohoku_region_with_sources.js',
     '4111_kanto_region_with_sources': '4111_kanto_region_with_sources.js',
+    '4111_kanto_region': '4111_kanto_region_with_sources.js',
     '4112_chubu_region_with_sources': '4112_chubu_region_with_sources.js',
+    '4112_chubu_region': '4112_chubu_region_with_sources.js',
     '4113_kinki_region_with_sources': '4113_kinki_region_with_sources.js',
+    '4113_kinki_region': '4113_kinki_region_with_sources.js',
     '4114_chugoku_shikoku_region_with_sources': '4114_chugoku_shikoku_region_with_sources.js',
+    '4114_chugoku_shikoku_region': '4114_chugoku_shikoku_region_with_sources.js',
     '4115_kyushu_region_with_sources': '4115_kyushu_region_with_sources.js',
-    '4116_world_geography': '4116_world_geography.js',
+    '4115_kyushu_region': '4115_kyushu_region_with_sources.js',
+    '4116_world_geography_with_sources': '4116_world_geography_with_sources.js',
+    '4116_world_geography': '4116_world_geography_with_sources.js',
+    
+    // 歴史分野の直接ファイル名でのアクセス（catalog.jsonから）
+    '4200_paleolithic_jomon_yayoi_with_sources': '4200_paleolithic_jomon_yayoi_with_sources.js',
+    '4201_kofun_asuka_with_sources': '4201_kofun_asuka_with_sources.js',
+    '4202_nara_period_with_sources': '4202_nara_period_with_sources.js',
+    '4203_heian_period': '4203_heian_period.js',
+    '4204_kamakura_period': '4204_kamakura_period.js',
+    '4205_muromachi_period': '4205_muromachi_period.js',
+    '4206_azuchi_momoyama': '4206_azuchi_momoyama.js',
+    '4207_edo_period': '4207_edo_period.js',
+    '4208_meiji_period': '4208_meiji_period.js',
+    '4209_taisho_showa_prewar': '4209_taisho_showa_prewar.js',
+    '4210_showa_postwar': '4210_showa_postwar.js',
+    '4211_heisei_reiwa': '4211_heisei_reiwa.js',
+    '4212_cross_period_problems': '4212_cross_period_problems.js',
     
     // テーマ史の直接ファイル名でのアクセス
     '4213_theme_politics_economy': '4213_theme_politics_economy.js',
     '4214_theme_people': '4214_theme_people.js',
     '4215_theme_diplomacy': '4215_theme_diplomacy.js',
     '4216_theme_culture': '4216_theme_culture.js',
+    
+    // 公民分野の直接ファイル名でのアクセス（catalog.jsonから）
+    '4300_politics_national_life': '4300_politics_national_life.js',
+    '4301_constitution_three_principles': '4301_constitution_three_principles.js',
+    '4302_diet_cabinet_judiciary': '4302_diet_cabinet_judiciary.js',
+    '4303_finance_local_government': '4303_finance_local_government.js',
+    '4304_world_affairs_international': '4304_world_affairs_international.js',
+    '4305_modern_social_issues': '4305_modern_social_issues.js',
     
     // 総合分野の直接ファイル名でのアクセス
     '4217_geography_theme_cross': '4217_geography_theme_cross.js',
@@ -126,18 +161,55 @@
     '4228_practice_d': '4228_practice_d.js'
   };
 
+  // eraパラメータの検証
+  console.log('🔍 デバッグ: eraパラメータ =', era);
+  console.log('🔍 デバッグ: eraパラメータの型 =', typeof era);
+  console.log('🔍 デバッグ: eraパラメータの長さ =', era ? era.length : 0);
+  console.log('🔍 デバッグ: マッピングキー一覧 =', Object.keys(map).filter(k => k.includes('4108') || k.includes('4106')).join(', '));
+  
   const file = map[era];
   if (!file) {
+    console.error('❌ 未対応の単元キーです: ' + era);
+    console.error('❌ eraパラメータの詳細:', JSON.stringify(era));
+    console.error('❌ マッピングに存在するキー:', Object.keys(map).filter(k => k.includes(era?.substring(0, 4) || '')).join(', '));
     alert('未対応の単元キーです: ' + era);
     return;
   }
+  
+  console.log('📚 loader.js: era=', era, 'mode=', mode, 'file=', file);
+  
+  // wakaruモードの場合はwakaruディレクトリ内のファイルを読み込む
+  let filePath = file;
+  const isWakaruMode = mode === 'wakaru';
+  const isLessonFile = file.startsWith('41') || file.startsWith('42') || file.startsWith('43');
+  
+  if (isWakaruMode && isLessonFile) {
+    filePath = '../wakaru/' + file;
+    console.log('✅ wakaruモード: パスを変更', filePath);
+    console.log('📁 wakaruディレクトリのファイルを読み込みます');
+  } else {
+    console.log('📚 oboeruモード（デフォルト）またはwakaru以外のモード');
+    console.log('📁 oboeruディレクトリのファイルを読み込みます');
+  }
+  
+  console.log('📚 最終的な読み込みファイルパス:', filePath);
+  console.log('🔍 mode=', mode, 'isWakaruMode=', isWakaruMode, 'isLessonFile=', isLessonFile);
+  
   const s = document.createElement('script');
-  s.src = file;
+  s.src = filePath;
   s.onload = () => {
+    console.log('📚 スクリプト読み込み完了:', filePath);
+    console.log('📚 window.questions の状態:', window.questions ? `${window.questions.length}個の質問` : 'undefined');
     if (!window.questions) {
-      console.error('学習データの読み込みに失敗しました: ' + file);
+      console.error('❌ 学習データの読み込みに失敗しました: ' + filePath);
+      console.error('❌ window.questions が undefined です');
+    } else {
+      console.log('✅ 学習データの読み込み成功:', filePath, '質問数:', window.questions.length);
     }
   };
-  s.onerror = () => console.error('学習データを読み込めませんでした: ' + file);
+  s.onerror = () => {
+    console.error('❌ スクリプトの読み込みエラー:', filePath);
+    console.error('❌ ファイルが見つかりませんでした');
+  };
   document.head.appendChild(s);
 })();

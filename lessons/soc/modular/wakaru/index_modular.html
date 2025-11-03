@@ -127,10 +127,19 @@
       
       // 既存の教材（後方互換性） - ダミーファイルは削除済み
     };
-    const currentEra = new URLSearchParams(location.search).get("era") || "geo_land_topo";
-    const currentMode = new URLSearchParams(location.search).get("mode") || "wakaru";
-    
-    document.getElementById("eraLabel").textContent = eraMap[currentEra] || currentEra;
+    // era変数はscript.jsで既に宣言されている可能性があるため、スコープ内で取得
+    (function() {
+      const currentEra = new URLSearchParams(location.search).get("era") || window.era || "geo_land_topo";
+      const currentMode = new URLSearchParams(location.search).get("mode") || window.mode || "wakaru";
+      
+      window.era = currentEra;
+      window.mode = currentMode;
+      
+      const eraLabelElement = document.getElementById("eraLabel");
+      if (eraLabelElement && eraMap[currentEra]) {
+        eraLabelElement.textContent = eraMap[currentEra] || currentEra;
+      }
+    })();
     
   </script>
 </body>

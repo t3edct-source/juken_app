@@ -9,8 +9,8 @@ window.questions = [
       "宝くじのみ"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -24,8 +24,8 @@ window.questions = [
       "住民税（個人）"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -39,8 +39,8 @@ window.questions = [
       "消費税"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -54,8 +54,8 @@ window.questions = [
       "商品券"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -69,8 +69,8 @@ window.questions = [
       "選挙管理"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -84,8 +84,8 @@ window.questions = [
       "告示"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -99,8 +99,8 @@ window.questions = [
       "世襲・身分"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -114,8 +114,8 @@ window.questions = [
       "常に市町村が実施"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -129,8 +129,8 @@ window.questions = [
       "国が両方を任命"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -144,8 +144,8 @@ window.questions = [
       "恩赦請求"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -159,8 +159,8 @@ window.questions = [
       "利用料"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -174,8 +174,8 @@ window.questions = [
       "たばこ特別税（国）"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -189,8 +189,8 @@ window.questions = [
       "勅許"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -204,8 +204,8 @@ window.questions = [
       "住民の一部の奉仕者"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -219,8 +219,8 @@ window.questions = [
       "外交交渉"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -234,8 +234,8 @@ window.questions = [
       "条例の増加"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -249,8 +249,8 @@ window.questions = [
       "勅許請求"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -264,8 +264,8 @@ window.questions = [
       "都道府県"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -279,8 +279,8 @@ window.questions = [
       "地域差別課税"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -294,8 +294,8 @@ window.questions = [
       "情報非公開"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -309,8 +309,8 @@ window.questions = [
       "封建制"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -324,8 +324,8 @@ window.questions = [
       "選挙管理委員会"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -339,8 +339,8 @@ window.questions = [
       "裁決"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -354,8 +354,8 @@ window.questions = [
       "国の省庁のみ"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -369,8 +369,8 @@ window.questions = [
       "選挙費用の私的補填"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -384,8 +384,8 @@ window.questions = [
       "累進税"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -399,8 +399,8 @@ window.questions = [
       "最高裁に上告"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -414,8 +414,8 @@ window.questions = [
       "恩赦"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -429,8 +429,8 @@ window.questions = [
       "国庫納付金"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
@@ -444,8 +444,8 @@ window.questions = [
       "無議決主義"
     ],
     "answer": 0,
-    "source": "",
-    "tags": [],
+    "source": "\",
+    \""tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   }
