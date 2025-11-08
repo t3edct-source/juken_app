@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>資料で分かる歴史 - 古墳・飛鳥時代</title>
+    <title>資料で分かる歴史 - 安土桃山時代</title>
     
     <style>
         * {
@@ -80,7 +80,7 @@
         }
 
         .source-header {
-            background: linear-gradient(135deg, #ff8a00 0%, #ff6b6b 100%);
+            background: linear-gradient(135deg, #d35400 0%, #e67e22 100%);
             color: white;
             padding: 15px;
             text-align: center;
@@ -122,6 +122,55 @@
             text-align: center;
         }
 
+        .source-text-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #d35400;
+            border-bottom: 2px solid #d35400;
+            padding-bottom: 5px;
+        }
+
+        .source-text-body {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .source-text-meta {
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        .source-text-modern {
+            font-size: 13px;
+            color: #333;
+            margin-top: 8px;
+            padding: 8px;
+            background: #fef5e7;
+            border-radius: 5px;
+            border-left: 3px solid #d35400;
+        }
+
+        .source-texts-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .source-text-item {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
         .info-panel {
             background: white;
             border-radius: 15px;
@@ -146,7 +195,7 @@
             background: #f8f9fa;
             padding: 15px;
             border-radius: 10px;
-            border-left: 4px solid #ff6b6b;
+            border-left: 4px solid #d35400;
         }
 
         .info-item h4 {
@@ -532,7 +581,7 @@
 <body>
     <div class="header">
         <button class="home-btn" onclick="goHome()">🏠 ホーム</button>
-        <div class="lesson-title">資料で分かる歴史 - 古墳・飛鳥時代</div>
+        <div class="lesson-title">資料で分かる歴史 - 安土桃山時代</div>
         <div style="width: 80px;"></div>
     </div>
 
@@ -540,8 +589,8 @@
         <!-- 資料エリア -->
         <div class="source-container">
             <div class="source-header">
-                <h2>📜 古墳・飛鳥時代の資料</h2>
-                <p>歴史資料から古墳・飛鳥時代を学習しましょう</p>
+                <h2>📜 安土桃山時代の資料</h2>
+                <p>歴史資料から安土桃山時代を学習しましょう</p>
             </div>
             <div class="source-area" id="source-area">
                 <div class="source-text">資料画像をここに表示します</div>
@@ -550,23 +599,35 @@
 
         <!-- 時代情報パネル -->
         <div class="info-panel show" id="info-panel">
-            <h3>📊 古墳・飛鳥時代の基本情報</h3>
+            <h3>📊 安土桃山時代の基本情報</h3>
             <div class="info-grid">
                 <div class="info-item">
                     <h4>時代区分</h4>
-                    <p>古墳時代: 3世紀後半〜6世紀<br>飛鳥時代: 592年〜710年</p>
+                    <p>1573年〜1603年</p>
                 </div>
                 <div class="info-item">
                     <h4>特徴</h4>
-                    <p>古墳: 前方後円墳の出現<br>飛鳥: 仏教の伝来、律令国家の形成</p>
+                    <p>織田信長、豊臣秀吉の統一、南蛮貿易</p>
                 </div>
                 <div class="info-item">
                     <h4>主な遺跡・建造物</h4>
-                    <p>仁徳天皇陵、法隆寺、飛鳥寺</p>
+                    <p>安土城、大阪城、聚楽第</p>
                 </div>
                 <div class="info-item">
                     <h4>主な資料</h4>
-                    <p>古墳、埴輪、仏像、法隆寺金堂釈迦三尊像</p>
+                    <p>南蛮屏風、茶の湯、城郭建築</p>
+                </div>
+            </div>
+            <div class="source-texts-grid" style="margin: 20px 0;">
+                <div class="source-text-item">
+                    <div class="source-text-title">フロイス『日本史』（ふろいす『にほんし』）</div>
+                    <div class="source-text-body">織田信長は、その権力と富において、日本のすべての王をはるかに超えていた。彼は非常に勇敢で、戦いにおいては常に勝利を収めていた。彼はキリスト教に対して好意的であり、宣教師たちを保護していた。</div>
+                    <div class="source-text-meta">ポルトガル人宣教師ルイス・フロイス（るいす・ふろいす）が書いた、安土桃山時代の日本を記録した歴史書です。</div>
+                </div>
+                <div class="source-text-item" style="text-align: center;">
+                    <div class="source-text-title">南蛮屏風（なんばんびょうぶ）</div>
+                    <img src="A-11128.jpg" alt="南蛮屏風" style="max-width: 100%; max-height: 180px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'padding: 20px; color: #666;\\'>南蛮屏風の画像を準備中です</div>';">
+                    <div class="source-text-meta">「友信」印、南蛮人（ヨーロッパ人）と日本人の交流を描いた屏風絵。安土桃山時代の代表的な絵画です。<br><small style="font-size: 10px; color: #999;">「友信」印,With the seal Tomonobu,東京国立博物館,Tokyo National Museum『南蛮屏風』（東京国立博物館所蔵）「ColBase」収録 (https://jpsearch.go.jp/item/cobas-47631)</small></div>
                 </div>
             </div>
             <button class="start-learning-btn" onclick="startLearning()">学習を開始する</button>
@@ -581,22 +642,146 @@
             <div class="choices" id="choices"></div>
             <div class="explanation" id="explanation"></div>
             <div class="navigation">
-                <button class="nav-btn prev-btn" id="prev-btn" onclick="previousQuestion()" disabled>前の問題</button>
                 <button class="nav-btn next-btn" id="next-btn" onclick="nextQuestion()">次の問題</button>
             </div>
         </div>
     </div>
     
     <script>
-        // 古墳・飛鳥時代のデータ
+        // 安土桃山時代のデータ
         const periodData = {
-            name: '古墳・飛鳥時代',
-            period: '古墳時代: 3世紀後半〜6世紀 / 飛鳥時代: 592年〜710年',
-            characteristics: '古墳: 前方後円墳の出現 / 飛鳥: 仏教の伝来、律令国家の形成',
-            sites: ['仁徳天皇陵', '法隆寺', '飛鳥寺'],
-            sources: ['古墳', '埴輪', '仏像', '法隆寺金堂釈迦三尊像'],
+            name: '安土桃山時代',
+            period: '1573年〜1603年',
+            characteristics: '織田信長、豊臣秀吉の統一、南蛮貿易',
+            sites: ['安土城', '大阪城', '聚楽第'],
+            sources: ['南蛮屏風', '茶の湯', '城郭建築'],
+            textSources: [
+                {
+                    id: 'frois_history',
+                    title: 'フロイス『日本史』（ふろいす『にほんし』）',
+                    content: `織田信長は、その権力と富において、日本のすべての王をはるかに超えていた。彼は非常に勇敢で、戦いにおいては常に勝利を収めていた。彼はキリスト教に対して好意的であり、宣教師たちを保護していた。`,
+                    period: '安土桃山時代',
+                    description: 'ポルトガル人宣教師ルイス・フロイス（るいす・ふろいす）が書いた、安土桃山時代の日本を記録した歴史書です。',
+                    source: '16世紀後半に書かれた歴史書'
+                }
+            ],
+            sourceImages: [
+                {
+                    id: 'nanban_byobu',
+                    url: 'A-11128.jpg',
+                    title: '南蛮屏風（なんばんびょうぶ）',
+                    period: '安土桃山時代',
+                    description: '「友信」印、南蛮人（ヨーロッパ人）と日本人の交流を描いた屏風絵。安土桃山時代の代表的な絵画です。',
+                    source: '東京国立博物館所蔵（A-11128）',
+                    credit: '「友信」印,With the seal Tomonobu,東京国立博物館,Tokyo National Museum『南蛮屏風』（東京国立博物館所蔵）「ColBase」収録 (https://jpsearch.go.jp/item/cobas-47631)'
+                }
+            ],
             questions: [
-                // 問題データは後で追加
+                {
+                    id: 1,
+                    question: "この南蛮屏風を見ると、どのような人々が描かれていますか？",
+                    choices: [
+                        "ヨーロッパ人（南蛮人）と日本人",
+                        "日本人だけ",
+                        "中国人だけ",
+                        "韓国人だけ"
+                    ],
+                    correct: 0,
+                    explanation: "この屏風を見ると、ヨーロッパ人（南蛮人）と日本人の両方が描かれていることがわかります。ヨーロッパ人は、長いマントや広いつばの帽子、ひげなどの特徴から区別できます。安土桃山時代には、南蛮貿易（なんばんぼうえき）が行われ、ヨーロッパ人と日本人が交流していました。",
+                    sourceImageId: 'nanban_byobu'
+                },
+                {
+                    id: 2,
+                    question: "このフロイス『日本史』の文章を見ると、織田信長についてどのように書かれていますか？",
+                    choices: [
+                        "権力と富において、日本のすべての王をはるかに超えていた",
+                        "貧しくて弱かった",
+                        "普通の武士だった",
+                        "農民だった"
+                    ],
+                    correct: 0,
+                    explanation: "この文章を見ると、「織田信長は、その権力と富において、日本のすべての王をはるかに超えていた」と書かれていることから、織田信長が非常に大きな権力と富を持っていたことがわかります。フロイスは、ヨーロッパ人の視点から、安土桃山時代の日本の様子を記録しました。",
+                    sourceTextId: 'frois_history'
+                },
+                {
+                    id: 3,
+                    question: "このフロイス『日本史』の文章を見ると、織田信長はキリスト教に対してどのような態度でしたか？",
+                    choices: [
+                        "好意的で、宣教師たちを保護していた",
+                        "反対していた",
+                        "無関心だった",
+                        "迫害していた"
+                    ],
+                    correct: 0,
+                    explanation: "この文章を見ると、「彼はキリスト教に対して好意的であり、宣教師たちを保護していた」と書かれていることから、織田信長がキリスト教に対して好意的で、宣教師たちを保護していたことがわかります。安土桃山時代には、キリスト教が日本に伝わり、一部の権力者が保護しました。",
+                    sourceTextId: 'frois_history'
+                },
+                {
+                    id: 4,
+                    question: "この南蛮屏風を見ると、背景にどのような特徴がありますか？",
+                    choices: [
+                        "金色（きんいろ）の背景が使われている",
+                        "白い背景だけ",
+                        "黒い背景だけ",
+                        "背景はない"
+                    ],
+                    correct: 0,
+                    explanation: "この屏風を見ると、金色（きんいろ）の背景が使われていることがわかります。安土桃山時代の絵画では、金箔（きんぱく）や金泥（きんでい）を使って、豪華（ごうか）で華やかな表現をすることが特徴です。これは、この時代の権力者（けんりょくしゃ）の力や富（とみ）を表しています。",
+                    sourceImageId: 'nanban_byobu'
+                },
+                {
+                    id: 5,
+                    question: "この南蛮屏風を見ると、どのような活動が行われているように見えますか？",
+                    choices: [
+                        "貿易（ぼうえき）や物の交換",
+                        "戦い",
+                        "農業",
+                        "勉強"
+                    ],
+                    correct: 0,
+                    explanation: "この屏風を見ると、人々が荷物を運んだり、箱や包みを持ったりしていることから、貿易（ぼうえき）や物の交換が行われていることがわかります。安土桃山時代には、南蛮貿易（なんばんぼうえき）が盛んに行われ、ヨーロッパから様々な物が日本に伝わりました。",
+                    sourceImageId: 'nanban_byobu'
+                },
+                {
+                    id: 6,
+                    question: "このフロイス『日本史』の文章を見ると、織田信長は戦いにおいてどのような人物でしたか？",
+                    choices: [
+                        "非常に勇敢で、戦いにおいては常に勝利を収めていた",
+                        "弱くて負けていた",
+                        "戦いを避けていた",
+                        "戦いをしなかった"
+                    ],
+                    correct: 0,
+                    explanation: "この文章を見ると、「彼は非常に勇敢で、戦いにおいては常に勝利を収めていた」と書かれていることから、織田信長が非常に勇敢で、戦いにおいては常に勝利を収めていたことがわかります。フロイスは、ヨーロッパ人の視点から、織田信長の人物像を記録しました。",
+                    sourceTextId: 'frois_history'
+                },
+                {
+                    id: 7,
+                    question: "この南蛮屏風を見ると、船や港の様子が描かれていますか？",
+                    choices: [
+                        "船や港の様子が描かれている",
+                        "船は描かれていない",
+                        "港だけ描かれている",
+                        "海だけ描かれている"
+                    ],
+                    correct: 0,
+                    explanation: "この屏風を見ると、船や港の様子が描かれていることがわかります。船には人々が乗っており、港では人々が荷物を運んだりしています。これは、南蛮貿易（なんばんぼうえき）が海を通じて行われていたことを表しています。",
+                    sourceImageId: 'nanban_byobu'
+                },
+                {
+                    id: 8,
+                    question: "この2つの資料を見比べると、安土桃山時代の特徴として正しいのはどれですか？",
+                    choices: [
+                        "ヨーロッパ人が日本を記録し、日本とヨーロッパの文化が交わった時代",
+                        "日本だけの文化の時代",
+                        "ヨーロッパだけの文化の時代",
+                        "文化が発達しなかった時代"
+                    ],
+                    correct: 0,
+                    explanation: "この2つの資料を見比べると、南蛮屏風からはヨーロッパ人と日本人が交流している様子が、フロイス『日本史』からはヨーロッパ人が日本の様子を記録していたことがわかります。安土桃山時代には、南蛮貿易（なんばんぼうえき）を通じて、日本とヨーロッパの文化が交わり、ヨーロッパ人が日本の様子を記録するなど、新しい文化や技術（ぎじゅつ）が日本に伝わりました。",
+                    sourceTextId: null,
+                    sourceImageId: null
+                }
             ]
         };
 
@@ -715,6 +900,83 @@
             return indices;
         }
 
+        // 資料を表示する関数（テキストと画像の両方に対応）
+        function displaySources(sourceTextId, sourceImageId) {
+            const sourceArea = document.getElementById('source-area');
+            
+            // 両方の資料を表示する場合（比較問題用）
+            if (!sourceTextId && !sourceImageId) {
+                const froisText = periodData.textSources.find(text => text.id === 'frois_history');
+                const nanbanImage = periodData.sourceImages.find(img => img.id === 'nanban_byobu');
+                
+                if (!froisText || !nanbanImage) {
+                    sourceArea.innerHTML = '<div class="source-text">資料をここに表示します</div>';
+                    return;
+                }
+                
+                const creditHtml = nanbanImage.credit ? `<br><small style="font-size: 10px; color: #999;">${nanbanImage.credit}</small>` : '';
+                
+                sourceArea.innerHTML = `
+                    <div class="source-texts-grid">
+                        <div class="source-text-item">
+                            <div class="source-text-title">${froisText.title}</div>
+                            <div class="source-text-body">${froisText.content}</div>
+                            <div class="source-text-meta">${froisText.description}</div>
+                        </div>
+                        <div class="source-text-item" style="text-align: center;">
+                            <div class="source-text-title">${nanbanImage.title}</div>
+                            <img src="${nanbanImage.url}" alt="${nanbanImage.title}" class="source-image" 
+                                 style="max-width: 100%; max-height: 50vh; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: contain;"
+                                 onerror="this.style.display='none';">
+                            <div class="source-text-meta" style="margin-top: 8px;">${nanbanImage.description}${creditHtml}</div>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            // テキスト資料だけを表示する場合
+            if (sourceTextId && !sourceImageId) {
+                const textSource = periodData.textSources.find(text => text.id === sourceTextId);
+                if (!textSource) {
+                    sourceArea.innerHTML = '<div class="source-text">資料が見つかりません</div>';
+                    return;
+                }
+                
+                sourceArea.innerHTML = `
+                    <div class="source-text-item">
+                        <div class="source-text-title">${textSource.title}</div>
+                        <div class="source-text-body">${textSource.content}</div>
+                        <div class="source-text-meta">${textSource.description}</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            // 画像資料だけを表示する場合
+            if (!sourceTextId && sourceImageId) {
+                const sourceImage = periodData.sourceImages.find(img => img.id === sourceImageId);
+                if (!sourceImage) {
+                    sourceArea.innerHTML = '<div class="source-text">資料が見つかりません</div>';
+                    return;
+                }
+                
+                const creditHtml = sourceImage.credit ? `<br><small style="font-size: 10px; color: #999;">${sourceImage.credit}</small>` : '';
+                sourceArea.innerHTML = `
+                    <div class="source-image-item" style="max-width: 100%;">
+                        <div class="source-image-title">${sourceImage.title}</div>
+                        <img src="${sourceImage.url}" alt="${sourceImage.title}" class="source-image" 
+                             style="max-width: 100%; max-height: 60vh; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: contain;"
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'padding: 20px; color: #666;\\'>${sourceImage.title}の画像を準備中です</div>';">
+                        <div class="source-image-meta">${sourceImage.description}${creditHtml}</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            sourceArea.innerHTML = '<div class="source-text">資料画像をここに表示します</div>';
+        }
+
         function showQuestion(index) {
             if (periodData.questions.length === 0) {
                 alert('問題データがまだ追加されていません。');
@@ -725,6 +987,9 @@
             questionStartTime = Date.now();
             
             document.getElementById('explanation').classList.remove('show');
+            
+            // 問題に関連する資料を表示
+            displaySources(question.sourceTextId || null, question.sourceImageId || null);
             
             document.getElementById('question-text').textContent = question.question;
             
@@ -745,7 +1010,6 @@
             document.getElementById('progress-fill').style.width = progress + '%';
             
             const nextBtn = document.getElementById('next-btn');
-            document.getElementById('prev-btn').disabled = index === 0;
             if (index === periodData.questions.length - 1) {
                 nextBtn.disabled = true;
                 nextBtn.textContent = '次の問題';
@@ -756,7 +1020,7 @@
         }
 
         function sendQuestionAnswerToParent(questionData, userAnswer, isCorrect) {
-            const lessonId = 'soc.history.source_kofun_asuka_wakaru';
+            const lessonId = 'soc.history.source_azuchi_momoyama_wakaru';
             
             const messageData = {
                 type: 'question:answered',
@@ -844,14 +1108,6 @@
             }, 500);
         }
 
-        function previousQuestion() {
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                showQuestion(currentQuestion);
-                document.getElementById('explanation').classList.remove('show');
-            }
-        }
-
         function nextQuestion() {
             if (currentQuestion === periodData.questions.length - 1) {
                 completeLesson();
@@ -915,7 +1171,7 @@
         function completeLesson() {
             learningTracker.saveSession();
             
-            const lessonId = 'soc.history.source_kofun_asuka_wakaru';
+            const lessonId = 'soc.history.source_azuchi_momoyama_wakaru';
             
             const messageData = {
                 type: 'lesson:complete',
@@ -992,6 +1248,9 @@
             document.getElementById('info-panel').style.display = 'none';
             document.getElementById('question-container').style.display = 'block';
             if (periodData.questions.length > 0) {
+                // 最初の問題の資料を表示
+                const firstQuestion = periodData.questions[0];
+                displaySources(firstQuestion.sourceTextId || null, firstQuestion.sourceImageId || null);
                 showQuestion(0);
             } else {
                 alert('問題データがまだ追加されていません。');

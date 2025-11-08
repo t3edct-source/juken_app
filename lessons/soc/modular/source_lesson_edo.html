@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>資料で分かる歴史 - 古墳・飛鳥時代</title>
+    <title>資料で分かる歴史 - 江戸時代</title>
     
     <style>
         * {
@@ -80,7 +80,7 @@
         }
 
         .source-header {
-            background: linear-gradient(135deg, #ff8a00 0%, #ff6b6b 100%);
+            background: linear-gradient(135deg, #16a085 0%, #27ae60 100%);
             color: white;
             padding: 15px;
             text-align: center;
@@ -122,6 +122,45 @@
             text-align: center;
         }
 
+        .source-text-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #16a085;
+            border-bottom: 2px solid #16a085;
+            padding-bottom: 5px;
+        }
+
+        .source-text-body {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .source-text-meta {
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        .source-texts-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .source-text-item {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
         .info-panel {
             background: white;
             border-radius: 15px;
@@ -146,7 +185,7 @@
             background: #f8f9fa;
             padding: 15px;
             border-radius: 10px;
-            border-left: 4px solid #ff6b6b;
+            border-left: 4px solid #16a085;
         }
 
         .info-item h4 {
@@ -532,7 +571,7 @@
 <body>
     <div class="header">
         <button class="home-btn" onclick="goHome()">🏠 ホーム</button>
-        <div class="lesson-title">資料で分かる歴史 - 古墳・飛鳥時代</div>
+        <div class="lesson-title">資料で分かる歴史 - 江戸時代</div>
         <div style="width: 80px;"></div>
     </div>
 
@@ -540,8 +579,8 @@
         <!-- 資料エリア -->
         <div class="source-container">
             <div class="source-header">
-                <h2>📜 古墳・飛鳥時代の資料</h2>
-                <p>歴史資料から古墳・飛鳥時代を学習しましょう</p>
+                <h2>📜 江戸時代の資料</h2>
+                <p>歴史資料から江戸時代を学習しましょう</p>
             </div>
             <div class="source-area" id="source-area">
                 <div class="source-text">資料画像をここに表示します</div>
@@ -550,23 +589,35 @@
 
         <!-- 時代情報パネル -->
         <div class="info-panel show" id="info-panel">
-            <h3>📊 古墳・飛鳥時代の基本情報</h3>
+            <h3>📊 江戸時代の基本情報</h3>
             <div class="info-grid">
                 <div class="info-item">
                     <h4>時代区分</h4>
-                    <p>古墳時代: 3世紀後半〜6世紀<br>飛鳥時代: 592年〜710年</p>
+                    <p>1603年〜1868年</p>
                 </div>
                 <div class="info-item">
                     <h4>特徴</h4>
-                    <p>古墳: 前方後円墳の出現<br>飛鳥: 仏教の伝来、律令国家の形成</p>
+                    <p>徳川幕府、鎖国、町人文化</p>
                 </div>
                 <div class="info-item">
                     <h4>主な遺跡・建造物</h4>
-                    <p>仁徳天皇陵、法隆寺、飛鳥寺</p>
+                    <p>江戸城、日光東照宮、日本橋</p>
                 </div>
                 <div class="info-item">
                     <h4>主な資料</h4>
-                    <p>古墳、埴輪、仏像、法隆寺金堂釈迦三尊像</p>
+                    <p>浮世絵、歌舞伎、俳諧</p>
+                </div>
+            </div>
+            <div class="source-texts-grid" style="margin: 20px 0;">
+                <div class="source-text-item">
+                    <div class="source-text-title">東海道中膝栗毛（とうかいどうちゅうひざくりげ）</div>
+                    <div class="source-text-body">弥次郎兵衛と喜多八、二人連れで江戸を出発した。日本橋を出て、高輪の大木戸を過ぎ、品川の宿に着いた。江戸の町は大変賑やかで、多くの人々が行き交っていた。</div>
+                    <div class="source-text-meta">十返舎一九（じっぺんしゃいっく）が書いた、江戸時代の代表的な滑稽本（こっけいぼん）です。弥次郎兵衛（やじろべえ）と喜多八（きたはち）の旅の物語です。</div>
+                </div>
+                <div class="source-text-item" style="text-align: center;">
+                    <div class="source-text-title">日本橋の景（にほんばしのけい）</div>
+                    <img src="dignl-1309957.jpg" alt="日本橋の景" style="max-width: 100%; max-height: 180px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'padding: 20px; color: #666;\\'>日本橋の景の画像を準備中です</div>';">
+                    <div class="source-text-meta">歌川豊英（うたがわとよひで）が描いた浮世絵。江戸時代の日本橋の活気ある様子を描いています。<br><small style="font-size: 10px; color: #999;">「ColBase」収録 (https://jpsearch.go.jp/item/dignl-1309957)</small></div>
                 </div>
             </div>
             <button class="start-learning-btn" onclick="startLearning()">学習を開始する</button>
@@ -581,22 +632,146 @@
             <div class="choices" id="choices"></div>
             <div class="explanation" id="explanation"></div>
             <div class="navigation">
-                <button class="nav-btn prev-btn" id="prev-btn" onclick="previousQuestion()" disabled>前の問題</button>
                 <button class="nav-btn next-btn" id="next-btn" onclick="nextQuestion()">次の問題</button>
             </div>
         </div>
     </div>
     
     <script>
-        // 古墳・飛鳥時代のデータ
+        // 江戸時代のデータ
         const periodData = {
-            name: '古墳・飛鳥時代',
-            period: '古墳時代: 3世紀後半〜6世紀 / 飛鳥時代: 592年〜710年',
-            characteristics: '古墳: 前方後円墳の出現 / 飛鳥: 仏教の伝来、律令国家の形成',
-            sites: ['仁徳天皇陵', '法隆寺', '飛鳥寺'],
-            sources: ['古墳', '埴輪', '仏像', '法隆寺金堂釈迦三尊像'],
+            name: '江戸時代',
+            period: '1603年〜1868年',
+            characteristics: '徳川幕府、鎖国、町人文化',
+            sites: ['江戸城', '日光東照宮', '日本橋'],
+            sources: ['浮世絵', '歌舞伎', '俳諧'],
+            textSources: [
+                {
+                    id: 'hizakurige',
+                    title: '東海道中膝栗毛（とうかいどうちゅうひざくりげ）',
+                    content: `弥次郎兵衛と喜多八、二人連れで江戸を出発した。日本橋を出て、高輪の大木戸を過ぎ、品川の宿に着いた。江戸の町は大変賑やかで、多くの人々が行き交っていた。`,
+                    period: '江戸時代',
+                    description: '十返舎一九（じっぺんしゃいっく）が書いた、江戸時代の代表的な滑稽本（こっけいぼん）です。弥次郎兵衛（やじろべえ）と喜多八（きたはち）の旅の物語です。',
+                    source: '江戸時代の代表的な文学作品'
+                }
+            ],
+            sourceImages: [
+                {
+                    id: 'nihonbashi',
+                    url: 'dignl-1309957.jpg',
+                    title: '日本橋の景（にほんばしのけい）',
+                    period: '江戸時代',
+                    description: '歌川豊英（うたがわとよひで）が描いた浮世絵。江戸時代の日本橋の活気ある様子を描いています。',
+                    source: '「ColBase」収録',
+                    credit: '「ColBase」収録 (https://jpsearch.go.jp/item/dignl-1309957)'
+                }
+            ],
             questions: [
-                // 問題データは後で追加
+                {
+                    id: 1,
+                    question: "この日本橋の景の浮世絵を見ると、どのような様子が描かれていますか？",
+                    choices: [
+                        "多くの人々が行き交い、活気ある市場の様子",
+                        "静かで人がいない様子",
+                        "戦いの様子",
+                        "農業の様子"
+                    ],
+                    correct: 0,
+                    explanation: "この浮世絵を見ると、日本橋の上や周辺に多くの人々が行き交い、様々な商品を運んでいることから、活気ある市場の様子が描かれていることがわかります。江戸時代には、日本橋は江戸の中心地として、多くの人々が集まる賑やかな場所でした。",
+                    sourceImageId: 'nihonbashi'
+                },
+                {
+                    id: 2,
+                    question: "この東海道中膝栗毛の文章を見ると、どのような場所から旅が始まっていますか？",
+                    choices: [
+                        "日本橋",
+                        "品川",
+                        "高輪",
+                        "京都"
+                    ],
+                    correct: 0,
+                    explanation: "この文章を見ると、「日本橋を出て」と書かれていることから、旅が日本橋から始まっていることがわかります。江戸時代には、日本橋が五街道（ごかいどう）の起点（きてん）として、多くの旅人がここから旅立ちました。",
+                    sourceTextId: 'hizakurige'
+                },
+                {
+                    id: 3,
+                    question: "この東海道中膝栗毛の文章を見ると、江戸の町はどのように書かれていますか？",
+                    choices: [
+                        "大変賑やかで、多くの人々が行き交っていた",
+                        "静かで人がいなかった",
+                        "戦いが行われていた",
+                        "農業が行われていた"
+                    ],
+                    correct: 0,
+                    explanation: "この文章を見ると、「江戸の町は大変賑やかで、多くの人々が行き交っていた」と書かれていることから、江戸の町が大変賑やかで、多くの人々が行き交っていたことがわかります。江戸時代には、江戸は大都市として発展し、多くの人々が住んでいました。",
+                    sourceTextId: 'hizakurige'
+                },
+                {
+                    id: 4,
+                    question: "この日本橋の景の浮世絵を見ると、人々はどのようなものを運んでいますか？",
+                    choices: [
+                        "魚や野菜、荷物など様々な商品",
+                        "武器だけ",
+                        "本だけ",
+                        "何も運んでいない"
+                    ],
+                    correct: 0,
+                    explanation: "この浮世絵を見ると、人々が大きな魚を天秤棒（てんびんぼう）で担いだり、籠（かご）に入った魚や野菜、木箱、布の束などを運んでいることがわかります。江戸時代には、日本橋が市場として機能し、様々な商品が取引されていました。",
+                    sourceImageId: 'nihonbashi'
+                },
+                {
+                    id: 5,
+                    question: "この東海道中膝栗毛の文章を見ると、どのような人物が旅をしていますか？",
+                    choices: [
+                        "弥次郎兵衛と喜多八、二人連れ",
+                        "一人だけ",
+                        "大勢の人",
+                        "動物だけ"
+                    ],
+                    correct: 0,
+                    explanation: "この文章を見ると、「弥次郎兵衛と喜多八、二人連れで江戸を出発した」と書かれていることから、弥次郎兵衛（やじろべえ）と喜多八（きたはち）の二人連れで旅をしていることがわかります。東海道中膝栗毛は、この二人の旅の物語です。",
+                    sourceTextId: 'hizakurige'
+                },
+                {
+                    id: 6,
+                    question: "この日本橋の景の浮世絵を見ると、遠景にどのようなものが描かれていますか？",
+                    choices: [
+                        "富士山",
+                        "建物だけ",
+                        "海だけ",
+                        "何も描かれていない"
+                    ],
+                    correct: 0,
+                    explanation: "この浮世絵を見ると、画面中央の奥に、雪をかぶった雄大な富士山が描かれていることがわかります。江戸時代の浮世絵では、富士山を背景に描くことが多く、これは江戸の人々にとって富士山が身近な存在であったことを表しています。",
+                    sourceImageId: 'nihonbashi'
+                },
+                {
+                    id: 7,
+                    question: "この日本橋の景の浮世絵を見ると、川や船の様子が描かれていますか？",
+                    choices: [
+                        "川や船の様子が描かれている",
+                        "川だけ描かれている",
+                        "船だけ描かれている",
+                        "川も船も描かれていない"
+                    ],
+                    correct: 0,
+                    explanation: "この浮世絵を見ると、日本橋の下には青い川が流れ、その上には複数の小舟が浮かんでいることがわかります。江戸時代には、川や水路が重要な交通手段であり、物資の運搬に使われていました。",
+                    sourceImageId: 'nihonbashi'
+                },
+                {
+                    id: 8,
+                    question: "この2つの資料を見比べると、江戸時代の特徴として正しいのはどれですか？",
+                    choices: [
+                        "文学と絵画が結びつき、町人の生活が描かれた時代",
+                        "文学だけが発達した時代",
+                        "絵画だけが発達した時代",
+                        "文化が発達しなかった時代"
+                    ],
+                    correct: 0,
+                    explanation: "この2つの資料を見比べると、東海道中膝栗毛からは江戸の町の賑やかさが、日本橋の景からは町人の活気ある生活が描かれていることがわかります。江戸時代には、文学と絵画が結びつき、町人（ちょうにん）の生活が多く描かれました。これは、江戸時代の町人文化の発達を表しています。",
+                    sourceTextId: null,
+                    sourceImageId: null
+                }
             ]
         };
 
@@ -715,6 +890,83 @@
             return indices;
         }
 
+        // 資料を表示する関数（テキストと画像の両方に対応）
+        function displaySources(sourceTextId, sourceImageId) {
+            const sourceArea = document.getElementById('source-area');
+            
+            // 両方の資料を表示する場合（比較問題用）
+            if (!sourceTextId && !sourceImageId) {
+                const hizakurigeText = periodData.textSources.find(text => text.id === 'hizakurige');
+                const nihonbashiImage = periodData.sourceImages.find(img => img.id === 'nihonbashi');
+                
+                if (!hizakurigeText || !nihonbashiImage) {
+                    sourceArea.innerHTML = '<div class="source-text">資料をここに表示します</div>';
+                    return;
+                }
+                
+                const creditHtml = nihonbashiImage.credit ? `<br><small style="font-size: 10px; color: #999;">${nihonbashiImage.credit}</small>` : '';
+                
+                sourceArea.innerHTML = `
+                    <div class="source-texts-grid">
+                        <div class="source-text-item">
+                            <div class="source-text-title">${hizakurigeText.title}</div>
+                            <div class="source-text-body">${hizakurigeText.content}</div>
+                            <div class="source-text-meta">${hizakurigeText.description}</div>
+                        </div>
+                        <div class="source-text-item" style="text-align: center;">
+                            <div class="source-text-title">${nihonbashiImage.title}</div>
+                            <img src="${nihonbashiImage.url}" alt="${nihonbashiImage.title}" class="source-image" 
+                                 style="max-width: 100%; max-height: 50vh; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: contain;"
+                                 onerror="this.style.display='none';">
+                            <div class="source-text-meta" style="margin-top: 8px;">${nihonbashiImage.description}${creditHtml}</div>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            // テキスト資料だけを表示する場合
+            if (sourceTextId && !sourceImageId) {
+                const textSource = periodData.textSources.find(text => text.id === sourceTextId);
+                if (!textSource) {
+                    sourceArea.innerHTML = '<div class="source-text">資料が見つかりません</div>';
+                    return;
+                }
+                
+                sourceArea.innerHTML = `
+                    <div class="source-text-item">
+                        <div class="source-text-title">${textSource.title}</div>
+                        <div class="source-text-body">${textSource.content}</div>
+                        <div class="source-text-meta">${textSource.description}</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            // 画像資料だけを表示する場合
+            if (!sourceTextId && sourceImageId) {
+                const sourceImage = periodData.sourceImages.find(img => img.id === sourceImageId);
+                if (!sourceImage) {
+                    sourceArea.innerHTML = '<div class="source-text">資料が見つかりません</div>';
+                    return;
+                }
+                
+                const creditHtml = sourceImage.credit ? `<br><small style="font-size: 10px; color: #999;">${sourceImage.credit}</small>` : '';
+                sourceArea.innerHTML = `
+                    <div class="source-image-item" style="max-width: 100%;">
+                        <div class="source-image-title">${sourceImage.title}</div>
+                        <img src="${sourceImage.url}" alt="${sourceImage.title}" class="source-image" 
+                             style="max-width: 100%; max-height: 60vh; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: contain;"
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'padding: 20px; color: #666;\\'>${sourceImage.title}の画像を準備中です</div>';">
+                        <div class="source-image-meta">${sourceImage.description}${creditHtml}</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            sourceArea.innerHTML = '<div class="source-text">資料画像をここに表示します</div>';
+        }
+
         function showQuestion(index) {
             if (periodData.questions.length === 0) {
                 alert('問題データがまだ追加されていません。');
@@ -725,6 +977,9 @@
             questionStartTime = Date.now();
             
             document.getElementById('explanation').classList.remove('show');
+            
+            // 問題に関連する資料を表示
+            displaySources(question.sourceTextId || null, question.sourceImageId || null);
             
             document.getElementById('question-text').textContent = question.question;
             
@@ -745,7 +1000,6 @@
             document.getElementById('progress-fill').style.width = progress + '%';
             
             const nextBtn = document.getElementById('next-btn');
-            document.getElementById('prev-btn').disabled = index === 0;
             if (index === periodData.questions.length - 1) {
                 nextBtn.disabled = true;
                 nextBtn.textContent = '次の問題';
@@ -756,7 +1010,7 @@
         }
 
         function sendQuestionAnswerToParent(questionData, userAnswer, isCorrect) {
-            const lessonId = 'soc.history.source_kofun_asuka_wakaru';
+            const lessonId = 'soc.history.source_edo_wakaru';
             
             const messageData = {
                 type: 'question:answered',
@@ -844,14 +1098,6 @@
             }, 500);
         }
 
-        function previousQuestion() {
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                showQuestion(currentQuestion);
-                document.getElementById('explanation').classList.remove('show');
-            }
-        }
-
         function nextQuestion() {
             if (currentQuestion === periodData.questions.length - 1) {
                 completeLesson();
@@ -915,7 +1161,7 @@
         function completeLesson() {
             learningTracker.saveSession();
             
-            const lessonId = 'soc.history.source_kofun_asuka_wakaru';
+            const lessonId = 'soc.history.source_edo_wakaru';
             
             const messageData = {
                 type: 'lesson:complete',
@@ -992,6 +1238,9 @@
             document.getElementById('info-panel').style.display = 'none';
             document.getElementById('question-container').style.display = 'block';
             if (periodData.questions.length > 0) {
+                // 最初の問題の資料を表示
+                const firstQuestion = periodData.questions[0];
+                displaySources(firstQuestion.sourceTextId || null, firstQuestion.sourceImageId || null);
                 showQuestion(0);
             } else {
                 alert('問題データがまだ追加されていません。');

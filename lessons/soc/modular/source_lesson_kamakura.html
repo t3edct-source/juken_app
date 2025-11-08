@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>資料で分かる歴史 - 古墳・飛鳥時代</title>
+    <title>資料で分かる歴史 - 鎌倉時代</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
     <style>
         * {
@@ -80,7 +83,7 @@
         }
 
         .source-header {
-            background: linear-gradient(135deg, #ff8a00 0%, #ff6b6b 100%);
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
             color: white;
             padding: 15px;
             text-align: center;
@@ -97,21 +100,81 @@
         }
 
         .source-area {
-            min-height: 400px;
+            min-height: 300px;
+            max-height: 70vh;
             position: relative;
             background: #f8f9fa;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
-            padding: 20px;
+            padding: 15px;
+            overflow-y: auto;
+            flex-direction: column;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 250px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
+
+        #kamakura-gsi-map {
+            width: 100%;
+            height: 100%;
         }
 
         .source-image {
             max-width: 100%;
-            max-height: 500px;
+            max-height: 45vh;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             object-fit: contain;
+            width: auto;
+            height: auto;
+        }
+
+        .source-images-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .source-images-grid .source-image-item {
+            width: 100%;
+        }
+
+        .source-images-grid .source-image {
+            width: 100%;
+            height: auto;
+        }
+
+        .source-image-item {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .source-image-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #e74c3c;
+            border-bottom: 2px solid #e74c3c;
+            padding-bottom: 5px;
+        }
+
+        .source-image-meta {
+            font-size: 12px;
+            color: #666;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #ddd;
         }
 
         .source-text {
@@ -146,7 +209,7 @@
             background: #f8f9fa;
             padding: 15px;
             border-radius: 10px;
-            border-left: 4px solid #ff6b6b;
+            border-left: 4px solid #e74c3c;
         }
 
         .info-item h4 {
@@ -493,7 +556,24 @@
 
             .source-area {
                 min-height: 250px;
+                max-height: 40vh;
+                padding: 10px;
+            }
+
+            .source-image {
+                max-height: 35vh;
+            }
+
+            .source-image-item {
                 padding: 12px;
+            }
+
+            .source-image-title {
+                font-size: 14px;
+            }
+
+            .source-image-meta {
+                font-size: 11px;
             }
 
             .source-header h2 {
@@ -532,7 +612,7 @@
 <body>
     <div class="header">
         <button class="home-btn" onclick="goHome()">🏠 ホーム</button>
-        <div class="lesson-title">資料で分かる歴史 - 古墳・飛鳥時代</div>
+        <div class="lesson-title">資料で分かる歴史 - 鎌倉時代</div>
         <div style="width: 80px;"></div>
     </div>
 
@@ -540,33 +620,47 @@
         <!-- 資料エリア -->
         <div class="source-container">
             <div class="source-header">
-                <h2>📜 古墳・飛鳥時代の資料</h2>
-                <p>歴史資料から古墳・飛鳥時代を学習しましょう</p>
+                <h2>📜 鎌倉時代の資料</h2>
+                <p>歴史資料から鎌倉時代を学習しましょう</p>
             </div>
             <div class="source-area" id="source-area">
-                <div class="source-text">資料画像をここに表示します</div>
+                <div class="source-text">絵巻と地図をここに表示します</div>
             </div>
         </div>
 
         <!-- 時代情報パネル -->
         <div class="info-panel show" id="info-panel">
-            <h3>📊 古墳・飛鳥時代の基本情報</h3>
+            <h3>📊 鎌倉時代の基本情報</h3>
             <div class="info-grid">
                 <div class="info-item">
                     <h4>時代区分</h4>
-                    <p>古墳時代: 3世紀後半〜6世紀<br>飛鳥時代: 592年〜710年</p>
+                    <p>1185年〜1333年</p>
                 </div>
                 <div class="info-item">
                     <h4>特徴</h4>
-                    <p>古墳: 前方後円墳の出現<br>飛鳥: 仏教の伝来、律令国家の形成</p>
+                    <p>武士の政治、武家文化</p>
                 </div>
                 <div class="info-item">
                     <h4>主な遺跡・建造物</h4>
-                    <p>仁徳天皇陵、法隆寺、飛鳥寺</p>
+                    <p>鶴岡八幡宮、建長寺、円覚寺</p>
                 </div>
                 <div class="info-item">
                     <h4>主な資料</h4>
-                    <p>古墳、埴輪、仏像、法隆寺金堂釈迦三尊像</p>
+                    <p>蒙古襲来絵巻、鎌倉幕府の文書</p>
+                </div>
+            </div>
+            <div class="source-images-grid" style="margin: 20px 0;">
+                <div class="source-image-item">
+                    <div class="source-image-title">蒙古襲来絵巻（もうこしゅうらいえまき）</div>
+                    <img src="mongol_scroll.jpg" alt="蒙古襲来絵巻" style="max-width: 100%; max-height: 180px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'padding: 20px; color: #666;\\'>蒙古襲来絵巻の画像を準備中です</div>';">
+                    <div class="source-image-meta">竹崎季長（たけざきすえなが）が描かせた絵巻。元寇（げんこう）の戦いの様子を描いています。</div>
+                </div>
+                <div class="source-image-item">
+                    <div class="source-image-title">鎌倉の地形図（かまくらのちけいず）</div>
+                    <div class="map-container">
+                        <div id="kamakura-gsi-map-preview"></div>
+                    </div>
+                    <div class="source-image-meta">鎌倉の地形を表した地図。三方が山、一方が海という地形がわかります。</div>
                 </div>
             </div>
             <button class="start-learning-btn" onclick="startLearning()">学習を開始する</button>
@@ -581,22 +675,144 @@
             <div class="choices" id="choices"></div>
             <div class="explanation" id="explanation"></div>
             <div class="navigation">
-                <button class="nav-btn prev-btn" id="prev-btn" onclick="previousQuestion()" disabled>前の問題</button>
                 <button class="nav-btn next-btn" id="next-btn" onclick="nextQuestion()">次の問題</button>
             </div>
         </div>
     </div>
     
     <script>
-        // 古墳・飛鳥時代のデータ
+        // 鎌倉時代のデータ
         const periodData = {
-            name: '古墳・飛鳥時代',
-            period: '古墳時代: 3世紀後半〜6世紀 / 飛鳥時代: 592年〜710年',
-            characteristics: '古墳: 前方後円墳の出現 / 飛鳥: 仏教の伝来、律令国家の形成',
-            sites: ['仁徳天皇陵', '法隆寺', '飛鳥寺'],
-            sources: ['古墳', '埴輪', '仏像', '法隆寺金堂釈迦三尊像'],
+            name: '鎌倉時代',
+            period: '1185年〜1333年',
+            characteristics: '武士の政治、武家文化',
+            sites: ['鶴岡八幡宮', '建長寺', '円覚寺'],
+            sources: ['蒙古襲来絵巻', '鎌倉幕府の文書'],
+            sourceImages: [
+                {
+                    id: 'mongol_scroll',
+                    url: 'mongol_scroll.jpg',
+                    title: '蒙古襲来絵巻（もうこしゅうらいえまき）',
+                    period: '13世紀後半（鎌倉時代）',
+                    description: '竹崎季長（たけざきすえなが）が描かせた絵巻。元寇（げんこう）の戦いの様子を描いています。',
+                    source: '東京国立博物館所蔵（A-1637）'
+                },
+                {
+                    id: 'kamakura_map',
+                    title: '鎌倉の地形図（かまくらのちけいず）',
+                    period: '現代の地形図',
+                    description: '鎌倉の地形を表した地図。三方が山、一方が海という地形がわかります。',
+                    source: '地理院地図',
+                    lat: 35.319,
+                    lng: 139.55,
+                    zoom: 13
+                }
+            ],
             questions: [
-                // 問題データは後で追加
+                {
+                    id: 1,
+                    question: "この蒙古襲来絵巻の写真を見ると、どのような戦いの様子が描かれていますか？",
+                    choices: [
+                        "弓矢を使った戦いの様子",
+                        "刀だけを使った戦いの様子",
+                        "槍だけを使った戦いの様子",
+                        "戦いの様子は描かれていない"
+                    ],
+                    correct: 0,
+                    explanation: "この絵巻の写真を見ると、多くの人が弓矢を持ち、矢を放っている様子が描かれていることがわかります。蒙古襲来絵巻は、元寇（げんこう）の戦いの様子を描いた絵巻で、鎌倉時代に日本を襲った元（げん）と高麗（こうらい）の連合軍との戦いを記録しています。",
+                    sourceImageId: 'mongol_scroll'
+                },
+                {
+                    id: 2,
+                    question: "この蒙古襲来絵巻の写真を見ると、馬に乗った武士はどのような様子ですか？",
+                    choices: [
+                        "敵の攻撃を受けながら戦っている様子",
+                        "のんびりと馬に乗っている様子",
+                        "戦いから逃げている様子",
+                        "一人で戦っている様子"
+                    ],
+                    correct: 0,
+                    explanation: "この絵巻の写真を見ると、馬に乗った武士の周りに爆発や矢が飛び交い、馬にも血がついていることから、敵の攻撃を受けながら戦っている様子であることがわかります。この絵巻は、竹崎季長（たけざきすえなが）という武士が、自分の戦いの様子を描かせたもので、鎌倉時代の武士の戦い方を記録した貴重な資料です。",
+                    sourceImageId: 'mongol_scroll'
+                },
+                {
+                    id: 3,
+                    question: "この鎌倉の地形図を見ると、鎌倉の地形の特徴として正しいのはどれですか？",
+                    choices: [
+                        "三方が山、一方が海という地形",
+                        "四方がすべて平らな地形",
+                        "四方がすべて山の地形",
+                        "四方がすべて海の地形"
+                    ],
+                    correct: 0,
+                    explanation: "この地形図を見ると、鎌倉は三方が山に囲まれ、一方が海に面している地形であることがわかります。このような地形は、敵から攻められにくい「守りやすい」地形です。鎌倉幕府がこの地に置かれた理由の一つが、この守りやすい地形でした。",
+                    sourceImageId: 'kamakura_map'
+                },
+                {
+                    id: 4,
+                    question: "この鎌倉の地形図を見ると、この地形がどのような点で有利ですか？",
+                    choices: [
+                        "敵から攻められにくい守りやすい地形",
+                        "農業に適した平らな地形",
+                        "貿易に適した港が多い地形",
+                        "交通の便が良い平らな地形"
+                    ],
+                    correct: 0,
+                    explanation: "この地形図を見ると、三方が山、一方が海という地形から、敵から攻められにくい守りやすい地形であることがわかります。鎌倉時代には、このような地形を利用して、幕府を守っていました。特に、陸からの攻撃に対しては、山が自然の壁となり、守りやすくなります。",
+                    sourceImageId: 'kamakura_map'
+                },
+                {
+                    id: 5,
+                    question: "この2つの資料を見比べると、鎌倉時代の特徴として正しいのはどれですか？",
+                    choices: [
+                        "武士が中心となった時代で、戦いと守りやすい地形が重要だった",
+                        "貴族が中心となった時代で、文化が重要だった",
+                        "農民が中心となった時代で、農業が重要だった",
+                        "商人が中心となった時代で、貿易が重要だった"
+                    ],
+                    correct: 0,
+                    explanation: "この2つの資料を見比べると、蒙古襲来絵巻からは武士の戦いの様子が、鎌倉の地形図からは守りやすい地形がわかります。鎌倉時代は、武士が中心となった時代で、戦いと守りやすい地形が重要でした。鎌倉幕府は、この守りやすい地形を利用して、元寇（げんこう）などの外敵から日本を守りました。",
+                    sourceImageId: null
+                },
+                {
+                    id: 6,
+                    question: "この蒙古襲来絵巻の写真を見ると、どのような武器が使われているように見えますか？",
+                    choices: [
+                        "弓矢と爆弾のような武器",
+                        "刀だけ",
+                        "槍だけ",
+                        "武器は使われていない"
+                    ],
+                    correct: 0,
+                    explanation: "この絵巻の写真を見ると、多くの人が弓矢を持ち、また爆発するような武器も描かれていることがわかります。元寇（げんこう）では、元（げん）と高麗（こうらい）の連合軍が、弓矢や爆弾（てつはう）などの武器を使って攻めてきました。鎌倉時代の武士たちは、このような新しい武器に対応して戦いました。",
+                    sourceImageId: 'mongol_scroll'
+                },
+                {
+                    id: 7,
+                    question: "この鎌倉の地形図を見ると、海に面している方向はどれですか？",
+                    choices: [
+                        "一方が海に面している",
+                        "四方がすべて海に面している",
+                        "海に面している方向はない",
+                        "二方が海に面している"
+                    ],
+                    correct: 0,
+                    explanation: "この地形図を見ると、鎌倉は一方が海に面している地形であることがわかります。三方が山に囲まれ、一方が海という地形は、陸からの攻撃に対しては守りやすく、海からの攻撃に対しては監視しやすいという特徴があります。鎌倉時代には、この地形を利用して、幕府を守っていました。",
+                    sourceImageId: 'kamakura_map'
+                },
+                {
+                    id: 8,
+                    question: "この2つの資料から、鎌倉時代の政治の特徴として正しいのはどれですか？",
+                    choices: [
+                        "武士が中心となった政治で、戦いと守りが重要だった",
+                        "貴族が中心となった政治で、文化が重要だった",
+                        "農民が中心となった政治で、農業が重要だった",
+                        "商人が中心となった政治で、貿易が重要だった"
+                    ],
+                    correct: 0,
+                    explanation: "この2つの資料を見比べると、蒙古襲来絵巻からは武士の戦いの様子が、鎌倉の地形図からは守りやすい地形がわかります。鎌倉時代は、武士が中心となった政治（武家政権）の時代で、戦いと守りが重要でした。鎌倉幕府は、守りやすい地形を選んで置かれ、元寇（げんこう）などの外敵から日本を守る役割を果たしました。",
+                    sourceImageId: null
+                }
             ]
         };
 
@@ -715,6 +931,136 @@
             return indices;
         }
 
+        // 地理院地図のインスタンス
+        let kamakuraMap = null;
+        let kamakuraMapPreview = null;
+
+        // 地理院地図を初期化する関数
+        function initKamakuraMap(containerId) {
+            if (kamakuraMap) {
+                kamakuraMap.remove();
+            }
+            
+            const mapData = periodData.sourceImages.find(img => img.id === 'kamakura_map');
+            if (!mapData) return;
+            
+            kamakuraMap = L.map(containerId).setView([mapData.lat, mapData.lng], mapData.zoom);
+            
+            // 地理院地図タイルの追加
+            L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
+                attribution: '© 国土地理院',
+                maxZoom: 18
+            }).addTo(kamakuraMap);
+            
+            // ダブルタップズームを無効化
+            kamakuraMap.doubleClickZoom.disable();
+        }
+
+        // プレビュー用の地理院地図を初期化する関数
+        function initKamakuraMapPreview() {
+            // コンテナが存在するか確認
+            const container = document.getElementById('kamakura-gsi-map-preview');
+            if (!container) {
+                console.log('地図コンテナが見つかりません');
+                return;
+            }
+            
+            if (kamakuraMapPreview) {
+                kamakuraMapPreview.remove();
+            }
+            
+            const mapData = periodData.sourceImages.find(img => img.id === 'kamakura_map');
+            if (!mapData) {
+                console.log('地図データが見つかりません');
+                return;
+            }
+            
+            // 地図を初期化
+            kamakuraMapPreview = L.map('kamakura-gsi-map-preview').setView([mapData.lat, mapData.lng], mapData.zoom);
+            
+            // 地理院地図タイルの追加
+            L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
+                attribution: '© 国土地理院',
+                maxZoom: 18
+            }).addTo(kamakuraMapPreview);
+            
+            // ダブルタップズームを無効化
+            kamakuraMapPreview.doubleClickZoom.disable();
+            
+            // 地図のサイズを再計算（コンテナが非表示の状態から表示された場合に対応）
+            setTimeout(() => {
+                if (kamakuraMapPreview) {
+                    kamakuraMapPreview.invalidateSize();
+                }
+            }, 100);
+        }
+
+        // 問題に関連する資料だけを表示する関数
+        function displaySources(sourceImageId) {
+            const sourceArea = document.getElementById('source-area');
+            
+            const mongolImage = periodData.sourceImages.find(img => img.id === 'mongol_scroll');
+            const kamakuraMapData = periodData.sourceImages.find(img => img.id === 'kamakura_map');
+            
+            if (!mongolImage || !kamakuraMapData) {
+                sourceArea.innerHTML = '<div class="source-text">資料をここに表示します</div>';
+                return;
+            }
+            
+            // sourceImageIdに基づいて表示する資料を決定
+            if (sourceImageId === 'mongol_scroll') {
+                // 蒙古襲来絵巻だけを表示
+                sourceArea.innerHTML = `
+                    <div class="source-image-item" style="max-width: 100%;">
+                        <div class="source-image-title">${mongolImage.title}</div>
+                        <img src="${mongolImage.url}" alt="${mongolImage.title}" class="source-image" 
+                             style="max-width: 100%; max-height: 50vh; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: contain;"
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'padding: 20px; color: #666;\\'>蒙古襲来絵巻の画像を準備中です</div>';">
+                        <div class="source-image-meta">${mongolImage.description}</div>
+                    </div>
+                `;
+            } else if (sourceImageId === 'kamakura_map') {
+                // 鎌倉の地形図だけを表示
+                sourceArea.innerHTML = `
+                    <div class="source-image-item" style="max-width: 100%;">
+                        <div class="source-image-title">${kamakuraMapData.title}</div>
+                        <div class="map-container" style="height: 400px;">
+                            <div id="kamakura-gsi-map"></div>
+                        </div>
+                        <div class="source-image-meta">${kamakuraMapData.description}</div>
+                    </div>
+                `;
+                // 地図を初期化（少し遅延させてDOMが確実に存在するようにする）
+                setTimeout(() => {
+                    initKamakuraMap('kamakura-gsi-map');
+                }, 100);
+            } else {
+                // sourceImageIdがnullの場合は両方を表示（比較問題用）
+                sourceArea.innerHTML = `
+                    <div class="source-images-grid">
+                        <div class="source-image-item">
+                            <div class="source-image-title">${mongolImage.title}</div>
+                            <img src="${mongolImage.url}" alt="${mongolImage.title}" class="source-image" 
+                                 style="width: 100%; max-height: 60vh; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: contain; object-position: top;"
+                                 onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'padding: 20px; color: #666;\\'>蒙古襲来絵巻の画像を準備中です</div>';">
+                            <div class="source-image-meta">${mongolImage.description}</div>
+                        </div>
+                        <div class="source-image-item">
+                            <div class="source-image-title">${kamakuraMapData.title}</div>
+                            <div class="map-container" style="height: 300px;">
+                                <div id="kamakura-gsi-map"></div>
+                            </div>
+                            <div class="source-image-meta">${kamakuraMapData.description}</div>
+                        </div>
+                    </div>
+                `;
+                // 地図を初期化（少し遅延させてDOMが確実に存在するようにする）
+                setTimeout(() => {
+                    initKamakuraMap('kamakura-gsi-map');
+                }, 100);
+            }
+        }
+
         function showQuestion(index) {
             if (periodData.questions.length === 0) {
                 alert('問題データがまだ追加されていません。');
@@ -725,6 +1071,9 @@
             questionStartTime = Date.now();
             
             document.getElementById('explanation').classList.remove('show');
+            
+            // 問題に関連する資料だけを表示
+            displaySources(question.sourceImageId || null);
             
             document.getElementById('question-text').textContent = question.question;
             
@@ -745,7 +1094,6 @@
             document.getElementById('progress-fill').style.width = progress + '%';
             
             const nextBtn = document.getElementById('next-btn');
-            document.getElementById('prev-btn').disabled = index === 0;
             if (index === periodData.questions.length - 1) {
                 nextBtn.disabled = true;
                 nextBtn.textContent = '次の問題';
@@ -756,7 +1104,7 @@
         }
 
         function sendQuestionAnswerToParent(questionData, userAnswer, isCorrect) {
-            const lessonId = 'soc.history.source_kofun_asuka_wakaru';
+            const lessonId = 'soc.history.source_kamakura_wakaru';
             
             const messageData = {
                 type: 'question:answered',
@@ -844,14 +1192,6 @@
             }, 500);
         }
 
-        function previousQuestion() {
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                showQuestion(currentQuestion);
-                document.getElementById('explanation').classList.remove('show');
-            }
-        }
-
         function nextQuestion() {
             if (currentQuestion === periodData.questions.length - 1) {
                 completeLesson();
@@ -915,7 +1255,7 @@
         function completeLesson() {
             learningTracker.saveSession();
             
-            const lessonId = 'soc.history.source_kofun_asuka_wakaru';
+            const lessonId = 'soc.history.source_kamakura_wakaru';
             
             const messageData = {
                 type: 'lesson:complete',
@@ -992,6 +1332,7 @@
             document.getElementById('info-panel').style.display = 'none';
             document.getElementById('question-container').style.display = 'block';
             if (periodData.questions.length > 0) {
+                // 最初の問題を表示（関連する資料はshowQuestion内で表示される）
                 showQuestion(0);
             } else {
                 alert('問題データがまだ追加されていません。');
@@ -1000,6 +1341,32 @@
 
         function goHome() {
             window.location.href = '/';
+        }
+
+    </script>
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+        // Leaflet読み込み後にプレビュー地図を初期化
+        function tryInitPreviewMap() {
+            if (typeof L !== 'undefined' && typeof periodData !== 'undefined') {
+                // 少し遅延させてDOMが確実に存在するようにする
+                setTimeout(() => {
+                    initKamakuraMapPreview();
+                }, 200);
+            } else {
+                // まだ準備ができていない場合は再試行
+                setTimeout(tryInitPreviewMap, 100);
+            }
+        }
+        
+        // ページ読み込み完了後に初期化を試みる
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', tryInitPreviewMap);
+        } else {
+            tryInitPreviewMap();
         }
     </script>
 </body>
