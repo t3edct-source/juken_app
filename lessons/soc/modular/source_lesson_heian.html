@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>資料で分かる歴史 - 平安時代</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hiragino Sans', 'Yu Gothic', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .home-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 44px;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .home-btn:hover {
+            background: #ff5252;
+            transform: translateY(-1px);
+        }
+
+        .home-btn:active {
+            transform: scale(0.98);
+        }
+
+        .lesson-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
+            margin: 0 10px;
+        }
+
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+        }
+
+        .source-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            margin-bottom: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .source-header {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .source-header h2 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .source-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .source-area {
+            min-height: 300px;
+            max-height: 50vh;
+            position: relative;
+            background: #f8f9fa;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .source-text-content {
+            width: 100%;
+            max-width: 100%;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            font-size: 14px;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .source-text-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #9b59b6;
+            border-bottom: 2px solid #9b59b6;
+            padding-bottom: 5px;
+        }
+
+        .source-text-body {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+        }
+
+        .source-text-meta {
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        .source-text-modern {
+            font-size: 13px;
+            color: #333;
+            margin-top: 8px;
+            padding: 8px;
+            background: #f3e5f5;
+            border-radius: 5px;
+            border-left: 3px solid #9b59b6;
+        }
+
+        .source-texts-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .source-text-item {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .source-image {
+            max-width: 100%;
+            max-height: 40vh;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            object-fit: contain;
+            width: auto;
+            height: auto;
+        }
+
+        .source-images-grid {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 10px;
+        }
+        
+        .source-images-grid img {
+            max-width: calc(50% - 5px);
+            max-height: 200px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            object-fit: contain;
+        }
+
+        .source-text {
+            padding: 20px;
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333;
+            text-align: center;
+        }
+
+        .info-panel {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .info-panel h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .info-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #9b59b6;
+        }
+
+        .info-item h4 {
+            color: #ff6b6b;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .info-item p {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .question-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .choice {
+            padding: 14px 16px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .choice:hover {
+            background: #e9ecef;
+            border-color: #667eea;
+        }
+
+        .choice.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .choice.correct {
+            background: #28a745;
+            color: white;
+            border-color: #28a745;
+            animation: correctPulse 0.6s ease;
+        }
+
+        .choice.incorrect {
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+            animation: wrongShake 0.6s ease;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .explanation {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #28a745;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .explanation h4 {
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+
+        .explanation p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 48px;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .prev-btn {
+            background: #6c757d;
+            color: white;
+        }
+
+        .prev-btn:hover:not(:disabled) {
+            background: #5a6268;
+        }
+
+        .next-btn {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .next-btn:hover:not(:disabled) {
+            background: #ff5252;
+        }
+
+        .start-learning-btn {
+            background: linear-gradient(135deg, #ff8a00 0%, #ff6b6b 100%);
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px auto;
+            display: block;
+            min-height: 52px;
+            width: 100%;
+            max-width: 400px;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .start-learning-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        .progress-bar {
+            background: #e9ecef;
+            border-radius: 10px;
+            height: 8px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(135deg, #ff8a00 0%, #ff6b6b 100%);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        * {
+            touch-action: manipulation;
+        }
+
+        .choice, .nav-btn, .home-btn, .start-learning-btn {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                overflow-x: hidden;
+            }
+
+            .header {
+                padding: 8px 12px;
+                flex-wrap: nowrap;
+            }
+
+            .home-btn {
+                padding: 10px 16px;
+                font-size: 13px;
+                min-width: auto;
+                flex-shrink: 0;
+            }
+
+            .lesson-title {
+                font-size: 14px;
+                margin: 0 8px;
+                text-align: center;
+                flex: 1;
+            }
+
+            .header > div:last-child {
+                width: 80px;
+                flex-shrink: 0;
+            }
+
+            .main-container {
+                padding: 10px;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .info-panel {
+                padding: 16px;
+            }
+
+            .info-item {
+                padding: 12px;
+            }
+
+            .info-item h4 {
+                font-size: 13px;
+            }
+
+            .info-item p {
+                font-size: 12px;
+            }
+            
+            .source-area {
+                min-height: 280px;
+                padding: 15px;
+            }
+
+            .source-header {
+                padding: 12px;
+            }
+
+            .source-header h2 {
+                font-size: 18px;
+                margin-bottom: 4px;
+            }
+
+            .source-header p {
+                font-size: 12px;
+            }
+
+            .question-container {
+                padding: 16px;
+            }
+
+            .question-text {
+                font-size: 15px;
+                margin-bottom: 12px;
+            }
+
+            .choice {
+                padding: 14px 16px;
+                font-size: 14px;
+                min-height: 52px;
+            }
+
+            .navigation {
+                flex-direction: column;
+                gap: 12px;
+                margin-top: 16px;
+            }
+
+            .nav-btn {
+                width: 100%;
+                padding: 14px 20px;
+                font-size: 15px;
+            }
+
+            .start-learning-btn {
+                padding: 16px 24px;
+                font-size: 15px;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .explanation {
+                padding: 12px;
+                font-size: 13px;
+                margin-top: 12px;
+            }
+
+            .explanation h4 {
+                font-size: 14px;
+                margin-bottom: 8px;
+            }
+
+            .progress-bar {
+                margin: 12px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 6px 10px;
+            }
+
+            .home-btn {
+                padding: 8px 14px;
+                font-size: 12px;
+            }
+
+            .lesson-title {
+                font-size: 12px;
+                margin: 0 6px;
+            }
+
+            .header > div:last-child {
+                width: 70px;
+            }
+
+            .main-container {
+                padding: 8px;
+            }
+
+            .source-area {
+                min-height: 250px;
+                max-height: 40vh;
+                padding: 10px;
+            }
+
+            .source-text-content {
+                padding: 12px;
+                font-size: 13px;
+            }
+
+            .source-text-title {
+                font-size: 14px;
+            }
+
+            .source-text-body {
+                font-size: 12px;
+            }
+
+            .source-text-meta {
+                font-size: 11px;
+            }
+
+            .source-text-modern {
+                font-size: 11px;
+                padding: 6px;
+            }
+
+            .source-text-item {
+                padding: 12px;
+            }
+
+            .source-image {
+                max-height: 35vh;
+            }
+
+            .source-header h2 {
+                font-size: 16px;
+            }
+
+            .source-header p {
+                font-size: 11px;
+            }
+
+            .question-container {
+                padding: 12px;
+            }
+
+            .question-text {
+                font-size: 14px;
+            }
+
+            .choice {
+                padding: 12px 14px;
+                font-size: 13px;
+                min-height: 48px;
+            }
+
+            .info-panel {
+                padding: 12px;
+            }
+
+            .start-learning-btn {
+                padding: 14px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <button class="home-btn" onclick="goHome()">🏠 ホーム</button>
+        <div class="lesson-title">資料で分かる歴史 - 平安時代</div>
+        <div style="width: 80px;"></div>
+    </div>
+
+    <div class="main-container">
+        <!-- 資料エリア -->
+        <div class="source-container">
+            <div class="source-header">
+                <h2>📜 平安時代の資料</h2>
+                <p>歴史資料から平安時代を学習しましょう</p>
+            </div>
+            <div class="source-area" id="source-area">
+                <div class="source-text">文字資料と画像資料をここに表示します</div>
+            </div>
+        </div>
+
+        <!-- 時代情報パネル -->
+        <div class="info-panel show" id="info-panel">
+            <h3>📊 平安時代の基本情報</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h4>時代区分</h4>
+                    <p>794年〜1185年</p>
+                </div>
+                <div class="info-item">
+                    <h4>特徴</h4>
+                    <p>貴族文化、国風文化</p>
+                </div>
+                <div class="info-item">
+                    <h4>主な遺跡・建造物</h4>
+                    <p>平安京、平等院、宇治上神社</p>
+                </div>
+                <div class="info-item">
+                    <h4>主な資料</h4>
+                    <p>源氏物語、枕草子、古今和歌集</p>
+                </div>
+            </div>
+            <div class="source-texts-grid" style="margin: 20px 0;">
+                <div class="source-text-item">
+                    <div class="source-text-title">源氏物語（げんじものがたり）</div>
+                    <div class="source-text-body" style="font-size: 13px; line-height: 1.8;">
+                        いづれの御時にか、女御、更衣あまたさぶらひたまひけるなかに、<br>
+                        いとやむごとなき際にはあらぬが、すぐれて時めきたまふありけり。<br>
+                        はじめより我はと思ひ上がりたまへる御方々、めざましきものにおとしめそねみたまふ。
+                    </div>
+                    <div class="source-text-modern" style="font-size: 12px;"><strong>意味：</strong>どの帝（みかど）の時代だったか、女御（にょうご）や更衣（こうい）がたくさんお仕えしていましたが、その中に、それほど高貴な身分ではないのに、特に帝に愛されていた方がいました。最初から自分こそがと自負していた方々は、目ざましいものとして軽視し、ねたみました。</div>
+                    <div class="source-text-meta">平安時代に紫式部（むらさきしきぶ）が書いた物語。世界最古の長編小説といわれています。</div>
+                </div>
+            </div>
+            <div class="source-images-grid" style="margin: 20px 0;">
+                <div style="text-align: center; flex: 1; min-width: 140px;">
+                    <img src="LC-2015_300_38ab_001.jpg" alt="源氏物語絵巻" style="max-width: 100%; max-height: 180px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <div style="margin-top: 8px; font-size: 12px; color: #666; font-weight: bold;">源氏物語絵巻</div>
+                </div>
+            </div>
+            <button class="start-learning-btn" onclick="startLearning()">学習を開始する</button>
+        </div>
+
+        <!-- 問題エリア -->
+        <div class="question-container" id="question-container" style="display: none;">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="question-text" id="question-text"></div>
+            <div class="choices" id="choices"></div>
+            <div class="explanation" id="explanation"></div>
+            <div class="navigation">
+                <button class="nav-btn next-btn" id="next-btn" onclick="nextQuestion()">次の問題</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 平安時代のデータ
+        const periodData = {
+            name: '平安時代',
+            period: '794年〜1185年',
+            characteristics: '貴族文化、国風文化',
+            sites: ['平安京', '平等院', '宇治上神社'],
+            sources: ['源氏物語', '枕草子', '古今和歌集'],
+            textSources: [
+                {
+                    id: 'genji_text',
+                    title: '源氏物語（げんじものがたり）',
+                    content: `いづれの御時にか、女御、更衣あまたさぶらひたまひけるなかに、
+いとやむごとなき際にはあらぬが、すぐれて時めきたまふありけり。
+はじめより我はと思ひ上がりたまへる御方々、めざましきものにおとしめそねみたまふ。
+同じほど、それより下臈の更衣たちは、ましてやすからず。
+朝夕の宮仕へにつけても、人の心をのみ動かし、恨みを負ふ積もりにやありけむ、
+いとあつしくなりゆき、もの心細げに里がちなるを、いよいよあかずあはれなるものに思ほして、
+人のそしりをもえはばからせたまはず、世のためしにもなりぬべき御もてなしなり。`,
+                    modernTranslation: 'どの帝（みかど）の時代だったか、女御（にょうご）や更衣（こうい）がたくさんお仕えしていましたが、その中に、それほど高貴な身分ではないのに、特に帝に愛されていた方がいました。最初から自分こそがと自負していた方々は、目ざましいものとして軽視し、ねたみました。',
+                    period: '平安時代',
+                    description: '平安時代に紫式部（むらさきしきぶ）が書いた物語。世界最古の長編小説といわれています。',
+                    source: '平安時代の代表的な文学作品'
+                }
+            ],
+            sourceImages: [
+                {
+                    id: 'genji_scroll',
+                    url: 'LC-2015_300_38ab_001.jpg',
+                    title: '源氏物語絵巻（げんじものがたりえまき）',
+                    period: '17世紀（江戸時代）',
+                    description: '源氏物語の54章を描いた絵巻物（えまきもの）。海北友雪（かいほうゆうせつ）の作と伝えられています。',
+                    source: 'メトロポリタン美術館所蔵（2015.300.38a, b）'
+                }
+            ],
+            questions: [
+                {
+                    id: 1,
+                    question: "この源氏物語の文章を見ると、どのような内容が書かれていますか？",
+                    choices: [
+                        "宮中（きゅうちゅう）での女性たちの様子",
+                        "戦いの様子",
+                        "農業の様子",
+                        "法律のきまり"
+                    ],
+                    correct: 0,
+                    explanation: "この文章を見ると、「女御、更衣あまたさぶらひたまひける」や「朝夕の宮仕へ」という表現から、宮中（きゅうちゅう）での女性たちの様子が書かれていることがわかります。平安時代には、このような宮中での生活を描いた文学が発達しました。",
+                    sourceTextId: 'genji_text'
+                },
+                {
+                    id: 2,
+                    question: "この源氏物語の文章を見ると、どのような表現のしかたが使われていますか？",
+                    choices: [
+                        "ひらがなを中心としたやわらかい表現",
+                        "漢字だけの表現",
+                        "カタカナだけの表現",
+                        "ローマ字の表現"
+                    ],
+                    correct: 0,
+                    explanation: "この文章を見ると、ひらがなを中心としたやわらかい表現が使われていることがわかります。平安時代には、ひらがなやカタカナが発明され、このような日本独自の文字を使った文学が発達しました。源氏物語は、ひらがなで書かれた代表的な作品です。",
+                    sourceTextId: 'genji_text'
+                },
+                {
+                    id: 3,
+                    question: "この源氏物語絵巻の写真を見ると、どのような技法で描かれているように見えますか？",
+                    choices: [
+                        "墨（すみ）と色を使って描いた絵",
+                        "写真",
+                        "彫刻",
+                        "コンピューターで作った絵"
+                    ],
+                    correct: 0,
+                    explanation: "この絵巻の写真を見ると、墨（すみ）と色を使って描かれた絵であることがわかります。源氏物語絵巻は、物語の場面を絵で表現した絵巻物（えまきもの）で、平安時代の文化を視覚的に伝える貴重な資料です。",
+                    sourceImageId: 'genji_scroll'
+                },
+                {
+                    id: 4,
+                    question: "この源氏物語絵巻の写真を見ると、どのような時代の様子が描かれていますか？",
+                    choices: [
+                        "貴族（きぞく）の生活の様子",
+                        "武士の戦いの様子",
+                        "農民の働く様子",
+                        "商人の商売の様子"
+                    ],
+                    correct: 0,
+                    explanation: "この絵巻の写真を見ると、建物や服装から、貴族（きぞく）の生活の様子が描かれていることがわかります。平安時代は、貴族が中心となった文化が発達した時代で、源氏物語はそのような貴族の生活を描いた作品です。",
+                    sourceImageId: 'genji_scroll'
+                },
+                {
+                    id: 5,
+                    question: "この2つの資料を見比べると、内容の関係として正しいのはどれですか？",
+                    choices: [
+                        "源氏物語の文章を絵で表現したもの",
+                        "全く関係のない別の作品",
+                        "同じ作者が書いた別の作品",
+                        "同じ時代の別の物語"
+                    ],
+                    correct: 0,
+                    explanation: "この2つの資料を見比べると、源氏物語絵巻は、源氏物語の文章を絵で表現したものであることがわかります。平安時代には、物語を文章だけでなく、絵でも表現する文化が発達しました。このように、文学と絵画が結びついた文化が、平安時代の特徴の一つです。",
+                    sourceTextId: null,
+                    sourceImageId: null
+                },
+                {
+                    id: 6,
+                    question: "この源氏物語の文章から、平安時代の文化の特徴として正しいのはどれですか？",
+                    choices: [
+                        "貴族を中心としたやわらかい文化",
+                        "武士を中心とした力強い文化",
+                        "農民を中心とした実用的な文化",
+                        "商人を中心とした商業的な文化"
+                    ],
+                    correct: 0,
+                    explanation: "この源氏物語の文章から、ひらがなを使ったやわらかい表現や、宮中での生活を描いた内容から、貴族を中心としたやわらかい文化が発達していたことがわかります。平安時代は、貴族が中心となった「国風文化（こくふうぶんか）」が発達した時代でした。",
+                    sourceTextId: 'genji_text'
+                },
+                {
+                    id: 7,
+                    question: "この源氏物語絵巻の写真を見ると、どのような形式の作品に見えますか？",
+                    choices: [
+                        "横に長い巻物（まきもの）の形式",
+                        "縦に長い掛け軸の形式",
+                        "正方形の絵の形式",
+                        "丸い絵の形式"
+                    ],
+                    correct: 0,
+                    explanation: "この絵巻の写真を見ると、横に長い巻物（まきもの）の形式であることがわかります。絵巻物（えまきもの）は、物語を横に長い巻物に描いたもので、平安時代に発達した絵画の形式です。",
+                    sourceImageId: 'genji_scroll'
+                },
+                {
+                    id: 8,
+                    question: "この2つの資料から、平安時代の特徴として正しいのはどれですか？",
+                    choices: [
+                        "文学と絵画が結びついた文化が発達した時代",
+                        "文学だけが発達した時代",
+                        "絵画だけが発達した時代",
+                        "文化が発達しなかった時代"
+                    ],
+                    correct: 0,
+                    explanation: "この2つの資料を見比べると、源氏物語という文学作品と、それを絵で表現した源氏物語絵巻から、文学と絵画が結びついた文化が発達していたことがわかります。平安時代は、貴族を中心とした文化が大きく発達し、文学と絵画が結びついた「国風文化」が生まれた時代でした。",
+                    sourceTextId: null,
+                    sourceImageId: null
+                }
+            ]
+        };
+
+        // 学習履歴管理クラス（縄文・弥生と同じ）
+        class LearningTracker {
+            constructor() {
+                this.mode = 'wakaru';
+                this.historyKey = `learningHistory_wakaru`;
+                
+                this.currentSession = {
+                    startTime: Date.now(),
+                    questions: [],
+                    score: 0,
+                    totalQuestions: 0,
+                    mode: 'wakaru'
+                };
+            }
+
+            recordAnswer(questionId, selectedAnswer, correctAnswer, timeSpent) {
+                this.currentSession.questions.push({
+                    questionId,
+                    selectedAnswer,
+                    correctAnswer,
+                    isCorrect: selectedAnswer === correctAnswer,
+                    timeSpent,
+                    timestamp: Date.now()
+                });
+
+                if (selectedAnswer === correctAnswer) {
+                    this.currentSession.score++;
+                }
+                this.currentSession.totalQuestions++;
+            }
+
+            saveSession() {
+                try {
+                    const existingHistory = this.loadHistory();
+                    const totalTime = Date.now() - this.currentSession.startTime;
+                    this.currentSession.totalTime = totalTime;
+                    
+                    const sessionToSave = {
+                        ...this.currentSession,
+                        endTime: Date.now(),
+                        duration: totalTime,
+                        totalTime: totalTime
+                    };
+                    
+                    existingHistory.sessions.push(sessionToSave);
+                    existingHistory.stats = this.calculateStats(existingHistory.sessions);
+                    localStorage.setItem(this.historyKey, JSON.stringify(existingHistory));
+                    
+                    return true;
+                } catch (error) {
+                    console.error('セッション保存エラー:', error);
+                    return false;
+                }
+            }
+
+            loadHistory() {
+                try {
+                    const data = localStorage.getItem(this.historyKey);
+                    if (data) {
+                        return JSON.parse(data);
+                    }
+                } catch (error) {
+                    console.error('履歴読み込みエラー:', error);
+                }
+                
+                return {
+                    sessions: [],
+                    stats: {
+                        totalSessions: 0,
+                        totalQuestions: 0,
+                        correctAnswers: 0,
+                        averageScore: 0,
+                        bestScore: 0
+                    }
+                };
+            }
+
+            calculateStats(sessions) {
+                const stats = {
+                    totalSessions: sessions.length,
+                    totalQuestions: 0,
+                    correctAnswers: 0,
+                    averageScore: 0,
+                    bestScore: 0
+                };
+
+                sessions.forEach(session => {
+                    stats.totalQuestions += session.totalQuestions;
+                    stats.correctAnswers += session.score;
+                    stats.bestScore = Math.max(stats.bestScore, session.score);
+                });
+
+                if (stats.totalSessions > 0 && stats.totalQuestions > 0) {
+                    stats.averageScore = (stats.correctAnswers / stats.totalQuestions * 100).toFixed(1);
+                }
+
+                return stats;
+            }
+        }
+
+        const learningTracker = new LearningTracker();
+
+        let currentQuestion = 0;
+        let score = 0;
+        let questionStartTime = Date.now();
+
+        function generateShuffledIndices(length) {
+            const indices = Array.from({ length }, (_, i) => i);
+            for (let i = indices.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [indices[i], indices[j]] = [indices[j], indices[i]];
+            }
+            return indices;
+        }
+
+        // 文字資料と画像資料を表示する関数（両方を常に表示）
+        function displaySources(sourceTextId, sourceImageId) {
+            const sourceArea = document.getElementById('source-area');
+            
+            // 平安時代のレッスンでは、文字資料と画像資料の両方を表示
+            const genjiText = periodData.textSources.find(src => src.id === 'genji_text');
+            const genjiImage = periodData.sourceImages.find(img => img.id === 'genji_scroll');
+            
+            if (!genjiText || !genjiImage) {
+                sourceArea.innerHTML = '<div class="source-text">文字資料と画像資料をここに表示します</div>';
+                return;
+            }
+            
+            // 文字資料と画像資料を表示
+            sourceArea.innerHTML = `
+                <div class="source-texts-grid">
+                    <div class="source-text-item">
+                        <div class="source-text-title">${genjiText.title}</div>
+                        <div class="source-text-body">${genjiText.content}</div>
+                        ${genjiText.modernTranslation ? `<div class="source-text-modern"><strong>意味：</strong>${genjiText.modernTranslation}</div>` : ''}
+                        <div class="source-text-meta">${genjiText.description}</div>
+                    </div>
+                    <div class="source-text-item" style="text-align: center;">
+                        <div class="source-text-title">${genjiImage.title}</div>
+                        <img src="${genjiImage.url}" alt="${genjiImage.title}" class="source-image" 
+                             style="max-width: 100%; max-height: 40vh; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: contain;"
+                             onerror="this.style.display='none';">
+                        <div class="source-text-meta" style="margin-top: 8px;">${genjiImage.description}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showQuestion(index) {
+            if (periodData.questions.length === 0) {
+                alert('問題データがまだ追加されていません。');
+                return;
+            }
+            
+            const question = periodData.questions[index];
+            questionStartTime = Date.now();
+            
+            document.getElementById('explanation').classList.remove('show');
+            
+            // 文字資料と画像資料を表示（常に両方表示）
+            displaySources(null, null);
+            
+            document.getElementById('question-text').textContent = question.question;
+            
+            const choicesContainer = document.getElementById('choices');
+            choicesContainer.innerHTML = '';
+            
+            const shuffledChoiceIndices = generateShuffledIndices(question.choices.length);
+            shuffledChoiceIndices.forEach((originalIndex) => {
+                const choiceElement = document.createElement('div');
+                choiceElement.className = 'choice';
+                choiceElement.textContent = question.choices[originalIndex];
+                choiceElement.dataset.originalIndex = String(originalIndex);
+                choiceElement.onclick = () => selectAnswer(originalIndex);
+                choicesContainer.appendChild(choiceElement);
+            });
+            
+            const progress = ((index + 1) / periodData.questions.length) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+            
+            const nextBtn = document.getElementById('next-btn');
+            if (index === periodData.questions.length - 1) {
+                nextBtn.disabled = true;
+                nextBtn.textContent = '次の問題';
+            } else {
+                nextBtn.disabled = false;
+                nextBtn.textContent = '次の問題';
+            }
+        }
+
+        function sendQuestionAnswerToParent(questionData, userAnswer, isCorrect) {
+            const lessonId = 'soc.history.source_heian_wakaru';
+            
+            const messageData = {
+                type: 'question:answered',
+                lessonId: lessonId,
+                questionData: {
+                    qnum: questionData.id || currentQuestion,
+                    question: questionData.question,
+                    choices: questionData.choices,
+                    answer: questionData.correct,
+                    explanation: questionData.explanation
+                },
+                userAnswer: userAnswer,
+                correctAnswer: questionData.correct,
+                isCorrect: isCorrect,
+                timestamp: Date.now()
+            };
+            
+            try {
+                if (window.parent !== window) {
+                    window.parent.postMessage(messageData, '*');
+                }
+                if (window.top !== window) {
+                    window.top.postMessage(messageData, '*');
+                }
+                
+                const existingAnswers = JSON.parse(localStorage.getItem('questionAnswers') || '[]');
+                existingAnswers.push(messageData);
+                localStorage.setItem('questionAnswers', JSON.stringify(existingAnswers));
+            } catch (e) {
+                console.log('個別問題回答送信失敗:', e);
+            }
+        }
+
+        function selectAnswer(choiceIndex) {
+            const question = periodData.questions[currentQuestion];
+            const choices = document.querySelectorAll('.choice');
+            const timeSpent = Date.now() - questionStartTime;
+            
+            choices.forEach(choice => {
+                choice.style.pointerEvents = 'none';
+            });
+            
+            choices.forEach((choice) => {
+                choice.classList.remove('selected', 'correct', 'incorrect');
+                const originalIndex = parseInt(choice.dataset.originalIndex || "-1", 10);
+                if (originalIndex === choiceIndex) {
+                    choice.classList.add('selected');
+                }
+            });
+            
+            setTimeout(() => {
+                const isCorrect = choiceIndex === question.correct;
+                
+                choices.forEach((choice) => {
+                    const originalIndex = parseInt(choice.dataset.originalIndex || "-1", 10);
+                    if (originalIndex === question.correct) {
+                        choice.classList.add('correct');
+                    } else if (originalIndex === choiceIndex && !isCorrect) {
+                        choice.classList.add('incorrect');
+                    }
+                });
+                
+                const explanation = document.getElementById('explanation');
+                explanation.innerHTML = `<h4>解説</h4><p>${question.explanation}</p>`;
+                explanation.classList.add('show');
+                
+                if (isCorrect) {
+                    score++;
+                }
+                
+                learningTracker.recordAnswer(
+                    question.id || currentQuestion,
+                    choiceIndex,
+                    question.correct,
+                    Math.round(timeSpent / 1000)
+                );
+                
+                sendQuestionAnswerToParent(question, choiceIndex, isCorrect);
+                
+                const nextBtn = document.getElementById('next-btn');
+                if (currentQuestion === periodData.questions.length - 1) {
+                    nextBtn.textContent = '学習完了';
+                    nextBtn.disabled = false;
+                }
+            }, 500);
+        }
+
+        function nextQuestion() {
+            if (currentQuestion === periodData.questions.length - 1) {
+                completeLesson();
+                return;
+            }
+            
+            if (currentQuestion < periodData.questions.length - 1) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+                document.getElementById('explanation').classList.remove('show');
+            }
+        }
+        
+        function showCurrentSessionResult() {
+            const session = learningTracker.currentSession;
+            const scorePercent = session.totalQuestions > 0 ? 
+                Math.round((session.score / session.totalQuestions) * 100) : 0;
+            
+            let resultMessage = '';
+            if (scorePercent >= 90) {
+                resultMessage = '🎉 素晴らしい成果です！';
+            } else if (scorePercent >= 70) {
+                resultMessage = '👍 よくできました！';
+            } else if (scorePercent >= 50) {
+                resultMessage = '📚 もう少し頑張りましょう！';
+            } else {
+                resultMessage = '💪 もう一度チャレンジしよう！';
+            }
+            
+            const totalTime = Date.now() - session.startTime;
+            const timeMinutes = Math.floor(totalTime / 60000);
+            const timeSeconds = Math.floor((totalTime % 60000) / 1000);
+            const timeDisplay = timeMinutes > 0 ? 
+                `${timeMinutes}分${timeSeconds}秒` : 
+                `${timeSeconds}秒`;
+            
+            return `
+                <div style="background: linear-gradient(135deg, #ff8a00 0%, #ff6b6b 100%); color: white; padding: 2rem; border-radius: 16px; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.3); margin-top: 20px;">
+                    <div style="font-size: 1.8rem; font-weight: bold; margin-bottom: 1rem;">学習完了！</div>
+                    <div style="font-size: 1.1rem; margin-bottom: 1.5rem;">${resultMessage}</div>
+                    <div style="background: rgba(255,255,255,0.2); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem;">
+                        <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">${session.score}/${session.totalQuestions}問正解</div>
+                        <div style="font-size: 1.5rem; font-weight: 600;">${scorePercent}%</div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.9rem; opacity: 0.9;">
+                        <div>学習時間: <strong>${timeDisplay}</strong></div>
+                        <div>完了時刻: <strong>${new Date().toLocaleString('ja-JP', {month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})}</strong></div>
+                    </div>
+                    <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.3);">
+                        <div style="font-size: 0.9rem; opacity: 0.9;">資料で分かる歴史の学習効果</div>
+                        <div style="font-size: 0.85rem; margin-top: 0.5rem; opacity: 0.8;">
+                            ・歴史資料の読み方が分かりました<br>
+                            ・時代の特徴を覚えやすくなりました<br>
+                            ・歴史的な理解が深まりました
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function completeLesson() {
+            learningTracker.saveSession();
+            
+            const lessonId = 'soc.history.source_heian_wakaru';
+            
+            const messageData = {
+                type: 'lesson:complete',
+                lessonId: lessonId,
+                detail: {
+                    correct: learningTracker.currentSession.score,
+                    total: learningTracker.currentSession.totalQuestions,
+                    timeSec: Math.round((Date.now() - learningTracker.currentSession.startTime) / 1000)
+                }
+            };
+            
+            try {
+                window.parent.postMessage(messageData, '*');
+            } catch (e) {
+                console.log('完了メッセージ送信失敗:', e);
+            }
+            
+            try {
+                if (window.top !== window) {
+                    window.top.postMessage(messageData, '*');
+                }
+            } catch (e) {
+                console.log('完了メッセージ送信失敗:', e);
+            }
+            
+            try {
+                const storageMessage = {
+                    ...messageData,
+                    timestamp: Date.now()
+                };
+                localStorage.setItem('lessonCompleteMessage', JSON.stringify(storageMessage));
+                
+                if (window.parent && window.parent.saveLessonProgress) {
+                    window.parent.saveLessonProgress(
+                        messageData.lessonId,
+                        messageData.detail.correct,
+                        messageData.detail.total,
+                        messageData.detail.timeSec
+                    );
+                }
+            } catch (e) {
+                console.log('localStorage/storage event 失敗:', e);
+            }
+            
+            document.getElementById('question-container').style.display = 'none';
+            
+            const resultContainer = document.createElement('div');
+            resultContainer.className = 'question-container';
+            resultContainer.style.display = 'block';
+            resultContainer.innerHTML = showCurrentSessionResult();
+            
+            const homeButton = document.createElement('button');
+            homeButton.textContent = '🏠 ホームに戻る';
+            homeButton.className = 'start-learning-btn';
+            homeButton.style.marginTop = '1.5rem';
+            homeButton.onclick = () => {
+                if (window.parent !== window || window.top !== window) {
+                    try {
+                        window.parent.postMessage({ type: 'lesson:goBack' }, '*');
+                        window.top.postMessage({ type: 'lesson:goBack' }, '*');
+                        return;
+                    } catch (e) {
+                        console.log('ホームに戻るメッセージの送信に失敗:', e);
+                    }
+                }
+                goHome();
+            };
+            resultContainer.appendChild(homeButton);
+            
+            document.querySelector('.main-container').appendChild(resultContainer);
+        }
+
+        function startLearning() {
+            document.getElementById('info-panel').style.display = 'none';
+            document.getElementById('question-container').style.display = 'block';
+            if (periodData.questions.length > 0) {
+                // 最初の問題の文字資料と画像資料を表示
+                displaySources(null, null);
+                showQuestion(0);
+            } else {
+                alert('問題データがまだ追加されていません。');
+            }
+        }
+
+        function goHome() {
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>
+

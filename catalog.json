@@ -1807,5 +1807,135 @@
       "九州地方",
       "インタラクティブ"
     ]
+  },
+  {
+    "id": "soc.history.source_jomon_yayoi_wakaru",
+    "grade": 5,
+    "subject": "soc",
+    "title": "資料で分かる歴史① - 縄文・弥生時代",
+    "duration_min": 18,
+    "sku_required": "g5-soc",
+    "path": "lessons/soc/modular/source_lesson_jomon_yayoi.html",
+    "format": "modular",
+    "tags": [
+      "歴史",
+      "資料学習",
+      "縄文時代",
+      "弥生時代",
+      "インタラクティブ"
+    ]
+  },
+  {
+    "id": "soc.history.source_kofun_asuka_wakaru",
+    "grade": 5,
+    "subject": "soc",
+    "title": "資料で分かる歴史② - 古墳・飛鳥時代",
+    "duration_min": 18,
+    "sku_required": "g5-soc",
+    "path": "lessons/soc/modular/source_lesson_kofun_asuka.html",
+    "format": "modular",
+    "tags": [
+      "歴史",
+      "資料学習",
+      "古墳時代",
+      "飛鳥時代",
+      "インタラクティブ"
+    ]
+  },
+  {
+    "id": "soc.history.source_nara_wakaru",
+    "grade": 5,
+    "subject": "soc",
+    "title": "資料で分かる歴史③ - 奈良時代",
+    "duration_min": 16,
+    "sku_required": "g5-soc",
+    "path": "lessons/soc/modular/source_lesson_nara.html",
+    "format": "modular",
+    "tags": [
+      "歴史",
+      "資料学習",
+      "奈良時代",
+      "インタラクティブ"
+    ]
+  },
+  {
+    "id": "soc.history.source_heian_wakaru",
+    "grade": 5,
+    "subject": "soc",
+    "title": "資料で分かる歴史④ - 平安時代",
+    "duration_min": 20,
+    "sku_required": "g5-soc",
+    "path": "lessons/soc/modular/source_lesson_heian.html",
+    "format": "modular",
+    "tags": [
+      "歴史",
+      "資料学習",
+      "平安時代",
+      "インタラクティブ"
+    ]
+  },
+  {
+    "id": "soc.history.source_kamakura_wakaru",
+    "grade": 5,
+    "subject": "soc",
+    "title": "資料で分かる歴史⑤ - 鎌倉時代",
+    "duration_min": 18,
+    "sku_required": "g5-soc",
+    "path": "lessons/soc/modular/source_lesson_kamakura.html",
+    "format": "modular",
+    "tags": [
+      "歴史",
+      "資料学習",
+      "鎌倉時代",
+      "インタラクティブ"
+    ]
+  },
+  {
+    "id": "soc.history.source_muromachi_wakaru",
+    "grade": 5,
+    "subject": "soc",
+    "title": "資料で分かる歴史⑥ - 室町時代",
+    "duration_min": 17,
+    "sku_required": "g5-soc",
+    "path": "lessons/soc/modular/source_lesson_muromachi.html",
+    "format": "modular",
+    "tags": [
+      "歴史",
+      "資料学習",
+      "室町時代",
+      "インタラクティブ"
+    ]
+  },
+  {
+    "id": "soc.history.source_azuchi_momoyama_wakaru",
+    "grade": 5,
+    "subject": "soc",
+    "title": "資料で分かる歴史⑦ - 安土桃山時代",
+    "duration_min": 19,
+    "sku_required": "g5-soc",
+    "path": "lessons/soc/modular/source_lesson_azuchi_momoyama.html",
+    "format": "modular",
+    "tags": [
+      "歴史",
+      "資料学習",
+      "安土桃山時代",
+      "インタラクティブ"
+    ]
+  },
+  {
+    "id": "soc.history.source_edo_wakaru",
+    "grade": 5,
+    "subject": "soc",
+    "title": "資料で分かる歴史⑧ - 江戸時代",
+    "duration_min": 22,
+    "sku_required": "g5-soc",
+    "path": "lessons/soc/modular/source_lesson_edo.html",
+    "format": "modular",
+    "tags": [
+      "歴史",
+      "資料学習",
+      "江戸時代",
+      "インタラクティブ"
+    ]
   }
 ]

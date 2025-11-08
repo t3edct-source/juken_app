@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>資料で分かる歴史 - 古墳・飛鳥時代</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hiragino Sans', 'Yu Gothic', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .home-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 44px;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .home-btn:hover {
+            background: #ff5252;
+            transform: translateY(-1px);
+        }
+
+        .home-btn:active {
+            transform: scale(0.98);
+        }
+
+        .lesson-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
+            margin: 0 10px;
+        }
+
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+        }
+
+        .source-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            margin-bottom: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .source-header {
+            background: linear-gradient(135deg, #ff8a00 0%, #ff6b6b 100%);
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .source-header h2 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .source-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .source-area {
+            min-height: 400px;
+            position: relative;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .source-image {
+            max-width: 100%;
+            max-height: 500px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            object-fit: contain;
+        }
+
+        .source-text {
+            padding: 20px;
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333;
+            text-align: center;
+        }
+
+        .info-panel {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .info-panel h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .info-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .info-item h4 {
+            color: #ff6b6b;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .info-item p {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .question-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .choice {
+            padding: 14px 16px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .choice:hover {
+            background: #e9ecef;
+            border-color: #667eea;
+        }
+
+        .choice.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .choice.correct {
+            background: #28a745;
+            color: white;
+            border-color: #28a745;
+            animation: correctPulse 0.6s ease;
+        }
+
+        .choice.incorrect {
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+            animation: wrongShake 0.6s ease;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .explanation {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #28a745;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .explanation h4 {
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+
+        .explanation p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 48px;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .prev-btn {
+            background: #6c757d;
+            color: white;
+        }
+
+        .prev-btn:hover:not(:disabled) {
+            background: #5a6268;
+        }
+
+        .next-btn {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .next-btn:hover:not(:disabled) {
+            background: #ff5252;
+        }
+
+        .start-learning-btn {
+            background: linear-gradient(135deg, #ff8a00 0%, #ff6b6b 100%);
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px auto;
+            display: block;
+            min-height: 52px;
+            width: 100%;
+            max-width: 400px;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .start-learning-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        .progress-bar {
+            background: #e9ecef;
+            border-radius: 10px;
+            height: 8px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(135deg, #ff8a00 0%, #ff6b6b 100%);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        * {
+            touch-action: manipulation;
+        }
+
+        .choice, .nav-btn, .home-btn, .start-learning-btn {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                overflow-x: hidden;
+            }
+
+            .header {
+                padding: 8px 12px;
+                flex-wrap: nowrap;
+            }
+
+            .home-btn {
+                padding: 10px 16px;
+                font-size: 13px;
+                min-width: auto;
+                flex-shrink: 0;
+            }
+
+            .lesson-title {
+                font-size: 14px;
+                margin: 0 8px;
+                text-align: center;
+                flex: 1;
+            }
+
+            .header > div:last-child {
+                width: 80px;
+                flex-shrink: 0;
+            }
+
+            .main-container {
+                padding: 10px;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .info-panel {
+                padding: 16px;
+            }
+
+            .info-item {
+                padding: 12px;
+            }
+
+            .info-item h4 {
+                font-size: 13px;
+            }
+
+            .info-item p {
+                font-size: 12px;
+            }
+            
+            .source-area {
+                min-height: 280px;
+                padding: 15px;
+            }
+
+            .source-header {
+                padding: 12px;
+            }
+
+            .source-header h2 {
+                font-size: 18px;
+                margin-bottom: 4px;
+            }
+
+            .source-header p {
+                font-size: 12px;
+            }
+
+            .question-container {
+                padding: 16px;
+            }
+
+            .question-text {
+                font-size: 15px;
+                margin-bottom: 12px;
+            }
+
+            .choice {
+                padding: 14px 16px;
+                font-size: 14px;
+                min-height: 52px;
+            }
+
+            .navigation {
+                flex-direction: column;
+                gap: 12px;
+                margin-top: 16px;
+            }
+
+            .nav-btn {
+                width: 100%;
+                padding: 14px 20px;
+                font-size: 15px;
+            }
+
+            .start-learning-btn {
+                padding: 16px 24px;
+                font-size: 15px;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .explanation {
+                padding: 12px;
+                font-size: 13px;
+                margin-top: 12px;
+            }
+
+            .explanation h4 {
+                font-size: 14px;
+                margin-bottom: 8px;
+            }
+
+            .progress-bar {
+                margin: 12px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 6px 10px;
+            }
+
+            .home-btn {
+                padding: 8px 14px;
+                font-size: 12px;
+            }
+
+            .lesson-title {
+                font-size: 12px;
+                margin: 0 6px;
+            }
+
+            .header > div:last-child {
+                width: 70px;
+            }
+
+            .main-container {
+                padding: 8px;
+            }
+
+            .source-area {
+                min-height: 250px;
+                padding: 12px;
+            }
+
+            .source-header h2 {
+                font-size: 16px;
+            }
+
+            .source-header p {
+                font-size: 11px;
+            }
+
+            .question-container {
+                padding: 12px;
+            }
+
+            .question-text {
+                font-size: 14px;
+            }
+
+            .choice {
+                padding: 12px 14px;
+                font-size: 13px;
+                min-height: 48px;
+            }
+
+            .info-panel {
+                padding: 12px;
+            }
+
+            .start-learning-btn {
+                padding: 14px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <button class="home-btn" onclick="goHome()">🏠 ホーム</button>
+        <div class="lesson-title">資料で分かる歴史 - 古墳・飛鳥時代</div>
+        <div style="width: 80px;"></div>
+    </div>
+
+    <div class="main-container">
+        <!-- 資料エリア -->
+        <div class="source-container">
+            <div class="source-header">
+                <h2>📜 古墳・飛鳥時代の資料</h2>
+                <p>歴史資料から古墳・飛鳥時代を学習しましょう</p>
+            </div>
+            <div class="source-area" id="source-area">
+                <div class="source-text">資料画像をここに表示します</div>
+            </div>
+        </div>
+
+        <!-- 時代情報パネル -->
+        <div class="info-panel show" id="info-panel">
+            <h3>📊 古墳・飛鳥時代の基本情報</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h4>時代区分</h4>
+                    <p>古墳時代: 3世紀後半〜6世紀<br>飛鳥時代: 592年〜710年</p>
+                </div>
+                <div class="info-item">
+                    <h4>特徴</h4>
+                    <p>古墳: 前方後円墳の出現<br>飛鳥: 仏教の伝来、律令国家の形成</p>
+                </div>
+                <div class="info-item">
+                    <h4>主な遺跡・建造物</h4>
+                    <p>仁徳天皇陵、法隆寺、飛鳥寺</p>
+                </div>
+                <div class="info-item">
+                    <h4>主な資料</h4>
+                    <p>古墳、埴輪、仏像、法隆寺金堂釈迦三尊像</p>
+                </div>
+            </div>
+            <button class="start-learning-btn" onclick="startLearning()">学習を開始する</button>
+        </div>
+
+        <!-- 問題エリア -->
+        <div class="question-container" id="question-container" style="display: none;">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="question-text" id="question-text"></div>
+            <div class="choices" id="choices"></div>
+            <div class="explanation" id="explanation"></div>
+            <div class="navigation">
+                <button class="nav-btn prev-btn" id="prev-btn" onclick="previousQuestion()" disabled>前の問題</button>
+                <button class="nav-btn next-btn" id="next-btn" onclick="nextQuestion()">次の問題</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 古墳・飛鳥時代のデータ
+        const periodData = {
+            name: '古墳・飛鳥時代',
+            period: '古墳時代: 3世紀後半〜6世紀 / 飛鳥時代: 592年〜710年',
+            characteristics: '古墳: 前方後円墳の出現 / 飛鳥: 仏教の伝来、律令国家の形成',
+            sites: ['仁徳天皇陵', '法隆寺', '飛鳥寺'],
+            sources: ['古墳', '埴輪', '仏像', '法隆寺金堂釈迦三尊像'],
+            questions: [
+                // 問題データは後で追加
+            ]
+        };
+
+        // 学習履歴管理クラス（縄文・弥生と同じ）
+        class LearningTracker {
+            constructor() {
+                this.mode = 'wakaru';
+                this.historyKey = `learningHistory_wakaru`;
+                
+                this.currentSession = {
+                    startTime: Date.now(),
+                    questions: [],
+                    score: 0,
+                    totalQuestions: 0,
+                    mode: 'wakaru'
+                };
+            }
+
+            recordAnswer(questionId, selectedAnswer, correctAnswer, timeSpent) {
+                this.currentSession.questions.push({
+                    questionId,
+                    selectedAnswer,
+                    correctAnswer,
+                    isCorrect: selectedAnswer === correctAnswer,
+                    timeSpent,
+                    timestamp: Date.now()
+                });
+
+                if (selectedAnswer === correctAnswer) {
+                    this.currentSession.score++;
+                }
+                this.currentSession.totalQuestions++;
+            }
+
+            saveSession() {
+                try {
+                    const existingHistory = this.loadHistory();
+                    const totalTime = Date.now() - this.currentSession.startTime;
+                    this.currentSession.totalTime = totalTime;
+                    
+                    const sessionToSave = {
+                        ...this.currentSession,
+                        endTime: Date.now(),
+                        duration: totalTime,
+                        totalTime: totalTime
+                    };
+                    
+                    existingHistory.sessions.push(sessionToSave);
+                    existingHistory.stats = this.calculateStats(existingHistory.sessions);
+                    localStorage.setItem(this.historyKey, JSON.stringify(existingHistory));
+                    
+                    return true;
+                } catch (error) {
+                    console.error('セッション保存エラー:', error);
+                    return false;
+                }
+            }
+
+            loadHistory() {
+                try {
+                    const data = localStorage.getItem(this.historyKey);
+                    if (data) {
+                        return JSON.parse(data);
+                    }
+                } catch (error) {
+                    console.error('履歴読み込みエラー:', error);
+                }
+                
+                return {
+                    sessions: [],
+                    stats: {
+                        totalSessions: 0,
+                        totalQuestions: 0,
+                        correctAnswers: 0,
+                        averageScore: 0,
+                        bestScore: 0
+                    }
+                };
+            }
+
+            calculateStats(sessions) {
+                const stats = {
+                    totalSessions: sessions.length,
+                    totalQuestions: 0,
+                    correctAnswers: 0,
+                    averageScore: 0,
+                    bestScore: 0
+                };
+
+                sessions.forEach(session => {
+                    stats.totalQuestions += session.totalQuestions;
+                    stats.correctAnswers += session.score;
+                    stats.bestScore = Math.max(stats.bestScore, session.score);
+                });
+
+                if (stats.totalSessions > 0 && stats.totalQuestions > 0) {
+                    stats.averageScore = (stats.correctAnswers / stats.totalQuestions * 100).toFixed(1);
+                }
+
+                return stats;
+            }
+        }
+
+        const learningTracker = new LearningTracker();
+
+        let currentQuestion = 0;
+        let score = 0;
+        let questionStartTime = Date.now();
+
+        function generateShuffledIndices(length) {
+            const indices = Array.from({ length }, (_, i) => i);
+            for (let i = indices.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [indices[i], indices[j]] = [indices[j], indices[i]];
+            }
+            return indices;
+        }
+
+        function showQuestion(index) {
+            if (periodData.questions.length === 0) {
+                alert('問題データがまだ追加されていません。');
+                return;
+            }
+            
+            const question = periodData.questions[index];
+            questionStartTime = Date.now();
+            
+            document.getElementById('explanation').classList.remove('show');
+            
+            document.getElementById('question-text').textContent = question.question;
+            
+            const choicesContainer = document.getElementById('choices');
+            choicesContainer.innerHTML = '';
+            
+            const shuffledChoiceIndices = generateShuffledIndices(question.choices.length);
+            shuffledChoiceIndices.forEach((originalIndex) => {
+                const choiceElement = document.createElement('div');
+                choiceElement.className = 'choice';
+                choiceElement.textContent = question.choices[originalIndex];
+                choiceElement.dataset.originalIndex = String(originalIndex);
+                choiceElement.onclick = () => selectAnswer(originalIndex);
+                choicesContainer.appendChild(choiceElement);
+            });
+            
+            const progress = ((index + 1) / periodData.questions.length) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+            
+            const nextBtn = document.getElementById('next-btn');
+            document.getElementById('prev-btn').disabled = index === 0;
+            if (index === periodData.questions.length - 1) {
+                nextBtn.disabled = true;
+                nextBtn.textContent = '次の問題';
+            } else {
+                nextBtn.disabled = false;
+                nextBtn.textContent = '次の問題';
+            }
+        }
+
+        function sendQuestionAnswerToParent(questionData, userAnswer, isCorrect) {
+            const lessonId = 'soc.history.source_kofun_asuka_wakaru';
+            
+            const messageData = {
+                type: 'question:answered',
+                lessonId: lessonId,
+                questionData: {
+                    qnum: questionData.id || currentQuestion,
+                    question: questionData.question,
+                    choices: questionData.choices,
+                    answer: questionData.correct,
+                    explanation: questionData.explanation
+                },
+                userAnswer: userAnswer,
+                correctAnswer: questionData.correct,
+                isCorrect: isCorrect,
+                timestamp: Date.now()
+            };
+            
+            try {
+                if (window.parent !== window) {
+                    window.parent.postMessage(messageData, '*');
+                }
+                if (window.top !== window) {
+                    window.top.postMessage(messageData, '*');
+                }
+                
+                const existingAnswers = JSON.parse(localStorage.getItem('questionAnswers') || '[]');
+                existingAnswers.push(messageData);
+                localStorage.setItem('questionAnswers', JSON.stringify(existingAnswers));
+            } catch (e) {
+                console.log('個別問題回答送信失敗:', e);
+            }
+        }
+
+        function selectAnswer(choiceIndex) {
+            const question = periodData.questions[currentQuestion];
+            const choices = document.querySelectorAll('.choice');
+            const timeSpent = Date.now() - questionStartTime;
+            
+            choices.forEach(choice => {
+                choice.style.pointerEvents = 'none';
+            });
+            
+            choices.forEach((choice) => {
+                choice.classList.remove('selected', 'correct', 'incorrect');
+                const originalIndex = parseInt(choice.dataset.originalIndex || "-1", 10);
+                if (originalIndex === choiceIndex) {
+                    choice.classList.add('selected');
+                }
+            });
+            
+            setTimeout(() => {
+                const isCorrect = choiceIndex === question.correct;
+                
+                choices.forEach((choice) => {
+                    const originalIndex = parseInt(choice.dataset.originalIndex || "-1", 10);
+                    if (originalIndex === question.correct) {
+                        choice.classList.add('correct');
+                    } else if (originalIndex === choiceIndex && !isCorrect) {
+                        choice.classList.add('incorrect');
+                    }
+                });
+                
+                const explanation = document.getElementById('explanation');
+                explanation.innerHTML = `<h4>解説</h4><p>${question.explanation}</p>`;
+                explanation.classList.add('show');
+                
+                if (isCorrect) {
+                    score++;
+                }
+                
+                learningTracker.recordAnswer(
+                    question.id || currentQuestion,
+                    choiceIndex,
+                    question.correct,
+                    Math.round(timeSpent / 1000)
+                );
+                
+                sendQuestionAnswerToParent(question, choiceIndex, isCorrect);
+                
+                const nextBtn = document.getElementById('next-btn');
+                if (currentQuestion === periodData.questions.length - 1) {
+                    nextBtn.textContent = '学習完了';
+                    nextBtn.disabled = false;
+                }
+            }, 500);
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+                document.getElementById('explanation').classList.remove('show');
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion === periodData.questions.length - 1) {
+                completeLesson();
+                return;
+            }
+            
+            if (currentQuestion < periodData.questions.length - 1) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+                document.getElementById('explanation').classList.remove('show');
+            }
+        }
+        
+        function showCurrentSessionResult() {
+            const session = learningTracker.currentSession;
+            const scorePercent = session.totalQuestions > 0 ? 
+                Math.round((session.score / session.totalQuestions) * 100) : 0;
+            
+            let resultMessage = '';
+            if (scorePercent >= 90) {
+                resultMessage = '🎉 素晴らしい成果です！';
+            } else if (scorePercent >= 70) {
+                resultMessage = '👍 よくできました！';
+            } else if (scorePercent >= 50) {
+                resultMessage = '📚 もう少し頑張りましょう！';
+            } else {
+                resultMessage = '💪 もう一度チャレンジしよう！';
+            }
+            
+            const totalTime = Date.now() - session.startTime;
+            const timeMinutes = Math.floor(totalTime / 60000);
+            const timeSeconds = Math.floor((totalTime % 60000) / 1000);
+            const timeDisplay = timeMinutes > 0 ? 
+                `${timeMinutes}分${timeSeconds}秒` : 
+                `${timeSeconds}秒`;
+            
+            return `
+                <div style="background: linear-gradient(135deg, #ff8a00 0%, #ff6b6b 100%); color: white; padding: 2rem; border-radius: 16px; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.3); margin-top: 20px;">
+                    <div style="font-size: 1.8rem; font-weight: bold; margin-bottom: 1rem;">学習完了！</div>
+                    <div style="font-size: 1.1rem; margin-bottom: 1.5rem;">${resultMessage}</div>
+                    <div style="background: rgba(255,255,255,0.2); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem;">
+                        <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">${session.score}/${session.totalQuestions}問正解</div>
+                        <div style="font-size: 1.5rem; font-weight: 600;">${scorePercent}%</div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.9rem; opacity: 0.9;">
+                        <div>学習時間: <strong>${timeDisplay}</strong></div>
+                        <div>完了時刻: <strong>${new Date().toLocaleString('ja-JP', {month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})}</strong></div>
+                    </div>
+                    <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.3);">
+                        <div style="font-size: 0.9rem; opacity: 0.9;">資料で分かる歴史の学習効果</div>
+                        <div style="font-size: 0.85rem; margin-top: 0.5rem; opacity: 0.8;">
+                            ・歴史資料の読み方が分かりました<br>
+                            ・時代の特徴を覚えやすくなりました<br>
+                            ・歴史的な理解が深まりました
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function completeLesson() {
+            learningTracker.saveSession();
+            
+            const lessonId = 'soc.history.source_kofun_asuka_wakaru';
+            
+            const messageData = {
+                type: 'lesson:complete',
+                lessonId: lessonId,
+                detail: {
+                    correct: learningTracker.currentSession.score,
+                    total: learningTracker.currentSession.totalQuestions,
+                    timeSec: Math.round((Date.now() - learningTracker.currentSession.startTime) / 1000)
+                }
+            };
+            
+            try {
+                window.parent.postMessage(messageData, '*');
+            } catch (e) {
+                console.log('完了メッセージ送信失敗:', e);
+            }
+            
+            try {
+                if (window.top !== window) {
+                    window.top.postMessage(messageData, '*');
+                }
+            } catch (e) {
+                console.log('完了メッセージ送信失敗:', e);
+            }
+            
+            try {
+                const storageMessage = {
+                    ...messageData,
+                    timestamp: Date.now()
+                };
+                localStorage.setItem('lessonCompleteMessage', JSON.stringify(storageMessage));
+                
+                if (window.parent && window.parent.saveLessonProgress) {
+                    window.parent.saveLessonProgress(
+                        messageData.lessonId,
+                        messageData.detail.correct,
+                        messageData.detail.total,
+                        messageData.detail.timeSec
+                    );
+                }
+            } catch (e) {
+                console.log('localStorage/storage event 失敗:', e);
+            }
+            
+            document.getElementById('question-container').style.display = 'none';
+            
+            const resultContainer = document.createElement('div');
+            resultContainer.className = 'question-container';
+            resultContainer.style.display = 'block';
+            resultContainer.innerHTML = showCurrentSessionResult();
+            
+            const homeButton = document.createElement('button');
+            homeButton.textContent = '🏠 ホームに戻る';
+            homeButton.className = 'start-learning-btn';
+            homeButton.style.marginTop = '1.5rem';
+            homeButton.onclick = () => {
+                if (window.parent !== window || window.top !== window) {
+                    try {
+                        window.parent.postMessage({ type: 'lesson:goBack' }, '*');
+                        window.top.postMessage({ type: 'lesson:goBack' }, '*');
+                        return;
+                    } catch (e) {
+                        console.log('ホームに戻るメッセージの送信に失敗:', e);
+                    }
+                }
+                goHome();
+            };
+            resultContainer.appendChild(homeButton);
+            
+            document.querySelector('.main-container').appendChild(resultContainer);
+        }
+
+        function startLearning() {
+            document.getElementById('info-panel').style.display = 'none';
+            document.getElementById('question-container').style.display = 'block';
+            if (periodData.questions.length > 0) {
+                showQuestion(0);
+            } else {
+                alert('問題データがまだ追加されていません。');
+            }
+        }
+
+        function goHome() {
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>
+
