@@ -155,27 +155,9 @@ function loadQuestion() {
   // oboeruモードではsource要素を非表示
   if (mode === "oboeru") {
     sourceEl.style.display = "none";
-    // oboeruモードでは下部の枠囲みに単元名を表示
-    let unitName = "";
-    const eraLabelElement = document.getElementById("eraLabel");
-    if (eraLabelElement && eraLabelElement.textContent) {
-      unitName = eraLabelElement.textContent;
-    } else if (window.eraMap && era) {
-      // eraLabelがまだ設定されていない場合は、直接eraMapから取得
-      unitName = window.eraMap[era] || era;
-      // eraLabelにも設定しておく
-      if (eraLabelElement) {
-        eraLabelElement.textContent = unitName;
-      }
-    }
-    
-    if (unitName) {
-      explanationEl.textContent = unitName;
-      explanationEl.style.display = "block";
-    } else {
-      explanationEl.textContent = "";
-      explanationEl.style.display = "none";
-    }
+    // oboeruモードでは問題表示時は解説を非表示（回答後に表示）
+    explanationEl.textContent = "";
+    explanationEl.style.display = "none";
   } else {
     sourceEl.style.display = "";
     explanationEl.textContent = "";
@@ -260,25 +242,9 @@ function handleAnswer(selected) {
     "🎉 正解です！素晴らしい！" : 
     `❌ 不正解です。正解は「${q.choices[q.answer]}」でした。`;
   
-  // oboeruモードでは単元名も一緒に表示
-  if (mode === "oboeru") {
-    let unitName = "";
-    const eraLabelElement = document.getElementById("eraLabel");
-    if (eraLabelElement && eraLabelElement.textContent) {
-      unitName = eraLabelElement.textContent;
-    } else if (window.eraMap && era) {
-      // eraLabelがまだ設定されていない場合は、直接eraMapから取得
-      unitName = window.eraMap[era] || era;
-    }
-    
-    if (unitName) {
-      explanationEl.innerHTML = `${message}<br><br><span style="opacity: 0.7; font-size: 0.9em;">${unitName}</span>`;
-    } else {
-      explanationEl.textContent = message;
-    }
-  } else {
-    explanationEl.textContent = message;
-  }
+  // 解説を表示（oboeruモードでは正解・不正解メッセージのみ）
+  explanationEl.textContent = message;
+  explanationEl.style.display = "block";
   explanationEl.style.animation = isCorrect ? "correctPulse 0.6s ease" : "wrongShake 0.6s ease";
   nextBtn.style.display = "inline-block";
   
