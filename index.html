@@ -21,9 +21,9 @@
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50 text-slate-800 min-h-screen relative overflow-x-hidden">
+<body class="bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50 text-slate-800 min-h-screen relative overflow-x-hidden theme-default">
   <!-- 背景装飾要素 -->
-  <div class="fixed inset-0 pointer-events-none overflow-hidden">
+  <div class="fixed inset-0 pointer-events-none overflow-hidden bg-decoration">
     <div class="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-yellow-200/30 to-orange-300/30 rounded-full blur-xl"></div>
     <div class="absolute top-40 right-20 w-24 h-24 bg-gradient-to-br from-pink-200/30 to-red-300/30 rounded-full blur-xl"></div>
     <div class="absolute bottom-40 left-20 w-28 h-28 bg-gradient-to-br from-orange-200/30 to-yellow-300/30 rounded-full blur-xl"></div>
@@ -39,6 +39,10 @@
         <span class="font-bold text-xl text-slate-800">ステップナビ</span>
       </a>
       <nav class="flex items-center gap-3 text-sm">
+        <!-- メニューボタン -->
+        <button id="menuBtn" class="px-3 py-2 rounded-lg bg-slate-500 text-white hover:bg-slate-600 shadow-sm transition-colors duration-200" title="メニュー">
+          ☰
+        </button>
         <!-- PWAインストールボタン -->
         <button id="installBtn" class="px-3 py-2 rounded-lg bg-orange-500 text-white hover:bg-orange-600 hidden shadow-sm transition-colors duration-200">
           📱 アプリに追加
@@ -50,7 +54,7 @@
     </div>
   </header>
 
-  <main id="app" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 relative z-10">
+  <main id="app" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 relative z-10">
     <div id="view" aria-live="polite"></div>
 
     <!-- Firebase認証ボックス -->
@@ -202,18 +206,18 @@
     <!-- ▼ 必須ビュー群（JSが表示/非表示を切り替えます） -->
     <section id="homeView" class="section-gap">
       <!-- 横長イラストエリア -->
-      <div class="w-full h-44 mb-6 overflow-hidden relative">
+      <div class="w-full h-32 sm:h-40 mb-4 sm:mb-6 overflow-hidden relative">
         <!-- イラスト表示エリア -->
         <div class="relative z-10 text-center">
-          <img id="subjectHero" src="./images/hero/hero-main.png" alt="楽しい学習イラスト" class="h-44 w-full object-cover transition-all duration-500">
+          <img id="subjectHero" src="./images/hero/hero-main.png" alt="楽しい学習イラスト" class="h-32 sm:h-40 w-full object-cover transition-all duration-500">
           <div class="absolute inset-0 flex items-center justify-center">
-            <p id="subjectMessage" class="text-white font-bold text-xl drop-shadow-lg bg-black/20 px-4 py-2 rounded-full">中学受験合格に向けて、理科・社会を徹底攻略！</p>
+            <p id="subjectMessage" class="text-white font-bold text-base sm:text-xl drop-shadow-lg bg-black/20 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full">中学受験合格に向けて、理科・社会を徹底攻略！</p>
           </div>
         </div>
       </div>
       
       <!-- 教科別タブ -->
-      <div class="subject-tabs mb-6">
+      <div class="subject-tabs mb-4 sm:mb-6">
         <button class="subject-tab active" data-subject="recommended">⭐ おすすめ学習</button>
         <button class="subject-tab" data-subject="sci">🔬 理科わかる</button>
         <button class="subject-tab" data-subject="science_drill">🧪 理科おぼえる</button>
@@ -253,6 +257,70 @@
     </section>
     <!-- ▲ 必須ビュー群 -->
   </main>
+
+  <!-- メニューポップアップ -->
+  <div id="menuPanel" class="fixed inset-0 z-50 hidden" style="display: none;">
+    <!-- 背景オーバーレイ -->
+    <div id="menuBackdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300"></div>
+    <!-- サイドパネル -->
+    <div class="fixed top-0 right-0 h-full w-80 max-w-[90vw] bg-white shadow-2xl transform transition-transform duration-300 translate-x-full">
+      <div class="h-full flex flex-col">
+        <!-- ヘッダー -->
+        <div class="sticky top-0 bg-gradient-to-r from-slate-50 to-slate-100 border-b border-slate-200 px-6 py-4 flex items-center justify-between z-10">
+          <h2 class="text-xl font-bold text-slate-800">メニュー</h2>
+          <button id="menuClose" class="text-slate-500 hover:text-slate-700 text-2xl font-bold transition-colors">&times;</button>
+        </div>
+        <!-- コンテンツ -->
+        <div class="flex-1 overflow-y-auto px-4 py-4">
+          <div class="space-y-2">
+            <!-- 学習統計 -->
+            <button class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3" data-action="show-stats">
+              <span class="text-2xl">📊</span>
+              <span class="font-semibold text-slate-800">学習統計</span>
+            </button>
+            <!-- 連続学習記録 -->
+            <button class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3" data-action="show-streak">
+              <span class="text-2xl">🔥</span>
+              <span class="font-semibold text-slate-800">連続学習記録</span>
+            </button>
+            <!-- 背景テーマ -->
+            <button class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3" data-action="show-theme">
+              <span class="text-2xl">🎨</span>
+              <span class="font-semibold text-slate-800">背景テーマ</span>
+            </button>
+            <!-- アプリに追加 -->
+            <button id="menuInstallBtn" class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3 hidden" data-action="install-app">
+              <span class="text-2xl">📱</span>
+              <span class="font-semibold text-slate-800">アプリに追加</span>
+            </button>
+            <!-- 区切り線 -->
+            <div class="border-t border-slate-200 my-2"></div>
+            <!-- ヘルプ -->
+            <button class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3" data-action="show-help">
+              <span class="text-2xl">❓</span>
+              <span class="font-semibold text-slate-800">ヘルプ</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- テーマ選択モーダル -->
+  <div id="themeModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center" style="display: none;">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
+      <div class="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between rounded-t-2xl">
+        <h2 class="text-xl font-bold text-slate-800">🎨 背景テーマを選択</h2>
+        <button id="themeModalClose" class="text-slate-500 hover:text-slate-700 text-2xl font-bold">&times;</button>
+      </div>
+      <div class="p-6">
+        <p class="text-sm text-slate-600 mb-4">連続学習日数に応じて新しいテーマがアンロックされます！</p>
+        <div id="themeList" class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <!-- テーマはJavaScriptで動的に生成 -->
+        </div>
+      </div>
+    </div>
+  </div>
 
   <footer class="border-t border-orange-200 bg-white/95 mt-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-center">

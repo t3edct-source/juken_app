@@ -1,4 +1,4 @@
-export const questions = [
+window.questions = [
   {
     "qnum": 1,
     "text": "九州地方の政令指定都市で、玄界灘に面するのはどれですか。",

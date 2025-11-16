@@ -1,4 +1,4 @@
-export const questions = [
+window.questions = [
   {
     "qnum": 1,
     "text": "山陰地方の県庁所在地で、日本海側に位置するのはどれですか。",

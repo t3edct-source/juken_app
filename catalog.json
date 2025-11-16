@@ -1937,5 +1937,1842 @@
       "江戸時代",
       "インタラクティブ"
     ]
+  },
+  {
+    "id": "sci.biology.plants_growth_light",
+    "grade": 4,
+    "subject": "sci",
+    "title": "植物の成長・光と日照",
+    "duration_min": 15,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/biology/plants_growth_light/output.html",
+    "format": "html",
+    "tags": [
+      "生物",
+      "植物",
+      "成長",
+      "光合成"
+    ]
+  },
+  {
+    "id": "sci.biology.plants_observation",
+    "grade": 4,
+    "subject": "sci",
+    "title": "植物の観察（葉・根・茎の働き）",
+    "duration_min": 14,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/biology/plants_observation/output.html",
+    "format": "html",
+    "tags": [
+      "生物",
+      "植物",
+      "観察",
+      "葉・根・茎"
+    ]
+  },
+  {
+    "id": "sci.biology.animals_classification",
+    "grade": 4,
+    "subject": "sci",
+    "title": "動物の分類・観察",
+    "duration_min": 16,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/biology/animals_classification/output.html",
+    "format": "html",
+    "tags": [
+      "生物",
+      "動物",
+      "分類",
+      "観察"
+    ]
+  },
+  {
+    "id": "sci.biology.human_body_basic",
+    "grade": 4,
+    "subject": "sci",
+    "title": "人の体のつくり（呼吸・運動）",
+    "duration_min": 15,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/biology/human_body_basic/output.html",
+    "format": "html",
+    "tags": [
+      "生物",
+      "人体",
+      "呼吸",
+      "運動"
+    ]
+  },
+  {
+    "id": "sci.physics.weight_volume_basic",
+    "grade": 4,
+    "subject": "sci",
+    "title": "物の重さ・体積の基礎",
+    "duration_min": 12,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/physics/weight_volume_basic/output.html",
+    "format": "html",
+    "tags": [
+      "物理",
+      "重さ",
+      "体積",
+      "基礎"
+    ]
+  },
+  {
+    "id": "sci.chemistry.air_water_properties",
+    "grade": 4,
+    "subject": "sci",
+    "title": "空気と水の性質",
+    "duration_min": 14,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/chemistry/air_water_properties/output.html",
+    "format": "html",
+    "tags": [
+      "化学",
+      "空気",
+      "水",
+      "性質"
+    ]
+  },
+  {
+    "id": "sci.chemistry.water_three_states",
+    "grade": 4,
+    "subject": "sci",
+    "title": "水の三態・温度変化",
+    "duration_min": 13,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/chemistry/water_three_states/output.html",
+    "format": "html",
+    "tags": [
+      "化学",
+      "水の三態",
+      "温度",
+      "状態変化"
+    ]
+  },
+  {
+    "id": "sci.earth.weather_changes",
+    "grade": 4,
+    "subject": "sci",
+    "title": "天気の変化・気温",
+    "duration_min": 15,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/earth/weather_changes/output.html",
+    "format": "html",
+    "tags": [
+      "地学",
+      "天気",
+      "気温",
+      "観察"
+    ]
+  },
+  {
+    "id": "sci.biology.seasons_living_things",
+    "grade": 4,
+    "subject": "sci",
+    "title": "季節と生き物",
+    "duration_min": 14,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/biology/seasons_living_things/output.html",
+    "format": "html",
+    "tags": [
+      "生物",
+      "季節",
+      "生き物",
+      "観察"
+    ]
+  },
+  {
+    "id": "sci.earth.sun_movement_shadow",
+    "grade": 4,
+    "subject": "sci",
+    "title": "太陽の動き（影）",
+    "duration_min": 13,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/earth/sun_movement_shadow/output.html",
+    "format": "html",
+    "tags": [
+      "地学",
+      "太陽",
+      "影",
+      "観察"
+    ]
+  },
+  {
+    "id": "sci.earth.constellations_seasons",
+    "grade": 4,
+    "subject": "sci",
+    "title": "星座と季節",
+    "duration_min": 14,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/earth/constellations_seasons/output.html",
+    "format": "html",
+    "tags": [
+      "地学",
+      "星座",
+      "季節",
+      "観察"
+    ]
+  },
+  {
+    "id": "sci.physics.electricity_conductivity_basic",
+    "grade": 4,
+    "subject": "sci",
+    "title": "電気の通りやすさ（基礎）",
+    "duration_min": 12,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/physics/electricity_conductivity_basic/output.html",
+    "format": "html",
+    "tags": [
+      "物理",
+      "電気",
+      "導体",
+      "絶縁体"
+    ]
+  },
+  {
+    "id": "sci.physics.magnet",
+    "grade": 4,
+    "subject": "sci",
+    "title": "磁石",
+    "duration_min": 13,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/physics/magnet/output.html",
+    "format": "html",
+    "tags": [
+      "物理",
+      "磁石",
+      "磁力",
+      "観察"
+    ]
+  },
+  {
+    "id": "sci.physics.electricity_motor",
+    "grade": 4,
+    "subject": "sci",
+    "title": "電気の利用（モーター）",
+    "duration_min": 14,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/physics/electricity_motor/output.html",
+    "format": "html",
+    "tags": [
+      "物理",
+      "電気",
+      "モーター",
+      "利用"
+    ]
+  },
+  {
+    "id": "sci.physics.buoyancy_basic",
+    "grade": 4,
+    "subject": "sci",
+    "title": "ものの浮きしずみ（基礎）",
+    "duration_min": 13,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/physics/buoyancy_basic/output.html",
+    "format": "html",
+    "tags": [
+      "物理",
+      "浮力",
+      "密度",
+      "基礎"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.g4_summary",
+    "grade": 4,
+    "subject": "sci",
+    "title": "まとめ・総合確認",
+    "duration_min": 20,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/comprehensive/g4_summary/output.html",
+    "format": "html",
+    "tags": [
+      "総合",
+      "小4",
+      "まとめ",
+      "確認"
+    ]
+  },
+  {
+    "id": "sci.biology.basic_experiment_tools_wakaru",
+    "grade": 4,
+    "subject": "sci",
+    "title": "基礎実験器具〈わかる編〉",
+    "duration_min": 12,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/biology/basic_experiment_tools_wakaru/output.html",
+    "format": "html",
+    "tags": [
+      "生物",
+      "実験器具",
+      "わかる編",
+      "基礎"
+    ]
+  },
+  {
+    "id": "sci.earth.weather_map_intro_wakaru",
+    "grade": 4,
+    "subject": "sci",
+    "title": "天気図の見方（導入）〈わかる編〉",
+    "duration_min": 14,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/earth/weather_map_intro_wakaru/output.html",
+    "format": "html",
+    "tags": [
+      "地学",
+      "天気図",
+      "わかる編",
+      "導入"
+    ]
+  },
+  {
+    "id": "sci.chemistry.air_water_simulation_wakaru",
+    "grade": 4,
+    "subject": "sci",
+    "title": "空気・水の性質のシミュレーション〈わかる編〉",
+    "duration_min": 15,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/chemistry/air_water_simulation_wakaru/output.html",
+    "format": "html",
+    "tags": [
+      "化学",
+      "シミュレーション",
+      "わかる編",
+      "空気・水"
+    ]
+  },
+  {
+    "id": "sci.earth.shadow_movement_model_wakaru",
+    "grade": 4,
+    "subject": "sci",
+    "title": "影の動きモデル〈わかる編〉",
+    "duration_min": 13,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/earth/shadow_movement_model_wakaru/output.html",
+    "format": "html",
+    "tags": [
+      "地学",
+      "影",
+      "モデル",
+      "わかる編"
+    ]
+  },
+  {
+    "id": "sci.earth.constellation_star_chart_wakaru",
+    "grade": 4,
+    "subject": "sci",
+    "title": "星座早見模型〈わかる編〉",
+    "duration_min": 14,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/earth/constellation_star_chart_wakaru/output.html",
+    "format": "html",
+    "tags": [
+      "地学",
+      "星座",
+      "早見盤",
+      "わかる編"
+    ]
+  },
+  {
+    "id": "sci.physics.circuit_diagram_intro_wakaru",
+    "grade": 4,
+    "subject": "sci",
+    "title": "電気の回路図の読み方（入門）〈わかる編〉",
+    "duration_min": 12,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/physics/circuit_diagram_intro_wakaru/output.html",
+    "format": "html",
+    "tags": [
+      "物理",
+      "回路図",
+      "わかる編",
+      "入門"
+    ]
+  },
+  {
+    "id": "sci.earth.typhoon_weather",
+    "grade": 5,
+    "subject": "sci",
+    "title": "台風と気象の変化",
+    "duration_min": 16,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/earth/typhoon_weather/output.html",
+    "format": "html",
+    "tags": [
+      "地学",
+      "台風",
+      "気象",
+      "観察"
+    ]
+  },
+  {
+    "id": "sci.earth.clouds_fronts_weather_map",
+    "grade": 5,
+    "subject": "sci",
+    "title": "雲・前線・天気図",
+    "duration_min": 18,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/earth/clouds_fronts_weather_map/output.html",
+    "format": "html",
+    "tags": [
+      "地学",
+      "雲",
+      "前線",
+      "天気図"
+    ]
+  },
+  {
+    "id": "sci.chemistry.water_solution_acid_alkali",
+    "grade": 5,
+    "subject": "sci",
+    "title": "水溶液の性質（酸・アルカリ）",
+    "duration_min": 17,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/chemistry/water_solution_acid_alkali/output.html",
+    "format": "html",
+    "tags": [
+      "化学",
+      "水溶液",
+      "酸性",
+      "アルカリ性"
+    ]
+  },
+  {
+    "id": "sci.chemistry.solubility_temperature",
+    "grade": 5,
+    "subject": "sci",
+    "title": "溶解度と温度",
+    "duration_min": 16,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/chemistry/solubility_temperature/output.html",
+    "format": "html",
+    "tags": [
+      "化学",
+      "溶解度",
+      "温度",
+      "実験"
+    ]
+  },
+  {
+    "id": "sci.chemistry.crystal_features",
+    "grade": 5,
+    "subject": "sci",
+    "title": "結晶の特徴",
+    "duration_min": 15,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/chemistry/crystal_features/output.html",
+    "format": "html",
+    "tags": [
+      "化学",
+      "結晶",
+      "観察",
+      "実験"
+    ]
+  },
+  {
+    "id": "sci.physics.lever_weight_basic",
+    "grade": 5,
+    "subject": "sci",
+    "title": "てこ・おもり（力学基礎）",
+    "duration_min": 18,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/physics/lever_weight_basic/output.html",
+    "format": "html",
+    "tags": [
+      "物理",
+      "てこ",
+      "おもり",
+      "力学"
+    ]
+  },
+  {
+    "id": "sci.physics.spring_force",
+    "grade": 5,
+    "subject": "sci",
+    "title": "ばねと力",
+    "duration_min": 15,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/physics/spring_force/output.html",
+    "format": "html",
+    "tags": [
+      "物理",
+      "ばね",
+      "力",
+      "実験"
+    ]
+  },
+  {
+    "id": "sci.physics.current_voltage_circuit",
+    "grade": 5,
+    "subject": "sci",
+    "title": "電流・電圧・回路",
+    "duration_min": 17,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/physics/current_voltage_circuit/output.html",
+    "format": "html",
+    "tags": [
+      "物理",
+      "電流",
+      "電圧",
+      "回路"
+    ]
+  },
+  {
+    "id": "sci.physics.electromagnet",
+    "grade": 5,
+    "subject": "sci",
+    "title": "電流の働き（電磁石）",
+    "duration_min": 16,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/physics/electromagnet/output.html",
+    "format": "html",
+    "tags": [
+      "物理",
+      "電磁石",
+      "電流",
+      "実験"
+    ]
+  },
+  {
+    "id": "sci.biology.plants_structure",
+    "grade": 5,
+    "subject": "sci",
+    "title": "植物のつくり（道管/師管）",
+    "duration_min": 16,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/biology/plants_structure/output.html",
+    "format": "html",
+    "tags": [
+      "生物",
+      "植物",
+      "道管",
+      "師管"
+    ]
+  },
+  {
+    "id": "sci.biology.leaf_photosynthesis",
+    "grade": 5,
+    "subject": "sci",
+    "title": "葉の働き・光合成",
+    "duration_min": 17,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/biology/leaf_photosynthesis/output.html",
+    "format": "html",
+    "tags": [
+      "生物",
+      "葉",
+      "光合成",
+      "植物"
+    ]
+  },
+  {
+    "id": "sci.biology.animal_body_blood_respiration",
+    "grade": 5,
+    "subject": "sci",
+    "title": "動物のからだ（血液・呼吸）",
+    "duration_min": 16,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/biology/animal_body_blood_respiration/output.html",
+    "format": "html",
+    "tags": [
+      "生物",
+      "動物",
+      "血液",
+      "呼吸"
+    ]
+  },
+  {
+    "id": "sci.biology.food_chain",
+    "grade": 5,
+    "subject": "sci",
+    "title": "食物連鎖",
+    "duration_min": 15,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/biology/food_chain/output.html",
+    "format": "html",
+    "tags": [
+      "生物",
+      "食物連鎖",
+      "生態系",
+      "基礎"
+    ]
+  },
+  {
+    "id": "sci.earth.land_river_erosion",
+    "grade": 5,
+    "subject": "sci",
+    "title": "土地・川・浸食",
+    "duration_min": 16,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/earth/land_river_erosion/output.html",
+    "format": "html",
+    "tags": [
+      "地学",
+      "土地",
+      "川",
+      "浸食"
+    ]
+  },
+  {
+    "id": "sci.earth.strata_fossils",
+    "grade": 5,
+    "subject": "sci",
+    "title": "地層と化石",
+    "duration_min": 17,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/earth/strata_fossils/output.html",
+    "format": "html",
+    "tags": [
+      "地学",
+      "地層",
+      "化石",
+      "観察"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.g5_summary",
+    "grade": 5,
+    "subject": "sci",
+    "title": "まとめ・総合確認",
+    "duration_min": 20,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/comprehensive/g5_summary/output.html",
+    "format": "html",
+    "tags": [
+      "総合",
+      "小5",
+      "まとめ",
+      "確認"
+    ]
+  },
+  {
+    "id": "sci.earth.weather_instruments_wakaru",
+    "grade": 5,
+    "subject": "sci",
+    "title": "気象計器の読み方（湿度・気圧）〈わかる編〉",
+    "duration_min": 15,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/earth/weather_instruments_wakaru/output.html",
+    "format": "html",
+    "tags": [
+      "地学",
+      "気象計器",
+      "わかる編",
+      "湿度・気圧"
+    ]
+  },
+  {
+    "id": "sci.chemistry.saturated_solution_model_wakaru",
+    "grade": 5,
+    "subject": "sci",
+    "title": "飽和水溶液のモデル〈わかる編〉",
+    "duration_min": 14,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/chemistry/saturated_solution_model_wakaru/output.html",
+    "format": "html",
+    "tags": [
+      "化学",
+      "飽和",
+      "モデル",
+      "わかる編"
+    ]
+  },
+  {
+    "id": "sci.earth.weather_timeline_wakaru",
+    "grade": 5,
+    "subject": "sci",
+    "title": "キッチンタイマー方式の「天気の時系列」〈わかる編〉",
+    "duration_min": 16,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/earth/weather_timeline_wakaru/output.html",
+    "format": "html",
+    "tags": [
+      "地学",
+      "天気",
+      "時系列",
+      "わかる編"
+    ]
+  },
+  {
+    "id": "sci.physics.moment_diagram_wakaru",
+    "grade": 5,
+    "subject": "sci",
+    "title": "力のモーメント図〈わかる編〉",
+    "duration_min": 15,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/physics/moment_diagram_wakaru/output.html",
+    "format": "html",
+    "tags": [
+      "物理",
+      "モーメント",
+      "わかる編",
+      "図解"
+    ]
+  },
+  {
+    "id": "sci.physics.current_flow_simulation_wakaru",
+    "grade": 5,
+    "subject": "sci",
+    "title": "電流の流れシミュレーション〈わかる編〉",
+    "duration_min": 14,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/physics/current_flow_simulation_wakaru/output.html",
+    "format": "html",
+    "tags": [
+      "物理",
+      "電流",
+      "シミュレーション",
+      "わかる編"
+    ]
+  },
+  {
+    "id": "sci.biology.photosynthesis_model_wakaru",
+    "grade": 5,
+    "subject": "sci",
+    "title": "光合成モデル〈わかる編〉",
+    "duration_min": 16,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/biology/photosynthesis_model_wakaru/output.html",
+    "format": "html",
+    "tags": [
+      "生物",
+      "光合成",
+      "モデル",
+      "わかる編"
+    ]
+  },
+  {
+    "id": "sci.earth.strata_section_wakaru",
+    "grade": 5,
+    "subject": "sci",
+    "title": "地層断面の読み方〈わかる編〉",
+    "duration_min": 15,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/earth/strata_section_wakaru/output.html",
+    "format": "html",
+    "tags": [
+      "地学",
+      "地層",
+      "断面",
+      "わかる編"
+    ]
+  },
+  {
+    "id": "sci.earth.fossil_types_wakaru",
+    "grade": 5,
+    "subject": "sci",
+    "title": "化石の種類（示相・示準）〈わかる編〉",
+    "duration_min": 16,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/earth/fossil_types_wakaru/output.html",
+    "format": "html",
+    "tags": [
+      "地学",
+      "化石",
+      "示相化石",
+      "示準化石",
+      "わかる編"
+    ]
+  },
+  {
+    "id": "sci.physics.electric_energy_work",
+    "grade": 6,
+    "subject": "sci",
+    "title": "電気エネルギーの利用（仕事率・消費電力）",
+    "duration_min": 18,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/physics/electric_energy_work/output.html",
+    "format": "html",
+    "tags": [
+      "物理",
+      "電気",
+      "仕事率",
+      "消費電力"
+    ]
+  },
+  {
+    "id": "sci.physics.buoyancy_density",
+    "grade": 6,
+    "subject": "sci",
+    "title": "浮力と密度",
+    "duration_min": 17,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/physics/buoyancy_density/output.html",
+    "format": "html",
+    "tags": [
+      "物理",
+      "浮力",
+      "密度",
+      "発展"
+    ]
+  },
+  {
+    "id": "sci.chemistry.state_change_evaporation_boiling",
+    "grade": 6,
+    "subject": "sci",
+    "title": "物質の状態変化（蒸発 vs 沸騰）",
+    "duration_min": 16,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/chemistry/state_change_evaporation_boiling/output.html",
+    "format": "html",
+    "tags": [
+      "化学",
+      "状態変化",
+      "蒸発",
+      "沸騰"
+    ]
+  },
+  {
+    "id": "sci.earth.weather_comprehensive",
+    "grade": 6,
+    "subject": "sci",
+    "title": "気象総合（前線→風→気温→湿度）",
+    "duration_min": 19,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/earth/weather_comprehensive/output.html",
+    "format": "html",
+    "tags": [
+      "地学",
+      "気象",
+      "総合",
+      "前線・風・気温・湿度"
+    ]
+  },
+  {
+    "id": "sci.biology.ecosystem_human_activity",
+    "grade": 6,
+    "subject": "sci",
+    "title": "生態系と人間活動",
+    "duration_min": 18,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/biology/ecosystem_human_activity/output.html",
+    "format": "html",
+    "tags": [
+      "生物",
+      "生態系",
+      "人間活動",
+      "環境"
+    ]
+  },
+  {
+    "id": "sci.earth.strata_earthquake_volcano",
+    "grade": 6,
+    "subject": "sci",
+    "title": "地層・地震・火山の総整理",
+    "duration_min": 20,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/earth/strata_earthquake_volcano/output.html",
+    "format": "html",
+    "tags": [
+      "地学",
+      "地層",
+      "地震",
+      "火山",
+      "総整理"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.astronomy_comprehensive",
+    "grade": 6,
+    "subject": "sci",
+    "title": "天体総合（太陽・月・星）",
+    "duration_min": 22,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/comprehensive/astronomy_comprehensive/output.html",
+    "format": "html",
+    "tags": [
+      "総合",
+      "天体",
+      "太陽",
+      "月",
+      "星"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.weather_comprehensive",
+    "grade": 6,
+    "subject": "sci",
+    "title": "気象総合（天気図＋時系列）",
+    "duration_min": 21,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/comprehensive/weather_comprehensive/output.html",
+    "format": "html",
+    "tags": [
+      "総合",
+      "気象",
+      "天気図",
+      "時系列"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.electricity_comprehensive",
+    "grade": 6,
+    "subject": "sci",
+    "title": "電流総合（電磁石・電力・回路）",
+    "duration_min": 20,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/comprehensive/electricity_comprehensive/output.html",
+    "format": "html",
+    "tags": [
+      "総合",
+      "電流",
+      "電磁石",
+      "電力",
+      "回路"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.mechanics_comprehensive",
+    "grade": 6,
+    "subject": "sci",
+    "title": "力学総合（てこ＋ばね＋重さ）",
+    "duration_min": 21,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/comprehensive/mechanics_comprehensive/output.html",
+    "format": "html",
+    "tags": [
+      "総合",
+      "力学",
+      "てこ",
+      "ばね",
+      "重さ"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.water_solution_comprehensive",
+    "grade": 6,
+    "subject": "sci",
+    "title": "水溶液総合（中和＋溶解度）",
+    "duration_min": 19,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/comprehensive/water_solution_comprehensive/output.html",
+    "format": "html",
+    "tags": [
+      "総合",
+      "水溶液",
+      "中和",
+      "溶解度"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.strata_comprehensive",
+    "grade": 6,
+    "subject": "sci",
+    "title": "地層総合（断層＋化石）",
+    "duration_min": 20,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/comprehensive/strata_comprehensive/output.html",
+    "format": "html",
+    "tags": [
+      "総合",
+      "地層",
+      "断層",
+      "化石"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.biology_comprehensive",
+    "grade": 6,
+    "subject": "sci",
+    "title": "生物総合（食物連鎖＋器官）",
+    "duration_min": 21,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/comprehensive/biology_comprehensive/output.html",
+    "format": "html",
+    "tags": [
+      "総合",
+      "生物",
+      "食物連鎖",
+      "器官"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.motion_comprehensive",
+    "grade": 6,
+    "subject": "sci",
+    "title": "物体の運動総合",
+    "duration_min": 20,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/comprehensive/motion_comprehensive/output.html",
+    "format": "html",
+    "tags": [
+      "総合",
+      "運動",
+      "物理",
+      "総合問題"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.combustion_comprehensive",
+    "grade": 6,
+    "subject": "sci",
+    "title": "燃焼の総合",
+    "duration_min": 19,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/comprehensive/combustion_comprehensive/output.html",
+    "format": "html",
+    "tags": [
+      "総合",
+      "燃焼",
+      "化学",
+      "総合問題"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.topography_erosion_comprehensive",
+    "grade": 6,
+    "subject": "sci",
+    "title": "地形・侵食総合",
+    "duration_min": 20,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/comprehensive/topography_erosion_comprehensive/output.html",
+    "format": "html",
+    "tags": [
+      "総合",
+      "地形",
+      "侵食",
+      "地学",
+      "総合問題"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.observation_record_comprehensive",
+    "grade": 6,
+    "subject": "sci",
+    "title": "観察・記録総合問題",
+    "duration_min": 22,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/comprehensive/observation_record_comprehensive/output.html",
+    "format": "html",
+    "tags": [
+      "総合",
+      "観察",
+      "記録",
+      "実験",
+      "総合問題"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.data_graph_comprehensive",
+    "grade": 6,
+    "subject": "sci",
+    "title": "資料読解・グラフ読解総合",
+    "duration_min": 23,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/comprehensive/data_graph_comprehensive/output.html",
+    "format": "html",
+    "tags": [
+      "総合",
+      "資料読解",
+      "グラフ読解",
+      "総合問題"
+    ]
+  },
+  {
+    "id": "sci.biology.plants_growth_light_oboeru",
+    "grade": 4,
+    "subject": "science_drill",
+    "title": "植物の成長・光と日照〈覚える編〉",
+    "duration_min": 15,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/biology/plants_growth_light/output.html",
+    "format": "drill",
+    "tags": [
+      "生物",
+      "植物",
+      "成長",
+      "光合成"
+    ]
+  },
+  {
+    "id": "sci.biology.plants_observation_oboeru",
+    "grade": 4,
+    "subject": "science_drill",
+    "title": "植物の観察（葉・根・茎の働き）〈覚える編〉",
+    "duration_min": 14,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/biology/plants_observation/output.html",
+    "format": "drill",
+    "tags": [
+      "生物",
+      "植物",
+      "観察",
+      "葉・根・茎"
+    ]
+  },
+  {
+    "id": "sci.biology.animals_classification_oboeru",
+    "grade": 4,
+    "subject": "science_drill",
+    "title": "動物の分類・観察〈覚える編〉",
+    "duration_min": 16,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/biology/animals_classification/output.html",
+    "format": "drill",
+    "tags": [
+      "生物",
+      "動物",
+      "分類",
+      "観察"
+    ]
+  },
+  {
+    "id": "sci.biology.human_body_basic_oboeru",
+    "grade": 4,
+    "subject": "science_drill",
+    "title": "人の体のつくり（呼吸・運動）〈覚える編〉",
+    "duration_min": 15,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/biology/human_body_basic/output.html",
+    "format": "drill",
+    "tags": [
+      "生物",
+      "人体",
+      "呼吸",
+      "運動"
+    ]
+  },
+  {
+    "id": "sci.physics.weight_volume_basic_oboeru",
+    "grade": 4,
+    "subject": "science_drill",
+    "title": "物の重さ・体積の基礎〈覚える編〉",
+    "duration_min": 12,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/physics/weight_volume_basic/output.html",
+    "format": "drill",
+    "tags": [
+      "物理",
+      "重さ",
+      "体積",
+      "基礎"
+    ]
+  },
+  {
+    "id": "sci.chemistry.air_water_properties_oboeru",
+    "grade": 4,
+    "subject": "science_drill",
+    "title": "空気と水の性質〈覚える編〉",
+    "duration_min": 14,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/chemistry/air_water_properties/output.html",
+    "format": "drill",
+    "tags": [
+      "化学",
+      "空気",
+      "水",
+      "性質"
+    ]
+  },
+  {
+    "id": "sci.chemistry.water_three_states_oboeru",
+    "grade": 4,
+    "subject": "science_drill",
+    "title": "水の三態・温度変化〈覚える編〉",
+    "duration_min": 13,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/chemistry/water_three_states/output.html",
+    "format": "drill",
+    "tags": [
+      "化学",
+      "水の三態",
+      "温度",
+      "状態変化"
+    ]
+  },
+  {
+    "id": "sci.earth.weather_changes_oboeru",
+    "grade": 4,
+    "subject": "science_drill",
+    "title": "天気の変化・気温〈覚える編〉",
+    "duration_min": 15,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/earth/weather_changes/output.html",
+    "format": "drill",
+    "tags": [
+      "地学",
+      "天気",
+      "気温",
+      "観察"
+    ]
+  },
+  {
+    "id": "sci.biology.seasons_living_things_oboeru",
+    "grade": 4,
+    "subject": "science_drill",
+    "title": "季節と生き物〈覚える編〉",
+    "duration_min": 14,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/biology/seasons_living_things/output.html",
+    "format": "drill",
+    "tags": [
+      "生物",
+      "季節",
+      "生き物",
+      "観察"
+    ]
+  },
+  {
+    "id": "sci.earth.sun_movement_shadow_oboeru",
+    "grade": 4,
+    "subject": "science_drill",
+    "title": "太陽の動き（影）〈覚える編〉",
+    "duration_min": 13,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/earth/sun_movement_shadow/output.html",
+    "format": "drill",
+    "tags": [
+      "地学",
+      "太陽",
+      "影",
+      "観察"
+    ]
+  },
+  {
+    "id": "sci.earth.constellations_seasons_oboeru",
+    "grade": 4,
+    "subject": "science_drill",
+    "title": "星座と季節〈覚える編〉",
+    "duration_min": 14,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/earth/constellations_seasons/output.html",
+    "format": "drill",
+    "tags": [
+      "地学",
+      "星座",
+      "季節",
+      "観察"
+    ]
+  },
+  {
+    "id": "sci.physics.electricity_conductivity_basic_oboeru",
+    "grade": 4,
+    "subject": "science_drill",
+    "title": "電気の通りやすさ（基礎）〈覚える編〉",
+    "duration_min": 12,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/physics/electricity_conductivity_basic/output.html",
+    "format": "drill",
+    "tags": [
+      "物理",
+      "電気",
+      "導体",
+      "絶縁体"
+    ]
+  },
+  {
+    "id": "sci.physics.magnet_oboeru",
+    "grade": 4,
+    "subject": "science_drill",
+    "title": "磁石〈覚える編〉",
+    "duration_min": 13,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/physics/magnet/output.html",
+    "format": "drill",
+    "tags": [
+      "物理",
+      "磁石",
+      "磁力",
+      "観察"
+    ]
+  },
+  {
+    "id": "sci.physics.electricity_motor_oboeru",
+    "grade": 4,
+    "subject": "science_drill",
+    "title": "電気の利用（モーター）〈覚える編〉",
+    "duration_min": 14,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/physics/electricity_motor/output.html",
+    "format": "drill",
+    "tags": [
+      "物理",
+      "電気",
+      "モーター",
+      "利用"
+    ]
+  },
+  {
+    "id": "sci.physics.buoyancy_basic_oboeru",
+    "grade": 4,
+    "subject": "science_drill",
+    "title": "ものの浮きしずみ（基礎）〈覚える編〉",
+    "duration_min": 13,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/physics/buoyancy_basic/output.html",
+    "format": "drill",
+    "tags": [
+      "物理",
+      "浮力",
+      "密度",
+      "基礎"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.g4_summary_oboeru",
+    "grade": 4,
+    "subject": "science_drill",
+    "title": "まとめ・総合確認〈覚える編〉",
+    "duration_min": 20,
+    "sku_required": "g4-sci",
+    "path": "lessons/sci/comprehensive/g4_summary/output.html",
+    "format": "drill",
+    "tags": [
+      "総合",
+      "小4",
+      "まとめ",
+      "確認"
+    ]
+  },
+  {
+    "id": "sci.earth.typhoon_weather_oboeru",
+    "grade": 5,
+    "subject": "science_drill",
+    "title": "台風と気象の変化〈覚える編〉",
+    "duration_min": 16,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/earth/typhoon_weather/output.html",
+    "format": "drill",
+    "tags": [
+      "地学",
+      "台風",
+      "気象",
+      "観察"
+    ]
+  },
+  {
+    "id": "sci.earth.clouds_fronts_weather_map_oboeru",
+    "grade": 5,
+    "subject": "science_drill",
+    "title": "雲・前線・天気図〈覚える編〉",
+    "duration_min": 18,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/earth/clouds_fronts_weather_map/output.html",
+    "format": "drill",
+    "tags": [
+      "地学",
+      "雲",
+      "前線",
+      "天気図"
+    ]
+  },
+  {
+    "id": "sci.chemistry.water_solution_acid_alkali_oboeru",
+    "grade": 5,
+    "subject": "science_drill",
+    "title": "水溶液の性質（酸・アルカリ）〈覚える編〉",
+    "duration_min": 17,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/chemistry/water_solution_acid_alkali/output.html",
+    "format": "drill",
+    "tags": [
+      "化学",
+      "水溶液",
+      "酸性",
+      "アルカリ性"
+    ]
+  },
+  {
+    "id": "sci.chemistry.solubility_temperature_oboeru",
+    "grade": 5,
+    "subject": "science_drill",
+    "title": "溶解度と温度〈覚える編〉",
+    "duration_min": 16,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/chemistry/solubility_temperature/output.html",
+    "format": "drill",
+    "tags": [
+      "化学",
+      "溶解度",
+      "温度",
+      "実験"
+    ]
+  },
+  {
+    "id": "sci.chemistry.crystal_features_oboeru",
+    "grade": 5,
+    "subject": "science_drill",
+    "title": "結晶の特徴〈覚える編〉",
+    "duration_min": 15,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/chemistry/crystal_features/output.html",
+    "format": "drill",
+    "tags": [
+      "化学",
+      "結晶",
+      "観察",
+      "実験"
+    ]
+  },
+  {
+    "id": "sci.physics.lever_weight_basic_oboeru",
+    "grade": 5,
+    "subject": "science_drill",
+    "title": "てこ・おもり（力学基礎）〈覚える編〉",
+    "duration_min": 18,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/physics/lever_weight_basic/output.html",
+    "format": "drill",
+    "tags": [
+      "物理",
+      "てこ",
+      "おもり",
+      "力学"
+    ]
+  },
+  {
+    "id": "sci.physics.spring_force_oboeru",
+    "grade": 5,
+    "subject": "science_drill",
+    "title": "ばねと力〈覚える編〉",
+    "duration_min": 15,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/physics/spring_force/output.html",
+    "format": "drill",
+    "tags": [
+      "物理",
+      "ばね",
+      "力",
+      "実験"
+    ]
+  },
+  {
+    "id": "sci.physics.current_voltage_circuit_oboeru",
+    "grade": 5,
+    "subject": "science_drill",
+    "title": "電流・電圧・回路〈覚える編〉",
+    "duration_min": 17,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/physics/current_voltage_circuit/output.html",
+    "format": "drill",
+    "tags": [
+      "物理",
+      "電流",
+      "電圧",
+      "回路"
+    ]
+  },
+  {
+    "id": "sci.physics.electromagnet_oboeru",
+    "grade": 5,
+    "subject": "science_drill",
+    "title": "電流の働き（電磁石）〈覚える編〉",
+    "duration_min": 16,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/physics/electromagnet/output.html",
+    "format": "drill",
+    "tags": [
+      "物理",
+      "電磁石",
+      "電流",
+      "実験"
+    ]
+  },
+  {
+    "id": "sci.biology.plants_structure_oboeru",
+    "grade": 5,
+    "subject": "science_drill",
+    "title": "植物のつくり（道管/師管）〈覚える編〉",
+    "duration_min": 16,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/biology/plants_structure/output.html",
+    "format": "drill",
+    "tags": [
+      "生物",
+      "植物",
+      "道管",
+      "師管"
+    ]
+  },
+  {
+    "id": "sci.biology.leaf_photosynthesis_oboeru",
+    "grade": 5,
+    "subject": "science_drill",
+    "title": "葉の働き・光合成〈覚える編〉",
+    "duration_min": 17,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/biology/leaf_photosynthesis/output.html",
+    "format": "drill",
+    "tags": [
+      "生物",
+      "葉",
+      "光合成",
+      "植物"
+    ]
+  },
+  {
+    "id": "sci.biology.animal_body_blood_respiration_oboeru",
+    "grade": 5,
+    "subject": "science_drill",
+    "title": "動物のからだ（血液・呼吸）〈覚える編〉",
+    "duration_min": 16,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/biology/animal_body_blood_respiration/output.html",
+    "format": "drill",
+    "tags": [
+      "生物",
+      "動物",
+      "血液",
+      "呼吸"
+    ]
+  },
+  {
+    "id": "sci.biology.food_chain_oboeru",
+    "grade": 5,
+    "subject": "science_drill",
+    "title": "食物連鎖〈覚える編〉",
+    "duration_min": 15,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/biology/food_chain/output.html",
+    "format": "drill",
+    "tags": [
+      "生物",
+      "食物連鎖",
+      "生態系",
+      "基礎"
+    ]
+  },
+  {
+    "id": "sci.earth.land_river_erosion_oboeru",
+    "grade": 5,
+    "subject": "science_drill",
+    "title": "土地・川・浸食〈覚える編〉",
+    "duration_min": 16,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/earth/land_river_erosion/output.html",
+    "format": "drill",
+    "tags": [
+      "地学",
+      "土地",
+      "川",
+      "浸食"
+    ]
+  },
+  {
+    "id": "sci.earth.strata_fossils_oboeru",
+    "grade": 5,
+    "subject": "science_drill",
+    "title": "地層と化石〈覚える編〉",
+    "duration_min": 17,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/earth/strata_fossils/output.html",
+    "format": "drill",
+    "tags": [
+      "地学",
+      "地層",
+      "化石",
+      "観察"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.g5_summary_oboeru",
+    "grade": 5,
+    "subject": "science_drill",
+    "title": "まとめ・総合確認〈覚える編〉",
+    "duration_min": 20,
+    "sku_required": "g5-sci",
+    "path": "lessons/sci/comprehensive/g5_summary/output.html",
+    "format": "drill",
+    "tags": [
+      "総合",
+      "小5",
+      "まとめ",
+      "確認"
+    ]
+  },
+  {
+    "id": "sci.physics.electric_energy_work_oboeru",
+    "grade": 6,
+    "subject": "science_drill",
+    "title": "電気エネルギーの利用（仕事率・消費電力）〈覚える編〉",
+    "duration_min": 18,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/physics/electric_energy_work/output.html",
+    "format": "drill",
+    "tags": [
+      "物理",
+      "電気",
+      "仕事率",
+      "消費電力"
+    ]
+  },
+  {
+    "id": "sci.physics.buoyancy_density_oboeru",
+    "grade": 6,
+    "subject": "science_drill",
+    "title": "浮力と密度〈覚える編〉",
+    "duration_min": 17,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/physics/buoyancy_density/output.html",
+    "format": "drill",
+    "tags": [
+      "物理",
+      "浮力",
+      "密度",
+      "発展"
+    ]
+  },
+  {
+    "id": "sci.chemistry.state_change_evaporation_boiling_oboeru",
+    "grade": 6,
+    "subject": "science_drill",
+    "title": "物質の状態変化（蒸発 vs 沸騰）〈覚える編〉",
+    "duration_min": 16,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/chemistry/state_change_evaporation_boiling/output.html",
+    "format": "drill",
+    "tags": [
+      "化学",
+      "状態変化",
+      "蒸発",
+      "沸騰"
+    ]
+  },
+  {
+    "id": "sci.earth.weather_comprehensive_oboeru",
+    "grade": 6,
+    "subject": "science_drill",
+    "title": "気象総合（前線→風→気温→湿度）〈覚える編〉",
+    "duration_min": 19,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/earth/weather_comprehensive/output.html",
+    "format": "drill",
+    "tags": [
+      "地学",
+      "気象",
+      "総合",
+      "前線・風・気温・湿度"
+    ]
+  },
+  {
+    "id": "sci.biology.ecosystem_human_activity_oboeru",
+    "grade": 6,
+    "subject": "science_drill",
+    "title": "生態系と人間活動〈覚える編〉",
+    "duration_min": 18,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/biology/ecosystem_human_activity/output.html",
+    "format": "drill",
+    "tags": [
+      "生物",
+      "生態系",
+      "人間活動",
+      "環境"
+    ]
+  },
+  {
+    "id": "sci.earth.strata_earthquake_volcano_oboeru",
+    "grade": 6,
+    "subject": "science_drill",
+    "title": "地層・地震・火山の総整理〈覚える編〉",
+    "duration_min": 20,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/earth/strata_earthquake_volcano/output.html",
+    "format": "drill",
+    "tags": [
+      "地学",
+      "地層",
+      "地震",
+      "火山",
+      "総整理"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.astronomy_comprehensive_oboeru",
+    "grade": 6,
+    "subject": "science_drill",
+    "title": "天体総合（太陽・月・星）〈覚える編〉",
+    "duration_min": 22,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/comprehensive/astronomy_comprehensive/output.html",
+    "format": "drill",
+    "tags": [
+      "総合",
+      "天体",
+      "太陽",
+      "月",
+      "星"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.weather_comprehensive_oboeru",
+    "grade": 6,
+    "subject": "science_drill",
+    "title": "気象総合（天気図＋時系列）〈覚える編〉",
+    "duration_min": 21,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/comprehensive/weather_comprehensive/output.html",
+    "format": "drill",
+    "tags": [
+      "総合",
+      "気象",
+      "天気図",
+      "時系列"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.electricity_comprehensive_oboeru",
+    "grade": 6,
+    "subject": "science_drill",
+    "title": "電流総合（電磁石・電力・回路）〈覚える編〉",
+    "duration_min": 20,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/comprehensive/electricity_comprehensive/output.html",
+    "format": "drill",
+    "tags": [
+      "総合",
+      "電流",
+      "電磁石",
+      "電力",
+      "回路"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.mechanics_comprehensive_oboeru",
+    "grade": 6,
+    "subject": "science_drill",
+    "title": "力学総合（てこ＋ばね＋重さ）〈覚える編〉",
+    "duration_min": 21,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/comprehensive/mechanics_comprehensive/output.html",
+    "format": "drill",
+    "tags": [
+      "総合",
+      "力学",
+      "てこ",
+      "ばね",
+      "重さ"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.water_solution_comprehensive_oboeru",
+    "grade": 6,
+    "subject": "science_drill",
+    "title": "水溶液総合（中和＋溶解度）〈覚える編〉",
+    "duration_min": 19,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/comprehensive/water_solution_comprehensive/output.html",
+    "format": "drill",
+    "tags": [
+      "総合",
+      "水溶液",
+      "中和",
+      "溶解度"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.strata_comprehensive_oboeru",
+    "grade": 6,
+    "subject": "science_drill",
+    "title": "地層総合（断層＋化石）〈覚える編〉",
+    "duration_min": 20,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/comprehensive/strata_comprehensive/output.html",
+    "format": "drill",
+    "tags": [
+      "総合",
+      "地層",
+      "断層",
+      "化石"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.biology_comprehensive_oboeru",
+    "grade": 6,
+    "subject": "science_drill",
+    "title": "生物総合（食物連鎖＋器官）〈覚える編〉",
+    "duration_min": 21,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/comprehensive/biology_comprehensive/output.html",
+    "format": "drill",
+    "tags": [
+      "総合",
+      "生物",
+      "食物連鎖",
+      "器官"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.motion_comprehensive_oboeru",
+    "grade": 6,
+    "subject": "science_drill",
+    "title": "物体の運動総合〈覚える編〉",
+    "duration_min": 20,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/comprehensive/motion_comprehensive/output.html",
+    "format": "drill",
+    "tags": [
+      "総合",
+      "運動",
+      "物理",
+      "総合問題"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.combustion_comprehensive_oboeru",
+    "grade": 6,
+    "subject": "science_drill",
+    "title": "燃焼の総合〈覚える編〉",
+    "duration_min": 19,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/comprehensive/combustion_comprehensive/output.html",
+    "format": "drill",
+    "tags": [
+      "総合",
+      "燃焼",
+      "化学",
+      "総合問題"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.topography_erosion_comprehensive_oboeru",
+    "grade": 6,
+    "subject": "science_drill",
+    "title": "地形・侵食総合〈覚える編〉",
+    "duration_min": 20,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/comprehensive/topography_erosion_comprehensive/output.html",
+    "format": "drill",
+    "tags": [
+      "総合",
+      "地形",
+      "侵食",
+      "地学",
+      "総合問題"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.observation_record_comprehensive_oboeru",
+    "grade": 6,
+    "subject": "science_drill",
+    "title": "観察・記録総合問題〈覚える編〉",
+    "duration_min": 22,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/comprehensive/observation_record_comprehensive/output.html",
+    "format": "drill",
+    "tags": [
+      "総合",
+      "観察",
+      "記録",
+      "実験",
+      "総合問題"
+    ]
+  },
+  {
+    "id": "sci.comprehensive.data_graph_comprehensive_oboeru",
+    "grade": 6,
+    "subject": "science_drill",
+    "title": "資料読解・グラフ読解総合〈覚える編〉",
+    "duration_min": 23,
+    "sku_required": "g6-sci",
+    "path": "lessons/sci/comprehensive/data_graph_comprehensive/output.html",
+    "format": "drill",
+    "tags": [
+      "総合",
+      "資料読解",
+      "グラフ読解",
+      "総合問題"
+    ]
   }
 ]

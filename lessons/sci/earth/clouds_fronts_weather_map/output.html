@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>雲・前線・天気図 - 中学受験理科</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+      background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .question-box {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgb(226 232 240);
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      max-width: 700px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .choices button {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      border: 2px solid #e5e7eb;
+      border-radius: 0.5rem;
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+    }
+    .choices button:hover {
+      border-color: #3b82f6;
+      background: #eff6ff;
+    }
+    .choices button.correct {
+      border-color: #10b981;
+      background: #d1fae5;
+    }
+    .choices button.wrong {
+      border-color: #ef4444;
+      background: #fee2e2;
+    }
+    .back-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      padding: 12px 18px;
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <button class="back-button" onclick="window.location.href='../../../../index.html'">← 戻る</button>
+  
+  <div class="question-box">
+    <h1 class="text-3xl font-bold mb-6 text-center">雲・前線・天気図</h1>
+    <h2 class="text-2xl font-bold mb-4" id="questionTitle">問題</h2>
+    <div id="questionContent" class="mb-6 text-lg"></div>
+    <div id="choices" class="choices mb-6"></div>
+    <div id="explanation" class="hidden mt-4 p-4 bg-blue-50 rounded-lg text-base"></div>
+    <div class="flex gap-4 mt-6">
+      <button id="nextBtn" class="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">次の問題へ</button>
+      <div id="progress" class="ml-auto text-gray-600"></div>
+    </div>
+  </div>
+
+  <script>
+    // ダミー問題データ（5問）
+    const questions = [
+      {
+        qnum: 1,
+        text: "雲・前線・天気図に関する問題です。正しい選択肢を選んでください。",
+        choices: ["選択肢1", "選択肢2", "選択肢3", "選択肢4"],
+        answer: 0,
+        explanation: "正解は選択肢1です。雲・前線・天気図では、このような内容が重要です。"
+      },
+      {
+        qnum: 2,
+        text: "雲・前線・天気図について、次のうち正しいのはどれですか。",
+        choices: ["選択肢A", "選択肢B", "選択肢C", "選択肢D"],
+        answer: 1,
+        explanation: "正解は選択肢Bです。雲・前線・天気図の重要なポイントを理解しましょう。"
+      },
+      {
+        qnum: 3,
+        text: "雲・前線・天気図に関連する現象について、適切な説明はどれですか。",
+        choices: ["説明1", "説明2", "説明3", "説明4"],
+        answer: 2,
+        explanation: "正解は説明3です。雲・前線・天気図では、この現象がよく観察されます。"
+      },
+      {
+        qnum: 4,
+        text: "雲・前線・天気図の実験結果から分かることは何ですか。",
+        choices: ["結果A", "結果B", "結果C", "結果D"],
+        answer: 0,
+        explanation: "正解は結果Aです。実験を通じて雲・前線・天気図の理解を深めましょう。"
+      },
+      {
+        qnum: 5,
+        text: "雲・前線・天気図について、最も適切な記述はどれですか。",
+        choices: ["記述1", "記述2", "記述3", "記述4"],
+        answer: 3,
+        explanation: "正解は記述4です。雲・前線・天気図の総合的な理解が求められます。"
+      }
+    ];
+
+    let currentQuestion = 0;
+    let selectedAnswer = null;
+
+    function showQuestion() {
+      const q = questions[currentQuestion];
+      document.getElementById('questionTitle').textContent = `問題 ${q.qnum}`;
+      document.getElementById('questionContent').textContent = q.text;
+      
+      const choicesDiv = document.getElementById('choices');
+      choicesDiv.innerHTML = '';
+      q.choices.forEach((choice, index) => {
+        const btn = document.createElement('button');
+        btn.textContent = `${String.fromCharCode(65 + index)}. ${choice}`;
+        btn.onclick = () => selectAnswer(index);
+        choicesDiv.appendChild(btn);
+      });
+
+      document.getElementById('explanation').classList.add('hidden');
+      selectedAnswer = null;
+      
+      // 進捗表示
+      document.getElementById('progress').textContent = `${currentQuestion + 1} / ${questions.length}`;
+    }
+
+    function selectAnswer(index) {
+      if (selectedAnswer !== null) return;
+      selectedAnswer = index;
+      const q = questions[currentQuestion];
+      const buttons = document.querySelectorAll('#choices button');
+      buttons.forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === q.answer) {
+          btn.classList.add('correct');
+        } else if (i === index) {
+          btn.classList.add('wrong');
+        }
+      });
+      
+      const explanation = document.getElementById('explanation');
+      explanation.textContent = q.explanation;
+      explanation.classList.remove('hidden');
+    }
+
+    document.getElementById('nextBtn').onclick = () => {
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        showQuestion();
+      } else {
+        alert('すべての問題が終わりました！お疲れ様でした。');
+        // 最初に戻る
+        currentQuestion = 0;
+        showQuestion();
+      }
+    };
+
+    showQuestion();
+  </script>
+</body>
+</html>

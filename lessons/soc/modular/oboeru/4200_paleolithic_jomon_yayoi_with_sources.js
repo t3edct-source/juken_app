@@ -1,4 +1,4 @@
-export const questions = [
+window.questions = [
   {
     "qnum": 1,
     "text": "打製石器が主に用いられ、狩猟・採集が中心だった時代はどれですか。",

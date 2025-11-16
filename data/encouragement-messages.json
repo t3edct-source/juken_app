@@ -1,0 +1,184 @@
+{
+  "dailyMessages": [
+    {
+      "date": "01-01",
+      "message": "🎍 新年あけましておめでとうございます！今年も一緒に頑張りましょう！",
+      "character": "character-newyear.png"
+    },
+    {
+      "date": "01-02",
+      "message": "📚 新しい年のスタートです。今日も一歩ずつ前進しましょう！",
+      "character": "character-encourage.png"
+    },
+    {
+      "date": "02-03",
+      "message": "❄️ 節分の日。鬼に負けない強い心で学習に取り組みましょう！",
+      "character": "character-encourage.png"
+    },
+    {
+      "date": "02-14",
+      "message": "💝 バレンタインデー。自分へのご褒美に学習を頑張りましょう！",
+      "character": "character-happy.png"
+    },
+    {
+      "date": "03-03",
+      "message": "🌸 ひな祭り。春が近づいてきました。新しい気持ちで学習を始めましょう！",
+      "character": "character-spring.png"
+    },
+    {
+      "date": "03-20",
+      "message": "🌱 春分の日。新しい季節の始まりです。",
+      "character": "character-spring.png"
+    },
+    {
+      "date": "04-01",
+      "message": "🎓 新年度スタート！新しい目標に向かって頑張りましょう！",
+      "character": "character-newyear.png"
+    },
+    {
+      "date": "04-29",
+      "message": "🌿 昭和の日。歴史を学ぶ良い機会ですね！",
+      "character": "character-study.png"
+    },
+    {
+      "date": "05-05",
+      "message": "🎏 こどもの日。未来の自分への投資として、今日も学習を！",
+      "character": "character-happy.png"
+    },
+    {
+      "date": "06-01",
+      "message": "☀️ 6月に入りました。梅雨前の今、集中して学習しましょう！",
+      "character": "character-study.png"
+    },
+    {
+      "date": "07-07",
+      "message": "⭐ 七夕。願い事が叶うように、今日も努力を続けましょう！",
+      "character": "character-wish.png"
+    },
+    {
+      "date": "08-11",
+      "message": "🏔️ 山の日。自然について学ぶ良い機会です！",
+      "character": "character-nature.png"
+    },
+    {
+      "date": "09-23",
+      "message": "🍂 秋分の日。実りの秋に向けて、知識を積み重ねましょう！",
+      "character": "character-study.png"
+    },
+    {
+      "date": "10-10",
+      "message": "🏃 体育の日。体と頭、両方鍛えましょう！",
+      "character": "character-encourage.png"
+    },
+    {
+      "date": "11-03",
+      "message": "📖 文化の日。文化や歴史を学ぶ良い日です！",
+      "character": "character-study.png"
+    },
+    {
+      "date": "11-23",
+      "message": "🌾 勤労感謝の日。日々の努力に感謝しましょう！",
+      "character": "character-encourage.png"
+    },
+    {
+      "date": "12-24",
+      "message": "🎄 クリスマスイブ。プレゼントは知識です！",
+      "character": "character-happy.png"
+    },
+    {
+      "date": "12-25",
+      "message": "🎅 メリークリスマス！今日も学習を頑張りましょう！",
+      "character": "character-happy.png"
+    },
+    {
+      "date": "12-31",
+      "message": "🎊 大晦日。一年の締めくくりです。来年も一緒に頑張りましょう！",
+      "character": "character-newyear.png"
+    }
+  ],
+  "randomMessages": [
+    {
+      "message": "今日も一歩ずつ前進しましょう！",
+      "character": "character-encourage.png"
+    },
+    {
+      "message": "継続は力なり。毎日の積み重ねが大切です！",
+      "character": "character-encourage.png"
+    },
+    {
+      "message": "小さな努力の積み重ねが、大きな成果につながります！",
+      "character": "character-encourage.png"
+    },
+    {
+      "message": "今日の学習が、未来の自分を変えます！",
+      "character": "character-study.png"
+    },
+    {
+      "message": "焦らず、着実に。自分のペースで進みましょう！",
+      "character": "character-encourage.png"
+    },
+    {
+      "message": "分からないことがあっても大丈夫。一緒に学んでいきましょう！",
+      "character": "character-support.png"
+    },
+    {
+      "message": "完璧を目指さず、まずは始めることが大切です！",
+      "character": "character-encourage.png"
+    },
+    {
+      "message": "今日も新しい発見があるといいですね！",
+      "character": "character-happy.png"
+    },
+    {
+      "message": "学習は長い道のりですが、必ずゴールにたどり着けます！",
+      "character": "character-encourage.png"
+    },
+    {
+      "message": "今日の頑張りが、明日の自信につながります！",
+      "character": "character-encourage.png"
+    },
+    {
+      "message": "一問一問、丁寧に取り組むことが大切です！",
+      "character": "character-study.png"
+    },
+    {
+      "message": "間違えても大丈夫。そこから学びが生まれます！",
+      "character": "character-support.png"
+    },
+    {
+      "message": "今日も集中して、知識を身につけましょう！",
+      "character": "character-study.png"
+    },
+    {
+      "message": "学習は自分への投資。未来の自分が喜びます！",
+      "character": "character-happy.png"
+    },
+    {
+      "message": "毎日少しずつでも、続けることが力になります！",
+      "character": "character-encourage.png"
+    },
+    {
+      "message": "今日も新しい知識に出会えますように！",
+      "character": "character-happy.png"
+    },
+    {
+      "message": "学習は楽しい冒険。一緒に楽しみながら進みましょう！",
+      "character": "character-happy.png"
+    },
+    {
+      "message": "今日の努力が、合格への道を切り開きます！",
+      "character": "character-encourage.png"
+    },
+    {
+      "message": "一歩ずつ、着実に。あなたならできます！",
+      "character": "character-support.png"
+    },
+    {
+      "message": "今日も素晴らしい学習の時間を過ごしましょう！",
+      "character": "character-happy.png"
+    }
+  ],
+  "defaultCharacter": "character-default.png",
+  "characterPath": "./images/character/"
+}
+

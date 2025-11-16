@@ -1,4 +1,4 @@
-export const questions = [
+window.questions = [
   {
     "qnum": 1,
     "text": "近畿地方で最大の湖はどれですか。",

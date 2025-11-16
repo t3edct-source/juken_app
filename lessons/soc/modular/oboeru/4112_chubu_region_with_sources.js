@@ -1,4 +1,4 @@
-export const questions = [
+window.questions = [
   {
     "qnum": 1,
     "text": "日本最長の川が流れる県をまたぐ地方区分に含まれるのはどれですか。",

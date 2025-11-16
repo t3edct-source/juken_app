@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>鬟ｽ蜥梧ｰｴ貅ｶ豸ｲ縺ｮ繝｢繝・Ν縲医ｏ縺九ｋ邱ｨ縲・- 荳ｭ蟄ｦ蜿鈴ｨ鍋炊遘・/title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+      background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .question-box {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgb(226 232 240);
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      max-width: 700px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .choices button {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      border: 2px solid #e5e7eb;
+      border-radius: 0.5rem;
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+    }
+    .choices button:hover {
+      border-color: #3b82f6;
+      background: #eff6ff;
+    }
+    .choices button.correct {
+      border-color: #10b981;
+      background: #d1fae5;
+    }
+    .choices button.wrong {
+      border-color: #ef4444;
+      background: #fee2e2;
+    }
+    .back-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      padding: 12px 18px;
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <button class="back-button" onclick="if(window.parent && window.parent !== window) { window.parent.postMessage({type: 'closeLesson'}, '*'); } else { window.location.href='/index.html'; }">竊・謌ｻ繧・/button>
+  
+  <div class="question-box">
+    <h1 class="text-3xl font-bold mb-6 text-center">鬟ｽ蜥梧ｰｴ貅ｶ豸ｲ縺ｮ繝｢繝・Ν縲医ｏ縺九ｋ邱ｨ縲・/h1>
+    <h2 class="text-2xl font-bold mb-4" id="questionTitle">蝠城｡・/h2>
+    <div id="questionContent" class="mb-6 text-lg"></div>
+    <div id="choices" class="choices mb-6"></div>
+    <div id="explanation" class="hidden mt-4 p-4 bg-blue-50 rounded-lg text-base"></div>
+    <div class="flex gap-4 mt-6">
+      <button id="nextBtn" class="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">谺｡縺ｮ蝠城｡後∈</button>
+      <div id="progress" class="ml-auto text-gray-600"></div>
+    </div>
+  </div>
+
+  <script>
+    // 繝繝溘・蝠城｡後ョ繝ｼ繧ｿ・・蝠擾ｼ・    const questions = [
+      {
+        qnum: 1,
+        text: "鬟ｽ蜥梧ｰｴ貅ｶ豸ｲ縺ｮ繝｢繝・Ν縲医ｏ縺九ｋ邱ｨ縲峨↓髢｢縺吶ｋ蝠城｡後〒縺吶よｭ｣縺励＞驕ｸ謚櫁い繧帝∈繧薙〒縺上□縺輔＞縲・,
+        choices: ["驕ｸ謚櫁い1", "驕ｸ謚櫁い2", "驕ｸ謚櫁い3", "驕ｸ謚櫁い4"],
+        answer: 0,
+        explanation: "豁｣隗｣縺ｯ驕ｸ謚櫁い1縺ｧ縺吶る｣ｽ蜥梧ｰｴ貅ｶ豸ｲ縺ｮ繝｢繝・Ν縲医ｏ縺九ｋ邱ｨ縲峨〒縺ｯ縲√％縺ｮ繧医≧縺ｪ蜀・ｮｹ縺碁㍾隕√〒縺吶・
+      },
+      {
+        qnum: 2,
+        text: "鬟ｽ蜥梧ｰｴ貅ｶ豸ｲ縺ｮ繝｢繝・Ν縲医ｏ縺九ｋ邱ｨ縲峨↓縺､縺・※縲∵ｬ｡縺ｮ縺・■豁｣縺励＞縺ｮ縺ｯ縺ｩ繧後〒縺吶°縲・,
+        choices: ["驕ｸ謚櫁いA", "驕ｸ謚櫁いB", "驕ｸ謚櫁いC", "驕ｸ謚櫁いD"],
+        answer: 1,
+        explanation: "豁｣隗｣縺ｯ驕ｸ謚櫁いB縺ｧ縺吶る｣ｽ蜥梧ｰｴ貅ｶ豸ｲ縺ｮ繝｢繝・Ν縲医ｏ縺九ｋ邱ｨ縲峨・驥崎ｦ√↑繝昴う繝ｳ繝医ｒ逅・ｧ｣縺励∪縺励ｇ縺・・
+      },
+      {
+        qnum: 3,
+        text: "鬟ｽ蜥梧ｰｴ貅ｶ豸ｲ縺ｮ繝｢繝・Ν縲医ｏ縺九ｋ邱ｨ縲峨↓髢｢騾｣縺吶ｋ迴ｾ雎｡縺ｫ縺､縺・※縲・←蛻・↑隱ｬ譏弱・縺ｩ繧後〒縺吶°縲・,
+        choices: ["隱ｬ譏・", "隱ｬ譏・", "隱ｬ譏・", "隱ｬ譏・"],
+        answer: 2,
+        explanation: "豁｣隗｣縺ｯ隱ｬ譏・縺ｧ縺吶る｣ｽ蜥梧ｰｴ貅ｶ豸ｲ縺ｮ繝｢繝・Ν縲医ｏ縺九ｋ邱ｨ縲峨〒縺ｯ縲√％縺ｮ迴ｾ雎｡縺後ｈ縺剰ｦｳ蟇溘＆繧後∪縺吶・
+      },
+      {
+        qnum: 4,
+        text: "鬟ｽ蜥梧ｰｴ貅ｶ豸ｲ縺ｮ繝｢繝・Ν縲医ｏ縺九ｋ邱ｨ縲峨・螳滄ｨ鍋ｵ先棡縺九ｉ蛻・°繧九％縺ｨ縺ｯ菴輔〒縺吶°縲・,
+        choices: ["邨先棡A", "邨先棡B", "邨先棡C", "邨先棡D"],
+        answer: 0,
+        explanation: "豁｣隗｣縺ｯ邨先棡A縺ｧ縺吶ょｮ滄ｨ薙ｒ騾壹§縺ｦ鬟ｽ蜥梧ｰｴ貅ｶ豸ｲ縺ｮ繝｢繝・Ν縲医ｏ縺九ｋ邱ｨ縲峨・逅・ｧ｣繧呈ｷｱ繧√∪縺励ｇ縺・・
+      },
+      {
+        qnum: 5,
+        text: "鬟ｽ蜥梧ｰｴ貅ｶ豸ｲ縺ｮ繝｢繝・Ν縲医ｏ縺九ｋ邱ｨ縲峨↓縺､縺・※縲∵怙繧る←蛻・↑險倩ｿｰ縺ｯ縺ｩ繧後〒縺吶°縲・,
+        choices: ["險倩ｿｰ1", "險倩ｿｰ2", "險倩ｿｰ3", "險倩ｿｰ4"],
+        answer: 3,
+        explanation: "豁｣隗｣縺ｯ險倩ｿｰ4縺ｧ縺吶る｣ｽ蜥梧ｰｴ貅ｶ豸ｲ縺ｮ繝｢繝・Ν縲医ｏ縺九ｋ邱ｨ縲峨・邱丞粋逧・↑逅・ｧ｣縺梧ｱゅａ繧峨ｌ縺ｾ縺吶・
+      }
+    ];
+
+    let currentQuestion = 0;
+    let selectedAnswer = null;
+
+    function showQuestion() {
+      const q = questions[currentQuestion];
+      document.getElementById('questionTitle').textContent = `蝠城｡・${q.qnum}`;
+      document.getElementById('questionContent').textContent = q.text;
+      
+      const choicesDiv = document.getElementById('choices');
+      choicesDiv.innerHTML = '';
+      q.choices.forEach((choice, index) => {
+        const btn = document.createElement('button');
+        btn.textContent = `${String.fromCharCode(65 + index)}. ${choice}`;
+        btn.onclick = () => selectAnswer(index);
+        choicesDiv.appendChild(btn);
+      });
+
+      document.getElementById('explanation').classList.add('hidden');
+      selectedAnswer = null;
+      
+      // 騾ｲ謐苓｡ｨ遉ｺ
+      document.getElementById('progress').textContent = `${currentQuestion + 1} / ${questions.length}`;
+    }
+
+    function selectAnswer(index) {
+      if (selectedAnswer !== null) return;
+      selectedAnswer = index;
+      const q = questions[currentQuestion];
+      const buttons = document.querySelectorAll('#choices button');
+      buttons.forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === q.answer) {
+          btn.classList.add('correct');
+        } else if (i === index) {
+          btn.classList.add('wrong');
+        }
+      });
+      
+      const explanation = document.getElementById('explanation');
+      explanation.textContent = q.explanation;
+      explanation.classList.remove('hidden');
+    }
+
+    document.getElementById('nextBtn').onclick = () => {
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        showQuestion();
+      } else {
+        alert('縺吶∋縺ｦ縺ｮ蝠城｡後′邨ゅｏ繧翫∪縺励◆・√♀逍ｲ繧梧ｧ倥〒縺励◆縲・);
+        // 譛蛻昴↓謌ｻ繧・        currentQuestion = 0;
+        showQuestion();
+      }
+    };
+
+    showQuestion();
+  </script>
+</body>
+</html>

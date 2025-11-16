@@ -136,6 +136,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   window.showHomeView = showHomeView;
   window.showLessonView = showLessonView;
   
+  // テーマ選択機能を初期化
+  initThemeSystem();
+  
+  // メニューシステムを初期化
+  initMenuSystem();
+  
   console.log('✅ DOMContentLoaded: app.js 初期化完了');
 });
 
@@ -824,6 +830,9 @@ function saveLessonProgress(id, correct, total, seconds){
   });
   
   saveProgress(id, score, detail);
+  
+  // 連続学習日数を更新
+  updateStreakDays();
 }
 
 // 学習履歴の保存処理を追加
@@ -1105,28 +1114,100 @@ var selectedUnit = null;
 // 理科の分野定義
 scienceUnits = [
   {
-    id: 'physics',
-    name: '物理分野',
-    icon: '⚡',
-    lessons: ['sci.physics.motion']
+    id: 'g4',
+    name: '小4理科：基礎現象 × 自然観察',
+    shortName: '小4',
+    icon: '📚',
+    lessons: [
+      'sci.biology.plants_growth_light',
+      'sci.biology.plants_observation',
+      'sci.biology.animals_classification',
+      'sci.biology.human_body_basic',
+      'sci.biology.seasons_living_things',
+      'sci.physics.weight_volume_basic',
+      'sci.physics.electricity_conductivity_basic',
+      'sci.physics.magnet',
+      'sci.physics.electricity_motor',
+      'sci.physics.buoyancy_basic',
+      'sci.chemistry.air_water_properties',
+      'sci.chemistry.water_three_states',
+      'sci.earth.weather_changes',
+      'sci.earth.sun_movement_shadow',
+      'sci.earth.constellations_seasons',
+      'sci.biology.basic_experiment_tools_wakaru',
+      'sci.earth.weather_map_intro_wakaru',
+      'sci.chemistry.air_water_simulation_wakaru',
+      'sci.earth.shadow_movement_model_wakaru',
+      'sci.earth.constellation_star_chart_wakaru',
+      'sci.physics.circuit_diagram_intro_wakaru',
+      'sci.comprehensive.g4_summary'
+    ]
   },
   {
-    id: 'chemistry',
-    name: '化学分野',
-    icon: '🧪',
-    lessons: ['sci.chemistry.water_solution']
+    id: 'g5',
+    name: '小5理科：実験・数値・計測',
+    shortName: '小5',
+    icon: '📚',
+    lessons: [
+      'sci.biology.plants_structure',
+      'sci.biology.leaf_photosynthesis',
+      'sci.biology.animal_body_blood_respiration',
+      'sci.biology.food_chain',
+      'sci.physics.lever_weight_basic',
+      'sci.physics.spring_force',
+      'sci.physics.current_voltage_circuit',
+      'sci.physics.electromagnet',
+      'sci.chemistry.water_solution_acid_alkali',
+      'sci.chemistry.solubility_temperature',
+      'sci.chemistry.crystal_features',
+      'sci.earth.typhoon_weather',
+      'sci.earth.clouds_fronts_weather_map',
+      'sci.earth.land_river_erosion',
+      'sci.earth.strata_fossils',
+      'sci.earth.weather_instruments_wakaru',
+      'sci.chemistry.saturated_solution_model_wakaru',
+      'sci.earth.weather_timeline_wakaru',
+      'sci.physics.moment_diagram_wakaru',
+      'sci.physics.current_flow_simulation_wakaru',
+      'sci.biology.photosynthesis_model_wakaru',
+      'sci.earth.strata_section_wakaru',
+      'sci.earth.fossil_types_wakaru',
+      'sci.comprehensive.g5_summary'
+    ]
   },
   {
-    id: 'biology',
-    name: '生物分野',
-    icon: '🌱',
-    lessons: ['sci.biology.human_body', 'sci.biology.plants']
+    id: 'g6_advanced',
+    name: '小6理科：発展分野',
+    shortName: '小6発展',
+    icon: '🚀',
+    lessons: [
+      'sci.physics.electric_energy_work',
+      'sci.physics.buoyancy_density',
+      'sci.chemistry.state_change_evaporation_boiling',
+      'sci.earth.weather_comprehensive',
+      'sci.biology.ecosystem_human_activity',
+      'sci.earth.strata_earthquake_volcano'
+    ]
   },
   {
-    id: 'earth_science',
-    name: '地学分野',
-    icon: '🌍',
-    lessons: ['sci.earth.weather']
+    id: 'g6_comprehensive',
+    name: '小6 総合',
+    shortName: '小6総合',
+    icon: '🎯',
+    lessons: [
+      'sci.comprehensive.astronomy_comprehensive',
+      'sci.comprehensive.weather_comprehensive',
+      'sci.comprehensive.electricity_comprehensive',
+      'sci.comprehensive.mechanics_comprehensive',
+      'sci.comprehensive.water_solution_comprehensive',
+      'sci.comprehensive.strata_comprehensive',
+      'sci.comprehensive.biology_comprehensive',
+      'sci.comprehensive.motion_comprehensive',
+      'sci.comprehensive.combustion_comprehensive',
+      'sci.comprehensive.topography_erosion_comprehensive',
+      'sci.comprehensive.observation_record_comprehensive',
+      'sci.comprehensive.data_graph_comprehensive'
+    ]
   }
 ];
 
@@ -1228,7 +1309,90 @@ socialUnits = [
 ];
 
 // 理科おぼえる編の分野定義
-  // 理科のおぼえる編教材が少ないため、今後追加予定
+scienceDrillUnits = [
+  {
+    id: 'g4_drill',
+    name: '小4理科：基礎現象 × 自然観察',
+    shortName: '小4',
+    icon: '📝',
+    lessons: [
+      'sci.biology.plants_growth_light_oboeru',
+      'sci.biology.plants_observation_oboeru',
+      'sci.biology.animals_classification_oboeru',
+      'sci.biology.human_body_basic_oboeru',
+      'sci.physics.weight_volume_basic_oboeru',
+      'sci.chemistry.air_water_properties_oboeru',
+      'sci.chemistry.water_three_states_oboeru',
+      'sci.earth.weather_changes_oboeru',
+      'sci.biology.seasons_living_things_oboeru',
+      'sci.earth.sun_movement_shadow_oboeru',
+      'sci.earth.constellations_seasons_oboeru',
+      'sci.physics.electricity_conductivity_basic_oboeru',
+      'sci.physics.magnet_oboeru',
+      'sci.physics.electricity_motor_oboeru',
+      'sci.physics.buoyancy_basic_oboeru',
+      'sci.comprehensive.g4_summary_oboeru'
+    ]
+  },
+  {
+    id: 'g5_drill',
+    name: '小5理科：実験・数値・計測',
+    shortName: '小5',
+    icon: '📝',
+    lessons: [
+      'sci.earth.typhoon_weather_oboeru',
+      'sci.earth.clouds_fronts_weather_map_oboeru',
+      'sci.chemistry.water_solution_acid_alkali_oboeru',
+      'sci.chemistry.solubility_temperature_oboeru',
+      'sci.chemistry.crystal_features_oboeru',
+      'sci.physics.lever_weight_basic_oboeru',
+      'sci.physics.spring_force_oboeru',
+      'sci.physics.current_voltage_circuit_oboeru',
+      'sci.physics.electromagnet_oboeru',
+      'sci.biology.plants_structure_oboeru',
+      'sci.biology.leaf_photosynthesis_oboeru',
+      'sci.biology.animal_body_blood_respiration_oboeru',
+      'sci.biology.food_chain_oboeru',
+      'sci.earth.land_river_erosion_oboeru',
+      'sci.earth.strata_fossils_oboeru',
+      'sci.comprehensive.g5_summary_oboeru'
+    ]
+  },
+  {
+    id: 'g6_drill_advanced',
+    name: '小6理科：発展分野',
+    shortName: '小6発展',
+    icon: '📝',
+    lessons: [
+      'sci.physics.electric_energy_work_oboeru',
+      'sci.physics.buoyancy_density_oboeru',
+      'sci.chemistry.state_change_evaporation_boiling_oboeru',
+      'sci.earth.weather_comprehensive_oboeru',
+      'sci.biology.ecosystem_human_activity_oboeru',
+      'sci.earth.strata_earthquake_volcano_oboeru'
+    ]
+  },
+  {
+    id: 'g6_drill_comprehensive',
+    name: '小6 総合',
+    shortName: '小6総合',
+    icon: '📝',
+    lessons: [
+      'sci.comprehensive.astronomy_comprehensive_oboeru',
+      'sci.comprehensive.weather_comprehensive_oboeru',
+      'sci.comprehensive.electricity_comprehensive_oboeru',
+      'sci.comprehensive.mechanics_comprehensive_oboeru',
+      'sci.comprehensive.water_solution_comprehensive_oboeru',
+      'sci.comprehensive.strata_comprehensive_oboeru',
+      'sci.comprehensive.biology_comprehensive_oboeru',
+      'sci.comprehensive.motion_comprehensive_oboeru',
+      'sci.comprehensive.combustion_comprehensive_oboeru',
+      'sci.comprehensive.topography_erosion_comprehensive_oboeru',
+      'sci.comprehensive.observation_record_comprehensive_oboeru',
+      'sci.comprehensive.data_graph_comprehensive_oboeru'
+    ]
+  }
+];
 
 // 社会おぼえる編の分野定義
 socialDrillUnits = [
@@ -1604,7 +1768,7 @@ async function renderHome(){
       
       homeView.innerHTML = `
         <!-- 横長イラストエリア -->
-        <div class="w-full h-44 mb-6 overflow-hidden relative">
+        <div class="w-full h-32 sm:h-40 mb-4 sm:mb-6 overflow-hidden relative">
           <!-- イラスト表示エリア -->
           <div id="subjectHero" class="w-full h-full ${subjectInfo.bgClass} flex items-center justify-center">
             <div class="text-white text-center">
@@ -1615,7 +1779,7 @@ async function renderHome(){
         </div>
         
         <!-- 教科別タブ -->
-        <div class="subject-tabs mb-6">
+        <div class="subject-tabs mb-4 sm:mb-6">
           <button class="subject-tab" data-subject="recommended">⭐ おすすめ学習</button>
           <button class="subject-tab" data-subject="sci">🔬 理科わかる</button>
           <button class="subject-tab" data-subject="science_drill">🧪 理科おぼえる</button>
@@ -2242,9 +2406,11 @@ function renderSubjectUnits(units, subjectName) {
     if (!unitsWrap) return;
     if (mq.matches) unitsWrap.classList.add('compact-units');
     else unitsWrap.classList.remove('compact-units');
+    // リサイズ時に単元名も更新
+    renderUnits(units);
   };
-  applyCompact();
   mq.addEventListener?.('change', applyCompact);
+  applyCompact(); // 初回実行
 }
 
 // 単元一覧を描画
@@ -2295,13 +2461,19 @@ function renderUnits(units) {
     unitElement.className = `unit-item ${isSelected ? 'selected' : ''} ${unitLessonsLength === 0 ? 'no-lessons' : ''}`;
     unitElement.title = `${unit.name}`;  // モバイルではこのtitleが活きる
     unitElement.setAttribute('aria-label', unit.name);
+    
+    // スマホ版では短い名称を表示
+    const mq = window.matchMedia('(max-width: 768px)');
+    const isMobile = mq.matches;
+    const displayName = isMobile && unit.shortName ? unit.shortName : unit.name;
     const shortLabel = (unit.shortName || unit.name || '').slice(0, 8);
+    
     unitElement.innerHTML = `
       <div class="unit-item-content">
         <div class="unit-item-icon">${unit.icon}</div>
         <div class="unit-item-short" aria-hidden="true">${shortLabel}</div>
         <div class="unit-item-info">
-          <h4 class="unit-item-title">${unit.name}</h4>
+          <h4 class="unit-item-title">${displayName}</h4>
           <div class="unit-item-meta">
             <span class="unit-item-count">${unitLessonsLength > 0 ? `${unitLessonsLength}個のレッスン` : '準備中'}</span>
             ${unitLessonsLength > 0 ? `<span class="unit-item-progress">${progressPercent}%</span>` : '<span class="unit-item-progress">-</span>'}
@@ -2977,65 +3149,616 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// 励ましメッセージデータ（JSONから読み込む）
+let encouragementData = null;
+
+// ===== 連続学習日数・レベル管理システム =====
+const STREAK_STORAGE_KEY = 'learningStreak';
+const THEME_STORAGE_KEY = 'unlockedThemes';
+const CURRENT_THEME_KEY = 'currentTheme';
+
+// レベル定義（連続日数に応じたレベル）
+const LEVEL_DEFINITIONS = [
+  { days: 0, level: 1, theme: 'default' },
+  { days: 3, level: 2, theme: 'spring' },
+  { days: 7, level: 3, theme: 'summer' },
+  { days: 14, level: 4, theme: 'autumn' },
+  { days: 30, level: 5, theme: 'winter' },
+  { days: 60, level: 6, theme: 'night' },
+  { days: 100, level: 7, theme: 'starry' }
+];
+
+// 連続学習日数を更新
+function updateStreakDays() {
+  try {
+    const today = new Date();
+    const todayStr = today.toISOString().split('T')[0]; // YYYY-MM-DD形式
+    
+    const streakData = JSON.parse(localStorage.getItem(STREAK_STORAGE_KEY) || '{"days": 0, "lastDate": ""}');
+    const lastDate = streakData.lastDate;
+    
+    let newDays = streakData.days || 0;
+    let levelUp = false;
+    
+    if (lastDate === todayStr) {
+      // 今日既に学習済みの場合は何もしない
+      return { days: newDays, level: getLevelFromDays(newDays), levelUp: false };
+    } else if (lastDate === '') {
+      // 初回学習
+      newDays = 1;
+      levelUp = true;
+    } else {
+      // 前回の学習日を確認
+      const lastDateObj = new Date(lastDate);
+      const yesterday = new Date(today);
+      yesterday.setDate(yesterday.getDate() - 1);
+      yesterday.setHours(0, 0, 0, 0);
+      lastDateObj.setHours(0, 0, 0, 0);
+      
+      if (lastDateObj.getTime() === yesterday.getTime()) {
+        // 連続学習（昨日学習していた）
+        newDays = (streakData.days || 0) + 1;
+        const oldLevel = getLevelFromDays(streakData.days || 0);
+        const newLevel = getLevelFromDays(newDays);
+        levelUp = newLevel > oldLevel;
+      } else {
+        // 連続が途切れた（リセット）
+        newDays = 1;
+        levelUp = true;
+      }
+    }
+    
+    // データを保存
+    const newStreakData = {
+      days: newDays,
+      lastDate: todayStr
+    };
+    localStorage.setItem(STREAK_STORAGE_KEY, JSON.stringify(newStreakData));
+    
+    // レベルアップ時にテーマをアンロック
+    if (levelUp) {
+      unlockThemeForLevel(getLevelFromDays(newDays));
+      // レベルアップ通知（オプション）
+      console.log(`🎉 レベルアップ！ Lv.${getLevelFromDays(newDays)}`);
+    }
+    
+    return { days: newDays, level: getLevelFromDays(newDays), levelUp };
+  } catch (error) {
+    console.error('❌ 連続学習日数の更新エラー:', error);
+    return { days: 0, level: 1, levelUp: false };
+  }
+}
+
+// 連続日数からレベルを取得
+function getLevelFromDays(days) {
+  for (let i = LEVEL_DEFINITIONS.length - 1; i >= 0; i--) {
+    if (days >= LEVEL_DEFINITIONS[i].days) {
+      return LEVEL_DEFINITIONS[i].level;
+    }
+  }
+  return 1;
+}
+
+// レベルに応じたテーマをアンロック
+function unlockThemeForLevel(level) {
+  try {
+    const unlockedThemes = JSON.parse(localStorage.getItem(THEME_STORAGE_KEY) || '[]');
+    
+    // レベルに対応するテーマを取得
+    const levelDef = LEVEL_DEFINITIONS.find(def => def.level === level);
+    if (levelDef && !unlockedThemes.includes(levelDef.theme)) {
+      unlockedThemes.push(levelDef.theme);
+      localStorage.setItem(THEME_STORAGE_KEY, JSON.stringify(unlockedThemes));
+      console.log(`🎨 テーマ「${levelDef.theme}」をアンロックしました！`);
+    }
+  } catch (error) {
+    console.error('❌ テーマアンロックエラー:', error);
+  }
+}
+
+// 連続学習日数とレベルを取得
+function getStreakInfo() {
+  try {
+    const streakData = JSON.parse(localStorage.getItem(STREAK_STORAGE_KEY) || '{"days": 0, "lastDate": ""}');
+    const days = streakData.days || 0;
+    const level = getLevelFromDays(days);
+    return { days, level };
+  } catch (error) {
+    console.error('❌ 連続学習日数の取得エラー:', error);
+    return { days: 0, level: 1 };
+  }
+}
+
+// テーマ定義
+const THEME_DEFINITIONS = [
+  { id: 'default', name: 'デフォルト', icon: '🌻', requiredLevel: 1 },
+  { id: 'spring', name: '春', icon: '🌸', requiredLevel: 2 },
+  { id: 'summer', name: '夏', icon: '☀️', requiredLevel: 3 },
+  { id: 'autumn', name: '秋', icon: '🍂', requiredLevel: 4 },
+  { id: 'winter', name: '冬', icon: '❄️', requiredLevel: 5 },
+  { id: 'night', name: '夜', icon: '🌙', requiredLevel: 6 },
+  { id: 'starry', name: '星空', icon: '⭐', requiredLevel: 7 }
+];
+
+// テーマシステムの初期化
+function initThemeSystem() {
+  // 現在のテーマを適用
+  applyCurrentTheme();
+  
+  // テーマ選択ボタンのイベント
+  const themeBtn = document.getElementById('themeBtn');
+  const themeModal = document.getElementById('themeModal');
+  const themeModalClose = document.getElementById('themeModalClose');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', () => {
+      openThemeModal();
+    });
+  }
+  
+  if (themeModalClose) {
+    themeModalClose.addEventListener('click', () => {
+      closeThemeModal();
+    });
+  }
+  
+  // モーダル外をクリックで閉じる
+  if (themeModal) {
+    themeModal.addEventListener('click', (e) => {
+      if (e.target === themeModal) {
+        closeThemeModal();
+      }
+    });
+  }
+  
+  // エスケープキーで閉じる
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && themeModal && !themeModal.classList.contains('hidden')) {
+      closeThemeModal();
+    }
+  });
+}
+
+// テーマモーダルを開く
+function openThemeModal() {
+  const themeModal = document.getElementById('themeModal');
+  const themeList = document.getElementById('themeList');
+  
+  if (!themeModal || !themeList) return;
+  
+  // アンロック済みテーマを取得
+  const unlockedThemes = JSON.parse(localStorage.getItem(THEME_STORAGE_KEY) || '[]');
+  const currentTheme = localStorage.getItem(CURRENT_THEME_KEY) || 'default';
+  const streakInfo = getStreakInfo();
+  
+  // デフォルトテーマは常にアンロック済み
+  if (!unlockedThemes.includes('default')) {
+    unlockedThemes.push('default');
+    localStorage.setItem(THEME_STORAGE_KEY, JSON.stringify(unlockedThemes));
+  }
+  
+  // テーマリストを生成
+  themeList.innerHTML = '';
+  
+  THEME_DEFINITIONS.forEach(theme => {
+    const isUnlocked = unlockedThemes.includes(theme.id) || theme.requiredLevel === 1;
+    const isCurrent = currentTheme === theme.id;
+    const canUnlock = streakInfo.level >= theme.requiredLevel;
+    
+    const themeCard = document.createElement('div');
+    themeCard.className = `theme-card p-4 rounded-xl border-2 cursor-pointer transition-all ${
+      isCurrent 
+        ? 'border-purple-500 bg-purple-50 shadow-lg' 
+        : isUnlocked 
+          ? 'border-slate-300 bg-white hover:border-purple-300 hover:shadow-md' 
+          : 'border-slate-200 bg-slate-100 opacity-60 cursor-not-allowed'
+    }`;
+    
+    if (isUnlocked && !isCurrent) {
+      themeCard.addEventListener('click', () => {
+        selectTheme(theme.id);
+      });
+    }
+    
+    themeCard.innerHTML = `
+      <div class="text-4xl mb-2 text-center">${theme.icon}</div>
+      <div class="text-sm font-bold text-center text-slate-800 mb-1">${theme.name}</div>
+      ${isCurrent ? '<div class="text-xs text-center text-purple-600 font-semibold">✓ 選択中</div>' : ''}
+      ${!isUnlocked && canUnlock ? '<div class="text-xs text-center text-orange-600 font-semibold mt-1">🔓 アンロック可能</div>' : ''}
+      ${!isUnlocked && !canUnlock ? `<div class="text-xs text-center text-slate-500 mt-1">Lv.${theme.requiredLevel}でアンロック</div>` : ''}
+    `;
+    
+    themeList.appendChild(themeCard);
+  });
+  
+  // モーダルを表示
+  themeModal.style.display = 'flex';
+  themeModal.classList.remove('hidden');
+}
+
+// テーマモーダルを閉じる
+function closeThemeModal() {
+  const themeModal = document.getElementById('themeModal');
+  if (themeModal) {
+    themeModal.style.display = 'none';
+    themeModal.classList.add('hidden');
+  }
+}
+
+// テーマを選択
+function selectTheme(themeId) {
+  localStorage.setItem(CURRENT_THEME_KEY, themeId);
+  applyCurrentTheme();
+  closeThemeModal();
+  console.log(`🎨 テーマ「${themeId}」を適用しました`);
+}
+
+// 現在のテーマを適用
+function applyCurrentTheme() {
+  const currentTheme = localStorage.getItem(CURRENT_THEME_KEY) || 'default';
+  const body = document.body;
+  
+  // 既存のテーマクラスを削除
+  THEME_DEFINITIONS.forEach(theme => {
+    body.classList.remove(`theme-${theme.id}`);
+  });
+  
+  // 新しいテーマクラスを追加
+  body.classList.add(`theme-${currentTheme}`);
+  
+  // 背景装飾要素にもクラスを適用
+  const bgDecoration = document.querySelector('.fixed.inset-0.pointer-events-none');
+  if (bgDecoration) {
+    bgDecoration.className = `fixed inset-0 pointer-events-none overflow-hidden bg-decoration`;
+  }
+}
+
+// ===== メニューシステム =====
+function initMenuSystem() {
+  const menuBtn = document.getElementById('menuBtn');
+  const menuPanel = document.getElementById('menuPanel');
+  const menuClose = document.getElementById('menuClose');
+  const menuBackdrop = document.getElementById('menuBackdrop');
+  const menuInstallBtn = document.getElementById('menuInstallBtn');
+  
+  // メニューボタンクリック
+  if (menuBtn) {
+    menuBtn.addEventListener('click', () => {
+      openMenuPanel();
+    });
+  }
+  
+  // 閉じるボタンクリック
+  if (menuClose) {
+    menuClose.addEventListener('click', () => {
+      closeMenuPanel();
+    });
+  }
+  
+  // 背景クリックで閉じる
+  if (menuBackdrop) {
+    menuBackdrop.addEventListener('click', () => {
+      closeMenuPanel();
+    });
+  }
+  
+  // エスケープキーで閉じる
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menuPanel && !menuPanel.classList.contains('hidden')) {
+      closeMenuPanel();
+    }
+  });
+  
+  // メニュー項目のクリックイベント
+  const menuItems = document.querySelectorAll('.menu-item');
+  menuItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+      const action = item.getAttribute('data-action');
+      handleMenuAction(action);
+    });
+  });
+  
+  // PWAインストールボタンの表示制御
+  if (menuInstallBtn) {
+    const installBtn = document.getElementById('installBtn');
+    if (installBtn && !installBtn.classList.contains('hidden')) {
+      menuInstallBtn.classList.remove('hidden');
+    }
+  }
+}
+
+// メニューパネルを開く
+function openMenuPanel() {
+  const menuPanel = document.getElementById('menuPanel');
+  const panelContent = menuPanel?.querySelector('.fixed.top-0.right-0');
+  
+  if (menuPanel && panelContent) {
+    menuPanel.style.display = 'block';
+    menuPanel.classList.remove('hidden');
+    
+    // アニメーション用に少し遅延
+    setTimeout(() => {
+      panelContent.classList.remove('translate-x-full');
+      const backdrop = document.getElementById('menuBackdrop');
+      if (backdrop) {
+        backdrop.style.opacity = '1';
+      }
+    }, 10);
+  }
+}
+
+// メニューパネルを閉じる
+function closeMenuPanel() {
+  const menuPanel = document.getElementById('menuPanel');
+  const panelContent = menuPanel?.querySelector('.fixed.top-0.right-0');
+  
+  if (menuPanel && panelContent) {
+    panelContent.classList.add('translate-x-full');
+    const backdrop = document.getElementById('menuBackdrop');
+    if (backdrop) {
+      backdrop.style.opacity = '0';
+    }
+    
+    setTimeout(() => {
+      menuPanel.style.display = 'none';
+      menuPanel.classList.add('hidden');
+    }, 300);
+  }
+}
+
+// メニューアクションを処理
+function handleMenuAction(action) {
+  closeMenuPanel();
+  
+  switch (action) {
+    case 'show-stats':
+      // 学習統計を表示（将来実装）
+      console.log('📊 学習統計を表示');
+      alert('学習統計機能は準備中です');
+      break;
+    case 'show-streak':
+      // 連続学習記録を表示（将来実装）
+      console.log('🔥 連続学習記録を表示');
+      const streakInfo = getStreakInfo();
+      alert(`連続学習: ${streakInfo.days}日\nレベル: Lv.${streakInfo.level}`);
+      break;
+    case 'show-theme':
+      // テーマ選択モーダルを開く
+      console.log('🎨 テーマ選択を表示');
+      openThemeModal();
+      break;
+    case 'install-app':
+      // PWAインストール（既存の機能を使用）
+      console.log('📱 アプリに追加');
+      const installBtn = document.getElementById('installBtn');
+      if (installBtn) {
+        installBtn.click();
+      }
+      break;
+    case 'show-help':
+      // ヘルプを表示（将来実装）
+      console.log('❓ ヘルプを表示');
+      alert('ヘルプ機能は準備中です');
+      break;
+    default:
+      console.log('不明なアクション:', action);
+  }
+}
+
+// 励ましメッセージデータを読み込む
+async function loadEncouragementData() {
+  if (encouragementData) return encouragementData;
+  
+  try {
+    const response = await fetch('./data/encouragement-messages.json');
+    if (response.ok) {
+      encouragementData = await response.json();
+      console.log('✅ 励ましメッセージデータ読み込み成功');
+      return encouragementData;
+    } else {
+      console.warn('⚠️ encouragement-messages.jsonが見つかりません。デフォルトデータを使用します。');
+      return getDefaultEncouragementData();
+    }
+  } catch (error) {
+    console.error('❌ 励ましメッセージデータ読み込みエラー:', error);
+    return getDefaultEncouragementData();
+  }
+}
+
+// デフォルトデータ（フォールバック用）
+function getDefaultEncouragementData() {
+  return {
+    dailyMessages: [
+      { date: '01-01', message: '🎍 新年あけましておめでとうございます！今年も一緒に頑張りましょう！', character: 'character-default.png' }
+    ],
+    randomMessages: [
+      { message: '今日も一歩ずつ前進しましょう！', character: 'character-default.png' }
+    ],
+    defaultCharacter: 'character-default.png',
+    characterPath: './images/character/'
+  };
+}
+
+// 日付に基づいたメッセージとキャラクターを取得
+async function getDailyDateMessage() {
+  const data = await loadEncouragementData();
+  const today = new Date();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  const dateKey = `${month}-${day}`;
+  
+  const dailyMsg = data.dailyMessages.find(msg => msg.date === dateKey);
+  if (dailyMsg) {
+    return {
+      message: dailyMsg.message,
+      character: data.characterPath + dailyMsg.character
+    };
+  }
+  return null;
+}
+
+// ランダムメッセージとキャラクターを取得
+async function getRandomEncouragementMessage() {
+  const data = await loadEncouragementData();
+  const randomIndex = Math.floor(Math.random() * data.randomMessages.length);
+  const randomMsg = data.randomMessages[randomIndex];
+  
+  return {
+    message: randomMsg.message,
+    character: data.characterPath + randomMsg.character
+  };
+}
+
+// おすすめタブ用の励ましメッセージとキャラクターを生成
+async function getRecommendedEncouragementMessage() {
+  const data = await loadEncouragementData();
+  const dateData = await getDailyDateMessage();
+  const randomData = await getRandomEncouragementMessage();
+  
+  let message, character;
+  
+  if (dateData) {
+    // 日付対応メッセージがある場合は、それとランダムメッセージを組み合わせ
+    message = `${dateData.message}\n\n${randomData.message}`;
+    // 日付対応メッセージのキャラクターを優先
+    character = dateData.character;
+  } else {
+    // 日付対応メッセージがない場合は、ランダムメッセージのみ
+    message = `⭐ ${randomData.message}`;
+    character = randomData.character;
+  }
+  
+  return { message, character };
+}
+
 // 教科別イラスト切り替えの機能
 function updateSubjectHero(subject) {
   const heroImg = document.getElementById('subjectHero');
   const heroMessage = document.getElementById('subjectMessage');
   
-  // 新しいgetSubjectHeroInfo関数を使ってヒーロー要素を更新
-  if (heroImg) {
-    const subjectInfo = getSubjectHeroInfo(subject);
-    heroImg.className = `w-full h-full ${subjectInfo.bgClass} flex items-center justify-center`;
-    heroImg.innerHTML = `
-      <div class="text-white text-center">
-        <div class="text-4xl mb-2">${subjectInfo.icon}</div>
-        <div class="text-xl font-bold">${subjectInfo.title}</div>
-      </div>
-    `;
+  // おすすめタブの場合は特別な処理
+  if (subject === 'recommended') {
+    // キャラクター表示用のスタイル（マンガの吹き出しスタイル）
+    if (heroImg) {
+      // imgタグの場合は親要素（div.relative.z-10.text-center）を操作
+      const heroContainer = heroImg.parentElement;
+      if (heroContainer) {
+        heroImg.style.display = 'none';
+        // 既存のキャラクター要素と吹き出しを削除
+        const existingChar = heroContainer.querySelector('.character-display');
+        if (existingChar) existingChar.remove();
+        const existingBubble = heroContainer.querySelector('.speech-bubble');
+        if (existingBubble) existingBubble.remove();
+        
+        // 背景を設定
+        heroContainer.className = 'relative z-10 w-full h-full bg-gradient-to-br from-yellow-100 via-orange-50 to-pink-50 flex items-center justify-between px-4 sm:px-6';
+        
+        // 非同期でメッセージとキャラクター画像を取得
+        getRecommendedEncouragementMessage().then(({ message, character }) => {
+          // 連続学習日数とレベルを取得
+          const streakInfo = getStreakInfo();
+          
+          // キャラクター表示要素を左側に配置
+          const charDiv = document.createElement('div');
+          charDiv.className = 'character-display flex-shrink-0 flex flex-col items-center justify-center';
+          charDiv.innerHTML = `
+            <img src="${character}" alt="学習応援キャラクター" class="w-20 h-20 sm:w-24 sm:h-24 object-contain mb-2 animate-bounce" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div class="text-7xl sm:text-8xl mb-2 animate-bounce" style="display:none;">🎓</div>
+            <div class="text-sm sm:text-base font-bold text-slate-700 mb-1">学習応援</div>
+            <div class="streak-info bg-gradient-to-r from-orange-400 to-pink-500 text-white text-xs sm:text-sm font-bold px-2 sm:px-3 py-1 rounded-full shadow-md">
+              🔥 ${streakInfo.days}日連続 | Lv.${streakInfo.level}
+            </div>
+          `;
+          heroContainer.appendChild(charDiv);
+          
+          // 吹き出しを右側に配置
+          const bubbleDiv = document.createElement('div');
+          bubbleDiv.className = 'speech-bubble flex-1 max-w-[65%] sm:max-w-[70%] relative ml-2 sm:ml-4';
+          // HTMLエスケープ関数を使用
+          const escapedMessage = escapeHtml(message).replace(/\n/g, '<br>');
+          bubbleDiv.innerHTML = `
+            <div class="bg-white rounded-2xl px-3 sm:px-5 py-2.5 sm:py-3.5 shadow-xl border-2 border-orange-300 relative z-10">
+              <p class="text-slate-800 font-semibold text-xs sm:text-sm leading-relaxed">${escapedMessage}</p>
+            </div>
+            <div class="absolute left-0 top-1/2 -translate-x-1.5 -translate-y-1/2 w-0 h-0 border-t-[10px] sm:border-t-[12px] border-t-transparent border-r-[14px] sm:border-r-[16px] border-r-white border-b-[10px] sm:border-b-[12px] border-b-transparent z-20"></div>
+            <div class="absolute left-0 top-1/2 -translate-x-2 -translate-y-1/2 w-0 h-0 border-t-[11px] sm:border-t-[14px] border-t-transparent border-r-[16px] sm:border-r-[18px] border-r-orange-300 border-b-[11px] sm:border-b-[14px] border-b-transparent z-0"></div>
+          `;
+          heroContainer.appendChild(bubbleDiv);
+        }).catch(error => {
+          console.error('❌ 励ましメッセージ取得エラー:', error);
+          // エラー時はデフォルト表示
+          const streakInfo = getStreakInfo();
+          const charDiv = document.createElement('div');
+          charDiv.className = 'character-display flex-shrink-0 flex flex-col items-center justify-center';
+          charDiv.innerHTML = `
+            <div class="text-7xl sm:text-8xl mb-2 animate-bounce">🎓</div>
+            <div class="text-sm sm:text-base font-bold text-slate-700 mb-1">学習応援</div>
+            <div class="streak-info bg-gradient-to-r from-orange-400 to-pink-500 text-white text-xs sm:text-sm font-bold px-2 sm:px-3 py-1 rounded-full shadow-md">
+              🔥 ${streakInfo.days}日連続 | Lv.${streakInfo.level}
+            </div>
+          `;
+          heroContainer.appendChild(charDiv);
+        });
+      }
+    }
+    
+    // 既存のメッセージ要素は非表示にする（吹き出しで表示するため）
+    if (heroMessage) {
+      heroMessage.style.display = 'none';
+    }
+    return;
   }
   
-  if (!heroMessage) return;
-  
-  const subjectData = {
-    recommended: {
-      image: './images/subjects/recommended.png',
-      message: '⭐ おすすめ学習で、中学受験合格への道筋をつかもう！'
-    },
-    sci: {
-      image: './images/subjects/science.png',
-      message: '🔬 理科わかる編で自然現象を理解し、入試で勝利しよう！'
-    },
-    soc: {
-      image: './images/subjects/social.png',
-      message: '🌍 社会わかる編で歴史・地理・公民をマスターしよう！'
-    },
-    science_drill: {
-      image: './images/subjects/science.png',
-      message: '🧪 理科おぼえる編で重要事項を徹底暗記しよう！'
-    },
-    social_drill: {
-      image: './images/subjects/social.png',
-      message: '📍 社会おぼえる編で重要事項を徹底暗記しよう！'
-    },
-    math: {
-      image: './images/subjects/math.png',
-      message: '🔢 算数で論理的思考力を身につけよう！'
-    },
-    jpn: {
-      image: './images/subjects/japanese.png',
-      message: '📚 国語で豊かな表現力を身につけよう！'
-    },
-    eng: {
-      image: './images/subjects/english.png',
-      message: '🌏 英語で世界とつながろう！'
+  // おすすめタブ以外の場合は、キャラクター要素と吹き出しを削除して画像を表示
+  if (heroImg) {
+    const heroContainer = heroImg.parentElement;
+    if (heroContainer) {
+      // キャラクター要素と吹き出しを削除
+      const existingChar = heroContainer.querySelector('.character-display');
+      if (existingChar) existingChar.remove();
+      const existingBubble = heroContainer.querySelector('.speech-bubble');
+      if (existingBubble) existingBubble.remove();
+      // 元のクラスに戻す
+      heroContainer.className = 'relative z-10 text-center';
+      heroImg.style.display = '';
     }
-  };
+    
+    // imgタグの場合はsrcを設定（既存のロジックに合わせる）
+    if (heroImg.tagName === 'IMG') {
+      const subjectData = {
+        sci: { image: './images/subjects/science.png' },
+        soc: { image: './images/subjects/social.png' },
+        science_drill: { image: './images/subjects/science.png' },
+        social_drill: { image: './images/subjects/social.png' },
+        math: { image: './images/subjects/math.png' },
+        jpn: { image: './images/subjects/japanese.png' },
+        eng: { image: './images/subjects/english.png' }
+      };
+      const data = subjectData[subject] || subjectData.sci;
+      if (data) {
+        heroImg.src = data.image;
+        heroImg.alt = `${subject}の学習イラスト`;
+        heroImg.className = 'h-32 sm:h-40 w-full object-cover transition-all duration-500';
+      }
+    }
+  }
   
-  const data = subjectData[subject] || subjectData.recommended;
-  if (data) {
-    heroImg.src = data.image;
-    heroImg.alt = `${subject}の学習イラスト`;
-    heroMessage.textContent = data.message;
+  // メッセージの更新
+  if (heroMessage) {
+    heroMessage.style.display = '';
+    const messageData = {
+      sci: '🔬 理科わかる編で自然現象を理解し、入試で勝利しよう！',
+      soc: '🌍 社会わかる編で歴史・地理・公民をマスターしよう！',
+      science_drill: '🧪 理科おぼえる編で重要事項を徹底暗記しよう！',
+      social_drill: '📍 社会おぼえる編で重要事項を徹底暗記しよう！',
+      math: '🔢 算数で論理的思考力を身につけよう！',
+      jpn: '📚 国語で豊かな表現力を身につけよう！',
+      eng: '🌏 英語で世界とつながろう！'
+    };
+    
+    const message = messageData[subject] || messageData.sci;
+    heroMessage.textContent = message;
+    heroMessage.className = 'text-white font-bold text-base sm:text-xl drop-shadow-lg bg-black/20 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full';
   }
 }
 
