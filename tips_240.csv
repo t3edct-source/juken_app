@@ -1,0 +1,241 @@
+﻿id,baseId,tone,category,subcategory,appFeature,message
+A01_cynical,A01,cynical,study,習慣,"calendar,character_comment",勉強を始めるときは、一番簡単な1問から入ると集中しやすい。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A01_encourage,A01,encourage,study,習慣,"calendar,character_comment",勉強を始めるときは、一番簡単な1問から入ると集中しやすい。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A02_cynical,A02,cynical,study,習慣,"calendar,character_comment",5分だけでもいい。「とりあえず始める」が一番むずかしい。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A02_encourage,A02,encourage,study,習慣,"calendar,character_comment",5分だけでもいい。「とりあえず始める」が一番むずかしい。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A03_cynical,A03,cynical,study,習慣,"calendar,character_comment",全部やろうとせず、1日の到達点を決めるだけで心が軽くなる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A03_encourage,A03,encourage,study,習慣,"calendar,character_comment",全部やろうとせず、1日の到達点を決めるだけで心が軽くなる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A04_cynical,A04,cynical,study,習慣,"calendar,character_comment",学習習慣は毎日同じ時間に1問だけで作れる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A04_encourage,A04,encourage,study,習慣,"calendar,character_comment",学習習慣は毎日同じ時間に1問だけで作れる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A05_cynical,A05,cynical,study,習慣,"calendar,character_comment",朝の3分は夜の10分より効果が高いことがある。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A05_encourage,A05,encourage,study,習慣,"calendar,character_comment",朝の3分は夜の10分より効果が高いことがある。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A06_cynical,A06,cynical,study,習慣,"calendar,character_comment",イヤな日はタイマー1分でもOK。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A06_encourage,A06,encourage,study,習慣,"calendar,character_comment",イヤな日はタイマー1分でもOK。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A07_cynical,A07,cynical,study,習慣,"calendar,character_comment",続けるコツは切り上げポイントを早めに作ること。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A07_encourage,A07,encourage,study,習慣,"calendar,character_comment",続けるコツは切り上げポイントを早めに作ること。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A08_cynical,A08,cynical,study,習慣,"calendar,character_comment",終わりが見えると行動しやすい。区切りを細かく。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A08_encourage,A08,encourage,study,習慣,"calendar,character_comment",終わりが見えると行動しやすい。区切りを細かく。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A09_cynical,A09,cynical,study,習慣,"calendar,character_comment",疲れた日は知識より図や資料を見ると入りやすい。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A09_encourage,A09,encourage,study,習慣,"calendar,character_comment",疲れた日は知識より図や資料を見ると入りやすい。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A10_cynical,A10,cynical,study,習慣,"calendar,character_comment",調子が悪い日があるからこそ、伸びる日が生まれる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A10_encourage,A10,encourage,study,習慣,"calendar,character_comment",調子が悪い日があるからこそ、伸びる日が生まれる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A01_cynical,A01,cynical,study,記憶,"review_pocket,remember_mode",復習は3日後が最も効果的。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A01_encourage,A01,encourage,study,記憶,"review_pocket,remember_mode",復習は3日後が最も効果的。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A02_cynical,A02,cynical,study,記憶,"review_pocket,remember_mode",できた問題を1週間後に解くと定着が強くなる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A02_encourage,A02,encourage,study,記憶,"review_pocket,remember_mode",できた問題を1週間後に解くと定着が強くなる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A03_cynical,A03,cynical,study,記憶,"review_pocket,remember_mode",間違えた問題は理由を言語化すると忘れにくい。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A03_encourage,A03,encourage,study,記憶,"review_pocket,remember_mode",間違えた問題は理由を言語化すると忘れにくい。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A04_cynical,A04,cynical,study,記憶,"review_pocket,remember_mode",似た問題は何が違うか探すと理解が深い。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A04_encourage,A04,encourage,study,記憶,"review_pocket,remember_mode",似た問題は何が違うか探すと理解が深い。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A05_cynical,A05,cynical,study,記憶,"review_pocket,remember_mode",音読は記憶に残りやすい方法のひとつ。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A05_encourage,A05,encourage,study,記憶,"review_pocket,remember_mode",音読は記憶に残りやすい方法のひとつ。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A06_cynical,A06,cynical,study,記憶,"review_pocket,remember_mode",語句は書くより声に出すほうが覚えやすい。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A06_encourage,A06,encourage,study,記憶,"review_pocket,remember_mode",語句は書くより声に出すほうが覚えやすい。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A07_cynical,A07,cynical,study,記憶,"review_pocket,remember_mode",復習は覚えていないところだけやる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A07_encourage,A07,encourage,study,記憶,"review_pocket,remember_mode",復習は覚えていないところだけやる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A08_cynical,A08,cynical,study,記憶,"review_pocket,remember_mode",30個一気より3個×10セットの方が定着する。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A08_encourage,A08,encourage,study,記憶,"review_pocket,remember_mode",30個一気より3個×10セットの方が定着する。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A09_cynical,A09,cynical,study,記憶,"review_pocket,remember_mode",分かったつもりは説明すると確認できる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A09_encourage,A09,encourage,study,記憶,"review_pocket,remember_mode",分かったつもりは説明すると確認できる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A10_cynical,A10,cynical,study,記憶,"review_pocket,remember_mode",覚えにくい言葉は図や写真とセットで覚える。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A10_encourage,A10,encourage,study,記憶,"review_pocket,remember_mode",覚えにくい言葉は図や写真とセットで覚える。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A01_cynical,A01,cynical,study,考え方,wakaru_diagram,問題は読み方が9割。読む順番を決めると安定する。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A01_encourage,A01,encourage,study,考え方,wakaru_diagram,問題は読み方が9割。読む順番を決めると安定する。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A02_cynical,A02,cynical,study,考え方,wakaru_diagram,難問は何を比べる問題か考えると突破口が開く。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A02_encourage,A02,encourage,study,考え方,wakaru_diagram,難問は何を比べる問題か考えると突破口が開く。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A03_cynical,A03,cynical,study,考え方,wakaru_diagram,分からない問題は図を描くと進む。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A03_encourage,A03,encourage,study,考え方,wakaru_diagram,分からない問題は図を描くと進む。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A04_cynical,A04,cynical,study,考え方,wakaru_diagram,頭の中だけで考えず書くと混乱が消える。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A04_encourage,A04,encourage,study,考え方,wakaru_diagram,頭の中だけで考えず書くと混乱が消える。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A05_cynical,A05,cynical,study,考え方,wakaru_diagram,文章を読んだら出てきた語句を3つ書くと整理できる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A05_encourage,A05,encourage,study,考え方,wakaru_diagram,文章を読んだら出てきた語句を3つ書くと整理できる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A06_cynical,A06,cynical,study,考え方,wakaru_diagram,文章が長いときは最初の1文で半分理解できる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A06_encourage,A06,encourage,study,考え方,wakaru_diagram,文章が長いときは最初の1文で半分理解できる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A07_cynical,A07,cynical,study,考え方,wakaru_diagram,正解を当てるより不正解を消す方が楽。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A07_encourage,A07,encourage,study,考え方,wakaru_diagram,正解を当てるより不正解を消す方が楽。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A08_cynical,A08,cynical,study,考え方,wakaru_diagram,自分の言葉に言い換えられたら理解できている証拠。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A08_encourage,A08,encourage,study,考え方,wakaru_diagram,自分の言葉に言い換えられたら理解できている証拠。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A09_cynical,A09,cynical,study,考え方,wakaru_diagram,理由を理解すると忘れにくい。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A09_encourage,A09,encourage,study,考え方,wakaru_diagram,理由を理解すると忘れにくい。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A10_cynical,A10,cynical,study,考え方,wakaru_diagram,解く順番を固定すると安定感が増す。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A10_encourage,A10,encourage,study,考え方,wakaru_diagram,解く順番を固定すると安定感が増す。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A01_cynical,A01,cynical,study,メンタル,character_comment,今日はつらい、があるから昨日より成長できる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A01_encourage,A01,encourage,study,メンタル,character_comment,今日はつらい、があるから昨日より成長できる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A02_cynical,A02,cynical,study,メンタル,character_comment,完璧主義より60点主義の方が伸びる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A02_encourage,A02,encourage,study,メンタル,character_comment,完璧主義より60点主義の方が伸びる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A03_cynical,A03,cynical,study,メンタル,character_comment,間違えた理由は責めず、直し方だけを考える。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A03_encourage,A03,encourage,study,メンタル,character_comment,間違えた理由は責めず、直し方だけを考える。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A04_cynical,A04,cynical,study,メンタル,character_comment,進まない日は少しだけ進めば十分。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A04_encourage,A04,encourage,study,メンタル,character_comment,進まない日は少しだけ進めば十分。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A05_cynical,A05,cynical,study,メンタル,character_comment,勉強は積むより続けるほうが難しいが続ける人が勝つ。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A05_encourage,A05,encourage,study,メンタル,character_comment,勉強は積むより続けるほうが難しいが続ける人が勝つ。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A06_cynical,A06,cynical,study,メンタル,character_comment,ライバルは他人ではなく昨日の自分。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A06_encourage,A06,encourage,study,メンタル,character_comment,ライバルは他人ではなく昨日の自分。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A07_cynical,A07,cynical,study,メンタル,character_comment,本番が近づくほどできない問題に出会うのは普通。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A07_encourage,A07,encourage,study,メンタル,character_comment,本番が近づくほどできない問題に出会うのは普通。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A08_cynical,A08,cynical,study,メンタル,character_comment,不安は行動でしか薄れない。1分だけ取り組む。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A08_encourage,A08,encourage,study,メンタル,character_comment,不安は行動でしか薄れない。1分だけ取り組む。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A09_cynical,A09,cynical,study,メンタル,character_comment,落ち込むのは本気で頑張っている証拠。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A09_encourage,A09,encourage,study,メンタル,character_comment,落ち込むのは本気で頑張っている証拠。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+A10_cynical,A10,cynical,study,メンタル,character_comment,自分を応援できるようになると勉強は楽になる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+A10_encourage,A10,encourage,study,メンタル,character_comment,自分を応援できるようになると勉強は楽になる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B01_cynical,B01,cynical,society,地理,wakaru_map,地図を読むときは色→記号→文字の順に見ると整理しやすい。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B01_encourage,B01,encourage,society,地理,wakaru_map,地図を読むときは色→記号→文字の順に見ると整理しやすい。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B02_cynical,B02,cynical,society,地理,wakaru_map,気候は年較差を見るだけで7割つかめる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B02_encourage,B02,encourage,society,地理,wakaru_map,気候は年較差を見るだけで7割つかめる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B03_cynical,B03,cynical,society,地理,wakaru_map,統計は増えているか減っているかの2分で理解する。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B03_encourage,B03,encourage,society,地理,wakaru_map,統計は増えているか減っているかの2分で理解する。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B04_cynical,B04,cynical,society,地理,wakaru_map,工業地域は海沿い・川沿い・高速沿いが多い。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B04_encourage,B04,encourage,society,地理,wakaru_map,工業地域は海沿い・川沿い・高速沿いが多い。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B05_cynical,B05,cynical,society,地理,wakaru_map,農産物は気候・地形・消費地の3つで説明できる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B05_encourage,B05,encourage,society,地理,wakaru_map,農産物は気候・地形・消費地の3つで説明できる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B06_cynical,B06,cynical,society,地理,wakaru_map,人口の多い都市は交通の結び目に集まる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B06_encourage,B06,encourage,society,地理,wakaru_map,人口の多い都市は交通の結び目に集まる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B07_cynical,B07,cynical,society,地理,wakaru_map,気候区分は降水量の差に注目すると判断しやすい。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B07_encourage,B07,encourage,society,地理,wakaru_map,気候区分は降水量の差に注目すると判断しやすい。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B08_cynical,B08,cynical,society,地理,wakaru_map,川は流域面積を見ると暮らしの特徴が見える。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B08_encourage,B08,encourage,society,地理,wakaru_map,川は流域面積を見ると暮らしの特徴が見える。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B09_cynical,B09,cynical,society,地理,wakaru_map,港に物流が集まるのは島国の特徴。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B09_encourage,B09,encourage,society,地理,wakaru_map,港に物流が集まるのは島国の特徴。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B10_cynical,B10,cynical,society,地理,wakaru_map,寒暖流の色を見ると海洋国の特色が理解できる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B10_encourage,B10,encourage,society,地理,wakaru_map,寒暖流の色を見ると海洋国の特色が理解できる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B11_cynical,B11,cynical,society,地理,wakaru_map,凡例を見れば8割分かる。まず凡例から。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B11_encourage,B11,encourage,society,地理,wakaru_map,凡例を見れば8割分かる。まず凡例から。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B12_cynical,B12,cynical,society,地理,wakaru_map,山や川の名前は地域の境界線であることが多い。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B12_encourage,B12,encourage,society,地理,wakaru_map,山や川の名前は地域の境界線であることが多い。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B13_cynical,B13,cynical,society,地理,wakaru_map,農業は輸送・機械化・高齢化の3問題を押さえる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B13_encourage,B13,encourage,society,地理,wakaru_map,農業は輸送・機械化・高齢化の3問題を押さえる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B14_cynical,B14,cynical,society,地理,wakaru_map,地理の文章は比較している場所に線を引くと理解が進む。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B14_encourage,B14,encourage,society,地理,wakaru_map,地理の文章は比較している場所に線を引くと理解が進む。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B15_cynical,B15,cynical,society,地理,wakaru_map,地理は理由の教科。「なぜ？」から読むと整う。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B15_encourage,B15,encourage,society,地理,wakaru_map,地理は理由の教科。「なぜ？」から読むと整う。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B01_cynical,B01,cynical,society,歴史,wakaru_source,歴史は時代のつながりを意識すると人物の役割が分かる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B01_encourage,B01,encourage,society,歴史,wakaru_source,歴史は時代のつながりを意識すると人物の役割が分かる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B02_cynical,B02,cynical,society,歴史,wakaru_source,資料は誰が何をしているかの2点を見る。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B02_encourage,B02,encourage,society,歴史,wakaru_source,資料は誰が何をしているかの2点を見る。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B03_cynical,B03,cynical,society,歴史,wakaru_source,年号より前後の出来事をつなげる方が定着する。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B03_encourage,B03,encourage,society,歴史,wakaru_source,年号より前後の出来事をつなげる方が定着する。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B04_cynical,B04,cynical,society,歴史,wakaru_source,政治の中心が移るのは交通・経済・軍事のどれかが理由。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B04_encourage,B04,encourage,society,歴史,wakaru_source,政治の中心が移るのは交通・経済・軍事のどれかが理由。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B05_cynical,B05,cynical,society,歴史,wakaru_source,資料には書かれていない情報こそ重要。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B05_encourage,B05,encourage,society,歴史,wakaru_source,資料には書かれていない情報こそ重要。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B06_cynical,B06,cynical,society,歴史,wakaru_source,文化は誰が支えたかで理解が深まる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B06_encourage,B06,encourage,society,歴史,wakaru_source,文化は誰が支えたかで理解が深まる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B07_cynical,B07,cynical,society,歴史,wakaru_source,戦いの勝敗は地形・兵力・戦術で整理すると分かりやすい。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B07_encourage,B07,encourage,society,歴史,wakaru_source,戦いの勝敗は地形・兵力・戦術で整理すると分かりやすい。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B08_cynical,B08,cynical,society,歴史,wakaru_source,時代の特色はくらし・政治・外国関係の3つで整理。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B08_encourage,B08,encourage,society,歴史,wakaru_source,時代の特色はくらし・政治・外国関係の3つで整理。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B09_cynical,B09,cynical,society,歴史,wakaru_source,人物はその人が残した変化を言語化すると覚えやすい。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B09_encourage,B09,encourage,society,歴史,wakaru_source,人物はその人が残した変化を言語化すると覚えやすい。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B10_cynical,B10,cynical,society,歴史,wakaru_source,宗教はなぜ広がったかを考えると理解できる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B10_encourage,B10,encourage,society,歴史,wakaru_source,宗教はなぜ広がったかを考えると理解できる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B11_cynical,B11,cynical,society,歴史,wakaru_source,幕府の場所が変わる＝権力の中心が移る。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B11_encourage,B11,encourage,society,歴史,wakaru_source,幕府の場所が変わる＝権力の中心が移る。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B12_cynical,B12,cynical,society,歴史,wakaru_source,古代→中世→近世→近代は土地→商業→産業→国際の流れ。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B12_encourage,B12,encourage,society,歴史,wakaru_source,古代→中世→近世→近代は土地→商業→産業→国際の流れ。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B13_cynical,B13,cynical,society,歴史,wakaru_source,戦国は地形と城に注目すると理解しやすい。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B13_encourage,B13,encourage,society,歴史,wakaru_source,戦国は地形と城に注目すると理解しやすい。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B14_cynical,B14,cynical,society,歴史,wakaru_source,明治の改革は江戸の習慣をどう変えたかで見ると本質が分かる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B14_encourage,B14,encourage,society,歴史,wakaru_source,明治の改革は江戸の習慣をどう変えたかで見ると本質が分かる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B15_cynical,B15,cynical,society,歴史,wakaru_source,その時代の人が何に困っていたかを考えると理解が深まる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B15_encourage,B15,encourage,society,歴史,wakaru_source,その時代の人が何に困っていたかを考えると理解が深まる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B01_cynical,B01,cynical,society,公民,wakaru_diagram,公民は誰が決めるかで整理できる（国会・内閣・裁判所・住民）。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B01_encourage,B01,encourage,society,公民,wakaru_diagram,公民は誰が決めるかで整理できる（国会・内閣・裁判所・住民）。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B02_cynical,B02,cynical,society,公民,wakaru_diagram,権利は自由→乱用→制限→公共の福祉で整理すると理解しやすい。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B02_encourage,B02,encourage,society,公民,wakaru_diagram,権利は自由→乱用→制限→公共の福祉で整理すると理解しやすい。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B03_cynical,B03,cynical,society,公民,wakaru_diagram,国会は法律を作り、内閣は実行し、裁判所は判断する。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B03_encourage,B03,encourage,society,公民,wakaru_diagram,国会は法律を作り、内閣は実行し、裁判所は判断する。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B04_cynical,B04,cynical,society,公民,wakaru_diagram,三権分立はけん制し合う仕組み。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B04_encourage,B04,encourage,society,公民,wakaru_diagram,三権分立はけん制し合う仕組み。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B05_cynical,B05,cynical,society,公民,wakaru_diagram,憲法はなぜその権利が必要だったかを考えると覚えやすい。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B05_encourage,B05,encourage,society,公民,wakaru_diagram,憲法はなぜその権利が必要だったかを考えると覚えやすい。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B06_cynical,B06,cynical,society,公民,wakaru_diagram,地方自治は住民が主役であることを忘れない。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B06_encourage,B06,encourage,society,公民,wakaru_diagram,地方自治は住民が主役であることを忘れない。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B07_cynical,B07,cynical,society,公民,wakaru_diagram,税金は誰が負担・どう集める・どう使うで整理できる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B07_encourage,B07,encourage,society,公民,wakaru_diagram,税金は誰が負担・どう集める・どう使うで整理できる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B08_cynical,B08,cynical,society,公民,wakaru_diagram,政治参加は選挙以外に身近な意見表明も含まれる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B08_encourage,B08,encourage,society,公民,wakaru_diagram,政治参加は選挙以外に身近な意見表明も含まれる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B09_cynical,B09,cynical,society,公民,wakaru_diagram,国際問題は利害・歴史・地理の3つで整理できる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B09_encourage,B09,encourage,society,公民,wakaru_diagram,国際問題は利害・歴史・地理の3つで整理できる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+B10_cynical,B10,cynical,society,公民,wakaru_diagram,公民は覚える教科ではなく考える教科。理由で説明しよう。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+B10_encourage,B10,encourage,society,公民,wakaru_diagram,公民は覚える教科ではなく考える教科。理由で説明しよう。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C01_cynical,C01,cynical,science,物理,wakaru_robot,光は反射角＝入射角を書くと整理できる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C01_encourage,C01,encourage,science,物理,wakaru_robot,光は反射角＝入射角を書くと整理できる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C02_cynical,C02,cynical,science,物理,wakaru_robot,影は光源・物体・スクリーンの距離で決まる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C02_encourage,C02,encourage,science,物理,wakaru_robot,影は光源・物体・スクリーンの距離で決まる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C03_cynical,C03,cynical,science,物理,wakaru_robot,電気は直列と並列のつながり方が最重要。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C03_encourage,C03,encourage,science,物理,wakaru_robot,電気は直列と並列のつながり方が最重要。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C04_cynical,C04,cynical,science,物理,wakaru_robot,電流は分かれ、電圧はそろう。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C04_encourage,C04,encourage,science,物理,wakaru_robot,電流は分かれ、電圧はそろう。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C05_cynical,C05,cynical,science,物理,wakaru_robot,音の大きさは振幅、高さは振動数。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C05_encourage,C05,encourage,science,物理,wakaru_robot,音の大きさは振幅、高さは振動数。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C06_cynical,C06,cynical,science,物理,wakaru_robot,力は矢印を書いてから考える。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C06_encourage,C06,encourage,science,物理,wakaru_robot,力は矢印を書いてから考える。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C07_cynical,C07,cynical,science,物理,wakaru_robot,てこは力点・支点・作用点の位置をまず書く。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C07_encourage,C07,encourage,science,物理,wakaru_robot,てこは力点・支点・作用点の位置をまず書く。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C08_cynical,C08,cynical,science,物理,wakaru_robot,ばねの伸びは力に比例する。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C08_encourage,C08,encourage,science,物理,wakaru_robot,ばねの伸びは力に比例する。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C09_cynical,C09,cynical,science,物理,wakaru_robot,電熱線は電流が大きいほど熱くなる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C09_encourage,C09,encourage,science,物理,wakaru_robot,電熱線は電流が大きいほど熱くなる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C10_cynical,C10,cynical,science,物理,wakaru_robot,電磁石は電流の向きと巻き方で決まる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C10_encourage,C10,encourage,science,物理,wakaru_robot,電磁石は電流の向きと巻き方で決まる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C01_cynical,C01,cynical,science,化学,review_pocket,水溶液は気体・色・固まり方の3つで判別できる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C01_encourage,C01,encourage,science,化学,review_pocket,水溶液は気体・色・固まり方の3つで判別できる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C02_cynical,C02,cynical,science,化学,review_pocket,酸性・中性・アルカリ性はBTB液の色を固定すると分かる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C02_encourage,C02,encourage,science,化学,review_pocket,酸性・中性・アルカリ性はBTB液の色を固定すると分かる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C03_cynical,C03,cynical,science,化学,review_pocket,状態変化は平らな部分が溶けている時間。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C03_encourage,C03,encourage,science,化学,review_pocket,状態変化は平らな部分が溶けている時間。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C04_cynical,C04,cynical,science,化学,review_pocket,溶ける量は温度に比例。例外は水酸化ナトリウム。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C04_encourage,C04,encourage,science,化学,review_pocket,溶ける量は温度に比例。例外は水酸化ナトリウム。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C05_cynical,C05,cynical,science,化学,review_pocket,重さは変わらない。形は変わっても質量は一定。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C05_encourage,C05,encourage,science,化学,review_pocket,重さは変わらない。形は変わっても質量は一定。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C06_cynical,C06,cynical,science,化学,review_pocket,気体の集め方は重い・軽い・溶けやすいで判断。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C06_encourage,C06,encourage,science,化学,review_pocket,気体の集め方は重い・軽い・溶けやすいで判断。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C07_cynical,C07,cynical,science,化学,review_pocket,結晶は規則正しい並び方の証拠。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C07_encourage,C07,encourage,science,化学,review_pocket,結晶は規則正しい並び方の証拠。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C08_cynical,C08,cynical,science,化学,review_pocket,濃さは溶けている量÷全体の量。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C08_encourage,C08,encourage,science,化学,review_pocket,濃さは溶けている量÷全体の量。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C09_cynical,C09,cynical,science,化学,review_pocket,蒸発はどこでも、沸騰は一定温度。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C09_encourage,C09,encourage,science,化学,review_pocket,蒸発はどこでも、沸騰は一定温度。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C10_cynical,C10,cynical,science,化学,review_pocket,化学変化は温度・色・気体・固体の4つで見抜ける。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C10_encourage,C10,encourage,science,化学,review_pocket,化学変化は温度・色・気体・固体の4つで見抜ける。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C01_cynical,C01,cynical,science,生物,wakaru_robot,光合成は二酸化炭素→酸素、呼吸は酸素→二酸化炭素。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C01_encourage,C01,encourage,science,生物,wakaru_robot,光合成は二酸化炭素→酸素、呼吸は酸素→二酸化炭素。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C02_cynical,C02,cynical,science,生物,wakaru_robot,葉は気孔・葉脈・葉肉の3語が最重要。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C02_encourage,C02,encourage,science,生物,wakaru_robot,葉は気孔・葉脈・葉肉の3語が最重要。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C03_cynical,C03,cynical,science,生物,wakaru_robot,根は水を吸うだけでなく体を支える。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C03_encourage,C03,encourage,science,生物,wakaru_robot,根は水を吸うだけでなく体を支える。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C04_cynical,C04,cynical,science,生物,wakaru_robot,食物連鎖は矢印の向きが大事。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C04_encourage,C04,encourage,science,生物,wakaru_robot,食物連鎖は矢印の向きが大事。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C05_cynical,C05,cynical,science,生物,wakaru_robot,血液は心臓→肺→心臓の往復が基本。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C05_encourage,C05,encourage,science,生物,wakaru_robot,血液は心臓→肺→心臓の往復が基本。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C06_cynical,C06,cynical,science,生物,wakaru_robot,肺はガス交換、腎臓はろ過が役割。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C06_encourage,C06,encourage,science,生物,wakaru_robot,肺はガス交換、腎臓はろ過が役割。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C07_cynical,C07,cynical,science,生物,wakaru_robot,植物の成長は日光・水・温度の3条件。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C07_encourage,C07,encourage,science,生物,wakaru_robot,植物の成長は日光・水・温度の3条件。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C08_cynical,C08,cynical,science,生物,wakaru_robot,脊椎動物は魚→両生→爬虫→鳥→哺乳の順。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C08_encourage,C08,encourage,science,生物,wakaru_robot,脊椎動物は魚→両生→爬虫→鳥→哺乳の順。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C09_cynical,C09,cynical,science,生物,wakaru_robot,細胞は核＝指令、細胞質＝働き手、膜＝扉。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C09_encourage,C09,encourage,science,生物,wakaru_robot,細胞は核＝指令、細胞質＝働き手、膜＝扉。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C10_cynical,C10,cynical,science,生物,wakaru_robot,消化は分解のイメージ。デンプン→ブドウ糖。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C10_encourage,C10,encourage,science,生物,wakaru_robot,消化は分解のイメージ。デンプン→ブドウ糖。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C01_cynical,C01,cynical,science,地学,wakaru_robot,天気図は気圧の谷と山を見ると変化が分かる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C01_encourage,C01,encourage,science,地学,wakaru_robot,天気図は気圧の谷と山を見ると変化が分かる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C02_cynical,C02,cynical,science,地学,wakaru_robot,気温と湿度は空気の量は一定を前提に比較。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C02_encourage,C02,encourage,science,地学,wakaru_robot,気温と湿度は空気の量は一定を前提に比較。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C03_cynical,C03,cynical,science,地学,wakaru_robot,季節風は夏＝海→陸、冬＝陸→海。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C03_encourage,C03,encourage,science,地学,wakaru_robot,季節風は夏＝海→陸、冬＝陸→海。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C04_cynical,C04,cynical,science,地学,wakaru_robot,前線は雨→風向き→気温の変化で読む。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C04_encourage,C04,encourage,science,地学,wakaru_robot,前線は雨→風向き→気温の変化で読む。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C05_cynical,C05,cynical,science,地学,wakaru_robot,地層は下ほど古い。逆転は押し上げを疑う。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C05_encourage,C05,encourage,science,地学,wakaru_robot,地層は下ほど古い。逆転は押し上げを疑う。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C06_cynical,C06,cynical,science,地学,wakaru_robot,化石は生息場所と時代のヒント。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C06_encourage,C06,encourage,science,地学,wakaru_robot,化石は生息場所と時代のヒント。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C07_cynical,C07,cynical,science,地学,wakaru_robot,火山は火山灰・溶岩・火山ガスの性質を押さえる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C07_encourage,C07,encourage,science,地学,wakaru_robot,火山は火山灰・溶岩・火山ガスの性質を押さえる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C08_cynical,C08,cynical,science,地学,wakaru_robot,星は東→西へ動く。1日と1年の動きを分ける。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C08_encourage,C08,encourage,science,地学,wakaru_robot,星は東→西へ動く。1日と1年の動きを分ける。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C09_cynical,C09,cynical,science,地学,wakaru_robot,南中高度は季節と緯度で決まる。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C09_encourage,C09,encourage,science,地学,wakaru_robot,南中高度は季節と緯度で決まる。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。
+C10_cynical,C10,cynical,science,地学,wakaru_robot,地震はP波→S波の順で届く。…って、頭では分かっててもなかなかできないんだよね。でも、それが普通。
+C10_encourage,C10,encourage,science,地学,wakaru_robot,地震はP波→S波の順で届く。 今日この一行を読んだあなたは、確実に一歩進んでるよ。ゆっくりで大丈夫。

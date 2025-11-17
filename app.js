@@ -55,6 +55,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 4) 購入ボタンの状態を更新
     updatePurchaseButtonsState(user);
     
+    // 5) アカウント情報メニューボタンの表示制御
+    updateAccountMenuButton();
+    
     // UI更新処理があればここに追加
     try {
       if (typeof renderAppView === 'function') {
@@ -3157,6 +3160,27 @@ const STREAK_STORAGE_KEY = 'learningStreak';
 const THEME_STORAGE_KEY = 'unlockedThemes';
 const CURRENT_THEME_KEY = 'currentTheme';
 
+// ===== 学習データエクスポート/インポートシステム =====
+// エクスポート対象のキーパターン
+const EXPORT_KEY_PATTERNS = [
+  /^progress:/,           // 進捗データ
+  /^learningHistory/,     // 学習履歴
+  /^checkpoint:/,         // チェックポイント
+  'learningStreak',       // 連続学習日数
+  'unlockedThemes',       // アンロック済みテーマ
+  'currentTheme',         // 現在のテーマ
+  'purchases',            // 購入情報
+  'currentGrade'          // 現在の学年
+];
+
+// 除外するキー（一時データなど）
+const EXCLUDE_KEYS = [
+  'lessonCompleteMessage',
+  'questionAnswers',
+  'history_migration_completed',
+  'progress_migration_completed'
+];
+
 // レベル定義（連続日数に応じたレベル）
 const LEVEL_DEFINITIONS = [
   { days: 0, level: 1, theme: 'default' },
@@ -3465,6 +3489,9 @@ function initMenuSystem() {
       menuInstallBtn.classList.remove('hidden');
     }
   }
+  
+  // アカウント情報ボタンの表示制御（ログイン時のみ表示）
+  updateAccountMenuButton();
 }
 
 // メニューパネルを開く
@@ -3512,15 +3539,14 @@ function handleMenuAction(action) {
   
   switch (action) {
     case 'show-stats':
-      // 学習統計を表示（将来実装）
+      // 学習統計を表示
       console.log('📊 学習統計を表示');
-      alert('学習統計機能は準備中です');
+      showStatsModal();
       break;
     case 'show-streak':
-      // 連続学習記録を表示（将来実装）
+      // 連続学習記録を表示
       console.log('🔥 連続学習記録を表示');
-      const streakInfo = getStreakInfo();
-      alert(`連続学習: ${streakInfo.days}日\nレベル: Lv.${streakInfo.level}`);
+      showStreakModal();
       break;
     case 'show-theme':
       // テーマ選択モーダルを開く
@@ -3539,6 +3565,21 @@ function handleMenuAction(action) {
       // ヘルプを表示（将来実装）
       console.log('❓ ヘルプを表示');
       alert('ヘルプ機能は準備中です');
+      break;
+    case 'show-account':
+      // アカウント情報を表示
+      console.log('👤 アカウント情報を表示');
+      showAccountModal();
+      break;
+    case 'export-data':
+      // 学習データをエクスポート
+      console.log('💾 学習データをエクスポート');
+      exportLearningData();
+      break;
+    case 'import-data':
+      // 学習データをインポート
+      console.log('📥 学習データをインポート');
+      importLearningData();
       break;
     default:
       console.log('不明なアクション:', action);
@@ -3567,16 +3608,25 @@ async function loadEncouragementData() {
 
 // デフォルトデータ（フォールバック用）
 function getDefaultEncouragementData() {
-  return {
-    dailyMessages: [
-      { date: '01-01', message: '🎍 新年あけましておめでとうございます！今年も一緒に頑張りましょう！', character: 'character-default.png' }
-    ],
-    randomMessages: [
-      { message: '今日も一歩ずつ前進しましょう！', character: 'character-default.png' }
-    ],
-    defaultCharacter: 'character-default.png',
-    characterPath: './images/character/'
-  };
+  return [
+    {
+      date: '01-01',
+      character: 'nyabi',
+      tone: 'encourage',
+      id: 'default',
+      baseId: 'default',
+      season: 'winter',
+      message: '今日も一歩ずつ前進しましょう！\n継続は力なり。毎日の積み重ねが大切です！\n小さな努力の積み重ねが、大きな成果につながります！'
+    }
+  ];
+}
+
+// キャラクター名から画像パスを生成
+function getCharacterImagePath(characterName) {
+  const characterPath = './images/character/';
+  // character名（"nyabi"または"robot"）から画像ファイル名を生成
+  // 実際のファイル名に合わせて調整が必要な場合があります
+  return `${characterPath}${characterName}.png`;
 }
 
 // 日付に基づいたメッセージとキャラクターを取得
@@ -3587,11 +3637,17 @@ async function getDailyDateMessage() {
   const day = String(today.getDate()).padStart(2, '0');
   const dateKey = `${month}-${day}`;
   
-  const dailyMsg = data.dailyMessages.find(msg => msg.date === dateKey);
+  // 配列から該当日付のメッセージを検索
+  const dailyMsg = Array.isArray(data) 
+    ? data.find(msg => msg.date === dateKey)
+    : null;
+  
   if (dailyMsg) {
     return {
       message: dailyMsg.message,
-      character: data.characterPath + dailyMsg.character
+      character: getCharacterImagePath(dailyMsg.character),
+      tone: dailyMsg.tone,
+      season: dailyMsg.season
     };
   }
   return null;
@@ -3600,31 +3656,42 @@ async function getDailyDateMessage() {
 // ランダムメッセージとキャラクターを取得
 async function getRandomEncouragementMessage() {
   const data = await loadEncouragementData();
-  const randomIndex = Math.floor(Math.random() * data.randomMessages.length);
-  const randomMsg = data.randomMessages[randomIndex];
+  
+  if (!Array.isArray(data) || data.length === 0) {
+    // フォールバック
+    return {
+      message: '今日も一歩ずつ前進しましょう！\n継続は力なり。毎日の積み重ねが大切です！\n小さな努力の積み重ねが、大きな成果につながります！',
+      character: getCharacterImagePath('nyabi'),
+      tone: 'encourage',
+      season: 'winter'
+    };
+  }
+  
+  const randomIndex = Math.floor(Math.random() * data.length);
+  const randomMsg = data[randomIndex];
   
   return {
     message: randomMsg.message,
-    character: data.characterPath + randomMsg.character
+    character: getCharacterImagePath(randomMsg.character),
+    tone: randomMsg.tone,
+    season: randomMsg.season
   };
 }
 
 // おすすめタブ用の励ましメッセージとキャラクターを生成
 async function getRecommendedEncouragementMessage() {
-  const data = await loadEncouragementData();
   const dateData = await getDailyDateMessage();
-  const randomData = await getRandomEncouragementMessage();
   
   let message, character;
   
   if (dateData) {
-    // 日付対応メッセージがある場合は、それとランダムメッセージを組み合わせ
-    message = `${dateData.message}\n\n${randomData.message}`;
-    // 日付対応メッセージのキャラクターを優先
+    // 日付対応メッセージがある場合は、それを使用
+    message = dateData.message;
     character = dateData.character;
   } else {
-    // 日付対応メッセージがない場合は、ランダムメッセージのみ
-    message = `⭐ ${randomData.message}`;
+    // 日付対応メッセージがない場合は、ランダムメッセージを使用
+    const randomData = await getRandomEncouragementMessage();
+    message = randomData.message;
     character = randomData.character;
   }
   
@@ -6402,4 +6469,1511 @@ function ensureUniqueReviewLessonId(baseId) {
 }
 
 // ==== 追補コードここまで ====
+
+// ===== 学習データエクスポート/インポート機能 =====
+
+// 学習データをエクスポート（クリップボード + ファイル保存）
+async function exportLearningData() {
+  try {
+    // エクスポート対象のデータを収集
+    const exportData = collectExportData();
+    
+    if (!exportData || Object.keys(exportData).length === 0) {
+      showToast('保存するデータがありません', 'warning');
+      return;
+    }
+    
+    // メタデータを追加
+    const fullData = {
+      version: '1.0',
+      exportDate: new Date().toISOString(),
+      data: exportData
+    };
+    
+    const jsonString = JSON.stringify(fullData, null, 2);
+    
+    // ファイルとして保存（推奨：端末間移行に最適）
+    downloadAsFile(jsonString);
+    
+    // クリップボードにもコピー（同じ端末内での一時保存用）
+    try {
+      await navigator.clipboard.writeText(jsonString);
+      showToast('✅ ファイルを保存しました！\nクリップボードにもコピーしました\n\n📌 別の端末に移す場合：\n保存したファイルをメールやクラウドストレージで共有してください', 'success');
+    } catch (clipboardError) {
+      console.warn('クリップボードへのコピーに失敗:', clipboardError);
+      showToast('✅ ファイルを保存しました！\n\n📌 別の端末に移す場合：\n保存したファイルをメールやクラウドストレージで共有してください', 'success');
+    }
+  } catch (error) {
+    console.error('❌ データエクスポートエラー:', error);
+    showToast('データの保存に失敗しました', 'error');
+  }
+}
+
+// エクスポート対象のデータを収集
+function collectExportData() {
+  const exportData = {};
+  
+  // localStorageから全キーを取得
+  const allKeys = Object.keys(localStorage);
+  
+  allKeys.forEach(key => {
+    // 除外キーをスキップ
+    if (EXCLUDE_KEYS.includes(key)) {
+      return;
+    }
+    
+    // パターンマッチング
+    let shouldExport = false;
+    for (const pattern of EXPORT_KEY_PATTERNS) {
+      if (typeof pattern === 'string') {
+        if (key === pattern) {
+          shouldExport = true;
+          break;
+        }
+      } else if (pattern.test(key)) {
+        shouldExport = true;
+        break;
+      }
+    }
+    
+    if (shouldExport) {
+      try {
+        const value = localStorage.getItem(key);
+        if (value) {
+          // JSONとして解析可能か確認
+          JSON.parse(value);
+          exportData[key] = value;
+        }
+      } catch (e) {
+        // JSONでない場合はスキップ
+        console.warn(`キー "${key}" はJSON形式ではないためスキップします`);
+      }
+    }
+  });
+  
+  return exportData;
+}
+
+// ファイルとしてダウンロード
+function downloadAsFile(jsonString) {
+  try {
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const dateStr = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+    a.href = url;
+    a.download = `学習データ_${dateStr}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast('✅ ファイルを保存しました', 'success');
+  } catch (error) {
+    console.error('❌ ファイル保存エラー:', error);
+    showToast('ファイルの保存に失敗しました', 'error');
+  }
+}
+
+// 学習データをインポート（クリップボード + ファイル読み込み）
+async function importLearningData() {
+  try {
+    // 現在のデータをバックアップ
+    const currentData = collectExportData();
+    const hasCurrentData = Object.keys(currentData).length > 0;
+    
+    if (hasCurrentData) {
+      const backup = confirm('現在の学習データをバックアップしますか？\n（推奨：読み込み前にバックアップを取っておくと安全です）');
+      if (backup) {
+        const backupData = {
+          version: '1.0',
+          exportDate: new Date().toISOString(),
+          data: currentData
+        };
+        downloadAsFile(JSON.stringify(backupData, null, 2));
+      }
+    }
+    
+    // インポート方法を選択（ファイル読み込みを推奨）
+    const method = prompt('データの読み込み方法を選択してください：\n\n1: ファイルを選択（推奨：別端末から移す場合）\n2: クリップボードから貼り付け（同じ端末内の場合）\n\n（1または2を入力、キャンセルで中止）');
+    
+    let jsonString = null;
+    
+    if (method === '1') {
+      // ファイルから読み込み（推奨）
+      jsonString = await readFromFile();
+    } else if (method === '2') {
+      // クリップボードから読み込み
+      try {
+        jsonString = await navigator.clipboard.readText();
+        if (!jsonString || jsonString.trim() === '') {
+          showToast('クリップボードが空です', 'warning');
+          // フォールバック: テキストエリアを使用
+          jsonString = await promptForPaste();
+        }
+      } catch (clipboardError) {
+        console.warn('クリップボードからの読み込みに失敗:', clipboardError);
+        // フォールバック: テキストエリアを使用
+        jsonString = await promptForPaste();
+      }
+    } else {
+      showToast('操作がキャンセルされました', 'info');
+      return;
+    }
+    
+    if (!jsonString || jsonString.trim() === '') {
+      showToast('データが空です', 'warning');
+      return;
+    }
+    
+    // データを解析
+    let importedData;
+    try {
+      importedData = JSON.parse(jsonString);
+    } catch (parseError) {
+      showToast('データの形式が正しくありません', 'error');
+      console.error('JSON解析エラー:', parseError);
+      return;
+    }
+    
+    // バージョンチェック
+    if (importedData.version && importedData.version !== '1.0') {
+      const proceed = confirm(`データのバージョンが異なります（${importedData.version}）。\n読み込みを続行しますか？`);
+      if (!proceed) {
+        return;
+      }
+    }
+    
+    // データを取得（dataプロパティがある場合はそれを使用）
+    const dataToImport = importedData.data || importedData;
+    
+    // 最終確認
+    const confirmMsg = `以下のデータを読み込みます：\n\n` +
+      `- 進捗データ: ${Object.keys(dataToImport).filter(k => k.startsWith('progress:')).length}件\n` +
+      `- 学習履歴: ${Object.keys(dataToImport).filter(k => k.startsWith('learningHistory')).length}件\n` +
+      `- その他: ${Object.keys(dataToImport).filter(k => !k.startsWith('progress:') && !k.startsWith('learningHistory')).length}件\n\n` +
+      `現在のデータは上書きされます。よろしいですか？`;
+    
+    if (!confirm(confirmMsg)) {
+      showToast('読み込みがキャンセルされました', 'info');
+      return;
+    }
+    
+    // データをインポート
+    let importedCount = 0;
+    let errorCount = 0;
+    
+    for (const [key, value] of Object.entries(dataToImport)) {
+      try {
+        // JSONとして検証
+        JSON.parse(value);
+        localStorage.setItem(key, value);
+        importedCount++;
+      } catch (e) {
+        console.warn(`キー "${key}" のインポートに失敗:`, e);
+        errorCount++;
+      }
+    }
+    
+    // 結果を表示
+    if (errorCount === 0) {
+      showToast(`✅ データの読み込みが完了しました！\n（${importedCount}件のデータを読み込みました）`, 'success');
+      
+      // UIを更新
+      setTimeout(() => {
+        if (typeof renderHome === 'function') {
+          renderHome();
+        }
+        // テーマを再適用
+        if (typeof applyCurrentTheme === 'function') {
+          applyCurrentTheme();
+        }
+      }, 500);
+    } else {
+      showToast(`⚠️ 一部のデータの読み込みに失敗しました\n（成功: ${importedCount}件、失敗: ${errorCount}件）`, 'warning');
+    }
+  } catch (error) {
+    console.error('❌ データインポートエラー:', error);
+    showToast('データの読み込みに失敗しました', 'error');
+  }
+}
+
+// クリップボードが使えない場合のフォールバック
+function promptForPaste() {
+  return new Promise((resolve) => {
+    const textarea = document.createElement('textarea');
+    textarea.style.position = 'fixed';
+    textarea.style.top = '50%';
+    textarea.style.left = '50%';
+    textarea.style.transform = 'translate(-50%, -50%)';
+    textarea.style.width = '80%';
+    textarea.style.height = '300px';
+    textarea.style.zIndex = '10000';
+    textarea.placeholder = 'ここにデータを貼り付けて「OK」をクリックしてください';
+    
+    const container = document.createElement('div');
+    container.style.position = 'fixed';
+    container.style.top = '0';
+    container.style.left = '0';
+    container.style.width = '100%';
+    container.style.height = '100%';
+    container.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    container.style.zIndex = '9999';
+    container.style.display = 'flex';
+    container.style.alignItems = 'center';
+    container.style.justifyContent = 'center';
+    
+    const button = document.createElement('button');
+    button.textContent = 'OK';
+    button.style.marginTop = '10px';
+    button.style.padding = '10px 20px';
+    button.onclick = () => {
+      const value = textarea.value;
+      document.body.removeChild(container);
+      resolve(value);
+    };
+    
+    const cancelButton = document.createElement('button');
+    cancelButton.textContent = 'キャンセル';
+    cancelButton.style.marginTop = '10px';
+    cancelButton.style.marginLeft = '10px';
+    cancelButton.style.padding = '10px 20px';
+    cancelButton.onclick = () => {
+      document.body.removeChild(container);
+      resolve(null);
+    };
+    
+    const buttonContainer = document.createElement('div');
+    buttonContainer.style.display = 'flex';
+    buttonContainer.style.justifyContent = 'center';
+    buttonContainer.appendChild(button);
+    buttonContainer.appendChild(cancelButton);
+    
+    container.appendChild(textarea);
+    container.appendChild(buttonContainer);
+    document.body.appendChild(container);
+    textarea.focus();
+  });
+}
+
+// ファイルから読み込み
+function readFromFile() {
+  return new Promise((resolve) => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json,application/json';
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      if (!file) {
+        resolve(null);
+        return;
+      }
+      
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        resolve(event.target.result);
+      };
+      reader.onerror = () => {
+        showToast('ファイルの読み込みに失敗しました', 'error');
+        resolve(null);
+      };
+      reader.readAsText(file);
+    };
+    input.oncancel = () => {
+      resolve(null);
+    };
+    input.click();
+  });
+}
+
+// トースト通知を表示
+function showToast(message, type = 'info') {
+  // 既存のトーストがあれば削除
+  const existingToast = document.querySelector('.data-export-toast');
+  if (existingToast) {
+    existingToast.remove();
+  }
+  
+  const toast = document.createElement('div');
+  toast.className = 'data-export-toast fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-6 py-4 rounded-lg shadow-lg text-white font-semibold whitespace-pre-line text-center max-w-md';
+  
+  // タイプに応じた色を設定
+  switch (type) {
+    case 'success':
+      toast.classList.add('bg-green-500');
+      break;
+    case 'error':
+      toast.classList.add('bg-red-500');
+      break;
+    case 'warning':
+      toast.classList.add('bg-yellow-500');
+      break;
+    default:
+      toast.classList.add('bg-blue-500');
+  }
+  
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  
+  // 3秒後に自動削除
+  setTimeout(() => {
+    if (toast.parentNode) {
+      toast.style.opacity = '0';
+      toast.style.transition = 'opacity 0.3s';
+      setTimeout(() => {
+        if (toast.parentNode) {
+          toast.parentNode.removeChild(toast);
+        }
+      }, 300);
+    }
+  }, 3000);
+}
+
+// ===== 学習統計システム =====
+
+// 達成度に応じた色とメッセージを取得
+function getAchievementInfo(percent) {
+  if (percent >= 80) {
+    return {
+      color: 'green',
+      gradient: 'from-green-400 to-emerald-500',
+      bgGradient: 'from-green-50 to-emerald-100',
+      textColor: 'text-green-700',
+      message: '完璧です！🎉',
+      icon: '🌟',
+      stars: '⭐⭐⭐⭐⭐'
+    };
+  } else if (percent >= 60) {
+    return {
+      color: 'orange',
+      gradient: 'from-orange-400 to-amber-500',
+      bgGradient: 'from-orange-50 to-amber-100',
+      textColor: 'text-orange-700',
+      message: '順調です！✨',
+      icon: '⭐',
+      stars: '⭐⭐⭐⭐'
+    };
+  } else if (percent >= 30) {
+    return {
+      color: 'yellow',
+      gradient: 'from-yellow-400 to-orange-400',
+      bgGradient: 'from-yellow-50 to-orange-100',
+      textColor: 'text-yellow-700',
+      message: '頑張っています！💪',
+      icon: '🚀',
+      stars: '⭐⭐⭐'
+    };
+  } else {
+    return {
+      color: 'gray',
+      gradient: 'from-slate-400 to-slate-500',
+      bgGradient: 'from-slate-50 to-slate-100',
+      textColor: 'text-slate-700',
+      message: 'これからです！🎯',
+      icon: '🌱',
+      stars: '⭐'
+    };
+  }
+}
+
+// 数値をカウントアップアニメーション
+function animateValue(element, start, end, duration, suffix = '') {
+  if (!element) return;
+  
+  let startTimestamp = null;
+  const step = (timestamp) => {
+    if (!startTimestamp) startTimestamp = timestamp;
+    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+    const current = Math.floor(progress * (end - start) + start);
+    element.textContent = current + suffix;
+    if (progress < 1) {
+      window.requestAnimationFrame(step);
+    } else {
+      element.textContent = end + suffix;
+    }
+  };
+  window.requestAnimationFrame(step);
+}
+
+// パーセンテージをカウントアップアニメーション
+function animatePercent(element, start, end, duration) {
+  if (!element) return;
+  
+  let startTimestamp = null;
+  const step = (timestamp) => {
+    if (!startTimestamp) startTimestamp = timestamp;
+    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+    const current = (progress * (end - start) + start).toFixed(1);
+    element.textContent = current + '%';
+    if (progress < 1) {
+      window.requestAnimationFrame(step);
+    } else {
+      element.textContent = end.toFixed(1) + '%';
+    }
+  };
+  window.requestAnimationFrame(step);
+}
+
+// プログレスバーをアニメーション
+function animateProgressBar(barElement, targetPercent, duration = 1000) {
+  if (!barElement) return;
+  
+  barElement.style.width = '0%';
+  barElement.style.transition = `width ${duration}ms ease-out`;
+  
+  setTimeout(() => {
+    barElement.style.width = targetPercent + '%';
+  }, 100);
+}
+
+// 次の目標を計算
+function getNextGoal(stats) {
+  const goals = [];
+  
+  // 総合目標
+  const totalProgress = stats.total.totalLessons > 0 
+    ? Math.round((stats.total.lessonsCompleted / stats.total.totalLessons) * 100) 
+    : 0;
+  
+  const nextMilestone = [25, 50, 75, 100].find(m => m > totalProgress);
+  if (nextMilestone) {
+    const remaining = Math.ceil((nextMilestone / 100) * stats.total.totalLessons) - stats.total.lessonsCompleted;
+    if (remaining > 0) {
+      goals.push({
+        type: 'total',
+        message: `あと${remaining}レッスンで${nextMilestone}%達成！🎯`,
+        icon: '🎯'
+      });
+    }
+  }
+  
+  // 教科別目標
+  Object.keys(stats.bySubject).forEach(subject => {
+    const subjectStats = stats.bySubject[subject];
+    const progress = subjectStats.total > 0 
+      ? Math.round((subjectStats.completed / subjectStats.total) * 100) 
+      : 0;
+    
+    const nextMilestone = [25, 50, 75, 100].find(m => m > progress);
+    if (nextMilestone) {
+      const remaining = Math.ceil((nextMilestone / 100) * subjectStats.total) - subjectStats.completed;
+      if (remaining > 0 && remaining <= 5) {
+        goals.push({
+          type: 'subject',
+          subject: subjectStats.name,
+          message: `${subjectStats.name}：あと${remaining}レッスンで${nextMilestone}%達成！`,
+          icon: '📚'
+        });
+      }
+    }
+  });
+  
+  // 連続学習目標
+  const streakInfo = getStreakInfo();
+  const nextStreakMilestone = [7, 14, 30, 60, 100].find(m => m > streakInfo.days);
+  if (nextStreakMilestone) {
+    const remaining = nextStreakMilestone - streakInfo.days;
+    if (remaining <= 7) {
+      goals.push({
+        type: 'streak',
+        message: `あと${remaining}日で連続${nextStreakMilestone}日達成！🔥`,
+        icon: '🔥'
+      });
+    }
+  }
+  
+  return goals.slice(0, 3); // 最大3つまで
+}
+
+// 統計データを収集
+function collectLearningStats() {
+  const stats = {
+    total: {
+      lessonsCompleted: 0,
+      totalLessons: 0,
+      totalTime: 0, // 秒単位
+      totalQuestions: 0,
+      correctAnswers: 0,
+      averageScore: 0
+    },
+    bySubject: {
+      'sci': { name: '理科わかる編', completed: 0, total: 0, totalTime: 0, totalQuestions: 0, correctAnswers: 0, averageScore: 0 },
+      'science_drill': { name: '理科おぼえる編', completed: 0, total: 0, totalTime: 0, totalQuestions: 0, correctAnswers: 0, averageScore: 0 },
+      'soc': { name: '社会わかる編', completed: 0, total: 0, totalTime: 0, totalQuestions: 0, correctAnswers: 0, averageScore: 0 },
+      'social_drill': { name: '社会おぼえる編', completed: 0, total: 0, totalTime: 0, totalQuestions: 0, correctAnswers: 0, averageScore: 0 }
+    },
+    byGrade: {
+      4: { name: '小4', completed: 0, total: 0, totalQuestions: 0, correctAnswers: 0, averageScore: 0 },
+      5: { name: '小5', completed: 0, total: 0, totalQuestions: 0, correctAnswers: 0, averageScore: 0 },
+      6: { name: '小6', completed: 0, total: 0, totalQuestions: 0, correctAnswers: 0, averageScore: 0 }
+    },
+    recentSessions: []
+  };
+  
+  if (!state.catalog || state.catalog.length === 0) {
+    console.warn('カタログが読み込まれていません');
+    return stats;
+  }
+  
+  // 全レッスンをループ
+  state.catalog.forEach(lesson => {
+    const progress = getLessonProgress(lesson.id);
+    const isCompleted = isLessonCompleted(lesson.id);
+    
+    // 総合統計
+    stats.total.totalLessons++;
+    if (isCompleted) {
+      stats.total.lessonsCompleted++;
+      
+      if (progress && progress.detail) {
+        const { correct = 0, total = 0, timeSec = 0 } = progress.detail;
+        stats.total.totalTime += timeSec;
+        stats.total.totalQuestions += total;
+        stats.total.correctAnswers += correct;
+      }
+    }
+    
+    // 教科別統計
+    if (stats.bySubject[lesson.subject]) {
+      const subjectStats = stats.bySubject[lesson.subject];
+      subjectStats.total++;
+      if (isCompleted) {
+        subjectStats.completed++;
+        if (progress && progress.detail) {
+          const { correct = 0, total = 0, timeSec = 0 } = progress.detail;
+          subjectStats.totalTime += timeSec;
+          subjectStats.totalQuestions += total;
+          subjectStats.correctAnswers += correct;
+        }
+      }
+    }
+    
+    // 学年別統計
+    if (lesson.grade && stats.byGrade[lesson.grade]) {
+      const gradeStats = stats.byGrade[lesson.grade];
+      gradeStats.total++;
+      if (isCompleted) {
+        gradeStats.completed++;
+        if (progress && progress.detail) {
+          const { correct = 0, total = 0 } = progress.detail;
+          gradeStats.totalQuestions += total;
+          gradeStats.correctAnswers += correct;
+        }
+      }
+    }
+    
+    // 最近の学習履歴（完了したレッスンのみ）
+    if (isCompleted && progress && progress.at) {
+      stats.recentSessions.push({
+        lessonId: lesson.id,
+        title: lesson.title,
+        subject: lesson.subject,
+        grade: lesson.grade,
+        date: new Date(progress.at),
+        correct: progress.detail?.correct || 0,
+        total: progress.detail?.total || 0,
+        timeSec: progress.detail?.timeSec || 0,
+        score: progress.score || 0
+      });
+    }
+  });
+  
+  // 平均正答率を計算
+  if (stats.total.totalQuestions > 0) {
+    stats.total.averageScore = (stats.total.correctAnswers / stats.total.totalQuestions * 100).toFixed(1);
+  }
+  
+  // 教科別の平均正答率を計算
+  Object.keys(stats.bySubject).forEach(subject => {
+    const subjectStats = stats.bySubject[subject];
+    if (subjectStats.totalQuestions > 0) {
+      subjectStats.averageScore = (subjectStats.correctAnswers / subjectStats.totalQuestions * 100).toFixed(1);
+    }
+  });
+  
+  // 学年別の平均正答率を計算
+  Object.keys(stats.byGrade).forEach(grade => {
+    const gradeStats = stats.byGrade[grade];
+    if (gradeStats.totalQuestions > 0) {
+      gradeStats.averageScore = (gradeStats.correctAnswers / gradeStats.totalQuestions * 100).toFixed(1);
+    }
+  });
+  
+  // 最近の学習履歴を日時順（新しい順）にソート
+  stats.recentSessions.sort((a, b) => b.date - a.date);
+  stats.recentSessions = stats.recentSessions.slice(0, 10); // 最新10件
+  
+  return stats;
+}
+
+// 時間をフォーマット（秒 → 時間分秒）
+function formatTime(seconds) {
+  if (!seconds || seconds === 0) return '0分';
+  
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
+  
+  if (hours > 0) {
+    return `${hours}時間${minutes}分`;
+  } else if (minutes > 0) {
+    return `${minutes}分`;
+  } else {
+    return `${secs}秒`;
+  }
+}
+
+// 統計モーダルを表示
+function showStatsModal() {
+  const modal = document.getElementById('statsModal');
+  const content = document.getElementById('statsContent');
+  
+  if (!modal || !content) {
+    console.error('統計モーダルの要素が見つかりません');
+    return;
+  }
+  
+  // 統計データを収集
+  const stats = collectLearningStats();
+  const streakInfo = getStreakInfo();
+  
+  // 次の目標を取得
+  const nextGoals = getNextGoal(stats);
+  const totalProgress = stats.total.totalLessons > 0 
+    ? Math.round((stats.total.lessonsCompleted / stats.total.totalLessons) * 100) 
+    : 0;
+  const achievementInfo = getAchievementInfo(totalProgress);
+  
+  // HTMLを生成
+  let html = '';
+  
+  // 励ましメッセージと次の目標
+  html += `
+    <div class="mb-6 bg-gradient-to-r ${achievementInfo.bgGradient} rounded-lg p-6 border-2 border-${achievementInfo.color}-300 shadow-lg">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-4xl">${achievementInfo.icon}</span>
+        <div>
+          <div class="text-2xl font-bold ${achievementInfo.textColor}">${achievementInfo.message}</div>
+          <div class="text-sm text-slate-600 mt-1">総合進捗: ${totalProgress}% ${achievementInfo.stars}</div>
+        </div>
+      </div>
+      ${nextGoals.length > 0 ? `
+        <div class="mt-4 pt-4 border-t border-${achievementInfo.color}-200">
+          <div class="text-sm font-semibold text-slate-700 mb-2">🎯 次の目標</div>
+          <div class="space-y-1">
+            ${nextGoals.map(goal => `
+              <div class="flex items-center gap-2 text-sm text-slate-600">
+                <span>${goal.icon}</span>
+                <span>${goal.message}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      ` : ''}
+    </div>
+  `;
+  
+  // 総合統計カード（フェードイン用のクラスを追加）
+  html += `
+    <div class="mb-6 stats-section opacity-0" style="animation: fadeInUp 0.6s ease-out 0.1s forwards;">
+      <h3 class="text-lg font-bold text-slate-800 mb-4">📈 総合統計</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+          <div class="text-sm text-slate-600 mb-1">総学習時間</div>
+          <div class="text-2xl font-bold text-blue-700" data-animate="time" data-value="${stats.total.totalTime}">0分</div>
+        </div>
+        <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4 transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+          <div class="text-sm text-slate-600 mb-1">完了レッスン</div>
+          <div class="text-2xl font-bold text-green-700" data-animate="number" data-value="${stats.total.lessonsCompleted}">0</div>
+          <div class="text-xs text-slate-500">/ ${stats.total.totalLessons}</div>
+        </div>
+        <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-4 transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+          <div class="text-sm text-slate-600 mb-1">平均正答率</div>
+          <div class="text-2xl font-bold text-purple-700" data-animate="percent" data-value="${parseFloat(stats.total.averageScore) || 0}">0%</div>
+        </div>
+        <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-4 transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+          <div class="text-sm text-slate-600 mb-1">連続学習</div>
+          <div class="text-2xl font-bold text-orange-700" data-animate="number" data-value="${streakInfo.days}">0</div>
+          <div class="text-xs text-slate-500">Lv.${streakInfo.level}</div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  // 教科別統計
+  html += `
+    <div class="mb-6 stats-section opacity-0" style="animation: fadeInUp 0.6s ease-out 0.3s forwards;">
+      <h3 class="text-lg font-bold text-slate-800 mb-4">📚 教科別統計</h3>
+      <div class="space-y-4">
+  `;
+  
+  Object.keys(stats.bySubject).forEach((subject, index) => {
+    const subjectStats = stats.bySubject[subject];
+    const progressPercent = subjectStats.total > 0 ? Math.round((subjectStats.completed / subjectStats.total) * 100) : 0;
+    const subjectAchievement = getAchievementInfo(progressPercent);
+    
+    html += `
+      <div class="bg-gradient-to-br ${subjectAchievement.bgGradient} rounded-lg p-4 border-l-4 border-${subjectAchievement.color}-500 transform transition-all duration-300 hover:scale-102 hover:shadow-lg">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">${subjectAchievement.icon}</span>
+            <div class="font-semibold text-slate-800">${subjectStats.name}</div>
+          </div>
+          <div class="text-sm text-slate-600">完了: ${subjectStats.completed}/${subjectStats.total}</div>
+        </div>
+        <div class="mb-2">
+          <div class="flex items-center justify-between text-sm mb-1">
+            <span class="text-slate-600">進捗</span>
+            <span class="font-semibold text-slate-800" data-animate="percent" data-value="${progressPercent}">0%</span>
+            <span class="text-xs ${subjectAchievement.textColor}">${subjectAchievement.stars}</span>
+          </div>
+          <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+            <div class="bg-gradient-to-r ${subjectAchievement.gradient} h-3 rounded-full progress-bar" data-progress="${progressPercent}" style="width: 0%"></div>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2 text-sm mt-3">
+          <div>
+            <span class="text-slate-600">平均正答率: </span>
+            <span class="font-semibold text-slate-800" data-animate="percent" data-value="${parseFloat(subjectStats.averageScore) || 0}">0%</span>
+          </div>
+          <div>
+            <span class="text-slate-600">学習時間: </span>
+            <span class="font-semibold text-slate-800">${formatTime(subjectStats.totalTime)}</span>
+          </div>
+        </div>
+        <div class="mt-2 text-xs ${subjectAchievement.textColor} font-semibold">
+          ${subjectAchievement.message}
+        </div>
+      </div>
+    `;
+  });
+  
+  html += `
+      </div>
+    </div>
+  `;
+  
+  // 学年別統計
+  html += `
+    <div class="mb-6 stats-section opacity-0" style="animation: fadeInUp 0.6s ease-out 0.5s forwards;">
+      <h3 class="text-lg font-bold text-slate-800 mb-4">🎓 学年別統計</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+  `;
+  
+  [4, 5, 6].forEach(grade => {
+    const gradeStats = stats.byGrade[grade];
+    const gradeProgress = gradeStats.total > 0 ? Math.round((gradeStats.completed / gradeStats.total) * 100) : 0;
+    const gradeAchievement = getAchievementInfo(gradeProgress);
+    
+    html += `
+      <div class="bg-gradient-to-br ${gradeAchievement.bgGradient} rounded-lg p-4 border-l-4 border-${gradeAchievement.color}-500 transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-2xl">${gradeAchievement.icon}</span>
+          <div class="text-lg font-bold ${gradeAchievement.textColor}">${gradeStats.name}</div>
+        </div>
+        <div class="text-sm text-slate-600 mb-1">完了: ${gradeStats.completed}/${gradeStats.total}</div>
+        <div class="text-sm mb-2">
+          <span class="text-slate-600">平均正答率: </span>
+          <span class="font-semibold text-slate-800" data-animate="percent" data-value="${parseFloat(gradeStats.averageScore) || 0}">0%</span>
+        </div>
+        <div class="text-xs ${gradeAchievement.textColor} font-semibold">
+          ${gradeAchievement.stars} ${gradeAchievement.message}
+        </div>
+      </div>
+    `;
+  });
+  
+  html += `
+      </div>
+    </div>
+  `;
+  
+  // 最近の学習履歴
+  html += `
+    <div class="mb-6 stats-section opacity-0" style="animation: fadeInUp 0.6s ease-out 0.7s forwards;">
+      <h3 class="text-lg font-bold text-slate-800 mb-4">📝 最近の学習</h3>
+  `;
+  
+  if (stats.recentSessions.length === 0) {
+    html += `
+      <div class="text-center py-8 text-slate-500">
+        <p class="text-lg mb-2">📚 まだ学習履歴がありません</p>
+        <p class="text-sm">レッスンを完了すると、ここに表示されます</p>
+      </div>
+    `;
+  } else {
+    html += `<div class="space-y-3">`;
+    stats.recentSessions.forEach((session, index) => {
+      const dateStr = session.date.toLocaleDateString('ja-JP', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      const scorePercent = session.total > 0 ? Math.round((session.correct / session.total) * 100) : 0;
+      const sessionAchievement = getAchievementInfo(scorePercent);
+      
+      html += `
+        <div class="bg-gradient-to-r ${sessionAchievement.bgGradient} rounded-lg p-4 border-l-4 border-${sessionAchievement.color}-500 transform transition-all duration-300 hover:scale-102 hover:shadow-lg" style="animation: fadeInUp 0.4s ease-out ${0.8 + index * 0.1}s forwards; opacity: 0;">
+          <div class="flex items-start justify-between mb-2">
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-lg">${sessionAchievement.icon}</span>
+                <div class="font-semibold text-slate-800">${session.title}</div>
+              </div>
+              <div class="text-sm text-slate-500 ml-7">${dateStr}</div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm mt-2">
+            <div>
+              <span class="text-slate-600">正答率: </span>
+              <span class="font-semibold ${sessionAchievement.textColor}">${scorePercent}%</span>
+              <span class="text-xs ml-1">${sessionAchievement.stars}</span>
+            </div>
+            <div>
+              <span class="text-slate-600">問題数: </span>
+              <span class="font-semibold text-slate-800">${session.total}問</span>
+            </div>
+            <div>
+              <span class="text-slate-600">時間: </span>
+              <span class="font-semibold text-slate-800">${formatTime(session.timeSec)}</span>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+    html += `</div>`;
+  }
+  
+  html += `
+    </div>
+  `;
+  
+  content.innerHTML = html;
+  
+  // モーダルを表示
+  modal.style.display = 'flex';
+  modal.classList.remove('hidden');
+  
+  // アニメーションを実行（少し遅延させてから開始）
+  setTimeout(() => {
+    // 数値のカウントアップアニメーション
+    const numberElements = content.querySelectorAll('[data-animate="number"]');
+    numberElements.forEach(el => {
+      const value = parseInt(el.getAttribute('data-value')) || 0;
+      animateValue(el, 0, value, 1500);
+    });
+    
+    // パーセンテージのカウントアップアニメーション
+    const percentElements = content.querySelectorAll('[data-animate="percent"]');
+    percentElements.forEach(el => {
+      const value = parseFloat(el.getAttribute('data-value')) || 0;
+      animatePercent(el, 0, value, 1500);
+    });
+    
+    // 時間のアニメーション（特別処理）
+    const timeElement = content.querySelector('[data-animate="time"]');
+    if (timeElement) {
+      const totalSeconds = parseInt(timeElement.getAttribute('data-value')) || 0;
+      let currentSeconds = 0;
+      const duration = 2000;
+      const increment = totalSeconds / (duration / 16); // 60fps想定
+      
+      const timeInterval = setInterval(() => {
+        currentSeconds += increment;
+        if (currentSeconds >= totalSeconds) {
+          currentSeconds = totalSeconds;
+          clearInterval(timeInterval);
+        }
+        timeElement.textContent = formatTime(Math.floor(currentSeconds));
+      }, 16);
+    }
+    
+    // プログレスバーのアニメーション
+    const progressBars = content.querySelectorAll('.progress-bar');
+    progressBars.forEach(bar => {
+      const targetPercent = parseInt(bar.getAttribute('data-progress')) || 0;
+      animateProgressBar(bar, targetPercent, 1500);
+    });
+  }, 200);
+  
+  // 閉じるボタンのイベント
+  const closeBtn = document.getElementById('statsModalClose');
+  if (closeBtn) {
+    closeBtn.onclick = () => closeStatsModal();
+  }
+  
+  // 背景クリックで閉じる
+  modal.onclick = (e) => {
+    if (e.target === modal) {
+      closeStatsModal();
+    }
+  };
+  
+  // エスケープキーで閉じる
+  const escapeHandler = (e) => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+      closeStatsModal();
+      document.removeEventListener('keydown', escapeHandler);
+    }
+  };
+  document.addEventListener('keydown', escapeHandler);
+}
+
+// 統計モーダルを閉じる
+function closeStatsModal() {
+  const modal = document.getElementById('statsModal');
+  if (modal) {
+    modal.classList.add('hidden');
+    setTimeout(() => {
+      modal.style.display = 'none';
+    }, 300);
+  }
+}
+
+// ===== 連続学習記録システム =====
+
+// 連続学習記録の詳細データを取得
+function getStreakDetails() {
+  const streakInfo = getStreakInfo();
+  const streakData = JSON.parse(localStorage.getItem(STREAK_STORAGE_KEY) || '{"days": 0, "lastDate": ""}');
+  const unlockedThemes = JSON.parse(localStorage.getItem(THEME_STORAGE_KEY) || '[]');
+  const currentTheme = localStorage.getItem(CURRENT_THEME_KEY) || 'default';
+  
+  // 次のレベルを取得
+  const currentLevelDef = LEVEL_DEFINITIONS.find(def => def.level === streakInfo.level);
+  const nextLevelDef = LEVEL_DEFINITIONS.find(def => def.level === streakInfo.level + 1);
+  
+  // 最近の学習日を計算（過去30日間）
+  const recentDays = [];
+  const today = new Date();
+  const learnedDates = new Set();
+  
+  // 進捗データから学習日を取得
+  if (state.catalog && state.catalog.length > 0) {
+    state.catalog.forEach(lesson => {
+      const progress = getLessonProgress(lesson.id);
+      if (progress && progress.at) {
+        const progressDate = new Date(progress.at);
+        const dateStr = progressDate.toISOString().split('T')[0];
+        learnedDates.add(dateStr);
+      }
+    });
+  }
+  
+  // 連続学習の最終日も追加
+  if (streakData.lastDate) {
+    learnedDates.add(streakData.lastDate);
+  }
+  
+  for (let i = 29; i >= 0; i--) {
+    const date = new Date(today);
+    date.setDate(date.getDate() - i);
+    const dateStr = date.toISOString().split('T')[0];
+    const isToday = i === 0;
+    
+    // 学習したかどうかを判定
+    const isLearned = learnedDates.has(dateStr) || 
+                      (isToday && streakData.days > 0); // 今日は連続中なら学習済み
+    
+    recentDays.push({
+      date: date,
+      dateStr: dateStr,
+      isLearned: isLearned,
+      dayOfWeek: date.getDay(),
+      isToday: isToday
+    });
+  }
+  
+  return {
+    days: streakInfo.days,
+    level: streakInfo.level,
+    lastDate: streakData.lastDate,
+    currentLevelDef,
+    nextLevelDef,
+    nextLevelDays: nextLevelDef ? nextLevelDef.days : null,
+    remainingDays: nextLevelDef ? Math.max(0, nextLevelDef.days - streakInfo.days) : null,
+    progressToNextLevel: nextLevelDef && currentLevelDef 
+      ? Math.min(100, Math.round(((streakInfo.days - currentLevelDef.days) / (nextLevelDef.days - currentLevelDef.days)) * 100))
+      : 100,
+    unlockedThemes,
+    currentTheme,
+    recentDays,
+    allThemes: THEME_DEFINITIONS
+  };
+}
+
+// 連続学習記録モーダルを表示
+function showStreakModal() {
+  const modal = document.getElementById('streakModal');
+  const content = document.getElementById('streakContent');
+  
+  if (!modal || !content) {
+    console.error('連続学習記録モーダルの要素が見つかりません');
+    return;
+  }
+  
+  const details = getStreakDetails();
+  
+  // HTMLを生成
+  let html = '';
+  
+  // メインヘッダー（大きな連続日数表示）
+  const achievementInfo = getAchievementInfo(details.progressToNextLevel);
+  html += `
+    <div class="mb-6 stats-section opacity-0" style="animation: fadeInUp 0.6s ease-out 0.1s forwards;">
+      <div class="bg-gradient-to-br ${achievementInfo.bgGradient} rounded-2xl p-8 text-center border-4 border-${achievementInfo.color}-400 shadow-2xl">
+        <div class="text-6xl mb-4" style="animation: pulse 2s ease-in-out infinite;">🔥</div>
+        <div class="text-5xl sm:text-6xl font-bold ${achievementInfo.textColor} mb-2" data-animate="number" data-value="${details.days}">0</div>
+        <div class="text-2xl font-semibold text-slate-700 mb-4">日連続学習中！</div>
+        <div class="text-xl ${achievementInfo.textColor} font-bold mb-2">${achievementInfo.message}</div>
+        <div class="text-lg text-slate-600">レベル ${details.level} ${achievementInfo.stars}</div>
+      </div>
+    </div>
+  `;
+  
+  // 次のレベルまでの進捗
+  if (details.nextLevelDef) {
+    html += `
+      <div class="mb-6 stats-section opacity-0" style="animation: fadeInUp 0.6s ease-out 0.3s forwards;">
+        <h3 class="text-lg font-bold text-slate-800 mb-4">🎯 次のレベルまで</h3>
+        <div class="bg-gradient-to-r from-orange-50 to-amber-100 rounded-lg p-6 border-2 border-orange-300">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <div class="text-xl font-bold text-orange-700">レベル ${details.nextLevelDef.level}</div>
+              <div class="text-sm text-slate-600">${details.nextLevelDef.days}日で達成</div>
+            </div>
+            <div class="text-right">
+              <div class="text-2xl font-bold text-orange-700" data-animate="number" data-value="${details.remainingDays}">0</div>
+              <div class="text-sm text-slate-600">日残り</div>
+            </div>
+          </div>
+          <div class="w-full bg-slate-200 rounded-full h-4 overflow-hidden">
+            <div class="bg-gradient-to-r from-orange-400 to-amber-500 h-4 rounded-full progress-bar" data-progress="${details.progressToNextLevel}" style="width: 0%"></div>
+          </div>
+          <div class="text-center mt-2 text-sm text-slate-600">
+            <span data-animate="percent" data-value="${details.progressToNextLevel}">0%</span> 達成
+          </div>
+        </div>
+      </div>
+    `;
+  } else {
+    html += `
+      <div class="mb-6 stats-section opacity-0" style="animation: fadeInUp 0.6s ease-out 0.3s forwards;">
+        <div class="bg-gradient-to-r from-yellow-50 to-amber-100 rounded-lg p-6 border-2 border-yellow-300 text-center">
+          <div class="text-4xl mb-2">🏆</div>
+          <div class="text-xl font-bold text-yellow-700">最高レベル達成！</div>
+          <div class="text-sm text-slate-600 mt-2">素晴らしい継続力です！</div>
+        </div>
+      </div>
+    `;
+  }
+  
+  // 最近の学習カレンダー（過去30日間）
+  html += `
+    <div class="mb-6 stats-section opacity-0" style="animation: fadeInUp 0.6s ease-out 0.5s forwards;">
+      <h3 class="text-lg font-bold text-slate-800 mb-4">📅 最近の学習カレンダー</h3>
+      <div class="bg-slate-50 rounded-lg p-4">
+        <div class="grid grid-cols-7 gap-2">
+  `;
+  
+  // 曜日ヘッダー
+  const weekDays = ['日', '月', '火', '水', '木', '金', '土'];
+  weekDays.forEach(day => {
+    html += `<div class="text-center text-xs font-semibold text-slate-500 py-1">${day}</div>`;
+  });
+  
+  // カレンダー日付
+  details.recentDays.forEach((dayInfo, index) => {
+    const dayNum = dayInfo.date.getDate();
+    let bgColor, textColor, border;
+    
+    if (dayInfo.isToday) {
+      // 今日
+      bgColor = dayInfo.isLearned 
+        ? 'bg-gradient-to-br from-orange-400 to-red-500' 
+        : 'bg-gradient-to-br from-orange-100 to-orange-200';
+      textColor = dayInfo.isLearned ? 'text-white' : 'text-orange-700';
+      border = 'border-2 border-orange-500';
+    } else if (dayInfo.isLearned) {
+      // 学習日
+      bgColor = 'bg-gradient-to-br from-green-400 to-emerald-500';
+      textColor = 'text-white';
+      border = '';
+    } else {
+      // 未学習日
+      bgColor = 'bg-slate-200';
+      textColor = 'text-slate-500';
+      border = '';
+    }
+    
+    html += `
+      <div class="aspect-square rounded-lg ${bgColor} ${textColor} ${border} flex items-center justify-center text-xs font-semibold transform transition-all duration-300 hover:scale-110 shadow-sm" title="${dayInfo.dateStr} ${dayInfo.isLearned ? '学習済み' : '未学習'}">
+        ${dayNum}
+      </div>
+    `;
+  });
+  
+  html += `
+        </div>
+        <div class="flex items-center justify-center gap-4 mt-4 text-sm flex-wrap">
+          <div class="flex items-center gap-2">
+            <div class="w-4 h-4 rounded bg-gradient-to-br from-green-400 to-emerald-500"></div>
+            <span class="text-slate-600">学習日</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="w-4 h-4 rounded bg-gradient-to-br from-orange-400 to-red-500 border-2 border-orange-500"></div>
+            <span class="text-slate-600">今日（学習済み）</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="w-4 h-4 rounded bg-slate-200"></div>
+            <span class="text-slate-600">未学習</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  // アンロック済みテーマ
+  html += `
+    <div class="mb-6 stats-section opacity-0" style="animation: fadeInUp 0.6s ease-out 0.7s forwards;">
+      <h3 class="text-lg font-bold text-slate-800 mb-4">🎨 アンロック済みテーマ</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+  `;
+  
+  details.allThemes.forEach((theme, index) => {
+    const isUnlocked = details.unlockedThemes.includes(theme.id);
+    const isCurrent = details.currentTheme === theme.id;
+    const bgColor = isUnlocked 
+      ? (isCurrent ? 'bg-gradient-to-br from-blue-400 to-purple-500' : 'bg-gradient-to-br from-slate-100 to-slate-200')
+      : 'bg-gradient-to-br from-slate-50 to-slate-100 opacity-50';
+    const textColor = isUnlocked ? 'text-slate-800' : 'text-slate-400';
+    const border = isCurrent ? 'border-4 border-blue-500' : isUnlocked ? 'border-2 border-slate-300' : 'border-2 border-slate-200';
+    
+    html += `
+      <div class="bg-gradient-to-br ${bgColor} rounded-lg p-4 text-center ${border} transform transition-all duration-300 hover:scale-105 ${isUnlocked ? 'cursor-pointer' : ''}" title="${isUnlocked ? theme.name : '未アンロック'}">
+        <div class="text-3xl mb-2">${isUnlocked ? theme.icon : '🔒'}</div>
+        <div class="text-sm font-semibold ${textColor}">${theme.name}</div>
+        ${isCurrent ? '<div class="text-xs text-blue-600 font-bold mt-1">使用中</div>' : ''}
+        ${!isUnlocked ? `<div class="text-xs text-slate-400 mt-1">Lv.${theme.requiredLevel}</div>` : ''}
+      </div>
+    `;
+  });
+  
+  html += `
+      </div>
+    </div>
+  `;
+  
+  // モチベーションメッセージ
+  const motivationalMessages = [
+    { days: 100, message: '100日達成！伝説的な継続力です！💎', icon: '💎' },
+    { days: 60, message: '2ヶ月達成！あなたは学習の達人です！🔥', icon: '🔥' },
+    { days: 30, message: '1ヶ月達成！本当に素晴らしいです！👑', icon: '👑' },
+    { days: 14, message: '2週間達成！学習が習慣になっています！🎉', icon: '🏆' },
+    { days: 7, message: '1週間達成！素晴らしい継続力です！✨', icon: '🌟' },
+    { days: 3, message: '3日連続！習慣がついてきました！💪', icon: '⭐' },
+    { days: 0, message: '今日から始めましょう！🚀', icon: '🌱' }
+  ];
+  
+  const currentMessage = motivationalMessages.find(msg => details.days >= msg.days) || motivationalMessages[motivationalMessages.length - 1];
+  
+  html += `
+    <div class="mb-6 stats-section opacity-0" style="animation: fadeInUp 0.6s ease-out 0.9s forwards;">
+      <div class="bg-gradient-to-r from-purple-50 to-pink-100 rounded-lg p-6 border-2 border-purple-300 text-center">
+        <div class="text-4xl mb-2">${currentMessage.icon}</div>
+        <div class="text-xl font-bold text-purple-700">${currentMessage.message}</div>
+        <div class="text-sm text-slate-600 mt-2">毎日の小さな積み重ねが大きな成果につながります</div>
+      </div>
+    </div>
+  `;
+  
+  content.innerHTML = html;
+  
+  // モーダルを表示
+  modal.style.display = 'flex';
+  modal.classList.remove('hidden');
+  
+  // アニメーションを実行
+  setTimeout(() => {
+    // 数値のカウントアップアニメーション
+    const numberElements = content.querySelectorAll('[data-animate="number"]');
+    numberElements.forEach(el => {
+      const value = parseInt(el.getAttribute('data-value')) || 0;
+      animateValue(el, 0, value, 2000);
+    });
+    
+    // パーセンテージのカウントアップアニメーション
+    const percentElements = content.querySelectorAll('[data-animate="percent"]');
+    percentElements.forEach(el => {
+      const value = parseFloat(el.getAttribute('data-value')) || 0;
+      animatePercent(el, 0, value, 2000);
+    });
+    
+    // プログレスバーのアニメーション
+    const progressBars = content.querySelectorAll('.progress-bar');
+    progressBars.forEach(bar => {
+      const targetPercent = parseInt(bar.getAttribute('data-progress')) || 0;
+      animateProgressBar(bar, targetPercent, 2000);
+    });
+  }, 200);
+  
+  // 閉じるボタンのイベント
+  const closeBtn = document.getElementById('streakModalClose');
+  if (closeBtn) {
+    closeBtn.onclick = () => closeStreakModal();
+  }
+  
+  // 背景クリックで閉じる
+  modal.onclick = (e) => {
+    if (e.target === modal) {
+      closeStreakModal();
+    }
+  };
+  
+  // エスケープキーで閉じる
+  const escapeHandler = (e) => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+      closeStreakModal();
+      document.removeEventListener('keydown', escapeHandler);
+    }
+  };
+  document.addEventListener('keydown', escapeHandler);
+}
+
+// 連続学習記録モーダルを閉じる
+function closeStreakModal() {
+  const modal = document.getElementById('streakModal');
+  if (modal) {
+    modal.classList.add('hidden');
+    setTimeout(() => {
+      modal.style.display = 'none';
+    }, 300);
+  }
+}
+
+// ===== アカウント情報システム =====
+
+// アカウント情報メニューボタンの表示制御
+function updateAccountMenuButton() {
+  const accountBtn = document.getElementById('menuAccountBtn');
+  if (!accountBtn) return;
+  
+  if (state.user) {
+    accountBtn.classList.remove('hidden');
+  } else {
+    accountBtn.classList.add('hidden');
+  }
+}
+
+// アカウント情報モーダルを表示
+function showAccountModal() {
+  const modal = document.getElementById('accountModal');
+  const content = document.getElementById('accountContent');
+  
+  if (!modal || !content) {
+    console.error('アカウント情報モーダルの要素が見つかりません');
+    return;
+  }
+  
+  if (!state.user) {
+    alert('ログインが必要です');
+    return;
+  }
+  
+  const user = state.user;
+  const entitlements = Array.from(state.userEntitlements);
+  const unlockedThemes = JSON.parse(localStorage.getItem(THEME_STORAGE_KEY) || '[]');
+  const streakInfo = getStreakInfo();
+  
+  // HTMLを生成
+  let html = '';
+  
+  // ユーザー情報カード
+  const userInitial = user.displayName 
+    ? user.displayName.charAt(0).toUpperCase() 
+    : user.email 
+      ? user.email.charAt(0).toUpperCase() 
+      : '👤';
+  const userName = user.displayName || user.email || 'ユーザー';
+  const userEmail = user.email || '';
+  const isEmailVerified = user.emailVerified !== false;
+  
+  html += `
+    <div class="mb-6 stats-section opacity-0" style="animation: fadeInUp 0.6s ease-out 0.1s forwards;">
+      <div class="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl p-6 border-2 border-blue-300 shadow-lg">
+        <div class="flex items-center gap-4 mb-4">
+          <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-full flex items-center justify-center text-3xl text-white font-bold">
+            ${userInitial}
+          </div>
+          <div class="flex-1">
+            <div class="text-xl font-bold text-slate-800 mb-1">${userName}</div>
+            <div class="text-sm text-slate-600">${userEmail}</div>
+            ${isEmailVerified ? `
+              <div class="text-xs text-green-600 mt-1 flex items-center gap-1">
+                <span>✓</span>
+                <span>メール確認済み</span>
+              </div>
+            ` : `
+              <div class="text-xs text-yellow-600 mt-1 flex items-center gap-1">
+                <span>⚠</span>
+                <span>メール未確認</span>
+              </div>
+            `}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  // 学習統計サマリー
+  html += `
+    <div class="mb-6 stats-section opacity-0" style="animation: fadeInUp 0.6s ease-out 0.3s forwards;">
+      <h3 class="text-lg font-bold text-slate-800 mb-4">📊 学習サマリー</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+        <div class="bg-gradient-to-br from-green-50 to-emerald-100 rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold text-green-700">${streakInfo.days}</div>
+          <div class="text-xs text-slate-600 mt-1">連続学習日数</div>
+        </div>
+        <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold text-purple-700">Lv.${streakInfo.level}</div>
+          <div class="text-xs text-slate-600 mt-1">現在のレベル</div>
+        </div>
+        <div class="bg-gradient-to-br from-orange-50 to-amber-100 rounded-lg p-4 text-center">
+          <div class="text-2xl font-bold text-orange-700">${unlockedThemes.length}</div>
+          <div class="text-xs text-slate-600 mt-1">アンロックテーマ</div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  // 購入済みコンテンツ
+  html += `
+    <div class="mb-6 stats-section opacity-0" style="animation: fadeInUp 0.6s ease-out 0.5s forwards;">
+      <h3 class="text-lg font-bold text-slate-800 mb-4">💳 購入済みコンテンツ</h3>
+  `;
+  
+  if (entitlements.length === 0) {
+    html += `
+      <div class="bg-slate-50 rounded-lg p-6 text-center">
+        <div class="text-4xl mb-2">📚</div>
+        <div class="text-slate-600 mb-2">購入済みコンテンツはありません</div>
+        <div class="text-sm text-slate-500">コンテンツを購入すると、ここに表示されます</div>
+      </div>
+    `;
+  } else {
+    html += `<div class="space-y-3">`;
+    
+    entitlements.forEach(entitlementId => {
+      // PACKSから該当するパックを検索
+      const pack = PACKS.find(p => p.id === entitlementId || p.productId === entitlementId);
+      if (pack) {
+        html += `
+          <div class="bg-gradient-to-r from-green-50 to-emerald-100 rounded-lg p-4 border-l-4 border-green-500 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">✅</span>
+              <div>
+                <div class="font-semibold text-slate-800">${pack.label}</div>
+                <div class="text-xs text-slate-600">購入済み</div>
+              </div>
+            </div>
+            <div class="text-sm text-green-600 font-semibold">利用可能</div>
+          </div>
+        `;
+      } else {
+        // パックが見つからない場合はIDをそのまま表示
+        html += `
+          <div class="bg-gradient-to-r from-slate-50 to-slate-100 rounded-lg p-4 border-l-4 border-slate-300 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">📦</span>
+              <div>
+                <div class="font-semibold text-slate-800">${entitlementId}</div>
+                <div class="text-xs text-slate-600">購入済み</div>
+              </div>
+            </div>
+            <div class="text-sm text-slate-600 font-semibold">利用可能</div>
+          </div>
+        `;
+      }
+    });
+    
+    html += `</div>`;
+  }
+  
+  html += `
+    </div>
+  `;
+  
+  // アカウント設定（将来拡張用）
+  const userId = user.uid || user.id || 'N/A';
+  const loginProvider = getLoginProviderName(user);
+  
+  html += `
+    <div class="mb-6 stats-section opacity-0" style="animation: fadeInUp 0.6s ease-out 0.7s forwards;">
+      <h3 class="text-lg font-bold text-slate-800 mb-4">⚙️ アカウント設定</h3>
+      <div class="bg-slate-50 rounded-lg p-4">
+        <div class="text-sm text-slate-600 space-y-2">
+          <p><span class="font-semibold">アカウントID:</span> <span class="font-mono text-xs bg-slate-200 px-2 py-1 rounded">${userId}</span></p>
+          <p><span class="font-semibold">ログイン方法:</span> ${loginProvider}</p>
+          <p class="text-xs text-slate-500 mt-4 pt-4 border-t border-slate-200">※ その他の設定機能は今後追加予定です</p>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  content.innerHTML = html;
+  
+  // モーダルを表示
+  modal.style.display = 'flex';
+  modal.classList.remove('hidden');
+  
+  // 閉じるボタンのイベント
+  const closeBtn = document.getElementById('accountModalClose');
+  if (closeBtn) {
+    closeBtn.onclick = () => closeAccountModal();
+  }
+  
+  // 背景クリックで閉じる
+  modal.onclick = (e) => {
+    if (e.target === modal) {
+      closeAccountModal();
+    }
+  };
+  
+  // エスケープキーで閉じる
+  const escapeHandler = (e) => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+      closeAccountModal();
+      document.removeEventListener('keydown', escapeHandler);
+    }
+  };
+  document.addEventListener('keydown', escapeHandler);
+}
+
+// ログインプロバイダー名を取得
+function getLoginProviderName(user) {
+  if (!user) return '不明';
+  
+  if (user.providerData && user.providerData.length > 0) {
+    const provider = user.providerData[0].providerId;
+    if (provider === 'google.com') return 'Googleアカウント';
+    if (provider === 'password') return 'メール/パスワード';
+    return provider;
+  }
+  
+  // フォールバック
+  if (user.email) return 'メール/パスワード';
+  return '不明';
+}
+
+// アカウント情報モーダルを閉じる
+function closeAccountModal() {
+  const modal = document.getElementById('accountModal');
+  if (modal) {
+    modal.classList.add('hidden');
+    setTimeout(() => {
+      modal.style.display = 'none';
+    }, 300);
+  }
+}
 

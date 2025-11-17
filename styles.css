@@ -49,6 +49,26 @@ html{scroll-behavior:smooth}
   50% { transform: scale(1.05); }
 }
 
+/* ===== 統計ページアニメーション ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stats-section {
+  animation-fill-mode: forwards;
+}
+
+.hover\:scale-102:hover {
+  transform: scale(1.02);
+}
+
 /* ===== 背景テーマ ===== */
 /* デフォルトテーマ（既存） */
 body.theme-default {

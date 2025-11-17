@@ -288,6 +288,23 @@
               <span class="text-2xl">🎨</span>
               <span class="font-semibold text-slate-800">背景テーマ</span>
             </button>
+            <!-- 履歴保存 -->
+            <button class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3" data-action="export-data">
+              <span class="text-2xl">💾</span>
+              <span class="font-semibold text-slate-800">学習データを保存</span>
+            </button>
+            <!-- 履歴読み込み -->
+            <button class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3" data-action="import-data">
+              <span class="text-2xl">📥</span>
+              <span class="font-semibold text-slate-800">学習データを読み込み</span>
+            </button>
+            <!-- 区切り線 -->
+            <div class="border-t border-slate-200 my-2"></div>
+            <!-- アカウント情報（ログイン時のみ表示 -->
+            <button id="menuAccountBtn" class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3 hidden" data-action="show-account">
+              <span class="text-2xl">👤</span>
+              <span class="font-semibold text-slate-800">アカウント情報</span>
+            </button>
             <!-- アプリに追加 -->
             <button id="menuInstallBtn" class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3 hidden" data-action="install-app">
               <span class="text-2xl">📱</span>
@@ -318,6 +335,45 @@
         <div id="themeList" class="grid grid-cols-2 sm:grid-cols-3 gap-4">
           <!-- テーマはJavaScriptで動的に生成 -->
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 学習統計モーダル -->
+  <div id="statsModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center" style="display: none;">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+      <div class="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between rounded-t-2xl z-10">
+        <h2 class="text-xl font-bold text-slate-800">📊 学習統計</h2>
+        <button id="statsModalClose" class="text-slate-500 hover:text-slate-700 text-2xl font-bold">&times;</button>
+      </div>
+      <div class="p-6" id="statsContent">
+        <!-- 統計コンテンツはJavaScriptで動的に生成 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 連続学習記録モーダル -->
+  <div id="streakModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center" style="display: none;">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+      <div class="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between rounded-t-2xl z-10">
+        <h2 class="text-xl font-bold text-slate-800">🔥 連続学習記録</h2>
+        <button id="streakModalClose" class="text-slate-500 hover:text-slate-700 text-2xl font-bold">&times;</button>
+      </div>
+      <div class="p-6" id="streakContent">
+        <!-- 連続学習記録コンテンツはJavaScriptで動的に生成 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- アカウント情報モーダル -->
+  <div id="accountModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center" style="display: none;">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+      <div class="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between rounded-t-2xl z-10">
+        <h2 class="text-xl font-bold text-slate-800">👤 アカウント情報</h2>
+        <button id="accountModalClose" class="text-slate-500 hover:text-slate-700 text-2xl font-bold">&times;</button>
+      </div>
+      <div class="p-6" id="accountContent">
+        <!-- アカウント情報コンテンツはJavaScriptで動的に生成 -->
       </div>
     </div>
   </div>
