@@ -6,22 +6,23 @@ function goBack() {
   console.log('🏠 ホームに移動: ../../../../index.html');
   
   try {
-    // 相対パスを使用（lessons/soc/modular/wakaru/ から index.html へ）
+    // 相対パスを使用（lessons/sci/modular/oboeru/ から index.html へ）
     window.location.href = '../../../../index.html';
   } catch (e) {
     console.error('❌ ホーム移動エラー:', e);
-    // フォールバック: 相対パス（別の方法）
-    window.location.href = '../../../../index.html';
+    // フォールバック: 絶対パス
+    window.location.href = '/index.html';
   }
 }
 
 const urlParams = new URLSearchParams(window.location.search);
-const mode = urlParams.get("mode") || "wakaru"; // デフォルトはわかる編
-const era = urlParams.get("era") || "4100_land_topography_climate_with_sources"; // レッスンID生成用
-const eraKey = urlParams.get("era") || "kodai"; // 単元キー（OK判定に使用）
+const mode = urlParams.get("mode") || "oboeru"; // デフォルトは覚える編
+// era変数はindex_modular.htmlで既に宣言されるが、script.jsが先に実行される可能性があるため、直接取得
+const era = urlParams.get("era") || window.era || "seasons_living_things_spring"; // レッスンID生成用
+const eraKey = urlParams.get("era") || "seasons_living_things_spring"; // 単元キー（OK判定に使用）
 
 document.getElementById("modeLabel").textContent = 
-  mode === "oboeru" ? "覚える編（タイマー付き）" : "わかる編";
+  mode === "oboeru" ? "覚える編" : "わかる編";
 
 let current = 0;
 let timer = null;
@@ -30,7 +31,6 @@ let shuffledQuestions = []; // 出題用（わかる編=そのまま, 覚える�
 let checkpointMode = false; // チェックポイントモーダル表示中フラグ
 
 const questionEl = document.getElementById("question");
-const visualEl = document.getElementById("visual");
 const sourceEl = document.getElementById("source");
 const choicesEl = document.getElementById("choices");
 const explanationEl = document.getElementById("explanation");
@@ -57,30 +57,14 @@ function createProgressDisplay() {
   return progressDisplay;
 }
 
-// タイマー表示用（覚える編でのみ作成・表示）
-let timerDisplay = null;
+// タイマー表示用（モダンなデザイン）
+const timerDisplay = document.createElement("div");
+timerDisplay.id = "timer";
+document.querySelector(".question-box").insertBefore(timerDisplay, sourceEl);
+
+// oboeruモードではsource要素を初期状態で非表示
 if (mode === "oboeru") {
-  timerDisplay = document.createElement("div");
-  timerDisplay.id = "timer";
-  timerDisplay.style.fontSize = "1em";
-  timerDisplay.style.fontWeight = "bold";
-  timerDisplay.style.color = "#d00";
-  timerDisplay.style.margin = "0.5em 0";
-  timerDisplay.style.display = "block"; // 覚える編では表示
-  document.querySelector(".question-box").insertBefore(timerDisplay, sourceEl);
-} else {
-  // わかる編の場合、もしタイマー要素が存在していたら完全に非表示にする
-  const existingTimer = document.getElementById("timer");
-  if (existingTimer) {
-    existingTimer.style.display = "none";
-    existingTimer.style.visibility = "hidden";
-    existingTimer.style.height = "0";
-    existingTimer.style.minHeight = "0";
-    existingTimer.style.padding = "0";
-    existingTimer.style.margin = "0";
-    existingTimer.style.overflow = "hidden";
-    existingTimer.remove(); // DOMから完全に削除
-  }
+  sourceEl.style.display = "none";
 }
 
 // 戻るボタンを初期化時に追加
@@ -162,41 +146,27 @@ function generateShuffledIndices(length) {
 function loadQuestion() {
   const q = shuffledQuestions[current];
   
-  // 進捗表示を追加（説明テキスト表示後は表示）
+  // 進捗表示を追加
   const progressDisplay = document.getElementById("progress") || createProgressDisplay();
-  if (progressDisplay) {
-    progressDisplay.style.display = "block";
-    const questionsArray = window.questions || questions;
-    const totalQuestions = questionsArray ? questionsArray.length : 0;
-    progressDisplay.textContent = `問題 ${current + 1} / ${totalQuestions}`;
-  }
+  const questionsArray = window.questions || questions;
+  const totalQuestions = questionsArray ? questionsArray.length : 0;
+  progressDisplay.textContent = `問題 ${current + 1} / ${totalQuestions}`;
   
   questionEl.innerHTML = q.text || q.question;
-  
-  // 図解の表示（visualフィールドがある場合）
-  if (q.visual && mode === "wakaru") {
-    visualEl.textContent = q.visual;
-    visualEl.style.display = "block";
-  } else {
-    visualEl.style.display = "none";
-    visualEl.innerHTML = ""; // 内容もクリア
-  }
-  
   sourceEl.innerHTML = mode === "wakaru" ? q.source : "";
-  
-  // wakaruモードでタイマー要素が存在する場合は確実に削除
-  if (mode === "wakaru") {
-    const timerEl = document.getElementById("timer");
-    if (timerEl) {
-      timerEl.remove();
-    }
+  // oboeruモードではsource要素を非表示
+  if (mode === "oboeru") {
+    sourceEl.style.display = "none";
+    // oboeruモードでは問題表示時は解説を非表示（回答後に表示）
+    explanationEl.textContent = "";
+    explanationEl.style.display = "none";
+  } else {
+    sourceEl.style.display = "";
+    explanationEl.textContent = "";
   }
-  explanationEl.textContent = "";
   nextBtn.style.display = "none";
   choicesEl.innerHTML = "";
-  if (timerDisplay) {
-    timerDisplay.textContent = "";
-  }
+  timerDisplay.textContent = "";
   
   // 最後の問題に到達した場合、完了メッセージを送信
   if (current === shuffledQuestions.length - 1) {
@@ -215,14 +185,12 @@ function loadQuestion() {
     choicesEl.appendChild(btn);
   });
 
-  if (mode === "oboeru" && timerDisplay) {
+  if (mode === "oboeru") {
     timeLeft = 20;
-    timerDisplay.textContent = `のこり ${timeLeft} 秒`;
+    timerDisplay.innerHTML = `<span style="opacity: 0.7;">残り</span> <span style="font-weight: 700;">${timeLeft}</span><span style="opacity: 0.7;">秒</span>`;
     timer = setInterval(() => {
       timeLeft--;
-      if (timerDisplay) {
-        timerDisplay.textContent = `のこり ${timeLeft} 秒`;
-      }
+      timerDisplay.innerHTML = `<span style="opacity: 0.7;">残り</span> <span style="font-weight: 700;">${timeLeft}</span><span style="opacity: 0.7;">秒</span>`;
       if (timeLeft <= 0) {
         clearInterval(timer);
         handleAnswer(-1); // 時間切れ → 不正解処理
@@ -276,7 +244,9 @@ function handleAnswer(selected) {
     "🎉 正解です！素晴らしい！" : 
     `❌ 不正解です。正解は「${q.choices[q.answer]}」でした。`;
   
+  // 解説を表示（oboeruモードでは正解・不正解メッセージのみ）
   explanationEl.textContent = message;
+  explanationEl.style.display = "block";
   explanationEl.style.animation = isCorrect ? "correctPulse 0.6s ease" : "wrongShake 0.6s ease";
   nextBtn.style.display = "inline-block";
   
@@ -284,16 +254,20 @@ function handleAnswer(selected) {
   const spent = mode === "oboeru" ? (20 - timeLeft) : 0;
   learningTracker.recordAnswer(current, selected, q.answer, spent);
   
-  // 個別問題の回答をメインページに送信
-  sendQuestionAnswerToParent(q, selected, isCorrect);
+  // 個別問題の回答をメインページに送信（復習システム無効化のため削除）
 }
 
 // 個別問題の回答をメインページに送信する関数
 function sendQuestionAnswerToParent(questionData, userAnswer, isCorrect) {
-  // レッスンIDを生成
+  // レッスンIDを生成（理科用）
   const urlParams = new URLSearchParams(window.location.search);
-  const era = urlParams.get("era") || "geo_land_topo";
-  const lessonId = `soc.geography.${era}.${mode}`;
+  const era = urlParams.get("era") || "seasons_living_things_spring";
+  let lessonId;
+  if (era.startsWith('sci.')) {
+    lessonId = era;
+  } else {
+    lessonId = `sci.biology.${era}_oboeru`;
+  }
   
   const messageData = {
     type: 'question:answered',
@@ -391,7 +365,8 @@ nextBtn.onclick = () => {
   console.log('🔄 nextBtn.onclick 実行:', { current, totalQuestions: totalQuestions });
   current++;
   
-  // チェックポイント検出（10問、20問完了時）
+  // 10問ごとに中断確認（最後の問題以外）
+  console.log(`🔍 チェックポイント確認: current=${current}, totalQuestions=${totalQuestions}, current % 10=${current % 10}`);
   if (current > 0 && current % 10 === 0 && current < totalQuestions) {
     console.log(`✅ チェックポイント到達: ${current}問完了`);
     // チェックポイントを自動保存
@@ -408,9 +383,7 @@ nextBtn.onclick = () => {
     console.log('🎯 レッスン完了！メッセージ送信処理を開始');
     questionEl.textContent = "終了！おつかれさまでした。";
     sourceEl.textContent = "";
-    if (timerDisplay) {
-      timerDisplay.textContent = "";
-    }
+    timerDisplay.textContent = "";
     choicesEl.innerHTML = "";
     explanationEl.textContent = "";
     nextBtn.style.display = "none";
@@ -449,54 +422,42 @@ nextBtn.onclick = () => {
         // 覚える編とわかる編で異なるID体系を使用
         let lessonId;
         
-        // パターンマッチングでID変換
-        if (era.includes('land_topography_climate')) {
-          lessonId = 'soc.geography.land_topography_climate';
-        } else if (era.includes('agriculture_forestry_fishery')) {
-          lessonId = 'soc.geography.agriculture_forestry_fishery';
-        } else if (era.includes('prefectures_cities')) {
-          lessonId = 'soc.geography.prefectures_cities';
-        } else if (era.includes('industry_energy')) {
-          lessonId = 'soc.geography.industry_energy';
-        } else if (era.includes('commerce_trade_transportation')) {
-          lessonId = 'soc.geography.commerce_trade_transportation';
-        } else if (era.includes('environment')) {
-          lessonId = 'soc.geography.environment';
-        } else if (era.includes('information')) {
-          lessonId = 'soc.geography.information';
-        } else if (era.includes('maps_symbols') || era.includes('maps_topographic_symbols')) {
-          lessonId = 'soc.geography.maps_symbols';
-        } else if (era.includes('hokkaido_region')) {
-          lessonId = 'soc.geography.hokkaido_region';
-        } else if (era.includes('tohoku_region')) {
-          lessonId = 'soc.geography.tohoku_region';
-        } else if (era.includes('kanto_region')) {
-          lessonId = 'soc.geography.kanto_region';
-        } else if (era.includes('chubu_region')) {
-          lessonId = 'soc.geography.chubu_region';
-        } else if (era.includes('kinki_region')) {
-          lessonId = 'soc.geography.kinki_region';
-        } else if (era.includes('chugoku_shikoku_region')) {
-          lessonId = 'soc.geography.chugoku_shikoku_region';
-        } else if (era.includes('kyushu_region')) {
-          lessonId = 'soc.geography.kyushu_region';
-        } else if (era.includes('world_geography')) {
-          lessonId = 'soc.geography.world_geography';
+        // パターンマッチングでID変換（理科用）
+        // eraがcatalog.jsonのID形式（sci.xxx.xxx_oboeru）の場合はそのまま使用
+        if (era.startsWith('sci.')) {
+          lessonId = era;
+        } else if (era.includes('seasons_living_things')) {
+          lessonId = 'sci.biology.seasons_living_things_oboeru';
+        } else if (era.includes('plants_growth_light')) {
+          lessonId = 'sci.biology.plants_growth_light_oboeru';
+        } else if (era.includes('plants_observation')) {
+          lessonId = 'sci.biology.plants_observation_oboeru';
+        } else if (era.includes('weight_volume_basic')) {
+          lessonId = 'sci.physics.weight_volume_basic_oboeru';
+        } else if (era.includes('electricity_conductivity_basic')) {
+          lessonId = 'sci.physics.electricity_conductivity_basic_oboeru';
+        } else if (era.includes('heat_properties')) {
+          lessonId = 'sci.physics.heat_properties_oboeru';
+        } else if (era.includes('air_properties')) {
+          lessonId = 'sci.chemistry.air_properties_oboeru';
+        } else if (era.includes('water_three_states')) {
+          lessonId = 'sci.chemistry.water_three_states_oboeru';
+        } else if (era.includes('combustion_air')) {
+          lessonId = 'sci.chemistry.combustion_air_oboeru';
+        } else if (era.includes('constellations_seasons')) {
+          lessonId = 'sci.earth.constellations_seasons_oboeru';
+        } else if (era.includes('sun_movement_shadow')) {
+          lessonId = 'sci.earth.sun_movement_shadow_oboeru';
+        } else if (era.includes('weather_changes')) {
+          lessonId = 'sci.earth.weather_changes_oboeru';
+        } else if (era.includes('river_work')) {
+          lessonId = 'sci.earth.river_work_oboeru';
         } else {
           // その他の場合はデフォルト形式
-          lessonId = `soc.geography.${era}`;
+          lessonId = `sci.biology.${era}_oboeru`;
         }
         
-        // modeパラメータによるID分離（catalog.jsonと一致させる）
-        if (mode === 'oboeru') {
-          // 覚える編: _oboeruサフィックスを追加
-          lessonId = lessonId + '_oboeru';
-          console.log('🔍 覚える編のID変換:', lessonId);
-        } else {
-          // わかる編: _wakaruサフィックスを追加
-          lessonId = lessonId + '_wakaru';
-          console.log('🔍 わかる編のID変換:', lessonId);
-        }
+        console.log('🔍 覚える編のID変換:', lessonId);
         
         console.log('🔄 レッスンID変換:', era, '→', lessonId);
         
@@ -676,8 +637,8 @@ nextBtn.onclick = () => {
 // 学習履歴管理クラス
 class LearningTracker {
   constructor() {
-    this.mode = 'wakaru'; // わかる編専用
-    this.historyKey = `learningHistory_wakaru`;
+    this.mode = mode; // mode別の履歴キー用
+    this.historyKey = `learningHistory_${this.mode}`;
     
     this.currentSession = {
       startTime: Date.now(),
@@ -820,143 +781,21 @@ class LearningTracker {
 // 学習履歴管理インスタンスを作成
 const learningTracker = new LearningTracker();
 
-// レッスンIDを取得する関数（script.jsと同じロジック）
+// レッスンIDを取得する関数
 function getLessonId() {
   const urlParams = new URLSearchParams(window.location.search);
   const eraParam = urlParams.get("era") || era;
   
-  // パターンマッチングでID変換
-  let lessonId;
-  
-  // 歴史レッスンの判定（42で始まる）
-  if (eraParam.startsWith('42')) {
-    if (eraParam.includes('paleolithic_jomon_yayoi') || eraParam.includes('4200_')) {
-      lessonId = 'soc.history.paleolithic_jomon_yayoi';
-    } else if (eraParam.includes('kofun_asuka') || eraParam.includes('4201_')) {
-      lessonId = 'soc.history.kofun_asuka';
-    } else if (eraParam.includes('nara_period') || eraParam.includes('4202_')) {
-      lessonId = 'soc.history.nara_period';
-    } else if (eraParam.includes('heian_period') || eraParam.includes('4203_')) {
-      lessonId = 'soc.history.heian_period';
-    } else if (eraParam.includes('kamakura_period') || eraParam.includes('4204_')) {
-      lessonId = 'soc.history.kamakura_period';
-    } else if (eraParam.includes('muromachi_period') || eraParam.includes('4205_')) {
-      lessonId = 'soc.history.muromachi_period';
-    } else if (eraParam.includes('azuchi_momoyama') || eraParam.includes('4206_')) {
-      lessonId = 'soc.history.azuchi_momoyama';
-    } else if (eraParam.includes('edo_period') || eraParam.includes('4207_')) {
-      lessonId = 'soc.history.edo_period';
-    } else if (eraParam.includes('meiji_period') || eraParam.includes('4208_')) {
-      lessonId = 'soc.history.meiji_period';
-    } else if (eraParam.includes('taisho_showa_prewar') || eraParam.includes('4209_')) {
-      lessonId = 'soc.history.taisho_showa_prewar';
-    } else if (eraParam.includes('showa_postwar') || eraParam.includes('4210_')) {
-      lessonId = 'soc.history.showa_postwar';
-    } else if (eraParam.includes('heisei_reiwa') || eraParam.includes('4211_')) {
-      lessonId = 'soc.history.heisei_reiwa';
-    } else if (eraParam.includes('cross_period_problems') || eraParam.includes('4212_')) {
-      lessonId = 'soc.history.cross_period_problems';
-    } else if (eraParam.includes('theme_politics_economy') || eraParam.includes('4213_')) {
-      lessonId = 'soc.history.theme_politics_economy';
-    } else if (eraParam.includes('theme_people') || eraParam.includes('4214_')) {
-      lessonId = 'soc.history.theme_people';
-    } else if (eraParam.includes('theme_diplomacy') || eraParam.includes('4215_')) {
-      lessonId = 'soc.history.theme_diplomacy';
-    } else if (eraParam.includes('theme_culture') || eraParam.includes('4216_')) {
-      lessonId = 'soc.history.theme_culture';
-    } else {
-      lessonId = `soc.history.${eraParam.replace(/^42\d+_/, '')}`;
-    }
-  }
-  // 総合レッスンの判定（4217以降）
-  else if (eraParam.startsWith('4217') || eraParam.startsWith('4218') || 
-           eraParam.startsWith('4219') || eraParam.startsWith('422') || eraParam.includes('comprehensive')) {
-    if (eraParam.includes('geography_theme_cross') || eraParam.includes('4217_')) {
-      lessonId = 'soc.comprehensive.geography_theme_cross';
-    } else if (eraParam.includes('history_theme_cross') || eraParam.includes('4218_')) {
-      lessonId = 'soc.comprehensive.history_theme_cross';
-    } else if (eraParam.includes('civics_theme_cross') || eraParam.includes('4219_')) {
-      lessonId = 'soc.comprehensive.civics_theme_cross';
-    } else if (eraParam.includes('general_comprehensive') || eraParam.includes('4220_')) {
-      lessonId = 'soc.comprehensive.general_comprehensive';
-    } else if (eraParam.includes('practice_a') || eraParam.includes('4225_')) {
-      lessonId = 'soc.comprehensive.practice_a';
-    } else if (eraParam.includes('practice_b') || eraParam.includes('4226_')) {
-      lessonId = 'soc.comprehensive.practice_b';
-    } else if (eraParam.includes('practice_c') || eraParam.includes('4227_')) {
-      lessonId = 'soc.comprehensive.practice_c';
-    } else if (eraParam.includes('practice_d') || eraParam.includes('4228_')) {
-      lessonId = 'soc.comprehensive.practice_d';
-    } else {
-      lessonId = `soc.comprehensive.${eraParam.replace(/^42\d+_/, '')}`;
-    }
-  }
-  // 公民レッスンの判定（43で始まる）
-  else if (eraParam.startsWith('43') || eraParam.includes('civics')) {
-    if (eraParam.includes('politics_national_life') || eraParam.includes('4300_')) {
-      lessonId = 'soc.civics.politics_national_life';
-    } else if (eraParam.includes('constitution_three_principles') || eraParam.includes('4301_')) {
-      lessonId = 'soc.civics.constitution_three_principles';
-    } else if (eraParam.includes('diet_cabinet_judiciary') || eraParam.includes('4302_')) {
-      lessonId = 'soc.civics.diet_cabinet_judiciary';
-    } else if (eraParam.includes('finance_local_government') || eraParam.includes('4303_')) {
-      lessonId = 'soc.civics.finance_local_government';
-    } else if (eraParam.includes('world_affairs_international') || eraParam.includes('4304_')) {
-      lessonId = 'soc.civics.world_affairs_international';
-    } else if (eraParam.includes('modern_social_issues') || eraParam.includes('4305_')) {
-      lessonId = 'soc.civics.modern_social_issues';
-    } else {
-      lessonId = `soc.civics.${eraParam.replace(/^43\d+_/, '')}`;
-    }
-  }
-  // 地理レッスンの判定
-  else if (eraParam.includes('land_topography_climate')) {
-    lessonId = 'soc.geography.land_topography_climate';
-  } else if (eraParam.includes('agriculture_forestry_fishery')) {
-    lessonId = 'soc.geography.agriculture_forestry_fishery';
-  } else if (eraParam.includes('prefectures_cities')) {
-    lessonId = 'soc.geography.prefectures_cities';
-  } else if (eraParam.includes('industry_energy')) {
-    lessonId = 'soc.geography.industry_energy';
-  } else if (eraParam.includes('commerce_trade_transportation')) {
-    lessonId = 'soc.geography.commerce_trade_transportation';
-  } else if (eraParam.includes('environment')) {
-    lessonId = 'soc.geography.environment';
-  } else if (eraParam.includes('information')) {
-    lessonId = 'soc.geography.information';
-  } else if (eraParam.includes('maps_symbols') || eraParam.includes('maps_topographic_symbols')) {
-    lessonId = 'soc.geography.maps_symbols';
-  } else if (eraParam.includes('hokkaido_region')) {
-    lessonId = 'soc.geography.hokkaido_region';
-  } else if (eraParam.includes('tohoku_region')) {
-    lessonId = 'soc.geography.tohoku_region';
-  } else if (eraParam.includes('kanto_region')) {
-    lessonId = 'soc.geography.kanto_region';
-  } else if (eraParam.includes('chubu_region')) {
-    lessonId = 'soc.geography.chubu_region';
-  } else if (eraParam.includes('kinki_region')) {
-    lessonId = 'soc.geography.kinki_region';
-  } else if (eraParam.includes('chugoku_shikoku_region')) {
-    lessonId = 'soc.geography.chugoku_shikoku_region';
-  } else if (eraParam.includes('kyushu_region')) {
-    lessonId = 'soc.geography.kyushu_region';
-  } else if (eraParam.includes('world_geography')) {
-    lessonId = 'soc.geography.world_geography';
-  } else {
-    lessonId = `soc.geography.${eraParam}`;
+  // eraが既にsci.で始まる形式の場合はそのまま使用
+  if (eraParam.startsWith('sci.')) {
+    return eraParam;
   }
   
-  // modeパラメータによるID分離
-  if (mode === 'oboeru') {
-    lessonId = lessonId + '_oboeru';
-  } else {
-    lessonId = lessonId + '_wakaru';
-  }
-  
-  return lessonId;
+  // それ以外の場合は変換
+  return `sci.${eraParam}`;
 }
 
-// チェックポイント関連の関数（script.jsと同じ）
+// チェックポイントを保存
 function saveCheckpoint() {
   try {
     const lessonId = getLessonId();
@@ -978,6 +817,7 @@ function saveCheckpoint() {
   }
 }
 
+// チェックポイントを読み込み
 function loadCheckpoint() {
   try {
     const lessonId = getLessonId();
@@ -995,6 +835,7 @@ function loadCheckpoint() {
   }
 }
 
+// チェックポイントを削除
 function clearCheckpoint() {
   try {
     const lessonId = getLessonId();
@@ -1007,6 +848,65 @@ function clearCheckpoint() {
     return false;
   }
 }
+
+// 初期化：わかる編は配列順、覚える編はランダム
+async function startApp() {
+  // window.questions または questions のいずれかを使用
+  const questionsArray = window.questions || questions;
+  if (!questionsArray || !Array.isArray(questionsArray) || questionsArray.length === 0) {
+    console.error('❌ 問題データが読み込まれていません');
+    return;
+  }
+  
+  // チェックポイントを読み込む
+  const checkpoint = loadCheckpoint();
+  if (checkpoint) {
+    // モダンな再開確認モーダルを表示
+    const shouldResume = await showResumeDialog(checkpoint);
+    if (shouldResume) {
+      current = checkpoint.current;
+      // セッション情報を復元
+      learningTracker.currentSession.score = checkpoint.session.score;
+      learningTracker.currentSession.totalQuestions = checkpoint.session.totalQuestions;
+      console.log('📖 チェックポイントから再開:', current);
+    } else {
+      // チェックポイントを削除して最初から開始
+      clearCheckpoint();
+    }
+  }
+  
+  if (mode === "oboeru") {
+    shuffledQuestions = shuffleQuestions();
+    if (current > 0) {
+      // チェックポイントから再開する場合、既にシャッフルされた問題の順序を保持
+      // ただし、currentの位置から開始するため、問題の順序は保持される
+    }
+  } else {
+    // わかる編は questions をそのまま
+    shuffledQuestions = [...questionsArray];
+  }
+  loadQuestion();
+}
+
+// データ到着後に開始（loader.js が questions を読み込むため）
+(function waitForQuestions(){
+  // 既に実行済みの場合は再実行しない
+  if (window._appStarted) {
+    return;
+  }
+  
+  // window.questions または questions のいずれかが読み込まれているかチェック
+  const questionsLoaded = (typeof window.questions !== 'undefined' && Array.isArray(window.questions) && window.questions.length > 0) ||
+                         (typeof questions !== 'undefined' && Array.isArray(questions) && questions.length > 0);
+  
+  if (questionsLoaded) {
+    // 実行済みフラグを設定
+    window._appStarted = true;
+    startApp();
+  } else {
+    setTimeout(waitForQuestions, 50);
+  }
+})();
 
 // 再開確認モーダルを表示する関数（Promiseを返す）
 function showResumeDialog(checkpoint) {
@@ -1221,48 +1121,26 @@ function showResumeDialog(checkpoint) {
           transform: translateY(-2px);
           box-shadow: 0 8px 24px rgba(16, 185, 129, 0.5);
         }
-        #resume-continue:active {
-          transform: translateY(0);
-        }
         #resume-start-over:hover {
           background: #f8fafc;
           border-color: #cbd5e1;
           color: #475569;
           transform: translateY(-1px);
         }
-        #resume-continue::before {
-          content: '';
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          width: 0;
-          height: 0;
-          border-radius: 50%;
-          background: rgba(255, 255, 255, 0.3);
-          transform: translate(-50%, -50%);
-          transition: width 0.6s, height 0.6s;
-        }
-        #resume-continue:hover::before {
-          width: 300px;
-          height: 300px;
-        }
       `;
       document.head.appendChild(style);
     }
     
-    // 「続きから再開する」ボタンのイベント
     document.getElementById('resume-continue').onclick = () => {
       document.body.removeChild(overlay);
       resolve(true);
     };
     
-    // 「最初から始める」ボタンのイベント
     document.getElementById('resume-start-over').onclick = () => {
       document.body.removeChild(overlay);
       resolve(false);
     };
     
-    // オーバーレイクリックで閉じる（最初から始めるとして扱う）
     overlay.onclick = (e) => {
       if (e.target === overlay) {
         document.body.removeChild(overlay);
@@ -1272,6 +1150,7 @@ function showResumeDialog(checkpoint) {
   });
 }
 
+// チェックポイントモーダルを表示する関数
 function showCheckpointDialog(questionNum) {
   if (checkpointMode) return;
   
@@ -1524,122 +1403,3 @@ function showCheckpointDialog(questionNum) {
     }
   };
 }
-
-// 説明テキストを表示する関数
-function showIntroduction() {
-  if (mode !== "wakaru") {
-    loadQuestion();
-    return;
-  }
-  
-  // window.introduction のチェック（空文字列や空白のみの場合はスキップ）
-  const introValue = window.introduction;
-  const introTrimmed = introValue ? introValue.trim() : '';
-  
-  if (typeof introValue === 'undefined' || !introValue || introTrimmed === '' || introTrimmed.length < 10) {
-    loadQuestion();
-    return;
-  }
-  
-  // 進捗表示を非表示
-  const progressDisplay = document.getElementById("progress");
-  if (progressDisplay) {
-    progressDisplay.style.display = "none";
-  }
-  
-  // 説明テキストを表示
-  questionEl.innerHTML = window.introduction;
-  sourceEl.innerHTML = "";
-  explanationEl.textContent = "";
-  choicesEl.innerHTML = "";
-  nextBtn.style.display = "none";
-  
-  // 「学習を開始」ボタンを追加
-  const startButton = document.createElement("button");
-  startButton.textContent = "学習を開始";
-  startButton.className = "choice";
-  startButton.style.cssText = "background: linear-gradient(135deg, #ea580c, #f97316); color: white; border: none; padding: 1rem 2rem; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 1.5rem; box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3); transition: all 0.3s ease;";
-  startButton.onmouseover = function() {
-    this.style.transform = 'translateY(-2px) scale(1.02)';
-    this.style.boxShadow = '0 6px 16px rgba(234, 88, 12, 0.4)';
-  };
-  startButton.onmouseout = function() {
-    this.style.transform = 'translateY(0) scale(1)';
-    this.style.boxShadow = '0 4px 12px rgba(234, 88, 12, 0.3)';
-  };
-  startButton.onclick = () => {
-    // 説明テキスト表示フラグを設定
-    window._introductionShown = true;
-    // 最初の問題を表示
-    loadQuestion();
-  };
-  
-  choicesEl.appendChild(startButton);
-}
-
-// 初期化：わかる編は配列順、覚える編はランダム
-async function startApp() {
-  // チェックポイントを読み込む
-  const checkpoint = loadCheckpoint();
-  if (checkpoint) {
-    // モダンな再開確認モーダルを表示
-    const shouldResume = await showResumeDialog(checkpoint);
-    if (shouldResume) {
-      current = checkpoint.current;
-      // セッション情報を復元
-      learningTracker.currentSession.score = checkpoint.session.score;
-      learningTracker.currentSession.totalQuestions = checkpoint.session.totalQuestions;
-      console.log('📖 チェックポイントから再開:', current);
-    } else {
-      // チェックポイントを削除して最初から開始
-      clearCheckpoint();
-    }
-  }
-  
-  if (mode === "oboeru") {
-    shuffledQuestions = shuffleQuestions();
-    if (current > 0) {
-      // 再開時は現在の問題から開始
-      loadQuestion();
-    } else {
-      loadQuestion();
-    }
-  } else {
-    // わかる編は questions をそのまま
-    // window.questions または questions のいずれかを使用
-    const questionsArray = window.questions || questions;
-    if (!questionsArray || !Array.isArray(questionsArray) || questionsArray.length === 0) {
-      console.error('❌ 問題データが読み込まれていません');
-      return;
-    }
-    shuffledQuestions = [...questionsArray];
-    
-    // 再開時は説明テキストをスキップして直接問題を表示
-    if (current > 0) {
-      loadQuestion();
-    } else {
-      // 説明テキストがあれば表示、なければ問題を表示
-      showIntroduction();
-    }
-  }
-}
-
-// データ到着後に開始（loader.js が questions を読み込むため）
-(function waitForQuestions(){
-  // 既に実行済みの場合は再実行しない
-  if (window._appStarted) {
-    return;
-  }
-  
-  // window.questions または questions のいずれかが読み込まれているかチェック
-  const questionsLoaded = (typeof window.questions !== 'undefined' && Array.isArray(window.questions) && window.questions.length > 0) ||
-                         (typeof questions !== 'undefined' && Array.isArray(questions) && questions.length > 0);
-  
-  if (questionsLoaded) {
-    // 実行済みフラグを設定
-    window._appStarted = true;
-    startApp();
-  } else {
-    setTimeout(waitForQuestions, 50);
-  }
-})();

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>中学受験理科｜学習</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- 戻るボタン（画面左上に固定） -->
+  <button id="backBtn" onclick="goBack()" style="position: fixed; top: 20px; left: 20px; z-index: 1000; padding: 12px 18px; background: linear-gradient(135deg, #ea580c, #f97316); color: white; border: none; border-radius: 12px; cursor: pointer; font-size: 14px; font-weight: 600; box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px) scale(1.05)'; this.style.boxShadow='0 6px 16px rgba(234, 88, 12, 0.4)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 4px 12px rgba(234, 88, 12, 0.3)'">← 戻る</button>
+  
+  <div class="question-box">
+    <div id="modeLabel"></div>
+    <div id="eraLabel" style="margin-bottom: 0.5rem; font-weight:700;"></div>
+    <h2 id="question"></h2>
+    <div class="source" id="source"></div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation"></div>
+    <div class="navigation-buttons">
+      <button id="nextBtn">次の問題へ</button>
+    </div>
+    <div id="historyDisplay"></div>
+  </div>
+
+  <script src="loader.js"></script>
+  <script src="script.js"></script>
+  <script>
+    const eraMap = {
+      // 小4理科（生物）
+      'sci.biology.seasons_living_things_oboeru': '季節と生物（春）',
+      'sci.biology.seasons_living_things_summer_oboeru': '季節と生物（夏〜冬）',
+      'sci.biology.plants_growth_light_oboeru': '植物の成長',
+      'sci.biology.plants_observation_oboeru': '花のつくりと受粉',
+      
+      // 小4理科（物理）
+      'sci.physics.weight_volume_basic_oboeru': 'つり合いとてんびん',
+      'sci.physics.electricity_conductivity_basic_oboeru': '電気（乾電池と豆電球）',
+      'sci.physics.heat_properties_oboeru': '熱の性質とものの変化',
+      
+      // 小4理科（化学）
+      'sci.chemistry.air_properties_oboeru': '空気の性質',
+      'sci.chemistry.water_three_states_oboeru': '水の変化・状態変化',
+      'sci.chemistry.combustion_air_oboeru': '燃焼と空気の成分',
+      
+      // 小4理科（地学）
+      'sci.earth.constellations_seasons_oboeru': '星と星座',
+      'sci.earth.sun_movement_shadow_oboeru': '太陽と影（基礎）',
+      'sci.earth.weather_changes_oboeru': '天気の変化',
+      'sci.earth.river_work_oboeru': '川のはたらき',
+      
+      // 小5理科（物理）
+      'sci.physics.current_voltage_circuit_oboeru': '電気の基礎（乾電池・回路）',
+      'sci.physics.current_effect_heating_oboeru': '電流の作用①（発熱）',
+      'sci.physics.current_effect_magnetic_oboeru': '電流の作用②（磁界）',
+      'sci.physics.lever_weight_basic_oboeru': 'てこのつり合い',
+      'sci.physics.spring_force_oboeru': 'ばねと力',
+      'sci.physics.light_properties_oboeru': '光の性質',
+      'sci.physics.force_motion_oboeru': '力と運動（浮力・かっ車・輪じく）',
+      
+      // 小5理科（地学）
+      'sci.earth.volcano_structure_oboeru': '火山のしくみ',
+      'sci.earth.earthquake_structure_oboeru': '地震のしくみ',
+      'sci.earth.land_river_erosion_oboeru': '流水と地形の変化',
+      'sci.earth.clouds_fronts_weather_map_oboeru': '気象（雲・前線・天気図）',
+      
+      // 小5理科（生物）
+      'sci.biology.food_chain_oboeru': '生物のつながり（食物連鎖）',
+      'sci.biology.human_body_digestion_respiration_oboeru': '人体①（消化・呼吸・血液）',
+      'sci.biology.human_body_nervous_motion_oboeru': '人体②（神経・運動）',
+      
+      // 小5理科（化学）
+      'sci.chemistry.solubility_temperature_oboeru': '水溶液と溶解度',
+      
+      // 小6理科（総合）
+      'sci.comprehensive.electricity_comprehensive_oboeru': '電気総合（回路／電力／発熱）',
+      'sci.comprehensive.light_sound_comprehensive_oboeru': '光・音の総合',
+      'sci.comprehensive.mechanics_comprehensive_oboeru': '力学総合（てこ／滑車／ばね／浮力）',
+      'sci.comprehensive.combustion_comprehensive_oboeru': '気体・燃焼総合（計算含む）',
+      'sci.comprehensive.water_solution_comprehensive_oboeru': '水溶液総合（酸・アルカリ・中和）',
+      'sci.comprehensive.animals_comprehensive_oboeru': '動物総合',
+      'sci.comprehensive.human_body_comprehensive_oboeru': 'ヒトの体総合（全分野の横断）',
+      'sci.comprehensive.astronomy_comprehensive_oboeru': '天体総合（太陽・月・地球・惑星）',
+      'sci.comprehensive.strata_comprehensive_oboeru': '大地の変化総合（地層／化石／火山／地震）',
+      'sci.comprehensive.weather_comprehensive_oboeru': '気象総合（前線／台風／天気図読み取り）'
+    };
+    // eraMapをグローバルに公開（script.jsからアクセス可能にする）
+    window.eraMap = eraMap;
+    
+    // era変数はscript.jsで既に宣言されているため、ここではwindow.eraのみ設定
+    // script.jsより後に実行されるため、eraLabelの設定を行う
+    (function() {
+      const era = new URLSearchParams(location.search).get("era") || window.era || "seasons_living_things_spring";
+      const mode = new URLSearchParams(location.search).get("mode") || window.mode || "oboeru";
+      
+      // era変数をグローバルに公開（他のスクリプトから参照可能にする）
+      window.era = era;
+      window.mode = mode;
+      
+      const eraLabelElement = document.getElementById("eraLabel");
+      if (eraLabelElement && eraMap[era]) {
+        eraLabelElement.textContent = eraMap[era] || era;
+      }
+    })();
+    
+  </script>
+</body>
+</html>
+

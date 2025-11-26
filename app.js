@@ -14,6 +14,13 @@ import {
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('🚀 DOMContentLoaded: app.js 初期化開始');
   
+  // ログイン画面を初期状態で確実に非表示にする（ゲートとして機能させない）
+  const loginPanel = document.querySelector('#authBox, .login-card, .auth-container');
+  if (loginPanel) {
+    loginPanel.classList.add('hidden');
+    loginPanel.style.display = 'none';
+  }
+  
   // Firebase認証オブジェクトをグローバルに公開（index.htmlの認証UI用）
   window.firebaseAuth = { 
     auth, signOut, signInWithEmailAndPassword, signInWithPopup, 
@@ -21,11 +28,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     sendEmailVerification, onAuthStateChanged 
   };
   
+  // 前回の認証状態を保持（不要なUI更新を防ぐため）
+  let lastAuthState = null;
+  
   // syncFirebaseAuth関数を定義してグローバルに公開
   window.syncFirebaseAuth = function(user) {
-    console.log('🔄 syncFirebaseAuth 開始:', user ? `uid: ${user.uid}` : 'ログアウト');
-    state.user = user || null;
+    const currentUserId = user ? user.uid : null;
     const isIn = !!user;
+    
+    // 認証状態が変わっていない場合はUI更新をスキップ（戻るボタン時の一瞬のログイン画面表示を防ぐ）
+    if (lastAuthState === currentUserId) {
+      // 状態は既に反映済みなので、state.userのみ更新してUI更新はスキップ
+      state.user = user || null;
+      return;
+    }
+    
+    console.log('🔄 syncFirebaseAuth 開始:', user ? `uid: ${user.uid}` : 'ログアウト');
+    lastAuthState = currentUserId;
+    state.user = user || null;
     
     if (user) {
       console.log('✅ ユーザー情報を state に保存:', {
@@ -38,14 +58,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 1) 画面の表示/非表示トグル（クラスで切替）
     document.documentElement.classList.toggle('is-auth', isIn);
     
-    // 2) ログインカードを隠す
+    // 2) ログインカードを隠す（認証状態が確定してから表示/非表示を切り替え）
     const loginPanel = document.querySelector('#authBox, .login-card, .auth-container');
     if (loginPanel) {
-      loginPanel.classList.toggle('hidden', isIn);
       if (isIn) {
+        // ログイン状態: 非表示
+        loginPanel.classList.add('hidden');
         loginPanel.style.display = 'none';
       } else {
-        loginPanel.style.display = 'block';
+        // ログアウト状態: 表示（ただし、初期化中は非表示のまま）
+        // 認証状態が確定したことを示すフラグをチェック
+        const authDetermined = document.documentElement.hasAttribute('data-auth-determined');
+        if (authDetermined) {
+          loginPanel.classList.remove('hidden');
+          loginPanel.style.display = 'block';
+        } else {
+          // 初期化中は非表示のまま
+          loginPanel.classList.add('hidden');
+          loginPanel.style.display = 'none';
+        }
       }
     }
     
@@ -70,9 +101,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log('🎯 UI切り替え完了:', isIn ? 'ログイン状態' : 'ログアウト状態');
   };
   
+  // ログイン画面を初期状態で確実に非表示にする（ゲートとして機能させない）
+  // すべての遷移でログイン画面を経由させないため、初期状態で非表示にする
+  (function hideLoginPanelInitially() {
+    const initialLoginPanel = document.querySelector('#authBox, .login-card, .auth-container');
+    if (initialLoginPanel) {
+      initialLoginPanel.classList.add('hidden');
+      initialLoginPanel.style.display = 'none';
+    }
+  })();
+  
   // Firebase認証状態の監視を設定
+  // 注意: onAuthStateChangedは非同期で発火するため、初期表示時はログイン画面を非表示のままにする
   onAuthStateChanged(auth, (user) => {
     console.log('🔥 Firebase認証状態変化:', user ? 'ログイン' : 'ログアウト');
+    // 認証状態が確定したことをマーク（これ以降、ログアウト状態の場合はログイン画面を表示可能）
+    if (!document.documentElement.hasAttribute('data-auth-determined')) {
+      document.documentElement.setAttribute('data-auth-determined', 'true');
+    }
     window.syncFirebaseAuth(user);
   });
   
@@ -91,8 +137,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.syncFirebaseAuth(currentUser);
   } else {
     console.log('❌ 初期化時にログインユーザーなし');
+    // 初期化時は認証状態を確定させるが、ログイン画面は非表示のまま
     window.syncFirebaseAuth(null);
   }
+  
+  // 認証状態が確定したことをマーク（これ以降、ログアウト状態の場合はログイン画面を表示）
+  document.documentElement.setAttribute('data-auth-determined', 'true');
   
   // currentSubject変数の初期化を確実にする
   console.log('🔄 currentSubject変数の状態確認:', window.currentSubject);
@@ -1054,6 +1104,20 @@ function setHash(view, arg){ location.hash = arg ? `#/${view}/${encodeURICompone
 
 function route(){
   const { view, arg } = parseHash();
+  
+  // ログイン画面を確実に非表示にする（戻るボタン時の一瞬の表示を防ぐ）
+  // state.userだけでなく、auth.currentUserも直接チェック（認証状態が確定する前でも対応）
+  const loginPanel = document.querySelector('#authBox, .login-card, .auth-container');
+  if (loginPanel) {
+    // ログイン済みかどうかを直接確認（state.userが未設定でもauth.currentUserで判定）
+    const isLoggedIn = state.user || (typeof auth !== 'undefined' && auth.currentUser);
+    if (isLoggedIn) {
+      // ログイン済みの場合は確実に非表示
+      loginPanel.classList.add('hidden');
+      loginPanel.style.display = 'none';
+    }
+  }
+  
   showOnly(view);
   if (view==='home') {
     clearSessionResult(); // ホームに戻った時にセッション結果をクリア
@@ -1118,98 +1182,77 @@ var selectedUnit = null;
 scienceUnits = [
   {
     id: 'g4',
-    name: '小4理科：基礎現象 × 自然観察',
+    name: '小4理科：観察・基本現象',
     shortName: '小4',
     icon: '📚',
     lessons: [
-      'sci.biology.plants_growth_light',
-      'sci.biology.plants_observation',
-      'sci.biology.animals_classification',
-      'sci.biology.human_body_basic',
-      'sci.biology.seasons_living_things',
-      'sci.physics.weight_volume_basic',
-      'sci.physics.electricity_conductivity_basic',
-      'sci.physics.magnet',
-      'sci.physics.electricity_motor',
-      'sci.physics.buoyancy_basic',
-      'sci.chemistry.air_water_properties',
-      'sci.chemistry.water_three_states',
-      'sci.earth.weather_changes',
-      'sci.earth.sun_movement_shadow',
-      'sci.earth.constellations_seasons',
-      'sci.biology.basic_experiment_tools_wakaru',
-      'sci.earth.weather_map_intro_wakaru',
-      'sci.chemistry.air_water_simulation_wakaru',
-      'sci.earth.shadow_movement_model_wakaru',
-      'sci.earth.constellation_star_chart_wakaru',
-      'sci.physics.circuit_diagram_intro_wakaru',
-      'sci.comprehensive.g4_summary'
+      // 生物（4）
+      'sci.biology.seasons_living_things', // 季節と生物（春）
+      'sci.biology.seasons_living_things_summer', // 季節と生物（夏〜冬）
+      'sci.biology.plants_growth_light', // 植物の成長
+      'sci.biology.plants_observation', // 花のつくりと受粉
+      // 物理（3）
+      'sci.physics.weight_volume_basic', // つり合いとてんびん
+      'sci.physics.electricity_conductivity_basic', // 電気（乾電池と豆電球）
+      'sci.physics.heat_properties', // 熱の性質とものの変化
+      // 化学（4）
+      'sci.chemistry.air_properties', // 空気の性質
+      'sci.chemistry.water_three_states', // 水の変化・状態変化
+      'sci.chemistry.combustion_air', // 燃焼と空気の成分
+      // 地学（4）
+      'sci.earth.constellations_seasons', // 星と星座
+      'sci.earth.sun_movement_shadow', // 太陽と影（基礎）
+      'sci.earth.weather_changes', // 天気の変化
+      'sci.earth.river_work' // 川のはたらき
     ]
   },
   {
     id: 'g5',
-    name: '小5理科：実験・数値・計測',
+    name: '小5理科：しくみを学ぶ',
     shortName: '小5',
     icon: '📚',
     lessons: [
-      'sci.biology.plants_structure',
-      'sci.biology.leaf_photosynthesis',
-      'sci.biology.animal_body_blood_respiration',
-      'sci.biology.food_chain',
-      'sci.physics.lever_weight_basic',
-      'sci.physics.spring_force',
-      'sci.physics.current_voltage_circuit',
-      'sci.physics.electromagnet',
-      'sci.chemistry.water_solution_acid_alkali',
-      'sci.chemistry.solubility_temperature',
-      'sci.chemistry.crystal_features',
-      'sci.earth.typhoon_weather',
-      'sci.earth.clouds_fronts_weather_map',
-      'sci.earth.land_river_erosion',
-      'sci.earth.strata_fossils',
-      'sci.earth.weather_instruments_wakaru',
-      'sci.chemistry.saturated_solution_model_wakaru',
-      'sci.earth.weather_timeline_wakaru',
-      'sci.physics.moment_diagram_wakaru',
-      'sci.physics.current_flow_simulation_wakaru',
-      'sci.biology.photosynthesis_model_wakaru',
-      'sci.earth.strata_section_wakaru',
-      'sci.earth.fossil_types_wakaru',
-      'sci.comprehensive.g5_summary'
+      // 物理（7）
+      'sci.physics.current_voltage_circuit', // 電気の基礎（乾電池・回路）
+      'sci.physics.current_effect_heating', // 電流の作用①（発熱）
+      'sci.physics.current_effect_magnetic', // 電流の作用②（磁界）
+      'sci.physics.lever_weight_basic', // てこのつり合い
+      'sci.physics.spring_force', // ばねと力
+      'sci.physics.light_properties', // 光の性質
+      'sci.physics.force_motion', // 力と運動（浮力・かっ車・輪じく）
+      // 地学（4）
+      'sci.earth.volcano_structure', // 火山のしくみ
+      'sci.earth.earthquake_structure', // 地震のしくみ
+      'sci.earth.land_river_erosion', // 流水と地形の変化
+      'sci.earth.clouds_fronts_weather_map', // 気象（雲・前線・天気図）
+      // 生物（3）
+      'sci.biology.food_chain', // 生物のつながり（食物連鎖）
+      'sci.biology.human_body_digestion_respiration', // 人体①（消化・呼吸・血液）
+      'sci.biology.human_body_nervous_motion', // 人体②（神経・運動）
+      // 化学（1）
+      'sci.chemistry.solubility_temperature' // 水溶液と溶解度
     ]
   },
   {
-    id: 'g6_advanced',
-    name: '小6理科：発展分野',
-    shortName: '小6発展',
-    icon: '🚀',
-    lessons: [
-      'sci.physics.electric_energy_work',
-      'sci.physics.buoyancy_density',
-      'sci.chemistry.state_change_evaporation_boiling',
-      'sci.earth.weather_comprehensive',
-      'sci.biology.ecosystem_human_activity',
-      'sci.earth.strata_earthquake_volcano'
-    ]
-  },
-  {
-    id: 'g6_comprehensive',
-    name: '小6 総合',
-    shortName: '小6総合',
+    id: 'g6',
+    name: '小6理科：総合と応用',
+    shortName: '小6',
     icon: '🎯',
     lessons: [
-      'sci.comprehensive.astronomy_comprehensive',
-      'sci.comprehensive.weather_comprehensive',
-      'sci.comprehensive.electricity_comprehensive',
-      'sci.comprehensive.mechanics_comprehensive',
-      'sci.comprehensive.water_solution_comprehensive',
-      'sci.comprehensive.strata_comprehensive',
-      'sci.comprehensive.biology_comprehensive',
-      'sci.comprehensive.motion_comprehensive',
-      'sci.comprehensive.combustion_comprehensive',
-      'sci.comprehensive.topography_erosion_comprehensive',
-      'sci.comprehensive.observation_record_comprehensive',
-      'sci.comprehensive.data_graph_comprehensive'
+      // 物理総合（3）
+      'sci.comprehensive.electricity_comprehensive', // 電気総合（回路／電力／発熱）
+      'sci.comprehensive.light_sound_comprehensive', // 光・音の総合
+      'sci.comprehensive.mechanics_comprehensive', // 力学総合（てこ／滑車／ばね／浮力）
+      // 化学総合（2）
+      'sci.comprehensive.combustion_comprehensive', // 気体・燃焼総合（計算含む）
+      'sci.comprehensive.water_solution_comprehensive', // 水溶液総合（酸・アルカリ・中和）
+      // 生物（2）
+      'sci.comprehensive.animals_comprehensive', // 動物総合
+      'sci.comprehensive.human_body_comprehensive', // ヒトの体総合（全分野の横断）
+      // 地学総合（3）
+      'sci.comprehensive.astronomy_comprehensive', // 天体総合（太陽・月・地球・惑星）
+      'sci.comprehensive.strata_comprehensive', // 大地の変化総合（地層／化石／火山／地震）
+      'sci.comprehensive.weather_comprehensive' // 気象総合（前線／台風／天気図読み取り）
     ]
   }
 ];
@@ -1315,84 +1358,77 @@ socialUnits = [
 scienceDrillUnits = [
   {
     id: 'g4_drill',
-    name: '小4理科：基礎現象 × 自然観察',
+    name: '小4理科：観察・基本現象',
     shortName: '小4',
     icon: '📝',
     lessons: [
-      'sci.biology.plants_growth_light_oboeru',
-      'sci.biology.plants_observation_oboeru',
-      'sci.biology.animals_classification_oboeru',
-      'sci.biology.human_body_basic_oboeru',
-      'sci.physics.weight_volume_basic_oboeru',
-      'sci.chemistry.air_water_properties_oboeru',
-      'sci.chemistry.water_three_states_oboeru',
-      'sci.earth.weather_changes_oboeru',
-      'sci.biology.seasons_living_things_oboeru',
-      'sci.earth.sun_movement_shadow_oboeru',
-      'sci.earth.constellations_seasons_oboeru',
-      'sci.physics.electricity_conductivity_basic_oboeru',
-      'sci.physics.magnet_oboeru',
-      'sci.physics.electricity_motor_oboeru',
-      'sci.physics.buoyancy_basic_oboeru',
-      'sci.comprehensive.g4_summary_oboeru'
+      // 生物（4）
+      'sci.biology.seasons_living_things_oboeru', // 季節と生物（春）
+      'sci.biology.seasons_living_things_summer_oboeru', // 季節と生物（夏〜冬）
+      'sci.biology.plants_growth_light_oboeru', // 植物の成長
+      'sci.biology.plants_observation_oboeru', // 花のつくりと受粉
+      // 物理（3）
+      'sci.physics.weight_volume_basic_oboeru', // つり合いとてんびん
+      'sci.physics.electricity_conductivity_basic_oboeru', // 電気（乾電池と豆電球）
+      'sci.physics.heat_properties_oboeru', // 熱の性質とものの変化
+      // 化学（4）
+      'sci.chemistry.air_properties_oboeru', // 空気の性質
+      'sci.chemistry.water_three_states_oboeru', // 水の変化・状態変化
+      'sci.chemistry.combustion_air_oboeru', // 燃焼と空気の成分
+      // 地学（4）
+      'sci.earth.constellations_seasons_oboeru', // 星と星座
+      'sci.earth.sun_movement_shadow_oboeru', // 太陽と影（基礎）
+      'sci.earth.weather_changes_oboeru', // 天気の変化
+      'sci.earth.river_work_oboeru' // 川のはたらき
     ]
   },
   {
     id: 'g5_drill',
-    name: '小5理科：実験・数値・計測',
+    name: '小5理科：しくみを学ぶ',
     shortName: '小5',
     icon: '📝',
     lessons: [
-      'sci.earth.typhoon_weather_oboeru',
-      'sci.earth.clouds_fronts_weather_map_oboeru',
-      'sci.chemistry.water_solution_acid_alkali_oboeru',
-      'sci.chemistry.solubility_temperature_oboeru',
-      'sci.chemistry.crystal_features_oboeru',
-      'sci.physics.lever_weight_basic_oboeru',
-      'sci.physics.spring_force_oboeru',
-      'sci.physics.current_voltage_circuit_oboeru',
-      'sci.physics.electromagnet_oboeru',
-      'sci.biology.plants_structure_oboeru',
-      'sci.biology.leaf_photosynthesis_oboeru',
-      'sci.biology.animal_body_blood_respiration_oboeru',
-      'sci.biology.food_chain_oboeru',
-      'sci.earth.land_river_erosion_oboeru',
-      'sci.earth.strata_fossils_oboeru',
-      'sci.comprehensive.g5_summary_oboeru'
+      // 物理（7）
+      'sci.physics.current_voltage_circuit_oboeru', // 電気の基礎（乾電池・回路）
+      'sci.physics.current_effect_heating_oboeru', // 電流の作用①（発熱）
+      'sci.physics.current_effect_magnetic_oboeru', // 電流の作用②（磁界）
+      'sci.physics.lever_weight_basic_oboeru', // てこのつり合い
+      'sci.physics.spring_force_oboeru', // ばねと力
+      'sci.physics.light_properties_oboeru', // 光の性質
+      'sci.physics.force_motion_oboeru', // 力と運動（浮力・かっ車・輪じく）
+      // 地学（4）
+      'sci.earth.volcano_structure_oboeru', // 火山のしくみ
+      'sci.earth.earthquake_structure_oboeru', // 地震のしくみ
+      'sci.earth.land_river_erosion_oboeru', // 流水と地形の変化
+      'sci.earth.clouds_fronts_weather_map_oboeru', // 気象（雲・前線・天気図）
+      // 生物（3）
+      'sci.biology.food_chain_oboeru', // 生物のつながり（食物連鎖）
+      'sci.biology.human_body_digestion_respiration_oboeru', // 人体①（消化・呼吸・血液）
+      'sci.biology.human_body_nervous_motion_oboeru', // 人体②（神経・運動）
+      // 化学（1）
+      'sci.chemistry.solubility_temperature_oboeru' // 水溶液と溶解度
     ]
   },
   {
-    id: 'g6_drill_advanced',
-    name: '小6理科：発展分野',
-    shortName: '小6発展',
+    id: 'g6_drill',
+    name: '小6理科：総合と応用',
+    shortName: '小6',
     icon: '📝',
     lessons: [
-      'sci.physics.electric_energy_work_oboeru',
-      'sci.physics.buoyancy_density_oboeru',
-      'sci.chemistry.state_change_evaporation_boiling_oboeru',
-      'sci.earth.weather_comprehensive_oboeru',
-      'sci.biology.ecosystem_human_activity_oboeru',
-      'sci.earth.strata_earthquake_volcano_oboeru'
-    ]
-  },
-  {
-    id: 'g6_drill_comprehensive',
-    name: '小6 総合',
-    shortName: '小6総合',
-    icon: '📝',
-    lessons: [
-      'sci.comprehensive.astronomy_comprehensive_oboeru',
-      'sci.comprehensive.weather_comprehensive_oboeru',
-      'sci.comprehensive.electricity_comprehensive_oboeru',
-      'sci.comprehensive.mechanics_comprehensive_oboeru',
-      'sci.comprehensive.water_solution_comprehensive_oboeru',
-      'sci.comprehensive.strata_comprehensive_oboeru',
-      'sci.comprehensive.biology_comprehensive_oboeru',
-      'sci.comprehensive.motion_comprehensive_oboeru',
-      'sci.comprehensive.combustion_comprehensive_oboeru',
-      'sci.comprehensive.topography_erosion_comprehensive_oboeru',
-      'sci.comprehensive.observation_record_comprehensive_oboeru',
-      'sci.comprehensive.data_graph_comprehensive_oboeru'
+      // 物理総合（3）
+      'sci.comprehensive.electricity_comprehensive_oboeru', // 電気総合（回路／電力／発熱）
+      'sci.comprehensive.light_sound_comprehensive_oboeru', // 光・音の総合
+      'sci.comprehensive.mechanics_comprehensive_oboeru', // 力学総合（てこ／滑車／ばね／浮力）
+      // 化学総合（2）
+      'sci.comprehensive.combustion_comprehensive_oboeru', // 気体・燃焼総合（計算含む）
+      'sci.comprehensive.water_solution_comprehensive_oboeru', // 水溶液総合（酸・アルカリ・中和）
+      // 生物（2）
+      'sci.comprehensive.animals_comprehensive_oboeru', // 動物総合
+      'sci.comprehensive.human_body_comprehensive_oboeru', // ヒトの体総合（全分野の横断）
+      // 地学総合（3）
+      'sci.comprehensive.astronomy_comprehensive_oboeru', // 天体総合（太陽・月・地球・惑星）
+      'sci.comprehensive.strata_comprehensive_oboeru', // 大地の変化総合（地層／化石／火山／地震）
+      'sci.comprehensive.weather_comprehensive_oboeru' // 気象総合（前線／台風／天気図読み取り）
     ]
   }
 ];
@@ -1481,15 +1517,10 @@ socialDrillUnits = [
 
 // おすすめ教材を選択する関数
 function getRecommendedLessons() {
-  console.log('getRecommendedLessons called');
   const recommendations = [];
-  
-  console.log('カタログ:', state.catalog ? `${state.catalog.length}件` : 'undefined');
-  console.log('復習レッスン:', state.reviewLessons ? `${state.reviewLessons.length}件` : 'undefined');
   
   // 1. 復習レッスンを最優先で追加（復習システム無効化のためスキップ）
   if (false && state.reviewLessons && state.reviewLessons.length > 0) {
-    console.log('復習レッスンをおすすめに追加:', state.reviewLessons);
     // 復習レッスンを通常のレッスン形式に変換
     state.reviewLessons.forEach(reviewLesson => {
       const reviewEntry = {
@@ -1504,8 +1535,6 @@ function getRecommendedLessons() {
       };
       recommendations.push(reviewEntry);
     });
-  } else {
-    console.log('復習レッスンはありません（復習システム無効化のため）');
   }
   
   // 理科・社会それぞれで1つずつ推薦
@@ -1517,63 +1546,45 @@ function getRecommendedLessons() {
   ];
   
   subjectGroups.forEach(group => {
-    console.log(`${group.name}分野の処理開始`);
     let recommendedLesson = null;
     
     // わかる編→おぼえる編の順で処理
     for (const subject of group.subjects) {
-    console.log(`${subject}教科の処理開始`);
-      
       // カタログからその教科の教材を取得し、IDでソート（番号順）
       const subjectLessons = state.catalog
         .filter(entry => entry.subject === subject)
         .sort((a, b) => a.id.localeCompare(b.id));
-      
-    console.log(`${subject}教科の教材:`, subjectLessons);
     
-    if (subjectLessons.length === 0) {
-      console.log(`${subject}教科の教材がありません`);
+      if (subjectLessons.length === 0) {
         continue;
       }
       
       // 最後に取り組んだ教材を特定（時系列順）
-    const completedLessons = subjectLessons
-      .filter(entry => {
-        const isCompleted = isLessonCompleted(entry.id);
-        console.log(`🔍 推薦システム完了チェック: ${entry.id} → ${isCompleted ? '完了' : '未完了'}`);
-        return isCompleted;
-      })
-      .sort((a, b) => {
-        const progressA = getLessonProgress(a.id);
-        const progressB = getLessonProgress(b.id);
-        return (progressB?.at || 0) - (progressA?.at || 0);
-      });
-    
-    console.log(`${subject}教科の完了済み教材:`, completedLessons);
+      const completedLessons = subjectLessons
+        .filter(entry => isLessonCompleted(entry.id))
+        .sort((a, b) => {
+          const progressA = getLessonProgress(a.id);
+          const progressB = getLessonProgress(b.id);
+          return (progressB?.at || 0) - (progressA?.at || 0);
+        });
       
       let nextLesson = null;
     
-    if (completedLessons.length > 0) {
+      if (completedLessons.length > 0) {
         // 最後に完了した教材の次の教材を探す
-      const lastCompleted = completedLessons[0];
-      const lastCompletedIndex = subjectLessons.findIndex(entry => entry.id === lastCompleted.id);
-      console.log(`${subject}教科の最後に完了した教材:`, lastCompleted, 'インデックス:', lastCompletedIndex);
+        const lastCompleted = completedLessons[0];
+        const lastCompletedIndex = subjectLessons.findIndex(entry => entry.id === lastCompleted.id);
       
-      if (lastCompletedIndex < subjectLessons.length - 1) {
-        nextLesson = subjectLessons[lastCompletedIndex + 1];
-        console.log(`${subject}教科の次の教材:`, nextLesson);
+        if (lastCompletedIndex < subjectLessons.length - 1) {
+          nextLesson = subjectLessons[lastCompletedIndex + 1];
+        }
       } else {
-          console.log(`${subject}教科はすべて完了済み`);
+        // 完了した教材がない場合は最初の教材を推薦
+        nextLesson = subjectLessons[0];
       }
-    } else {
-      // 完了した教材がない場合は最初の教材を推薦
-      nextLesson = subjectLessons[0];
-      console.log(`${subject}教科の最初の教材を推薦:`, nextLesson);
-    }
     
       // 未完了の教材が見つかったら推薦として採用
-    if (nextLesson && !isLessonCompleted(nextLesson.id)) {
-        console.log(`${group.name}分野の推薦教材:`, nextLesson);
+      if (nextLesson && !isLessonCompleted(nextLesson.id)) {
         recommendedLesson = nextLesson;
         break; // わかる編で見つかったらおぼえる編は見ない
       }
@@ -1581,34 +1592,25 @@ function getRecommendedLessons() {
     
     // その分野の推薦教材があれば追加
     if (recommendedLesson) {
-      console.log(`${group.name}分野の教材を推薦リストに追加:`, recommendedLesson);
       recommendations.push(recommendedLesson);
-    } else {
-      console.log(`${group.name}分野に推薦できる教材がありません`);
     }
   });
   
   // 3. おさらいレッスンを1つ追加
   const reviewLesson = getReviewLesson();
   if (reviewLesson) {
-    console.log('おさらいレッスンを推薦リストに追加:', reviewLesson);
     recommendations.push({
       ...reviewLesson,
       type: 'review',
       reviewType: 'osaarai' // おさらい専用のタイプ
     });
-  } else {
-    console.log('おさらいレッスンがありません');
   }
-  
-  console.log('最終的な推薦リスト（復習レッスン含む）:', recommendations);
   
   return recommendations;
 }
 
 // おさらいレッスンを取得する関数
 function getReviewLesson() {
-  console.log('getReviewLesson called');
   
   // 全教科（理科・社会のわかる編・おぼえる編）から完了済みレッスンを取得
   const reviewCandidates = [];
@@ -1659,7 +1661,6 @@ function getReviewLesson() {
   });
   
   if (reviewCandidates.length === 0) {
-    console.log('おさらい候補が見つかりませんでした');
     return null;
   }
   
@@ -1671,14 +1672,7 @@ function getReviewLesson() {
     return b.daysSince - a.daysSince; // 同じ優先度なら古い順
   });
   
-  const selected = reviewCandidates[0].lesson;
-  console.log('選ばれたおさらいレッスン:', selected, {
-    score: reviewCandidates[0].score,
-    daysSince: reviewCandidates[0].daysSince,
-    priority: reviewCandidates[0].priority
-  });
-  
-  return selected;
+  return reviewCandidates[0].lesson;
 }
 
 // おさらいの優先度を計算する関数
@@ -1719,26 +1713,54 @@ function setupSubjectTabs() {
 
 // タブクリックハンドラーを分離
 async function handleTabClick(event) {
+  // デフォルトの動作（スクロールなど）を防ぐ
+  event.preventDefault();
+  event.stopPropagation();
+  
+  // 現在のスクロール位置を保存
+  const scrollY = window.scrollY;
+  const scrollX = window.scrollX;
+  
   const tab = event.currentTarget;
-      console.log('📌 タブクリック:', tab.dataset.subject);
+  console.log('📌 タブクリック:', tab.dataset.subject);
+  
+  // フォーカスを即座に外してスクロールを防ぐ
+  tab.blur();
   
   const subjectTabs = document.querySelectorAll('.subject-tab');
       
-      // アクティブなタブを更新
-      subjectTabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
+  // アクティブなタブを更新
+  subjectTabs.forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
       
-      // 選択された教科を更新
+  // 選択された教科を更新
   const newSubject = tab.dataset.subject || 'recommended';
   window.currentSubject = newSubject;
   console.log('📌 currentSubject更新:', window.currentSubject);
       
-      // 教科に応じたイラストを更新
+  // 教科に応じたイラストを更新
   updateSubjectHero(window.currentSubject);
       
-      // 教材一覧を再描画
-      console.log('📌 renderHome()を呼び出し');
+  // 教材一覧を再描画
+  console.log('📌 renderHome()を呼び出し');
   await renderHome();
+  
+  // スクロール位置を復元（DOM更新後に複数回実行して確実に復元）
+  requestAnimationFrame(() => {
+    window.scrollTo({
+      top: scrollY,
+      left: scrollX,
+      behavior: 'instant' // 即座に復元（smoothではない）
+    });
+    // 念のためもう一度実行
+    setTimeout(() => {
+      window.scrollTo({
+        top: scrollY,
+        left: scrollX,
+        behavior: 'instant'
+      });
+    }, 0);
+  });
 }
 
 async function renderHome(){
@@ -1748,9 +1770,21 @@ async function renderHome(){
     console.log('🔄 renderHome内でcurrentSubjectを初期化:', window.currentSubject);
   }
   
+  // ログイン画面を確実に非表示にする（戻るボタン時の一瞬の表示を防ぐ）
+  // state.userだけでなく、auth.currentUserも直接チェック（認証状態が確定する前でも対応）
+  const loginPanel = document.querySelector('#authBox, .login-card, .auth-container');
+  if (loginPanel) {
+    // ログイン済みかどうかを直接確認（state.userが未設定でもauth.currentUserで判定）
+    const isLoggedIn = state.user || (typeof auth !== 'undefined' && auth.currentUser);
+    if (isLoggedIn) {
+      // ログイン済みの場合は確実に非表示
+      loginPanel.classList.add('hidden');
+      loginPanel.style.display = 'none';
+    }
+  }
+  
   // currentSubjectの安全な取得
   const safeCurrentSubject = window.currentSubject || 'recommended';
-  console.log('🔄 renderHome内でsafeCurrentSubjectを設定:', safeCurrentSubject);
   
   const homeView = document.getElementById('homeView');
   const app = document.getElementById('app');
@@ -1810,11 +1844,11 @@ async function renderHome(){
     }
     
     if (safeCurrentSubject === 'sci') {
-      renderScienceUnits();
+      await renderScienceUnits();
     } else if (safeCurrentSubject === 'soc') {
       await renderSocialUnits();
     } else if (safeCurrentSubject === 'science_drill') {
-      renderScienceDrillUnits();
+      await renderScienceDrillUnits();
     } else if (safeCurrentSubject === 'social_drill') {
       await renderSocialDrillUnits();
     }
@@ -1838,19 +1872,14 @@ async function renderHome(){
   }
   list.innerHTML='';
   
-  // safeCurrentSubjectは既に関数の最初で定義済み
-  console.log('renderHome called, currentSubject:', safeCurrentSubject);
-  
   let displayCatalog;
   
   if (safeCurrentSubject === 'recommended') {
     // おすすめ教材を取得
     displayCatalog = getRecommendedLessons();
-    console.log('おすすめ教材:', displayCatalog);
     
     // おすすめ教材がない場合のメッセージ
     if (displayCatalog.length === 0) {
-      console.log('おすすめ教材がありません');
       list.innerHTML = `
         <div class="col-span-full text-center py-8">
           <div class="text-slate-500">
@@ -1866,11 +1895,15 @@ async function renderHome(){
   } else {
     // 特定の教科の教材をフィルタリング
     displayCatalog = state.catalog.filter(entry => entry.subject === safeCurrentSubject);
-    console.log(`${safeCurrentSubject}の教材:`, displayCatalog);
+    
+    // 理科おぼえる編の場合は単元別表示を使用
+    if (safeCurrentSubject === 'science_drill') {
+      await renderScienceDrillUnits();
+      return;
+    }
     
     // 社会おぼえる編の場合は単元別表示を使用
     if (safeCurrentSubject === 'social_drill') {
-      console.log('🔍 社会おぼえる編の単元別表示を実行');
       await renderSocialDrillUnits();
       return;
     }
@@ -1893,14 +1926,15 @@ async function renderHome(){
     });
   }
   
-  console.log('表示する教材:', displayCatalog);
+  // DocumentFragmentを使用してDOM操作を最適化
+  const fragment = document.createDocumentFragment();
   
-  displayCatalog.forEach(entry=>{
-    const div=document.createElement('div');
+  displayCatalog.forEach((entry, index) => {
+    const div = document.createElement('div');
     const isCompleted = isLessonCompleted(entry.id);
     
     const reviewClass = entry.type === 'review' ? 'review' : '';
-    div.className=`card p-4 ${entry.subject} ${reviewClass} ${isCompleted ? 'completed' : ''}`;
+    div.className = `card p-4 ${entry.subject} ${reviewClass} ${isCompleted ? 'completed' : ''}`;
     
     const need = entry.sku_required ? `<span class="badge lock">要購入</span>` : `<span class="badge open">無料</span>`;
     const subjectName = getSubjectName(entry.subject);
@@ -1917,11 +1951,39 @@ async function renderHome(){
     // おすすめタブの場合は特別な表示
     let recommendationBadge = '';
     let reviewInfo = '';
+    let buttonColor = 'bg-blue-500 hover:bg-blue-600';
+    
     if (safeCurrentSubject === 'recommended') {
+      // 教科に応じたテーマカラーを適用
+      if (entry.subject === 'sci' || entry.subject === 'science_drill') {
+        // 理科: 緑系
+        div.classList.add('recommended-card', 'recommended-sci');
+        buttonColor = 'bg-green-600 hover:bg-green-700';
+        if (entry.reviewType === 'osaarai') {
+          recommendationBadge = `<span class="badge recommend-simple" style="background: #16a34a; color: white;">🔄 おさらい</span>`;
+        } else {
+          recommendationBadge = `<span class="badge recommend-simple" style="background: #16a34a; color: white;">⭐ おすすめ</span>`;
+        }
+      } else if (entry.subject === 'soc' || entry.subject === 'social_drill') {
+        // 社会: オレンジ系
+        div.classList.add('recommended-card', 'recommended-soc');
+        buttonColor = 'bg-orange-600 hover:bg-orange-700';
+        if (entry.reviewType === 'osaarai') {
+          recommendationBadge = `<span class="badge recommend-simple" style="background: #ea580c; color: white;">🔄 おさらい</span>`;
+        } else {
+          recommendationBadge = `<span class="badge recommend-simple" style="background: #ea580c; color: white;">⭐ おすすめ</span>`;
+        }
+      } else {
+        // その他の教科（デフォルト）
+        div.classList.add('recommended-card');
+        if (entry.reviewType === 'osaarai') {
+          recommendationBadge = `<span class="badge recommend-simple" style="background: #6b7280; color: white;">🔄 おさらい</span>`;
+        } else {
+          recommendationBadge = `<span class="badge recommend-simple" style="background: #6b7280; color: white;">⭐ おすすめ</span>`;
+        }
+      }
+      
       if (entry.reviewType === 'osaarai') {
-        // おさらいレッスンの場合
-        recommendationBadge = `<span class="badge review" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">🔄 おさらい</span>`;
-        
         // おさらい情報を取得
         const reviewProgress = getLessonProgress(entry.id);
         if (reviewProgress) {
@@ -1929,13 +1991,11 @@ async function renderHome(){
           const lastStudyDate = reviewProgress.at ? new Date(reviewProgress.at) : null;
           if (lastStudyDate) {
             const daysSince = Math.floor((Date.now() - lastStudyDate.getTime()) / (1000 * 60 * 60 * 24));
-            reviewInfo = `<div class="text-xs text-purple-600 mb-1">前回のスコア: ${scorePercent}% ・ ${daysSince}日前に学習</div>`;
+            const infoColor = (entry.subject === 'sci' || entry.subject === 'science_drill') ? 'text-green-700' : 
+                             (entry.subject === 'soc' || entry.subject === 'social_drill') ? 'text-orange-700' : 'text-slate-600';
+            reviewInfo = `<div class="text-xs ${infoColor} mb-1">前回のスコア: ${scorePercent}% ・ ${daysSince}日前に学習</div>`;
           }
         }
-      } else if (false && entry.type === 'review') {
-        recommendationBadge = `<span class="badge review">🎓 復習</span>`;
-      } else {
-        recommendationBadge = `<span class="badge recommend">⭐ おすすめ</span>`;
       }
     }
     
@@ -1952,30 +2012,110 @@ async function renderHome(){
       ${reviewInfo}
       ${scoreDisplay}
       <div class="text-center">
-        <span class="inline-block px-3 py-2 rounded-lg bg-indigo-600 text-white text-sm font-medium">${isCompleted ? '再学習' : '開く'}</span>
+        <span class="inline-block px-3 py-2 rounded-lg ${buttonColor} text-white text-sm font-bold shadow-md transition-colors duration-200">${isCompleted ? '再学習' : '開く'}</span>
       </div>
     `;
     
     // カード全体をクリック可能にする
     div.style.cursor = 'pointer';
+    div.onclick = () => setHash('lesson', entry.id);
     
-    // 復習レッスンの場合は専用の処理（復習システム無効化のためスキップ）
-    if (false && entry.type === 'review') {
-      div.onclick = () => console.log('復習システムは無効化されています');
-    } else {
-      div.onclick = () => setHash('lesson', entry.id);
-    }
-    
-    list.appendChild(div);
+    fragment.appendChild(div);
   });
   
-  // 教科別タブのイベントリスナーを設定
-  setupSubjectTabs();
+  // 一度にDOMに追加（パフォーマンス向上）
+  list.appendChild(fragment);
+  
+  // 教科別タブのイベントリスナーを設定（既に設定済みの場合はスキップ）
+  if (!document.querySelector('.subject-tab[data-listener-attached]')) {
+    setupSubjectTabs();
+  }
 }
 
 // 理科の単元別表示を実装
-function renderScienceUnits() {
+// 理科の単元別表示を実装
+async function renderScienceUnits() {
+  console.log('🔍 renderScienceUnits called');
+  
+  // state.catalogが未初期化の場合は待機
+  if (!state.catalog || state.catalog.length === 0) {
+    console.log('🔍 state.catalogが未初期化のため、loadCatalogを実行します');
+    try {
+      await loadCatalog();
+      console.log('🔍 loadCatalog完了:', state.catalog);
+      
+      // さらに確実にするため、少し待機
+      await new Promise(resolve => setTimeout(resolve, 100));
+    } catch (error) {
+      console.error('❌ loadCatalogエラー:', error);
+      return;
+    }
+  }
+  
+  // 配列が空の場合は再初期化（既に定義されているため、ここでは確認のみ）
+  if (!scienceUnits || scienceUnits.length === 0) {
+    console.log('🔍 scienceUnitsが空のため再初期化します');
+    // scienceUnitsは既に定義されているため、ここではログのみ
+  }
+  
+  console.log('🔍 scienceUnits:', scienceUnits);
   renderSubjectUnits(scienceUnits, '理科');
+  
+  // 小4理科を自動選択（初期表示）
+  setTimeout(() => {
+    const g4Unit = scienceUnits.find(u => u.id === 'g4');
+    if (g4Unit) {
+      console.log('✅ 小4理科を自動選択します');
+      selectUnit('g4');
+    }
+  }, 100);
+  
+  // わかる編の進捗表示を強制更新
+  console.log('🔄 わかる編の進捗表示を強制更新');
+  setTimeout(() => {
+    const unitItems = document.querySelectorAll('.unit-item');
+    unitItems.forEach((item, index) => {
+      const title = item.querySelector('.unit-item-title');
+      if (title && title.textContent.includes('小4理科')) {
+        console.log(`✅ 小4理科の要素を発見 (インデックス: ${index})`);
+        
+        // わかる編の進捗を計算
+        const g4Lessons = state.catalog ? state.catalog.filter(lesson => 
+          lesson.id.includes('sci.') && !lesson.id.includes('_oboeru') && 
+          scienceUnits.find(u => u.id === 'g4')?.lessons.includes(lesson.id)
+        ) : [];
+        
+        const completedCount = g4Lessons.filter(lesson => {
+          const progressKey = getProgressStorageKey(lesson.id);
+          const progressData = localStorage.getItem(progressKey);
+          if (progressData) {
+            const parsed = JSON.parse(progressData);
+            const isCompleted = parsed.detail?.correct > 0;
+            console.log(`🔍 進捗チェック: ${lesson.id} → ${progressKey} → ${isCompleted ? '完了' : '未完了'}`);
+            return isCompleted;
+          }
+          return false;
+        }).length;
+        
+        const progressPercent = Math.round((completedCount / g4Lessons.length) * 100);
+        console.log(`計算された進捗: ${progressPercent}%`);
+        
+        // 進捗パーセンテージを更新
+        const progressElement = item.querySelector('.unit-item-progress');
+        if (progressElement) {
+          progressElement.textContent = progressPercent + '%';
+          console.log('✅ 小4理科の進捗を更新しました:', progressPercent + '%');
+        }
+        
+        // 進捗バーも更新
+        const progressBar = item.querySelector('.unit-item-progress-fill');
+        if (progressBar) {
+          progressBar.style.width = progressPercent + '%';
+          console.log('✅ 進捗バーを更新しました:', progressPercent + '%');
+        }
+      }
+    });
+  }, 200);
 }
 
 // 社会の単元別表示を実装
@@ -2191,8 +2331,91 @@ async function renderSocialUnits() {
 }
 
 // 理科おぼえる編の単元別表示を実装
-function renderScienceDrillUnits() {
+// 理科おぼえる編の単元別表示を実装
+async function renderScienceDrillUnits() {
+  console.log('🔍 renderScienceDrillUnits called');
+  
+  // state.catalogが未初期化の場合は待機
+  if (!state.catalog || state.catalog.length === 0) {
+    console.log('🔍 state.catalogが未初期化のため、loadCatalogを実行します');
+    try {
+      await loadCatalog();
+      console.log('🔍 loadCatalog完了:', state.catalog);
+      
+      // さらに確実にするため、少し待機
+      await new Promise(resolve => setTimeout(resolve, 100));
+      console.log('🔍 待機後のstate.catalog:', state.catalog);
+    } catch (error) {
+      console.error('❌ loadCatalogエラー:', error);
+    }
+  }
+  
+  // 配列が空の場合は再初期化（既に定義されているため、ここでは確認のみ）
+  if (!scienceDrillUnits || scienceDrillUnits.length === 0) {
+    console.log('🔍 scienceDrillUnitsが空のため再初期化します');
+    // scienceDrillUnitsは既に定義されているため、ここではログのみ
+  }
+  
+  console.log('🔍 scienceDrillUnits:', scienceDrillUnits);
+  console.log('🔍 state.catalog after load:', state.catalog);
   renderSubjectUnits(scienceDrillUnits, '理科おぼえる');
+  
+  // 小4理科を自動選択（初期表示）
+  setTimeout(() => {
+    const g4Unit = scienceDrillUnits.find(u => u.id === 'g4_drill');
+    if (g4Unit) {
+      console.log('✅ 小4理科を自動選択します（覚える編）');
+      selectUnit('g4_drill');
+    }
+  }, 100);
+  
+  // 進捗表示を強制更新
+  console.log('🔄 進捗表示を強制更新');
+  setTimeout(() => {
+    const unitItems = document.querySelectorAll('.unit-item');
+    unitItems.forEach((item, index) => {
+      const title = item.querySelector('.unit-item-title');
+      if (title && title.textContent.includes('小4理科')) {
+        console.log(`✅ 小4理科の要素を発見 (インデックス: ${index})`);
+        
+        // 進捗を計算（おぼえる編のIDを対象に集計）
+        const g4Lessons = state.catalog ? state.catalog.filter(lesson => 
+          lesson.id.includes('sci.') && lesson.id.includes('_oboeru') && 
+          scienceDrillUnits.find(u => u.id === 'g4_drill')?.lessons.includes(lesson.id)
+        ) : [];
+        
+        const completedCount = g4Lessons.filter(lesson => {
+          // ID変換処理を適用
+          const progressKey = getProgressStorageKey(lesson.id);
+          const progressData = localStorage.getItem(progressKey);
+          if (progressData) {
+            const parsed = JSON.parse(progressData);
+            const isCompleted = parsed.detail?.correct > 0;
+            console.log(`🔍 進捗チェック: ${lesson.id} → ${progressKey} → ${isCompleted ? '完了' : '未完了'}`);
+            return isCompleted;
+          }
+          return false;
+        }).length;
+        
+        const progressPercent = Math.round((completedCount / g4Lessons.length) * 100);
+        console.log(`計算された進捗: ${progressPercent}%`);
+        
+        // 進捗パーセンテージを更新
+        const progressElement = item.querySelector('.unit-item-progress');
+        if (progressElement) {
+          progressElement.textContent = progressPercent + '%';
+          console.log('✅ 小4理科の進捗を更新しました:', progressPercent + '%');
+        }
+        
+        // 進捗バーも更新
+        const progressBar = item.querySelector('.unit-item-progress-fill');
+        if (progressBar) {
+          progressBar.style.width = progressPercent + '%';
+          console.log('✅ 進捗バーを更新しました:', progressPercent + '%');
+        }
+      }
+    });
+  }, 200);
 }
 
 // 社会おぼえる編の単元別表示を実装
@@ -3629,6 +3852,25 @@ function getCharacterImagePath(characterName) {
   return `${characterPath}${characterName}.png`;
 }
 
+// 連続学習日数に応じたビビッドカラーのアクセントを取得（任天堂風デザイン、既存色を踏襲）
+function getStreakAccentColor(days) {
+  // 抑え目な背景色に、ビビッドな色をアクセントとして使用
+  // 既存の教科色（オレンジ、緑、青）を活用してバランスを取る
+  // 背景は淡いグレー系で抑え目な印象に
+  const subtleBg = 'bg-slate-50'; // 淡いグレー背景
+  if (days >= 30) {
+    return { bg: subtleBg, accent: 'bg-blue-500', border: 'border-blue-500', borderColor: '#3b82f6', text: 'text-blue-600' };
+  } else if (days >= 15) {
+    return { bg: subtleBg, accent: 'bg-green-600', border: 'border-green-600', borderColor: '#16a34a', text: 'text-green-600' };
+  } else if (days >= 8) {
+    return { bg: subtleBg, accent: 'bg-orange-600', border: 'border-orange-600', borderColor: '#ea580c', text: 'text-orange-600' };
+  } else if (days >= 4) {
+    return { bg: subtleBg, accent: 'bg-orange-500', border: 'border-orange-500', borderColor: '#f97316', text: 'text-orange-600' };
+  } else {
+    return { bg: subtleBg, accent: 'bg-yellow-500', border: 'border-yellow-500', borderColor: '#f59e0b', text: 'text-yellow-600' };
+  }
+}
+
 // 日付に基づいたメッセージとキャラクターを取得
 async function getDailyDateMessage() {
   const data = await loadEncouragementData();
@@ -3706,7 +3948,7 @@ function updateSubjectHero(subject) {
   // おすすめタブの場合は特別な処理
   if (subject === 'recommended') {
     // キャラクター表示用のスタイル（マンガの吹き出しスタイル）
-    if (heroImg) {
+  if (heroImg) {
       // imgタグの場合は親要素（div.relative.z-10.text-center）を操作
       const heroContainer = heroImg.parentElement;
       if (heroContainer) {
@@ -3717,50 +3959,59 @@ function updateSubjectHero(subject) {
         const existingBubble = heroContainer.querySelector('.speech-bubble');
         if (existingBubble) existingBubble.remove();
         
-        // 背景を設定
-        heroContainer.className = 'relative z-10 w-full h-full bg-gradient-to-br from-yellow-100 via-orange-50 to-pink-50 flex items-center justify-between px-4 sm:px-6';
+        // 連続学習日数に応じたビビッドカラーのアクセントを取得
+        const streakInfo = getStreakInfo();
+        const accentColors = getStreakAccentColor(streakInfo.days);
+        
+        // 背景を設定（白基調＋ビビッドカラーのアクセント）
+        heroContainer.className = `relative z-10 w-full h-full ${accentColors.bg} flex items-center justify-between px-4 sm:px-6 transition-all duration-1000`;
+        heroContainer.style.height = '12rem'; // h-48相当
+        heroContainer.style.borderBottom = `4px solid ${accentColors.borderColor}`;
+        
+        // ビビッドカラーの装飾要素を追加（上部のアクセントバー）
+        const accentBar = document.createElement('div');
+        accentBar.className = `absolute top-0 left-0 right-0 h-1 ${accentColors.accent}`;
+        accentBar.style.zIndex = '1';
+        heroContainer.appendChild(accentBar);
         
         // 非同期でメッセージとキャラクター画像を取得
         getRecommendedEncouragementMessage().then(({ message, character }) => {
-          // 連続学習日数とレベルを取得
-          const streakInfo = getStreakInfo();
           
           // キャラクター表示要素を左側に配置
           const charDiv = document.createElement('div');
           charDiv.className = 'character-display flex-shrink-0 flex flex-col items-center justify-center';
           charDiv.innerHTML = `
-            <img src="${character}" alt="学習応援キャラクター" class="w-20 h-20 sm:w-24 sm:h-24 object-contain mb-2 animate-bounce" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-            <div class="text-7xl sm:text-8xl mb-2 animate-bounce" style="display:none;">🎓</div>
-            <div class="text-sm sm:text-base font-bold text-slate-700 mb-1">学習応援</div>
-            <div class="streak-info bg-gradient-to-r from-orange-400 to-pink-500 text-white text-xs sm:text-sm font-bold px-2 sm:px-3 py-1 rounded-full shadow-md">
+            <img src="${character}" alt="学習応援キャラクター" class="w-24 h-24 sm:w-32 sm:h-32 object-contain mb-3">
+            <div class="streak-info ${accentColors.accent} text-white text-xs sm:text-sm font-bold px-2 sm:px-3 py-1 rounded-full shadow-lg">
               🔥 ${streakInfo.days}日連続 | Lv.${streakInfo.level}
             </div>
           `;
           heroContainer.appendChild(charDiv);
           
-          // 吹き出しを右側に配置
+          // 吹き出しを右側に配置（任天堂風：白背景＋ビビッドカラーのボーダー、天地センター）
           const bubbleDiv = document.createElement('div');
-          bubbleDiv.className = 'speech-bubble flex-1 max-w-[65%] sm:max-w-[70%] relative ml-2 sm:ml-4';
+          bubbleDiv.className = 'speech-bubble flex-1 max-w-[65%] sm:max-w-[70%] relative ml-2 sm:ml-4 self-center';
           // HTMLエスケープ関数を使用
           const escapedMessage = escapeHtml(message).replace(/\n/g, '<br>');
           bubbleDiv.innerHTML = `
-            <div class="bg-white rounded-2xl px-3 sm:px-5 py-2.5 sm:py-3.5 shadow-xl border-2 border-orange-300 relative z-10">
+            <div class="bg-white rounded-2xl px-3 sm:px-5 py-2.5 sm:py-3.5 shadow-xl border-4 ${accentColors.border} relative z-10 transform transition-all duration-300 hover:scale-105" style="border-color: ${accentColors.borderColor};">
               <p class="text-slate-800 font-semibold text-xs sm:text-sm leading-relaxed">${escapedMessage}</p>
             </div>
-            <div class="absolute left-0 top-1/2 -translate-x-1.5 -translate-y-1/2 w-0 h-0 border-t-[10px] sm:border-t-[12px] border-t-transparent border-r-[14px] sm:border-r-[16px] border-r-white border-b-[10px] sm:border-b-[12px] border-b-transparent z-20"></div>
-            <div class="absolute left-0 top-1/2 -translate-x-2 -translate-y-1/2 w-0 h-0 border-t-[11px] sm:border-t-[14px] border-t-transparent border-r-[16px] sm:border-r-[18px] border-r-orange-300 border-b-[11px] sm:border-b-[14px] border-b-transparent z-0"></div>
+            <div class="absolute left-0 top-1/2 -translate-x-1.5 -translate-y-1/2 w-0 h-0 border-t-[10px] sm:border-t-[12px] border-t-transparent border-r-[14px] sm:border-r-[16px] border-b-[10px] sm:border-b-[12px] border-b-transparent z-20" style="border-right-color: ${accentColors.borderColor};"></div>
           `;
           heroContainer.appendChild(bubbleDiv);
         }).catch(error => {
           console.error('❌ 励ましメッセージ取得エラー:', error);
           // エラー時はデフォルト表示
           const streakInfo = getStreakInfo();
+          const accentColors = getStreakAccentColor(streakInfo.days);
+          // エラー時はデフォルトキャラクター画像を表示
+          const defaultCharacter = './images/character/character-default.png';
           const charDiv = document.createElement('div');
           charDiv.className = 'character-display flex-shrink-0 flex flex-col items-center justify-center';
           charDiv.innerHTML = `
-            <div class="text-7xl sm:text-8xl mb-2 animate-bounce">🎓</div>
-            <div class="text-sm sm:text-base font-bold text-slate-700 mb-1">学習応援</div>
-            <div class="streak-info bg-gradient-to-r from-orange-400 to-pink-500 text-white text-xs sm:text-sm font-bold px-2 sm:px-3 py-1 rounded-full shadow-md">
+            <img src="${defaultCharacter}" alt="学習応援キャラクター" class="w-24 h-24 sm:w-32 sm:h-32 object-contain mb-3">
+            <div class="streak-info ${accentColors.accent} text-white text-xs sm:text-sm font-bold px-2 sm:px-3 py-1 rounded-full shadow-lg">
               🔥 ${streakInfo.days}日連続 | Lv.${streakInfo.level}
             </div>
           `;
@@ -3802,9 +4053,9 @@ function updateSubjectHero(subject) {
         eng: { image: './images/subjects/english.png' }
       };
       const data = subjectData[subject] || subjectData.sci;
-      if (data) {
-        heroImg.src = data.image;
-        heroImg.alt = `${subject}の学習イラスト`;
+  if (data) {
+    heroImg.src = data.image;
+    heroImg.alt = `${subject}の学習イラスト`;
         heroImg.className = 'h-32 sm:h-40 w-full object-cover transition-all duration-500';
       }
     }
@@ -4893,7 +5144,19 @@ function registerProgressAPI() {
         }
       } else if (d && d.type === 'lesson:goBack') {
         console.log('🔙 lesson:goBack メッセージを検出');
-        setHash('home');
+        // ログイン画面を確実に非表示にしてからホームに戻る
+        // state.userだけでなく、auth.currentUserも直接チェック（認証状態が確定する前でも対応）
+        const loginPanel = document.querySelector('#authBox, .login-card, .auth-container');
+        if (loginPanel) {
+          // ログイン済みかどうかを直接確認（state.userが未設定でもauth.currentUserで判定）
+          const isLoggedIn = state.user || (typeof auth !== 'undefined' && auth.currentUser);
+          if (isLoggedIn) {
+            loginPanel.classList.add('hidden');
+            loginPanel.style.display = 'none';
+          }
+        }
+        // 直接TOPに遷移（setHash経由ではなく、確実にTOPを表示）
+        location.hash = '#/home';
       }
     };
     window.addEventListener('message', handler);

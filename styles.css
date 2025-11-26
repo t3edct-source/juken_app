@@ -1,5 +1,9 @@
 /* ===== Global ===== */
 html{scroll-behavior:smooth}
+/* タブクリック時のスクロールを防ぐ */
+.subject-tab:focus {
+  outline: none;
+}
 .brand-gradient{background:linear-gradient(135deg,#2563eb,#7c3aed)}
 .card{background:#fff;border:2px solid rgb(226 232 240);border-radius:1rem;transition:all .3s ease;box-shadow:0 2px 8px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.1);cursor:pointer}
 .card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 12px 32px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.15);border-color:rgb(203 213 225)}
@@ -21,6 +25,53 @@ html{scroll-behavior:smooth}
 .card.eng{background:linear-gradient(135deg, #f8fafc, #e2e8f0);border-color:#64748b;box-shadow:0 4px 16px rgba(100, 116, 139, 0.15), 0 2px 6px rgba(100, 116, 139, 0.1)}
 .card.eng:hover{box-shadow:0 12px 32px rgba(100, 116, 139, 0.25), 0 6px 16px rgba(100, 116, 139, 0.15);border-color:#475569}
 
+/* おすすめレッスンカードの特別スタイル（シンプル・テーマカラー対応） */
+.card.recommended-card{
+  background:#ffffff;
+  border-left-width: 4px;
+  border-top-width: 2px;
+  border-right-width: 2px;
+  border-bottom-width: 2px;
+  border-color: rgb(226 232 240);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* 理科のおすすめカード（緑系） */
+.card.recommended-card.recommended-sci{
+  border-left-color: #16a34a;
+  background: linear-gradient(to right, #f0fdf4 0%, #ffffff 10%);
+}
+
+.card.recommended-card.recommended-sci:hover{
+  border-left-color: #15803d;
+  box-shadow: 0 12px 32px rgba(22, 163, 74, 0.15), 0 4px 12px rgba(22, 163, 74, 0.1);
+  transform: translateY(-6px) scale(1.02);
+}
+
+/* 社会のおすすめカード（オレンジ系） */
+.card.recommended-card.recommended-soc{
+  border-left-color: #ea580c;
+  background: linear-gradient(to right, #fff7ed 0%, #ffffff 10%);
+}
+
+.card.recommended-card.recommended-soc:hover{
+  border-left-color: #c2410c;
+  box-shadow: 0 12px 32px rgba(234, 88, 12, 0.15), 0 4px 12px rgba(234, 88, 12, 0.1);
+  transform: translateY(-6px) scale(1.02);
+}
+
+/* シンプルなバッジスタイル（レインボー装飾なし） */
+.badge.recommend-simple{
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+
 /* 完了した教材のスタイル */
 .card.completed{opacity:0.7;filter:grayscale(0.4);position:relative;border-color:#10b981;border-width:3px}
 .card.completed::before{content:'';position:absolute;top:0;right:0;width:0;height:0;border-style:solid;border-width:0 2.5rem 2.5rem 0;border-color:transparent #10b981 transparent transparent;z-index:1;filter:drop-shadow(0 2px 4px rgba(16, 185, 129, 0.3))}
@@ -31,6 +82,25 @@ html{scroll-behavior:smooth}
 .badge.open{background:#dcfce7;color:#166534}
 .badge.complete{background:#10b981;color:#fff;font-weight:600}
 .badge.recommend{background:linear-gradient(135deg, #fbbf24, #f59e0b);color:#fff;font-weight:600;box-shadow:0 2px 4px rgba(251, 191, 36, 0.3)}
+.badge.enhanced-recommend-badge{
+  background:#f59e0b;
+  color:#ffffff;
+  font-weight:700;
+  border:2px solid #d97706;
+  animation: recommendPulse 2s ease-in-out infinite;
+  box-shadow:0 4px 12px rgba(245, 158, 11, 0.4), 0 0 20px rgba(245, 158, 11, 0.2);
+}
+
+@keyframes recommendPulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow:0 4px 12px rgba(245, 158, 11, 0.4), 0 0 20px rgba(245, 158, 11, 0.2);
+  }
+  50% { 
+    transform: scale(1.05);
+    box-shadow:0 6px 16px rgba(245, 158, 11, 0.5), 0 0 30px rgba(245, 158, 11, 0.3);
+  }
+}
 
 /* 進捗バー */
 .progress-bar{width:100%;height:6px;background:#e5e7eb;border-radius:3px;overflow:hidden}
@@ -1010,37 +1080,114 @@ body.theme-starry .card {
 .subtab{padding:.375rem .75rem;border-radius:9999px;border:1px solid rgb(226 232 240);background:#fff;color:rgb(71 85 105);font-size:.9rem}
 .subtab[aria-selected="true"]{color:#1e3a8a;background:#e0e7ff;border-color:#4f46e5;font-weight:700}
 
-/* ===== 教科別タブ ===== */
+/* ===== 教科別タブ（任天堂風：白基調＋ビビッドカラー） ===== */
 .subject-tabs{display:flex;flex-wrap:nowrap;gap:.375rem;justify-content:center;overflow-x:auto;padding:.25rem 0}
-.subject-tab{padding:.375rem .75rem;border-radius:.75rem;border:1px solid rgb(226 232 240);background:#fff;color:rgb(71 85 105);font-size:.8rem;font-weight:500;transition:all .2s ease;cursor:pointer;white-space:nowrap;flex-shrink:0}
-.subject-tab:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.1)}
-.subject-tab.active{color:#fff;font-weight:600;box-shadow:0 4px 12px rgba(0,0,0,0.15)}
+.subject-tab{
+  padding:.5rem 1rem;
+  border-radius:.75rem;
+  border:3px solid;
+  background:#ffffff;
+  font-size:.8rem;
+  font-weight:600;
+  transition:all .2s ease;
+  cursor:pointer;
+  white-space:nowrap;
+  flex-shrink:0;
+  box-shadow:0 2px 4px rgba(0,0,0,0.08);
+  position:relative;
+}
+.subject-tab:hover{
+  transform:translateY(-2px);
+  box-shadow:0 4px 12px rgba(0,0,0,0.12);
+}
+.subject-tab.active{
+  color:#fff;
+  font-weight:700;
+  box-shadow:0 4px 16px rgba(0,0,0,0.15), 0 0 20px rgba(0,0,0,0.1);
+  transform:translateY(-1px);
+}
 
-/* 教科別タブの色 */
-.subject-tab[data-subject="recommended"]{background:linear-gradient(135deg, #fef3c7, #fde68a);border-color:#f59e0b;color:#92400e}
-.subject-tab[data-subject="recommended"].active{background:linear-gradient(135deg, #f59e0b, #d97706);color:#fff}
+/* 教科別タブの色（任天堂風：白背景＋ビビッドカラーボーダー、既存色を踏襲） */
+.subject-tab[data-subject="recommended"]{
+  border-color:#f59e0b;
+  color:#f59e0b;
+}
+.subject-tab[data-subject="recommended"].active{
+  background:#f59e0b;
+  border-color:#f59e0b;
+  color:#fff;
+}
 
-.subject-tab[data-subject="math"]{background:linear-gradient(135deg, #eff6ff, #dbeafe);border-color:#3b82f6}
-.subject-tab[data-subject="math"].active{background:linear-gradient(135deg, #1d4ed8, #1e40af)}
+.subject-tab[data-subject="math"]{
+  border-color:#3b82f6;
+  color:#3b82f6;
+}
+.subject-tab[data-subject="math"].active{
+  background:#3b82f6;
+  border-color:#3b82f6;
+  color:#fff;
+}
 
-.subject-tab[data-subject="soc"]{background:linear-gradient(135deg, #fff7ed, #fed7aa);border-color:#ea580c}
-.subject-tab[data-subject="soc"].active{background:linear-gradient(135deg, #c2410c, #9a3412)}
+.subject-tab[data-subject="soc"]{
+  border-color:#ea580c;
+  color:#ea580c;
+}
+.subject-tab[data-subject="soc"].active{
+  background:#ea580c;
+  border-color:#ea580c;
+  color:#fff;
+}
 
-.subject-tab[data-subject="sci"]{background:linear-gradient(135deg, #f0fdf4, #bbf7d0);border-color:#16a34a}
-.subject-tab[data-subject="sci"].active{background:linear-gradient(135deg, #15803d, #166534)}
+.subject-tab[data-subject="sci"]{
+  border-color:#16a34a;
+  color:#16a34a;
+}
+.subject-tab[data-subject="sci"].active{
+  background:#16a34a;
+  border-color:#16a34a;
+  color:#fff;
+}
 
-.subject-tab[data-subject="jpn"]{background:linear-gradient(135deg, #fef2f2, #fecaca);border-color:#dc2626}
-.subject-tab[data-subject="jpn"].active{background:linear-gradient(135deg, #b91c1c, #991b1b)}
+.subject-tab[data-subject="jpn"]{
+  border-color:#dc2626;
+  color:#dc2626;
+}
+.subject-tab[data-subject="jpn"].active{
+  background:#dc2626;
+  border-color:#dc2626;
+  color:#fff;
+}
 
-.subject-tab[data-subject="eng"]{background:linear-gradient(135deg, #f8fafc, #e2e8f0);border-color:#64748b}
-.subject-tab[data-subject="eng"].active{background:linear-gradient(135deg, #475569, #334155)}
+.subject-tab[data-subject="eng"]{
+  border-color:#64748b;
+  color:#64748b;
+}
+.subject-tab[data-subject="eng"].active{
+  background:#64748b;
+  border-color:#64748b;
+  color:#fff;
+}
 
-/* 新しい教科タブの色 */
-.subject-tab[data-subject="science_drill"]{background:linear-gradient(135deg, #ecfdf5, #bbf7d0);border-color:#22c55e;color:#166534}
-.subject-tab[data-subject="science_drill"].active{background:linear-gradient(135deg, #22c55e, #16a34a);color:#fff}
+/* 新しい教科タブの色（既存色を踏襲） */
+.subject-tab[data-subject="science_drill"]{
+  border-color:#16a34a;
+  color:#16a34a;
+}
+.subject-tab[data-subject="science_drill"].active{
+  background:#16a34a;
+  border-color:#16a34a;
+  color:#fff;
+}
 
-.subject-tab[data-subject="social_drill"]{background:linear-gradient(135deg, #fef7ed, #fdba74);border-color:#f97316;color:#c2410c}
-.subject-tab[data-subject="social_drill"].active{background:linear-gradient(135deg, #f97316, #ea580c);color:#fff}
+.subject-tab[data-subject="social_drill"]{
+  border-color:#ea580c;
+  color:#ea580c;
+}
+.subject-tab[data-subject="social_drill"].active{
+  background:#ea580c;
+  border-color:#ea580c;
+  color:#fff;
+}
 
 /* ===== Recommendation ===== */
 .reco{display:grid;gap:.75rem}

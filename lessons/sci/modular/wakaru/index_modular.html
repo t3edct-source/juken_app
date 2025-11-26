@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>中学受験理科｜季節と生物</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- 戻るボタン（画面左上に固定） -->
+  <button id="backBtn" onclick="goBack()" style="position: fixed; top: 20px; left: 20px; z-index: 1000; padding: 12px 18px; background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; border-radius: 12px; cursor: pointer; font-size: 14px; font-weight: 600; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px) scale(1.05)'; this.style.boxShadow='0 6px 16px rgba(16, 185, 129, 0.4)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 4px 12px rgba(16, 185, 129, 0.3)'">← 戻る</button>
+
+  <div class="question-box">
+    <div id="modeLabel"></div>
+    <div id="eraLabel" style="margin-bottom: 0.5rem; font-weight:700;"></div>
+    <h2 id="question"></h2>
+    <div id="visual" class="visual-diagram" style="display: none; margin: 1rem 0; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe; font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; font-size: 0.95rem;"></div>
+    <div class="source" id="source"></div>
+    <div class="choices" id="choices"></div>
+    <div class="explanation" id="explanation"></div>
+    <div class="navigation-buttons">
+      <button id="nextBtn">次の問題へ</button>
+    </div>
+    <div id="historyDisplay"></div>
+  </div>
+
+  <script src="loader.js"></script>
+  <script src="script.js"></script>
+  <script>
+    const eraMap = {
+      // 理科分野（小4）
+      'sci.biology.seasons_living_things': '季節と生物（春）',
+      'sci.biology.seasons_living_things_summer': '季節と生物（夏〜冬）',
+      'sci.biology.plants_growth_light': '植物の成長',
+      'sci.biology.plants_observation': '花のつくりと受粉',
+      'sci.physics.weight_volume_basic': 'つり合いとてんびん',
+      'sci.physics.electricity_conductivity_basic': '電気（乾電池と豆電球）',
+      'sci.physics.heat_properties': '熱の性質とものの変化',
+      'sci.chemistry.air_properties': '空気の性質',
+      'sci.chemistry.water_three_states': '水の変化・状態変化',
+      'sci.chemistry.combustion_air': '燃焼と空気の成分',
+      'sci.earth.constellations_seasons': '星と星座',
+      'sci.earth.sun_movement_shadow': '太陽と影（基礎）',
+      'sci.earth.weather_changes': '天気の変化',
+      'sci.earth.river_work': '川のはたらき',
+      
+      // 理科分野（小5）
+      'sci.physics.current_voltage_circuit': '電気の基礎（乾電池・回路）',
+      'sci.physics.current_effect_heating': '電流の作用①（発熱）',
+      'sci.physics.current_effect_magnetic': '電流の作用②（磁界）',
+      'sci.physics.lever_weight_basic': 'てこのつり合い',
+      'sci.physics.spring_force': 'ばねと力',
+      'sci.physics.light_properties': '光の性質',
+      'sci.physics.force_motion': '力と運動（浮力・かっ車・輪じく）',
+      'sci.earth.volcano_structure': '火山のしくみ',
+      'sci.earth.earthquake_structure': '地震のしくみ',
+      'sci.earth.land_river_erosion': '流水と地形の変化',
+      'sci.earth.clouds_fronts_weather_map': '気象（雲・前線・天気図）',
+      'sci.biology.food_chain': '生物のつながり（食物連鎖）',
+      'sci.biology.human_body_digestion_respiration': '人体①（消化・呼吸・血液）',
+      'sci.biology.human_body_nervous_motion': '人体②（神経・運動）',
+      'sci.chemistry.solubility_temperature': '水溶液と溶解度',
+      
+      // 理科分野（小6）
+      'sci.comprehensive.electricity_comprehensive': '電気総合（回路／電力／発熱）',
+      'sci.comprehensive.light_sound_comprehensive': '光・音の総合',
+      'sci.comprehensive.mechanics_comprehensive': '力学総合（てこ／滑車／ばね／浮力）',
+      'sci.comprehensive.combustion_comprehensive': '気体・燃焼総合（計算含む）',
+      'sci.comprehensive.water_solution_comprehensive': '水溶液総合（酸・アルカリ・中和）',
+      'sci.comprehensive.animals_comprehensive': '動物総合',
+      'sci.comprehensive.human_body_comprehensive': 'ヒトの体総合（全分野の横断）',
+      'sci.comprehensive.astronomy_comprehensive': '天体総合（太陽・月・地球・惑星）',
+      'sci.comprehensive.strata_comprehensive': '大地の変化総合（地層／化石／火山／地震）',
+      'sci.comprehensive.weather_comprehensive': '気象総合（前線／台風／天気図読み取り）'
+    };
+    // era変数はscript.jsで既に宣言されている可能性があるため、スコープ内で取得
+    (function() {
+      const currentEra = new URLSearchParams(location.search).get("era") || window.era || "seasons_living_things_spring";
+      const currentMode = new URLSearchParams(location.search).get("mode") || window.mode || "wakaru";
+      
+      window.era = currentEra;
+      window.mode = currentMode;
+      
+      const eraLabelElement = document.getElementById("eraLabel");
+      if (eraLabelElement && eraMap[currentEra]) {
+        eraLabelElement.textContent = eraMap[currentEra] || currentEra;
+      }
+    })();
+    
+  </script>
+</body>
+</html>

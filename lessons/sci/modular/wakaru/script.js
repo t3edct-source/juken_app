@@ -6,19 +6,19 @@ function goBack() {
   console.log('🏠 ホームに移動: ../../../../index.html');
   
   try {
-    // 相対パスを使用（lessons/soc/modular/wakaru/ から index.html へ）
+    // 相対パスを使用（lessons/sci/modular/wakaru/ から index.html へ）
     window.location.href = '../../../../index.html';
   } catch (e) {
     console.error('❌ ホーム移動エラー:', e);
-    // フォールバック: 相対パス（別の方法）
-    window.location.href = '../../../../index.html';
+    // フォールバック: 絶対パス
+    window.location.href = '/index.html';
   }
 }
 
 const urlParams = new URLSearchParams(window.location.search);
 const mode = urlParams.get("mode") || "wakaru"; // デフォルトはわかる編
-const era = urlParams.get("era") || "4100_land_topography_climate_with_sources"; // レッスンID生成用
-const eraKey = urlParams.get("era") || "kodai"; // 単元キー（OK判定に使用）
+const era = urlParams.get("era") || "seasons_living_things_spring"; // レッスンID生成用
+const eraKey = urlParams.get("era") || "seasons_living_things_spring"; // 単元キー（OK判定に使用）
 
 document.getElementById("modeLabel").textContent = 
   mode === "oboeru" ? "覚える編（タイマー付き）" : "わかる編";
@@ -290,10 +290,17 @@ function handleAnswer(selected) {
 
 // 個別問題の回答をメインページに送信する関数
 function sendQuestionAnswerToParent(questionData, userAnswer, isCorrect) {
-  // レッスンIDを生成
+  // レッスンIDを生成（理科用）
   const urlParams = new URLSearchParams(window.location.search);
-  const era = urlParams.get("era") || "geo_land_topo";
-  const lessonId = `soc.geography.${era}.${mode}`;
+  const era = urlParams.get("era") || "seasons_living_things_spring";
+  let lessonId;
+  if (era.startsWith('sci.')) {
+    lessonId = era;
+  } else if (era.includes('seasons_living_things')) {
+    lessonId = 'sci.biology.seasons_living_things';
+  } else {
+    lessonId = `sci.biology.${era}`;
+  }
   
   const messageData = {
     type: 'question:answered',
@@ -449,50 +456,24 @@ nextBtn.onclick = () => {
         // 覚える編とわかる編で異なるID体系を使用
         let lessonId;
         
-        // パターンマッチングでID変換
-        if (era.includes('land_topography_climate')) {
-          lessonId = 'soc.geography.land_topography_climate';
-        } else if (era.includes('agriculture_forestry_fishery')) {
-          lessonId = 'soc.geography.agriculture_forestry_fishery';
-        } else if (era.includes('prefectures_cities')) {
-          lessonId = 'soc.geography.prefectures_cities';
-        } else if (era.includes('industry_energy')) {
-          lessonId = 'soc.geography.industry_energy';
-        } else if (era.includes('commerce_trade_transportation')) {
-          lessonId = 'soc.geography.commerce_trade_transportation';
-        } else if (era.includes('environment')) {
-          lessonId = 'soc.geography.environment';
-        } else if (era.includes('information')) {
-          lessonId = 'soc.geography.information';
-        } else if (era.includes('maps_symbols') || era.includes('maps_topographic_symbols')) {
-          lessonId = 'soc.geography.maps_symbols';
-        } else if (era.includes('hokkaido_region')) {
-          lessonId = 'soc.geography.hokkaido_region';
-        } else if (era.includes('tohoku_region')) {
-          lessonId = 'soc.geography.tohoku_region';
-        } else if (era.includes('kanto_region')) {
-          lessonId = 'soc.geography.kanto_region';
-        } else if (era.includes('chubu_region')) {
-          lessonId = 'soc.geography.chubu_region';
-        } else if (era.includes('kinki_region')) {
-          lessonId = 'soc.geography.kinki_region';
-        } else if (era.includes('chugoku_shikoku_region')) {
-          lessonId = 'soc.geography.chugoku_shikoku_region';
-        } else if (era.includes('kyushu_region')) {
-          lessonId = 'soc.geography.kyushu_region';
-        } else if (era.includes('world_geography')) {
-          lessonId = 'soc.geography.world_geography';
+        // パターンマッチングでID変換（理科用）
+        if (era.startsWith('sci.')) {
+          lessonId = era;
+        } else if (era.includes('seasons_living_things')) {
+          lessonId = 'sci.biology.seasons_living_things';
         } else {
-          // その他の場合はデフォルト形式
-          lessonId = `soc.geography.${era}`;
+          lessonId = `sci.biology.${era}`;
         }
         
-        // modeパラメータによるID分離（catalog.jsonと一致させる）
+        // modeパラメータによるID分離（理科用：wakaru編はそのまま、oboeru編は_oboeruサフィックス）
+        // わかる編はそのまま使用（catalog.jsonのIDと一致）
         if (mode === 'oboeru') {
           // 覚える編: _oboeruサフィックスを追加
           lessonId = lessonId + '_oboeru';
           console.log('🔍 覚える編のID変換:', lessonId);
         } else {
+          // わかる編はそのまま
+          console.log('🔍 わかる編のID変換:', lessonId);
           // わかる編: _wakaruサフィックスを追加
           lessonId = lessonId + '_wakaru';
           console.log('🔍 わかる編のID変換:', lessonId);
@@ -820,14 +801,25 @@ class LearningTracker {
 // 学習履歴管理インスタンスを作成
 const learningTracker = new LearningTracker();
 
-// レッスンIDを取得する関数（script.jsと同じロジック）
+// レッスンIDを取得する関数（理科用）
 function getLessonId() {
   const urlParams = new URLSearchParams(window.location.search);
   const eraParam = urlParams.get("era") || era;
   
-  // パターンマッチングでID変換
+  // パターンマッチングでID変換（理科用）
   let lessonId;
   
+  if (eraParam.startsWith('sci.')) {
+    lessonId = eraParam;
+  } else if (eraParam.includes('seasons_living_things')) {
+    lessonId = 'sci.biology.seasons_living_things';
+  } else {
+    lessonId = `sci.biology.${eraParam}`;
+  }
+  
+  return lessonId;
+  
+  /* 社会用のロジック（コメントアウト）
   // 歴史レッスンの判定（42で始まる）
   if (eraParam.startsWith('42')) {
     if (eraParam.includes('paleolithic_jomon_yayoi') || eraParam.includes('4200_')) {
@@ -946,14 +938,11 @@ function getLessonId() {
     lessonId = `soc.geography.${eraParam}`;
   }
   
-  // modeパラメータによるID分離
-  if (mode === 'oboeru') {
-    lessonId = lessonId + '_oboeru';
-  } else {
-    lessonId = lessonId + '_wakaru';
-  }
+  // modeパラメータによるID分離（理科用：wakaru編はそのまま、oboeru編は_oboeruサフィックス）
+  // わかる編はそのまま使用（catalog.jsonのIDと一致）
   
   return lessonId;
+  */
 }
 
 // チェックポイント関連の関数（script.jsと同じ）

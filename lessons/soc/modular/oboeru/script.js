@@ -3,14 +3,15 @@ function goBack() {
   console.log('🏠 ホームボタンクリック');
   
   // 相対パスでメインページに移動
-  console.log('🏠 ホームに移動: /index.html');
+  console.log('🏠 ホームに移動: ../../../../index.html');
   
   try {
-    window.location.href = '/index.html';
+    // 相対パスを使用（lessons/soc/modular/oboeru/ から index.html へ）
+    window.location.href = '../../../../index.html';
   } catch (e) {
     console.error('❌ ホーム移動エラー:', e);
-    // フォールバック: 相対パス
-    window.location.href = './index.html';
+    // フォールバック: 相対パス（別の方法）
+    window.location.href = '../../../../index.html';
   }
 }
 
@@ -27,6 +28,7 @@ let current = 0;
 let timer = null;
 let timeLeft = 20;
 let shuffledQuestions = []; // 出題用（わかる編=そのまま, 覚える編=ランダム）
+let checkpointMode = false; // チェックポイントモーダル表示中フラグ
 
 const questionEl = document.getElementById("question");
 const sourceEl = document.getElementById("source");
@@ -96,7 +98,7 @@ function addBackButton() {
       }
     }
     // iframe外の場合は直接メインページに戻る
-    window.location.href = "/index.html";
+    window.location.href = "../../../../index.html";
   };
   
   // ホバー効果
@@ -357,6 +359,18 @@ nextBtn.onclick = () => {
   const totalQuestions = questionsArray ? questionsArray.length : 0;
   console.log('🔄 nextBtn.onclick 実行:', { current, totalQuestions: totalQuestions });
   current++;
+  
+  // 10問ごとに中断確認（最後の問題以外）
+  console.log(`🔍 チェックポイント確認: current=${current}, totalQuestions=${totalQuestions}, current % 10=${current % 10}`);
+  if (current > 0 && current % 10 === 0 && current < totalQuestions) {
+    console.log(`✅ チェックポイント到達: ${current}問完了`);
+    // チェックポイントを自動保存
+    saveCheckpoint();
+    // チェックポイントモーダルを表示
+    showCheckpointDialog(current);
+    return; // ユーザーが選択するまで待つ
+  }
+  
   if (current < totalQuestions) {
     console.log('📝 次の問題を読み込み:', current + 1);
     loadQuestion();
@@ -371,6 +385,9 @@ nextBtn.onclick = () => {
     
     // 学習履歴を保存
     learningTracker.saveSession();
+    
+    // レッスン完了時にチェックポイントを削除
+    clearCheckpoint();
     
     // 今回のセッション結果を表示
     const historyDisplay = document.getElementById("historyDisplay");
@@ -581,7 +598,7 @@ nextBtn.onclick = () => {
         }
       }
       // iframe外の場合は直接メインページに戻る
-      window.location.href = "/index.html";
+      window.location.href = "../../../../index.html";
     };
     document.querySelector(".question-box").appendChild(homeButton);
 
@@ -764,8 +781,175 @@ class LearningTracker {
 // 学習履歴管理インスタンスを作成
 const learningTracker = new LearningTracker();
 
+// レッスンIDを取得する関数
+function getLessonId() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const eraParam = urlParams.get("era") || era;
+  
+  // パターンマッチングでID変換
+  let lessonId;
+  
+  // 歴史レッスンの判定（42で始まる）
+  if (eraParam.startsWith('42')) {
+    if (eraParam.includes('paleolithic_jomon_yayoi') || eraParam.includes('4200_')) {
+      lessonId = 'soc.history.paleolithic_jomon_yayoi_oboeru';
+    } else if (eraParam.includes('kofun_asuka') || eraParam.includes('4201_')) {
+      lessonId = 'soc.history.kofun_asuka_oboeru';
+    } else if (eraParam.includes('nara_period') || eraParam.includes('4202_')) {
+      lessonId = 'soc.history.nara_period_oboeru';
+    } else if (eraParam.includes('heian_period') || eraParam.includes('4203_')) {
+      lessonId = 'soc.history.heian_period_oboeru';
+    } else if (eraParam.includes('kamakura_period') || eraParam.includes('4204_')) {
+      lessonId = 'soc.history.kamakura_period_oboeru';
+    } else if (eraParam.includes('muromachi_period') || eraParam.includes('4205_')) {
+      lessonId = 'soc.history.muromachi_period_oboeru';
+    } else if (eraParam.includes('azuchi_momoyama') || eraParam.includes('4206_')) {
+      lessonId = 'soc.history.azuchi_momoyama_oboeru';
+    } else if (eraParam.includes('edo_period') || eraParam.includes('4207_')) {
+      lessonId = 'soc.history.edo_period_oboeru';
+    } else if (eraParam.includes('meiji_period') || eraParam.includes('4208_')) {
+      lessonId = 'soc.history.meiji_period_oboeru';
+    } else if (eraParam.includes('taisho_showa_prewar') || eraParam.includes('4209_')) {
+      lessonId = 'soc.history.taisho_showa_prewar_oboeru';
+    } else if (eraParam.includes('showa_postwar') || eraParam.includes('4210_')) {
+      lessonId = 'soc.history.showa_postwar_oboeru';
+    } else if (eraParam.includes('heisei_reiwa') || eraParam.includes('4211_')) {
+      lessonId = 'soc.history.heisei_reiwa_oboeru';
+    } else if (eraParam.includes('cross_period') || eraParam.includes('4212_')) {
+      lessonId = 'soc.history.cross_period_problems_oboeru';
+    } else {
+      lessonId = `soc.history.${eraParam.replace(/^42\d+_/, '')}_oboeru`;
+    }
+  }
+  // 公民レッスンの判定（43で始まる、またはcivicを含む）
+  else if (eraParam.startsWith('43') || eraParam.includes('civic') || eraParam.includes('civics')) {
+    if (eraParam.includes('politics_national_life') || eraParam.includes('4300_')) {
+      lessonId = 'soc.civics.politics_national_life_oboeru';
+    } else if (eraParam.includes('constitution_three_principles') || eraParam.includes('4301_')) {
+      lessonId = 'soc.civics.constitution_three_principles_oboeru';
+    } else if (eraParam.includes('diet_cabinet_judiciary') || eraParam.includes('4302_')) {
+      lessonId = 'soc.civics.diet_cabinet_judiciary_oboeru';
+    } else if (eraParam.includes('finance_local_government') || eraParam.includes('4303_')) {
+      lessonId = 'soc.civics.finance_local_government_oboeru';
+    } else if (eraParam.includes('world_affairs_international') || eraParam.includes('4304_')) {
+      lessonId = 'soc.civics.world_affairs_international_oboeru';
+    } else if (eraParam.includes('modern_social_issues') || eraParam.includes('4305_')) {
+      lessonId = 'soc.civics.modern_social_issues_oboeru';
+    } else if (eraParam.includes('constitution') || eraParam === 'civic_constitution') {
+      // civic_constitution → soc.civics.constitution_oboeru
+      lessonId = 'soc.civics.constitution_oboeru';
+    } else if (eraParam.includes('government') || eraParam === 'civic_government') {
+      // civic_government → soc.civics.government_oboeru
+      lessonId = 'soc.civics.government_oboeru';
+    } else {
+      lessonId = `soc.civics.${eraParam.replace(/^43\d+_/, '').replace(/^civic_/, '')}_oboeru`;
+    }
+  }
+  // 地理レッスンの判定（41で始まる、または地理関連のキーワード）
+  else if (eraParam.startsWith('41') || eraParam.includes('geography') || eraParam.includes('region')) {
+    // eraパラメータから_with_sourcesを削除してIDを生成
+    const cleanEra = eraParam.replace(/_with_sources$/, '');
+    
+    if (cleanEra.includes('land_topography_climate') || cleanEra.includes('4100_')) {
+      lessonId = 'soc.geography.land_topography_climate_oboeru';
+    } else if (cleanEra.includes('agriculture_forestry_fishery') || cleanEra.includes('4101_')) {
+      lessonId = 'soc.geography.agriculture_forestry_fishery_oboeru';
+    } else if (cleanEra.includes('prefectures_cities') || cleanEra.includes('4102_')) {
+      lessonId = 'soc.geography.prefectures_cities_oboeru';
+    } else if (cleanEra.includes('industry_energy') || cleanEra.includes('4103_')) {
+      lessonId = 'soc.geography.industry_energy_oboeru';
+    } else if (cleanEra.includes('commerce_trade_transportation') || cleanEra.includes('4104_')) {
+      lessonId = 'soc.geography.commerce_trade_transportation_oboeru';
+    } else if (cleanEra.includes('environment') || cleanEra.includes('4106_')) {
+      lessonId = 'soc.geography.environment_oboeru';
+    } else if (cleanEra.includes('information') || cleanEra.includes('4107_')) {
+      lessonId = 'soc.geography.information_oboeru';
+    } else if (cleanEra.includes('maps_symbols') || cleanEra.includes('maps_topographic_symbols') || cleanEra.includes('4108_')) {
+      lessonId = 'soc.geography.maps_symbols_oboeru';
+    } else if (cleanEra.includes('hokkaido_region') || cleanEra.includes('4109_')) {
+      lessonId = 'soc.geography.hokkaido_region_oboeru';
+    } else if (cleanEra.includes('tohoku_region') || cleanEra.includes('4110_')) {
+      lessonId = 'soc.geography.tohoku_region_oboeru';
+    } else if (cleanEra.includes('kanto_region') || cleanEra.includes('4111_')) {
+      lessonId = 'soc.geography.kanto_region_oboeru';
+    } else if (cleanEra.includes('chubu_region') || cleanEra.includes('4112_')) {
+      lessonId = 'soc.geography.chubu_region_oboeru';
+    } else if (cleanEra.includes('kinki_region') || cleanEra.includes('4113_')) {
+      lessonId = 'soc.geography.kinki_region_oboeru';
+    } else if (cleanEra.includes('chugoku_shikoku_region') || cleanEra.includes('4114_')) {
+      lessonId = 'soc.geography.chugoku_shikoku_region_oboeru';
+    } else if (cleanEra.includes('kyushu_region') || cleanEra.includes('4115_')) {
+      lessonId = 'soc.geography.kyushu_region_oboeru';
+    } else if (cleanEra.includes('world_geography') || cleanEra.includes('4116_')) {
+      lessonId = 'soc.geography.world_geography_oboeru';
+    } else {
+      // 数字プレフィックスを削除してIDを生成
+      const baseName = cleanEra.replace(/^41\d+_/, '');
+      lessonId = `soc.geography.${baseName}_oboeru`;
+    }
+  } else {
+    lessonId = `soc.${eraParam}_oboeru`;
+  }
+  
+  return lessonId;
+}
+
+// チェックポイントを保存
+function saveCheckpoint() {
+  try {
+    const lessonId = getLessonId();
+    const checkpointKey = `checkpoint:${lessonId}`;
+    const checkpointData = {
+      current: current,
+      timestamp: Date.now(),
+      session: {
+        score: learningTracker.currentSession.score,
+        totalQuestions: learningTracker.currentSession.totalQuestions
+      }
+    };
+    localStorage.setItem(checkpointKey, JSON.stringify(checkpointData));
+    console.log('✅ チェックポイント保存完了:', checkpointData);
+    return true;
+  } catch (error) {
+    console.error('❌ チェックポイント保存エラー:', error);
+    return false;
+  }
+}
+
+// チェックポイントを読み込み
+function loadCheckpoint() {
+  try {
+    const lessonId = getLessonId();
+    const checkpointKey = `checkpoint:${lessonId}`;
+    const checkpointData = localStorage.getItem(checkpointKey);
+    if (checkpointData) {
+      const data = JSON.parse(checkpointData);
+      console.log('📖 チェックポイント読み込み:', data);
+      return data;
+    }
+    return null;
+  } catch (error) {
+    console.error('❌ チェックポイント読み込みエラー:', error);
+    return null;
+  }
+}
+
+// チェックポイントを削除
+function clearCheckpoint() {
+  try {
+    const lessonId = getLessonId();
+    const checkpointKey = `checkpoint:${lessonId}`;
+    localStorage.removeItem(checkpointKey);
+    console.log('🗑️ チェックポイント削除完了');
+    return true;
+  } catch (error) {
+    console.error('❌ チェックポイント削除エラー:', error);
+    return false;
+  }
+}
+
 // 初期化：わかる編は配列順、覚える編はランダム
-function startApp() {
+async function startApp() {
   // window.questions または questions のいずれかを使用
   const questionsArray = window.questions || questions;
   if (!questionsArray || !Array.isArray(questionsArray) || questionsArray.length === 0) {
@@ -773,8 +957,29 @@ function startApp() {
     return;
   }
   
+  // チェックポイントを読み込む
+  const checkpoint = loadCheckpoint();
+  if (checkpoint) {
+    // モダンな再開確認モーダルを表示
+    const shouldResume = await showResumeDialog(checkpoint);
+    if (shouldResume) {
+      current = checkpoint.current;
+      // セッション情報を復元
+      learningTracker.currentSession.score = checkpoint.session.score;
+      learningTracker.currentSession.totalQuestions = checkpoint.session.totalQuestions;
+      console.log('📖 チェックポイントから再開:', current);
+    } else {
+      // チェックポイントを削除して最初から開始
+      clearCheckpoint();
+    }
+  }
+  
   if (mode === "oboeru") {
     shuffledQuestions = shuffleQuestions();
+    if (current > 0) {
+      // チェックポイントから再開する場合、既にシャッフルされた問題の順序を保持
+      // ただし、currentの位置から開始するため、問題の順序は保持される
+    }
   } else {
     // わかる編は questions をそのまま
     shuffledQuestions = [...questionsArray];
@@ -801,3 +1006,499 @@ function startApp() {
     setTimeout(waitForQuestions, 50);
   }
 })();
+
+// 再開確認モーダルを表示する関数（Promiseを返す）
+function showResumeDialog(checkpoint) {
+  return new Promise((resolve) => {
+    const overlay = document.createElement('div');
+    overlay.id = 'resume-overlay';
+    overlay.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 10000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease;
+      backdrop-filter: blur(4px);
+    `;
+    
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+      background: white;
+      border-radius: 24px;
+      padding: 0;
+      max-width: 90%;
+      width: 420px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.1);
+      animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      overflow: hidden;
+      position: relative;
+    `;
+    
+    const questionsArray = window.questions || questions;
+    const totalQuestions = questionsArray ? questionsArray.length : 0;
+    const progressPercent = totalQuestions > 0 ? Math.round((checkpoint.current / totalQuestions) * 100) : 0;
+    const scorePercent = checkpoint.session.totalQuestions > 0 ? 
+      Math.round((checkpoint.session.score / checkpoint.session.totalQuestions) * 100) : 0;
+    
+    modal.innerHTML = `
+      <div style="
+        background: linear-gradient(135deg, #10b981, #059669, #047857);
+        padding: 2rem 2rem 1.5rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      ">
+        <div style="
+          position: absolute;
+          top: -50%;
+          right: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+          animation: rotate 20s linear infinite;
+        "></div>
+        <div style="position: relative; z-index: 1;">
+          <div style="
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            animation: bounceIn 0.6s ease-out;
+          ">📌</div>
+          <div style="
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.25rem;
+          ">前回の続きから</div>
+          <div style="
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.9);
+          ">学習を再開しますか？</div>
+        </div>
+      </div>
+      <div style="padding: 2rem;">
+        <div style="
+          background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+          border: 2px solid #86efac;
+          border-radius: 16px;
+          padding: 1.5rem;
+          margin-bottom: 1.5rem;
+        ">
+          <div style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+          ">
+            <div style="
+              font-size: 0.9rem;
+              color: #166534;
+              font-weight: 600;
+            ">進捗状況</div>
+            <div style="
+              font-size: 0.85rem;
+              color: #10b981;
+              font-weight: 600;
+              background: rgba(16, 185, 129, 0.1);
+              padding: 0.25rem 0.75rem;
+              border-radius: 8px;
+            ">${progressPercent}%</div>
+          </div>
+          <div style="
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #166534;
+            margin-bottom: 0.75rem;
+          ">${checkpoint.current} / ${totalQuestions}問完了</div>
+          <div style="
+            height: 8px;
+            background: #dcfce7;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+          ">
+            <div style="
+              height: 100%;
+              width: ${progressPercent}%;
+              background: linear-gradient(90deg, #10b981, #059669);
+              border-radius: 4px;
+              transition: width 0.3s ease;
+            "></div>
+          </div>
+          <div style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 0.75rem;
+            border-top: 1px solid #86efac;
+          ">
+            <div style="
+              font-size: 0.85rem;
+              color: #166534;
+              font-weight: 600;
+            ">スコア</div>
+            <div style="
+              font-size: 1.1rem;
+              font-weight: 700;
+              background: linear-gradient(135deg, #10b981, #059669);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;
+            ">${checkpoint.session.score}/${checkpoint.session.totalQuestions}問正解 (${scorePercent}%)</div>
+          </div>
+        </div>
+        <div style="
+          display: flex;
+          gap: 0.75rem;
+          flex-direction: column;
+        ">
+          <button id="resume-continue" style="
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+          ">
+            <span style="position: relative; z-index: 1;">続きから再開する →</span>
+          </button>
+          <button id="resume-start-over" style="
+            width: 100%;
+            padding: 0.875rem 1.5rem;
+            background: white;
+            color: #64748b;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+          ">🔄 最初から始める</button>
+        </div>
+      </div>
+    `;
+    
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+    
+    // アニメーション用のスタイルを追加（既に存在する場合はスキップ）
+    if (!document.getElementById('checkpoint-styles')) {
+      const style = document.createElement('style');
+      style.id = 'checkpoint-styles';
+      style.textContent = `
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes slideUp {
+          from { transform: translateY(30px) scale(0.95); opacity: 0; }
+          to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        @keyframes bounceIn {
+          0% { transform: scale(0.3); opacity: 0; }
+          50% { transform: scale(1.1); }
+          70% { transform: scale(0.9); }
+          100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes rotate {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        #resume-continue:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(16, 185, 129, 0.5);
+        }
+        #resume-start-over:hover {
+          background: #f8fafc;
+          border-color: #cbd5e1;
+          color: #475569;
+          transform: translateY(-1px);
+        }
+      `;
+      document.head.appendChild(style);
+    }
+    
+    document.getElementById('resume-continue').onclick = () => {
+      document.body.removeChild(overlay);
+      resolve(true);
+    };
+    
+    document.getElementById('resume-start-over').onclick = () => {
+      document.body.removeChild(overlay);
+      resolve(false);
+    };
+    
+    overlay.onclick = (e) => {
+      if (e.target === overlay) {
+        document.body.removeChild(overlay);
+        resolve(false);
+      }
+    };
+  });
+}
+
+// チェックポイントモーダルを表示する関数
+function showCheckpointDialog(questionNum) {
+  if (checkpointMode) return;
+  
+  checkpointMode = true;
+  const questionsArray = window.questions || questions;
+  const totalQuestions = questionsArray ? questionsArray.length : 0;
+  const completedQuestions = questionNum;
+  const session = learningTracker.currentSession;
+  const scorePercent = session.totalQuestions > 0 ? 
+    Math.round((session.score / session.totalQuestions) * 100) : 0;
+  
+  const overlay = document.createElement('div');
+  overlay.id = 'checkpoint-overlay';
+  overlay.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+    backdrop-filter: blur(4px);
+  `;
+  
+  // モーダルコンテンツを作成（モダンなデザイン）
+  const modal = document.createElement('div');
+  modal.style.cssText = `
+    background: white;
+    border-radius: 24px;
+    padding: 0;
+    max-width: 90%;
+    width: 420px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.1);
+    animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+    position: relative;
+  `;
+  
+  // グラデーション背景ヘッダー
+  modal.innerHTML = `
+    <div style="
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed, #6d28d9);
+      padding: 2rem 2rem 1.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    ">
+      <div style="
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        animation: rotate 20s linear infinite;
+      "></div>
+      <div style="position: relative; z-index: 1;">
+        <div style="
+          font-size: 3rem;
+          margin-bottom: 0.5rem;
+          animation: bounceIn 0.6s ease-out;
+        ">🎉</div>
+        <div style="
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: white;
+          margin-bottom: 0.25rem;
+        ">${completedQuestions}問完了！</div>
+        <div style="
+          font-size: 0.9rem;
+          color: rgba(255,255,255,0.9);
+        ">チェックポイントに到達しました</div>
+      </div>
+    </div>
+    <div style="padding: 2rem;">
+      <div style="
+        background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+        border: 2px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+      ">
+        <div style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1rem;
+        ">
+          <div style="
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: 600;
+          ">現在のスコア</div>
+          <div style="
+            font-size: 0.85rem;
+            color: #8b5cf6;
+            font-weight: 600;
+            background: rgba(139, 92, 246, 0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 8px;
+          ">${scorePercent}%</div>
+        </div>
+        <div style="
+          font-size: 2.25rem;
+          font-weight: 800;
+          background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          margin-bottom: 0.75rem;
+        ">${session.score}/${session.totalQuestions}問正解</div>
+        <div style="
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-size: 0.9rem;
+          color: #64748b;
+        ">
+          <span style="
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #8b5cf6;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+          "></span>
+          残り ${totalQuestions - completedQuestions}問
+        </div>
+      </div>
+      <div style="
+        display: flex;
+        gap: 0.75rem;
+        flex-direction: column;
+      ">
+        <button id="checkpoint-continue" style="
+          width: 100%;
+          padding: 1rem 1.5rem;
+          background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+          color: white;
+          border: none;
+          border-radius: 12px;
+          font-size: 1rem;
+          font-weight: 700;
+          cursor: pointer;
+          box-shadow: 0 4px 16px rgba(139, 92, 246, 0.4);
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
+        ">
+          <span style="position: relative; z-index: 1;">続ける →</span>
+        </button>
+        <button id="checkpoint-save-exit" style="
+          width: 100%;
+          padding: 0.875rem 1.5rem;
+          background: white;
+          color: #64748b;
+          border: 2px solid #e2e8f0;
+          border-radius: 12px;
+          font-size: 0.95rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        ">💾 保存して終了</button>
+      </div>
+    </div>
+  `;
+  
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+  
+  if (!document.getElementById('checkpoint-styles')) {
+    const style = document.createElement('style');
+    style.id = 'checkpoint-styles';
+    style.textContent = `
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes slideUp {
+        from { transform: translateY(30px) scale(0.95); opacity: 0; }
+        to { transform: translateY(0) scale(1); opacity: 1; }
+      }
+      @keyframes bounceIn {
+        0% { transform: scale(0.3); opacity: 0; }
+        50% { transform: scale(1.1); }
+        70% { transform: scale(0.9); }
+        100% { transform: scale(1); opacity: 1; }
+      }
+      @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.5; transform: scale(1.2); }
+      }
+      #checkpoint-continue:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(139, 92, 246, 0.5);
+      }
+      #checkpoint-continue:active {
+        transform: translateY(0);
+      }
+      #checkpoint-save-exit:hover {
+        background: #f8fafc;
+        border-color: #cbd5e1;
+        color: #475569;
+        transform: translateY(-1px);
+      }
+      #checkpoint-continue::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+      }
+      #checkpoint-continue:hover::before {
+        width: 300px;
+        height: 300px;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  document.getElementById('checkpoint-continue').onclick = () => {
+    document.body.removeChild(overlay);
+    checkpointMode = false;
+    loadQuestion();
+  };
+  
+  document.getElementById('checkpoint-save-exit').onclick = () => {
+    saveCheckpoint();
+    learningTracker.saveSession();
+    goBack();
+  };
+  
+  overlay.onclick = (e) => {
+    if (e.target === overlay) {
+      document.body.removeChild(overlay);
+      checkpointMode = false;
+    }
+  };
+}
