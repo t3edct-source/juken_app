@@ -51,9 +51,16 @@ function createProgressDisplay() {
   progressDisplay.style.boxShadow = "none";
   
   // 親要素に相対位置を設定
+  const questionHeader = document.querySelector(".question-header");
   const questionBox = document.querySelector(".question-box");
-  questionBox.style.position = "relative";
-  questionBox.appendChild(progressDisplay);
+  if (questionHeader) {
+    questionHeader.style.position = "relative";
+    questionHeader.appendChild(progressDisplay);
+  } else {
+    // フォールバック：従来の方法
+    questionBox.style.position = "relative";
+    questionBox.appendChild(progressDisplay);
+  }
   return progressDisplay;
 }
 
@@ -67,7 +74,14 @@ if (mode === "oboeru") {
   timerDisplay.style.color = "#d00";
   timerDisplay.style.margin = "0.5em 0";
   timerDisplay.style.display = "block"; // 覚える編では表示
-  document.querySelector(".question-box").insertBefore(timerDisplay, sourceEl);
+  // タイマーはスクロール部分の最初に配置
+  const questionContent = document.querySelector(".question-content");
+  if (questionContent) {
+    questionContent.insertBefore(timerDisplay, questionContent.firstChild);
+  } else {
+    // フォールバック：従来の方法
+    document.querySelector(".question-box").insertBefore(timerDisplay, sourceEl);
+  }
 } else {
   // わかる編の場合、もしタイマー要素が存在していたら完全に非表示にする
   const existingTimer = document.getElementById("timer");

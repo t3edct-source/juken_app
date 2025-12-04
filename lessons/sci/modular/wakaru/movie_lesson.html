@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>動画で分かる理科 - サンプル</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            touch-action: manipulation;
+        }
+
+        body {
+            font-family: 'Hiragino Sans', 'Yu Gothic', sans-serif;
+            background: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .home-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 44px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .home-btn:hover {
+            background: #ff5252;
+            transform: translateY(-1px);
+        }
+
+        .home-btn:active {
+            transform: scale(0.98);
+        }
+
+        .lesson-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
+            margin: 0 10px;
+        }
+
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+        }
+
+        /* ▶ 動画エリア（社会の source-container に対応） */
+        .video-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            margin-bottom: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .video-header {
+            background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .video-header h2 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .video-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .video-area {
+            background: #f8f9fa;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-player {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            background: black;
+        }
+
+        .video-caption {
+            font-size: 13px;
+            color: #555;
+            margin-top: 8px;
+            text-align: left;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        /* ▶ 情報パネル（学ぶポイント等） */
+        .info-panel {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .info-panel h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .info-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #00b09b;
+        }
+
+        .info-item h4 {
+            color: #00b09b;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .info-item p {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .start-learning-btn {
+            background: linear-gradient(135deg, #ff8a00 0%, #ff6b6b 100%);
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px auto 0;
+            display: block;
+            min-height: 52px;
+            width: 100%;
+            max-width: 400px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .start-learning-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        /* ▶ 問題エリア（社会版とほぼ同じ） */
+        .question-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .choice {
+            padding: 14px 16px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .choice:hover {
+            background: #e9ecef;
+            border-color: #00b4db;
+        }
+
+        .choice.selected {
+            background: #00b4db;
+            color: white;
+            border-color: #00b4db;
+        }
+
+        .choice.correct {
+            background: #28a745;
+            color: white;
+            border-color: #28a745;
+            animation: correctPulse 0.6s ease;
+        }
+
+        .choice.incorrect {
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+            animation: wrongShake 0.6s ease;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .explanation {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #28a745;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .explanation h4 {
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+
+        .explanation p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 48px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .prev-btn {
+            background: #6c757d;
+            color: white;
+        }
+
+        .prev-btn:hover:not(:disabled) {
+            background: #5a6268;
+        }
+
+        .next-btn {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .next-btn:hover:not(:disabled) {
+            background: #ff5252;
+        }
+
+        .progress-bar {
+            background: #e9ecef;
+            border-radius: 10px;
+            height: 8px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(135deg, #ff8a00 0%, #ff6b6b 100%);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        /* レスポンシブ調整 */
+        @media (max-width: 768px) {
+            .header {
+                padding: 8px 12px;
+            }
+
+            .home-btn {
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+
+            .lesson-title {
+                font-size: 14px;
+                margin: 0 8px;
+            }
+
+            .main-container {
+                padding: 10px;
+            }
+
+            .video-area {
+                padding: 15px;
+            }
+
+            .info-panel {
+                padding: 16px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .question-container {
+                padding: 16px;
+            }
+
+            .choice {
+                min-height: 52px;
+                font-size: 14px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 6px 10px;
+            }
+
+            .home-btn {
+                padding: 8px 14px;
+                font-size: 12px;
+            }
+
+            .lesson-title {
+                font-size: 12px;
+                margin: 0 6px;
+            }
+
+            .main-container {
+                padding: 8px;
+            }
+
+            .question-container {
+                padding: 12px;
+            }
+
+            .choice {
+                padding: 12px 14px;
+                font-size: 13px;
+                min-height: 48px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <button class="home-btn" onclick="goHome()">🏠 ホーム</button>
+        <div class="lesson-title">動画で分かる理科 - サンプル</div>
+        <div style="width: 80px;"></div>
+    </div>
+
+    <div class="main-container">
+        <!-- 動画エリア -->
+        <div class="video-container">
+            <div class="video-header">
+                <h2>🎥 実験動画：水の状態変化</h2>
+                <p>10秒の動画を見て、様子からわかることを考えてみましょう</p>
+            </div>
+            <div class="video-area">
+                <video
+                    class="video-player"
+                    id="lesson-video"
+                    controls
+                    playsinline
+                    preload="metadata"
+                >
+                    <!-- 実際にはここに mp4 などを指定 -->
+                    <source src="sample_water_state_change.mp4" type="video/mp4">
+                    お使いのブラウザでは動画が再生できません。
+                </video>
+                <div class="video-caption" id="video-caption">
+                    ※ このテンプレートでは、10秒程度の短い実験動画を流し、
+                    画面の変化から読み取れることを問題にします。
+                </div>
+            </div>
+        </div>
+
+        <!-- 学ぶポイントパネル -->
+        <div class="info-panel" id="info-panel">
+            <h3>📊 このレッスンで学ぶポイント</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h4>① 見た目の変化</h4>
+                    <p>氷がとける・水が沸騰するなど、動画から確認できる変化をおさえます。</p>
+                </div>
+                <div class="info-item">
+                    <h4>② 状態変化の言葉</h4>
+                    <p>「固体 → 液体」「液体 → 気体」など、理科で使う言葉と結び付けます。</p>
+                </div>
+                <div class="info-item">
+                    <h4>③ 条件との関係</h4>
+                    <p>温度が上がるとどうなるか、熱との関係を考えます。</p>
+                </div>
+            </div>
+            <button class="start-learning-btn" onclick="startLearning()">学習を開始する</button>
+        </div>
+
+        <!-- 問題エリア -->
+        <div class="question-container" id="question-container" style="display: none;">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="question-text" id="question-text"></div>
+            <div class="choices" id="choices"></div>
+            <div class="explanation" id="explanation"></div>
+            <div class="navigation">
+                <button class="nav-btn prev-btn" id="prev-btn" onclick="previousQuestion()">前の問題</button>
+                <button class="nav-btn next-btn" id="next-btn" onclick="nextQuestion()">次の問題</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ▼ レッスンID（ステップナビ側で利用）※レッスンごとに書き換え
+        const LESSON_ID = 'sci.sample.video_water_state_change_wakaru';
+
+        // ▼ 動画レッスン用データテンプレート
+        const videoLessonData = {
+            title: '水の状態変化',
+            videoSrc: 'sample_water_state_change.mp4',
+            videoCaption: 'コップの中の氷がとけていく様子と、やかんから水蒸気が出る様子をまとめた短い動画です。',
+            keyPoints: [
+                '動画から「見た目の変化」を正しく読み取る',
+                '変化を「固体・液体・気体」の言葉で説明できる',
+                '温度や熱との関係をイメージする'
+            ],
+            questions: [
+                {
+                    id: 1,
+                    question: '動画の前半では、コップの中で何が起こっていましたか？',
+                    choices: [
+                        '氷がとけて水になっていた',
+                        '水がこおって氷になっていた',
+                        '水がふきこぼれていた',
+                        '何も変化していなかった'
+                    ],
+                    correct: 0,
+                    explanation: '動画の前半では、コップの中の氷がだんだん小さくなり、水がふえていく様子が映っています。これは「固体（氷）」が「液体（水）」になる変化です。',
+                    // 必要であれば、どのタイミングの場面かをメモしておいてもOK
+                    videoTimeHint: '0〜4秒あたり'
+                },
+                {
+                    id: 2,
+                    question: '動画の後半で、やかんの口から出ていた白いものは何ですか？',
+                    choices: [
+                        '水蒸気（すいじょうき）',
+                        '氷',
+                        '砂',
+                        '油'
+                    ],
+                    correct: 0,
+                    explanation: 'やかんがあたためられると、中の水が熱せられて水蒸気になり、口から白い湯気として出てきます。これは「液体（水）」が「気体（水蒸気）」になる変化です。',
+                    videoTimeHint: '5〜10秒あたり'
+                }
+            ]
+        };
+
+        // ▼ 学習履歴管理（社会版と同じ構造）
+        class LearningTracker {
+            constructor() {
+                this.mode = 'wakaru';
+                this.historyKey = `learningHistory_wakaru`;
+
+                this.currentSession = {
+                    startTime: Date.now(),
+                    questions: [],
+                    score: 0,
+                    totalQuestions: 0,
+                    mode: 'wakaru'
+                };
+            }
+
+            recordAnswer(questionId, selectedAnswer, correctAnswer, timeSpent) {
+                this.currentSession.questions.push({
+                    questionId,
+                    selectedAnswer,
+                    correctAnswer,
+                    isCorrect: selectedAnswer === correctAnswer,
+                    timeSpent,
+                    timestamp: Date.now()
+                });
+
+                if (selectedAnswer === correctAnswer) {
+                    this.currentSession.score++;
+                }
+                this.currentSession.totalQuestions++;
+            }
+
+            saveSession() {
+                try {
+                    const existingHistory = this.loadHistory();
+                    const totalTime = Date.now() - this.currentSession.startTime;
+                    this.currentSession.totalTime = totalTime;
+
+                    const sessionToSave = {
+                        ...this.currentSession,
+                        endTime: Date.now(),
+                        duration: totalTime
+                    };
+
+                    existingHistory.sessions.push(sessionToSave);
+                    existingHistory.stats = this.calculateStats(existingHistory.sessions);
+                    localStorage.setItem(this.historyKey, JSON.stringify(existingHistory));
+
+                    return true;
+                } catch (error) {
+                    console.error('セッション保存エラー:', error);
+                    return false;
+                }
+            }
+
+            loadHistory() {
+                try {
+                    const data = localStorage.getItem(this.historyKey);
+                    if (data) {
+                        return JSON.parse(data);
+                    }
+                } catch (error) {
+                    console.error('履歴読み込みエラー:', error);
+                }
+
+                return {
+                    sessions: [],
+                    stats: {
+                        totalSessions: 0,
+                        totalQuestions: 0,
+                        correctAnswers: 0,
+                        averageScore: 0,
+                        bestScore: 0
+                    }
+                };
+            }
+
+            calculateStats(sessions) {
+                const stats = {
+                    totalSessions: sessions.length,
+                    totalQuestions: 0,
+                    correctAnswers: 0,
+                    averageScore: 0,
+                    bestScore: 0
+                };
+
+                sessions.forEach(session => {
+                    stats.totalQuestions += session.totalQuestions;
+                    stats.correctAnswers += session.score;
+                    stats.bestScore = Math.max(stats.bestScore, session.score);
+                });
+
+                if (stats.totalSessions > 0 && stats.totalQuestions > 0) {
+                    stats.averageScore = (stats.correctAnswers / stats.totalQuestions * 100).toFixed(1);
+                }
+
+                return stats;
+            }
+        }
+
+        const learningTracker = new LearningTracker();
+
+        let currentQuestion = 0;
+        let score = 0;
+        let questionStartTime = Date.now();
+
+        function generateShuffledIndices(length) {
+            const indices = Array.from({ length }, (_, i) => i);
+            for (let i = indices.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [indices[i], indices[j]] = [indices[j], indices[i]];
+            }
+            return indices;
+        }
+
+        function startLearning() {
+            const infoPanel = document.getElementById('info-panel');
+            const questionContainer = document.getElementById('question-container');
+
+            infoPanel.style.display = 'none';
+            questionContainer.style.display = 'block';
+
+            // 動画キャプション更新（必要に応じて）
+            document.getElementById('video-caption').textContent = videoLessonData.videoCaption || '';
+
+            // 最初の問題へ
+            if (videoLessonData.questions.length > 0) {
+                showQuestion(0);
+            } else {
+                alert('問題データがまだ追加されていません。');
+            }
+        }
+
+        function showQuestion(index) {
+            const question = videoLessonData.questions[index];
+            questionStartTime = Date.now();
+
+            document.getElementById('explanation').classList.remove('show');
+            document.getElementById('question-text').textContent = question.question;
+
+            const choicesContainer = document.getElementById('choices');
+            choicesContainer.innerHTML = '';
+
+            const shuffledChoiceIndices = generateShuffledIndices(question.choices.length);
+            shuffledChoiceIndices.forEach((originalIndex) => {
+                const choiceElement = document.createElement('div');
+                choiceElement.className = 'choice';
+                choiceElement.textContent = question.choices[originalIndex];
+                choiceElement.dataset.originalIndex = String(originalIndex);
+                choiceElement.onclick = () => selectAnswer(originalIndex);
+                choicesContainer.appendChild(choiceElement);
+            });
+
+            const progress = ((index + 1) / videoLessonData.questions.length) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+
+            const nextBtn = document.getElementById('next-btn');
+            const prevBtn = document.getElementById('prev-btn');
+            prevBtn.disabled = index === 0;
+            if (index === videoLessonData.questions.length - 1) {
+                nextBtn.disabled = true;
+                nextBtn.textContent = '次の問題';
+            } else {
+                nextBtn.disabled = false;
+                nextBtn.textContent = '次の問題';
+            }
+        }
+
+        function selectAnswer(choiceIndex) {
+            const question = videoLessonData.questions[currentQuestion];
+            const choices = document.querySelectorAll('.choice');
+            const timeSpent = Date.now() - questionStartTime;
+
+            choices.forEach(choice => {
+                choice.style.pointerEvents = 'none';
+            });
+
+            choices.forEach((choice) => {
+                choice.classList.remove('selected', 'correct', 'incorrect');
+                const originalIndex = parseInt(choice.dataset.originalIndex || "-1", 10);
+                if (originalIndex === choiceIndex) {
+                    choice.classList.add('selected');
+                }
+            });
+
+            setTimeout(() => {
+                const isCorrect = choiceIndex === question.correct;
+
+                choices.forEach((choice) => {
+                    const originalIndex = parseInt(choice.dataset.originalIndex || "-1", 10);
+                    if (originalIndex === question.correct) {
+                        choice.classList.add('correct');
+                    } else if (originalIndex === choiceIndex && !isCorrect) {
+                        choice.classList.add('incorrect');
+                    }
+                });
+
+                const explanation = document.getElementById('explanation');
+                explanation.innerHTML = `<h4>解説</h4><p>${question.explanation}</p>` +
+                    (question.videoTimeHint ? `<p style="margin-top:8px; font-size:12px; color:#555;">▶ 動画の ${question.videoTimeHint} をもう一度見てみよう</p>` : '');
+                explanation.classList.add('show');
+
+                if (isCorrect) {
+                    score++;
+                }
+
+                learningTracker.recordAnswer(
+                    question.id || currentQuestion,
+                    choiceIndex,
+                    question.correct,
+                    Math.round(timeSpent / 1000)
+                );
+
+                sendQuestionAnswerToParent(question, choiceIndex, isCorrect);
+
+                const nextBtn = document.getElementById('next-btn');
+                if (currentQuestion === videoLessonData.questions.length - 1) {
+                    nextBtn.textContent = '学習完了';
+                    nextBtn.disabled = false;
+                }
+            }, 500);
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+                document.getElementById('explanation').classList.remove('show');
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion === videoLessonData.questions.length - 1) {
+                completeLesson();
+                return;
+            }
+
+            if (currentQuestion < videoLessonData.questions.length - 1) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+                document.getElementById('explanation').classList.remove('show');
+            }
+        }
+
+        function showCurrentSessionResult() {
+            const session = learningTracker.currentSession;
+            const scorePercent = session.totalQuestions > 0
+                ? Math.round(session.score / session.totalQuestions * 100)
+                : 0;
+
+            return `
+                <h2 style="font-size:20px; margin-bottom:10px;">学習おつかれさま！</h2>
+                <p style="margin-bottom:8px;">正解数：${session.score} / ${session.totalQuestions}</p>
+                <p style="margin-bottom:8px;">正解率：${scorePercent}%</p>
+            `;
+        }
+
+        function completeLesson() {
+            learningTracker.saveSession();
+
+            const messageData = {
+                type: 'lesson:complete',
+                lessonId: LESSON_ID,
+                detail: {
+                    correct: learningTracker.currentSession.score,
+                    total: learningTracker.currentSession.totalQuestions,
+                    timeSec: Math.round((Date.now() - learningTracker.currentSession.startTime) / 1000)
+                }
+            };
+
+            try {
+                if (window.parent !== window) {
+                    window.parent.postMessage(messageData, '*');
+                }
+                if (window.top !== window) {
+                    window.top.postMessage(messageData, '*');
+                }
+
+                const storageMessage = {
+                    messageData,
+                    timestamp: Date.now()
+                };
+                localStorage.setItem('lessonCompleteMessage', JSON.stringify(storageMessage));
+
+                if (window.parent && window.parent.saveLessonProgress) {
+                    window.parent.saveLessonProgress(
+                        messageData.lessonId,
+                        messageData.detail.correct,
+                        messageData.detail.total,
+                        messageData.detail.timeSec
+                    );
+                }
+            } catch (e) {
+                console.log('完了メッセージ送信失敗:', e);
+            }
+
+            document.getElementById('question-container').style.display = 'none';
+
+            const resultContainer = document.createElement('div');
+            resultContainer.className = 'question-container';
+            resultContainer.style.display = 'block';
+            resultContainer.innerHTML = showCurrentSessionResult();
+
+            const homeButton = document.createElement('button');
+            homeButton.textContent = '🏠 ホームに戻る';
+            homeButton.className = 'start-learning-btn';
+            homeButton.style.marginTop = '1.5rem';
+            homeButton.onclick = () => {
+                if (window.parent !== window || window.top !== window) {
+                    try {
+                        window.parent.postMessage({ type: 'lesson:goBack' }, '*');
+                        window.top.postMessage({ type: 'lesson:goBack' }, '*');
+                        return;
+                    } catch (e) {
+                        console.log('ホームに戻るメッセージ送信失敗:', e);
+                    }
+                }
+                goHome();
+            };
+            resultContainer.appendChild(homeButton);
+
+            document.querySelector('.main-container').appendChild(resultContainer);
+        }
+
+        function sendQuestionAnswerToParent(questionData, userAnswer, isCorrect) {
+            const messageData = {
+                type: 'question:answered',
+                lessonId: LESSON_ID,
+                questionData: {
+                    qnum: questionData.id || currentQuestion,
+                    question: questionData.question,
+                    choices: questionData.choices,
+                    answer: questionData.correct,
+                    explanation: questionData.explanation
+                },
+                userAnswer: userAnswer,
+                correctAnswer: questionData.correct,
+                isCorrect: isCorrect,
+                timestamp: Date.now()
+            };
+
+            try {
+                if (window.parent !== window) {
+                    window.parent.postMessage(messageData, '*');
+                }
+                if (window.top !== window) {
+                    window.top.postMessage(messageData, '*');
+                }
+
+                const existingAnswers = JSON.parse(localStorage.getItem('questionAnswers') || '[]');
+                existingAnswers.push(messageData);
+                localStorage.setItem('questionAnswers', JSON.stringify(existingAnswers));
+            } catch (e) {
+                console.log('個別問題回答送信失敗:', e);
+            }
+        }
+
+        function goHome() {
+            // ステップナビ本体から埋め込まれる想定なら postMessage で戻す
+            if (window.parent !== window || window.top !== window) {
+                try {
+                    window.parent.postMessage({ type: 'lesson:goBack' }, '*');
+                    window.top.postMessage({ type: 'lesson:goBack' }, '*');
+                    return;
+                } catch (e) {
+                    console.log('ホームへのメッセージ送信失敗:', e);
+                }
+            }
+            // 単体で開いたときのフォールバック
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>

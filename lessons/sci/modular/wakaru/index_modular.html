@@ -12,17 +12,23 @@
   <button id="backBtn" onclick="goBack()" style="position: fixed; top: 20px; left: 20px; z-index: 1000; padding: 12px 18px; background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; border-radius: 12px; cursor: pointer; font-size: 14px; font-weight: 600; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px) scale(1.05)'; this.style.boxShadow='0 6px 16px rgba(16, 185, 129, 0.4)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 4px 12px rgba(16, 185, 129, 0.3)'">← 戻る</button>
 
   <div class="question-box">
-    <div id="modeLabel"></div>
-    <div id="eraLabel" style="margin-bottom: 0.5rem; font-weight:700;"></div>
-    <h2 id="question"></h2>
-    <div id="visual" class="visual-diagram" style="display: none; margin: 1rem 0; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe; font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; font-size: 0.95rem;"></div>
-    <div class="source" id="source"></div>
-    <div class="choices" id="choices"></div>
-    <div class="explanation" id="explanation"></div>
-    <div class="navigation-buttons">
-      <button id="nextBtn">次の問題へ</button>
+    <!-- 固定表示部分（問題文まで） -->
+    <div class="question-header">
+      <div id="modeLabel"></div>
+      <div id="eraLabel" style="margin-bottom: 0.5rem; font-weight:700;"></div>
+      <h2 id="question"></h2>
     </div>
-    <div id="historyDisplay"></div>
+    <!-- スクロール可能部分（説明文、選択肢など） -->
+    <div class="question-content">
+      <div id="visual" class="visual-diagram" style="display: none; margin: 1rem 0; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe; font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; font-size: 0.95rem;"></div>
+      <div class="source" id="source"></div>
+      <div class="choices" id="choices"></div>
+      <div class="explanation" id="explanation"></div>
+      <div class="navigation-buttons">
+        <button id="nextBtn">次の問題へ</button>
+      </div>
+      <div id="historyDisplay"></div>
+    </div>
   </div>
 
   <script src="loader.js"></script>

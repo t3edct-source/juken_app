@@ -51,16 +51,30 @@ function createProgressDisplay() {
   progressDisplay.style.boxShadow = "none";
   
   // 親要素に相対位置を設定
+  const questionHeader = document.querySelector(".question-header");
   const questionBox = document.querySelector(".question-box");
-  questionBox.style.position = "relative";
-  questionBox.appendChild(progressDisplay);
+  if (questionHeader) {
+    questionHeader.style.position = "relative";
+    questionHeader.appendChild(progressDisplay);
+  } else {
+    // フォールバック：従来の方法
+    questionBox.style.position = "relative";
+    questionBox.appendChild(progressDisplay);
+  }
   return progressDisplay;
 }
 
 // タイマー表示用（モダンなデザイン）
 const timerDisplay = document.createElement("div");
 timerDisplay.id = "timer";
-document.querySelector(".question-box").insertBefore(timerDisplay, sourceEl);
+// タイマーはスクロール部分の最初に配置
+const questionContent = document.querySelector(".question-content");
+if (questionContent) {
+  questionContent.insertBefore(timerDisplay, questionContent.firstChild);
+} else {
+  // フォールバック：従来の方法
+  document.querySelector(".question-box").insertBefore(timerDisplay, sourceEl);
+}
 
 // oboeruモードではsource要素を初期状態で非表示
 if (mode === "oboeru") {
