@@ -1886,6 +1886,42 @@
     "tags": []
   },
   {
+    "id": "sci.kisetsu_seibutsu_annual_wakaru",
+    "grade": 4,
+    "subject": "sci",
+    "title": "シミュレーションで学ぶ理科 - 季節と生物",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/kisetsu_seibutsu_sim.html",
+    "format": "html",
+    "tags": [
+      "季節",
+      "生物",
+      "気温",
+      "日照時間",
+      "シミュレーション"
+    ]
+  },
+  {
+    "id": "sci.konchu_lifecycle_wakaru",
+    "grade": 4,
+    "subject": "sci",
+    "title": "シミュレーションで学ぶ理科 - 昆虫のライフサイクル",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/konchu_lifecycle_sim.html",
+    "format": "html",
+    "tags": [
+      "昆虫",
+      "ライフサイクル",
+      "卵",
+      "幼虫",
+      "さなぎ",
+      "成虫",
+      "シミュレーション"
+    ]
+  },
+  {
     "id": "sci.biology.plants_growth_light",
     "grade": 4,
     "subject": "sci",
@@ -1917,6 +1953,23 @@
     "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.physics.weight_volume_basic&mode=wakaru",
     "format": "html",
     "tags": []
+  },
+  {
+    "id": "sci.tsuriai_tenbin_wakaru",
+    "grade": 4,
+    "subject": "sci",
+    "title": "シミュレーションで学ぶ理科 - つり合いとてんびん",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/tsuriai_tenbin_sim.html",
+    "format": "html",
+    "tags": [
+      "つり合い",
+      "てんびん",
+      "重さ",
+      "距離",
+      "シミュレーション"
+    ]
   },
   {
     "id": "sci.physics.electricity_conductivity_basic",
@@ -1963,6 +2016,24 @@
     "tags": []
   },
   {
+    "id": "sci.chemistry.water_three_states_sim",
+    "grade": 4,
+    "subject": "sci",
+    "title": "シミュレーションで学ぶ理科 - 水の変化",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/mizu_no_henka_sim.html",
+    "format": "html",
+    "tags": [
+      "水",
+      "温度",
+      "状態変化",
+      "氷",
+      "水蒸気",
+      "シミュレーション"
+    ]
+  },
+  {
     "id": "sci.chemistry.combustion_air",
     "grade": 4,
     "subject": "sci",
@@ -1996,6 +2067,22 @@
     "tags": []
   },
   {
+    "id": "sci.earth.sun_movement_shadow_sim",
+    "grade": 4,
+    "subject": "sci",
+    "title": "シミュレーションで学ぶ理科 - 太陽と影",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/taiyo_to_kage_sim.html",
+    "format": "html",
+    "tags": [
+      "太陽",
+      "影",
+      "時間",
+      "シミュレーション"
+    ]
+  },
+  {
     "id": "sci.earth.weather_changes",
     "grade": 4,
     "subject": "sci",
@@ -2007,6 +2094,23 @@
     "tags": []
   },
   {
+    "id": "sci.earth.weather_changes_cloud_motion_model",
+    "grade": 4,
+    "subject": "sci",
+    "title": "シミュレーションで学ぶ理科 - 天気の変化",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/tenki_no_henka_sim.html",
+    "format": "html",
+    "tags": [
+      "天気",
+      "気圧",
+      "風",
+      "雲",
+      "シミュレーション"
+    ]
+  },
+  {
     "id": "sci.earth.river_work",
     "grade": 4,
     "subject": "sci",
@@ -2016,6 +2120,26 @@
     "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.river_work&mode=wakaru",
     "format": "html",
     "tags": []
+  },
+  {
+    "id": "sci.earth.river_work_sim",
+    "grade": 4,
+    "subject": "sci",
+    "title": "シミュレーションで学ぶ理科 - 川のはたらき",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/river_work_sim.html",
+    "format": "html",
+    "tags": [
+      "地学",
+      "川",
+      "侵食",
+      "堆積",
+      "上流",
+      "中流",
+      "下流",
+      "シミュレーション"
+    ]
   },
   {
     "id": "sci.biology.seasons_living_things_oboeru",
@@ -2183,6 +2307,25 @@
     "tags": []
   },
   {
+    "id": "sci.physics.current_voltage_circuit_sim",
+    "grade": 5,
+    "subject": "sci",
+    "title": "シミュレーションで学ぶ理科 - 電気の基礎",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/denki_kiso_sim.html",
+    "format": "html",
+    "tags": [
+      "電気",
+      "乾電池",
+      "豆電球",
+      "回路",
+      "直列",
+      "並列",
+      "シミュレーション"
+    ]
+  },
+  {
     "id": "sci.physics.current_effect_heating",
     "grade": 5,
     "subject": "sci",
@@ -2194,6 +2337,22 @@
     "tags": []
   },
   {
+    "id": "sci.physics.current_effect_heating_sim",
+    "grade": 5,
+    "subject": "sci",
+    "title": "シミュレーションで学ぶ理科 - 電流の作用①（発熱）",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/denki_hatsunetsu_sim.html",
+    "format": "html",
+    "tags": [
+      "電流",
+      "発熱",
+      "電熱線",
+      "シミュレーション"
+    ]
+  },
+  {
     "id": "sci.physics.current_effect_magnetic",
     "grade": 5,
     "subject": "sci",
@@ -2203,6 +2362,24 @@
     "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.physics.current_effect_magnetic&mode=wakaru",
     "format": "html",
     "tags": []
+  },
+  {
+    "id": "sci.physics.current_effect_magnetic_sim",
+    "grade": 5,
+    "subject": "sci",
+    "title": "シミュレーションで学ぶ理科 - 電流の作用②（磁界）",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/denki_jikai_sim.html",
+    "format": "html",
+    "tags": [
+      "電流",
+      "磁界",
+      "電磁石",
+      "コイル",
+      "鉄心",
+      "シミュレーション"
+    ]
   },
   {
     "id": "sci.physics.lever_weight_basic",
@@ -2280,6 +2457,24 @@
     "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.volcano_structure&mode=wakaru",
     "format": "html",
     "tags": []
+  },
+  {
+    "id": "sci.earth.volcano_structure_sim",
+    "grade": 5,
+    "subject": "sci",
+    "title": "シミュレーションで学ぶ理科 - 火山のしくみ",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/kazan_shikumi_sim.html",
+    "format": "html",
+    "tags": [
+      "火山",
+      "マグマ",
+      "噴火",
+      "溶岩",
+      "火山灰",
+      "シミュレーション"
+    ]
   },
   {
     "id": "sci.earth.earthquake_structure",

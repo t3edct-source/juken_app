@@ -1186,24 +1186,31 @@ scienceUnits = [
     shortName: '小4',
     icon: '📚',
     lessons: [
-      // 生物（4）
+      // 生物（6）
       'sci.biology.seasons_living_things', // 季節と生物（春）
       'sci.biology.seasons_living_things_summer', // 季節と生物（夏〜冬）
+      'sci.kisetsu_seibutsu_annual_wakaru', // 季節と生物シミュレーション
+      'sci.konchu_lifecycle_wakaru', // 昆虫の年間ライフサイクルシミュレーション
       'sci.biology.plants_growth_light', // 植物の成長
       'sci.biology.plants_observation', // 花のつくりと受粉
-      // 物理（3）
+      // 物理（4）
       'sci.physics.weight_volume_basic', // つり合いとてんびん
+      'sci.tsuriai_tenbin_wakaru', // つり合いとてんびんシミュレーション
       'sci.physics.electricity_conductivity_basic', // 電気（乾電池と豆電球）
       'sci.physics.heat_properties', // 熱の性質とものの変化
-      // 化学（4）
+      // 化学（5）
       'sci.chemistry.air_properties', // 空気の性質
       'sci.chemistry.water_three_states', // 水の変化・状態変化
+      'sci.chemistry.water_three_states_sim', // 水の変化：温度と状態変化シミュレーション
       'sci.chemistry.combustion_air', // 燃焼と空気の成分
-      // 地学（4）
+      // 地学（7）
       'sci.earth.constellations_seasons', // 星と星座
       'sci.earth.sun_movement_shadow', // 太陽と影（基礎）
+      'sci.earth.sun_movement_shadow_sim', // 太陽と影：影の長さシミュレーション
       'sci.earth.weather_changes', // 天気の変化
-      'sci.earth.river_work' // 川のはたらき
+      'sci.earth.weather_changes_cloud_motion_model', // 天気の変化：雲が動くモデル
+      'sci.earth.river_work', // 川のはたらき
+      'sci.earth.river_work_sim' // 川のはたらきシミュレーション
     ]
   },
   {
@@ -1212,16 +1219,20 @@ scienceUnits = [
     shortName: '小5',
     icon: '📚',
     lessons: [
-      // 物理（7）
+      // 物理（8）
       'sci.physics.current_voltage_circuit', // 電気の基礎（乾電池・回路）
+      'sci.physics.current_voltage_circuit_sim', // 電気の基礎：乾電池と豆電球シミュレーション
       'sci.physics.current_effect_heating', // 電流の作用①（発熱）
+      'sci.physics.current_effect_heating_sim', // 電流の作用①：発熱シミュレーション
       'sci.physics.current_effect_magnetic', // 電流の作用②（磁界）
+      'sci.physics.current_effect_magnetic_sim', // 電流の作用②：磁界シミュレーション
       'sci.physics.lever_weight_basic', // てこのつり合い
       'sci.physics.spring_force', // ばねと力
       'sci.physics.light_properties', // 光の性質
       'sci.physics.force_motion', // 力と運動（浮力・かっ車・輪じく）
       // 地学（4）
       'sci.earth.volcano_structure', // 火山のしくみ
+      'sci.earth.volcano_structure_sim', // 火山のしくみ：マグマと噴火シミュレーション
       'sci.earth.earthquake_structure', // 地震のしくみ
       'sci.earth.land_river_erosion', // 流水と地形の変化
       'sci.earth.clouds_fronts_weather_map', // 気象（雲・前線・天気図）

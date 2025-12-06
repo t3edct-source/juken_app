@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>シミュレーションで学ぶ理科 - 天気の変化</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hiragino Sans', 'Yu Gothic', sans-serif;
+            background: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .home-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 44px;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .home-btn:hover {
+            background: #ff5252;
+            transform: translateY(-1px);
+        }
+
+        .home-btn:active {
+            transform: scale(0.98);
+        }
+
+        .lesson-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
+            margin: 0 10px;
+        }
+
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+        }
+
+        /* ▼ シミュレーションコンテナ（map-container相当） */
+        .sim-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            margin-bottom: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .sim-header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .sim-header h2 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .sim-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .sim-area {
+            padding: 12px 12px 16px;
+            background: #e3f2fd;
+        }
+
+        .sim-control-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .sim-control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 120px;
+            flex: 1;
+        }
+
+        .sim-control-label {
+            font-size: 13px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .sim-radio-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            font-size: 13px;
+        }
+
+        .sim-radio-row label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .sim-start-btn {
+            background: linear-gradient(135deg, #ff8a00 0%, #ff6b6b 100%);
+            color: #fff;
+            border: none;
+            border-radius: 999px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            min-height: 44px;
+            flex-shrink: 0;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .sim-start-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* ▼ 実際のシミュレーション領域（前回の field を再利用） */
+        .sim-field {
+            position: relative;
+            margin-top: 4px;
+            background: linear-gradient(to top, #9be7ff 0%, #e3f2fd 60%, #e0f7fa 100%);
+            border-radius: 12px;
+            padding: 12px;
+            overflow: hidden;
+            height: 190px;
+        }
+
+        .zone-label {
+            position: absolute;
+            top: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 999px;
+            color: #fff;
+        }
+
+        .zone-left {
+            left: 8px;
+        }
+
+        .zone-right {
+            right: 8px;
+        }
+
+        .zone-high {
+            background: #1565c0; /* 高気圧（青） */
+        }
+
+        .zone-low {
+            background: #c62828; /* 低気圧（赤） */
+        }
+
+        .ground {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 56px;
+            background: linear-gradient(to top, #4caf50, #81c784);
+        }
+
+        .wind-arrows {
+            position: absolute;
+            top: 88px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 32px;
+            pointer-events: none;
+        }
+
+        .wind-arrow {
+            font-size: 22px;
+            opacity: 0.2;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .wind-arrow.active {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        .cloud {
+            position: absolute;
+            top: 52px;
+            width: 72px;
+            height: 40px;
+            border-radius: 40px;
+            background: #ffffff;
+            box-shadow:
+                -18px 0 0 0 #ffffff,
+                18px 0 0 0 #ffffff,
+                0 -14px 0 0 #ffffff;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: #555;
+            pointer-events: none;
+            transform: translateX(0);
+        }
+
+        .sim-comment {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #444;
+            background: #f5f5f5;
+            border-radius: 12px;
+            padding: 10px 12px;
+            border-left: 4px solid #00bcd4;
+            margin-top: 10px;
+        }
+
+        .sim-comment strong {
+            color: #00796b;
+        }
+
+        /* ▼ 既存テンプレと同じ質問パネルなど */
+
+        .info-panel {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .info-panel h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .info-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #4facfe;
+        }
+
+        .info-item h4 {
+            color: #4facfe;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .info-item p {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .question-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .choice {
+            padding: 14px 16px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .choice:hover {
+            background: #e9ecef;
+            border-color: #667eea;
+        }
+
+        .choice.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .choice.correct {
+            background: #28a745;
+            color: white;
+            border-color: #28a745;
+            animation: correctPulse 0.6s ease;
+        }
+
+        .choice.incorrect {
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+            animation: wrongShake 0.6s ease;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .explanation {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #28a745;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .explanation h4 {
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+
+        .explanation p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 48px;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .prev-btn {
+            background: #6c757d;
+            color: white;
+        }
+
+        .prev-btn:hover:not(:disabled) {
+            background: #5a6268;
+        }
+
+        .next-btn {
+            background: #4facfe;
+            color: white;
+        }
+
+        .next-btn:hover:not(:disabled) {
+            background: #3d8bfe;
+        }
+
+        .start-learning-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px auto;
+            display: block;
+            min-height: 52px;
+            width: 100%;
+            max-width: 400px;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .start-learning-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .progress-bar {
+            background: #e9ecef;
+            border-radius: 10px;
+            height: 8px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        * {
+            touch-action: manipulation;
+        }
+
+        .choice, .nav-btn, .home-btn, .start-learning-btn, .sim-start-btn {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                overflow-x: hidden;
+            }
+
+            .header {
+                padding: 8px 12px;
+                flex-wrap: nowrap;
+            }
+
+            .home-btn {
+                padding: 10px 16px;
+                font-size: 13px;
+                min-width: auto;
+                flex-shrink: 0;
+            }
+
+            .lesson-title {
+                font-size: 14px;
+                margin: 0 8px;
+                text-align: center;
+                flex: 1;
+            }
+
+            .header > div:last-child {
+                width: 80px;
+                flex-shrink: 0;
+            }
+
+            .main-container {
+                padding: 10px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .info-panel {
+                padding: 16px;
+            }
+
+            .info-item {
+                padding: 12px;
+            }
+
+            .info-item h4 {
+                font-size: 13px;
+            }
+
+            .info-item p {
+                font-size: 12px;
+            }
+
+            .sim-area {
+                padding: 10px 10px 14px;
+            }
+
+            .sim-field {
+                height: 200px;
+            }
+
+            .question-container {
+                padding: 16px;
+            }
+
+            .question-text {
+                font-size: 15px;
+                margin-bottom: 12px;
+            }
+
+            .choice {
+                padding: 14px 16px;
+                font-size: 14px;
+                min-height: 52px;
+            }
+
+            .navigation {
+                flex-direction: column;
+                gap: 12px;
+                margin-top: 16px;
+            }
+
+            .nav-btn {
+                width: 100%;
+                padding: 14px 20px;
+                font-size: 15px;
+            }
+
+            .start-learning-btn {
+                padding: 16px 24px;
+                font-size: 15px;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .explanation {
+                padding: 12px;
+                font-size: 13px;
+                margin-top: 12px;
+            }
+
+            .explanation h4 {
+                font-size: 14px;
+                margin-bottom: 8px;
+            }
+
+            .progress-bar {
+                margin: 12px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 6px 10px;
+            }
+
+            .home-btn {
+                padding: 8px 14px;
+                font-size: 12px;
+            }
+
+            .lesson-title {
+                font-size: 12px;
+                margin: 0 6px;
+            }
+
+            .header > div:last-child {
+                width: 70px;
+            }
+
+            .main-container {
+                padding: 8px;
+            }
+
+            .question-container {
+                padding: 12px;
+            }
+
+            .question-text {
+                font-size: 14px;
+            }
+
+            .choice {
+                padding: 12px 14px;
+                font-size: 13px;
+                min-height: 48px;
+            }
+
+            .info-panel {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <button class="home-btn" onclick="goHome()">🏠 ホーム</button>
+        <div class="lesson-title">シミュレーションで学ぶ理科 - 天気の変化</div>
+        <div style="width: 80px;"></div>
+    </div>
+
+    <div class="main-container">
+        <!-- シミュレーションエリア -->
+        <div class="sim-container">
+            <div class="sim-header">
+                <h2>☁️ 天気の変化シミュレーション</h2>
+                <p>高気圧と低気圧のならびを変えて、風と雲の動きを体験しよう</p>
+            </div>
+            <div class="sim-area">
+                <div class="sim-control-row">
+                    <div class="sim-control-group">
+                        <div class="sim-control-label">左の空のようす</div>
+                        <div class="sim-radio-row">
+                            <label>
+                                <input type="radio" name="leftPressure" value="high" checked>
+                                高気圧（晴れやすい）
+                            </label>
+                            <label>
+                                <input type="radio" name="leftPressure" value="low">
+                                低気圧（くもり・雨になりやすい）
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="sim-control-group">
+                        <div class="sim-control-label">右の空のようす</div>
+                        <div class="sim-radio-row">
+                            <label>
+                                <input type="radio" name="rightPressure" value="high">
+                                高気圧
+                            </label>
+                            <label>
+                                <input type="radio" name="rightPressure" value="low" checked>
+                                低気圧
+                            </label>
+                        </div>
+                    </div>
+
+                    <button class="sim-start-btn" id="startBtn">▶ シミュレーションスタート</button>
+                </div>
+
+                <div class="sim-field" id="sim-field">
+                    <div class="zone-label zone-left zone-high" id="leftLabel">左：高気圧</div>
+                    <div class="zone-label zone-right zone-low" id="rightLabel">右：低気圧</div>
+
+                    <div class="cloud" id="cloud">雲</div>
+
+                    <div class="wind-arrows">
+                        <div class="wind-arrow" id="arrowLeft">←</div>
+                        <div class="wind-arrow" id="arrowRight">→</div>
+                    </div>
+
+                    <div class="ground"></div>
+                </div>
+
+                <div class="sim-comment" id="sim-comment">
+                    左を<strong>高気圧</strong>、右を<strong>低気圧</strong>にして「シミュレーションスタート」をおしてみよう。<br>
+                    空気はどちらからどちらへ動き、その結果<strong>雲</strong>はどう動くかな？
+                </div>
+            </div>
+        </div>
+
+        <!-- 情報パネル（導入テキスト） -->
+        <div class="info-panel show" id="info-panel">
+            <h3>📊 天気の変化と気圧</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h4>高気圧</h4>
+                    <p>まわりより<strong>気圧が高い</strong>ところ。空気が下降するため、空は<strong>晴れやすく</strong>なります。</p>
+                </div>
+                <div class="info-item">
+                    <h4>低気圧</h4>
+                    <p>まわりより<strong>気圧が低い</strong>ところ。まわりから空気が集まってきて上昇し、<strong>雲ができ、雨になりやすく</strong>なります。</p>
+                </div>
+                <div class="info-item">
+                    <h4>風</h4>
+                    <p>空気は<strong>高気圧から低気圧へ</strong>動きます。この空気の動きが「風」です。</p>
+                </div>
+            </div>
+            <button class="start-learning-btn" onclick="startLearning()">学習を開始する</button>
+        </div>
+
+        <!-- 問題エリア -->
+        <div class="question-container" id="question-container" style="display: none;">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="question-text" id="question-text"></div>
+            <div class="choices" id="choices"></div>
+            <div class="explanation" id="explanation"></div>
+            <div class="navigation">
+                <button class="nav-btn prev-btn" id="prev-btn" onclick="previousQuestion()" disabled>前の問題</button>
+                <button class="nav-btn next-btn" id="next-btn" onclick="nextQuestion()">次の問題</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ================================
+           ▼ シミュレーション用スクリプト
+        ================================= */
+        const startBtn = document.getElementById('startBtn');
+        const cloudEl = document.getElementById('cloud');
+        const fieldEl = document.getElementById('sim-field');
+        const leftLabel = document.getElementById('leftLabel');
+        const rightLabel = document.getElementById('rightLabel');
+        const arrowLeft = document.getElementById('arrowLeft');
+        const arrowRight = document.getElementById('arrowRight');
+        const simCommentEl = document.getElementById('sim-comment');
+
+        let animationId = null;
+        let cloudX = 0;
+        let windDirection = 0; // -1: 右→左, 0: ほぼなし, 1: 左→右
+        let windSpeed = 0;
+
+        function getSelectedPressure(name) {
+            const el = document.querySelector('input[name="' + name + '"]:checked');
+            return el ? el.value : 'high';
+        }
+
+        function updateZoneLabels(left, right) {
+            leftLabel.textContent = '左：' + (left === 'high' ? '高気圧' : '低気圧');
+            rightLabel.textContent = '右：' + (right === 'high' ? '高気圧' : '低気圧');
+
+            leftLabel.classList.toggle('zone-high', left === 'high');
+            leftLabel.classList.toggle('zone-low', left === 'low');
+            rightLabel.classList.toggle('zone-high', right === 'high');
+            rightLabel.classList.toggle('zone-low', right === 'low');
+        }
+
+        function setSimComment(left, right) {
+            if (left === right) {
+                simCommentEl.innerHTML =
+                    '左も右も<strong>' + (left === 'high' ? '高気圧' : '低気圧') + '</strong>です。<br>' +
+                    '気圧のちがいがほとんどないので、<strong>風はあまりふきません</strong>。';
+            } else if (left === 'high' && right === 'low') {
+                simCommentEl.innerHTML =
+                    '左が<strong>高気圧</strong>、右が<strong>低気圧</strong>です。<br>' +
+                    '空気は<strong>高気圧から低気圧へ</strong>動きます。この空気の動きが<strong>風</strong>です。<br>' +
+                    'そのため、雲は<strong>左から右へ</strong>ながれていきます。';
+            } else if (left === 'low' && right === 'high') {
+                simCommentEl.innerHTML =
+                    '左が<strong>低気圧</strong>、右が<strong>高気圧</strong>です。<br>' +
+                    '空気は<strong>高気圧から低気圧へ</strong>動くので、今度は<strong>右から左へ</strong>風がふきます。<br>' +
+                    '雲は<strong>右から左へ</strong>ながれていきます。';
+            }
+        }
+
+        function stopAnimation() {
+            if (animationId !== null) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
+        }
+
+        function startSimulation() {
+            const left = getSelectedPressure('leftPressure');
+            const right = getSelectedPressure('rightPressure');
+
+            updateZoneLabels(left, right);
+            setSimComment(left, right);
+            stopAnimation();
+
+            arrowLeft.classList.remove('active');
+            arrowRight.classList.remove('active');
+
+            if (left === right) {
+                windDirection = 0;
+                windSpeed = 0.5;
+            } else if (left === 'high' && right === 'low') {
+                windDirection = 1;
+                windSpeed = 1.5;
+                arrowRight.classList.add('active');
+            } else {
+                windDirection = -1;
+                windSpeed = 1.5;
+                arrowLeft.classList.add('active');
+            }
+
+            const fieldRect = fieldEl.getBoundingClientRect();
+            const cloudWidth = cloudEl.offsetWidth || 72;
+
+            if (windDirection === 1) {
+                cloudX = fieldRect.width * 0.1;
+            } else if (windDirection === -1) {
+                cloudX = fieldRect.width * 0.8 - cloudWidth;
+            } else {
+                cloudX = fieldRect.width * 0.45;
+            }
+
+            cloudEl.style.transform = 'translateX(' + cloudX + 'px)';
+
+            function animate() {
+                const w = fieldEl.getBoundingClientRect().width;
+                const cloudW = cloudEl.offsetWidth || 72;
+
+                if (windDirection === 1) {
+                    cloudX += windSpeed;
+                    if (cloudX > w - cloudW) {
+                        cloudX = -cloudW * 0.2;
+                    }
+                } else if (windDirection === -1) {
+                    cloudX -= windSpeed;
+                    if (cloudX < -cloudW * 0.2) {
+                        cloudX = w - cloudW;
+                    }
+                } else {
+                    cloudX += Math.sin(Date.now() / 500) * 0.2;
+                }
+
+                cloudEl.style.transform = 'translateX(' + cloudX + 'px)';
+                animationId = requestAnimationFrame(animate);
+            }
+
+            animationId = requestAnimationFrame(animate);
+        }
+
+        startBtn.addEventListener('click', startSimulation);
+        // 初期表示
+        updateZoneLabels('high', 'low');
+
+        /* ================================
+           ▼ わかる編・問題データ
+        ================================= */
+        const lessonData = {
+            id: 'sci.weather.tenki_no_henka_wakaru',
+            questions: [
+                {
+                    id: 1,
+                    question: "このシミュレーションで、風がつよくふくのはどんなならびのときですか？",
+                    choices: [
+                        "左も右も高気圧のとき",
+                        "左も右も低気圧のとき",
+                        "左が高気圧で右が低気圧、または左が低気圧で右が高気圧のとき",
+                        "気圧と風には関係がない"
+                    ],
+                    correct: 2,
+                    explanation: "空気は「高気圧 → 低気圧」へ動きます。左右で気圧がちがうときに、気圧の差をうめるように空気が動き、風がふきます。"
+                },
+                {
+                    id: 2,
+                    question: "空気はつねに、どちらからどちらへ動きますか？",
+                    choices: [
+                        "低気圧から高気圧へ",
+                        "高気圧から低気圧へ",
+                        "太陽のある方からない方へ",
+                        "雲の多い方から少ない方へ"
+                    ],
+                    correct: 1,
+                    explanation: "空気は気圧の高いところ（高気圧）から、気圧の低いところ（低気圧）へと動きます。この空気の動きが風です。"
+                },
+                {
+                    id: 3,
+                    question: "左も右も高気圧にしたとき、雲の動きはどうなりますか？",
+                    choices: [
+                        "つよい風で、雲がすごい速さで流れる",
+                        "まったく動かなくなる",
+                        "ゆっくりとしか動かない（風がほとんどふかない）",
+                        "雲が上下にジャンプする"
+                    ],
+                    correct: 2,
+                    explanation: "左右で気圧がほとんど同じなので、空気を動かす力が弱く、風はあまりふきません。そのため、雲の動きもゆっくりになります。"
+                }
+            ]
+        };
+
+        /* ================================
+           ▼ 学習履歴管理クラス（既存テンプレ準拠）
+        ================================= */
+        class LearningTracker {
+            constructor() {
+                this.mode = 'wakaru';
+                this.historyKey = 'learningHistory_wakaru';
+
+                this.currentSession = {
+                    startTime: Date.now(),
+                    questions: [],
+                    score: 0,
+                    totalQuestions: 0,
+                    mode: 'wakaru'
+                };
+            }
+
+            recordAnswer(questionId, selectedAnswer, correctAnswer, timeSpent) {
+                this.currentSession.questions.push({
+                    questionId,
+                    selectedAnswer,
+                    correctAnswer,
+                    isCorrect: selectedAnswer === correctAnswer,
+                    timeSpent,
+                    timestamp: Date.now()
+                });
+
+                if (selectedAnswer === correctAnswer) {
+                    this.currentSession.score++;
+                }
+                this.currentSession.totalQuestions++;
+            }
+
+            saveSession() {
+                try {
+                    const existingHistory = this.loadHistory();
+                    const totalTime = Date.now() - this.currentSession.startTime;
+                    this.currentSession.totalTime = totalTime;
+
+                    const sessionToSave = {
+                        ...this.currentSession,
+                        endTime: Date.now(),
+                        duration: totalTime,
+                        totalTime: totalTime
+                    };
+
+                    existingHistory.sessions.push(sessionToSave);
+                    existingHistory.stats = this.calculateStats(existingHistory.sessions);
+                    localStorage.setItem(this.historyKey, JSON.stringify(existingHistory));
+
+                    console.log('✅ セッション保存完了:', {
+                        score: this.currentSession.score,
+                        totalQuestions: this.currentSession.totalQuestions,
+                        totalTime: totalTime
+                    });
+
+                    return true;
+                } catch (error) {
+                    console.error('セッション保存エラー:', error);
+                    return false;
+                }
+            }
+
+            loadHistory() {
+                try {
+                    const data = localStorage.getItem(this.historyKey);
+                    if (data) {
+                        return JSON.parse(data);
+                    }
+                } catch (error) {
+                    console.error('履歴読み込みエラー:', error);
+                }
+
+                return {
+                    sessions: [],
+                    stats: {
+                        totalSessions: 0,
+                        totalQuestions: 0,
+                        correctAnswers: 0,
+                        averageScore: 0,
+                        bestScore: 0
+                    }
+                };
+            }
+
+            calculateStats(sessions) {
+                const stats = {
+                    totalSessions: sessions.length,
+                    totalQuestions: 0,
+                    correctAnswers: 0,
+                    averageScore: 0,
+                    bestScore: 0
+                };
+
+                sessions.forEach(session => {
+                    stats.totalQuestions += session.totalQuestions;
+                    stats.correctAnswers += session.score;
+                    stats.bestScore = Math.max(stats.bestScore, session.score);
+                });
+
+                if (stats.totalSessions > 0 && stats.totalQuestions > 0) {
+                    stats.averageScore = (stats.correctAnswers / stats.totalQuestions * 100).toFixed(1);
+                }
+
+                return stats;
+            }
+        }
+
+        const learningTracker = new LearningTracker();
+
+        let currentQuestion = 0;
+        let score = 0;
+        let questionStartTime = Date.now();
+
+        function generateShuffledIndices(length) {
+            const indices = Array.from({ length }, (_, i) => i);
+            for (let i = indices.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [indices[i], indices[j]] = [indices[j], indices[i]];
+            }
+            return indices;
+        }
+
+        function showQuestion(index) {
+            const question = lessonData.questions[index];
+            questionStartTime = Date.now();
+
+            document.getElementById('explanation').classList.remove('show');
+            document.getElementById('question-text').textContent = question.question;
+
+            const choicesContainer = document.getElementById('choices');
+            choicesContainer.innerHTML = '';
+
+            const shuffledChoiceIndices = generateShuffledIndices(question.choices.length);
+            shuffledChoiceIndices.forEach(originalIndex => {
+                const choiceElement = document.createElement('div');
+                choiceElement.className = 'choice';
+                choiceElement.textContent = question.choices[originalIndex];
+                choiceElement.dataset.originalIndex = String(originalIndex);
+                choiceElement.onclick = () => selectAnswer(originalIndex);
+                choicesContainer.appendChild(choiceElement);
+            });
+
+            const progress = ((index + 1) / lessonData.questions.length) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+
+            const nextBtn = document.getElementById('next-btn');
+            document.getElementById('prev-btn').disabled = index === 0;
+
+            if (index === lessonData.questions.length - 1) {
+                nextBtn.disabled = true;
+                nextBtn.textContent = '次の問題';
+            } else {
+                nextBtn.disabled = false;
+                nextBtn.textContent = '次の問題';
+            }
+        }
+
+        function sendQuestionAnswerToParent(questionData, userAnswer, isCorrect) {
+            const lessonId = lessonData.id;
+
+            const messageData = {
+                type: 'question:answered',
+                lessonId: lessonId,
+                questionData: {
+                    qnum: questionData.id || currentQuestion,
+                    question: questionData.question,
+                    choices: questionData.choices,
+                    answer: questionData.correct,
+                    explanation: questionData.explanation
+                },
+                userAnswer: userAnswer,
+                correctAnswer: questionData.correct,
+                isCorrect: isCorrect,
+                timestamp: Date.now()
+            };
+
+            console.log('📝 個別問題回答を送信:', messageData);
+
+            try {
+                if (window.parent !== window) {
+                    window.parent.postMessage(messageData, '*');
+                }
+                if (window.top !== window) {
+                    window.top.postMessage(messageData, '*');
+                }
+
+                const existingAnswers = JSON.parse(localStorage.getItem('questionAnswers') || '[]');
+                existingAnswers.push(messageData);
+                localStorage.setItem('questionAnswers', JSON.stringify(existingAnswers));
+
+                console.log('✅ 個別問題回答送信完了 (postMessage + localStorage)');
+            } catch (e) {
+                console.log('❌ 個別問題回答送信失敗:', e);
+            }
+        }
+
+        function selectAnswer(choiceIndex) {
+            const question = lessonData.questions[currentQuestion];
+            const choices = document.querySelectorAll('.choice');
+            const timeSpent = Date.now() - questionStartTime;
+
+            choices.forEach(choice => {
+                choice.style.pointerEvents = 'none';
+            });
+
+            choices.forEach(choice => {
+                choice.classList.remove('selected', 'correct', 'incorrect');
+                const originalIndex = parseInt(choice.dataset.originalIndex || "-1", 10);
+                if (originalIndex === choiceIndex) {
+                    choice.classList.add('selected');
+                }
+            });
+
+            setTimeout(() => {
+                const isCorrect = choiceIndex === question.correct;
+
+                choices.forEach(choice => {
+                    const originalIndex = parseInt(choice.dataset.originalIndex || "-1", 10);
+                    if (originalIndex === question.correct) {
+                        choice.classList.add('correct');
+                    } else if (originalIndex === choiceIndex && !isCorrect) {
+                        choice.classList.add('incorrect');
+                    }
+                });
+
+                const explanation = document.getElementById('explanation');
+                explanation.innerHTML = '<h4>解説</h4><p>' + question.explanation + '</p>';
+                explanation.classList.add('show');
+
+                if (isCorrect) {
+                    score++;
+                }
+
+                learningTracker.recordAnswer(
+                    question.id || currentQuestion,
+                    choiceIndex,
+                    question.correct,
+                    Math.round(timeSpent / 1000)
+                );
+
+                sendQuestionAnswerToParent(question, choiceIndex, isCorrect);
+
+                const nextBtn = document.getElementById('next-btn');
+                if (currentQuestion === lessonData.questions.length - 1) {
+                    nextBtn.textContent = '学習完了';
+                    nextBtn.disabled = false;
+                }
+            }, 500);
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+                document.getElementById('explanation').classList.remove('show');
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion === lessonData.questions.length - 1) {
+                completeLesson();
+                return;
+            }
+
+            if (currentQuestion < lessonData.questions.length - 1) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+                document.getElementById('explanation').classList.remove('show');
+            }
+        }
+
+        function showCurrentSessionResult() {
+            const session = learningTracker.currentSession;
+            const scorePercent = session.totalQuestions > 0 ?
+                Math.round((session.score / session.totalQuestions) * 100) : 0;
+
+            let resultMessage = '';
+            if (scorePercent >= 90) {
+                resultMessage = '🎉 素晴らしい成果です！';
+            } else if (scorePercent >= 70) {
+                resultMessage = '👍 よくできました！';
+            } else if (scorePercent >= 50) {
+                resultMessage = '📚 もう少し頑張りましょう！';
+            } else {
+                resultMessage = '💪 もう一度チャレンジしよう！';
+            }
+
+            const totalTime = Date.now() - session.startTime;
+            const timeMinutes = Math.floor(totalTime / 60000);
+            const timeSeconds = Math.floor((totalTime % 60000) / 1000);
+            const timeDisplay = timeMinutes > 0 ?
+                timeMinutes + '分' + timeSeconds + '秒' :
+                timeSeconds + '秒';
+
+            return `
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 16px; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.3); margin-top: 20px;">
+                    <div style="font-size: 1.8rem; font-weight: bold; margin-bottom: 1rem;">学習完了！</div>
+                    <div style="font-size: 1.1rem; margin-bottom: 1.5rem;">${resultMessage}</div>
+                    <div style="background: rgba(255,255,255,0.2); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem;">
+                        <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">${session.score}/${session.totalQuestions}問正解</div>
+                        <div style="font-size: 1.5rem; font-weight: 600;">${scorePercent}%</div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.9rem; opacity: 0.9;">
+                        <div>学習時間: <strong>${timeDisplay}</strong></div>
+                        <div>完了時刻: <strong>${new Date().toLocaleString('ja-JP', {month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})}</strong></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function completeLesson() {
+            learningTracker.saveSession();
+
+            const lessonId = lessonData.id;
+
+            const messageData = {
+                type: 'lesson:complete',
+                lessonId: lessonId,
+                detail: {
+                    correct: learningTracker.currentSession.score,
+                    total: learningTracker.currentSession.totalQuestions,
+                    timeSec: Math.round((Date.now() - learningTracker.currentSession.startTime) / 1000)
+                }
+            };
+
+            console.log('🚀 完了メッセージを送信します:', messageData);
+
+            try {
+                window.parent.postMessage(messageData, '*');
+                console.log('✅ window.parent.postMessage 送信成功');
+            } catch (e) {
+                console.log('❌ window.parent.postMessage 失敗:', e);
+            }
+
+            try {
+                if (window.top !== window) {
+                    window.top.postMessage(messageData, '*');
+                    console.log('✅ window.top.postMessage 送信成功');
+                }
+            } catch (e) {
+                console.log('❌ window.top.postMessage 送信失敗:', e);
+            }
+
+            try {
+                const storageMessage = {
+                    type: 'lesson:complete',
+                    data: messageData,
+                    timestamp: Date.now()
+                };
+                localStorage.setItem('lessonCompleteMessage', JSON.stringify(storageMessage));
+
+                if (window.parent && window.parent.saveLessonProgress) {
+                    window.parent.saveLessonProgress(
+                        messageData.lessonId,
+                        messageData.detail.correct,
+                        messageData.detail.total,
+                        messageData.detail.timeSec
+                    );
+                    console.log('✅ 直接メインページの関数呼び出し成功');
+                }
+            } catch (e) {
+                console.log('❌ localStorage/storage event 失敗:', e);
+            }
+
+            document.getElementById('question-container').style.display = 'none';
+
+            const resultContainer = document.createElement('div');
+            resultContainer.className = 'question-container';
+            resultContainer.style.display = 'block';
+            resultContainer.innerHTML = showCurrentSessionResult();
+
+            const homeButton = document.createElement('button');
+            homeButton.textContent = '🏠 ホームに戻る';
+            homeButton.className = 'start-learning-btn';
+            homeButton.style.marginTop = '1.5rem';
+            homeButton.onclick = () => {
+                if (window.parent !== window || window.top !== window) {
+                    try {
+                        window.parent.postMessage({ type: 'lesson:goBack' }, '*');
+                        window.top.postMessage({ type: 'lesson:goBack' }, '*');
+                        console.log('🏠 ホームに戻るメッセージを送信しました');
+                        return;
+                    } catch (e) {
+                        console.log('ホームに戻るメッセージの送信に失敗:', e);
+                    }
+                }
+                goHome();
+            };
+            resultContainer.appendChild(homeButton);
+
+            document.querySelector('.main-container').appendChild(resultContainer);
+        }
+
+        function startLearning() {
+            document.getElementById('info-panel').style.display = 'none';
+            document.getElementById('question-container').style.display = 'block';
+            if (lessonData.questions.length > 0) {
+                showQuestion(0);
+            } else {
+                alert('問題データがまだ追加されていません。');
+            }
+        }
+
+        function goHome() {
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>

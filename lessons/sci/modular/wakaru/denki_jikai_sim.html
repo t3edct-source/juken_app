@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>シミュレーションで学ぶ理科 - 電流の作用②（磁界）</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+      background: linear-gradient(135deg, #cfd9ff 0%, #e2fcff 50%, #f5f7ff 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .header {
+      background: rgba(255,255,255,0.95);
+      padding: 10px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .home-btn {
+      background:#4f8cff;
+      color:white;
+      border:none;
+      padding:10px 18px;
+      border-radius:20px;
+      font-size:14px;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      min-height:44px;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .home-btn:hover { background:#3b6fe0; transform:translateY(-1px); }
+    .home-btn:active { transform:scale(0.98); }
+    .lesson-title {
+      font-size:18px;
+      font-weight:bold;
+      color:#333;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      flex:1;
+      margin:0 10px;
+    }
+    .main-container {
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      padding:15px;
+    }
+
+    /* ▼ シミュ全体 */
+    .sim-container {
+      background:white;
+      border-radius:15px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.15);
+      margin-bottom:15px;
+      overflow:hidden;
+      position:relative;
+    }
+    .sim-header {
+      background:linear-gradient(135deg, #4f8cff 0%, #00bcd4 100%);
+      color:white;
+      padding:15px;
+      text-align:center;
+    }
+    .sim-header h2 { font-size:20px; margin-bottom:5px; }
+    .sim-header p { font-size:14px; opacity:0.9; }
+
+    .sim-area {
+      padding:12px 12px 16px;
+      background:#e3f2fd;
+    }
+    .sim-control-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      margin-bottom:10px;
+    }
+    .sim-control-label {
+      font-size:13px;
+      font-weight:bold;
+      color:#1a237e;
+      min-width:150px;
+    }
+    .slider {
+      flex:1;
+      -webkit-appearance:none;
+      height:6px;
+      border-radius:999px;
+      background:#c5cae9;
+      outline:none;
+    }
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance:none;
+      width:22px; height:22px;
+      border-radius:50%;
+      background:#3f51b5;
+      box-shadow:0 0 0 4px rgba(63,81,181,0.3);
+      cursor:pointer;
+    }
+    .slider::-moz-range-thumb {
+      width:22px; height:22px;
+      border-radius:50%;
+      background:#3f51b5;
+      box-shadow:0 0 0 4px rgba(63,81,181,0.3);
+      cursor:pointer;
+    }
+    .value-display {
+      font-size:13px;
+      font-weight:bold;
+      color:#283593;
+      min-width:90px;
+      text-align:right;
+    }
+
+    .toggle-group {
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .toggle-btn {
+      padding:8px 14px;
+      border-radius:999px;
+      border:2px solid #c5cae9;
+      background:#e8eaf6;
+      font-size:13px;
+      cursor:pointer;
+      transition:all 0.2s ease;
+      min-height:36px;
+      display:flex;
+      align-items:center;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .toggle-btn.selected {
+      background:#536dfe;
+      border-color:#3d5afe;
+      color:#e3f2fd;
+      font-weight:bold;
+    }
+
+    .sim-field {
+      position:relative;
+      margin-top:6px;
+      background:linear-gradient(to bottom, #e8eaf6 0%, #d1c4e9 55%, #b39ddb 100%);
+      border-radius:12px;
+      padding:12px;
+      overflow:hidden;
+      min-height:230px;
+    }
+
+    /* ▼ 電磁石イメージ */
+    .magnet-area {
+      position:relative;
+      width:100%;
+      height:150px;
+    }
+
+    .core {
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%, -50%);
+      width:100px;
+      height:35px;
+      border-radius:10px;
+      background:linear-gradient(135deg, #90a4ae 0%, #607d8b 50%, #455a64 100%);
+      box-shadow:0 3px 8px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.2);
+      opacity:0;
+      transition:opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      border:2px solid rgba(69,90,100,0.9);
+      z-index:3;
+    }
+    .core.visible {
+      opacity:1;
+      transform:translate(-50%, -50%) scale(1);
+      box-shadow:0 4px 12px rgba(0,0,0,0.5), inset 0 0 8px rgba(96,125,139,0.3);
+      animation:corePulse 2s ease-in-out infinite;
+    }
+    @keyframes corePulse {
+      0%, 100% { box-shadow:0 4px 12px rgba(0,0,0,0.5), inset 0 0 8px rgba(96,125,139,0.3); }
+      50% { box-shadow:0 6px 16px rgba(96,125,139,0.6), inset 0 0 12px rgba(96,125,139,0.5); }
+    }
+    .core-label {
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%, -50%);
+      font-size:9px;
+      font-weight:bold;
+      color:rgba(255,255,255,0.95);
+      text-shadow:0 1px 3px rgba(0,0,0,0.7);
+      opacity:0;
+      transition:opacity 0.3s ease;
+      pointer-events:none;
+      white-space:nowrap;
+      z-index:4;
+    }
+    .core.visible .core-label {
+      opacity:1;
+    }
+
+    .coil-body {
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%, -50%);
+      width:150px;
+      height:60px;
+      border-radius:18px;
+      background:linear-gradient(135deg, #5c6bc0 0%, #3949ab 50%, #283593 100%);
+      box-shadow:0 4px 10px rgba(0,0,0,0.4);
+      overflow:visible;
+      transition:box-shadow 0.3s ease, opacity 0.3s ease;
+      z-index:1;
+    }
+    .coil-body.has-core {
+      box-shadow:0 4px 10px rgba(0,0,0,0.4), 0 0 15px rgba(96,125,139,0.4);
+      opacity:0.85;
+    }
+    .coil-wrap {
+      position:absolute;
+      left:0;
+      top:0;
+      width:100%;
+      height:100%;
+      background-image:repeating-linear-gradient(
+        90deg,
+        rgba(255,255,255,0.9) 0px,
+        rgba(255,255,255,0.9) 4px,
+        rgba(255,255,255,0.1) 4px,
+        rgba(255,255,255,0.1) 10px
+      );
+      mix-blend-mode:screen;
+      opacity:0.5;
+    }
+    .coil-glow {
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%, -50%);
+      width:180px;
+      height:80px;
+      border-radius:24px;
+      background:radial-gradient(circle at 50% 50%, rgba(255,255,255,0.9) 0%, rgba(129,212,250,0.9) 40%, rgba(41,121,255,0.4) 75%);
+      opacity:0;
+      transition:opacity 0.25s ease, box-shadow 0.25s ease;
+      box-shadow:0 0 0 rgba(41,98,255,0.8);
+      pointer-events:none;
+    }
+    .coil-glow.low {
+      opacity:0.35;
+      box-shadow:0 0 16px rgba(41,182,246,0.9);
+    }
+    .coil-glow.mid {
+      opacity:0.7;
+      box-shadow:0 0 22px rgba(41,98,255,1);
+    }
+    .coil-glow.high {
+      opacity:1;
+      box-shadow:0 0 32px rgba(26,35,126,1);
+    }
+
+    .pole-label {
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      background:rgba(26,35,126,0.9);
+      color:white;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:bold;
+      box-shadow:0 2px 6px rgba(0,0,0,0.4);
+    }
+    .pole-label.left { left:26px; }
+    .pole-label.right { right:26px; }
+
+    .field-line {
+      position:absolute;
+      border-radius:50%;
+      border:2px dashed rgba(227,242,253,0.8);
+      box-shadow:0 0 12px rgba(187,222,251,0.8);
+      opacity:0;
+      transition:opacity 0.3s ease, border-width 0.3s ease, box-shadow 0.3s ease;
+    }
+    .field-line.inner {
+      left:15%; right:15%; top:18%; bottom:18%;
+    }
+    .field-line.middle {
+      left:11%; right:11%; top:14%; bottom:14%;
+    }
+    .field-line.outer {
+      left:8%; right:8%; top:10%; bottom:10%;
+    }
+    .field-line.far {
+      left:5%; right:5%; top:6%; bottom:6%;
+    }
+    .field-line.visible {
+      opacity:1;
+    }
+    .field-line.weak {
+      border-width:1px;
+      border-color:rgba(187,222,251,0.6);
+      box-shadow:0 0 8px rgba(187,222,251,0.5);
+    }
+    .field-line.medium {
+      border-width:2px;
+      border-color:rgba(129,212,250,0.8);
+      box-shadow:0 0 15px rgba(129,212,250,0.7);
+    }
+    .field-line.strong {
+      border-width:3px;
+      border-color:rgba(66,165,245,1);
+      box-shadow:0 0 20px rgba(66,165,245,0.9), 0 0 30px rgba(41,121,255,0.5);
+    }
+
+    /* 吸いつくクリップ */
+    .clip-group {
+      position:absolute;
+      bottom:6px;
+      right:10px;
+      display:flex;
+      gap:4px;
+      align-items:flex-end;
+    }
+    .clip {
+      width:14px;
+      height:22px;
+      border-radius:4px;
+      border:2px solid rgba(236,239,241,0.9);
+      border-top:none;
+      position:relative;
+      opacity:0.1;
+      transition:opacity 0.3s ease, transform 0.3s ease;
+    }
+    .clip::before {
+      content:"";
+      position:absolute;
+      left:2px;
+      right:2px;
+      bottom:5px;
+      height:2px;
+      background:rgba(236,239,241,0.9);
+    }
+    .clip.visible {
+      opacity:1;
+      transform:translateY(-6px);
+      animation:clipAttract 0.5s ease-out;
+    }
+    @keyframes clipAttract {
+      0% { transform:translateY(0) scale(0.9); }
+      50% { transform:translateY(-8px) scale(1.05); }
+      100% { transform:translateY(-6px) scale(1); }
+    }
+
+    .mag-panel {
+      margin-top:8px;
+      background:rgba(255,255,255,0.9);
+      border-radius:10px;
+      padding:8px 10px;
+    }
+    .mag-title {
+      font-size:13px;
+      font-weight:bold;
+      color:#1a237e;
+      margin-bottom:4px;
+    }
+    .mag-bar {
+      position:relative;
+      height:12px;
+      border-radius:999px;
+      overflow:hidden;
+      background:#c5cae9;
+    }
+    .mag-fill {
+      height:100%;
+      width:0%;
+      border-radius:999px;
+      background:linear-gradient(90deg, #bbdefb, #64b5f6, #1e88e5);
+      transition:width 0.25s ease;
+    }
+    .mag-label {
+      margin-top:4px;
+      font-size:11px;
+      color:#1a237e;
+      text-align:right;
+    }
+
+    .sim-comment {
+      font-size:13px;
+      line-height:1.6;
+      color:#1a237e;
+      background:#e8eaf6;
+      border-radius:12px;
+      padding:10px 12px;
+      border-left:4px solid #3f51b5;
+      margin-top:8px;
+    }
+    .sim-comment strong { color:#283593; }
+
+    /* ▼ infoパネル */
+    .info-panel {
+      background:white;
+      border-radius:15px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.15);
+      padding:20px;
+      margin-bottom:15px;
+    }
+    .info-panel h3 {
+      color:#333;
+      margin-bottom:15px;
+      font-size:18px;
+    }
+    .info-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+      gap:15px;
+    }
+    .info-item {
+      background:#f8f9fa;
+      padding:15px;
+      border-radius:10px;
+      border-left:4px solid #64b5f6;
+    }
+    .info-item h4 {
+      color:#1976d2;
+      margin-bottom:8px;
+      font-size:14px;
+    }
+    .info-item p {
+      color:#555;
+      font-size:13px;
+      line-height:1.4;
+    }
+
+    /* ▼ 問題パネル */
+    .question-container {
+      background:white;
+      border-radius:15px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.15);
+      padding:20px;
+      margin-bottom:15px;
+    }
+    .question-text {
+      font-size:16px;
+      font-weight:bold;
+      color:#333;
+      margin-bottom:15px;
+    }
+    .choices {
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .choice {
+      padding:14px 16px;
+      background:#f8f9fa;
+      border:2px solid #e9ecef;
+      border-radius:10px;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      font-size:14px;
+      min-height:48px;
+      display:flex;
+      align-items:center;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .choice:hover {
+      background:#e9ecef;
+      border-color:#64b5f6;
+    }
+    .choice.selected {
+      background:#64b5f6;
+      color:white;
+      border-color:#1e88e5;
+    }
+    .choice.correct {
+      background:#28a745;
+      color:white;
+      border-color:#28a745;
+      animation:correctPulse 0.6s ease;
+    }
+    .choice.incorrect {
+      background:#dc3545;
+      color:white;
+      border-color:#dc3545;
+      animation:wrongShake 0.6s ease;
+    }
+    @keyframes correctPulse {
+      0%,100%{transform:scale(1);}
+      50%{transform:scale(1.05);}
+    }
+    @keyframes wrongShake {
+      0%,100%{transform:translateX(0);}
+      25%{transform:translateX(-10px);}
+      75%{transform:translateX(10px);}
+    }
+    .explanation {
+      margin-top:15px;
+      padding:15px;
+      background:#f8f9fa;
+      border-radius:10px;
+      border-left:4px solid #28a745;
+      display:none;
+    }
+    .explanation.show { display:block; }
+    .explanation h4 {
+      color:#28a745;
+      margin-bottom:10px;
+    }
+    .explanation p {
+      color:#666;
+      line-height:1.5;
+    }
+    .navigation {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-top:20px;
+    }
+    .nav-btn {
+      padding:14px 24px;
+      border:none;
+      border-radius:25px;
+      font-size:14px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      min-height:48px;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .nav-btn:disabled {
+      opacity:0.5;
+      cursor:not-allowed;
+    }
+    .prev-btn {
+      background:#6c757d;
+      color:white;
+    }
+    .prev-btn:hover:not(:disabled) { background:#5a6268; }
+    .next-btn {
+      background:#64b5f6;
+      color:#0d47a1;
+    }
+    .next-btn:hover:not(:disabled) { background:#42a5f5; }
+
+    .start-learning-btn {
+      background:linear-gradient(135deg, #64b5f6 0%, #42a5f5 50%, #1e88e5 100%);
+      color:white;
+      border:none;
+      padding:16px 30px;
+      border-radius:25px;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      margin:20px auto;
+      display:block;
+      min-height:52px;
+      width:100%;
+      max-width:400px;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .start-learning-btn:hover {
+      transform:translateY(-2px);
+      box-shadow:0 8px 25px rgba(100,181,246,0.35);
+    }
+    .progress-bar {
+      background:#e9ecef;
+      border-radius:10px;
+      height:8px;
+      margin:15px 0;
+      overflow:hidden;
+    }
+    .progress-fill {
+      background:linear-gradient(135deg, #64b5f6 0%, #42a5f5 100%);
+      height:100%;
+      transition:width 0.3s ease;
+    }
+
+    * { touch-action:manipulation; }
+    .choice, .nav-btn, .home-btn, .start-learning-btn, .toggle-btn {
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+
+    @media (max-width:768px){
+      body { overflow-x:hidden; }
+      .header { padding:8px 12px; }
+      .home-btn { padding:10px 16px; font-size:13px; }
+      .lesson-title { font-size:14px; margin:0 8px; text-align:center; }
+      .header > div:last-child { width:80px; }
+      .main-container { padding:10px; }
+      .info-grid { grid-template-columns:1fr; gap:12px; }
+      .info-panel { padding:16px; }
+      .info-item { padding:12px; }
+      .info-item h4 { font-size:13px; }
+      .info-item p { font-size:12px; }
+      .sim-area { padding:10px 10px 14px; }
+      .sim-field { min-height:240px; }
+      .question-container { padding:16px; }
+      .question-text { font-size:15px; margin-bottom:12px; }
+      .choice { padding:14px 16px; font-size:14px; min-height:52px; }
+      .navigation { flex-direction:column; gap:12px; margin-top:16px; }
+      .nav-btn { width:100%; padding:14px 20px; font-size:15px; }
+      .start-learning-btn { padding:16px 24px; font-size:15px; max-width:100%; }
+      .explanation { padding:12px; font-size:13px; margin-top:12px; }
+      .progress-bar { margin:12px 0; }
+    }
+    @media (max-width:480px){
+      .header { padding:6px 10px; }
+      .home-btn { padding:8px 14px; font-size:12px; }
+      .lesson-title { font-size:12px; margin:0 6px; }
+      .header > div:last-child { width:70px; }
+      .main-container { padding:8px; }
+      .question-container { padding:12px; }
+      .question-text { font-size:14px; }
+      .choice { padding:12px 14px; font-size:13px; min-height:48px; }
+      .info-panel { padding:12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <button class="home-btn" onclick="goHome()">🏠 ホーム</button>
+    <div class="lesson-title">シミュレーションで学ぶ理科 - 電流の作用②（磁界）</div>
+    <div style="width:80px;"></div>
+  </div>
+
+  <div class="main-container">
+    <!-- ▼ シミュレーション -->
+    <div class="sim-container">
+      <div class="sim-header">
+        <h2>🧲 電流の作用② 磁界シミュレーション</h2>
+        <p>電流の強さ・コイルの巻き数・鉄心で、電磁石の強さがどう変わるか体験しよう</p>
+      </div>
+      <div class="sim-area">
+        <div class="sim-control-row">
+          <div class="sim-control-label">電流の強さ（小 → 大）</div>
+          <input type="range" id="currentSlider" class="slider" min="0" max="3" step="1" value="1">
+          <div class="value-display" id="currentDisplay">弱め</div>
+        </div>
+
+        <div class="sim-control-row">
+          <div class="sim-control-label">コイルの巻き数（少 → 多）</div>
+          <input type="range" id="turnsSlider" class="slider" min="0" max="3" step="1" value="2">
+          <div class="value-display" id="turnsDisplay">ふつう</div>
+        </div>
+
+        <div class="sim-control-row">
+          <div class="sim-control-label">鉄心（てっしん）</div>
+          <div class="toggle-group">
+            <button class="toggle-btn selected" id="coreOnBtn">鉄心あり</button>
+            <button class="toggle-btn" id="coreOffBtn">鉄心なし</button>
+          </div>
+        </div>
+
+        <div class="sim-field">
+          <div class="magnet-area">
+            <div class="core visible" id="core">
+              <div class="core-label">鉄心</div>
+            </div>
+
+            <div class="coil-body">
+              <div class="coil-wrap"></div>
+              <div class="coil-glow" id="coilGlow"></div>
+            </div>
+
+            <div class="pole-label left">N</div>
+            <div class="pole-label right">S</div>
+
+            <div class="field-line inner" id="fieldInner"></div>
+            <div class="field-line middle" id="fieldMiddle"></div>
+            <div class="field-line outer" id="fieldOuter"></div>
+            <div class="field-line far" id="fieldFar"></div>
+
+            <div class="clip-group">
+              <div class="clip" id="clip1"></div>
+              <div class="clip" id="clip2"></div>
+              <div class="clip" id="clip3"></div>
+            </div>
+          </div>
+
+          <div class="mag-panel">
+            <div class="mag-title">電磁石の強さ（磁界の強さイメージ）</div>
+            <div class="mag-bar">
+              <div class="mag-fill" id="magFill"></div>
+            </div>
+            <div class="mag-label" id="magLabel">電流が流れていないので 0%</div>
+          </div>
+
+          <div class="sim-comment" id="simComment">
+            「電流の強さ」と「コイルの巻き数」、そして<strong>鉄心</strong>のあり・なしをかえてみよう。<br>
+            電流が<strong>強く</strong>、コイルの巻き数が<strong>多く</strong>、さらに<strong>鉄心あり</strong>にすると、電磁石はとても<strong>強く</strong>なります。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ▼ 導入テキスト -->
+    <div class="info-panel" id="info-panel">
+      <h3>📊 電磁石の強さをきめる3つの条件</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <h4>コイルに電流を流すと磁界ができる</h4>
+          <p>細い銅線をぐるぐると<strong>コイル状</strong>にまき、そのコイルに電流を流すと、まわりに<strong>磁界（磁力のはたらく空間）</strong>ができます。<br>
+             この磁界の向きは電流の流れる向きで決まり、<strong>N極・S極</strong>もできます。</p>
+        </div>
+        <div class="info-item">
+          <h4>電流が強いほど・巻き数が多いほど強くなる</h4>
+          <p>同じコイルでは、<br>
+             ・流す<strong>電流が強い</strong>ほど<br>
+             ・コイルの<strong>巻き数が多い</strong>ほど<br>
+             電磁石の磁界は<strong>強く</strong>なります。</p>
+        </div>
+        <div class="info-item">
+          <h4>鉄心を入れるともっと強くなる</h4>
+          <p>コイルの中に<strong>鉄心（てっしん）</strong>を入れると、鉄が磁界を集めるはたらきをするので、電磁石の磁界は<strong>いっそう強く</strong>なります。<br>
+             クレーン車などの<strong>電磁石</strong>は、この仕組みを利用しています。</p>
+        </div>
+      </div>
+      <button class="start-learning-btn" onclick="startLearning()">学習を開始する</button>
+    </div>
+
+    <!-- ▼ 問題エリア -->
+    <div class="question-container" id="question-container" style="display:none;">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="question-text" id="question-text"></div>
+      <div class="choices" id="choices"></div>
+      <div class="explanation" id="explanation"></div>
+      <div class="navigation">
+        <button class="nav-btn prev-btn" id="prev-btn" onclick="previousQuestion()" disabled>前の問題</button>
+        <button class="nav-btn next-btn" id="next-btn" onclick="nextQuestion()">次の問題</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ================================
+       ▼ 磁界シミュレーション
+    ================================= */
+    const currentSlider = document.getElementById('currentSlider');
+    const turnsSlider = document.getElementById('turnsSlider');
+    const currentDisplay = document.getElementById('currentDisplay');
+    const turnsDisplay = document.getElementById('turnsDisplay');
+    const coreOnBtn = document.getElementById('coreOnBtn');
+    const coreOffBtn = document.getElementById('coreOffBtn');
+
+    const coreEl = document.getElementById('core');
+    const coilGlow = document.getElementById('coilGlow');
+    const fieldInner = document.getElementById('fieldInner');
+    const fieldMiddle = document.getElementById('fieldMiddle');
+    const fieldOuter = document.getElementById('fieldOuter');
+    const fieldFar = document.getElementById('fieldFar');
+    const magFill = document.getElementById('magFill');
+    const magLabel = document.getElementById('magLabel');
+    const simCommentEl = document.getElementById('simComment');
+    const clip1 = document.getElementById('clip1');
+    const clip2 = document.getElementById('clip2');
+    const clip3 = document.getElementById('clip3');
+
+    let hasCore = true;
+
+    function describeCurrent(level) {
+      switch(level) {
+        case 0: return '流れていない';
+        case 1: return '弱め';
+        case 2: return 'ふつう';
+        case 3: return '強め';
+        default: return '';
+      }
+    }
+    function describeTurns(level) {
+      switch(level) {
+        case 0: return 'ほとんどなし';
+        case 1: return '少なめ';
+        case 2: return 'ふつう';
+        case 3: return '多め';
+        default: return '';
+      }
+    }
+
+    function updateDisplayText() {
+      const c = parseInt(currentSlider.value, 10);
+      const t = parseInt(turnsSlider.value, 10);
+      currentDisplay.textContent = describeCurrent(c);
+      turnsDisplay.textContent = describeTurns(t);
+    }
+
+    function calcMagPower() {
+      const c = parseInt(currentSlider.value, 10);
+      const t = parseInt(turnsSlider.value, 10);
+
+      if (c === 0 || t === 0) return 0;
+
+      const rawBase = c * t; // 1〜9
+      let percent = (rawBase / 9) * 80; // 〜80%
+      if (hasCore) {
+        percent += 20;          // 鉄心があると強くなるイメージ
+      }
+      return Math.min(100, Math.round(percent));
+    }
+
+    function updateMagnet() {
+      updateDisplayText();
+      const magPercent = calcMagPower();
+
+      // バー
+      magFill.style.width = magPercent + '%';
+      if (magPercent === 0) {
+        magLabel.textContent = '電流が流れていないか、コイルがほとんどまかれていないので 0%';
+      } else {
+        magLabel.textContent = '電磁石の強さのイメージ：' + magPercent + '%';
+      }
+
+      // コイルの光り方・磁力線の出方
+      coilGlow.classList.remove('low','mid','high');
+      [fieldInner, fieldMiddle, fieldOuter, fieldFar].forEach(f => {
+        f.classList.remove('visible', 'weak', 'medium', 'strong');
+      });
+      
+      if (magPercent === 0) {
+        coilGlow.style.opacity = 0;
+      } else if (magPercent <= 30) {
+        coilGlow.classList.add('low');
+        fieldInner.classList.add('visible', 'weak');
+      } else if (magPercent <= 50) {
+        coilGlow.classList.add('low');
+        fieldInner.classList.add('visible', 'weak');
+        fieldMiddle.classList.add('visible', 'weak');
+      } else if (magPercent <= 70) {
+        coilGlow.classList.add('mid');
+        fieldInner.classList.add('visible', 'medium');
+        fieldMiddle.classList.add('visible', 'medium');
+        fieldOuter.classList.add('visible', 'weak');
+      } else if (magPercent <= 85) {
+        coilGlow.classList.add('mid');
+        fieldInner.classList.add('visible', 'medium');
+        fieldMiddle.classList.add('visible', 'medium');
+        fieldOuter.classList.add('visible', 'medium');
+        fieldFar.classList.add('visible', 'weak');
+      } else {
+        coilGlow.classList.add('high');
+        fieldInner.classList.add('visible', 'strong');
+        fieldMiddle.classList.add('visible', 'strong');
+        fieldOuter.classList.add('visible', 'medium');
+        fieldFar.classList.add('visible', 'medium');
+      }
+
+      // 鉄心の表示
+      const coilBody = document.querySelector('.coil-body');
+      if (hasCore) {
+        coreEl.classList.add('visible');
+        coilBody.classList.add('has-core');
+      } else {
+        coreEl.classList.remove('visible');
+        coilBody.classList.remove('has-core');
+      }
+
+      // クリップの数
+      clip1.classList.remove('visible');
+      clip2.classList.remove('visible');
+      clip3.classList.remove('visible');
+      if (magPercent > 0 && magPercent <= 40) {
+        clip1.classList.add('visible');
+      } else if (magPercent > 40 && magPercent <= 75) {
+        clip1.classList.add('visible');
+        clip2.classList.add('visible');
+      } else if (magPercent > 75) {
+        clip1.classList.add('visible');
+        clip2.classList.add('visible');
+        clip3.classList.add('visible');
+      }
+
+      // コメント
+      const c = parseInt(currentSlider.value, 10);
+      const t = parseInt(turnsSlider.value, 10);
+
+      let comment = '';
+      if (c === 0 || t === 0) {
+        comment =
+          '電流が<strong>流れていない</strong>か、コイルが<strong>ほとんどまかれていない</strong>ので、電磁石の磁力はほとんどありません。' +
+          '電流を流し、コイルをしっかりとまいてみましょう。';
+      } else if (!hasCore) {
+        comment =
+          '電流は<strong>' + describeCurrent(c) + '</strong>、巻き数は<strong>' + describeTurns(t) + '</strong>ですが、<strong>鉄心なし</strong>なので、磁力はやや弱めです。' +
+          '同じ条件で<strong>鉄心あり</strong>にすると、もっと強い電磁石になります。';
+      } else if (c === 1 && t === 1) {
+        comment =
+          '電流は<strong>弱め</strong>、巻き数も<strong>少なめ</strong>ですが、鉄心が入っているので、クリップを少しだけ引きつけています。' +
+          '電流か巻き数のどちらかをふやすと、もっと強くなります。';
+      } else if (c >= 2 && t >= 2 && magPercent <= 75) {
+        comment =
+          '電流が<strong>やや強く</strong>、巻き数も<strong>ふつう以上</strong>なので、電磁石はかなり強くなっています。' +
+          '鉄心を入れることで、まわりの磁界が<strong>ぎゅっと集められている</strong>イメージです。';
+      } else if (magPercent > 75) {
+        comment =
+          '電流が<strong>強く</strong>、巻き数も<strong>多く</strong>、さらに<strong>鉄心あり</strong>なので、とても強い電磁石になっています。' +
+          '実際の電磁石も、電流の強さ・巻き数・鉄心の3つを工夫して使われています。';
+      } else {
+        comment =
+          '電流は<strong>' + describeCurrent(c) + '</strong>、巻き数は<strong>' + describeTurns(t) + '</strong>です。' +
+          '電流が<strong>強いほど</strong>、巻き数が<strong>多いほど</strong>、さらに<strong>鉄心あり</strong>のとき、電磁石は強くなります。';
+      }
+      simCommentEl.innerHTML = comment;
+    }
+
+    currentSlider.addEventListener('input', updateMagnet);
+    turnsSlider.addEventListener('input', updateMagnet);
+
+    coreOnBtn.addEventListener('click', () => {
+      hasCore = true;
+      coreOnBtn.classList.add('selected');
+      coreOffBtn.classList.remove('selected');
+      updateMagnet();
+    });
+    coreOffBtn.addEventListener('click', () => {
+      hasCore = false;
+      coreOffBtn.classList.add('selected');
+      coreOnBtn.classList.remove('selected');
+      updateMagnet();
+    });
+
+    // 初期表示
+    updateMagnet();
+
+    /* ================================
+       ▼ 問題データ（わかる編）
+    ================================= */
+    const lessonData = {
+      id: 'sci.physics.current_effect_magnetic_sim',
+      questions: [
+        {
+          id: 1,
+          question: "同じコイルに電流を流したとき、電磁石の強さを大きくしたい場合、どうすればよいですか？",
+          choices: [
+            "コイルの巻き数を少なくする",
+            "電流の強さを弱くする",
+            "コイルの巻き数を多くする",
+            "電流を流す時間だけを長くする"
+          ],
+          correct: 2,
+          explanation: "電磁石の強さは、<strong>電流の強さ</strong>と<strong>コイルの巻き数</strong>に関係します。<br>同じ電流を流しているなら、コイルの<strong>巻き数を多く</strong>することで磁界が強くなり、電磁石の強さも大きくなります。"
+        },
+        {
+          id: 2,
+          question: "次のうち、電磁石の強さを弱くする工夫として正しいものはどれですか？（他の条件は同じとする）",
+          choices: [
+            "コイルの巻き数を増やす",
+            "鉄心をコイルの中に入れる",
+            "流す電流を弱くする",
+            "電池をふやして電流を強くする"
+          ],
+          correct: 2,
+          explanation: "電磁石の強さは、電流の<strong>強さ</strong>とコイルの<strong>巻き数</strong>、そして<strong>鉄心</strong>のあり・なしで決まります。<br>これらのうち、強さを弱くしたいなら<strong>電流を弱く</strong>するのが正しい工夫です。巻き数を増やしたり鉄心を入れたりすると、逆に強くなります。"
+        },
+        {
+          id: 3,
+          question: "電磁石の強さについての説明として、正しいものはどれですか？",
+          choices: [
+            "電流の強さだけが関係し、巻き数や鉄心は関係しない",
+            "コイルの巻き数だけが関係し、電流や鉄心は関係しない",
+            "電流が流れていれば、巻き数や鉄心に関係なく同じ強さになる",
+            "電流の強さ・巻き数・鉄心のあり・なしの3つが関係する"
+          ],
+          correct: 3,
+          explanation: "電磁石の強さには、<strong>電流の強さ</strong>・<strong>コイルの巻き数</strong>・<strong>鉄心を入れるかどうか</strong>の3つが関係します。<br>電流が<strong>強いほど</strong>、巻き数が<strong>多いほど</strong>、さらに<strong>鉄心あり</strong>にすると、電磁石は<strong>強く</strong>なります。"
+        }
+      ]
+    };
+
+    /* ================================
+       ▼ LearningTracker & 問題表示
+    ================================= */
+    class LearningTracker {
+      constructor() {
+        this.mode = 'wakaru';
+        this.historyKey = 'learningHistory_denki_jikai_wakaru';
+        this.currentSession = {
+          startTime: Date.now(),
+          questions: [],
+          score: 0,
+          totalQuestions: 0,
+          mode: 'wakaru'
+        };
+      }
+      recordAnswer(questionId, selectedAnswer, correctAnswer, timeSpent) {
+        this.currentSession.questions.push({
+          questionId,
+          selectedAnswer,
+          correctAnswer,
+          isCorrect: selectedAnswer === correctAnswer,
+          timeSpent,
+          timestamp: Date.now()
+        });
+        if (selectedAnswer === correctAnswer) this.currentSession.score++;
+        this.currentSession.totalQuestions++;
+      }
+      loadHistory() {
+        try {
+          const data = localStorage.getItem(this.historyKey);
+          if (data) return JSON.parse(data);
+        } catch(e){ console.error(e); }
+        return {
+          sessions: [],
+          stats: {
+            totalSessions:0,
+            totalQuestions:0,
+            correctAnswers:0,
+            averageScore:0,
+            bestScore:0
+          }
+        };
+      }
+      calculateStats(sessions) {
+        const stats = {
+          totalSessions: sessions.length,
+          totalQuestions: 0,
+          correctAnswers: 0,
+          averageScore: 0,
+          bestScore: 0
+        };
+        sessions.forEach(s=>{
+          stats.totalQuestions += s.totalQuestions;
+          stats.correctAnswers += s.score;
+          stats.bestScore = Math.max(stats.bestScore, s.score);
+        });
+        if (stats.totalSessions>0 && stats.totalQuestions>0){
+          stats.averageScore = (stats.correctAnswers / stats.totalQuestions *100).toFixed(1);
+        }
+        return stats;
+      }
+      saveSession() {
+        try {
+          const existing = this.loadHistory();
+          const totalTime = Date.now() - this.currentSession.startTime;
+          this.currentSession.totalTime = totalTime;
+          const sessionToSave = {
+            ...this.currentSession,
+            endTime: Date.now(),
+            duration: totalTime,
+            totalTime
+          };
+          existing.sessions.push(sessionToSave);
+          existing.stats = this.calculateStats(existing.sessions);
+          localStorage.setItem(this.historyKey, JSON.stringify(existing));
+          console.log('✅ セッション保存完了', sessionToSave);
+          return true;
+        } catch(e){
+          console.error('セッション保存エラー', e);
+          return false;
+        }
+      }
+    }
+
+    const learningTracker = new LearningTracker();
+    let currentQuestion = 0;
+    let score = 0;
+    let questionStartTime = Date.now();
+
+    function generateShuffledIndices(length){
+      const idx = Array.from({length},(_,i)=>i);
+      for(let i=idx.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [idx[i], idx[j]] = [idx[j], idx[i]];
+      }
+      return idx;
+    }
+
+    function showQuestion(index){
+      const q = lessonData.questions[index];
+      questionStartTime = Date.now();
+      const expEl = document.getElementById('explanation');
+      expEl.classList.remove('show');
+
+      document.getElementById('question-text').textContent = q.question;
+      const choicesContainer = document.getElementById('choices');
+      choicesContainer.innerHTML = '';
+
+      const order = generateShuffledIndices(q.choices.length);
+      order.forEach(originalIndex=>{
+        const div = document.createElement('div');
+        div.className = 'choice';
+        div.textContent = q.choices[originalIndex];
+        div.dataset.originalIndex = String(originalIndex);
+        div.onclick = () => selectAnswer(originalIndex);
+        choicesContainer.appendChild(div);
+      });
+
+      const progress = ((index+1)/lessonData.questions.length)*100;
+      document.getElementById('progress-fill').style.width = progress + '%';
+
+      document.getElementById('prev-btn').disabled = index===0;
+      const nextBtn = document.getElementById('next-btn');
+      if (index === lessonData.questions.length-1){
+        nextBtn.disabled = false;
+        nextBtn.textContent = '学習完了';
+      } else {
+        nextBtn.disabled = false;
+        nextBtn.textContent = '次の問題';
+      }
+    }
+
+    function sendQuestionAnswerToParent(questionData, userAnswer, isCorrect){
+      const messageData = {
+        type:'question:answered',
+        lessonId: lessonData.id,
+        questionData:{
+          qnum: questionData.id || currentQuestion,
+          question: questionData.question,
+          choices: questionData.choices,
+          answer: questionData.correct,
+          explanation: questionData.explanation
+        },
+        userAnswer,
+        correctAnswer: questionData.correct,
+        isCorrect,
+        timestamp: Date.now()
+      };
+      console.log('📝 個別問題回答を送信:', messageData);
+      try{
+        if (window.parent !== window) window.parent.postMessage(messageData,'*');
+        if (window.top !== window) window.top.postMessage(messageData,'*');
+        const existing = JSON.parse(localStorage.getItem('questionAnswers') || '[]');
+        existing.push(messageData);
+        localStorage.setItem('questionAnswers', JSON.stringify(existing));
+      }catch(e){
+        console.log('❌ 個別問題回答送信失敗:', e);
+      }
+    }
+
+    function selectAnswer(choiceIndex){
+      const q = lessonData.questions[currentQuestion];
+      const choices = document.querySelectorAll('.choice');
+      const timeSpent = Date.now() - questionStartTime;
+
+      choices.forEach(c=>{ c.style.pointerEvents='none'; });
+
+      choices.forEach(c=>{
+        c.classList.remove('selected','correct','incorrect');
+        const originalIndex = parseInt(c.dataset.originalIndex || "-1",10);
+        if (originalIndex === choiceIndex){
+          c.classList.add('selected');
+        }
+      });
+
+      setTimeout(()=>{
+        const isCorrect = choiceIndex === q.correct;
+        choices.forEach(c=>{
+          const originalIndex = parseInt(c.dataset.originalIndex || "-1",10);
+          if (originalIndex === q.correct){
+            c.classList.add('correct');
+          } else if (originalIndex === choiceIndex && !isCorrect){
+            c.classList.add('incorrect');
+          }
+        });
+
+        const expEl = document.getElementById('explanation');
+        expEl.innerHTML = '<h4>解説</h4><p>' + q.explanation + '</p>';
+        expEl.classList.add('show');
+
+        if (isCorrect) score++;
+
+        learningTracker.recordAnswer(
+          q.id || currentQuestion,
+          choiceIndex,
+          q.correct,
+          Math.round(timeSpent/1000)
+        );
+        sendQuestionAnswerToParent(q, choiceIndex, isCorrect);
+      }, 500);
+    }
+
+    function previousQuestion(){
+      if (currentQuestion>0){
+        currentQuestion--;
+        showQuestion(currentQuestion);
+        document.getElementById('explanation').classList.remove('show');
+      }
+    }
+
+    function showCurrentSessionResult(){
+      const session = learningTracker.currentSession;
+      const scorePercent = session.totalQuestions>0
+        ? Math.round((session.score/session.totalQuestions)*100)
+        : 0;
+      let msg = '';
+      if (scorePercent >= 90) msg = '🎉 電磁石のきまりをよく理解できています！';
+      else if (scorePercent >= 70) msg = '👍 よくできました！';
+      else if (scorePercent >= 50) msg = '📚 電流・巻き数・鉄心の3つをもう一度整理してみよう。';
+      else msg = '💪 スライダーやボタンを動かしながら、もう一度確かめてみよう。';
+
+      const totalTime = Date.now() - session.startTime;
+      const m = Math.floor(totalTime/60000);
+      const s = Math.floor((totalTime%60000)/1000);
+      const timeDisp = m>0 ? m+'分'+s+'秒' : s+'秒';
+
+      return `
+        <div style="background: linear-gradient(135deg,#64b5f6 0%,#42a5f5 100%); color:white; padding:2rem; border-radius:16px; text-align:center; box-shadow:0 8px 32px rgba(0,0,0,0.3); margin-top:20px;">
+          <div style="font-size:1.8rem; font-weight:bold; margin-bottom:1rem;">学習完了！</div>
+          <div style="font-size:1.1rem; margin-bottom:1.5rem;">${msg}</div>
+          <div style="background:rgba(255,255,255,0.2); border-radius:12px; padding:1.5rem; margin-bottom:1rem;">
+            <div style="font-size:2.5rem; font-weight:bold; margin-bottom:0.5rem;">${session.score}/${session.totalQuestions}問正解</div>
+            <div style="font-size:1.5rem; font-weight:600;">${scorePercent}%</div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:0.9rem; opacity:0.9;">
+            <div>学習時間: <strong>${timeDisp}</strong></div>
+            <div>完了時刻: <strong>${new Date().toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</strong></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function completeLesson(){
+      learningTracker.saveSession();
+      const messageData = {
+        type:'lesson:complete',
+        lessonId: lessonData.id,
+        detail:{
+          correct: learningTracker.currentSession.score,
+          total: learningTracker.currentSession.totalQuestions,
+          timeSec: Math.round((Date.now()-learningTracker.currentSession.startTime)/1000)
+        }
+      };
+      console.log('🚀 完了メッセージ送信:', messageData);
+      try{ if (window.parent !== window) window.parent.postMessage(messageData,'*'); }catch(e){}
+      try{ if (window.top !== window) window.top.postMessage(messageData,'*'); }catch(e){}
+
+      try{
+        const storageMessage = { type:'lesson:complete', data:messageData, timestamp:Date.now() };
+        localStorage.setItem('lessonCompleteMessage', JSON.stringify(storageMessage));
+        if (window.parent && window.parent.saveLessonProgress){
+          window.parent.saveLessonProgress(
+            messageData.lessonId,
+            messageData.detail.correct,
+            messageData.detail.total,
+            messageData.detail.timeSec
+          );
+        }
+      }catch(e){ console.log('localStorage/saveLessonProgress エラー', e); }
+
+      document.getElementById('question-container').style.display='none';
+      const resultContainer = document.createElement('div');
+      resultContainer.className='question-container';
+      resultContainer.style.display='block';
+      resultContainer.innerHTML = showCurrentSessionResult();
+
+      const homeButton = document.createElement('button');
+      homeButton.textContent = '🏠 ホームに戻る';
+      homeButton.className = 'start-learning-btn';
+      homeButton.style.marginTop = '1.5rem';
+      homeButton.onclick = ()=>{
+        if (window.parent !== window || window.top !== window){
+          try{
+            window.parent.postMessage({type:'lesson:goBack'}, '*');
+            window.top.postMessage({type:'lesson:goBack'}, '*');
+            return;
+          }catch(e){}
+        }
+        goHome();
+      };
+      resultContainer.appendChild(homeButton);
+      document.querySelector('.main-container').appendChild(resultContainer);
+    }
+
+    function nextQuestion(){
+      if (currentQuestion === lessonData.questions.length-1){
+        completeLesson();
+        return;
+      }
+      if (currentQuestion < lessonData.questions.length-1){
+        currentQuestion++;
+        showQuestion(currentQuestion);
+        document.getElementById('explanation').classList.remove('show');
+      }
+    }
+
+    function startLearning(){
+      document.getElementById('info-panel').style.display = 'none';
+      document.getElementById('question-container').style.display = 'block';
+      if (lessonData.questions.length > 0){
+        showQuestion(0);
+      } else {
+        alert('問題データがまだ追加されていません。');
+      }
+    }
+
+    function goHome(){
+      window.location.href = '/';
+    }
+  </script>
+</body>
+</html>

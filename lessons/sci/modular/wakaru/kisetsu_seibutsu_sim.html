@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>シミュレーションで学ぶ理科 - 季節と生物</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+      background: linear-gradient(135deg, #e3f2fd 0%, #e8f5e9 40%, #fffde7 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .header {
+      background: rgba(255,255,255,0.95);
+      padding: 10px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .home-btn {
+      background:#42a5f5;
+      color:white;
+      border:none;
+      padding:10px 18px;
+      border-radius:20px;
+      font-size:14px;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      min-height:44px;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .home-btn:hover { background:#1e88e5; transform:translateY(-1px); }
+    .home-btn:active { transform:scale(0.98); }
+    .lesson-title {
+      font-size:18px;
+      font-weight:bold;
+      color:#333;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      flex:1;
+      margin:0 10px;
+    }
+    .main-container {
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      padding:15px;
+    }
+
+    /* ▼ シミュ全体 */
+    .sim-container {
+      background:white;
+      border-radius:15px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.15);
+      margin-bottom:15px;
+      overflow:hidden;
+      position:relative;
+    }
+    .sim-header {
+      background:linear-gradient(135deg, #42a5f5 0%, #66bb6a 100%);
+      color:white;
+      padding:15px;
+      text-align:center;
+    }
+    .sim-header h2 { font-size:20px; margin-bottom:5px; }
+    .sim-header p { font-size:14px; opacity:0.9; }
+
+    .sim-area {
+      padding:12px 12px 16px;
+      background:#e3f2fd;
+    }
+    .month-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      margin-bottom:8px;
+    }
+    .month-label {
+      font-size:13px;
+      font-weight:bold;
+      color:#1a237e;
+      min-width:120px;
+    }
+    .month-slider {
+      flex:1;
+      -webkit-appearance:none;
+      height:6px;
+      border-radius:999px;
+      background:#c5cae9;
+      outline:none;
+    }
+    .month-slider::-webkit-slider-thumb {
+      -webkit-appearance:none;
+      width:22px; height:22px;
+      border-radius:50%;
+      background:#3949ab;
+      box-shadow:0 0 0 4px rgba(57,73,171,0.3);
+      cursor:pointer;
+    }
+    .month-slider::-moz-range-thumb {
+      width:22px; height:22px;
+      border-radius:50%;
+      background:#3949ab;
+      box-shadow:0 0 0 4px rgba(57,73,171,0.3);
+      cursor:pointer;
+    }
+    .month-display {
+      font-size:13px;
+      font-weight:bold;
+      color:#283593;
+      min-width:100px;
+      text-align:right;
+    }
+
+    .sim-field {
+      position:relative;
+      margin-top:6px;
+      background:linear-gradient(to bottom, #bbdefb 0%, #e8f5e9 55%, #c8e6c9 100%);
+      border-radius:12px;
+      padding:12px;
+      overflow:hidden;
+      min-height:270px;
+      transition:background 0.5s ease;
+    }
+    .sim-field.spring {
+      background:linear-gradient(135deg, #f8bbd0 0%, #fce4ec 30%, #e8f5e9 60%, #c8e6c9 100%);
+    }
+    .sim-field.summer {
+      background:linear-gradient(135deg, #81d4fa 0%, #b3e5fc 40%, #c8e6c9 60%, #a5d6a7 100%);
+    }
+    .sim-field.autumn {
+      background:linear-gradient(135deg, #ffcc80 0%, #ffe0b2 30%, #ffab91 60%, #ef9a9a 100%);
+    }
+    .sim-field.winter {
+      background:linear-gradient(135deg, #b3e5fc 0%, #e1f5fe 40%, #f5f5f5 70%, #eceff1 100%);
+    }
+
+    /* ▼ 上段：グラフエリア */
+    .env-panel {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:10px;
+    }
+    .env-card {
+      flex:1 1 140px;
+      background:linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,255,255,0.95));
+      border-radius:12px;
+      padding:12px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.5);
+      transition:transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .env-card:hover {
+      transform:translateY(-2px);
+      box-shadow:0 6px 16px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.7);
+    }
+    .env-title {
+      font-size:13px;
+      font-weight:bold;
+      margin-bottom:6px;
+      color:#1a237e;
+      display:flex;
+      align-items:center;
+      gap:4px;
+    }
+    .env-title span.emoji { 
+      font-size:20px; 
+      filter:drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+      animation:float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform:translateY(0); }
+      50% { transform:translateY(-3px); }
+    }
+    .env-value {
+      font-size:14px;
+      font-weight:bold;
+      margin-bottom:6px;
+      color:#004d40;
+      text-shadow:0 1px 2px rgba(255,255,255,0.8);
+    }
+    .env-bar-bg {
+      position:relative;
+      width:100%;
+      height:10px;
+      border-radius:999px;
+      background:#e0e0e0;
+      overflow:hidden;
+    }
+    .env-bar-fill {
+      position:absolute;
+      top:0; left:0;
+      height:100%;
+      width:0%;
+      border-radius:999px;
+      background:linear-gradient(90deg, #64b5f6 0%, #42a5f5 30%, #ffb74d 60%, #ff9800 80%, #ef5350 100%);
+      transition:width 0.4s ease;
+      box-shadow:0 0 8px rgba(255,152,0,0.4), inset 0 1px 2px rgba(255,255,255,0.3);
+    }
+    .env-sub {
+      font-size:11px;
+      color:#555;
+      margin-top:4px;
+    }
+
+    .season-badge {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 12px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:bold;
+      color:#fff;
+      background:linear-gradient(135deg, #81c784, #66bb6a);
+      box-shadow:0 2px 8px rgba(76,175,80,0.4);
+      transition:all 0.3s ease;
+    }
+    .season-badge.spring {
+      background:linear-gradient(135deg, #f48fb1, #f06292);
+      box-shadow:0 2px 8px rgba(244,143,177,0.4);
+    }
+    .season-badge.summer {
+      background:linear-gradient(135deg, #4fc3f7, #29b6f6);
+      box-shadow:0 2px 8px rgba(41,182,246,0.4);
+    }
+    .season-badge.autumn {
+      background:linear-gradient(135deg, #ffb74d, #ffa726);
+      box-shadow:0 2px 8px rgba(255,183,77,0.4);
+    }
+    .season-badge.winter {
+      background:linear-gradient(135deg, #90caf9, #64b5f6);
+      box-shadow:0 2px 8px rgba(100,181,246,0.4);
+    }
+
+    /* ▼ 下段：生物エリア */
+    .life-panel-title {
+      font-size:15px;
+      font-weight:bold;
+      color:#1b5e20;
+      margin-bottom:10px;
+      padding:8px 12px;
+      background:linear-gradient(135deg, rgba(232,245,233,0.9), rgba(200,230,201,0.8));
+      border-radius:10px;
+      border-left:4px solid #66bb6a;
+      box-shadow:0 2px 8px rgba(76,175,80,0.15);
+      text-shadow:0 1px 2px rgba(255,255,255,0.8);
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .life-panel-title::before {
+      content:"🌱";
+      font-size:18px;
+      filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+    }
+    .life-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
+      gap:10px;
+      margin-top:0;
+    }
+    .life-card {
+      background:linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,255,255,0.95));
+      border-radius:12px;
+      padding:14px 16px;
+      box-shadow:0 3px 10px rgba(0,0,0,0.12), 0 0 0 1px rgba(255,255,255,0.5);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      min-height:90px;
+      transition:all 0.3s ease;
+      position:relative;
+      overflow:hidden;
+    }
+    .life-card::before {
+      content:"";
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:3px;
+      background:linear-gradient(90deg, #81c784, #66bb6a);
+      transform:scaleX(0);
+      transform-origin:left;
+      transition:transform 0.4s ease;
+    }
+    .life-card:hover {
+      transform:translateY(-3px);
+      box-shadow:0 6px 16px rgba(0,0,0,0.18), 0 0 0 1px rgba(255,255,255,0.7);
+    }
+    .life-card:hover::before {
+      transform:scaleX(1);
+    }
+    .life-card.active {
+      background:linear-gradient(135deg, rgba(232,245,233,0.98), rgba(200,230,201,0.95));
+      box-shadow:0 4px 14px rgba(76,175,80,0.25), 0 0 0 2px rgba(129,199,132,0.4);
+    }
+    .life-card.active::before {
+      transform:scaleX(1);
+      background:linear-gradient(90deg, #66bb6a, #4caf50);
+    }
+    .life-header {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      width:100%;
+    }
+    .life-name {
+      font-size:15px;
+      font-weight:bold;
+      color:#33691e;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      text-shadow:0 1px 2px rgba(255,255,255,0.8);
+      flex:1;
+    }
+    .life-emoji {
+      font-size:32px;
+      filter:drop-shadow(0 3px 6px rgba(0,0,0,0.2));
+      transition:transform 0.3s ease;
+      display:inline-block;
+    }
+    .life-card:hover .life-emoji {
+      transform:scale(1.15) rotate(5deg);
+    }
+    .life-card.active .life-emoji {
+      animation:lifePulse 2s ease-in-out infinite;
+    }
+    @keyframes lifePulse {
+      0%, 100% { transform:scale(1); }
+      50% { transform:scale(1.1); }
+    }
+    .life-state-badge {
+      font-size:11px;
+      padding:6px 12px;
+      border-radius:999px;
+      background:linear-gradient(135deg, #e8f5e9, #c8e6c9);
+      color:#2e7d32;
+      border:2px solid #a5d6a7;
+      white-space:nowrap;
+      font-weight:bold;
+      box-shadow:0 2px 6px rgba(0,0,0,0.15);
+      transition:all 0.3s ease;
+      text-align:center;
+      min-width:fit-content;
+    }
+    .life-card.active .life-state-badge {
+      background:linear-gradient(135deg, #c8e6c9, #a5d6a7);
+      color:#1b5e20;
+      border-color:#66bb6a;
+      box-shadow:0 3px 10px rgba(76,175,80,0.4);
+      transform:scale(1.05);
+    }
+
+    .sim-comment {
+      margin-top:10px;
+      font-size:13px;
+      line-height:1.7;
+      color:#1a237e;
+      background:linear-gradient(135deg, rgba(227,242,253,0.95), rgba(187,222,251,0.9));
+      border-radius:12px;
+      padding:12px 14px;
+      border-left:5px solid #42a5f5;
+      box-shadow:0 2px 8px rgba(66,165,245,0.2);
+      transition:all 0.3s ease;
+    }
+    .sim-comment strong { 
+      color:#0d47a1; 
+      font-weight:bold;
+      text-shadow:0 1px 2px rgba(255,255,255,0.5);
+    }
+
+    /* ▼ infoパネル */
+    .info-panel {
+      background:white;
+      border-radius:15px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.15);
+      padding:20px;
+      margin-bottom:15px;
+    }
+    .info-panel h3 {
+      color:#333;
+      margin-bottom:15px;
+      font-size:18px;
+    }
+    .info-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+      gap:15px;
+    }
+    .info-item {
+      background:#f8f9fa;
+      padding:15px;
+      border-radius:10px;
+      border-left:4px solid #64b5f6;
+    }
+    .info-item h4 {
+      color:#1976d2;
+      margin-bottom:8px;
+      font-size:14px;
+    }
+    .info-item p {
+      color:#555;
+      font-size:13px;
+      line-height:1.4;
+    }
+
+    /* ▼ 問題パネル */
+    .question-container {
+      background:white;
+      border-radius:15px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.15);
+      padding:20px;
+      margin-bottom:15px;
+    }
+    .question-text {
+      font-size:16px;
+      font-weight:bold;
+      color:#333;
+      margin-bottom:15px;
+    }
+    .choices {
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .choice {
+      padding:14px 16px;
+      background:#f8f9fa;
+      border:2px solid #e9ecef;
+      border-radius:10px;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      font-size:14px;
+      min-height:48px;
+      display:flex;
+      align-items:center;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .choice:hover {
+      background:#e9ecef;
+      border-color:#64b5f6;
+    }
+    .choice.selected {
+      background:#64b5f6;
+      color:white;
+      border-color:#1e88e5;
+    }
+    .choice.correct {
+      background:#28a745;
+      color:white;
+      border-color:#28a745;
+      animation:correctPulse 0.6s ease;
+    }
+    .choice.incorrect {
+      background:#dc3545;
+      color:white;
+      border-color:#dc3545;
+      animation:wrongShake 0.6s ease;
+    }
+    @keyframes correctPulse {
+      0%,100%{transform:scale(1);}
+      50%{transform:scale(1.05);}
+    }
+    @keyframes wrongShake {
+      0%,100%{transform:translateX(0);}
+      25%{transform:translateX(-10px);}
+      75%{transform:translateX(10px);}
+    }
+    .explanation {
+      margin-top:15px;
+      padding:15px;
+      background:#f8f9fa;
+      border-radius:10px;
+      border-left:4px solid #28a745;
+      display:none;
+    }
+    .explanation.show { display:block; }
+    .explanation h4 {
+      color:#28a745;
+      margin-bottom:10px;
+    }
+    .explanation p {
+      color:#666;
+      line-height:1.5;
+    }
+    .navigation {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-top:20px;
+    }
+    .nav-btn {
+      padding:14px 24px;
+      border:none;
+      border-radius:25px;
+      font-size:14px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      min-height:48px;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .nav-btn:disabled {
+      opacity:0.5;
+      cursor:not-allowed;
+    }
+    .prev-btn {
+      background:#6c757d;
+      color:white;
+    }
+    .prev-btn:hover:not(:disabled) { background:#5a6268; }
+    .next-btn {
+      background:#64b5f6;
+      color:#0d47a1;
+    }
+    .next-btn:hover:not(:disabled) { background:#42a5f5; }
+
+    .start-learning-btn {
+      background:linear-gradient(135deg, #64b5f6 0%, #42a5f5 50%, #1e88e5 100%);
+      color:white;
+      border:none;
+      padding:16px 30px;
+      border-radius:25px;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      margin:20px auto;
+      display:block;
+      min-height:52px;
+      width:100%;
+      max-width:400px;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .start-learning-btn:hover {
+      transform:translateY(-2px);
+      box-shadow:0 8px 25px rgba(100,181,246,0.35);
+    }
+    .progress-bar {
+      background:#e9ecef;
+      border-radius:10px;
+      height:8px;
+      margin:15px 0;
+      overflow:hidden;
+    }
+    .progress-fill {
+      background:linear-gradient(135deg, #64b5f6 0%, #42a5f5 100%);
+      height:100%;
+      transition:width 0.3s ease;
+    }
+
+    * { touch-action:manipulation; }
+    .choice, .nav-btn, .home-btn, .start-learning-btn {
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+
+    @media (max-width:768px){
+      body { overflow-x:hidden; }
+      .header { padding:8px 12px; }
+      .home-btn { padding:10px 16px; font-size:13px; }
+      .lesson-title { font-size:14px; margin:0 8px; text-align:center; }
+      .header > div:last-child { width:80px; }
+      .main-container { padding:10px; }
+      .info-grid { grid-template-columns:1fr; gap:12px; }
+      .info-panel { padding:16px; }
+      .info-item { padding:12px; }
+      .info-item h4 { font-size:13px; }
+      .info-item p { font-size:12px; }
+      .sim-area { padding:10px 10px 14px; }
+      .sim-field { min-height:260px; }
+      .life-grid { grid-template-columns:1fr 1fr; }
+      .question-container { padding:16px; }
+      .question-text { font-size:15px; margin-bottom:12px; }
+      .choice { padding:14px 16px; font-size:14px; min-height:52px; }
+      .navigation { flex-direction:column; gap:12px; margin-top:16px; }
+      .nav-btn { width:100%; padding:14px 20px; font-size:15px; }
+      .start-learning-btn { padding:16px 24px; font-size:15px; max-width:100%; }
+      .explanation { padding:12px; font-size:13px; margin-top:12px; }
+      .progress-bar { margin:12px 0; }
+    }
+    @media (max-width:480px){
+      .header { padding:6px 10px; }
+      .home-btn { padding:8px 14px; font-size:12px; }
+      .lesson-title { font-size:12px; margin:0 6px; }
+      .header > div:last-child { width:70px; }
+      .main-container { padding:8px; }
+      .question-container { padding:12px; }
+      .question-text { font-size:14px; }
+      .choice { padding:12px 14px; font-size:13px; min-height:48px; }
+      .info-panel { padding:12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <button class="home-btn" onclick="goHome()">🏠 ホーム</button>
+    <div class="lesson-title">シミュレーションで学ぶ理科 - 季節と生物</div>
+    <div style="width:80px;"></div>
+  </div>
+
+  <div class="main-container">
+    <!-- ▼ シミュレーション -->
+    <div class="sim-container">
+      <div class="sim-header">
+        <h2>🌱 季節と生物シミュレーション</h2>
+        <p>月を動かして、気温・日照時間と生物の活動の変化を見てみよう</p>
+      </div>
+      <div class="sim-area">
+        <div class="month-row">
+          <div class="month-label">月（1〜12月）</div>
+          <input type="range" id="monthSlider" class="month-slider" min="1" max="12" step="1" value="4">
+          <div class="month-display" id="monthDisplay">4月（春）</div>
+        </div>
+        <div class="sim-field">
+          <!-- 環境パネル -->
+          <div class="env-panel">
+            <div class="env-card">
+              <div class="env-title">
+                <span class="emoji">🌡️</span><span>気温のようす</span>
+              </div>
+              <div class="env-value" id="tempValue"></div>
+              <div class="env-bar-bg">
+                <div class="env-bar-fill" id="tempBar"></div>
+              </div>
+              <div class="env-sub" id="tempSub"></div>
+            </div>
+            <div class="env-card">
+              <div class="env-title">
+                <span class="emoji">☀️</span><span>日照時間のようす</span>
+              </div>
+              <div class="env-value" id="lightValue"></div>
+              <div class="env-bar-bg">
+                <div class="env-bar-fill" id="lightBar"></div>
+              </div>
+              <div class="env-sub" id="lightSub"></div>
+            </div>
+            <div class="env-card">
+              <div class="env-title">
+                <span class="emoji">📅</span><span>季節のまとめ</span>
+              </div>
+              <div style="margin-bottom:6px;">
+                <span class="season-badge" id="seasonBadge">春のはじまり</span>
+              </div>
+              <div class="env-sub" id="seasonSub">
+                春は、冬のあいだに準備していた芽がひらき、多くの生物が活動を始める季節です。
+              </div>
+            </div>
+          </div>
+
+          <!-- 生物パネル -->
+          <div class="life-panel-title">
+            <span>主な生物の活動のようす</span>
+          </div>
+          <div class="life-grid">
+            <div class="life-card" data-species="sakura">
+              <div class="life-header">
+                <div class="life-name"><span class="life-emoji">🌸</span><span>サクラ</span></div>
+                <div class="life-state-badge" id="sakuraState"></div>
+              </div>
+            </div>
+            <div class="life-card" data-species="frog">
+              <div class="life-header">
+                <div class="life-name"><span class="life-emoji">🐸</span><span>カエル</span></div>
+                <div class="life-state-badge" id="frogState"></div>
+              </div>
+            </div>
+            <div class="life-card" data-species="cicada">
+              <div class="life-header">
+                <div class="life-name"><span class="life-emoji">🐞</span><span>セミ</span></div>
+                <div class="life-state-badge" id="cicadaState"></div>
+              </div>
+            </div>
+            <div class="life-card" data-species="tree">
+              <div class="life-header">
+                <div class="life-name"><span class="life-emoji">🌳</span><span>落葉樹</span></div>
+                <div class="life-state-badge" id="treeState"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sim-comment" id="simComment">
+            月を動かすと、<strong>気温</strong>や<strong>日照時間</strong>が変化し、それに合わせて生物の活動のようすも変わります。<br>
+            例えば、春は気温と日照時間が少しずつ増え、サクラが<strong>つぼみから開花</strong>し、カエルも<strong>冬ごもりから目覚めて活動</strong>を始めます。<br>
+            夏は気温も日照時間も高くなり、セミが<strong>成虫になって鳴く</strong>など、生き物の活動がとてもさかんになります。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ▼ 導入テキスト -->
+    <div class="info-panel" id="info-panel">
+      <h3>📊 気温・日照時間と生物の活動の関係</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <h4>春：活動が始まる季節</h4>
+          <p>冬のあいだは、気温が低く日照時間も短いため、多くの生物は活動をおさえています。<br>
+             春になると、気温と日照時間が少しずつ増え、<strong>冬芽</strong>がひらいたり、動物が<strong>冬ごもりから目覚めたり</strong>して、活動がさかんになっていきます。</p>
+        </div>
+        <div class="info-item">
+          <h4>夏：活動が最もさかんな季節</h4>
+          <p>夏は、気温も日照時間も一年でとても高い時期です。植物は<strong>葉をしげらせて光合成</strong>をさかんに行い、セミのように<strong>成虫として活動</strong>する生き物も多く見られます。</p>
+        </div>
+        <div class="info-item">
+          <h4>秋・冬：次の季節への準備</h4>
+          <p>秋には気温や日照時間がだんだんと減り、落葉樹は<strong>葉を紅葉させて落とし</strong>、冬をこす準備をします。<br>
+             冬は、低温と短い日照時間の中で、植物は<strong>芽の中で次の春の準備</strong>をし、動物は<strong>冬ごもり</strong>や活動をおさえた状態でくらします。</p>
+        </div>
+      </div>
+      <button class="start-learning-btn" onclick="startLearning()">学習を開始する</button>
+    </div>
+
+    <!-- ▼ 問題エリア -->
+    <div class="question-container" id="question-container" style="display:none;">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="question-text" id="question-text"></div>
+      <div class="choices" id="choices"></div>
+      <div class="explanation" id="explanation"></div>
+      <div class="navigation">
+        <button class="nav-btn prev-btn" id="prev-btn" onclick="previousQuestion()" disabled>前の問題</button>
+        <button class="nav-btn next-btn" id="next-btn" onclick="nextQuestion()">次の問題</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ================================
+       ▼ 季節と生物シミュレーション
+    ================================= */
+    const monthSlider = document.getElementById('monthSlider');
+    const monthDisplay = document.getElementById('monthDisplay');
+
+    const tempValue = document.getElementById('tempValue');
+    const tempBar = document.getElementById('tempBar');
+    const tempSub = document.getElementById('tempSub');
+
+    const lightValue = document.getElementById('lightValue');
+    const lightBar = document.getElementById('lightBar');
+    const lightSub = document.getElementById('lightSub');
+
+    const seasonBadge = document.getElementById('seasonBadge');
+    const seasonSub = document.getElementById('seasonSub');
+
+    const sakuraState = document.getElementById('sakuraState');
+    const frogState = document.getElementById('frogState');
+    const cicadaState = document.getElementById('cicadaState');
+    const treeState = document.getElementById('treeState');
+
+    const simCommentEl = document.getElementById('simComment');
+
+    // 日本の年間イメージ（簡略）
+    const tempByMonth = [5, 6, 9, 14, 18, 22, 26, 28, 24, 18, 12, 7]; // おおよその平均気温イメージ
+    const lightByMonth = [9, 10, 11, 13, 14, 14.5, 14.5, 13.5, 12.5, 11, 10, 9]; // 日照時間イメージ
+
+    function getSeasonLabel(month){
+      if (month === 3 || month === 4) return "春（芽ぶき）";
+      if (month === 5) return "春（活動がさかんに）";
+      if (month === 6) return "初夏";
+      if (month === 7 || month === 8) return "夏";
+      if (month === 9 || month === 10) return "秋";
+      if (month === 11 || month === 12) return "冬のはじまり";
+      if (month === 1 || month === 2) return "冬（さむい季節）";
+      return "季節";
+    }
+
+    function getSeasonSummary(month){
+      if (month === 3 || month === 4){
+        return "春は、気温と日照時間が少しずつ増え、植物の芽ぶきや動物の活動が始まる季節です。";
+      } else if (month === 5){
+        return "春の終わりごろは、葉が大きくなり、動物の活動もいちばんさかんになっていく時期です。";
+      } else if (month === 6){
+        return "初夏は、気温も日照時間も高くなり始め、夏の準備が進むころです。";
+      } else if (month === 7 || month === 8){
+        return "夏は、気温も日照時間も一年でとても高い時期で、生き物の活動がとてもさかんです。";
+      } else if (month === 9 || month === 10){
+        return "秋は、気温や日照時間が減っていき、葉が色づいたり、冬に向けた準備が進む季節です。";
+      } else if (month === 11 || month === 12){
+        return "冬のはじめは、落葉樹の葉が落ち、動物も活動をおさえながら冬に入っていきます。";
+      } else {
+        return "冬は気温も日照時間も低く、多くの生物が活動をおさえて次の春にそなえる季節です。";
+      }
+    }
+
+    function describeTemp(temp){
+      if (temp <= 6) return temp + "℃くらい（とてもさむい）";
+      if (temp <= 10) return temp + "℃くらい（さむい）";
+      if (temp <= 15) return temp + "℃くらい（すこし肌寒い）";
+      if (temp <= 20) return temp + "℃くらい（すごしやすい）";
+      if (temp <= 25) return temp + "℃くらい（あたたかい）";
+      return temp + "℃くらい（とてもあつい）";
+    }
+
+    function describeTempSub(temp){
+      if (temp <= 6) return "地面や水はつめたく、多くの生物は活動をおさえています。";
+      if (temp <= 10) return "日中でもひんやりしていて、植物や動物の活動はまだ少なめです。";
+      if (temp <= 15) return "日中は動きやすくなり、芽ぶきや活動が増えてきます。";
+      if (temp <= 20) return "多くの生物にとって活動しやすい気温です。";
+      if (temp <= 25) return "植物の成長や動物の活動がとてもさかんになります。";
+      return "暑さが強く、日中の活動が短くなる生物もいます。";
+    }
+
+    function describeLight(light){
+      if (light <= 9.5) return light + "時間くらい（かなりみじかい）";
+      if (light <= 11) return light + "時間くらい（ややみじかい）";
+      if (light <= 13) return light + "時間くらい（ふつう〜やや長い）";
+      if (light <= 14.2) return light + "時間くらい（かなり長い）";
+      return light + "時間くらい（一年でもとくに長い）";
+    }
+
+    function describeLightSub(light){
+      if (light <= 9.5) return "日が出ている時間がみじかく、植物の光合成の時間も限られます。";
+      if (light <= 11) return "少しずつ日が長くなり、光合成の時間も増えていきます。";
+      if (light <= 13) return "日が長く、生物が活動できる時間も長くなります。";
+      if (light <= 14.2) return "日照時間が長く、植物の光合成や動物の活動に十分な光があります。";
+      return "一年のうちでもとくに日照時間が長い時期です。";
+    }
+
+    function getSakuraState(month){
+      if (month === 1 || month === 2) {
+        return {
+          badge: "冬芽で春の準備",
+          desc: "サクラは葉を落とし、枝の先についた<strong>冬芽</strong>の中で、春にひらくつぼみの準備をしています。"
+        };
+      } else if (month === 3) {
+        return {
+          badge: "つぼみがふくらむ",
+          desc: "気温と日照時間が少しずつ増え、冬芽の中のつぼみが<strong>ふくらみ始めます</strong>。"
+        };
+      } else if (month === 4) {
+        return {
+          badge: "花がさく",
+          desc: "多くの地域で<strong>花がさき</strong>、サクラの花が見られる季節です。花が終わるころには葉も出てきます。"
+        };
+      } else if (month === 5) {
+        return {
+          badge: "葉ざくらの季節",
+          desc: "花が終わり、サクラは<strong>葉をしげらせて光合成</strong>を行います。"
+        };
+      } else if (month >= 6 && month <= 8) {
+        return {
+          badge: "葉をしげらせる",
+          desc: "夏のあいだ、たくさんの葉で<strong>光合成</strong>を行い、枝や根を太らせます。"
+        };
+      } else if (month === 9 || month === 10) {
+        return {
+          badge: "来年の芽づくり",
+          desc: "葉でつくった養分を使って、翌春にひらく<strong>つぼみのもと（冬芽）</strong>をつくり始めます。"
+        };
+      } else {
+        return {
+          badge: "葉を落として休む",
+          desc: "葉を落とし、冬芽の中で<strong>次の春にそなえる</strong>時期です。"
+        };
+      }
+    }
+
+    function getFrogState(month){
+      if (month === 3) {
+        return {
+          badge: "冬ごもりから目覚める",
+          desc: "池や土の中で冬をこしていたカエルが、少しずつ<strong>冬ごもりから目覚め</strong>始めます。"
+        };
+      } else if (month === 4 || month === 5) {
+        return {
+          badge: "産卵・活動期",
+          desc: "池などで<strong>産卵</strong>を行い、オタマジャクシが見られるようになります。カエルの活動もさかんです。"
+        };
+      } else if (month >= 6 && month <= 8) {
+        return {
+          badge: "活動さかん",
+          desc: "水辺や田んぼなどでカエルの<strong>鳴き声</strong>がよく聞こえ、えさもえさも多く、活動がさかんです。"
+        };
+      } else if (month === 9 || month === 10) {
+        return {
+          badge: "活動をへらす",
+          desc: "気温が下がるにつれて、活動する時間が少なくなり、冬ごもりの場所をさがし始めます。"
+        };
+      } else {
+        return {
+          badge: "冬ごもり中",
+          desc: "土の中や水底などで<strong>冬ごもり</strong>をし、体の活動をおさえています。"
+        };
+      }
+    }
+
+    function getCicadaState(month){
+      if (month >= 1 && month <= 5) {
+        return {
+          badge: "土の中で幼虫",
+          desc: "セミの多くは<strong>土の中の幼虫</strong>としてくらしており、地上にはほとんど姿を見せません。"
+        };
+      } else if (month === 6) {
+        return {
+          badge: "羽化が始まる",
+          desc: "気温が高くなると、幼虫が地上に出てきて、木にのぼって<strong>さなぎから成虫へ</strong>と変わり始めます。"
+        };
+      } else if (month === 7 || month === 8) {
+        return {
+          badge: "成虫として活動",
+          desc: "セミの成虫が<strong>鳴き声をあげて活動</strong>する時期です。成虫の一生は短く、多くはこの時期に見られます。"
+        };
+      } else if (month === 9) {
+        return {
+          badge: "成虫がへる",
+          desc: "成虫の数が少なくなり、次に土の中でそだつ幼虫の世代にバトンタッチしていきます。"
+        };
+      } else {
+        return {
+          badge: "次の夏への準備",
+          desc: "地上では見えませんが、<strong>土の中の幼虫</strong>として生きており、次の夏に成虫になる準備をしています。"
+        };
+      }
+    }
+
+    function getTreeState(month){
+      if (month === 3 || month === 4) {
+        return {
+          badge: "芽ぶきの季節",
+          desc: "落葉樹では、枝の先から<strong>新しい芽や葉</strong>が出てきて、少しずつ木全体が緑になっていきます。"
+        };
+      } else if (month >= 5 && month <= 8) {
+        return {
+          badge: "葉をしげらせる",
+          desc: "たくさんの葉を広げて<strong>光合成</strong>を行い、幹や枝を太くします。"
+        };
+      } else if (month === 9 || month === 10) {
+        return {
+          badge: "紅葉・落葉",
+          desc: "葉が<strong>色づき</strong>、やがて<strong>葉を落とし</strong>て冬をこす準備をします。"
+        };
+      } else {
+        return {
+          badge: "葉を落として休む",
+          desc: "葉を落とした状態で、枝や根の中で<strong>次の春にそなえて休んで</strong>います。"
+        };
+      }
+    }
+
+    function updateSeasonSim(){
+      const month = parseInt(monthSlider.value, 10);
+      const seasonLabel = getSeasonLabel(month);
+      monthDisplay.textContent = month + "月（" + seasonLabel + "）";
+
+      // 季節に応じた背景色とクラスの設定
+      const simField = document.querySelector('.sim-field');
+      const seasonClass = (month >= 3 && month <= 5) ? 'spring' : 
+                         (month >= 6 && month <= 8) ? 'summer' : 
+                         (month >= 9 && month <= 11) ? 'autumn' : 'winter';
+      simField.classList.remove('spring', 'summer', 'autumn', 'winter');
+      simField.classList.add(seasonClass);
+
+      // 季節バッジのクラス設定
+      seasonBadge.classList.remove('spring', 'summer', 'autumn', 'winter');
+      seasonBadge.classList.add(seasonClass);
+
+      // 気温・日照の表示
+      const t = tempByMonth[month-1];
+      const l = lightByMonth[month-1];
+
+      const tempPercent = Math.min(100, Math.max(0, (t - 0) / 30 * 100));
+      const lightPercent = Math.min(100, Math.max(0, (l - 8) / 7 * 100));
+
+      tempBar.style.width = tempPercent + "%";
+      lightBar.style.width = lightPercent + "%";
+
+      tempValue.textContent = describeTemp(t);
+      tempSub.textContent = describeTempSub(t);
+
+      lightValue.textContent = describeLight(l);
+      lightSub.textContent = describeLightSub(l);
+
+      seasonBadge.textContent = seasonLabel;
+      seasonSub.textContent = getSeasonSummary(month);
+
+      // 生物の状態
+      const sak = getSakuraState(month);
+      sakuraState.textContent = sak.badge;
+      const sakuraCard = document.querySelector('[data-species="sakura"]');
+      sakuraCard.classList.toggle('active', month >= 3 && month <= 5);
+
+      const fr = getFrogState(month);
+      frogState.textContent = fr.badge;
+      const frogCard = document.querySelector('[data-species="frog"]');
+      frogCard.classList.toggle('active', month >= 3 && month <= 8);
+
+      const ci = getCicadaState(month);
+      cicadaState.textContent = ci.badge;
+      const cicadaCard = document.querySelector('[data-species="cicada"]');
+      cicadaCard.classList.toggle('active', month >= 6 && month <= 8);
+
+      const tr = getTreeState(month);
+      treeState.textContent = tr.badge;
+      const treeCard = document.querySelector('[data-species="tree"]');
+      treeCard.classList.toggle('active', month >= 3 && month <= 10);
+
+      // コメント
+      let comment = "";
+      if (month === 3 || month === 4){
+        comment =
+          "春になると、気温と日照時間が少しずつ増え、サクラの<strong>つぼみ</strong>がふくらみ、落葉樹も<strong>新しい葉</strong>を出し始めます。<br>" +
+          "カエルも冬ごもりから目覚めて活動を始めるなど、多くの生物にとって<strong>活動スタート</strong>の季節です。";
+      } else if (month === 7 || month === 8){
+        comment =
+          "夏は、気温も日照時間も一年でとても高く、生物の活動が<strong>いちばんさかん</strong>な季節です。<br>" +
+          "セミは成虫として<strong>鳴き声</strong>をあげ、植物も<strong>葉をしげらせて光合成</strong>をさかんに行います。";
+      } else if (month === 11 || month === 12 || month === 1 || month === 2){
+        comment =
+          "冬は、気温が低く日照時間も短いため、多くの生物は活動をおさえます。<br>" +
+          "サクラや落葉樹は<strong>葉を落として冬芽の中で準備</strong>をし、カエルやセミは<strong>見えない場所で冬ごもり</strong>をして、次の春や夏を待っています。";
+      } else {
+        comment =
+          "月によって、気温や日照時間が変わり、それに合わせて生物の活動のしかたも変わります。<br>" +
+          "「いつどんな活動をしているか」を、気温や日照時間の変化とセットで考えることが大切です。";
+      }
+      simCommentEl.innerHTML = comment;
+    }
+
+    monthSlider.addEventListener('input', updateSeasonSim);
+    updateSeasonSim(); // 初期表示
+
+    /* ================================
+       ▼ 問題データ（わかる編）
+    ================================= */
+    const lessonData = {
+      id: 'sci.kisetsu_seibutsu_annual_wakaru',
+      questions: [
+        {
+          id: 1,
+          question: "春になると多くの植物が芽ぶき、動物の活動がさかんになり始める主なおもな理由として、もっとも適切なものはどれですか？",
+          choices: [
+            "気温と日照時間が少しずつ増えるから",
+            "空気中の酸素が急にふえるから",
+            "地球が太陽に近づきすぎて暑くなるから",
+            "雨がまったくふらなくなるから"
+          ],
+          correct: 0,
+          explanation: "春になると、冬とくらべて<strong>気温</strong>と<strong>日照時間</strong>が少しずつ増えます。これにより、植物は<strong>冬芽を開いて芽ぶき</strong>、動物も<strong>冬ごもりから目覚めて活動</strong>を始めます。したがって、①が正解です。"
+        },
+        {
+          id: 2,
+          question: "セミは夏になると地上で鳴いているのがよく見られますが、冬や春など、そのほかの季節にはどうしてあまり見られないのですか？もっとも適切な説明はどれですか？",
+          choices: [
+            "冬や春には、セミがほとんどいなくなるから",
+            "冬や春には、セミが木の葉の中にかくれているから",
+            "冬や春には、セミの多くが土の中で幼虫としてくらしているから",
+            "冬や春には、セミが海の中でくらしているから"
+          ],
+          correct: 2,
+          explanation: "セミの一生では、長い時間を<strong>土の中の幼虫</strong>としてすごし、夏になると地上に出て<strong>成虫になって鳴き声をあげます</strong>。冬や春に地上であまり見られないのは、いなくなったのではなく、土の中で<strong>次の夏の準備をしている</strong>からです。"
+        },
+        {
+          id: 3,
+          question: "落葉樹（サクラやカエデなど）が秋から冬にかけて葉を落とす主なおもな理由として、もっとも適切なものはどれですか？",
+          choices: [
+            "冬は日照時間がみじかく、気温も低いため、葉をたくさんつけていると水分をうばわれやすいから",
+            "冬は光合成がいちばんさかんになるから、そのじゃまにならないように葉を落とすため",
+            "葉が重くなりすぎて木がたおれないようにするため",
+            "冬は虫が多いので、葉を食べられないように全部落としてしまうため"
+          ],
+          correct: 0,
+          explanation: "秋から冬にかけては、気温が下がり<strong>日照時間もみじかく</strong>なります。このとき、たくさん葉をつけていると、葉から水分がうばわれてしまいやすくなります。そこで、落葉樹は葉を落として<strong>水分のへりをふせぎ</strong>、冬をこしやすくしているのです。"
+        }
+      ]
+    };
+
+    /* ================================
+       ▼ LearningTracker & 問題表示
+    ================================= */
+    class LearningTracker {
+      constructor() {
+        this.mode = 'wakaru';
+        this.historyKey = 'learningHistory_kisetsu_seibutsu_annual_wakaru';
+        this.currentSession = {
+          startTime: Date.now(),
+          questions: [],
+          score: 0,
+          totalQuestions: 0,
+          mode: 'wakaru'
+        };
+      }
+      recordAnswer(questionId, selectedAnswer, correctAnswer, timeSpent) {
+        this.currentSession.questions.push({
+          questionId,
+          selectedAnswer,
+          correctAnswer,
+          isCorrect: selectedAnswer === correctAnswer,
+          timeSpent,
+          timestamp: Date.now()
+        });
+        if (selectedAnswer === correctAnswer) this.currentSession.score++;
+        this.currentSession.totalQuestions++;
+      }
+      loadHistory() {
+        try {
+          const data = localStorage.getItem(this.historyKey);
+          if (data) return JSON.parse(data);
+        } catch(e){ console.error(e); }
+        return {
+          sessions: [],
+          stats: {
+            totalSessions:0,
+            totalQuestions:0,
+            correctAnswers:0,
+            averageScore:0,
+            bestScore:0
+          }
+        };
+      }
+      calculateStats(sessions) {
+        const stats = {
+          totalSessions: sessions.length,
+          totalQuestions: 0,
+          correctAnswers: 0,
+          averageScore: 0,
+          bestScore: 0
+        };
+        sessions.forEach(s=>{
+          stats.totalQuestions += s.totalQuestions;
+          stats.correctAnswers += s.score;
+          stats.bestScore = Math.max(stats.bestScore, s.score);
+        });
+        if (stats.totalSessions>0 && stats.totalQuestions>0){
+          stats.averageScore = (stats.correctAnswers / stats.totalQuestions *100).toFixed(1);
+        }
+        return stats;
+      }
+      saveSession() {
+        try {
+          const existing = this.loadHistory();
+          const totalTime = Date.now() - this.currentSession.startTime;
+          this.currentSession.totalTime = totalTime;
+          const sessionToSave = {
+            ...this.currentSession,
+            endTime: Date.now(),
+            duration: totalTime,
+            totalTime
+          };
+          existing.sessions.push(sessionToSave);
+          existing.stats = this.calculateStats(existing.sessions);
+          localStorage.setItem(this.historyKey, JSON.stringify(existing));
+          console.log('✅ セッション保存完了', sessionToSave);
+          return true;
+        } catch(e){
+          console.error('セッション保存エラー', e);
+          return false;
+        }
+      }
+    }
+
+    const learningTracker = new LearningTracker();
+    let currentQuestion = 0;
+    let score = 0;
+    let questionStartTime = Date.now();
+
+    function generateShuffledIndices(length){
+      const idx = Array.from({length},(_,i)=>i);
+      for(let i=idx.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [idx[i], idx[j]] = [idx[j], idx[i]];
+      }
+      return idx;
+    }
+
+    function showQuestion(index){
+      const q = lessonData.questions[index];
+      questionStartTime = Date.now();
+      const expEl = document.getElementById('explanation');
+      expEl.classList.remove('show');
+
+      document.getElementById('question-text').textContent = q.question;
+      const choicesContainer = document.getElementById('choices');
+      choicesContainer.innerHTML = '';
+
+      const order = generateShuffledIndices(q.choices.length);
+      order.forEach(originalIndex=>{
+        const div = document.createElement('div');
+        div.className = 'choice';
+        div.textContent = q.choices[originalIndex];
+        div.dataset.originalIndex = String(originalIndex);
+        div.onclick = () => selectAnswer(originalIndex);
+        choicesContainer.appendChild(div);
+      });
+
+      const progress = ((index+1)/lessonData.questions.length)*100;
+      document.getElementById('progress-fill').style.width = progress + '%';
+
+      document.getElementById('prev-btn').disabled = index===0;
+      const nextBtn = document.getElementById('next-btn');
+      if (index === lessonData.questions.length-1){
+        nextBtn.disabled = false;
+        nextBtn.textContent = '学習完了';
+      } else {
+        nextBtn.disabled = false;
+        nextBtn.textContent = '次の問題';
+      }
+    }
+
+    function sendQuestionAnswerToParent(questionData, userAnswer, isCorrect){
+      const messageData = {
+        type:'question:answered',
+        lessonId: lessonData.id,
+        questionData:{
+          qnum: questionData.id || currentQuestion,
+          question: questionData.question,
+          choices: questionData.choices,
+          answer: questionData.correct,
+          explanation: questionData.explanation
+        },
+        userAnswer,
+        correctAnswer: questionData.correct,
+        isCorrect,
+        timestamp: Date.now()
+      };
+      console.log('📝 個別問題回答を送信:', messageData);
+      try{
+        if (window.parent !== window) window.parent.postMessage(messageData,'*');
+        if (window.top !== window) window.top.postMessage(messageData,'*');
+        const existing = JSON.parse(localStorage.getItem('questionAnswers') || '[]');
+        existing.push(messageData);
+        localStorage.setItem('questionAnswers', JSON.stringify(existing));
+      }catch(e){
+        console.log('❌ 個別問題回答送信失敗:', e);
+      }
+    }
+
+    function selectAnswer(choiceIndex){
+      const q = lessonData.questions[currentQuestion];
+      const choices = document.querySelectorAll('.choice');
+      const timeSpent = Date.now() - questionStartTime;
+
+      choices.forEach(c=>{ c.style.pointerEvents='none'; });
+
+      choices.forEach(c=>{
+        c.classList.remove('selected','correct','incorrect');
+        const originalIndex = parseInt(c.dataset.originalIndex || "-1",10);
+        if (originalIndex === choiceIndex){
+          c.classList.add('selected');
+        }
+      });
+
+      setTimeout(()=>{
+        const isCorrect = choiceIndex === q.correct;
+        choices.forEach(c=>{
+          const originalIndex = parseInt(c.dataset.originalIndex || "-1",10);
+          if (originalIndex === q.correct){
+            c.classList.add('correct');
+          } else if (originalIndex === choiceIndex && !isCorrect){
+            c.classList.add('incorrect');
+          }
+        });
+
+        const expEl = document.getElementById('explanation');
+        expEl.innerHTML = '<h4>解説</h4><p>' + q.explanation + '</p>';
+        expEl.classList.add('show');
+
+        if (isCorrect) score++;
+
+        learningTracker.recordAnswer(
+          q.id || currentQuestion,
+          choiceIndex,
+          q.correct,
+          Math.round(timeSpent/1000)
+        );
+        sendQuestionAnswerToParent(q, choiceIndex, isCorrect);
+      }, 500);
+    }
+
+    function previousQuestion(){
+      if (currentQuestion>0){
+        currentQuestion--;
+        showQuestion(currentQuestion);
+        document.getElementById('explanation').classList.remove('show');
+      }
+    }
+
+    function showCurrentSessionResult(){
+      const session = learningTracker.currentSession;
+      const scorePercent = session.totalQuestions>0
+        ? Math.round((session.score/session.totalQuestions)*100)
+        : 0;
+      let msg = '';
+      if (scorePercent >= 90) msg = '🎉 季節と生物の関係をとてもよく理解できています！';
+      else if (scorePercent >= 70) msg = '👍 よくできました！';
+      else if (scorePercent >= 50) msg = '📚 気温・日照時間と生物の活動の関係をもう一度整理してみよう。';
+      else msg = '💪 月を動かしながら、生き物の一年の活動パターンをもう一度確かめてみよう。';
+
+      const totalTime = Date.now() - session.startTime;
+      const m = Math.floor(totalTime/60000);
+      const s = Math.floor((totalTime%60000)/1000);
+      const timeDisp = m>0 ? m+'分'+s+'秒' : s+'秒';
+
+      return `
+        <div style="background: linear-gradient(135deg,#64b5f6 0%,#42a5f5 100%); color:white; padding:2rem; border-radius:16px; text-align:center; box-shadow:0 8px 32px rgba(0,0,0,0.3); margin-top:20px;">
+          <div style="font-size:1.8rem; font-weight:bold; margin-bottom:1rem;">学習完了！</div>
+          <div style="font-size:1.1rem; margin-bottom:1.5rem;">${msg}</div>
+          <div style="background:rgba(255,255,255,0.2); border-radius:12px; padding:1.5rem; margin-bottom:1rem;">
+            <div style="font-size:2.5rem; font-weight:bold; margin-bottom:0.5rem;">${session.score}/${session.totalQuestions}問正解</div>
+            <div style="font-size:1.5rem; font-weight:600;">${scorePercent}%</div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:0.9rem; opacity:0.9;">
+            <div>学習時間: <strong>${timeDisp}</strong></div>
+            <div>完了時刻: <strong>${new Date().toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</strong></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function completeLesson(){
+      learningTracker.saveSession();
+      const messageData = {
+        type:'lesson:complete',
+        lessonId: lessonData.id,
+        detail:{
+          correct: learningTracker.currentSession.score,
+          total: learningTracker.currentSession.totalQuestions,
+          timeSec: Math.round((Date.now()-learningTracker.currentSession.startTime)/1000)
+        }
+      };
+      console.log('🚀 完了メッセージ送信:', messageData);
+      try{ if (window.parent !== window) window.parent.postMessage(messageData,'*'); }catch(e){}
+      try{ if (window.top !== window) window.top.postMessage(messageData,'*'); }catch(e){}
+
+      try{
+        const storageMessage = { type:'lesson:complete', data:messageData, timestamp:Date.now() };
+        localStorage.setItem('lessonCompleteMessage', JSON.stringify(storageMessage));
+        if (window.parent && window.parent.saveLessonProgress){
+          window.parent.saveLessonProgress(
+            messageData.lessonId,
+            messageData.detail.correct,
+            messageData.detail.total,
+            messageData.detail.timeSec
+          );
+        }
+      }catch(e){ console.log('localStorage/saveLessonProgress エラー', e); }
+
+      document.getElementById('question-container').style.display='none';
+      const resultContainer = document.createElement('div');
+      resultContainer.className='question-container';
+      resultContainer.style.display='block';
+      resultContainer.innerHTML = showCurrentSessionResult();
+
+      const homeButton = document.createElement('button');
+      homeButton.textContent = '🏠 ホームに戻る';
+      homeButton.className = 'start-learning-btn';
+      homeButton.style.marginTop = '1.5rem';
+      homeButton.onclick = ()=>{
+        if (window.parent !== window || window.top !== window){
+          try{
+            window.parent.postMessage({type:'lesson:goBack'}, '*');
+            window.top.postMessage({type:'lesson:goBack'}, '*');
+            return;
+          }catch(e){}
+        }
+        goHome();
+      };
+      resultContainer.appendChild(homeButton);
+      document.querySelector('.main-container').appendChild(resultContainer);
+    }
+
+    function nextQuestion(){
+      if (currentQuestion === lessonData.questions.length-1){
+        completeLesson();
+        return;
+      }
+      if (currentQuestion < lessonData.questions.length-1){
+        currentQuestion++;
+        showQuestion(currentQuestion);
+        document.getElementById('explanation').classList.remove('show');
+      }
+    }
+
+    function startLearning(){
+      document.getElementById('info-panel').style.display = 'none';
+      document.getElementById('question-container').style.display = 'block';
+      if (lessonData.questions.length > 0){
+        showQuestion(0);
+      } else {
+        alert('問題データがまだ追加されていません。');
+      }
+    }
+
+    function goHome(){
+      window.location.href = '/';
+    }
+  </script>
+</body>
+</html>

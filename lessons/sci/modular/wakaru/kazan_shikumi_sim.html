@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>シミュレーションで学ぶ理科 - 火山のしくみ</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+      background: linear-gradient(135deg, #ffecd2 0%, #ff9a9e 50%, #ff6a88 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .header {
+      background: rgba(255,255,255,0.95);
+      padding: 10px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .home-btn {
+      background:#ff7043;
+      color:white;
+      border:none;
+      padding:10px 18px;
+      border-radius:20px;
+      font-size:14px;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      min-height:44px;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .home-btn:hover { background:#f4511e; transform:translateY(-1px); }
+    .home-btn:active { transform:scale(0.98); }
+    .lesson-title {
+      font-size:18px;
+      font-weight:bold;
+      color:#333;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      flex:1;
+      margin:0 10px;
+    }
+    .main-container {
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      padding:15px;
+    }
+
+    /* ▼ シミュ全体 */
+    .sim-container {
+      background:white;
+      border-radius:15px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.15);
+      margin-bottom:15px;
+      overflow:hidden;
+      position:relative;
+    }
+    .sim-header {
+      background:linear-gradient(135deg, #ff7043 0%, #ffb74d 100%);
+      color:white;
+      padding:15px;
+      text-align:center;
+    }
+    .sim-header h2 { font-size:20px; margin-bottom:5px; }
+    .sim-header p { font-size:14px; opacity:0.9; }
+
+    .sim-area {
+      padding:12px 12px 16px;
+      background:#ffe0b2;
+    }
+    .sim-control-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      margin-bottom:10px;
+    }
+    .sim-control-label {
+      font-size:13px;
+      font-weight:bold;
+      color:#4e342e;
+      min-width:160px;
+    }
+    .slider {
+      flex:1;
+      -webkit-appearance:none;
+      height:6px;
+      border-radius:999px;
+      background:#ffcc80;
+      outline:none;
+    }
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance:none;
+      width:22px; height:22px;
+      border-radius:50%;
+      background:#ff7043;
+      box-shadow:0 0 0 4px rgba(255,112,67,0.3);
+      cursor:pointer;
+    }
+    .slider::-moz-range-thumb {
+      width:22px; height:22px;
+      border-radius:50%;
+      background:#ff7043;
+      box-shadow:0 0 0 4px rgba(255,112,67,0.3);
+      cursor:pointer;
+    }
+    .value-display {
+      font-size:13px;
+      font-weight:bold;
+      color:#5d4037;
+      min-width:90px;
+      text-align:right;
+    }
+
+    .sim-field {
+      position:relative;
+      margin-top:6px;
+      background:linear-gradient(to bottom, #ffe8d6 0%, #ffcc80 50%, #8bc34a 100%);
+      border-radius:12px;
+      padding:12px;
+      overflow:hidden;
+      min-height:240px;
+    }
+
+    /* ▼ 火山イメージ */
+    .volcano-area {
+      position:relative;
+      width:100%;
+      height:170px;
+    }
+
+    .ground {
+      position:absolute;
+      left:-10%;
+      right:-10%;
+      bottom:40px;
+      height:40px;
+      background:linear-gradient(to top, #6d4c41, #8d6e63);
+      border-radius:40% 40% 0 0;
+      box-shadow:0 -4px 10px rgba(0,0,0,0.3) inset;
+    }
+
+    .volcano {
+      position:absolute;
+      bottom:40px;
+      left:50%;
+      transform:translateX(-50%);
+      width:140px;
+      height:110px;
+      background:linear-gradient(135deg, #5d4037 0%, #3e2723 40%, #4e342e 100%);
+      clip-path:polygon(50% 0%, 0% 100%, 100% 100%);
+      box-shadow:0 4px 10px rgba(0,0,0,0.5);
+    }
+
+    .lava-surface {
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:95px;
+      width:40px;
+      height:14px;
+      border-radius:50%;
+      background:radial-gradient(circle at 50% 40%, #ffe082 0%, #ff7043 60%, #e64a19 100%);
+      box-shadow:0 0 8px rgba(255,87,34,0.8);
+      opacity:0.8;
+    }
+
+    .lava-flow {
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:40px;
+      width:46px;
+      height:70px;
+      border-radius:30px;
+      background:linear-gradient(to bottom, #ffcc80 0%, #ff7043 40%, #d84315 100%);
+      clip-path: polygon(50% 0%, 10% 100%, 90% 100%);
+      box-shadow:0 0 6px rgba(255,87,34,0.7);
+      opacity:0;
+      transition:opacity 0.25s ease, transform 0.25s ease;
+    }
+    .lava-flow.strong {
+      opacity:1;
+      transform:translateX(-50%) translateY(-5px);
+    }
+    .lava-flow.medium {
+      opacity:0.8;
+    }
+    .lava-flow.weak {
+      opacity:0.4;
+      height:50px;
+    }
+
+    .magma-chamber {
+      position:absolute;
+      bottom:0;
+      left:50%;
+      transform:translateX(-50%);
+      width:90px;
+      height:60px;
+      border-radius:50%;
+      background:radial-gradient(circle at 50% 30%, #ffb74d 0%, #f4511e 50%, #bf360c 100%);
+      box-shadow:0 0 10px rgba(255,87,34,0.9);
+    }
+
+    .magma-pipe {
+      position:absolute;
+      bottom:55px;
+      left:50%;
+      transform:translateX(-50%);
+      width:28px;
+      height:80px;
+      border-radius:20px;
+      background:linear-gradient(to top, #ffb74d 0%, #ff7043 50%, #d84315 100%);
+      box-shadow:0 0 6px rgba(255,87,34,0.7);
+    }
+
+    .eruption-cloud {
+      position:absolute;
+      left:50%;
+      bottom:140px;
+      transform:translateX(-50%);
+      width:120px;
+      height:60px;
+      border-radius:60px;
+      background:radial-gradient(circle at 50% 40%, #ffffff 0%, #ffe0b2 40%, #ffcc80 70%);
+      box-shadow:0 0 15px rgba(255,241,118,0.9);
+      opacity:0;
+      transition:opacity 0.25s ease, transform 0.25s ease;
+    }
+    .eruption-cloud::before,
+    .eruption-cloud::after {
+      content:"";
+      position:absolute;
+      width:60px;
+      height:40px;
+      border-radius:50%;
+      background:inherit;
+    }
+    .eruption-cloud::before { left:-10px; top:10px; }
+    .eruption-cloud::after { right:-10px; top:10px; }
+
+    .eruption-cloud.small {
+      opacity:0.4;
+      transform:translateX(-50%) translateY(0);
+    }
+    .eruption-cloud.medium {
+      opacity:0.7;
+      transform:translateX(-50%) translateY(-10px);
+    }
+    .eruption-cloud.large {
+      opacity:1;
+      transform:translateX(-50%) translateY(-25px);
+    }
+
+    .ash {
+      position:absolute;
+      left:50%;
+      bottom:140px;
+      transform:translateX(-50%);
+      width:2px;
+      height:50px;
+      background:linear-gradient(to top, rgba(121,85,72,0.8), rgba(255,241,118,0));
+      opacity:0;
+      transition:opacity 0.25s ease, height 0.25s ease;
+    }
+    .ash.weak {
+      opacity:0.4;
+      height:40px;
+    }
+    .ash.medium {
+      opacity:0.7;
+      height:70px;
+    }
+    .ash.strong {
+      opacity:1;
+      height:100px;
+    }
+
+    .danger-panel {
+      position:absolute;
+      right:8px;
+      top:8px;
+      width:70px;
+      height:130px;
+      border-radius:14px;
+      background:rgba(255,255,255,0.9);
+      box-shadow:0 2px 8px rgba(0,0,0,0.2);
+      padding:6px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      font-size:10px;
+      color:#4e342e;
+    }
+    .danger-title {
+      text-align:center;
+      font-weight:bold;
+      margin-bottom:4px;
+      font-size:11px;
+    }
+    .danger-scale {
+      flex:1;
+      border-radius:10px;
+      background:linear-gradient(to top, #d32f2f, #fbc02d, #66bb6a);
+      position:relative;
+      overflow:hidden;
+    }
+    .danger-pointer {
+      position:absolute;
+      left:0;
+      right:0;
+      height:4px;
+      background:#212121;
+      box-shadow:0 0 4px rgba(0,0,0,0.5);
+      transform:translateY(100%);
+      transition:transform 0.25s ease;
+    }
+    .danger-labels {
+      display:flex;
+      justify-content:space-between;
+      margin-top:4px;
+      font-size:9px;
+    }
+
+    .mag-panel {
+      margin-top:8px;
+      background:rgba(255,255,255,0.95);
+      border-radius:10px;
+      padding:8px 10px;
+    }
+    .mag-title {
+      font-size:13px;
+      font-weight:bold;
+      color:#4e342e;
+      margin-bottom:4px;
+    }
+    .mag-bar {
+      position:relative;
+      height:12px;
+      border-radius:999px;
+      overflow:hidden;
+      background:#ffe0b2;
+    }
+    .mag-fill {
+      height:100%;
+      width:0%;
+      border-radius:999px;
+      background:linear-gradient(90deg, #fff176, #ffb74d, #f4511e);
+      transition:width 0.25s ease;
+    }
+    .mag-label {
+      margin-top:4px;
+      font-size:11px;
+      color:#4e342e;
+      text-align:right;
+    }
+
+    .sim-comment {
+      font-size:13px;
+      line-height:1.6;
+      color:#4e342e;
+      background:#ffecb3;
+      border-radius:12px;
+      padding:10px 12px;
+      border-left:4px solid #ffb300;
+      margin-top:8px;
+    }
+    .sim-comment strong { color:#e65100; }
+
+    /* ▼ infoパネル */
+    .info-panel {
+      background:white;
+      border-radius:15px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.15);
+      padding:20px;
+      margin-bottom:15px;
+    }
+    .info-panel h3 {
+      color:#333;
+      margin-bottom:15px;
+      font-size:18px;
+    }
+    .info-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+      gap:15px;
+    }
+    .info-item {
+      background:#f8f9fa;
+      padding:15px;
+      border-radius:10px;
+      border-left:4px solid #ffb74d;
+    }
+    .info-item h4 {
+      color:#fb8c00;
+      margin-bottom:8px;
+      font-size:14px;
+    }
+    .info-item p {
+      color:#555;
+      font-size:13px;
+      line-height:1.4;
+    }
+
+    /* ▼ 問題パネル */
+    .question-container {
+      background:white;
+      border-radius:15px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.15);
+      padding:20px;
+      margin-bottom:15px;
+    }
+    .question-text {
+      font-size:16px;
+      font-weight:bold;
+      color:#333;
+      margin-bottom:15px;
+    }
+    .choices {
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .choice {
+      padding:14px 16px;
+      background:#f8f9fa;
+      border:2px solid #e9ecef;
+      border-radius:10px;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      font-size:14px;
+      min-height:48px;
+      display:flex;
+      align-items:center;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .choice:hover {
+      background:#e9ecef;
+      border-color:#ffb74d;
+    }
+    .choice.selected {
+      background:#ffb74d;
+      color:white;
+      border-color:#fb8c00;
+    }
+    .choice.correct {
+      background:#28a745;
+      color:white;
+      border-color:#28a745;
+      animation:correctPulse 0.6s ease;
+    }
+    .choice.incorrect {
+      background:#dc3545;
+      color:white;
+      border-color:#dc3545;
+      animation:wrongShake 0.6s ease;
+    }
+    @keyframes correctPulse {
+      0%,100%{transform:scale(1);}
+      50%{transform:scale(1.05);}
+    }
+    @keyframes wrongShake {
+      0%,100%{transform:translateX(0);}
+      25%{transform:translateX(-10px);}
+      75%{transform:translateX(10px);}
+    }
+    .explanation {
+      margin-top:15px;
+      padding:15px;
+      background:#f8f9fa;
+      border-radius:10px;
+      border-left:4px solid #28a745;
+      display:none;
+    }
+    .explanation.show { display:block; }
+    .explanation h4 {
+      color:#28a745;
+      margin-bottom:10px;
+    }
+    .explanation p {
+      color:#666;
+      line-height:1.5;
+    }
+    .navigation {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-top:20px;
+    }
+    .nav-btn {
+      padding:14px 24px;
+      border:none;
+      border-radius:25px;
+      font-size:14px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      min-height:48px;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .nav-btn:disabled {
+      opacity:0.5;
+      cursor:not-allowed;
+    }
+    .prev-btn {
+      background:#6c757d;
+      color:white;
+    }
+    .prev-btn:hover:not(:disabled) { background:#5a6268; }
+    .next-btn {
+      background:#ffb74d;
+      color:#4e342e;
+    }
+    .next-btn:hover:not(:disabled) { background:#ffa726; }
+
+    .start-learning-btn {
+      background:linear-gradient(135deg, #ffb74d 0%, #ff8a65 100%);
+      color:white;
+      border:none;
+      padding:16px 30px;
+      border-radius:25px;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      margin:20px auto;
+      display:block;
+      min-height:52px;
+      width:100%;
+      max-width:400px;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .start-learning-btn:hover {
+      transform:translateY(-2px);
+      box-shadow:0 8px 25px rgba(255,183,77,0.35);
+    }
+    .progress-bar {
+      background:#e9ecef;
+      border-radius:10px;
+      height:8px;
+      margin:15px 0;
+      overflow:hidden;
+    }
+    .progress-fill {
+      background:linear-gradient(135deg, #ffb74d 0%, #ff8a65 100%);
+      height:100%;
+      transition:width 0.3s ease;
+    }
+
+    * { touch-action:manipulation; }
+    .choice, .nav-btn, .home-btn, .start-learning-btn {
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+
+    @media (max-width:768px){
+      body { overflow-x:hidden; }
+      .header { padding:8px 12px; }
+      .home-btn { padding:10px 16px; font-size:13px; }
+      .lesson-title { font-size:14px; margin:0 8px; text-align:center; }
+      .header > div:last-child { width:80px; }
+      .main-container { padding:10px; }
+      .info-grid { grid-template-columns:1fr; gap:12px; }
+      .info-panel { padding:16px; }
+      .info-item { padding:12px; }
+      .info-item h4 { font-size:13px; }
+      .info-item p { font-size:12px; }
+      .sim-area { padding:10px 10px 14px; }
+      .sim-field { min-height:250px; }
+      .question-container { padding:16px; }
+      .question-text { font-size:15px; margin-bottom:12px; }
+      .choice { padding:14px 16px; font-size:14px; min-height:52px; }
+      .navigation { flex-direction:column; gap:12px; margin-top:16px; }
+      .nav-btn { width:100%; padding:14px 20px; font-size:15px; }
+      .start-learning-btn { padding:16px 24px; font-size:15px; max-width:100%; }
+      .explanation { padding:12px; font-size:13px; margin-top:12px; }
+      .progress-bar { margin:12px 0; }
+    }
+    @media (max-width:480px){
+      .header { padding:6px 10px; }
+      .home-btn { padding:8px 14px; font-size:12px; }
+      .lesson-title { font-size:12px; margin:0 6px; }
+      .header > div:last-child { width:70px; }
+      .main-container { padding:8px; }
+      .question-container { padding:12px; }
+      .question-text { font-size:14px; }
+      .choice { padding:12px 14px; font-size:13px; min-height:48px; }
+      .info-panel { padding:12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <button class="home-btn" onclick="goHome()">🏠 ホーム</button>
+    <div class="lesson-title">シミュレーションで学ぶ理科 - 火山のしくみ</div>
+    <div style="width:80px;"></div>
+  </div>
+
+  <div class="main-container">
+    <!-- ▼ シミュレーション -->
+    <div class="sim-container">
+      <div class="sim-header">
+        <h2>🌋 火山のしくみシミュレーション</h2>
+        <p>マグマのねばりけと気体の量をかえて、噴火のようすのちがいを体験しよう</p>
+      </div>
+      <div class="sim-area">
+        <div class="sim-control-row">
+          <div class="sim-control-label">マグマのねばりけ</div>
+          <input type="range" id="viscositySlider" class="slider" min="0" max="3" step="1" value="1">
+          <div class="value-display" id="viscosityDisplay">ややさらさら</div>
+        </div>
+
+        <div class="sim-control-row">
+          <div class="sim-control-label">マグマにふくまれる気体の量</div>
+          <input type="range" id="gasSlider" class="slider" min="0" max="3" step="1" value="2">
+          <div class="value-display" id="gasDisplay">ふつう</div>
+        </div>
+
+        <div class="sim-field">
+          <div class="volcano-area">
+            <div class="ground"></div>
+
+            <div class="volcano">
+              <div class="lava-surface"></div>
+              <div class="lava-flow" id="lavaFlow"></div>
+            </div>
+
+            <div class="magma-chamber"></div>
+            <div class="magma-pipe"></div>
+
+            <div class="eruption-cloud" id="eruptionCloud"></div>
+            <div class="ash" id="ash"></div>
+
+            <div class="danger-panel">
+              <div class="danger-title">噴火の<br>はげしさ</div>
+              <div class="danger-scale">
+                <div class="danger-pointer" id="dangerPointer"></div>
+              </div>
+              <div class="danger-labels">
+                <span>おだやか</span>
+                <span>激しい</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mag-panel">
+            <div class="mag-title">噴煙の高さと溶岩の流れ（イメージ）</div>
+            <div class="mag-bar">
+              <div class="mag-fill" id="magFill"></div>
+            </div>
+            <div class="mag-label" id="magLabel">マグマの条件をかえてみよう</div>
+          </div>
+
+          <div class="sim-comment" id="simComment">
+            「マグマのねばりけ」と「気体の量」をかえてみよう。<br>
+            マグマが<strong>さらさら</strong>で気体が<strong>少ない</strong>ときは、溶岩がなめらかに流れ出る、おだやかな噴火になります。<br>
+            反対に、マグマが<strong>ねばねば</strong>で気体が<strong>多い</strong>ときは、気体が一気にふき出し、<strong>激しい噴火</strong>になります。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ▼ 導入テキスト -->
+    <div class="info-panel" id="info-panel">
+      <h3>📊 火山の噴火のようすを決める2つのポイント</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <h4>マグマのねばりけ</h4>
+          <p>マグマにふくまれる成分によって、<strong>さらさら</strong>したマグマと、<strong>ねばねば</strong>したマグマがあります。<br>
+             ・さらさら：溶岩が遠くまで流れやすい<br>
+             ・ねばねば：火口付近にたまりやすく、気体がぬけにくい</p>
+        </div>
+        <div class="info-item">
+          <h4>マグマにふくまれる気体</h4>
+          <p>マグマの中には<strong>水蒸気などの気体</strong>がふくまれています。<br>
+             気体が多いと、火口近くで気体が一気にふき出し、<strong>火山灰や火山れき</strong>を高くまでふきとばす、激しい噴火になりやすいです。</p>
+        </div>
+        <div class="info-item">
+          <h4>火山の形との関係</h4>
+          <p>おだやかな噴火が多い火山では、溶岩が広く流れ出して<strong>盾状火山</strong>のような形になります。<br>
+             ねばりけの強いマグマで激しい噴火をくり返す火山では、火山灰などが積もって<strong>成層火山</strong>のような形になりやすいです。</p>
+        </div>
+      </div>
+      <button class="start-learning-btn" onclick="startLearning()">学習を開始する</button>
+    </div>
+
+    <!-- ▼ 問題エリア -->
+    <div class="question-container" id="question-container" style="display:none;">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="question-text" id="question-text"></div>
+      <div class="choices" id="choices"></div>
+      <div class="explanation" id="explanation"></div>
+      <div class="navigation">
+        <button class="nav-btn prev-btn" id="prev-btn" onclick="previousQuestion()" disabled>前の問題</button>
+        <button class="nav-btn next-btn" id="next-btn" onclick="nextQuestion()">次の問題</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ================================
+       ▼ 火山シミュレーション
+    ================================= */
+    const viscositySlider = document.getElementById('viscositySlider');
+    const gasSlider = document.getElementById('gasSlider');
+    const viscosityDisplay = document.getElementById('viscosityDisplay');
+    const gasDisplay = document.getElementById('gasDisplay');
+
+    const lavaFlow = document.getElementById('lavaFlow');
+    const eruptionCloud = document.getElementById('eruptionCloud');
+    const ash = document.getElementById('ash');
+    const dangerPointer = document.getElementById('dangerPointer');
+    const magFill = document.getElementById('magFill');
+    const magLabel = document.getElementById('magLabel');
+    const simCommentEl = document.getElementById('simComment');
+
+    function describeViscosity(v) {
+      switch(v){
+        case 0: return 'とてもさらさら';
+        case 1: return 'ややさらさら';
+        case 2: return 'ややねばねば';
+        case 3: return 'とてもねばねば';
+        default: return '';
+      }
+    }
+    function describeGas(g) {
+      switch(g){
+        case 0: return 'とても少ない';
+        case 1: return 'やや少ない';
+        case 2: return 'ふつう';
+        case 3: return 'とても多い';
+        default: return '';
+      }
+    }
+
+    function updateDisplayText(){
+      const v = parseInt(viscositySlider.value, 10);
+      const g = parseInt(gasSlider.value, 10);
+      viscosityDisplay.textContent = describeViscosity(v);
+      gasDisplay.textContent = describeGas(g);
+    }
+
+    function calcEruptionPower(){
+      const v = parseInt(viscositySlider.value, 10); // 0〜3
+      const g = parseInt(gasSlider.value, 10);       // 0〜3
+
+      // 「ねばりけ」と「気体の量」が両方大きいと激しい噴火
+      const base = (v + 1) * (g + 1); // 1〜16
+      const percent = Math.min(100, Math.round(base / 16 * 100));
+      return percent;
+    }
+
+    function updateVolcano(){
+      updateDisplayText();
+      const power = calcEruptionPower();
+
+      // 噴煙・溶岩バー
+      magFill.style.width = power + '%';
+      if (power === 0){
+        magLabel.textContent = 'マグマがさらさらで気体もほとんどないので、とてもおだやかな状態です。';
+      } else if (power <= 35){
+        magLabel.textContent = 'おだやかな噴火：溶岩がゆっくり流れ、噴煙もあまり高く上がりません。';
+      } else if (power <= 70){
+        magLabel.textContent = '中くらいの噴火：溶岩も噴煙もそこそこあり、火山灰もふります。';
+      } else {
+        magLabel.textContent = '激しい噴火：噴煙が高く上がり、多くの火山灰や火山れきがふき出します。';
+      }
+
+      // 溶岩の流れの見た目
+      lavaFlow.className = 'lava-flow';
+      if (power === 0){
+        lavaFlow.style.opacity = 0;
+      } else if (power <= 35){
+        lavaFlow.classList.add('strong'); // さらさらマグマをイメージ
+      } else if (power <= 70){
+        lavaFlow.classList.add('medium');
+      } else {
+        lavaFlow.classList.add('weak'); // ねばりけ大＋気体多い → 流れにくいが近くでたまるイメージ
+      }
+
+      // 噴煙（雲）の見た目
+      eruptionCloud.className = 'eruption-cloud';
+      if (power === 0){
+        eruptionCloud.style.opacity = 0;
+      } else if (power <= 35){
+        eruptionCloud.classList.add('small');
+      } else if (power <= 70){
+        eruptionCloud.classList.add('medium');
+      } else {
+        eruptionCloud.classList.add('large');
+      }
+
+      // 火山灰の高さ
+      ash.className = 'ash';
+      if (power === 0){
+        ash.style.opacity = 0;
+      } else if (power <= 35){
+        ash.classList.add('weak');
+      } else if (power <= 70){
+        ash.classList.add('medium');
+      } else {
+        ash.classList.add('strong');
+      }
+
+      // 危険度メーター（下=0, 上=100）
+      const pointerY = 100 - power;
+      dangerPointer.style.transform = 'translateY(' + pointerY + '%)';
+
+      // コメント文
+      const v = parseInt(viscositySlider.value, 10);
+      const g = parseInt(gasSlider.value, 10);
+
+      let comment = '';
+      if (power === 0){
+        comment =
+          'マグマが<strong>さらさら</strong>で、気体も<strong>とても少ない</strong>状態です。火口から少し溶岩が出る程度で、' +
+          '噴煙もあまり上がらない、おだやかなようすです。';
+      } else if (v <= 1 && g <= 1){
+        comment =
+          'マグマが<strong>さらさら</strong>で、気体もあまり多くありません。溶岩はなめらかに流れ出し、' +
+          '噴煙もそれほど高くありません。<strong>盾状火山</strong>のような、おだやかな噴火のイメージです。';
+      } else if (v <= 1 && g >= 2){
+        comment =
+          'マグマはわりと<strong>さらさら</strong>ですが、気体が<strong>多い</strong>ので、ときどき噴煙が高く上がります。' +
+          '溶岩も流れますが、火山灰もそこそこふりそそぐ、やや強めの噴火です。';
+      } else if (v >= 2 && g <= 1){
+        comment =
+          'マグマが<strong>ねばねば</strong>で、気体はそれほど多くありません。溶岩は火口付近にたまりやすく、' +
+          'あまり遠くまでは流れませんが、山の形は<strong>急なすそ野</strong>になりやすいです。';
+      } else {
+        comment =
+          'マグマが<strong>ねばねば</strong>で、気体も<strong>多い</strong>状態です。マグマの中にため込まれた気体が' +
+          '一気にふき出し、噴煙が高く上がる<strong>激しい噴火</strong>になります。火山灰や火山れきもたくさんふき出します。';
+      }
+
+      simCommentEl.innerHTML = comment;
+    }
+
+    viscositySlider.addEventListener('input', updateVolcano);
+    gasSlider.addEventListener('input', updateVolcano);
+    updateVolcano(); // 初期表示
+
+    /* ================================
+       ▼ 問題データ（わかる編）
+    ================================= */
+    const lessonData = {
+      id: 'sci.earth.volcano_structure_sim',
+      questions: [
+        {
+          id: 1,
+          question: "次のうち、もっとも激しい噴火になりやすいマグマの条件はどれですか？",
+          choices: [
+            "マグマがさらさらで、気体が少ない",
+            "マグマがさらさらで、気体が多い",
+            "マグマがねばねばで、気体が少ない",
+            "マグマがねばねばで、気体が多い"
+          ],
+          correct: 3,
+          explanation: "激しい噴火になりやすいのは、<strong>ねばりけの強いマグマ</strong>の中に<strong>気体が多く</strong>ふくまれているときです。マグマがねばねばだと気体がぬけにくく、ため込まれた気体が一気にふき出すことで、火山灰や火山れきが高くまでとばされます。"
+        },
+        {
+          id: 2,
+          question: "マグマがさらさらで、おだやかな噴火をくり返す火山の形として、もっとも当てはまるものはどれですか？",
+          choices: [
+            "山のようすがなだらかな盾状火山",
+            "山の形がとがった火山楯",
+            "すそ野が急な成層火山",
+            "ほとんど山らしく見えないカルデラ"
+          ],
+          correct: 0,
+          explanation: "マグマが<strong>さらさら</strong>でおだやかな噴火が多いと、溶岩がひろく遠くまで流れ広がり、<strong>なだらかな形</strong>の火山になります。これを<strong>盾状火山</strong>といいます。"
+        },
+        {
+          id: 3,
+          question: "ねばりけの強いマグマで激しい噴火がおこるとき、火山からはどのようなものが多くふき出しますか？",
+          choices: [
+            "水だけが多くふき出す",
+            "溶岩だけが静かに流れ出す",
+            "火山灰や火山れきが多くふき出す",
+            "二酸化炭素だけがふき出す"
+          ],
+          correct: 2,
+          explanation: "ねばりけの強いマグマに気体が多くふくまれていると、気体が一気にふき出す<strong>激しい噴火</strong>になります。このとき、細かい粉のような<strong>火山灰</strong>や、小石〜岩のかけらのような<strong>火山れき</strong>がたくさん空高くふき上げられます。"
+        }
+      ]
+    };
+
+    /* ================================
+       ▼ LearningTracker & 問題表示
+    ================================= */
+    class LearningTracker {
+      constructor() {
+        this.mode = 'wakaru';
+        this.historyKey = 'learningHistory_kazan_shikumi_wakaru';
+        this.currentSession = {
+          startTime: Date.now(),
+          questions: [],
+          score: 0,
+          totalQuestions: 0,
+          mode: 'wakaru'
+        };
+      }
+      recordAnswer(questionId, selectedAnswer, correctAnswer, timeSpent) {
+        this.currentSession.questions.push({
+          questionId,
+          selectedAnswer,
+          correctAnswer,
+          isCorrect: selectedAnswer === correctAnswer,
+          timeSpent,
+          timestamp: Date.now()
+        });
+        if (selectedAnswer === correctAnswer) this.currentSession.score++;
+        this.currentSession.totalQuestions++;
+      }
+      loadHistory() {
+        try {
+          const data = localStorage.getItem(this.historyKey);
+          if (data) return JSON.parse(data);
+        } catch(e){ console.error(e); }
+        return {
+          sessions: [],
+          stats: {
+            totalSessions:0,
+            totalQuestions:0,
+            correctAnswers:0,
+            averageScore:0,
+            bestScore:0
+          }
+        };
+      }
+      calculateStats(sessions) {
+        const stats = {
+          totalSessions: sessions.length,
+          totalQuestions: 0,
+          correctAnswers: 0,
+          averageScore: 0,
+          bestScore: 0
+        };
+        sessions.forEach(s=>{
+          stats.totalQuestions += s.totalQuestions;
+          stats.correctAnswers += s.score;
+          stats.bestScore = Math.max(stats.bestScore, s.score);
+        });
+        if (stats.totalSessions>0 && stats.totalQuestions>0){
+          stats.averageScore = (stats.correctAnswers / stats.totalQuestions *100).toFixed(1);
+        }
+        return stats;
+      }
+      saveSession() {
+        try {
+          const existing = this.loadHistory();
+          const totalTime = Date.now() - this.currentSession.startTime;
+          this.currentSession.totalTime = totalTime;
+          const sessionToSave = {
+            ...this.currentSession,
+            endTime: Date.now(),
+            duration: totalTime,
+            totalTime
+          };
+          existing.sessions.push(sessionToSave);
+          existing.stats = this.calculateStats(existing.sessions);
+          localStorage.setItem(this.historyKey, JSON.stringify(existing));
+          console.log('✅ セッション保存完了', sessionToSave);
+          return true;
+        } catch(e){
+          console.error('セッション保存エラー', e);
+          return false;
+        }
+      }
+    }
+
+    const learningTracker = new LearningTracker();
+    let currentQuestion = 0;
+    let score = 0;
+    let questionStartTime = Date.now();
+
+    function generateShuffledIndices(length){
+      const idx = Array.from({length},(_,i)=>i);
+      for(let i=idx.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [idx[i], idx[j]] = [idx[j], idx[i]];
+      }
+      return idx;
+    }
+
+    function showQuestion(index){
+      const q = lessonData.questions[index];
+      questionStartTime = Date.now();
+      const expEl = document.getElementById('explanation');
+      expEl.classList.remove('show');
+
+      document.getElementById('question-text').textContent = q.question;
+      const choicesContainer = document.getElementById('choices');
+      choicesContainer.innerHTML = '';
+
+      const order = generateShuffledIndices(q.choices.length);
+      order.forEach(originalIndex=>{
+        const div = document.createElement('div');
+        div.className = 'choice';
+        div.textContent = q.choices[originalIndex];
+        div.dataset.originalIndex = String(originalIndex);
+        div.onclick = () => selectAnswer(originalIndex);
+        choicesContainer.appendChild(div);
+      });
+
+      const progress = ((index+1)/lessonData.questions.length)*100;
+      document.getElementById('progress-fill').style.width = progress + '%';
+
+      document.getElementById('prev-btn').disabled = index===0;
+      const nextBtn = document.getElementById('next-btn');
+      if (index === lessonData.questions.length-1){
+        nextBtn.disabled = false;
+        nextBtn.textContent = '学習完了';
+      } else {
+        nextBtn.disabled = false;
+        nextBtn.textContent = '次の問題';
+      }
+    }
+
+    function sendQuestionAnswerToParent(questionData, userAnswer, isCorrect){
+      const messageData = {
+        type:'question:answered',
+        lessonId: lessonData.id,
+        questionData:{
+          qnum: questionData.id || currentQuestion,
+          question: questionData.question,
+          choices: questionData.choices,
+          answer: questionData.correct,
+          explanation: questionData.explanation
+        },
+        userAnswer,
+        correctAnswer: questionData.correct,
+        isCorrect,
+        timestamp: Date.now()
+      };
+      console.log('📝 個別問題回答を送信:', messageData);
+      try{
+        if (window.parent !== window) window.parent.postMessage(messageData,'*');
+        if (window.top !== window) window.top.postMessage(messageData,'*');
+        const existing = JSON.parse(localStorage.getItem('questionAnswers') || '[]');
+        existing.push(messageData);
+        localStorage.setItem('questionAnswers', JSON.stringify(existing));
+      }catch(e){
+        console.log('❌ 個別問題回答送信失敗:', e);
+      }
+    }
+
+    function selectAnswer(choiceIndex){
+      const q = lessonData.questions[currentQuestion];
+      const choices = document.querySelectorAll('.choice');
+      const timeSpent = Date.now() - questionStartTime;
+
+      choices.forEach(c=>{ c.style.pointerEvents='none'; });
+
+      choices.forEach(c=>{
+        c.classList.remove('selected','correct','incorrect');
+        const originalIndex = parseInt(c.dataset.originalIndex || "-1",10);
+        if (originalIndex === choiceIndex){
+          c.classList.add('selected');
+        }
+      });
+
+      setTimeout(()=>{
+        const isCorrect = choiceIndex === q.correct;
+        choices.forEach(c=>{
+          const originalIndex = parseInt(c.dataset.originalIndex || "-1",10);
+          if (originalIndex === q.correct){
+            c.classList.add('correct');
+          } else if (originalIndex === choiceIndex && !isCorrect){
+            c.classList.add('incorrect');
+          }
+        });
+
+        const expEl = document.getElementById('explanation');
+        expEl.innerHTML = '<h4>解説</h4><p>' + q.explanation + '</p>';
+        expEl.classList.add('show');
+
+        if (isCorrect) score++;
+
+        learningTracker.recordAnswer(
+          q.id || currentQuestion,
+          choiceIndex,
+          q.correct,
+          Math.round(timeSpent/1000)
+        );
+        sendQuestionAnswerToParent(q, choiceIndex, isCorrect);
+      }, 500);
+    }
+
+    function previousQuestion(){
+      if (currentQuestion>0){
+        currentQuestion--;
+        showQuestion(currentQuestion);
+        document.getElementById('explanation').classList.remove('show');
+      }
+    }
+
+    function showCurrentSessionResult(){
+      const session = learningTracker.currentSession;
+      const scorePercent = session.totalQuestions>0
+        ? Math.round((session.score/session.totalQuestions)*100)
+        : 0;
+      let msg = '';
+      if (scorePercent >= 90) msg = '🎉 火山のしくみをとてもよく理解できています！';
+      else if (scorePercent >= 70) msg = '👍 よくできました！';
+      else if (scorePercent >= 50) msg = '📚 マグマのねばりけと気体の量の関係をもう一度整理してみよう。';
+      else msg = '💪 スライダーを動かしながら、噴火のようすをもう一度確かめてみよう。';
+
+      const totalTime = Date.now() - session.startTime;
+      const m = Math.floor(totalTime/60000);
+      const s = Math.floor((totalTime%60000)/1000);
+      const timeDisp = m>0 ? m+'分'+s+'秒' : s+'秒';
+
+      return `
+        <div style="background: linear-gradient(135deg,#ffb74d 0%,#ff8a65 100%); color:white; padding:2rem; border-radius:16px; text-align:center; box-shadow:0 8px 32px rgba(0,0,0,0.3); margin-top:20px;">
+          <div style="font-size:1.8rem; font-weight:bold; margin-bottom:1rem;">学習完了！</div>
+          <div style="font-size:1.1rem; margin-bottom:1.5rem;">${msg}</div>
+          <div style="background:rgba(255,255,255,0.2); border-radius:12px; padding:1.5rem; margin-bottom:1rem;">
+            <div style="font-size:2.5rem; font-weight:bold; margin-bottom:0.5rem;">${session.score}/${session.totalQuestions}問正解</div>
+            <div style="font-size:1.5rem; font-weight:600;">${scorePercent}%</div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:0.9rem; opacity:0.9;">
+            <div>学習時間: <strong>${timeDisp}</strong></div>
+            <div>完了時刻: <strong>${new Date().toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</strong></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function completeLesson(){
+      learningTracker.saveSession();
+      const messageData = {
+        type:'lesson:complete',
+        lessonId: lessonData.id,
+        detail:{
+          correct: learningTracker.currentSession.score,
+          total: learningTracker.currentSession.totalQuestions,
+          timeSec: Math.round((Date.now()-learningTracker.currentSession.startTime)/1000)
+        }
+      };
+      console.log('🚀 完了メッセージ送信:', messageData);
+      try{ if (window.parent !== window) window.parent.postMessage(messageData,'*'); }catch(e){}
+      try{ if (window.top !== window) window.top.postMessage(messageData,'*'); }catch(e){}
+
+      try{
+        const storageMessage = { type:'lesson:complete', data:messageData, timestamp:Date.now() };
+        localStorage.setItem('lessonCompleteMessage', JSON.stringify(storageMessage));
+        if (window.parent && window.parent.saveLessonProgress){
+          window.parent.saveLessonProgress(
+            messageData.lessonId,
+            messageData.detail.correct,
+            messageData.detail.total,
+            messageData.detail.timeSec
+          );
+        }
+      }catch(e){ console.log('localStorage/saveLessonProgress エラー', e); }
+
+      document.getElementById('question-container').style.display='none';
+      const resultContainer = document.createElement('div');
+      resultContainer.className='question-container';
+      resultContainer.style.display='block';
+      resultContainer.innerHTML = showCurrentSessionResult();
+
+      const homeButton = document.createElement('button');
+      homeButton.textContent = '🏠 ホームに戻る';
+      homeButton.className = 'start-learning-btn';
+      homeButton.style.marginTop = '1.5rem';
+      homeButton.onclick = ()=>{
+        if (window.parent !== window || window.top !== window){
+          try{
+            window.parent.postMessage({type:'lesson:goBack'}, '*');
+            window.top.postMessage({type:'lesson:goBack'}, '*');
+            return;
+          }catch(e){}
+        }
+        goHome();
+      };
+      resultContainer.appendChild(homeButton);
+      document.querySelector('.main-container').appendChild(resultContainer);
+    }
+
+    function nextQuestion(){
+      if (currentQuestion === lessonData.questions.length-1){
+        completeLesson();
+        return;
+      }
+      if (currentQuestion < lessonData.questions.length-1){
+        currentQuestion++;
+        showQuestion(currentQuestion);
+        document.getElementById('explanation').classList.remove('show');
+      }
+    }
+
+    function startLearning(){
+      document.getElementById('info-panel').style.display = 'none';
+      document.getElementById('question-container').style.display = 'block';
+      if (lessonData.questions.length > 0){
+        showQuestion(0);
+      } else {
+        alert('問題データがまだ追加されていません。');
+      }
+    }
+
+    function goHome(){
+      window.location.href = '/';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>シミュレーションで学ぶ理科 - 太陽と影</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+      background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 10px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .home-btn {
+      background: #ff6b6b;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-height: 44px;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .home-btn:hover { background:#ff5252; transform: translateY(-1px); }
+    .home-btn:active { transform: scale(0.98); }
+    .lesson-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+      margin: 0 10px;
+    }
+    .main-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 15px;
+    }
+
+    /* ▼ シミュレーションコンテナ */
+    .sim-container {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      margin-bottom: 15px;
+      overflow: hidden;
+      position: relative;
+    }
+    .sim-header {
+      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+    .sim-header h2 {
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+    .sim-header p {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+    .sim-area {
+      padding: 12px 12px 16px;
+      background: #fff8e1;
+    }
+    .sim-control-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .sim-control-label {
+      font-size: 13px;
+      font-weight: bold;
+      color: #333;
+    }
+    .time-display {
+      font-size: 14px;
+      font-weight: bold;
+      color: #e65100;
+      min-width: 60px;
+      text-align: right;
+    }
+    .time-slider {
+      flex: 1;
+      -webkit-appearance: none;
+      height: 6px;
+      border-radius: 999px;
+      background: #ffe0b2;
+      outline: none;
+    }
+    .time-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #ff6f00;
+      box-shadow: 0 0 0 4px rgba(255, 167, 38, 0.3);
+      cursor: pointer;
+    }
+    .time-slider::-moz-range-thumb {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #ff6f00;
+      box-shadow: 0 0 0 4px rgba(255, 167, 38, 0.3);
+      cursor: pointer;
+    }
+
+    .sim-field {
+      position: relative;
+      margin-top: 6px;
+      background: linear-gradient(to top, #c5e1a5 0%, #e8f5e9 40%, #fffde7 100%);
+      border-radius: 12px;
+      padding: 12px;
+      overflow: hidden;
+      height: 210px;
+    }
+    .ground-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 60px;
+      height: 2px;
+      background: rgba(0,0,0,0.15);
+    }
+    .person {
+      position: absolute;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 26px;
+      height: 70px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: 3;
+    }
+    .person-body {
+      width: 14px;
+      height: 40px;
+      background: #5d4037;
+      border-radius: 6px;
+      position: relative;
+    }
+    .person-head {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #ffe0b2;
+      box-shadow: 0 2px 0 rgba(0,0,0,0.15);
+    }
+    .shadow {
+      position: absolute;
+      bottom: 60px;
+      height: 14px;
+      background: rgba(0,0,0,0.25);
+      border-radius: 999px;
+      transform-origin: center;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .sun {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fffde7 0%, #ffeb3b 40%, #fbc02d 70%);
+      box-shadow: 0 0 20px rgba(255, 235, 59, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #f57f17;
+      z-index: 1;
+    }
+    .sim-comment {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #444;
+      background: #fffde7;
+      border-radius: 12px;
+      padding: 10px 12px;
+      border-left: 4px solid #ffb300;
+      margin-top: 10px;
+    }
+    .sim-comment strong {
+      color: #f57f17;
+    }
+
+    /* ▼ infoパネル */
+    .info-panel {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      padding: 20px;
+      margin-bottom: 15px;
+    }
+    .info-panel h3 {
+      color: #333;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+    .info-item {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 10px;
+      border-left: 4px solid #ffb74d;
+    }
+    .info-item h4 {
+      color: #ff9800;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    .info-item p {
+      color: #666;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    /* ▼ 問題パネル */
+    .question-container {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      padding: 20px;
+      margin-bottom: 15px;
+    }
+    .question-text {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 15px;
+    }
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .choice {
+      padding: 14px 16px;
+      background: #f8f9fa;
+      border: 2px solid #e9ecef;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 14px;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .choice:hover {
+      background: #e9ecef;
+      border-color: #ffb74d;
+    }
+    .choice.selected {
+      background: #ffb74d;
+      color: white;
+      border-color: #ffb74d;
+    }
+    .choice.correct {
+      background: #28a745;
+      color: white;
+      border-color: #28a745;
+      animation: correctPulse 0.6s ease;
+    }
+    .choice.incorrect {
+      background: #dc3545;
+      color: white;
+      border-color: #dc3545;
+      animation: wrongShake 0.6s ease;
+    }
+    @keyframes correctPulse {
+      0%,100%{transform:scale(1);}
+      50%{transform:scale(1.05);}
+    }
+    @keyframes wrongShake {
+      0%,100%{transform:translateX(0);}
+      25%{transform:translateX(-10px);}
+      75%{transform:translateX(10px);}
+    }
+    .explanation {
+      margin-top: 15px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      border-left: 4px solid #28a745;
+      display: none;
+    }
+    .explanation.show { display:block; }
+    .explanation h4 {
+      color: #28a745;
+      margin-bottom: 10px;
+    }
+    .explanation p {
+      color: #666;
+      line-height: 1.5;
+    }
+    .navigation {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .nav-btn {
+      padding: 14px 24px;
+      border: none;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-height: 48px;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .nav-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .prev-btn {
+      background: #6c757d;
+      color: white;
+    }
+    .prev-btn:hover:not(:disabled) { background:#5a6268; }
+    .next-btn {
+      background: #ff9800;
+      color: white;
+    }
+    .next-btn:hover:not(:disabled) { background:#fb8c00; }
+
+    .start-learning-btn {
+      background: linear-gradient(135deg, #ffb74d 0%, #ff8a65 100%);
+      color: white;
+      border: none;
+      padding: 16px 30px;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 20px auto;
+      display: block;
+      min-height: 52px;
+      width: 100%;
+      max-width: 400px;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .start-learning-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255,183,77,0.3);
+    }
+    .progress-bar {
+      background: #e9ecef;
+      border-radius: 10px;
+      height: 8px;
+      margin: 15px 0;
+      overflow: hidden;
+    }
+    .progress-fill {
+      background: linear-gradient(135deg, #ffb74d 0%, #ff8a65 100%);
+      height: 100%;
+      transition: width 0.3s ease;
+    }
+
+    * { touch-action: manipulation; }
+    .choice, .nav-btn, .home-btn, .start-learning-btn {
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    @media (max-width: 768px) {
+      body { overflow-x: hidden; }
+      .header { padding:8px 12px; }
+      .home-btn { padding:10px 16px; font-size:13px; }
+      .lesson-title { font-size:14px; margin:0 8px; text-align:center; }
+      .header > div:last-child { width:80px; }
+      .main-container { padding:10px; }
+      .info-grid { grid-template-columns:1fr; gap:12px; }
+      .info-panel { padding:16px; }
+      .info-item { padding:12px; }
+      .info-item h4 { font-size:13px; }
+      .info-item p { font-size:12px; }
+      .sim-area { padding:10px 10px 14px; }
+      .sim-field { height:220px; }
+      .question-container { padding:16px; }
+      .question-text { font-size:15px; margin-bottom:12px; }
+      .choice { padding:14px 16px; font-size:14px; min-height:52px; }
+      .navigation { flex-direction:column; gap:12px; margin-top:16px; }
+      .nav-btn { width:100%; padding:14px 20px; font-size:15px; }
+      .start-learning-btn { padding:16px 24px; font-size:15px; max-width:100%; }
+      .explanation { padding:12px; font-size:13px; margin-top:12px; }
+      .progress-bar { margin:12px 0; }
+    }
+    @media (max-width: 480px) {
+      .header { padding:6px 10px; }
+      .home-btn { padding:8px 14px; font-size:12px; }
+      .lesson-title { font-size:12px; margin:0 6px; }
+      .header > div:last-child { width:70px; }
+      .main-container { padding:8px; }
+      .question-container { padding:12px; }
+      .question-text { font-size:14px; }
+      .choice { padding:12px 14px; font-size:13px; min-height:48px; }
+      .info-panel { padding:12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <button class="home-btn" onclick="goHome()">🏠 ホーム</button>
+    <div class="lesson-title">シミュレーションで学ぶ理科 - 太陽と影</div>
+    <div style="width: 80px;"></div>
+  </div>
+
+  <div class="main-container">
+    <!-- ▼ シミュレーション -->
+    <div class="sim-container">
+      <div class="sim-header">
+        <h2>☀️ 太陽と影のシミュレーション</h2>
+        <p>時間を動かして、太陽の高さと影の長さの変化を体験しよう</p>
+      </div>
+      <div class="sim-area">
+        <div class="sim-control-row">
+          <div class="sim-control-label">時間をえらぼう（朝6時〜夕方6時）</div>
+          <input type="range" id="timeSlider" class="time-slider" min="6" max="18" step="1" value="9">
+          <div class="time-display" id="timeDisplay">9時</div>
+        </div>
+
+        <div class="sim-field" id="shadowField">
+          <div class="ground-line"></div>
+          <div class="person" id="person">
+            <div class="person-body">
+              <div class="person-head"></div>
+            </div>
+          </div>
+          <div class="shadow" id="shadow"></div>
+          <div class="sun" id="sun">☀</div>
+        </div>
+
+        <div class="sim-comment" id="sim-comment">
+          スライダーを動かして、<strong>朝・昼・夕方</strong>で影の長さや向きがどう変わるか見てみよう。<br>
+          太陽が<strong>高いとき</strong>と<strong>低いとき</strong>で、影はどうちがうかな？
+        </div>
+      </div>
+    </div>
+
+    <!-- ▼ 導入テキスト -->
+    <div class="info-panel" id="info-panel">
+      <h3>📊 太陽の高さと影の長さ</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <h4>太陽の高さ</h4>
+          <p>朝や夕方は、太陽は空の<strong>低い</strong>ところに見えます。<br>昼ごろは、太陽が空の<strong>高い</strong>ところに来ます。</p>
+        </div>
+        <div class="info-item">
+          <h4>影の長さ</h4>
+          <p>太陽が<strong>低い</strong>ときは、影は<strong>長く</strong>のびます。<br>太陽が<strong>高い</strong>ときは、影は<strong>短く</strong>なります。</p>
+        </div>
+        <div class="info-item">
+          <h4>影の向き</h4>
+          <p>太陽が東にある朝は影は<strong>西向き</strong>（右向き）、<br>太陽が西にある夕方は影は<strong>東向き</strong>（左向き）になります。</p>
+        </div>
+      </div>
+      <button class="start-learning-btn" onclick="startLearning()">学習を開始する</button>
+    </div>
+
+    <!-- ▼ 問題エリア -->
+    <div class="question-container" id="question-container" style="display:none;">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="question-text" id="question-text"></div>
+      <div class="choices" id="choices"></div>
+      <div class="explanation" id="explanation"></div>
+      <div class="navigation">
+        <button class="nav-btn prev-btn" id="prev-btn" onclick="previousQuestion()" disabled>前の問題</button>
+        <button class="nav-btn next-btn" id="next-btn" onclick="nextQuestion()">次の問題</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ================================
+       ▼ 太陽と影シミュレーション
+    ================================= */
+    const timeSlider = document.getElementById('timeSlider');
+    const timeDisplay = document.getElementById('timeDisplay');
+    const field = document.getElementById('shadowField');
+    const person = document.getElementById('person');
+    const shadowEl = document.getElementById('shadow');
+    const sunEl = document.getElementById('sun');
+    const simCommentEl = document.getElementById('sim-comment');
+
+    function updateSunAndShadow() {
+      const hour = parseInt(timeSlider.value, 10);
+      timeDisplay.textContent = hour + '時';
+
+      const rect = field.getBoundingClientRect();
+      const w = rect.width;
+      const h = rect.height;
+
+      // 太陽の位置（左→右、朝夕は低く、昼は高く）
+      const t = (hour - 6) / 12; // 0〜1
+      const sunX = w * (0.1 + 0.8 * t);
+      const heightFactor = Math.sin(Math.PI * Math.min(Math.max(t, 0), 1)); // 0〜1
+      const sunY = h * (0.65 - 0.35 * heightFactor);
+      sunEl.style.left = (sunX - 20) + 'px';
+      sunEl.style.top = (sunY - 20) + 'px';
+
+      // 人の位置（中央）
+      const personRect = person.getBoundingClientRect();
+      const footX = w / 2;
+      const footY = h - 60; // ground-line
+
+      person.style.left = '50%';
+
+      // 影の長さ（昼が最も短い、朝夕が長い）
+      const distanceFromNoon = Math.abs(hour - 12); // 0〜6
+      const lengthFactor = 0.8 + (distanceFromNoon / 6) * 1.7; // ~0.8〜2.5
+      const baseLength = 60; // px
+      const shadowLength = baseLength * lengthFactor;
+
+      const isMorning = hour < 12;
+      const isNoon = hour === 12;
+
+      shadowEl.style.height = '14px';
+
+      if (isNoon) {
+        shadowEl.style.width = baseLength * 0.6 + 'px';
+        shadowEl.style.left = (footX - (baseLength * 0.3)) + 'px';
+      } else if (isMorning) {
+        // 朝：太陽が左（東）にあるので、影は右（西）向き
+        shadowEl.style.width = shadowLength + 'px';
+        shadowEl.style.left = footX + 'px'; // 右側へ
+      } else {
+        // 夕方：太陽が右（西）にあるので、影は左（東）向き
+        shadowEl.style.width = shadowLength + 'px';
+        shadowEl.style.left = (footX - shadowLength) + 'px'; // 左側へ
+      }
+      shadowEl.style.bottom = '60px';
+      shadowEl.style.borderRadius = '999px';
+      shadowEl.style.opacity = 0.25;
+
+      // コメント更新
+      let comment = '';
+      if (hour <= 8) {
+        comment =
+          'まだ<strong>朝</strong>の時間です。太陽は空の低いところ（東側）にあるので、影は<strong>長く</strong>、<strong>西向き（右側）</strong>にのびています。';
+      } else if (hour < 11) {
+        comment =
+          '太陽が少しずつ高くなってきました。影は<strong>少しずつ短く</strong>なりながら、まだ<strong>西向き（右側）</strong>にのびています。';
+      } else if (hour === 12) {
+        comment =
+          'ちょうど<strong>昼ごろ</strong>です。太陽がいちばん高くなるので、影は<strong>いちばん短く</strong>なります。';
+      } else if (hour <= 15) {
+        comment =
+          '午後の時間です。太陽は少しずつ低くなり（西側へ）、影は<strong>長く</strong>なりはじめます。今度は<strong>東向き（左側）</strong>にのびています。';
+      } else {
+        comment =
+          '夕方に近づくほど太陽は低くなり（西側）、影は<strong>とても長く</strong>なります。影は<strong>東向き（左側）</strong>にのびています。';
+      }
+      simCommentEl.innerHTML = comment;
+    }
+
+    timeSlider.addEventListener('input', updateSunAndShadow);
+    window.addEventListener('resize', updateSunAndShadow);
+    // 初期表示
+    updateSunAndShadow();
+
+    /* ================================
+       ▼ 問題データ
+    ================================= */
+    const lessonData = {
+      id: 'sci.earth.sun_movement_shadow_sim',
+      questions: [
+        {
+          id: 1,
+          question: "人の影がいちばん短くなるのは、だいたい何時ごろですか？",
+          choices: [
+            "朝6時ごろ",
+            "午前9時ごろ",
+            "正午（昼の12時）ごろ",
+            "夕方5時ごろ"
+          ],
+          correct: 2,
+          explanation: "太陽が空のいちばん高いところに来るのは、だいたい正午（昼の12時）ごろです。このとき、影はいちばん短くなります。"
+        },
+        {
+          id: 2,
+          question: "朝の時間（たとえば8時ごろ）、影はどのようにのびますか？",
+          choices: [
+            "人のすぐ下にほとんど影がない",
+            "人から西向き（右側）に長くのびる",
+            "人から東向き（左側）に長くのびる",
+            "影はどの向きにも出ない"
+          ],
+          correct: 1,
+          explanation: "朝は太陽が東にあるので、影は反対側の西向き（右側）にのびます。太陽が低いので、影は長くのびます。"
+        },
+        {
+          id: 3,
+          question: "夕方の時間（たとえば5時ごろ）の影のようすとして、正しいものをえらびましょう。",
+          choices: [
+            "影はとても短く、ほとんど足もとだけにできる",
+            "影は西向き（右側）にのびる",
+            "影は東向き（左側）に長くのびる",
+            "影は一日中おなじ長さと向きで変わらない"
+          ],
+          correct: 2,
+          explanation: "夕方は太陽が西にあるので、影は反対側の東向き（左側）にのびます。太陽が低くなるので、影は朝と同じように長くなります。"
+        }
+      ]
+    };
+
+    /* ================================
+       ▼ LearningTracker & 問題表示
+    ================================= */
+    class LearningTracker {
+      constructor() {
+        this.mode = 'wakaru';
+        this.historyKey = 'learningHistory_shadow_wakaru';
+        this.currentSession = {
+          startTime: Date.now(),
+          questions: [],
+          score: 0,
+          totalQuestions: 0,
+          mode: 'wakaru'
+        };
+      }
+      recordAnswer(questionId, selectedAnswer, correctAnswer, timeSpent) {
+        this.currentSession.questions.push({
+          questionId,
+          selectedAnswer,
+          correctAnswer,
+          isCorrect: selectedAnswer === correctAnswer,
+          timeSpent,
+          timestamp: Date.now()
+        });
+        if (selectedAnswer === correctAnswer) this.currentSession.score++;
+        this.currentSession.totalQuestions++;
+      }
+      loadHistory() {
+        try {
+          const data = localStorage.getItem(this.historyKey);
+          if (data) return JSON.parse(data);
+        } catch(e){ console.error(e); }
+        return {
+          sessions: [],
+          stats: {
+            totalSessions:0,
+            totalQuestions:0,
+            correctAnswers:0,
+            averageScore:0,
+            bestScore:0
+          }
+        };
+      }
+      calculateStats(sessions) {
+        const stats = {
+          totalSessions: sessions.length,
+          totalQuestions: 0,
+          correctAnswers: 0,
+          averageScore: 0,
+          bestScore: 0
+        };
+        sessions.forEach(s=>{
+          stats.totalQuestions += s.totalQuestions;
+          stats.correctAnswers += s.score;
+          stats.bestScore = Math.max(stats.bestScore, s.score);
+        });
+        if (stats.totalSessions>0 && stats.totalQuestions>0){
+          stats.averageScore = (stats.correctAnswers / stats.totalQuestions *100).toFixed(1);
+        }
+        return stats;
+      }
+      saveSession() {
+        try {
+          const existing = this.loadHistory();
+          const totalTime = Date.now() - this.currentSession.startTime;
+          this.currentSession.totalTime = totalTime;
+          const sessionToSave = {
+            ...this.currentSession,
+            endTime: Date.now(),
+            duration: totalTime,
+            totalTime
+          };
+          existing.sessions.push(sessionToSave);
+          existing.stats = this.calculateStats(existing.sessions);
+          localStorage.setItem(this.historyKey, JSON.stringify(existing));
+          console.log('✅ セッション保存完了', sessionToSave);
+          return true;
+        } catch(e){
+          console.error('セッション保存エラー', e);
+          return false;
+        }
+      }
+    }
+
+    const learningTracker = new LearningTracker();
+    let currentQuestion = 0;
+    let score = 0;
+    let questionStartTime = Date.now();
+
+    function generateShuffledIndices(length){
+      const idx = Array.from({length},(_,i)=>i);
+      for(let i=idx.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [idx[i], idx[j]] = [idx[j], idx[i]];
+      }
+      return idx;
+    }
+
+    function showQuestion(index){
+      const q = lessonData.questions[index];
+      questionStartTime = Date.now();
+      const expEl = document.getElementById('explanation');
+      expEl.classList.remove('show');
+
+      document.getElementById('question-text').textContent = q.question;
+      const choicesContainer = document.getElementById('choices');
+      choicesContainer.innerHTML = '';
+
+      const order = generateShuffledIndices(q.choices.length);
+      order.forEach(originalIndex=>{
+        const div = document.createElement('div');
+        div.className = 'choice';
+        div.textContent = q.choices[originalIndex];
+        div.dataset.originalIndex = String(originalIndex);
+        div.onclick = () => selectAnswer(originalIndex);
+        choicesContainer.appendChild(div);
+      });
+
+      const progress = ((index+1)/lessonData.questions.length)*100;
+      document.getElementById('progress-fill').style.width = progress + '%';
+
+      document.getElementById('prev-btn').disabled = index===0;
+      const nextBtn = document.getElementById('next-btn');
+      if (index === lessonData.questions.length-1){
+        nextBtn.disabled = false;
+        nextBtn.textContent = '学習完了';
+      } else {
+        nextBtn.disabled = false;
+        nextBtn.textContent = '次の問題';
+      }
+    }
+
+    function sendQuestionAnswerToParent(questionData, userAnswer, isCorrect){
+      const messageData = {
+        type:'question:answered',
+        lessonId: lessonData.id,
+        questionData:{
+          qnum: questionData.id || currentQuestion,
+          question: questionData.question,
+          choices: questionData.choices,
+          answer: questionData.correct,
+          explanation: questionData.explanation
+        },
+        userAnswer,
+        correctAnswer: questionData.correct,
+        isCorrect,
+        timestamp: Date.now()
+      };
+      console.log('📝 個別問題回答を送信:', messageData);
+      try{
+        if (window.parent !== window) window.parent.postMessage(messageData,'*');
+        if (window.top !== window) window.top.postMessage(messageData,'*');
+        const existing = JSON.parse(localStorage.getItem('questionAnswers') || '[]');
+        existing.push(messageData);
+        localStorage.setItem('questionAnswers', JSON.stringify(existing));
+      }catch(e){
+        console.log('❌ 個別問題回答送信失敗:', e);
+      }
+    }
+
+    function selectAnswer(choiceIndex){
+      const q = lessonData.questions[currentQuestion];
+      const choices = document.querySelectorAll('.choice');
+      const timeSpent = Date.now() - questionStartTime;
+
+      choices.forEach(c=>{ c.style.pointerEvents='none'; });
+
+      choices.forEach(c=>{
+        c.classList.remove('selected','correct','incorrect');
+        const originalIndex = parseInt(c.dataset.originalIndex || "-1",10);
+        if (originalIndex === choiceIndex){
+          c.classList.add('selected');
+        }
+      });
+
+      setTimeout(()=>{
+        const isCorrect = choiceIndex === q.correct;
+        choices.forEach(c=>{
+          const originalIndex = parseInt(c.dataset.originalIndex || "-1",10);
+          if (originalIndex === q.correct){
+            c.classList.add('correct');
+          } else if (originalIndex === choiceIndex && !isCorrect){
+            c.classList.add('incorrect');
+          }
+        });
+
+        const expEl = document.getElementById('explanation');
+        expEl.innerHTML = '<h4>解説</h4><p>' + q.explanation + '</p>';
+        expEl.classList.add('show');
+
+        if (isCorrect) score++;
+
+        learningTracker.recordAnswer(
+          q.id || currentQuestion,
+          choiceIndex,
+          q.correct,
+          Math.round(timeSpent/1000)
+        );
+        sendQuestionAnswerToParent(q, choiceIndex, isCorrect);
+      }, 500);
+    }
+
+    function previousQuestion(){
+      if (currentQuestion>0){
+        currentQuestion--;
+        showQuestion(currentQuestion);
+        document.getElementById('explanation').classList.remove('show');
+      }
+    }
+
+    function showCurrentSessionResult(){
+      const session = learningTracker.currentSession;
+      const scorePercent = session.totalQuestions>0
+        ? Math.round((session.score/session.totalQuestions)*100)
+        : 0;
+      let msg = '';
+      if (scorePercent >= 90) msg = '🎉 ばっちり理解できています！';
+      else if (scorePercent >= 70) msg = '👍 よくできました！';
+      else if (scorePercent >= 50) msg = '📚 だいじなところをもう一度見直してみよう。';
+      else msg = '💪 もう一度シミュレーションを動かしながら考えてみよう。';
+
+      const totalTime = Date.now() - session.startTime;
+      const m = Math.floor(totalTime/60000);
+      const s = Math.floor((totalTime%60000)/1000);
+      const timeDisp = m>0 ? m+'分'+s+'秒' : s+'秒';
+
+      return `
+        <div style="background: linear-gradient(135deg,#ffb74d 0%,#ff8a65 100%); color:white; padding:2rem; border-radius:16px; text-align:center; box-shadow:0 8px 32px rgba(0,0,0,0.3); margin-top:20px;">
+          <div style="font-size:1.8rem; font-weight:bold; margin-bottom:1rem;">学習完了！</div>
+          <div style="font-size:1.1rem; margin-bottom:1.5rem;">${msg}</div>
+          <div style="background:rgba(255,255,255,0.2); border-radius:12px; padding:1.5rem; margin-bottom:1rem;">
+            <div style="font-size:2.5rem; font-weight:bold; margin-bottom:0.5rem;">${session.score}/${session.totalQuestions}問正解</div>
+            <div style="font-size:1.5rem; font-weight:600;">${scorePercent}%</div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:0.9rem; opacity:0.9;">
+            <div>学習時間: <strong>${timeDisp}</strong></div>
+            <div>完了時刻: <strong>${new Date().toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</strong></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function completeLesson(){
+      learningTracker.saveSession();
+      const messageData = {
+        type:'lesson:complete',
+        lessonId: lessonData.id,
+        detail:{
+          correct: learningTracker.currentSession.score,
+          total: learningTracker.currentSession.totalQuestions,
+          timeSec: Math.round((Date.now()-learningTracker.currentSession.startTime)/1000)
+        }
+      };
+      console.log('🚀 完了メッセージ送信:', messageData);
+      try{ window.parent.postMessage(messageData,'*'); }catch(e){}
+      try{ if(window.top!==window) window.top.postMessage(messageData,'*'); }catch(e){}
+
+      try{
+        const storageMessage = { type:'lesson:complete', data:messageData, timestamp:Date.now() };
+        localStorage.setItem('lessonCompleteMessage', JSON.stringify(storageMessage));
+        if (window.parent && window.parent.saveLessonProgress){
+          window.parent.saveLessonProgress(
+            messageData.lessonId,
+            messageData.detail.correct,
+            messageData.detail.total,
+            messageData.detail.timeSec
+          );
+        }
+      }catch(e){ console.log('localStorage/saveLessonProgress エラー', e); }
+
+      document.getElementById('question-container').style.display='none';
+      const resultContainer = document.createElement('div');
+      resultContainer.className='question-container';
+      resultContainer.style.display='block';
+      resultContainer.innerHTML = showCurrentSessionResult();
+
+      const homeButton = document.createElement('button');
+      homeButton.textContent = '🏠 ホームに戻る';
+      homeButton.className = 'start-learning-btn';
+      homeButton.style.marginTop = '1.5rem';
+      homeButton.onclick = ()=>{
+        if (window.parent !== window || window.top !== window){
+          try{
+            window.parent.postMessage({type:'lesson:goBack'}, '*');
+            window.top.postMessage({type:'lesson:goBack'}, '*');
+            return;
+          }catch(e){}
+        }
+        goHome();
+      };
+      resultContainer.appendChild(homeButton);
+      document.querySelector('.main-container').appendChild(resultContainer);
+    }
+
+    function nextQuestion(){
+      if (currentQuestion === lessonData.questions.length-1){
+        completeLesson();
+        return;
+      }
+      if (currentQuestion < lessonData.questions.length-1){
+        currentQuestion++;
+        showQuestion(currentQuestion);
+        document.getElementById('explanation').classList.remove('show');
+      }
+    }
+
+    function startLearning(){
+      document.getElementById('info-panel').style.display = 'none';
+      document.getElementById('question-container').style.display = 'block';
+      if (lessonData.questions.length > 0){
+        showQuestion(0);
+      } else {
+        alert('問題データがまだ追加されていません。');
+      }
+    }
+
+    function goHome(){
+      window.location.href = '/';
+    }
+  </script>
+</body>
+</html>

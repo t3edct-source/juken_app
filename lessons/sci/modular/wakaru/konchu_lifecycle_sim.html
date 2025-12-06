@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>シミュレーションで学ぶ理科 - 昆虫のライフサイクル</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+      background: linear-gradient(135deg, #e3f2fd 0%, #f1f8e9 40%, #fffde7 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .header {
+      background: rgba(255,255,255,0.95);
+      padding: 10px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .home-btn {
+      background:#42a5f5;
+      color:white;
+      border:none;
+      padding:10px 18px;
+      border-radius:20px;
+      font-size:14px;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      min-height:44px;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .home-btn:hover { background:#1e88e5; transform:translateY(-1px); }
+    .home-btn:active { transform:scale(0.98); }
+    .lesson-title {
+      font-size:18px;
+      font-weight:bold;
+      color:#333;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      flex:1;
+      margin:0 10px;
+    }
+    .main-container {
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      padding:15px;
+    }
+
+    /* ▼ シミュ全体 */
+    .sim-container {
+      background:white;
+      border-radius:15px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.15);
+      margin-bottom:15px;
+      overflow:hidden;
+      position:relative;
+    }
+    .sim-header {
+      background:linear-gradient(135deg, #42a5f5 0%, #66bb6a 100%);
+      color:white;
+      padding:15px;
+      text-align:center;
+    }
+    .sim-header h2 { font-size:20px; margin-bottom:5px; }
+    .sim-header p { font-size:14px; opacity:0.9; }
+
+    .sim-area {
+      padding:12px 12px 16px;
+      background:#e3f2fd;
+    }
+
+    .top-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      margin-bottom:10px;
+    }
+    .month-label {
+      font-size:14px;
+      font-weight:bold;
+      color:#1a237e;
+      min-width:120px;
+      padding:4px 0;
+      text-shadow:0 1px 2px rgba(255,255,255,0.8);
+    }
+    .month-slider {
+      flex:1;
+      -webkit-appearance:none;
+      height:8px;
+      border-radius:999px;
+      background:linear-gradient(90deg, #c5cae9, #e1bee7);
+      outline:none;
+      box-shadow:inset 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .month-slider::-webkit-slider-thumb {
+      -webkit-appearance:none;
+      width:24px; 
+      height:24px;
+      border-radius:50%;
+      background:linear-gradient(135deg, #3949ab, #5c6bc0);
+      box-shadow:0 0 0 4px rgba(57,73,171,0.3), 0 3px 8px rgba(0,0,0,0.3);
+      cursor:pointer;
+      transition:all 0.2s ease;
+    }
+    .month-slider::-webkit-slider-thumb:hover {
+      transform:scale(1.1);
+      box-shadow:0 0 0 5px rgba(57,73,171,0.4), 0 4px 12px rgba(0,0,0,0.4);
+    }
+    .month-slider::-moz-range-thumb {
+      width:24px; 
+      height:24px;
+      border-radius:50%;
+      background:linear-gradient(135deg, #3949ab, #5c6bc0);
+      box-shadow:0 0 0 4px rgba(57,73,171,0.3), 0 3px 8px rgba(0,0,0,0.3);
+      cursor:pointer;
+      border:none;
+      transition:all 0.2s ease;
+    }
+    .month-slider::-moz-range-thumb:hover {
+      transform:scale(1.1);
+    }
+    .month-display {
+      font-size:14px;
+      font-weight:bold;
+      color:#283593;
+      min-width:100px;
+      text-align:right;
+      background:linear-gradient(135deg, rgba(255,255,255,0.9), rgba(227,242,253,0.8));
+      padding:6px 12px;
+      border-radius:8px;
+      box-shadow:0 2px 6px rgba(0,0,0,0.1);
+      border:1px solid rgba(57,73,171,0.2);
+    }
+
+    .insect-tabs {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:4px;
+    }
+    .insect-tab {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:8px 14px;
+      border-radius:999px;
+      border:2px solid #90caf9;
+      background:linear-gradient(135deg, rgba(255,255,255,0.95), rgba(227,242,253,0.9));
+      font-size:13px;
+      font-weight:600;
+      cursor:pointer;
+      color:#1565c0;
+      transition:all 0.3s ease;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+      box-shadow:0 2px 6px rgba(0,0,0,0.1);
+    }
+    .insect-tab:hover {
+      transform:translateY(-2px);
+      box-shadow:0 4px 10px rgba(33,150,243,0.3);
+      border-color:#64b5f6;
+    }
+    .insect-tab span.emoji { 
+      font-size:20px;
+      filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+      transition:transform 0.3s ease;
+    }
+    .insect-tab:hover span.emoji {
+      transform:scale(1.15) rotate(5deg);
+    }
+    .insect-tab.active {
+      background:linear-gradient(135deg,#64b5f6 0%,#42a5f5 50%,#1e88e5 100%);
+      color:white;
+      border-color:#1976d2;
+      box-shadow:0 4px 12px rgba(33,150,243,0.5), 0 0 0 2px rgba(33,150,243,0.2);
+      transform:translateY(-1px);
+    }
+    .insect-tab.active span.emoji {
+      transform:scale(1.1);
+      filter:drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+    }
+
+    .sim-field {
+      position:relative;
+      margin-top:6px;
+      background:linear-gradient(to bottom, #bbdefb 0%, #e8f5e9 55%, #c8e6c9 100%);
+      border-radius:12px;
+      padding:12px;
+      overflow:hidden;
+      min-height:260px;
+    }
+
+    /* ▼ ステージタイムライン */
+    .timeline {
+      background:linear-gradient(135deg, rgba(255,255,255,0.98), rgba(227,242,253,0.95));
+      border-radius:12px;
+      padding:14px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.15), 0 0 0 1px rgba(57,73,171,0.15);
+      margin-bottom:10px;
+      border:1px solid rgba(57,73,171,0.1);
+    }
+    .timeline-title {
+      font-size:14px;
+      font-weight:bold;
+      color:#1a237e;
+      margin-bottom:10px;
+      padding-bottom:8px;
+      border-bottom:2px solid rgba(57,73,171,0.2);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      text-shadow:0 1px 2px rgba(255,255,255,0.8);
+    }
+    .timeline-title span.sub {
+      font-size:11px;
+      font-weight:normal;
+      color:#455a64;
+      opacity:0.9;
+    }
+    .timeline-bar {
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:4px;
+      position:relative;
+      margin-bottom:4px;
+    }
+    .timeline-line {
+      position:absolute;
+      left:5%;
+      right:5%;
+      top:20px;
+      height:3px;
+      background:linear-gradient(90deg, #cfd8dc, #b0bec5, #cfd8dc);
+      z-index:0;
+      border-radius:999px;
+      box-shadow:inset 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .stage-dot {
+      position:relative;
+      z-index:1;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      width:20%;
+    }
+    .stage-dot-circle {
+      width:22px;
+      height:22px;
+      border-radius:50%;
+      background:linear-gradient(135deg, #e0e0e0, #f5f5f5);
+      border:3px solid #b0bec5;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:11px;
+      font-weight:bold;
+      color:#546e7a;
+      transition:all 0.3s ease;
+      box-shadow:0 2px 6px rgba(0,0,0,0.15);
+    }
+    .stage-dot:hover .stage-dot-circle {
+      transform:scale(1.1);
+      box-shadow:0 3px 8px rgba(0,0,0,0.2);
+    }
+    .stage-dot-label {
+      margin-top:6px;
+      font-size:11px;
+      color:#455a64;
+      text-align:center;
+      white-space:nowrap;
+      font-weight:500;
+      transition:all 0.3s ease;
+    }
+    .stage-dot.active .stage-dot-circle {
+      background:linear-gradient(135deg,#ffca28 0%,#ffb74d 50%,#ff7043 100%);
+      border-color:#fb8c00;
+      color:#4e342e;
+      transform:scale(1.3);
+      box-shadow:0 0 0 5px rgba(255,183,77,0.6), 0 4px 12px rgba(255,152,0,0.5);
+      animation:stagePulse 2s ease-in-out infinite;
+    }
+    @keyframes stagePulse {
+      0%, 100% { box-shadow:0 0 0 5px rgba(255,183,77,0.6), 0 4px 12px rgba(255,152,0,0.5); }
+      50% { box-shadow:0 0 0 7px rgba(255,183,77,0.8), 0 6px 16px rgba(255,152,0,0.7); }
+    }
+    .stage-dot.active .stage-dot-label {
+      color:#bf360c;
+      font-weight:bold;
+      transform:scale(1.05);
+    }
+
+    .stage-detail {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:6px;
+    }
+    .stage-card {
+      flex:2;
+      background:linear-gradient(135deg, rgba(248,249,250,0.98), rgba(232,245,233,0.95));
+      border-radius:12px;
+      padding:12px 14px;
+      min-width:180px;
+      box-shadow:0 3px 10px rgba(0,0,0,0.12), 0 0 0 1px rgba(76,175,80,0.15);
+      border:1px solid rgba(76,175,80,0.2);
+      transition:all 0.3s ease;
+    }
+    .stage-card:hover {
+      transform:translateY(-2px);
+      box-shadow:0 5px 14px rgba(0,0,0,0.18), 0 0 0 1px rgba(76,175,80,0.3);
+    }
+    .stage-card-title {
+      font-size:14px;
+      font-weight:bold;
+      color:#1b5e20;
+      margin-bottom:8px;
+      display:flex;
+      align-items:center;
+      gap:6px;
+      text-shadow:0 1px 2px rgba(255,255,255,0.8);
+    }
+    .stage-card-title span.emoji {
+      font-size:22px;
+      filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+      animation:float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform:translateY(0); }
+      50% { transform:translateY(-3px); }
+    }
+    .stage-card-body {
+      font-size:12px;
+      color:#424242;
+      line-height:1.6;
+      padding-top:2px;
+    }
+    .activity-card {
+      flex:1;
+      background:linear-gradient(135deg, rgba(248,249,250,0.98), rgba(187,222,251,0.95));
+      border-radius:12px;
+      padding:12px 14px;
+      min-width:150px;
+      box-shadow:0 3px 10px rgba(0,0,0,0.12), 0 0 0 1px rgba(33,150,243,0.15);
+      border:1px solid rgba(33,150,243,0.2);
+      transition:all 0.3s ease;
+    }
+    .activity-card:hover {
+      transform:translateY(-2px);
+      box-shadow:0 5px 14px rgba(0,0,0,0.18), 0 0 0 1px rgba(33,150,243,0.3);
+    }
+    .activity-title {
+      font-size:13px;
+      font-weight:bold;
+      color:#0277bd;
+      margin-bottom:6px;
+      text-shadow:0 1px 2px rgba(255,255,255,0.8);
+    }
+    .activity-bar-bg {
+      position:relative;
+      width:100%;
+      height:10px;
+      border-radius:999px;
+      background:linear-gradient(90deg, #e0e0e0, #cfd8dc);
+      overflow:hidden;
+      margin-top:4px;
+      box-shadow:inset 0 2px 4px rgba(0,0,0,0.15);
+      border:1px solid rgba(0,0,0,0.1);
+    }
+    .activity-bar-fill {
+      position:absolute;
+      left:0; top:0; bottom:0;
+      width:0%;
+      border-radius:999px;
+      background:linear-gradient(90deg,#81c784 0%,#aed581 25%,#ffeb3b 50%,#ffb74d 75%,#ef5350 100%);
+      transition:width 0.4s ease;
+      box-shadow:0 0 8px rgba(255,235,59,0.4), inset 0 1px 2px rgba(255,255,255,0.3);
+    }
+    .activity-level {
+      margin-top:6px;
+      font-size:12px;
+      font-weight:bold;
+      color:#00695c;
+      text-shadow:0 1px 2px rgba(255,255,255,0.8);
+    }
+    .activity-note {
+      margin-top:4px;
+      font-size:11px;
+      color:#455a64;
+      line-height:1.4;
+    }
+
+    .sim-comment {
+      margin-top:10px;
+      font-size:13px;
+      line-height:1.7;
+      color:#1a237e;
+      background:linear-gradient(135deg, rgba(227,242,253,0.95), rgba(187,222,251,0.9));
+      border-radius:12px;
+      padding:12px 14px;
+      border-left:5px solid #42a5f5;
+      box-shadow:0 2px 8px rgba(66,165,245,0.15);
+    }
+    .sim-comment strong { 
+      color:#0d47a1; 
+      font-weight:bold;
+      text-shadow:0 1px 2px rgba(255,255,255,0.5);
+    }
+
+    /* ▼ infoパネル */
+    .info-panel {
+      background:white;
+      border-radius:15px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.15);
+      padding:20px;
+      margin-bottom:15px;
+    }
+    .info-panel h3 {
+      color:#333;
+      margin-bottom:15px;
+      font-size:18px;
+    }
+    .info-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+      gap:15px;
+    }
+    .info-item {
+      background:#f8f9fa;
+      padding:15px;
+      border-radius:10px;
+      border-left:4px solid #aed581;
+    }
+    .info-item h4 {
+      color:#558b2f;
+      margin-bottom:8px;
+      font-size:14px;
+    }
+    .info-item p {
+      color:#555;
+      font-size:13px;
+      line-height:1.4;
+    }
+
+    /* ▼ 問題パネル */
+    .question-container {
+      background:white;
+      border-radius:15px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.15);
+      padding:20px;
+      margin-bottom:15px;
+    }
+    .question-text {
+      font-size:16px;
+      font-weight:bold;
+      color:#333;
+      margin-bottom:15px;
+    }
+    .choices {
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .choice {
+      padding:14px 16px;
+      background:#f8f9fa;
+      border:2px solid #e9ecef;
+      border-radius:10px;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      font-size:14px;
+      min-height:48px;
+      display:flex;
+      align-items:center;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .choice:hover {
+      background:#e9ecef;
+      border-color:#64b5f6;
+    }
+    .choice.selected {
+      background:#64b5f6;
+      color:white;
+      border-color:#1e88e5;
+    }
+    .choice.correct {
+      background:#28a745;
+      color:white;
+      border-color:#28a745;
+      animation:correctPulse 0.6s ease;
+    }
+    .choice.incorrect {
+      background:#dc3545;
+      color:white;
+      border-color:#dc3545;
+      animation:wrongShake 0.6s ease;
+    }
+    @keyframes correctPulse {
+      0%,100%{transform:scale(1);}
+      50%{transform:scale(1.05);}
+    }
+    @keyframes wrongShake {
+      0%,100%{transform:translateX(0);}
+      25%{transform:translateX(-10px);}
+      75%{transform:translateX(10px);}
+    }
+    .explanation {
+      margin-top:15px;
+      padding:15px;
+      background:#f8f9fa;
+      border-radius:10px;
+      border-left:4px solid #28a745;
+      display:none;
+    }
+    .explanation.show { display:block; }
+    .explanation h4 {
+      color:#28a745;
+      margin-bottom:10px;
+    }
+    .explanation p {
+      color:#666;
+      line-height:1.5;
+    }
+    .navigation {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-top:20px;
+    }
+    .nav-btn {
+      padding:14px 24px;
+      border:none;
+      border-radius:25px;
+      font-size:14px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      min-height:48px;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .nav-btn:disabled {
+      opacity:0.5;
+      cursor:not-allowed;
+    }
+    .prev-btn {
+      background:#6c757d;
+      color:white;
+    }
+    .prev-btn:hover:not(:disabled) { background:#5a6268; }
+    .next-btn {
+      background:#64b5f6;
+      color:#0d47a1;
+    }
+    .next-btn:hover:not(:disabled) { background:#42a5f5; }
+
+    .start-learning-btn {
+      background:linear-gradient(135deg, #81c784 0%, #66bb6a 50%, #43a047 100%);
+      color:white;
+      border:none;
+      padding:16px 30px;
+      border-radius:25px;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      margin:20px auto;
+      display:block;
+      min-height:52px;
+      width:100%;
+      max-width:400px;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .start-learning-btn:hover {
+      transform:translateY(-2px);
+      box-shadow:0 8px 25px rgba(129,199,132,0.35);
+    }
+    .progress-bar {
+      background:#e9ecef;
+      border-radius:10px;
+      height:8px;
+      margin:15px 0;
+      overflow:hidden;
+    }
+    .progress-fill {
+      background:linear-gradient(135deg, #81c784 0%, #66bb6a 100%);
+      height:100%;
+      transition:width 0.3s ease;
+    }
+
+    * { touch-action:manipulation; }
+    .choice, .nav-btn, .home-btn, .start-learning-btn, .insect-tab {
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+
+    @media (max-width:768px){
+      body { overflow-x:hidden; }
+      .header { padding:8px 12px; }
+      .home-btn { padding:10px 16px; font-size:13px; }
+      .lesson-title { font-size:14px; margin:0 8px; text-align:center; }
+      .header > div:last-child { width:80px; }
+      .main-container { padding:10px; }
+
+      .info-grid { grid-template-columns:1fr; gap:12px; }
+      .info-panel { padding:16px; }
+      .info-item { padding:12px; }
+      .info-item h4 { font-size:13px; }
+      .info-item p { font-size:12px; }
+
+      .sim-area { padding:10px 10px 14px; }
+      .sim-field { min-height:260px; }
+      .stage-detail { flex-direction:column; }
+      .stage-card, .activity-card { min-width:100%; }
+
+      .question-container { padding:16px; }
+      .question-text { font-size:15px; margin-bottom:12px; }
+      .choice { padding:14px 16px; font-size:14px; min-height:52px; }
+      .navigation { flex-direction:column; gap:12px; margin-top:16px; }
+      .nav-btn { width:100%; padding:14px 20px; font-size:15px; }
+      .start-learning-btn { padding:16px 24px; font-size:15px; max-width:100%; }
+      .explanation { padding:12px; font-size:13px; margin-top:12px; }
+      .progress-bar { margin:12px 0; }
+    }
+    @media (max-width:480px){
+      .header { padding:6px 10px; }
+      .home-btn { padding:8px 14px; font-size:12px; }
+      .lesson-title { font-size:12px; margin:0 6px; }
+      .header > div:last-child { width:70px; }
+      .main-container { padding:8px; }
+      .question-container { padding:12px; }
+      .question-text { font-size:14px; }
+      .choice { padding:12px 14px; font-size:13px; min-height:48px; }
+      .info-panel { padding:12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <button class="home-btn" onclick="goHome()">🏠 ホーム</button>
+    <div class="lesson-title">シミュレーションで学ぶ理科 - 昆虫のライフサイクル</div>
+    <div style="width:80px;"></div>
+  </div>
+
+  <div class="main-container">
+    <!-- ▼ シミュレーション -->
+    <div class="sim-container">
+      <div class="sim-header">
+        <h2>🦋 昆虫の年間ライフサイクル</h2>
+        <p>月と昆虫をえらんで、「卵・幼虫・さなぎ・成虫」の一年の流れを見てみよう</p>
+      </div>
+      <div class="sim-area">
+        <div class="top-row">
+          <div class="month-label">月（1〜12月）</div>
+          <input type="range" id="monthSlider" class="month-slider" min="1" max="12" step="1" value="6">
+          <div class="month-display" id="monthDisplay">6月</div>
+        </div>
+
+        <div class="insect-tabs">
+          <button class="insect-tab active" data-insect="butterfly">
+            <span class="emoji">🦋</span><span>チョウ</span>
+          </button>
+          <button class="insect-tab" data-insect="cicada">
+            <span class="emoji">🦗</span><span>セミ</span>
+          </button>
+          <button class="insect-tab" data-insect="beetle">
+            <span class="emoji">🐛</span><span>カブトムシ</span>
+          </button>
+        </div>
+
+        <div class="sim-field">
+          <!-- タイムライン -->
+          <div class="timeline">
+            <div class="timeline-title">
+              <span>ライフサイクルの流れ（卵 → 幼虫 → さなぎ → 成虫）</span>
+              <span class="sub" id="timelineSub">選んだ昆虫の一年の中で、今どのステージかを確認しよう。</span>
+            </div>
+            <div class="timeline-bar">
+              <div class="timeline-line"></div>
+              <div class="stage-dot" data-stage="egg">
+                <div class="stage-dot-circle">卵</div>
+                <div class="stage-dot-label">卵</div>
+              </div>
+              <div class="stage-dot" data-stage="larva">
+                <div class="stage-dot-circle">幼</div>
+                <div class="stage-dot-label">幼虫</div>
+              </div>
+              <div class="stage-dot" data-stage="pupa">
+                <div class="stage-dot-circle">さ</div>
+                <div class="stage-dot-label">さなぎ</div>
+              </div>
+              <div class="stage-dot" data-stage="adult">
+                <div class="stage-dot-circle">成</div>
+                <div class="stage-dot-label">成虫</div>
+              </div>
+              <div class="stage-dot" data-stage="dormant">
+                <div class="stage-dot-circle">冬</div>
+                <div class="stage-dot-label">冬ごもり</div>
+              </div>
+            </div>
+            <div class="stage-detail">
+              <div class="stage-card">
+                <div class="stage-card-title">
+                  <span class="emoji" id="stageEmoji">🦋</span>
+                  <span id="stageTitle">チョウ：成虫として活動</span>
+                </div>
+                <div class="stage-card-body" id="stageDesc">
+                  チョウは成虫として花のまわりをとび回り、花のみつをすったり、卵をうんだりしています。
+                </div>
+              </div>
+              <div class="activity-card">
+                <div class="activity-title">活動のさかんさ</div>
+                <div class="activity-bar-bg">
+                  <div class="activity-bar-fill" id="activityBar"></div>
+                </div>
+                <div class="activity-level" id="activityLevel">活動レベル：高い</div>
+                <div class="activity-note" id="activityNote">
+                  気温が高く、えさも多いので、活動がとてもさかんです。
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sim-comment" id="simComment">
+            月と昆虫をえらぶと、その月にどの<strong>ステージ（卵・幼虫・さなぎ・成虫・冬ごもり）</strong>でくらしているかがわかります。<br>
+            例えば、チョウは春〜夏にかけて成虫がよく見られますが、それ以外の季節には<strong>卵や幼虫、さなぎの姿</strong>で生きていることが多いです。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ▼ 導入テキスト -->
+    <div class="info-panel" id="info-panel">
+      <h3>🔄 昆虫のライフサイクルと季節</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <h4>卵 → 幼虫 → さなぎ → 成虫</h4>
+          <p>多くの昆虫は、<strong>卵・幼虫・さなぎ・成虫</strong>という決まった流れで成長します。<br>
+             例えばチョウの場合、卵からかえった幼虫は「青虫」として<strong>葉をたくさん食べ</strong>、やがてさなぎになり、最後に羽のある成虫になります。</p>
+        </div>
+        <div class="info-item">
+          <h4>一年の中で「見える」季節と「見えない」季節</h4>
+          <p>セミのように、<strong>成虫として見えている期間</strong>が短い昆虫もいます。地上で見えないときも、<strong>土の中の幼虫や卵・さなぎ</strong>として生きていることが多いです。</p>
+        </div>
+        <div class="info-item">
+          <h4>季節と活動のさかんさ</h4>
+          <p>気温や日照時間が高い夏には、成虫として活動する昆虫が多く見られます。<br>
+             いっぽうで、寒い冬には<strong>冬ごもり</strong>をしたり、卵やさなぎの状態で次の季節を待っていたりします。</p>
+        </div>
+      </div>
+      <button class="start-learning-btn" onclick="startLearning()">学習を開始する</button>
+    </div>
+
+    <!-- ▼ 問題エリア -->
+    <div class="question-container" id="question-container" style="display:none;">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="question-text" id="question-text"></div>
+      <div class="choices" id="choices"></div>
+      <div class="explanation" id="explanation"></div>
+      <div class="navigation">
+        <button class="nav-btn prev-btn" id="prev-btn" onclick="previousQuestion()" disabled>前の問題</button>
+        <button class="nav-btn next-btn" id="next-btn" onclick="nextQuestion()">次の問題</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ================================
+       ▼ 昆虫ライフサイクル シミュ
+    ================================= */
+    const monthSlider = document.getElementById('monthSlider');
+    const monthDisplay = document.getElementById('monthDisplay');
+    const insectTabs = document.querySelectorAll('.insect-tab');
+    const stageDots = document.querySelectorAll('.stage-dot');
+
+    const stageEmoji = document.getElementById('stageEmoji');
+    const stageTitle = document.getElementById('stageTitle');
+    const stageDesc = document.getElementById('stageDesc');
+    const activityBar = document.getElementById('activityBar');
+    const activityLevel = document.getElementById('activityLevel');
+    const activityNote = document.getElementById('activityNote');
+    const simCommentEl = document.getElementById('simComment');
+    const timelineSub = document.getElementById('timelineSub');
+
+    let currentInsect = 'butterfly';
+
+    // 昆虫ごとの一年データ（ざっくりモデル）
+    // stage: egg, larva, pupa, adult, dormant
+    const insectData = {
+      butterfly: {
+        name: 'チョウ',
+        emoji: '🦋',
+        life: {
+          1: { stage: 'dormant', activity: 1, desc: '卵やさなぎの状態で冬をこしていることが多く、外からはほとんど見えません。' },
+          2: { stage: 'dormant', activity: 1, desc: 'まだ寒く、卵やさなぎとしてじっとしている時期です。' },
+          3: { stage: 'egg', activity: 3, desc: 'あたたかい日がふえると、成虫になったチョウが卵をうみはじめる地域もあります。' },
+          4: { stage: 'larva', activity: 4, desc: '卵からかえった幼虫（青虫）が葉をたくさん食べて成長します。' },
+          5: { stage: 'larva', activity: 4, desc: '幼虫として活動がさかんで、体を大きくしていきます。' },
+          6: { stage: 'pupa', activity: 3, desc: '十分に大きくなった幼虫がさなぎになり、中で成虫の体をつくっています。' },
+          7: { stage: 'adult', activity: 5, desc: '多くのチョウが成虫となり、花のまわりをとび回ってえさをとったり卵をうんだりします。' },
+          8: { stage: 'adult', activity: 4, desc: '成虫として活動していますが、暑さが強い日中は活動をひかえることもあります。' },
+          9: { stage: 'egg', activity: 3, desc: '次の世代のために卵をうむ時期で、卵や幼虫の姿が見られます。' },
+          10:{ stage: 'larva', activity: 2, desc: '一部の幼虫は、寒くなる前にえさを食べて成長し、冬をこす準備をします。' },
+          11:{ stage: 'dormant', activity: 1, desc: 'さなぎや卵の状態で冬をこすものが多く、外からはほとんど見られません。' },
+          12:{ stage: 'dormant', activity: 1, desc: '低温の中で、次の春にそなえてじっとしています。' }
+        },
+        comment: 'チョウは、春〜夏にかけて成虫がよく見られますが、それ以外の季節には卵や幼虫、さなぎの姿で生きていることが多いです。'
+      },
+      cicada: {
+        name: 'セミ',
+        emoji: '🦗',
+        life: {
+          1: { stage: 'larva', activity: 1, desc: 'ほとんどの時間を土の中の幼虫としてすごしており、地上からは見えません。' },
+          2: { stage: 'larva', activity: 1, desc: '土の中で木の根からしるをすって成長します。' },
+          3: { stage: 'larva', activity: 1, desc: 'まだ気温がひくく、地上にはほとんど出てきません。' },
+          4: { stage: 'larva', activity: 1, desc: '土の中でゆっくり成長をつづけています。' },
+          5: { stage: 'larva', activity: 2, desc: '気温が上がるにつれて、地表近くへ移動してくる幼虫もいます。' },
+          6: { stage: 'pupa', activity: 3, desc: '夜などに地上に出てきて木にのぼり、からをぬいで成虫になる「羽化」が始まります。さなぎ・成虫への変化の時期です。' },
+          7: { stage: 'adult', activity: 5, desc: '成虫として木にとまり、大きな声で鳴いています。なかまをよびあい、卵をうむ活動がさかんです。' },
+          8: { stage: 'adult', activity: 4, desc: '成虫として活動していますが、一匹一匹の成虫の寿命は短く、多くはこの時期に一生を終えます。' },
+          9: { stage: 'egg', activity: 2, desc: '木の枝などにうまれた卵がふ化し、幼虫になって地面にもぐっていきます。' },
+          10:{ stage: 'larva', activity: 1, desc: '地面の中で幼虫としてくらし、次の夏に向けてゆっくりと成長します。' },
+          11:{ stage: 'larva', activity: 1, desc: 'まだ土の中で、地上からは見えません。' },
+          12:{ stage: 'larva', activity: 1, desc: '低温の中で活動をおさえながら、土の中で生きています。' }
+        },
+        comment: 'セミは、ほとんどの時間を土の中の幼虫としてすごし、夏のあいだの短い期間だけ成虫として地上で見られます。'
+      },
+      beetle: {
+        name: 'カブトムシ',
+        emoji: '🐛',
+        life: {
+          1: { stage: 'larva', activity: 1, desc: '土の中や落ち葉の下で幼虫としてすごし、えさを食べて体を大きくしています。' },
+          2: { stage: 'larva', activity: 1, desc: 'まだ寒いので、活動はおさえめですが、少しずつ成長しています。' },
+          3: { stage: 'larva', activity: 2, desc: '気温の上昇とともに、えさを食べる量が増え、体が大きくなっていきます。' },
+          4: { stage: 'larva', activity: 2, desc: '幼虫として活動しながら、さなぎになる準備を始めます。' },
+          5: { stage: 'pupa', activity: 2, desc: '土の中でさなぎとなり、中で成虫の体をつくっています。外からは見えません。' },
+          6: { stage: 'pupa', activity: 2, desc: 'さなぎの状態がつづき、成虫になる直前の時期です。' },
+          7: { stage: 'adult', activity: 5, desc: '成虫として地上に出てきます。夜に活動し、木のしるや果物を食べたり、なかまをさがしたりします。' },
+          8: { stage: 'adult', activity: 4, desc: '成虫として活動していますが、だんだんと寿命が近づき、数がへっていきます。' },
+          9: { stage: 'egg', activity: 2, desc: '土の中にうみつけられた卵から幼虫がふ化し、新しい世代の幼虫がえさを食べ始めます。' },
+          10:{ stage: 'larva', activity: 2, desc: '幼虫として落ち葉やたい肥などを食べ、次の年の夏にむけて成長します。' },
+          11:{ stage: 'larva', activity: 1, desc: '気温が下がり、活動をおさえながら土の中でくらします。' },
+          12:{ stage: 'larva', activity: 1, desc: '低温の中で、幼虫として冬をこし、次の春にそなえています。' }
+        },
+        comment: 'カブトムシは、ほとんどの期間を土の中の幼虫やさなぎとしてすごし、夏のあいだだけ成虫として地上に出てきます。'
+      }
+    };
+
+    function activityLabel(level){
+      if (level <= 1) return '活動レベル：とても低い';
+      if (level === 2) return '活動レベル：やや低い';
+      if (level === 3) return '活動レベル：ふつう';
+      if (level === 4) return '活動レベル：やや高い';
+      return '活動レベル：高い';
+    }
+
+    function activityNoteText(stage, level){
+      if (stage === 'dormant') return '外からはほとんど見えませんが、次の季節にそなえてじっとしています。';
+      if (stage === 'egg') return '卵の中で、次のステージにそなえて成長しています。';
+      if (stage === 'pupa') return '姿はあまり動きませんが、中では大きな変化が起こっています。';
+      if (stage === 'adult' && level >= 4) return '成虫としてえさをとり、なかまをさがす活動がさかんです。';
+      if (stage === 'larva' && level >= 3) return '幼虫としてえさをたくさん食べ、体を大きくしています。';
+      return '季節に合わせて、活動のようすやスピードが変わっています。';
+    }
+
+    function stageJapanese(stage){
+      if (stage === 'egg') return '卵';
+      if (stage === 'larva') return '幼虫';
+      if (stage === 'pupa') return 'さなぎ';
+      if (stage === 'adult') return '成虫';
+      if (stage === 'dormant') return '冬ごもり';
+      return '';
+    }
+
+    function stageEmojiFor(stage, insectKey){
+      if (insectKey === 'butterfly'){
+        if (stage === 'egg') return '🥚';
+        if (stage === 'larva') return '🐛';
+        if (stage === 'pupa') return '🟤';
+        if (stage === 'adult') return '🦋';
+        if (stage === 'dormant') return '❄️';
+      } else if (insectKey === 'cicada'){
+        if (stage === 'egg') return '🥚';
+        if (stage === 'larva') return '🪳';
+        if (stage === 'pupa') return '🟤';
+        if (stage === 'adult') return '🦗';
+        if (stage === 'dormant') return '❄️';
+      } else if (insectKey === 'beetle'){
+        if (stage === 'egg') return '🥚';
+        if (stage === 'larva') return '🐛';
+        if (stage === 'pupa') return '🟤';
+        if (stage === 'adult') return '🪲';
+        if (stage === 'dormant') return '❄️';
+      }
+      return '🐞';
+    }
+
+    function updateInsectSim(){
+      const month = parseInt(monthSlider.value, 10);
+      monthDisplay.textContent = month + '月';
+
+      const insect = insectData[currentInsect];
+      const data = insect.life[month];
+
+      // ステージ強調
+      stageDots.forEach(dot=>{
+        dot.classList.remove('active');
+        if (dot.dataset.stage === data.stage){
+          dot.classList.add('active');
+        }
+      });
+
+      // メインテキスト
+      const stageJ = stageJapanese(data.stage);
+      stageEmoji.textContent = stageEmojiFor(data.stage, currentInsect);
+      stageTitle.textContent = insect.name + '：' + stageJ + 'のようす';
+      stageDesc.innerHTML = data.desc;
+
+      const percent = Math.min(100, Math.max(0, data.activity * 20));
+      activityBar.style.width = percent + '%';
+      activityLevel.textContent = activityLabel(data.activity);
+      activityNote.textContent = activityNoteText(data.stage, data.activity);
+
+      // コメント
+      simCommentEl.innerHTML =
+        insect.comment + '<br>' +
+        '月を動かして、「いつ成虫として見えるのか」「見えない季節にはどのステージで生きているのか」をくらべてみましょう。';
+
+      // タイムライン補足
+      timelineSub.textContent = insect.name + 'が一年の中でどのステージでくらしているかを、月ごとに確認してみよう。';
+    }
+
+    monthSlider.addEventListener('input', updateInsectSim);
+    insectTabs.forEach(tab=>{
+      tab.addEventListener('click', ()=>{
+        insectTabs.forEach(t=>t.classList.remove('active'));
+        tab.classList.add('active');
+        currentInsect = tab.dataset.insect || 'butterfly';
+        updateInsectSim();
+      });
+    });
+
+    updateInsectSim(); // 初期表示
+
+    /* ================================
+       ▼ 問題データ（わかる編）
+    ================================= */
+    const lessonData = {
+      id: 'sci.konchu_lifecycle_wakaru',
+      questions: [
+        {
+          id: 1,
+          question: "セミは夏になると成虫が地上で大きな声で鳴いていますが、そのほかの季節にはあまり姿が見られません。このとき、セミはどのようにして生きていることが多いですか？もっとも適切なものはどれですか？",
+          choices: [
+            "冬や春には、セミはほとんどいなくなってしまう",
+            "冬や春には、セミが木の葉の上で成虫のままじっとしている",
+            "冬や春には、セミの多くが土の中で幼虫としてくらしている",
+            "冬や春には、セミが海にもぐって魚のようにくらしている"
+          ],
+          correct: 2,
+          explanation: "セミは一年のほとんどを<strong>土の中の幼虫</strong>としてくらしています。夏のあいだだけ地上に出て<strong>成虫として活動</strong>し、鳴いたり卵をうんだりします。冬や春に地上であまり見られないのは、いなくなったのではなく、土の中で<strong>次の夏の準備</strong>をしているからです。"
+        },
+        {
+          id: 2,
+          question: "チョウの一生を、卵・幼虫・さなぎ・成虫の順番にならべたものとして正しいものはどれですか？",
+          choices: [
+            "成虫 → 卵 → 幼虫 → さなぎ",
+            "卵 → さなぎ → 幼虫 → 成虫",
+            "幼虫 → 卵 → 成虫 → さなぎ",
+            "卵 → 幼虫 → さなぎ → 成虫"
+          ],
+          correct: 3,
+          explanation: "多くのチョウは、<strong>卵 → 幼虫（青虫） → さなぎ → 成虫</strong>という順番で成長します。成虫は卵をうみ、その卵から新しい幼虫がかえる、という流れがくり返されます。"
+        },
+        {
+          id: 3,
+          question: "カブトムシについての説明として、もっとも適切なものはどれですか？",
+          choices: [
+            "カブトムシは一年じゅう成虫として地上でくらしている",
+            "カブトムシは夏にだけ土の中の幼虫としてくらし、冬は成虫として活動する",
+            "カブトムシはほとんどの期間を土の中の幼虫やさなぎとしてすごし、夏のあいだだけ成虫として地上に出てくる",
+            "カブトムシは卵のまま一年をこし、次の年に一度だけ成虫になる"
+          ],
+          correct: 2,
+          explanation: "カブトムシは、長い時間を<strong>土の中の幼虫</strong>としてすごし、そのあと<strong>さなぎ</strong>になって成虫の体をつくります。<br>成虫として地上に出て活動するのは主に<strong>夏のあいだ</strong>だけで、それ以外の季節は土の中で次の夏にそなえていることが多いです。"
+        }
+      ]
+    };
+
+    /* ================================
+       ▼ LearningTracker & 問題表示
+    ================================= */
+    class LearningTracker {
+      constructor() {
+        this.mode = 'wakaru';
+        this.historyKey = 'learningHistory_konchu_lifecycle_wakaru';
+        this.currentSession = {
+          startTime: Date.now(),
+          questions: [],
+          score: 0,
+          totalQuestions: 0,
+          mode: 'wakaru'
+        };
+      }
+      recordAnswer(questionId, selectedAnswer, correctAnswer, timeSpent) {
+        this.currentSession.questions.push({
+          questionId,
+          selectedAnswer,
+          correctAnswer,
+          isCorrect: selectedAnswer === correctAnswer,
+          timeSpent,
+          timestamp: Date.now()
+        });
+        if (selectedAnswer === correctAnswer) this.currentSession.score++;
+        this.currentSession.totalQuestions++;
+      }
+      loadHistory() {
+        try {
+          const data = localStorage.getItem(this.historyKey);
+          if (data) return JSON.parse(data);
+        } catch(e){ console.error(e); }
+        return {
+          sessions: [],
+          stats: {
+            totalSessions:0,
+            totalQuestions:0,
+            correctAnswers:0,
+            averageScore:0,
+            bestScore:0
+          }
+        };
+      }
+      calculateStats(sessions) {
+        const stats = {
+          totalSessions: sessions.length,
+          totalQuestions: 0,
+          correctAnswers: 0,
+          averageScore: 0,
+          bestScore: 0
+        };
+        sessions.forEach(s=>{
+          stats.totalQuestions += s.totalQuestions;
+          stats.correctAnswers += s.score;
+          stats.bestScore = Math.max(stats.bestScore, s.score);
+        });
+        if (stats.totalSessions>0 && stats.totalQuestions>0){
+          stats.averageScore = (stats.correctAnswers / stats.totalQuestions *100).toFixed(1);
+        }
+        return stats;
+      }
+      saveSession() {
+        try {
+          const existing = this.loadHistory();
+          const totalTime = Date.now() - this.currentSession.startTime;
+          this.currentSession.totalTime = totalTime;
+          const sessionToSave = {
+            ...this.currentSession,
+            endTime: Date.now(),
+            duration: totalTime,
+            totalTime
+          };
+          existing.sessions.push(sessionToSave);
+          existing.stats = this.calculateStats(existing.sessions);
+          localStorage.setItem(this.historyKey, JSON.stringify(existing));
+          console.log('✅ セッション保存完了', sessionToSave);
+          return true;
+        } catch(e){
+          console.error('セッション保存エラー', e);
+          return false;
+        }
+      }
+    }
+
+    const learningTracker = new LearningTracker();
+    let currentQuestion = 0;
+    let score = 0;
+    let questionStartTime = Date.now();
+
+    function generateShuffledIndices(length){
+      const idx = Array.from({length},(_,i)=>i);
+      for(let i=idx.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [idx[i], idx[j]] = [idx[j], idx[i]];
+      }
+      return idx;
+    }
+
+    function showQuestion(index){
+      const q = lessonData.questions[index];
+      questionStartTime = Date.now();
+      const expEl = document.getElementById('explanation');
+      expEl.classList.remove('show');
+
+      document.getElementById('question-text').textContent = q.question;
+      const choicesContainer = document.getElementById('choices');
+      choicesContainer.innerHTML = '';
+
+      const order = generateShuffledIndices(q.choices.length);
+      order.forEach(originalIndex=>{
+        const div = document.createElement('div');
+        div.className = 'choice';
+        div.textContent = q.choices[originalIndex];
+        div.dataset.originalIndex = String(originalIndex);
+        div.onclick = () => selectAnswer(originalIndex);
+        choicesContainer.appendChild(div);
+      });
+
+      const progress = ((index+1)/lessonData.questions.length)*100;
+      document.getElementById('progress-fill').style.width = progress + '%';
+
+      document.getElementById('prev-btn').disabled = index===0;
+      const nextBtn = document.getElementById('next-btn');
+      if (index === lessonData.questions.length-1){
+        nextBtn.disabled = false;
+        nextBtn.textContent = '学習完了';
+      } else {
+        nextBtn.disabled = false;
+        nextBtn.textContent = '次の問題';
+      }
+    }
+
+    function sendQuestionAnswerToParent(questionData, userAnswer, isCorrect){
+      const messageData = {
+        type:'question:answered',
+        lessonId: lessonData.id,
+        questionData:{
+          qnum: questionData.id || currentQuestion,
+          question: questionData.question,
+          choices: questionData.choices,
+          answer: questionData.correct,
+          explanation: questionData.explanation
+        },
+        userAnswer,
+        correctAnswer: questionData.correct,
+        isCorrect,
+        timestamp: Date.now()
+      };
+      console.log('📝 個別問題回答を送信:', messageData);
+      try{
+        if (window.parent !== window) window.parent.postMessage(messageData,'*');
+        if (window.top !== window) window.top.postMessage(messageData,'*');
+        const existing = JSON.parse(localStorage.getItem('questionAnswers') || '[]');
+        existing.push(messageData);
+        localStorage.setItem('questionAnswers', JSON.stringify(existing));
+      }catch(e){
+        console.log('❌ 個別問題回答送信失敗:', e);
+      }
+    }
+
+    function selectAnswer(choiceIndex){
+      const q = lessonData.questions[currentQuestion];
+      const choices = document.querySelectorAll('.choice');
+      const timeSpent = Date.now() - questionStartTime;
+
+      choices.forEach(c=>{ c.style.pointerEvents='none'; });
+
+      choices.forEach(c=>{
+        c.classList.remove('selected','correct','incorrect');
+        const originalIndex = parseInt(c.dataset.originalIndex || "-1",10);
+        if (originalIndex === choiceIndex){
+          c.classList.add('selected');
+        }
+      });
+
+      setTimeout(()=>{
+        const isCorrect = choiceIndex === q.correct;
+        choices.forEach(c=>{
+          const originalIndex = parseInt(c.dataset.originalIndex || "-1",10);
+          if (originalIndex === q.correct){
+            c.classList.add('correct');
+          } else if (originalIndex === choiceIndex && !isCorrect){
+            c.classList.add('incorrect');
+          }
+        });
+
+        const expEl = document.getElementById('explanation');
+        expEl.innerHTML = '<h4>解説</h4><p>' + q.explanation + '</p>';
+        expEl.classList.add('show');
+
+        if (isCorrect) score++;
+
+        learningTracker.recordAnswer(
+          q.id || currentQuestion,
+          choiceIndex,
+          q.correct,
+          Math.round(timeSpent/1000)
+        );
+        sendQuestionAnswerToParent(q, choiceIndex, isCorrect);
+      }, 500);
+    }
+
+    function previousQuestion(){
+      if (currentQuestion>0){
+        currentQuestion--;
+        showQuestion(currentQuestion);
+        document.getElementById('explanation').classList.remove('show');
+      }
+    }
+
+    function showCurrentSessionResult(){
+      const session = learningTracker.currentSession;
+      const scorePercent = session.totalQuestions>0
+        ? Math.round((session.score/session.totalQuestions)*100)
+        : 0;
+      let msg = '';
+      if (scorePercent >= 90) msg = '🎉 昆虫のライフサイクルをとてもよく理解できています！';
+      else if (scorePercent >= 70) msg = '👍 よくできました！';
+      else if (scorePercent >= 50) msg = '📚 「見える季節」と「見えない季節」のようすをもう一度整理してみよう。';
+      else msg = '💪 月と昆虫を動かしながら、一年の流れをもう一度たどってみよう。';
+
+      const totalTime = Date.now() - session.startTime;
+      const m = Math.floor(totalTime/60000);
+      const s = Math.floor((totalTime%60000)/1000);
+      const timeDisp = m>0 ? m+'分'+s+'秒' : s+'秒';
+
+      return `
+        <div style="background: linear-gradient(135deg,#81c784 0%,#66bb6a 100%); color:white; padding:2rem; border-radius:16px; text-align:center; box-shadow:0 8px 32px rgba(0,0,0,0.3); margin-top:20px;">
+          <div style="font-size:1.8rem; font-weight:bold; margin-bottom:1rem;">学習完了！</div>
+          <div style="font-size:1.1rem; margin-bottom:1.5rem;">${msg}</div>
+          <div style="background:rgba(255,255,255,0.2); border-radius:12px; padding:1.5rem; margin-bottom:1rem;">
+            <div style="font-size:2.5rem; font-weight:bold; margin-bottom:0.5rem;">${session.score}/${session.totalQuestions}問正解</div>
+            <div style="font-size:1.5rem; font-weight:600;">${scorePercent}%</div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:0.9rem; opacity:0.9;">
+            <div>学習時間: <strong>${timeDisp}</strong></div>
+            <div>完了時刻: <strong>${new Date().toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</strong></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function completeLesson(){
+      learningTracker.saveSession();
+      const messageData = {
+        type:'lesson:complete',
+        lessonId: lessonData.id,
+        detail:{
+          correct: learningTracker.currentSession.score,
+          total: learningTracker.currentSession.totalQuestions,
+          timeSec: Math.round((Date.now()-learningTracker.currentSession.startTime)/1000)
+        }
+      };
+      console.log('🚀 完了メッセージ送信:', messageData);
+      try{ if (window.parent !== window) window.parent.postMessage(messageData,'*'); }catch(e){}
+      try{ if (window.top !== window) window.top.postMessage(messageData,'*'); }catch(e){}
+
+      try{
+        const storageMessage = { type:'lesson:complete', data:messageData, timestamp:Date.now() };
+        localStorage.setItem('lessonCompleteMessage', JSON.stringify(storageMessage));
+        if (window.parent && window.parent.saveLessonProgress){
+          window.parent.saveLessonProgress(
+            messageData.lessonId,
+            messageData.detail.correct,
+            messageData.detail.total,
+            messageData.detail.timeSec
+          );
+        }
+      }catch(e){ console.log('localStorage/saveLessonProgress エラー', e); }
+
+      document.getElementById('question-container').style.display='none';
+      const resultContainer = document.createElement('div');
+      resultContainer.className='question-container';
+      resultContainer.style.display='block';
+      resultContainer.innerHTML = showCurrentSessionResult();
+
+      const homeButton = document.createElement('button');
+      homeButton.textContent = '🏠 ホームに戻る';
+      homeButton.className = 'start-learning-btn';
+      homeButton.style.marginTop = '1.5rem';
+      homeButton.onclick = ()=>{
+        if (window.parent !== window || window.top !== window){
+          try{
+            window.parent.postMessage({type:'lesson:goBack'}, '*');
+            window.top.postMessage({type:'lesson:goBack'}, '*');
+            return;
+          }catch(e){}
+        }
+        goHome();
+      };
+      resultContainer.appendChild(homeButton);
+      document.querySelector('.main-container').appendChild(resultContainer);
+    }
+
+    function nextQuestion(){
+      if (currentQuestion === lessonData.questions.length-1){
+        completeLesson();
+        return;
+      }
+      if (currentQuestion < lessonData.questions.length-1){
+        currentQuestion++;
+        showQuestion(currentQuestion);
+        document.getElementById('explanation').classList.remove('show');
+      }
+    }
+
+    function startLearning(){
+      document.getElementById('info-panel').style.display = 'none';
+      document.getElementById('question-container').style.display = 'block';
+      if (lessonData.questions.length > 0){
+        showQuestion(0);
+      } else {
+        alert('問題データがまだ追加されていません。');
+      }
+    }
+
+    function goHome(){
+      window.location.href = '/';
+    }
+  </script>
+</body>
+</html>

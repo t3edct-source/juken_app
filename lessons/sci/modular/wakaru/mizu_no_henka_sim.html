@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>シミュレーションで学ぶ理科 - 水の変化</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+      background: linear-gradient(135deg, #b2fefa 0%, #0ed2f7 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 10px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .home-btn {
+      background: #ff6b6b;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-height: 44px;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .home-btn:hover { background:#ff5252; transform: translateY(-1px); }
+    .home-btn:active { transform: scale(0.98); }
+    .lesson-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+      margin: 0 10px;
+    }
+    .main-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 15px;
+    }
+
+    /* ▼ シミュレーションコンテナ */
+    .sim-container {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      margin-bottom: 15px;
+      overflow: hidden;
+      position: relative;
+    }
+    .sim-header {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+    .sim-header h2 {
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+    .sim-header p {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+    .sim-area {
+      padding: 12px 12px 16px;
+      background: #e0f7fa;
+    }
+    .sim-control-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .sim-control-label {
+      font-size: 13px;
+      font-weight: bold;
+      color: #004d40;
+    }
+    .temp-slider {
+      flex: 1;
+      -webkit-appearance: none;
+      height: 6px;
+      border-radius: 999px;
+      background: #b2ebf2;
+      outline: none;
+    }
+    .temp-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #039be5;
+      box-shadow: 0 0 0 4px rgba(3,155,229,0.3);
+      cursor: pointer;
+    }
+    .temp-slider::-moz-range-thumb {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #039be5;
+      box-shadow: 0 0 0 4px rgba(3,155,229,0.3);
+      cursor: pointer;
+    }
+    .temp-display {
+      font-size: 13px;
+      font-weight: bold;
+      color: #01579b;
+      min-width: 80px;
+      text-align: right;
+    }
+
+    /* ▼ 水の状態フィールド */
+    .sim-field {
+      position: relative;
+      margin-top: 6px;
+      background: linear-gradient(to top, #b3e5fc 0%, #e1f5fe 50%, #ffffff 100%);
+      border-radius: 12px;
+      padding: 12px;
+      overflow: hidden;
+      height: 230px;
+    }
+    .thermometer {
+      position: absolute;
+      right: 16px;
+      top: 16px;
+      width: 32px;
+      height: 130px;
+      border-radius: 16px;
+      border: 2px solid rgba(0,0,0,0.15);
+      background: linear-gradient(to bottom, #ffffff, #f5f5f5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: 8px;
+      z-index: 3;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .thermo-mercury {
+      width: 12px;
+      border-radius: 6px;
+      background: linear-gradient(to top, #d32f2f 0%, #f44336 30%, #ff5252 60%, #ff8a65 100%);
+      transition: height 0.4s ease, background 0.4s ease;
+      box-shadow: 0 0 6px rgba(244,67,54,0.5);
+    }
+    .thermo-bulb {
+      position: absolute;
+      bottom: -12px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ff8a65 0%, #ff5252 50%, #e53935 80%, #c62828 100%);
+      box-shadow: 0 0 12px rgba(244,67,54,0.8), 0 2px 4px rgba(0,0,0,0.2);
+      z-index: -1;
+      transition: box-shadow 0.4s ease;
+    }
+
+    .beaker {
+      position: absolute;
+      left: 50%;
+      bottom: 20px;
+      transform: translateX(-50%);
+      width: 150px;
+      height: 150px;
+      border-radius: 0 0 18px 18px;
+      border: 3px solid rgba(33,150,243,0.8);
+      background: linear-gradient(to bottom, rgba(255,255,255,0.85), rgba(255,255,255,0.5));
+      overflow: hidden;
+      z-index: 2;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15), inset 0 0 20px rgba(255,255,255,0.3);
+    }
+    .beaker-inner {
+      position: absolute;
+      inset: 10px;
+      border-radius: 0 0 14px 14px;
+      overflow: hidden;
+    }
+    .water {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      background: linear-gradient(to top, #0288d1, #4fc3f7);
+      transition: height 0.3s ease, background 0.4s ease, box-shadow 0.4s ease;
+      box-shadow: inset 0 0 20px rgba(3,169,244,0.3);
+    }
+    .water.cold {
+      background: linear-gradient(to top, #01579b 0%, #0277bd 50%, #0288d1 100%);
+      box-shadow: inset 0 0 20px rgba(2,136,209,0.4);
+    }
+    .water.warm {
+      background: linear-gradient(to top, #0288d1 0%, #03a9f4 50%, #4fc3f7 100%);
+      box-shadow: inset 0 0 25px rgba(3,169,244,0.5);
+    }
+    .water.hot {
+      background: linear-gradient(to top, #0277bd 0%, #039be5 50%, #29b6f6 100%);
+      box-shadow: inset 0 0 30px rgba(41,182,246,0.6), 0 -2px 10px rgba(255,193,7,0.3);
+    }
+    .ice {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      width: 80px;
+      height: 50px;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 50%, #90caf9 100%);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(33,150,243,0.6), inset 0 2px 4px rgba(255,255,255,0.8);
+      opacity: 0;
+      transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+      border: 2px solid rgba(144,202,249,0.8);
+      z-index: 3;
+    }
+    .ice.visible {
+      opacity: 1;
+      animation: iceShimmer 2s ease-in-out infinite;
+    }
+    @keyframes iceShimmer {
+      0%, 100% { box-shadow: 0 4px 12px rgba(33,150,243,0.6), inset 0 2px 4px rgba(255,255,255,0.8); }
+      50% { box-shadow: 0 6px 16px rgba(33,150,243,0.8), inset 0 2px 6px rgba(255,255,255,0.9); }
+    }
+    .ice::before,
+    .ice::after {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 22px;
+      background: linear-gradient(135deg, #e1f5fe 0%, #b3e5fc 100%);
+      border-radius: 8px;
+      top: -12px;
+      box-shadow: 0 2px 6px rgba(33,150,243,0.5);
+      border: 1px solid rgba(144,202,249,0.6);
+    }
+    .ice::before {
+      left: 5px;
+    }
+    .ice::after {
+      right: 5px;
+    }
+
+    .steam {
+      position: absolute;
+      bottom: 140px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 140px;
+      height: 90px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .steam-cloud {
+      position: absolute;
+      bottom: 0;
+      width: 42px;
+      height: 32px;
+      background: radial-gradient(circle at 30% 30%, #ffffff 0%, #f5f5f5 40%, #e0e0e0 70%, #bdbdbd 100%);
+      border-radius: 50%;
+      animation: steamMove 2.2s infinite ease-in-out;
+      opacity: 0.9;
+      box-shadow: 0 0 8px rgba(255,255,255,0.8);
+    }
+    .steam-cloud:nth-child(1) { left: 5px; animation-delay: 0s; }
+    .steam-cloud:nth-child(2) { left: 49px; animation-delay: 0.4s; }
+    .steam-cloud:nth-child(3) { left: 93px; animation-delay: 0.8s; }
+
+    @keyframes steamMove {
+      0% { transform: translateY(0) scale(0.8); opacity: 0.0; }
+      20%{ opacity: 0.7; }
+      50% { transform: translateY(-20px) scale(1.1); opacity: 1; }
+      100%{ transform: translateY(-40px) scale(1.2); opacity: 0; }
+    }
+
+    .bubble {
+      position: absolute;
+      bottom: 10px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.95) 0%, rgba(227,242,253,0.8) 60%, rgba(187,222,251,0.6) 100%);
+      border-radius: 50%;
+      width: 10px;
+      height: 10px;
+      opacity: 0;
+      animation: none;
+      box-shadow: 0 0 4px rgba(255,255,255,0.8), inset 0 1px 2px rgba(255,255,255,0.9);
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+    @keyframes bubbleUp {
+      0% { transform: translateY(0) scale(0.7); opacity: 0; }
+      15%{ opacity: 0.8; }
+      50% { transform: translateY(-35px) scale(1.1); opacity: 1; }
+      100%{ transform: translateY(-70px) scale(1.3); opacity: 0; }
+    }
+
+    .state-label {
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.9));
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: bold;
+      color: #01579b;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15), 0 0 0 2px rgba(3,169,244,0.2);
+      z-index: 3;
+      border: 1px solid rgba(3,169,244,0.3);
+      transition: all 0.3s ease;
+    }
+    .state-label.ice-state {
+      color: #0277bd;
+      border-color: rgba(33,150,243,0.4);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15), 0 0 0 2px rgba(33,150,243,0.3);
+    }
+    .state-label.water-state {
+      color: #01579b;
+      border-color: rgba(3,169,244,0.4);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15), 0 0 0 2px rgba(3,169,244,0.3);
+    }
+    .state-label.steam-state {
+      color: #004d40;
+      border-color: rgba(0,150,136,0.4);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15), 0 0 0 2px rgba(0,150,136,0.3);
+    }
+
+    .sim-comment {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #004d40;
+      background: #e0f2f1;
+      border-radius: 12px;
+      padding: 10px 12px;
+      border-left: 4px solid #00838f;
+      margin-top: 8px;
+    }
+    .sim-comment strong {
+      color: #006064;
+    }
+
+    /* ▼ infoパネル */
+    .info-panel {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      padding: 20px;
+      margin-bottom: 15px;
+    }
+    .info-panel h3 {
+      color: #333;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+    .info-item {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 10px;
+      border-left: 4px solid #29b6f6;
+    }
+    .info-item h4 {
+      color: #039be5;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    .info-item p {
+      color: #555;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    /* ▼ 問題パネル */
+    .question-container {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      padding: 20px;
+      margin-bottom: 15px;
+    }
+    .question-text {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 15px;
+    }
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .choice {
+      padding: 14px 16px;
+      background: #f8f9fa;
+      border: 2px solid #e9ecef;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 14px;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .choice:hover {
+      background: #e9ecef;
+      border-color: #29b6f6;
+    }
+    .choice.selected {
+      background: #29b6f6;
+      color: white;
+      border-color: #29b6f6;
+    }
+    .choice.correct {
+      background: #28a745;
+      color: white;
+      border-color: #28a745;
+      animation: correctPulse 0.6s ease;
+    }
+    .choice.incorrect {
+      background: #dc3545;
+      color: white;
+      border-color: #dc3545;
+      animation: wrongShake 0.6s ease;
+    }
+    @keyframes correctPulse {
+      0%,100%{transform:scale(1);}
+      50%{transform:scale(1.05);}
+    }
+    @keyframes wrongShake {
+      0%,100%{transform:translateX(0);}
+      25%{transform:translateX(-10px);}
+      75%{transform:translateX(10px);}
+    }
+    .explanation {
+      margin-top: 15px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      border-left: 4px solid #28a745;
+      display: none;
+    }
+    .explanation.show { display:block; }
+    .explanation h4 {
+      color: #28a745;
+      margin-bottom: 10px;
+    }
+    .explanation p {
+      color: #666;
+      line-height: 1.5;
+    }
+    .navigation {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .nav-btn {
+      padding: 14px 24px;
+      border: none;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-height: 48px;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .nav-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .prev-btn {
+      background: #6c757d;
+      color: white;
+    }
+    .prev-btn:hover:not(:disabled) { background:#5a6268; }
+    .next-btn {
+      background: #29b6f6;
+      color: white;
+    }
+    .next-btn:hover:not(:disabled) { background:#0288d1; }
+
+    .start-learning-btn {
+      background: linear-gradient(135deg, #29b6f6 0%, #00bcd4 100%);
+      color: white;
+      border: none;
+      padding: 16px 30px;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 20px auto;
+      display: block;
+      min-height: 52px;
+      width: 100%;
+      max-width: 400px;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .start-learning-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(41,182,246,0.35);
+    }
+    .progress-bar {
+      background: #e9ecef;
+      border-radius: 10px;
+      height: 8px;
+      margin: 15px 0;
+      overflow: hidden;
+    }
+    .progress-fill {
+      background: linear-gradient(135deg, #29b6f6 0%, #00bcd4 100%);
+      height: 100%;
+      transition: width 0.3s ease;
+    }
+
+    * { touch-action: manipulation; }
+    .choice, .nav-btn, .home-btn, .start-learning-btn {
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    @media (max-width: 768px) {
+      body { overflow-x: hidden; }
+      .header { padding:8px 12px; }
+      .home-btn { padding:10px 16px; font-size:13px; }
+      .lesson-title { font-size:14px; margin:0 8px; text-align:center; }
+      .header > div:last-child { width:80px; }
+      .main-container { padding:10px; }
+      .info-grid { grid-template-columns:1fr; gap:12px; }
+      .info-panel { padding:16px; }
+      .info-item { padding:12px; }
+      .info-item h4 { font-size:13px; }
+      .info-item p { font-size:12px; }
+      .sim-area { padding:10px 10px 14px; }
+      .sim-field { height:240px; }
+      .question-container { padding:16px; }
+      .question-text { font-size:15px; margin-bottom:12px; }
+      .choice { padding:14px 16px; font-size:14px; min-height:52px; }
+      .navigation { flex-direction:column; gap:12px; margin-top:16px; }
+      .nav-btn { width:100%; padding:14px 20px; font-size:15px; }
+      .start-learning-btn { padding:16px 24px; font-size:15px; max-width:100%; }
+      .explanation { padding:12px; font-size:13px; margin-top:12px; }
+      .progress-bar { margin:12px 0; }
+    }
+    @media (max-width: 480px) {
+      .header { padding:6px 10px; }
+      .home-btn { padding:8px 14px; font-size:12px; }
+      .lesson-title { font-size:12px; margin:0 6px; }
+      .header > div:last-child { width:70px; }
+      .main-container { padding:8px; }
+      .question-container { padding:12px; }
+      .question-text { font-size:14px; }
+      .choice { padding:12px 14px; font-size:13px; min-height:48px; }
+      .info-panel { padding:12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <button class="home-btn" onclick="goHome()">🏠 ホーム</button>
+    <div class="lesson-title">シミュレーションで学ぶ理科 - 水の変化</div>
+    <div style="width: 80px;"></div>
+  </div>
+
+  <div class="main-container">
+    <!-- ▼ シミュレーション -->
+    <div class="sim-container">
+      <div class="sim-header">
+        <h2>💧 水の変化シミュレーション</h2>
+        <p>温度を変えて、水が「氷・水・水蒸気」とどう変わるか体験しよう</p>
+      </div>
+      <div class="sim-area">
+        <div class="sim-control-row">
+          <div class="sim-control-label">温度（-20〜120℃）を変えてみよう</div>
+          <input type="range" id="tempSlider" class="temp-slider" min="-20" max="120" step="1" value="20">
+          <div class="temp-display" id="tempDisplay">20℃</div>
+        </div>
+
+        <div class="sim-field" id="waterField">
+          <div class="state-label" id="stateLabel">状態：液体の水</div>
+
+          <div class="thermometer">
+            <div class="thermo-mercury" id="thermoMercury" style="height: 55%;"></div>
+            <div class="thermo-bulb"></div>
+          </div>
+
+          <div class="beaker">
+            <div class="beaker-inner">
+              <div class="water" id="water" style="height: 45%;"></div>
+              <div class="ice" id="ice"></div>
+
+              <!-- 泡（3つまで） -->
+              <div class="bubble" id="bubble1"></div>
+              <div class="bubble" id="bubble2"></div>
+              <div class="bubble" id="bubble3"></div>
+            </div>
+          </div>
+
+          <div class="steam" id="steam">
+            <div class="steam-cloud"></div>
+            <div class="steam-cloud"></div>
+            <div class="steam-cloud"></div>
+          </div>
+        </div>
+
+        <div class="sim-comment" id="simComment">
+          スライダーを動かして、温度が<strong>0℃より下</strong>、<strong>0〜100℃</strong>、<strong>100℃より上</strong>のときで<br>
+          水のようす（氷・水・水蒸気）がどう変わるか見てみよう。<br>
+          それぞれの温度で、水の<strong>粒のようす</strong>もイメージしてみてね。
+        </div>
+      </div>
+    </div>
+
+    <!-- ▼ 導入テキスト -->
+    <div class="info-panel" id="info-panel">
+      <h3>📊 水の変化と温度</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <h4>水の3つの状態</h4>
+          <p>水は、温度によって<br>
+            ・固体：<strong>氷</strong><br>
+            ・液体：<strong>水</strong><br>
+            ・気体：<strong>水蒸気</strong><br>
+            の3つの状態に変わります。</p>
+        </div>
+        <div class="info-item">
+          <h4>0℃と100℃のきまり</h4>
+          <p>ふつうの気圧では、<br>
+            ・水は<strong>0℃</strong>で氷と水が入れかわります。<br>
+            ・水は<strong>100℃</strong>で水と水蒸気が入れかわります。<br>
+            この温度を<strong>融点</strong>・<strong>沸点</strong>といいます。</p>
+        </div>
+        <div class="info-item">
+          <h4>粒の動きのイメージ</h4>
+          <p>氷では水の粒が<strong>きっちり並んで</strong>動きにくく、<br>
+            水ではゆっくり<strong>動き回り</strong>、<br>
+            水蒸気では遠くはなれて<strong>すばやく動いて</strong>います。</p>
+        </div>
+      </div>
+      <button class="start-learning-btn" onclick="startLearning()">学習を開始する</button>
+    </div>
+
+    <!-- ▼ 問題エリア -->
+    <div class="question-container" id="question-container" style="display:none;">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="question-text" id="question-text"></div>
+      <div class="choices" id="choices"></div>
+      <div class="explanation" id="explanation"></div>
+      <div class="navigation">
+        <button class="nav-btn prev-btn" id="prev-btn" onclick="previousQuestion()" disabled>前の問題</button>
+        <button class="nav-btn next-btn" id="next-btn" onclick="nextQuestion()">次の問題</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ================================
+       ▼ 水の変化シミュレーション
+    ================================= */
+    const tempSlider = document.getElementById('tempSlider');
+    const tempDisplay = document.getElementById('tempDisplay');
+    const stateLabel = document.getElementById('stateLabel');
+    const waterEl = document.getElementById('water');
+    const iceEl = document.getElementById('ice');
+    const steamEl = document.getElementById('steam');
+    const thermoMercuryEl = document.getElementById('thermoMercury');
+    const simCommentEl = document.getElementById('simComment');
+    const bubbleEls = [
+      document.getElementById('bubble1'),
+      document.getElementById('bubble2'),
+      document.getElementById('bubble3')
+    ];
+    const beakerInnerRectRef = { width: 0, height: 0 };
+
+    function updateBeakerRect() {
+      const inner = document.querySelector('.beaker-inner');
+      if (!inner) return;
+      const r = inner.getBoundingClientRect();
+      beakerInnerRectRef.width = r.width;
+      beakerInnerRectRef.height = r.height;
+    }
+
+    function setupBubbles() {
+      updateBeakerRect();
+      const w = beakerInnerRectRef.width || 100;
+      bubbleEls.forEach((b, i) => {
+        b.style.left = (20 + i * (w / 4)) + 'px';
+        b.style.animationDelay = (i * 0.3) + 's';
+      });
+    }
+
+    function updateWaterState() {
+      const t = parseInt(tempSlider.value, 10);
+      tempDisplay.textContent = t + '℃';
+
+      // 温度 -20〜120 を 0〜1 に正規化
+      const tNorm = (t + 20) / 140;
+      const mercuryHeight = 10 + tNorm * 80; // 10〜90%
+      thermoMercuryEl.style.height = mercuryHeight + '%';
+
+      // 状態と見た目
+      let stateText = '';
+      let comment = '';
+
+      // 水のクラスをリセット
+      waterEl.classList.remove('cold', 'warm', 'hot');
+      iceEl.classList.remove('visible');
+
+      if (t < 0) {
+        stateText = '状態：固体（氷）';
+        iceEl.classList.add('visible');
+        iceEl.style.transform = 'translateX(-50%) translateY(0)';
+        waterEl.style.height = '20%';
+        waterEl.style.background = 'linear-gradient(to top, #81d4fa, #b3e5fc)';
+        waterEl.classList.add('cold');
+        steamEl.style.opacity = 0;
+        bubbleEls.forEach(b => {
+          b.style.opacity = 0;
+          b.style.animation = 'none';
+        });
+        comment =
+          '温度が<strong>0℃より低い</strong>ので、水は<strong>氷</strong>になっています。' +
+          '水の粒が<strong>きっちり並んで</strong>いて、ほとんど動きません。';
+
+      } else if (t >= 0 && t < 100) {
+        stateText = '状態：液体の水';
+        stateLabel.classList.add('water-state');
+        if (t < 5) {
+          iceEl.classList.add('visible');
+          iceEl.style.transform = 'translateX(-50%) translateY(0)';
+        } else {
+          iceEl.style.transform = 'translateX(-50%) translateY(6px)';
+        }
+
+        const waterHeight = 35 + (t / 100) * 15; // 35〜50%
+        waterEl.style.height = waterHeight + '%';
+
+        // 温度に応じて水の色とクラスを設定
+        if (t < 30) {
+          waterEl.classList.add('cold');
+          waterEl.style.background = 'linear-gradient(to top, #01579b 0%, #0277bd 50%, #0288d1 100%)';
+        } else if (t < 70) {
+          waterEl.classList.add('warm');
+          waterEl.style.background = 'linear-gradient(to top, #0288d1 0%, #03a9f4 50%, #4fc3f7 100%)';
+        } else {
+          waterEl.classList.add('hot');
+          waterEl.style.background = 'linear-gradient(to top, #0277bd 0%, #039be5 50%, #29b6f6 100%)';
+        }
+
+        if (t >= 80) {
+          steamEl.style.opacity = 0.8;
+          bubbleEls.forEach((b, i) => {
+            b.style.opacity = 1;
+            b.style.animation = 'bubbleUp 1.4s infinite ease-in-out';
+            b.style.animationDelay = (i * 0.2) + 's';
+          });
+        } else {
+          steamEl.style.opacity = 0;
+          bubbleEls.forEach(b => {
+            b.style.opacity = 0;
+            b.style.animation = 'none';
+          });
+        }
+
+        if (t === 0) {
+          comment =
+            'ちょうど<strong>0℃</strong>で、氷と水が入れかわる温度です。' +
+            '氷と水がいっしょに見えることもあります。この温度を<strong>融点</strong>といいます。';
+        } else if (t < 20) {
+          comment =
+            'まだひんやりした<strong>液体の水</strong>です。水の粒は少しずつ動き回っていますが、' +
+            'あまり激しくは動きません。';
+        } else if (t < 80) {
+          comment =
+            '温度が上がってきて、水の粒の動きが<strong>はげしく</strong>なってきました。' +
+            'まだ水のままですが、お湯に近づいています。';
+        } else {
+          comment =
+            'お湯がとても熱くなって、<strong>蒸発</strong>が盛んになってきました。' +
+            '100℃に近づくと、水が<strong>沸騰</strong>して、どんどん水蒸気がふえていきます。';
+        }
+
+      } else {
+        stateText = '状態：気体（水蒸気）';
+        stateLabel.classList.add('steam-state');
+        iceEl.style.transform = 'translateX(-50%) translateY(6px)';
+        waterEl.style.height = '25%';
+        waterEl.style.background = 'linear-gradient(to top, #4fc3f7, #e1f5fe)';
+        waterEl.classList.add('hot');
+        steamEl.style.opacity = 1;
+
+        bubbleEls.forEach((b, i) => {
+          b.style.opacity = 1;
+          b.style.animation = 'bubbleUp 1.2s infinite ease-in-out';
+          b.style.animationDelay = (i * 0.15) + 's';
+        });
+
+        if (t === 100) {
+          comment =
+            'ちょうど<strong>100℃</strong>で、水と水蒸気が入れかわる温度です。' +
+            '水がどんどん<strong>沸とう</strong>して、水蒸気になっていきます。この温度を<strong>沸点</strong>といいます。';
+        } else {
+          comment =
+            '100℃より高いので、水はほとんど<strong>水蒸気</strong>になっています。' +
+            '水の粒は遠くはなれて、びゅんびゅん<strong>すばやく動いて</strong>います。';
+        }
+      }
+
+      stateLabel.textContent = stateText;
+      simCommentEl.innerHTML = comment;
+    }
+
+    tempSlider.addEventListener('input', updateWaterState);
+    window.addEventListener('resize', () => {
+      setupBubbles();
+    });
+
+    // 初期設定
+    setupBubbles();
+    updateWaterState();
+
+    /* ================================
+       ▼ 問題データ
+    ================================= */
+    const lessonData = {
+      id: 'sci.chemistry.water_three_states_sim',
+      questions: [
+        {
+          id: 1,
+          question: "ふつうの気圧のもとで、水が「氷」と「水」のあいだを行き来する温度は何℃ですか？",
+          choices: [
+            "0℃",
+            "50℃",
+            "100℃",
+            "200℃"
+          ],
+          correct: 0,
+          explanation: "ふつうの気圧では、水は<strong>0℃</strong>で氷と水の状態が入れかわります。この温度を水の<strong>融点</strong>といいます。"
+        },
+        {
+          id: 2,
+          question: "水が「水」と「水蒸気」のあいだを行き来する温度（沸点）は、ふつう何℃ですか？",
+          choices: [
+            "0℃",
+            "50℃",
+            "80℃",
+            "100℃"
+          ],
+          correct: 3,
+          explanation: "ふつうの気圧では、水は<strong>100℃</strong>で水と水蒸気の状態が入れかわります。この温度を水の<strong>沸点</strong>といいます。"
+        },
+        {
+          id: 3,
+          question: "次のうち、水が<strong>気体（水蒸気）</strong>になっているときのようすとして、もっとも近いものはどれですか？",
+          choices: [
+            "水の粒がきっちり並んでほとんど動かない",
+            "水の粒がゆっくりと動き回っている",
+            "水の粒が離れあってすばやく動き回っている",
+            "水の粒がまったく動かなくなる"
+          ],
+          correct: 2,
+          explanation: "水蒸気は水の<strong>気体の状態</strong>です。水の粒はおたがいから<strong>遠くはなれて</strong>、びゅんびゅん<strong>すばやく動き回って</strong>います。"
+        }
+      ]
+    };
+
+    /* ================================
+       ▼ LearningTracker & 問題表示
+    ================================= */
+    class LearningTracker {
+      constructor() {
+        this.mode = 'wakaru';
+        this.historyKey = 'learningHistory_mizu_no_henka_wakaru';
+        this.currentSession = {
+          startTime: Date.now(),
+          questions: [],
+          score: 0,
+          totalQuestions: 0,
+          mode: 'wakaru'
+        };
+      }
+      recordAnswer(questionId, selectedAnswer, correctAnswer, timeSpent) {
+        this.currentSession.questions.push({
+          questionId,
+          selectedAnswer,
+          correctAnswer,
+          isCorrect: selectedAnswer === correctAnswer,
+          timeSpent,
+          timestamp: Date.now()
+        });
+        if (selectedAnswer === correctAnswer) this.currentSession.score++;
+        this.currentSession.totalQuestions++;
+      }
+      loadHistory() {
+        try {
+          const data = localStorage.getItem(this.historyKey);
+          if (data) return JSON.parse(data);
+        } catch(e){ console.error(e); }
+        return {
+          sessions: [],
+          stats: {
+            totalSessions:0,
+            totalQuestions:0,
+            correctAnswers:0,
+            averageScore:0,
+            bestScore:0
+          }
+        };
+      }
+      calculateStats(sessions) {
+        const stats = {
+          totalSessions: sessions.length,
+          totalQuestions: 0,
+          correctAnswers: 0,
+          averageScore: 0,
+          bestScore: 0
+        };
+        sessions.forEach(s=>{
+          stats.totalQuestions += s.totalQuestions;
+          stats.correctAnswers += s.score;
+          stats.bestScore = Math.max(stats.bestScore, s.score);
+        });
+        if (stats.totalSessions>0 && stats.totalQuestions>0){
+          stats.averageScore = (stats.correctAnswers / stats.totalQuestions *100).toFixed(1);
+        }
+        return stats;
+      }
+      saveSession() {
+        try {
+          const existing = this.loadHistory();
+          const totalTime = Date.now() - this.currentSession.startTime;
+          this.currentSession.totalTime = totalTime;
+          const sessionToSave = {
+            ...this.currentSession,
+            endTime: Date.now(),
+            duration: totalTime,
+            totalTime
+          };
+          existing.sessions.push(sessionToSave);
+          existing.stats = this.calculateStats(existing.sessions);
+          localStorage.setItem(this.historyKey, JSON.stringify(existing));
+          console.log('✅ セッション保存完了', sessionToSave);
+          return true;
+        } catch(e){
+          console.error('セッション保存エラー', e);
+          return false;
+        }
+      }
+    }
+
+    const learningTracker = new LearningTracker();
+    let currentQuestion = 0;
+    let score = 0;
+    let questionStartTime = Date.now();
+
+    function generateShuffledIndices(length){
+      const idx = Array.from({length},(_,i)=>i);
+      for(let i=idx.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [idx[i], idx[j]] = [idx[j], idx[i]];
+      }
+      return idx;
+    }
+
+    function showQuestion(index){
+      const q = lessonData.questions[index];
+      questionStartTime = Date.now();
+      const expEl = document.getElementById('explanation');
+      expEl.classList.remove('show');
+
+      document.getElementById('question-text').textContent = q.question;
+      const choicesContainer = document.getElementById('choices');
+      choicesContainer.innerHTML = '';
+
+      const order = generateShuffledIndices(q.choices.length);
+      order.forEach(originalIndex=>{
+        const div = document.createElement('div');
+        div.className = 'choice';
+        div.textContent = q.choices[originalIndex];
+        div.dataset.originalIndex = String(originalIndex);
+        div.onclick = () => selectAnswer(originalIndex);
+        choicesContainer.appendChild(div);
+      });
+
+      const progress = ((index+1)/lessonData.questions.length)*100;
+      document.getElementById('progress-fill').style.width = progress + '%';
+
+      document.getElementById('prev-btn').disabled = index===0;
+      const nextBtn = document.getElementById('next-btn');
+      if (index === lessonData.questions.length-1){
+        nextBtn.disabled = false;
+        nextBtn.textContent = '学習完了';
+      } else {
+        nextBtn.disabled = false;
+        nextBtn.textContent = '次の問題';
+      }
+    }
+
+    function sendQuestionAnswerToParent(questionData, userAnswer, isCorrect){
+      const messageData = {
+        type:'question:answered',
+        lessonId: lessonData.id,
+        questionData:{
+          qnum: questionData.id || currentQuestion,
+          question: questionData.question,
+          choices: questionData.choices,
+          answer: questionData.correct,
+          explanation: questionData.explanation
+        },
+        userAnswer,
+        correctAnswer: questionData.correct,
+        isCorrect,
+        timestamp: Date.now()
+      };
+      console.log('📝 個別問題回答を送信:', messageData);
+      try{
+        if (window.parent !== window) window.parent.postMessage(messageData,'*');
+        if (window.top !== window) window.top.postMessage(messageData,'*');
+        const existing = JSON.parse(localStorage.getItem('questionAnswers') || '[]');
+        existing.push(messageData);
+        localStorage.setItem('questionAnswers', JSON.stringify(existing));
+      }catch(e){
+        console.log('❌ 個別問題回答送信失敗:', e);
+      }
+    }
+
+    function selectAnswer(choiceIndex){
+      const q = lessonData.questions[currentQuestion];
+      const choices = document.querySelectorAll('.choice');
+      const timeSpent = Date.now() - questionStartTime;
+
+      choices.forEach(c=>{ c.style.pointerEvents='none'; });
+
+      choices.forEach(c=>{
+        c.classList.remove('selected','correct','incorrect');
+        const originalIndex = parseInt(c.dataset.originalIndex || "-1",10);
+        if (originalIndex === choiceIndex){
+          c.classList.add('selected');
+        }
+      });
+
+      setTimeout(()=>{
+        const isCorrect = choiceIndex === q.correct;
+        choices.forEach(c=>{
+          const originalIndex = parseInt(c.dataset.originalIndex || "-1",10);
+          if (originalIndex === q.correct){
+            c.classList.add('correct');
+          } else if (originalIndex === choiceIndex && !isCorrect){
+            c.classList.add('incorrect');
+          }
+        });
+
+        const expEl = document.getElementById('explanation');
+        expEl.innerHTML = '<h4>解説</h4><p>' + q.explanation + '</p>';
+        expEl.classList.add('show');
+
+        if (isCorrect) score++;
+
+        learningTracker.recordAnswer(
+          q.id || currentQuestion,
+          choiceIndex,
+          q.correct,
+          Math.round(timeSpent/1000)
+        );
+        sendQuestionAnswerToParent(q, choiceIndex, isCorrect);
+      }, 500);
+    }
+
+    function previousQuestion(){
+      if (currentQuestion>0){
+        currentQuestion--;
+        showQuestion(currentQuestion);
+        document.getElementById('explanation').classList.remove('show');
+      }
+    }
+
+    function showCurrentSessionResult(){
+      const session = learningTracker.currentSession;
+      const scorePercent = session.totalQuestions>0
+        ? Math.round((session.score/session.totalQuestions)*100)
+        : 0;
+      let msg = '';
+      if (scorePercent >= 90) msg = '🎉 とてもよく理解できています！';
+      else if (scorePercent >= 70) msg = '👍 よくできました！';
+      else if (scorePercent >= 50) msg = '📚 大事なところをもう一度見直してみよう。';
+      else msg = '💪 温度を動かしながら、もう一度考えてみよう。';
+
+      const totalTime = Date.now() - session.startTime;
+      const m = Math.floor(totalTime/60000);
+      const s = Math.floor((totalTime%60000)/1000);
+      const timeDisp = m>0 ? m+'分'+s+'秒' : s+'秒';
+
+      return `
+        <div style="background: linear-gradient(135deg,#29b6f6 0%,#00bcd4 100%); color:white; padding:2rem; border-radius:16px; text-align:center; box-shadow:0 8px 32px rgba(0,0,0,0.3); margin-top:20px;">
+          <div style="font-size:1.8rem; font-weight:bold; margin-bottom:1rem;">学習完了！</div>
+          <div style="font-size:1.1rem; margin-bottom:1.5rem;">${msg}</div>
+          <div style="background:rgba(255,255,255,0.2); border-radius:12px; padding:1.5rem; margin-bottom:1rem;">
+            <div style="font-size:2.5rem; font-weight:bold; margin-bottom:0.5rem;">${session.score}/${session.totalQuestions}問正解</div>
+            <div style="font-size:1.5rem; font-weight:600;">${scorePercent}%</div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:0.9rem; opacity:0.9;">
+            <div>学習時間: <strong>${timeDisp}</strong></div>
+            <div>完了時刻: <strong>${new Date().toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</strong></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function completeLesson(){
+      learningTracker.saveSession();
+      const messageData = {
+        type:'lesson:complete',
+        lessonId: lessonData.id,
+        detail:{
+          correct: learningTracker.currentSession.score,
+          total: learningTracker.currentSession.totalQuestions,
+          timeSec: Math.round((Date.now()-learningTracker.currentSession.startTime)/1000)
+        }
+      };
+      console.log('🚀 完了メッセージ送信:', messageData);
+      try{ if (window.parent !== window) window.parent.postMessage(messageData,'*'); }catch(e){}
+      try{ if (window.top !== window) window.top.postMessage(messageData,'*'); }catch(e){}
+
+      try{
+        const storageMessage = { type:'lesson:complete', data:messageData, timestamp:Date.now() };
+        localStorage.setItem('lessonCompleteMessage', JSON.stringify(storageMessage));
+        if (window.parent && window.parent.saveLessonProgress){
+          window.parent.saveLessonProgress(
+            messageData.lessonId,
+            messageData.detail.correct,
+            messageData.detail.total,
+            messageData.detail.timeSec
+          );
+        }
+      }catch(e){ console.log('localStorage/saveLessonProgress エラー', e); }
+
+      document.getElementById('question-container').style.display='none';
+      const resultContainer = document.createElement('div');
+      resultContainer.className='question-container';
+      resultContainer.style.display='block';
+      resultContainer.innerHTML = showCurrentSessionResult();
+
+      const homeButton = document.createElement('button');
+      homeButton.textContent = '🏠 ホームに戻る';
+      homeButton.className = 'start-learning-btn';
+      homeButton.style.marginTop = '1.5rem';
+      homeButton.onclick = ()=>{
+        if (window.parent !== window || window.top !== window){
+          try{
+            window.parent.postMessage({type:'lesson:goBack'}, '*');
+            window.top.postMessage({type:'lesson:goBack'}, '*');
+            return;
+          }catch(e){}
+        }
+        goHome();
+      };
+      resultContainer.appendChild(homeButton);
+      document.querySelector('.main-container').appendChild(resultContainer);
+    }
+
+    function nextQuestion(){
+      if (currentQuestion === lessonData.questions.length-1){
+        completeLesson();
+        return;
+      }
+      if (currentQuestion < lessonData.questions.length-1){
+        currentQuestion++;
+        showQuestion(currentQuestion);
+        document.getElementById('explanation').classList.remove('show');
+      }
+    }
+
+    function startLearning(){
+      document.getElementById('info-panel').style.display = 'none';
+      document.getElementById('question-container').style.display = 'block';
+      if (lessonData.questions.length > 0){
+        showQuestion(0);
+      } else {
+        alert('問題データがまだ追加されていません。');
+      }
+    }
+
+    function goHome(){
+      window.location.href = '/';
+    }
+  </script>
+</body>
+</html>
