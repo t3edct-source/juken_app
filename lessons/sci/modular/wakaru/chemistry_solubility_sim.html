@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>シミュレーションで学ぶ理科 - 水溶液と溶解度</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+      background: linear-gradient(135deg, #e3f2fd 0%, #e8f5e9 40%, #fffde7 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .header {
+      background: rgba(255,255,255,0.95);
+      padding: 8px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .home-btn {
+      background:#42a5f5;
+      color:white;
+      border:none;
+      padding:8px 14px;
+      border-radius:20px;
+      font-size:13px;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      min-height:44px;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .home-btn:hover { background:#1e88e5; transform:translateY(-1px); }
+    .home-btn:active { transform:scale(0.98); }
+    .lesson-title {
+      font-size:14px;
+      font-weight:bold;
+      color:#333;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      flex:1;
+      margin:0 8px;
+    }
+    .main-container {
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      padding:10px;
+    }
+
+    /* ▼ シミュ全体 */
+    .sim-container {
+      background:white;
+      border-radius:15px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.15);
+      margin-bottom:15px;
+      overflow:hidden;
+      position:relative;
+    }
+    .sim-header {
+      background:linear-gradient(135deg, #42a5f5 0%, #66bb6a 100%);
+      color:white;
+      padding:8px 10px;
+      text-align:center;
+    }
+    .sim-header h2 { font-size:14px; margin-bottom:0; line-height:1.4; }
+    .sim-header p { display:none; }
+
+    .sim-area {
+      padding:8px;
+      background:#e3f2fd;
+    }
+
+    .control-row {
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin-bottom:8px;
+    }
+    .control-label {
+      font-size:13px;
+      font-weight:bold;
+      color:#1a237e;
+      width:100%;
+    }
+
+    /* 物質タブ */
+    .substance-tabs {
+      display:flex;
+      gap:6px;
+      width:100%;
+    }
+    .substance-btn {
+      flex:1;
+      border:none;
+      border-radius:20px;
+      padding:8px 10px;
+      font-size:12px;
+      cursor:pointer;
+      background:#f8f9fa;
+      color:#333;
+      font-weight:bold;
+      min-height:44px;
+      transition:all 0.25s ease;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+      box-shadow:0 2px 6px rgba(0,0,0,0.1);
+      border:2px solid #e9ecef;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:4px;
+    }
+    .substance-btn.active {
+      background:linear-gradient(135deg,#42a5f5,#66bb6a);
+      color:white;
+      box-shadow:0 4px 14px rgba(66,165,245,0.4);
+      transform:translateY(-1px);
+      border-color:transparent;
+    }
+
+    .emoji-icon {
+      font-size:16px;
+      filter:drop-shadow(0 1px 2px rgba(0,0,0,0.7));
+    }
+
+    .mode-desc {
+      display:none;
+    }
+    
+    /* 説明文（地の文） */
+    .sim-description {
+      padding:8px 10px;
+      font-size:13px;
+      color:#555;
+      line-height:1.6;
+      text-align:center;
+      background:transparent;
+    }
+    .sim-description strong {
+      color:#1976d2;
+      font-weight:bold;
+    }
+
+    .control-row.bottom {
+      margin-top:4px;
+    }
+    .temp-slider-wrap {
+      width:100%;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+    .temp-slider {
+      width:100%;
+      -webkit-appearance:none;
+      height:8px;
+      border-radius:999px;
+      background:#c5cae9;
+      outline:none;
+    }
+    .temp-slider::-webkit-slider-thumb {
+      -webkit-appearance:none;
+      appearance:none;
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      background:radial-gradient(circle,#64b5f6 0%,#42a5f5 45%,#1e88e5 100%);
+      box-shadow:0 2px 6px rgba(66,165,245,0.4);
+      cursor:pointer;
+      border:2px solid white;
+      margin-top:-10px;
+    }
+    .temp-slider::-moz-range-thumb {
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      background:#42a5f5;
+      border:2px solid white;
+      cursor:pointer;
+    }
+    .temp-steps {
+      display:flex;
+      justify-content:space-between;
+      font-size:10px;
+      color:#555;
+      line-height:1.3;
+    }
+
+    /* ▼ ビーカーシーン */
+    .sim-field {
+      position:relative;
+      margin-top:6px;
+      border-radius:12px;
+      padding:8px;
+      overflow:hidden;
+      min-height:200px;
+      background:linear-gradient(135deg, rgba(255,255,255,0.95), rgba(240,248,255,0.9));
+      box-shadow:0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .beaker-scene {
+      position:relative;
+      width:100%;
+      height:180px;
+      border-radius:12px;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(66,165,245,0.15), transparent 55%),
+        radial-gradient(circle at 95% 15%, rgba(102,187,106,0.12), transparent 55%),
+        linear-gradient(135deg, #e3f2fd 0%, #e8f5e9 50%, #fffde7 100%);
+      box-shadow:0 4px 12px rgba(0,0,0,0.1);
+      border:1px solid rgba(66,165,245,0.3);
+    }
+
+    /* ビーカー本体 */
+    .beaker {
+      position:absolute;
+      left:50%;
+      top:10%;
+      transform:translateX(-50%);
+      width:42%;
+      height:78%;
+      border-radius:0 0 14px 14px;
+      border:2px solid rgba(148,163,184,0.9);
+      border-top:none;
+      background:linear-gradient(180deg, rgba(15,23,42,0.3), rgba(15,23,42,0.7));
+      overflow:hidden;
+      box-shadow:0 0 12px rgba(15,23,42,0.9);
+    }
+    .beaker::before {
+      content:"";
+      position:absolute;
+      left:12%;
+      right:12%;
+      top:-6px;
+      height:8px;
+      border-radius:999px;
+      border:2px solid rgba(148,163,184,0.9);
+      border-bottom:none;
+      background:radial-gradient(circle, rgba(248,250,252,0.12), transparent 70%);
+    }
+
+    /* 水 */
+    .water {
+      position:absolute;
+      left:7%;
+      right:7%;
+      bottom:0;
+      height:60%;
+      background:linear-gradient(180deg, rgba(56,189,248,0.6), rgba(56,189,248,0.85));
+      border-radius:0 0 10px 10px;
+      box-shadow:0 0 16px rgba(56,189,248,0.8);
+      overflow:hidden;
+    }
+    .water-surface {
+      position:absolute;
+      top:-6px;
+      left:-5%;
+      width:110%;
+      height:12px;
+      border-radius:50%;
+      background:radial-gradient(circle at 50% 0%, rgba(248,250,252,0.7), rgba(56,189,248,0.8) 40%, transparent 70%);
+      box-shadow:0 0 10px rgba(56,189,248,0.8);
+    }
+
+    /* 溶質粒子 */
+    .solute-particle {
+      position:absolute;
+      width:6px;
+      height:6px;
+      border-radius:50%;
+      background:radial-gradient(circle, #e5e7eb 0%, #cbd5f5 45%, #64748b 100%);
+      box-shadow:0 0 6px rgba(148,163,184,0.9);
+      opacity:0.9;
+      animation:floatParticle 6s ease-in-out infinite;
+    }
+    .solute-particle.small {
+      width:4px;
+      height:4px;
+      opacity:0.8;
+      animation-duration:7.5s;
+    }
+
+    @keyframes floatParticle {
+      0% { transform:translateY(0); opacity:0.9; }
+      50% { transform:translateY(-10px); opacity:0.7; }
+      100% { transform:translateY(0); opacity:0.9; }
+    }
+
+    /* 沈殿（飽和をこえた分） */
+    .precipitate {
+      position:absolute;
+      left:10%;
+      right:10%;
+      bottom:0;
+      height:14px;
+      background:repeating-linear-gradient(
+        90deg,
+        #64748b 0px,
+        #64748b 4px,
+        #475569 4px,
+        #475569 7px
+      );
+      border-radius:6px 6px 0 0;
+      box-shadow:0 0 12px rgba(30,64,175,0.9);
+      transform-origin:center bottom;
+      transform:scaleY(0);
+      transition:transform 0.35s ease;
+    }
+
+    /* 飽和ライン */
+    .saturation-line {
+      position:absolute;
+      left:9%;
+      right:9%;
+      bottom:40%;
+      height:2px;
+      border-radius:999px;
+      background:repeating-linear-gradient(
+        90deg,
+        rgba(250,204,21,0.8) 0px,
+        rgba(250,204,21,0.8) 8px,
+        transparent 8px,
+        transparent 12px
+      );
+      box-shadow:0 0 8px rgba(250,204,21,0.8);
+    }
+    .saturation-label {
+      position:absolute;
+      right:12%;
+      bottom:41%;
+      padding:2px 8px;
+      font-size:10px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.95);
+      color:#facc15;
+      border:1px solid rgba(250,204,21,0.8);
+      box-shadow:0 2px 6px rgba(0,0,0,0.8);
+    }
+
+    /* 飽和度バー（どれくらい近いか） */
+    .sat-bar-wrap {
+      position:absolute;
+      left:10%;
+      right:10%;
+      top:10%;
+      height:6px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.85);
+      overflow:hidden;
+      box-shadow:0 0 8px rgba(15,23,42,0.9);
+    }
+    .sat-bar-fill {
+      width:0%;
+      height:100%;
+      border-radius:999px;
+      background:linear-gradient(90deg,#22c55e 0%,#eab308 60%,#ef4444 100%);
+      box-shadow:0 0 10px rgba(34,197,94,0.9);
+      transition:width 0.35s ease;
+    }
+
+    /* 再結晶アニメ（冷やしたとき） */
+    .crystal {
+      position:absolute;
+      width:10px;
+      height:14px;
+      background:linear-gradient(135deg,#e0f2fe,#bae6fd);
+      clip-path:polygon(50% 0%,100% 40%,100% 100%,0% 100%,0% 40%);
+      box-shadow:0 0 8px rgba(191,219,254,0.9);
+      opacity:0;
+      transform-origin:center bottom;
+      transform:translateY(10px) scale(0.5);
+      transition:opacity 0.4s ease, transform 0.4s ease;
+    }
+    .crystal.visible {
+      opacity:1;
+      transform:translateY(0) scale(1);
+    }
+
+    /* ラベル */
+    .sky-tag {
+      padding:8px 12px;
+      font-size:13px;
+      border-radius:8px;
+      background:rgba(255,255,255,0.95);
+      color:#1976d2;
+      box-shadow:0 2px 8px rgba(0,0,0,0.15);
+      border:1px solid rgba(66,165,245,0.3);
+      font-weight:bold;
+      margin-bottom:8px;
+      text-align:center;
+    }
+    .sky-label {
+      position:absolute;
+      bottom:8px;
+      right:8px;
+      left:8px;
+      padding:8px 10px;
+      font-size:11px;
+      border-radius:8px;
+      background:rgba(255,255,255,0.95);
+      color:#333;
+      display:flex;
+      align-items:center;
+      gap:6px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.15);
+      border:1px solid rgba(66,165,245,0.3);
+    }
+    .sky-label span.icon {
+      font-size:14px;
+      filter:drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+      flex-shrink:0;
+    }
+    .sky-label span:last-child {
+      flex:1;
+      line-height:1.4;
+    }
+
+    /* infoカード（テキストかなり少なめ） */
+    .env-panel {
+      display:none;
+    }
+    .env-card {
+      width:100%;
+      background:linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,255,255,0.95));
+      border-radius:12px;
+      padding:10px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.5);
+      transition:transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .env-card:hover {
+      transform:translateY(-2px);
+      box-shadow:0 6px 16px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.7);
+    }
+    .env-title {
+      font-size:13px;
+      font-weight:bold;
+      margin-bottom:3px;
+      color:#1a237e;
+      display:flex;
+      align-items:center;
+      gap:4px;
+    }
+    .env-title span.emoji {
+      font-size:16px;
+      filter:drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+      animation:float 3s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-3px);} }
+    .env-value {
+      font-size:14px;
+      font-weight:bold;
+      margin-bottom:2px;
+      color:#1976d2;
+    }
+    .env-sub {
+      font-size:12px;
+      color:#555;
+      line-height:1.4;
+    }
+
+    .sim-comment {
+      display:none;
+    }
+
+    /* ▼ infoパネル（コンパクト） */
+    .info-panel {
+      display:none;
+    }
+    .info-panel h3 {
+      color:#333;
+      margin-bottom:12px;
+      font-size:16px;
+      line-height:1.4;
+    }
+    .info-grid {
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
+    }
+    .info-item {
+      background:#f8f9fa;
+      padding:12px;
+      border-radius:10px;
+      border-left:4px solid #64b5f6;
+    }
+    .info-item h4 {
+      color:#1976d2;
+      margin-bottom:6px;
+      font-size:14px;
+    }
+    .info-item p {
+      color:#555;
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    /* ▼ 問題パネル */
+    .question-container {
+      background:white;
+      border-radius:15px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.15);
+      padding:14px;
+      margin-bottom:12px;
+    }
+    .question-text {
+      font-size:15px;
+      font-weight:bold;
+      color:#333;
+      margin-bottom:12px;
+      line-height:1.5;
+    }
+    .progress-bar {
+      background:#e9ecef;
+      border-radius:999px;
+      height:8px;
+      margin:10px 0 14px;
+      overflow:hidden;
+    }
+    .progress-fill {
+      background:linear-gradient(135deg, #38bdf8 0%, #22c55e 100%);
+      height:100%;
+      width:0%;
+      transition:width 0.3s ease;
+    }
+    .choices {
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .choice {
+      padding:14px 16px;
+      background:#f8f9fa;
+      border:2px solid #e9ecef;
+      border-radius:10px;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      font-size:14px;
+      min-height:52px;
+      display:flex;
+      align-items:center;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+      color:#333;
+      line-height:1.5;
+    }
+    .choice:hover {
+      background:#e9ecef;
+      border-color:#64b5f6;
+    }
+    .choice.correct {
+      background:#28a745;
+      color:white;
+      border-color:#28a745;
+      animation:correctPulse 0.6s ease;
+    }
+    .choice.incorrect {
+      background:#dc3545;
+      color:white;
+      border-color:#dc3545;
+      animation:wrongShake 0.6s ease;
+    }
+    @keyframes correctPulse {
+      0%,100%{transform:scale(1);}
+      50%{transform:scale(1.04);}
+    }
+    @keyframes wrongShake {
+      0%,100%{transform:translateX(0);}
+      25%{transform:translateX(-8px);}
+      75%{transform:translateX(8px);}
+    }
+
+    .explanation {
+      margin-top:15px;
+      padding:15px;
+      background:#f8f9fa;
+      border-radius:10px;
+      border-left:4px solid #28a745;
+      display:none;
+    }
+    .explanation.show { display:block; }
+    .explanation h4 {
+      color:#28a745;
+      margin-bottom:8px;
+      font-size:14px;
+    }
+    .explanation p {
+      color:#555;
+      line-height:1.5;
+      font-size:13px;
+    }
+
+    .navigation {
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:14px;
+    }
+    .nav-btn {
+      padding:14px 18px;
+      border:none;
+      border-radius:999px;
+      font-size:14px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      min-height:48px;
+      width:100%;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .nav-btn:disabled {
+      opacity:0.4;
+      cursor:not-allowed;
+    }
+    .prev-btn {
+      background:#6c757d;
+      color:white;
+    }
+    .prev-btn:hover:not(:disabled) { background:#5a6268; }
+    .next-btn {
+      background:#42a5f5;
+      color:white;
+    }
+    .next-btn:hover:not(:disabled) { background:#1e88e5; }
+
+    * { touch-action:manipulation; }
+    .choice, .nav-btn, .home-btn, .substance-btn {
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+
+    /* 375px以上で段階的に拡大 */
+    @media (min-width:480px){
+      .header { padding:10px 15px; }
+      .home-btn { padding:10px 18px; font-size:14px; }
+      .lesson-title { font-size:16px; margin:0 10px; }
+      .main-container { padding:12px; }
+      .sim-header { padding:12px; }
+      .sim-header h2 { font-size:16px; }
+      .sim-header p { display:block; font-size:12px; }
+      .sim-area { padding:10px; }
+      .control-row { flex-direction:row; align-items:center; }
+      .control-label { width:auto; min-width:80px; }
+      .substance-tabs { width:auto; flex:1; }
+      .substance-btn { padding:10px 12px; font-size:13px; min-height:48px; }
+      .temp-slider-wrap { flex:1; }
+      .sim-description { font-size:14px; padding:10px 12px; }
+      .sim-field { padding:10px; min-height:220px; }
+      .beaker-scene { height:180px; }
+      .sky-label { bottom:10px; right:10px; left:auto; width:auto; }
+      .env-panel { display:flex; flex-direction:row; flex-wrap:wrap; }
+      .env-card { flex:1 1 140px; }
+      .sim-comment { display:block; }
+      .info-panel { display:block; padding:16px; }
+      .info-grid { grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px; }
+      .info-item { padding:14px; }
+      .question-container { padding:16px; }
+      .question-text { font-size:16px; }
+      .navigation { flex-direction:row; }
+      .nav-btn { width:auto; flex:1; }
+    }
+    @media (min-width:768px){
+      .main-container { padding:15px; }
+      .sim-header h2 { font-size:20px; }
+      .sim-header p { font-size:14px; }
+      .sim-field { min-height:260px; }
+      .beaker-scene { height:190px; }
+      .info-panel { padding:20px; }
+      .info-grid { grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:15px; }
+      .info-item { padding:15px; }
+      .question-container { padding:20px; }
+      .question-text { font-size:16px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <button class="home-btn" onclick="goHome()">🏠 ホーム</button>
+    <div class="lesson-title">水溶液と溶解度シミュレーション</div>
+    <div style="width:80px;"></div>
+  </header>
+
+  <main class="main-container">
+    <!-- ▼ シミュレーション -->
+    <section class="sim-container">
+      <div class="sim-header">
+        <h2>食塩・ミョウバンと 溶解度のちがい</h2>
+        <p>物質と温度をかえて、どれくらいとけるかを目で見てくらべよう。</p>
+      </div>
+
+      <div class="sim-area">
+        <div class="control-row">
+          <div class="control-label">物質</div>
+          <div class="substance-tabs">
+            <button class="substance-btn active" data-substance="salt" id="btnSalt">
+              <span class="emoji-icon">🧂</span>食塩
+            </button>
+            <button class="substance-btn" data-substance="alum" id="btnAlum">
+              <span class="emoji-icon">💎</span>ミョウバン
+            </button>
+          </div>
+        </div>
+
+        <div class="control-row bottom">
+          <div class="control-label">温度</div>
+          <div class="temp-slider-wrap">
+            <input type="range" min="0" max="3" step="1" value="1" class="temp-slider" id="tempSlider" />
+            <div class="temp-steps">
+              <span>0℃</span>
+              <span>20℃</span>
+              <span>40℃</span>
+              <span>60℃</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="sim-description" id="simDescription">
+          <strong>食塩</strong>は温度を変えても溶解度はあまり変わらない。<strong>ミョウバン</strong>は温度が高いほどたくさんとける。
+        </div>
+
+        <div class="sim-field">
+          <div class="sky-tag" id="skyTag">食塩 20℃：溶解度のようす</div>
+          <div class="beaker-scene" id="beakerScene">
+            <div class="beaker">
+              <div class="sat-bar-wrap">
+                <div class="sat-bar-fill" id="satBar"></div>
+              </div>
+
+              <div class="water" id="waterArea">
+                <div class="water-surface"></div>
+
+                <!-- 溶質粒子（ざっくり配置） -->
+                <div class="solute-particle" id="p1" style="left:20%; bottom:20%;"></div>
+                <div class="solute-particle small" id="p2" style="left:30%; bottom:35%;"></div>
+                <div class="solute-particle" id="p3" style="left:42%; bottom:28%;"></div>
+                <div class="solute-particle small" id="p4" style="left:55%; bottom:18%;"></div>
+                <div class="solute-particle" id="p5" style="left:65%; bottom:32%;"></div>
+                <div class="solute-particle small" id="p6" style="left:38%; bottom:45%;"></div>
+                <div class="solute-particle small" id="p7" style="left:52%; bottom:50%;"></div>
+              </div>
+
+              <!-- 飽和ライン＆沈殿 -->
+              <div class="saturation-line"></div>
+              <div class="saturation-label">飽和</div>
+              <div class="precipitate" id="precipitate"></div>
+
+              <!-- 再結晶クリスタル -->
+              <div class="crystal" id="crystal1" style="left:18%; bottom:16%;"></div>
+              <div class="crystal" id="crystal2" style="left:32%; bottom:18%;"></div>
+              <div class="crystal" id="crystal3" style="left:46%; bottom:17%;"></div>
+              <div class="crystal" id="crystal4" style="left:60%; bottom:16%;"></div>
+              <div class="crystal" id="crystal5" style="left:72%; bottom:19%;"></div>
+            </div>
+          </div>
+
+          <div class="env-panel">
+            <div class="env-card">
+              <div class="env-title"><span class="emoji">🧪</span>とけている量</div>
+              <div class="env-value" id="dissolveText">水100gに ○g とける</div>
+              <div class="env-sub">溶解度：数字が大きいほど、たくさんとける</div>
+            </div>
+            <div class="env-card">
+              <div class="env-title"><span class="emoji">📊</span>飽和までの近さ</div>
+              <div class="env-value" id="saturationText">まだ余裕あり</div>
+              <div class="env-sub">バーが右に行くほど、飽和に近い（またはこえている）</div>
+            </div>
+            <div class="env-card">
+              <div class="env-title"><span class="emoji">❄️</span>再結晶のようす</div>
+              <div class="env-value" id="crystalText">ミョウバンで温度を下げると出やすい</div>
+              <div class="env-sub">高温でたくさんとけたあと、冷やすと結晶ができる</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ▼ 導入テキスト（コンパクト要点） -->
+    <section class="info-panel">
+      <h3>水溶液と溶解度のポイント</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <h4>① 「とける」とは？</h4>
+          <p>
+            物質のつぶが水の中に広がり、目に見えなくなることを<strong>溶解</strong>という。
+          </p>
+        </div>
+        <div class="info-item">
+          <h4>② 溶解度と飽和</h4>
+          <p>
+            一定の水にとける<strong>最大の量</strong>を溶解度という。それ以上は<strong>飽和</strong>となり、底にあまる。
+          </p>
+        </div>
+        <div class="info-item">
+          <h4>③ 温度と再結晶</h4>
+          <p>
+            ミョウバンのように、高温だとよくとけ、冷やすと<strong>再結晶</strong>する物質もある。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ▼ わかる編 3問 -->
+    <section class="question-container">
+      <div class="question-text" id="questionText"></div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="choices" id="choicesContainer"></div>
+      <div class="explanation" id="explanationBox">
+        <h4>解説</h4>
+        <p id="explanationText"></p>
+      </div>
+
+      <div class="navigation">
+        <button class="nav-btn prev-btn" id="prevBtn">前の問題へ</button>
+        <button class="nav-btn next-btn" id="nextBtn">次の問題へ</button>
+      </div>
+      <div id="historyDisplay"></div>
+    </section>
+  </main>
+
+  <script>
+    /************ LearningTracker ************/
+    class LearningTracker {
+      constructor(lessonId) {
+        this.lessonId = lessonId;
+        this.storageKey = "stepnavi_science_" + lessonId;
+        this.currentSession = null;
+        this.history = this.loadHistory();
+      }
+
+      loadHistory() {
+        try {
+          const raw = localStorage.getItem(this.storageKey);
+          return raw ? JSON.parse(raw) : { sessions: [] };
+        } catch (e) {
+          console.warn("Failed to load history:", e);
+          return { sessions: [] };
+        }
+      }
+
+      startSession() {
+        this.currentSession = {
+          startedAt: Date.now(),
+          answered: 0,
+          correct: 0,
+          records: []
+        };
+      }
+
+      recordAnswer(questionIndex, isCorrect) {
+        if (!this.currentSession) this.startSession();
+        const now = Date.now();
+        this.currentSession.answered += 1;
+        if (isCorrect) this.currentSession.correct += 1;
+        this.currentSession.records.push({
+          questionIndex,
+          isCorrect,
+          answeredAt: now
+        });
+
+        this.postToParent("question:answered", {
+          lessonId: this.lessonId,
+          questionIndex,
+          isCorrect,
+          timestamp: now
+        });
+      }
+
+      completeLesson(totalQuestions) {
+        if (!this.currentSession) return;
+        const now = Date.now();
+        const durationMs = now - this.currentSession.startedAt;
+        const summary = {
+          ...this.currentSession,
+          finishedAt: now,
+          durationMs,
+          totalQuestions
+        };
+        this.history.sessions.push(summary);
+        try {
+          localStorage.setItem(this.storageKey, JSON.stringify(this.history));
+        } catch (e) {
+          console.warn("Failed to save history:", e);
+        }
+
+        this.postToParent("lesson:complete", {
+          lessonId: this.lessonId,
+          totalQuestions,
+          answered: this.currentSession.answered,
+          correct: this.currentSession.correct,
+          durationMs
+        });
+
+        this.currentSession = null;
+      }
+
+      saveSession() {
+        if (!this.currentSession) return;
+        const now = Date.now();
+        const durationMs = now - this.currentSession.startedAt;
+        const summary = {
+          ...this.currentSession,
+          finishedAt: now,
+          durationMs
+        };
+        this.history.sessions.push(summary);
+        try {
+          localStorage.setItem(this.storageKey, JSON.stringify(this.history));
+        } catch (e) {
+          console.warn("Failed to save history:", e);
+        }
+      }
+
+      postToParent(type, payload) {
+        try {
+          if (window.parent && window.parent !== window) {
+            window.parent.postMessage({ type, payload }, "*");
+          }
+        } catch (e) {
+          console.warn("postMessage failed:", e);
+        }
+      }
+    }
+
+    const LESSON_ID = "sci.chemistry.solubility_temperature_sim";
+    const tracker = new LearningTracker(LESSON_ID);
+
+    /************ 水溶液シミュ制御 ************/
+    const btnSalt = document.getElementById("btnSalt");
+    const btnAlum = document.getElementById("btnAlum");
+    const substanceButtons = [btnSalt, btnAlum];
+    const tempSlider = document.getElementById("tempSlider");
+    const simDescription = document.getElementById("simDescription");
+
+    const satBar = document.getElementById("satBar");
+    const precipitate = document.getElementById("precipitate");
+    const waterArea = document.getElementById("waterArea");
+    const particles = [
+      document.getElementById("p1"),
+      document.getElementById("p2"),
+      document.getElementById("p3"),
+      document.getElementById("p4"),
+      document.getElementById("p5"),
+      document.getElementById("p6"),
+      document.getElementById("p7")
+    ];
+    const crystals = [
+      document.getElementById("crystal1"),
+      document.getElementById("crystal2"),
+      document.getElementById("crystal3"),
+      document.getElementById("crystal4"),
+      document.getElementById("crystal5")
+    ];
+
+    const dissolveText = document.getElementById("dissolveText");
+    const saturationText = document.getElementById("saturationText");
+    const crystalText = document.getElementById("crystalText");
+    const skyTag = document.getElementById("skyTag");
+
+    // 簡略溶解度データ（イメージ用）
+    // 値は「水100gにとける量（g）」のイメージ
+    const solubilityData = {
+      salt: [35, 36, 36, 37],  // ほぼ変わらない
+      alum: [5, 10, 25, 40]    // 温度で大きく変化
+    };
+    const tempLabels = ["0℃", "20℃", "40℃", "60℃"];
+
+    let currentSubstance = "salt";
+
+    function setSubstance(substance) {
+      currentSubstance = substance;
+      substanceButtons.forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.substance === substance);
+      });
+
+      if (substance === "salt") {
+        crystalText.textContent = "食塩では、再結晶の変化は目立ちにくい";
+      } else {
+        crystalText.textContent = "高温でとけたあと冷やすと、再結晶がよく見える";
+      }
+      updateSolutionScene();
+    }
+
+    substanceButtons.forEach(btn => {
+      btn.addEventListener("click", () => setSubstance(btn.dataset.substance));
+    });
+
+    tempSlider.addEventListener("input", () => {
+      updateSolutionScene();
+    });
+
+    function updateSolutionScene() {
+      const tIndex = parseInt(tempSlider.value, 10);
+      const sol = solubilityData[currentSubstance][tIndex];
+      const tempLabel = tempLabels[tIndex];
+
+      // 溶解度表示（ざっくり）
+      dissolveText.textContent = "水100gに 約 " + sol + "g とける";
+      skyTag.textContent =
+        (currentSubstance === "salt" ? "食塩 " : "ミョウバン ") +
+        tempLabel + "：溶解度のようす";
+
+      // 飽和バー（食塩はいつも中くらい、ミョウバンは高温で右寄り）
+      let ratio;
+      if (currentSubstance === "salt") {
+        ratio = 0.55 + (tIndex * 0.03); // ほぼ一定
+      } else {
+        ratio = 0.2 + (tIndex * 0.25); // 0→小、60℃→ほぼ飽和
+      }
+      ratio = Math.max(0, Math.min(1.2, ratio));
+      satBar.style.width = (Math.min(ratio, 1) * 100) + "%";
+
+      // 粒子の表示数を更新（溶解度に応じて）
+      const particleCount = Math.floor(ratio * particles.length);
+      particles.forEach((p, i) => {
+        if (i < particleCount) {
+          p.style.opacity = "0.9";
+          p.style.display = "block";
+        } else {
+          p.style.opacity = "0";
+          p.style.display = "none";
+        }
+      });
+
+      // 飽和のコメント
+      if (ratio < 0.7) {
+        saturationText.textContent = "まだ飽和よりかなり少ない";
+        precipitate.style.transform = "scaleY(0)";
+      } else if (ratio < 1.0) {
+        saturationText.textContent = "飽和に近い（ほぼ限界）";
+        precipitate.style.transform = "scaleY(0.3)";
+      } else {
+        saturationText.textContent = "飽和をこえて、底にあまる";
+        precipitate.style.transform = "scaleY(0.8)";
+      }
+
+      // ミョウバン × 低温 のときだけ結晶をくっきり
+      const showCrystal = (currentSubstance === "alum" && tIndex === 0);
+      crystals.forEach((c, i) => {
+        if (showCrystal) {
+          setTimeout(() => {
+            c.classList.add("visible");
+          }, 80 * i);
+        } else {
+          c.classList.remove("visible");
+        }
+      });
+    }
+
+    // 初期状態
+    setSubstance("salt");
+    tempSlider.value = 1;
+    updateSolutionScene();
+
+    /************ わかる編：問題データ ************/
+    const questions = [
+      {
+        id: "q1",
+        text: "食塩を水に入れてよくかきまぜると、ふつうどうなりますか？",
+        choices: [
+          "水の中にとけて見えなくなる",
+          "水の上にうかぶ",
+          "水の底にずっと沈んだまま",
+          "かたちが大きくなる"
+        ],
+        correct: 0,
+        explanation:
+          "食塩を水に入れてかきまぜると、食塩のつぶが水の中に広がり、目には見えなくなります。これは<strong>溶解</strong>した状態で、水溶液になっています。"
+      },
+      {
+        id: "q2",
+        text: "溶解度とは、どのような量を表したものですか？",
+        choices: [
+          "一定の水にとける物質の最大の量",
+          "水と物質の温度のちがい",
+          "水に入れた物質の重さ",
+          "水溶液の色のこさ"
+        ],
+        correct: 0,
+        explanation:
+          "<strong>溶解度</strong>とは、ふつう「水100gに何gまでとけるか」のように、一定の水にとける<strong>物質の最大の量</strong>を表したものです。それ以上入れると、底にとけ残りが出てきます。"
+      },
+      {
+        id: "q3",
+        text: "ミョウバンの水溶液を高温でつくり、あとでゆっくり冷やすと、何という現象がおこりやすくなりますか？",
+        choices: [
+          "再結晶",
+          "溶解",
+          "蒸発",
+          "中和"
+        ],
+        correct: 0,
+        explanation:
+          "ミョウバンは、高温ではたくさんとけますが、冷やすと溶解度が小さくなります。そのため、とけていた分の一部が<strong>結晶として出てくる</strong>ことがあり、これを<strong>再結晶</strong>といいます。"
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let answeredFlags = new Array(questions.length).fill(false);
+
+    const questionTextEl = document.getElementById("questionText");
+    const choicesContainer = document.getElementById("choicesContainer");
+    const explanationBox = document.getElementById("explanationBox");
+    const explanationText = document.getElementById("explanationText");
+    const progressFill = document.getElementById("progressFill");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    function renderQuestion(index) {
+      const q = questions[index];
+      questionTextEl.textContent = "Q" + (index + 1) + ". " + q.text;
+      choicesContainer.innerHTML = "";
+      explanationBox.classList.remove("show");
+      explanationText.innerHTML = "";
+
+      q.choices.forEach((choiceText, i) => {
+        const btn = document.createElement("button");
+        btn.className = "choice";
+        btn.textContent = choiceText;
+        btn.dataset.index = i;
+        btn.addEventListener("click", () => handleChoiceClick(index, i, btn));
+        choicesContainer.appendChild(btn);
+      });
+
+      updateProgress();
+      updateNavButtons();
+    }
+
+    function handleChoiceClick(qIndex, choiceIndex, btnEl) {
+      const q = questions[qIndex];
+
+      if (answeredFlags[qIndex]) return;
+
+      const allChoices = choicesContainer.querySelectorAll(".choice");
+      allChoices.forEach(el => el.disabled = true);
+
+      const isCorrect = (choiceIndex === q.correct);
+      answeredFlags[qIndex] = true;
+
+      if (isCorrect) {
+        btnEl.classList.add("correct");
+      } else {
+        btnEl.classList.add("incorrect");
+        const correctBtn = allChoices[q.correct];
+        if (correctBtn) correctBtn.classList.add("correct");
+      }
+
+      explanationBox.classList.add("show");
+      explanationText.innerHTML = q.explanation;
+
+      tracker.recordAnswer(qIndex, isCorrect);
+
+      updateProgress();
+      updateNavButtons();
+
+      // デバッグ: 回答状況を確認
+      const allAnswered = answeredFlags.every(f => f);
+      const answeredCount = answeredFlags.filter(f => f).length;
+      console.log('📊 回答状況:', {
+        currentQuestion: qIndex + 1,
+        totalQuestions: questions.length,
+        answeredCount: answeredCount,
+        allAnswered: allAnswered,
+        answeredFlags: [...answeredFlags] // 配列のコピーをログに出力
+      });
+
+      if (allAnswered) {
+        console.log('✅ すべての問題に回答済み。完了画面を表示します。');
+        // すべての問題に回答した場合、完了画面を表示
+        // ナビゲーションボタンを即座に無効化
+        nextBtn.disabled = true;
+        prevBtn.disabled = true;
+        nextBtn.style.opacity = "0.5";
+        prevBtn.style.opacity = "0.5";
+        
+        // 解説を表示してから完了画面へ遷移
+        // ユーザーが解説を読む時間を確保（2秒）
+        const completionTimer = setTimeout(() => {
+          console.log('🎯 完了画面を表示します（タイマー実行）');
+          if (answeredFlags.every(f => f)) {
+            showCompletionScreen();
+          } else {
+            console.warn('⚠️ タイマー実行時点で、まだすべての問題に回答していません');
+          }
+        }, 2000);
+        
+        // タイマーをグローバルに保存（必要に応じてクリアできるように）
+        window.completionTimer = completionTimer;
+      } else {
+        console.log('⏳ まだ回答していない問題があります。', {
+          answered: answeredFlags.filter(f => f).length,
+          total: questions.length,
+          missing: answeredFlags.map((f, i) => !f ? i + 1 : null).filter(x => x !== null)
+        });
+      }
+    }
+
+    function showCompletionScreen() {
+      console.log('🎯 レッスン完了！メッセージ送信処理を開始');
+      console.log('🎯 showCompletionScreen が呼ばれました');
+      
+      // 学習履歴を保存
+      tracker.saveSession();
+      
+      // レッスン完了時にチェックポイントを削除
+      clearCheckpoint();
+      
+      // UIを完了画面に変更
+      questionTextEl.textContent = "学習完了！おつかれさまでした。";
+      choicesContainer.innerHTML = "";
+      explanationBox.classList.remove("show");
+      explanationText.innerHTML = "";
+      
+      // ナビゲーションボタンを非表示
+      nextBtn.style.display = "none";
+      prevBtn.style.display = "none";
+      
+      // プログレスバーを100%に
+      progressFill.style.width = "100%";
+      
+      // 今回のセッション結果を表示
+      const historyDisplay = document.getElementById("historyDisplay");
+      console.log('📊 historyDisplay要素:', historyDisplay);
+      if (historyDisplay) {
+        const resultHTML = showCurrentSessionResult();
+        console.log('📊 結果HTML:', resultHTML);
+        historyDisplay.innerHTML = resultHTML;
+        historyDisplay.style.display = "block";
+        historyDisplay.style.visibility = "visible";
+        historyDisplay.style.opacity = "1";
+        console.log('✅ セッション結果を表示しました');
+        console.log('📊 historyDisplayのスタイル:', {
+          display: historyDisplay.style.display,
+          visibility: historyDisplay.style.visibility,
+          opacity: historyDisplay.style.opacity
+        });
+      } else {
+        console.warn('⚠️ historyDisplay要素が見つかりません');
+      }
+      
+      // 完了メッセージを親フレームに送信
+      console.log('🎯 メッセージ送信処理開始');
+      const totalQuestions = questions.length;
+      const messageData = {
+        type: 'lesson:complete',
+        lessonId: LESSON_ID,
+        detail: {
+          correct: tracker.currentSession ? tracker.currentSession.correct : 0,
+          total: totalQuestions,
+          timeSec: tracker.currentSession ? Math.floor((Date.now() - tracker.currentSession.startedAt) / 1000) : 0
+        }
+      };
+      
+      console.log('🚀 完了メッセージを送信します:', messageData);
+      try {
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage(messageData, "*");
+          console.log('✅ メッセージ送信成功');
+        } else {
+          // iframe判定に関係なく、常にメッセージを送信
+          window.parent.postMessage(messageData, "*");
+          console.log('✅ メッセージ送信成功（強制送信）');
+        }
+      } catch (e) {
+        console.warn("postMessage failed:", e);
+      }
+      
+      // completeLessonも呼び出して履歴に記録
+      tracker.completeLesson(totalQuestions);
+      console.log('✅ 完了処理が完了しました');
+    }
+
+    function updateProgress() {
+      const answeredCount = answeredFlags.filter(f => f).length;
+      const ratio = answeredCount / questions.length;
+      progressFill.style.width = (ratio * 100) + "%";
+    }
+
+    function updateNavButtons() {
+      // すべての問題に回答済みの場合は、完了画面表示中なのでボタンを無効化
+      if (answeredFlags.every(f => f)) {
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+        return;
+      }
+      prevBtn.disabled = (currentQuestionIndex === 0);
+      nextBtn.disabled = (currentQuestionIndex === questions.length - 1);
+    }
+
+    prevBtn.addEventListener("click", () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        renderQuestion(currentQuestionIndex);
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        renderQuestion(currentQuestionIndex);
+      } else {
+        // 最後の問題で「次の問題へ」をクリックした場合
+        // すべての問題に回答済みか確認
+        const allAnswered = answeredFlags.every(f => f);
+        console.log('📊 「次の問題へ」クリック:', {
+          currentQuestionIndex: currentQuestionIndex,
+          totalQuestions: questions.length,
+          allAnswered: allAnswered,
+          answeredFlags: answeredFlags
+        });
+        
+        if (allAnswered) {
+          console.log('✅ すべての問題に回答済み。完了画面を表示します。');
+          showCompletionScreen();
+        } else {
+          console.warn('⚠️ まだ回答していない問題があります。完了画面を表示できません。');
+        }
+      }
+    });
+
+    tracker.startSession();
+    renderQuestion(currentQuestionIndex);
+
+    /************ 終了処理用の関数 ************/
+    function clearCheckpoint() {
+      try {
+        const checkpointKey = `checkpoint:${LESSON_ID}`;
+        localStorage.removeItem(checkpointKey);
+        console.log('🗑️ チェックポイント削除完了');
+        return true;
+      } catch (error) {
+        console.error('❌ チェックポイント削除エラー:', error);
+        return false;
+      }
+    }
+
+    function showCurrentSessionResult() {
+      const session = tracker.currentSession;
+      if (!session) return '';
+      
+      const totalQuestions = questions.length;
+      const correct = session.correct || 0;
+      const scorePercent = totalQuestions > 0 ? 
+        Math.round((correct / totalQuestions) * 100) : 0;
+      
+      // 成績に応じたメッセージ
+      let resultMessage = '';
+      if (scorePercent >= 90) {
+        resultMessage = '🎉 素晴らしい成果です！';
+      } else if (scorePercent >= 70) {
+        resultMessage = '👍 よくできました！';
+      } else if (scorePercent >= 50) {
+        resultMessage = '💪 もう少し頑張りましょう！';
+      } else {
+        resultMessage = '📚 復習して再挑戦しましょう！';
+      }
+      
+      return `
+        <div style="padding: 16px; background: #f8f9fa; border-radius: 12px; margin-top: 12px;">
+          <h3 style="margin-bottom: 12px; color: #333; font-size: 16px;">今回の結果</h3>
+          <p style="margin: 8px 0; color: #555; font-size: 14px;">
+            <strong>正解数:</strong> ${correct} / ${totalQuestions} 問
+          </p>
+          <p style="margin: 8px 0; color: #555; font-size: 14px;">
+            <strong>正答率:</strong> ${scorePercent}%
+          </p>
+          <p style="margin: 12px 0 0 0; color: #1976d2; font-size: 15px; font-weight: bold;">
+            ${resultMessage}
+          </p>
+        </div>
+      `;
+    }
+
+    /************ ホームボタン ************/
+    function goHome(){
+      window.location.href = '/';
+    }
+  </script>
+</body>
+</html>

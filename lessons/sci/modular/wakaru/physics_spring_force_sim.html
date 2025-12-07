@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>シミュレーションで学ぶ理科 - ばねと力</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+      background: radial-gradient(circle at top, #0f172a 0%, #020617 45%, #000 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color:#e5e7eb;
+    }
+    .header {
+      background: rgba(15,23,42,0.95);
+      padding: 10px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.7);
+      backdrop-filter: blur(10px);
+    }
+    .home-btn {
+      background:linear-gradient(135deg,#38bdf8,#22c55e);
+      color:white;
+      border:none;
+      padding:10px 18px;
+      border-radius:999px;
+      font-size:14px;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      min-height:44px;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+      box-shadow:0 3px 10px rgba(56,189,248,0.7);
+    }
+    .home-btn:hover { filter:brightness(1.05); transform:translateY(-1px); }
+    .home-btn:active { transform:scale(0.97); }
+    .lesson-title {
+      font-size:18px;
+      font-weight:bold;
+      color:#e0f2fe;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      flex:1;
+      margin:0 10px;
+      text-align:center;
+    }
+    .main-container {
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      padding:15px;
+      gap:12px;
+    }
+
+    /* ▼ シミュ全体 */
+    .sim-container {
+      background:rgba(15,23,42,0.96);
+      border-radius:18px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.8);
+      margin-bottom:8px;
+      overflow:hidden;
+      border:1px solid rgba(148,163,184,0.6);
+    }
+    .sim-header {
+      background:radial-gradient(circle at top, #f97316 0%, #0f172a 60%, #020617 100%);
+      color:#e0f2fe;
+      padding:14px 15px;
+      text-align:center;
+      border-bottom:1px solid rgba(148,163,184,0.5);
+    }
+    .sim-header h2 { font-size:20px; margin-bottom:4px; }
+    .sim-header p { font-size:13px; opacity:0.9; }
+
+    .sim-area {
+      padding:12px 12px 16px;
+    }
+
+    .control-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      margin-bottom:8px;
+    }
+    .control-label {
+      font-size:13px;
+      font-weight:bold;
+      color:#fed7aa;
+      min-width:90px;
+    }
+
+    /* ばねタブ */
+    .spring-tabs {
+      display:flex;
+      gap:8px;
+      flex:1;
+    }
+    .spring-btn {
+      flex:1;
+      border:none;
+      border-radius:999px;
+      padding:8px 10px;
+      font-size:12px;
+      cursor:pointer;
+      background:rgba(15,23,42,0.9);
+      color:#e2e8f0;
+      font-weight:bold;
+      min-height:40px;
+      transition:all 0.25s ease;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+      box-shadow:0 2px 8px rgba(0,0,0,0.5);
+      border:1px solid rgba(148, 163, 184, 0.6);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:4px;
+    }
+    .spring-btn.active {
+      background:linear-gradient(135deg,#fb923c,#facc15);
+      color:#0b1120;
+      box-shadow:0 4px 14px rgba(248,181,70,0.7);
+      transform:translateY(-1px);
+      border-color:transparent;
+    }
+    .emoji-icon {
+      font-size:16px;
+      filter:drop-shadow(0 1px 2px rgba(0,0,0,0.7));
+    }
+    .mode-desc {
+      font-size:11px;
+      color:#cbd5f5;
+      min-width:120px;
+      text-align:right;
+    }
+
+    .control-row.bottom {
+      margin-top:6px;
+    }
+    .force-slider-wrap {
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    .force-slider {
+      width:100%;
+      -webkit-appearance:none;
+      height:6px;
+      border-radius:999px;
+      background:#020617;
+      outline:none;
+      box-shadow:inset 0 0 4px rgba(15,23,42,0.9);
+    }
+    .force-slider::-webkit-slider-thumb {
+      -webkit-appearance:none;
+      appearance:none;
+      width:22px;
+      height:22px;
+      border-radius:50%;
+      background:radial-gradient(circle,#fb923c 0%,#f97316 45%,#c2410c 100%);
+      box-shadow:0 0 10px rgba(248,181,70,0.9);
+      cursor:pointer;
+      border:2px solid #fffbeb;
+      margin-top:-8px;
+    }
+    .force-slider::-moz-range-thumb {
+      width:22px;
+      height:22px;
+      border-radius:50%;
+      background:#fb923c;
+      border:2px solid #fffbeb;
+      cursor:pointer;
+    }
+    .force-steps {
+      display:flex;
+      justify-content:space-between;
+      font-size:11px;
+      color:#cbd5f5;
+    }
+
+    /* ▼ シーン */
+    .sim-field {
+      position:relative;
+      margin-top:6px;
+      border-radius:16px;
+      padding:12px;
+      overflow:hidden;
+      min-height:260px;
+      background:radial-gradient(circle at top, #020617 0%, #020617 45%, #020617 100%);
+      box-shadow:0 6px 20px rgba(0,0,0,0.85), inset 0 0 22px rgba(15,23,42,0.9);
+    }
+
+    .spring-scene {
+      position:relative;
+      width:100%;
+      height:190px;
+      border-radius:14px;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(248,250,252,0.15), transparent 55%),
+        radial-gradient(circle at 90% 15%, rgba(248,181,70,0.25), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(249,115,22,0.12), transparent 70%),
+        linear-gradient(180deg, #0a0f1a 0%, #020617 50%, #0a0f1a 100%);
+      box-shadow:inset 0 0 40px rgba(15,23,42,0.95), 0 4px 18px rgba(0,0,0,0.9);
+      border:1px solid rgba(148,163,184,0.6);
+    }
+
+    .ceiling {
+      position:absolute;
+      left:20%;
+      right:20%;
+      top:10px;
+      height:10px;
+      border-radius:999px;
+      background:linear-gradient(90deg,#4b5563,#6b7280,#9ca3af);
+      box-shadow:0 4px 12px rgba(0,0,0,0.9), inset 0 2px 4px rgba(255,255,255,0.1);
+      border:1px solid rgba(148,163,184,0.3);
+    }
+
+    .spring {
+      position:absolute;
+      left:50%;
+      top:20px;
+      width:20px;
+      height:100px;
+      transform:translateX(-50%);
+      background:
+        repeating-linear-gradient(
+          180deg,
+          transparent 0px,
+          transparent 5px,
+          rgba(254,243,199,0.98) 5px,
+          rgba(254,243,199,0.98) 10px
+        ),
+        linear-gradient(180deg, rgba(252,211,77,0.3) 0%, rgba(254,243,199,0.95) 50%, rgba(252,211,77,0.3) 100%);
+      border-radius:999px;
+      filter:drop-shadow(0 0 12px rgba(252,211,77,0.95)) drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+      transform-origin:top center;
+      transition:height 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border:1px solid rgba(252,211,77,0.4);
+      box-shadow:inset 0 0 10px rgba(252,211,77,0.3);
+    }
+    
+    .spring::before {
+      content:'';
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      background:radial-gradient(ellipse at center, rgba(252,211,77,0.2) 0%, transparent 70%);
+      border-radius:999px;
+    }
+
+    .mass {
+      position:absolute;
+      left:50%;
+      width:75px;
+      height:42px;
+      background:
+        linear-gradient(135deg,#fb923c 0%,#f97316 50%,#ea580c 100%),
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3) 0%, transparent 50%);
+      border-radius:10px;
+      transform:translateX(-50%);
+      box-shadow:
+        0 8px 20px rgba(0,0,0,0.9),
+        0 4px 8px rgba(249,115,22,0.5),
+        inset 0 2px 4px rgba(255,255,255,0.2),
+        inset 0 -2px 4px rgba(0,0,0,0.3);
+      border:2px solid rgba(251,146,60,0.8);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fffbeb;
+      font-weight:bold;
+      font-size:15px;
+      text-shadow:0 2px 4px rgba(0,0,0,0.8);
+      transition:top 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s ease;
+    }
+    
+    .mass:hover {
+      transform:translateX(-50%) scale(1.05);
+    }
+
+    .weight-icons {
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:8px;
+      display:flex;
+      gap:4px;
+      font-size:14px;
+      filter:drop-shadow(0 2px 3px rgba(0,0,0,0.9));
+    }
+    
+    /* 力の矢印 */
+    .force-arrow {
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      pointer-events:none;
+      opacity:0;
+      transition:opacity 0.3s ease;
+    }
+    
+    .force-arrow-down {
+      top:50%;
+      margin-top:20px;
+    }
+    
+    .force-arrow.show {
+      opacity:1;
+      animation:forcePulse 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes forcePulse {
+      0%, 100% { transform:translateX(-50%) translateY(0) scale(1); }
+      50% { transform:translateX(-50%) translateY(3px) scale(1.1); }
+    }
+
+    /* 伸びのバー */
+    .stretch-bar-wrap {
+      position:absolute;
+      right:16px;
+      top:24px;
+      width:12px;
+      height:120px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.9);
+      box-shadow:0 0 12px rgba(0,0,0,0.8);
+      overflow:hidden;
+      border:1px solid rgba(148,163,184,0.7);
+    }
+    .stretch-bar-fill {
+      position:absolute;
+      left:2px;
+      right:2px;
+      bottom:2px;
+      height:0;
+      border-radius:999px;
+      background:
+        linear-gradient(180deg,#22c55e 0%,#facc15 50%,#f97316 100%),
+        radial-gradient(ellipse at center, rgba(255,255,255,0.3) 0%, transparent 70%);
+      box-shadow:
+        0 0 12px rgba(34,197,94,0.95),
+        0 0 8px rgba(250,204,21,0.6),
+        inset 0 0 8px rgba(255,255,255,0.2);
+      transition:height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border:1px solid rgba(34,197,94,0.5);
+    }
+    
+    .stretch-bar-fill::after {
+      content:'';
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:4px;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+      animation:shine 2s ease-in-out infinite;
+    }
+    
+    @keyframes shine {
+      0%, 100% { opacity:0; }
+      50% { opacity:1; }
+    }
+    .stretch-label {
+      position:absolute;
+      right:16px;
+      bottom:22px;
+      font-size:11px;
+      padding:3px 8px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.95);
+      color:#bbf7d0;
+      border:1px solid rgba(34,197,94,0.7);
+      box-shadow:0 2px 6px rgba(0,0,0,0.8);
+    }
+
+    .sky-tag {
+      position:absolute;
+      top:10px;
+      right:10px;
+      padding:6px 10px;
+      font-size:11px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.95);
+      color:#fed7aa;
+      box-shadow:0 2px 8px rgba(0,0,0,0.8);
+      border:1px solid rgba(248,181,70,0.6);
+    }
+    .sky-label {
+      position:absolute;
+      bottom:10px;
+      left:10px;
+      padding:6px 10px;
+      font-size:12px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.95);
+      color:#e0f2fe;
+      display:flex;
+      align-items:center;
+      gap:6px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.8);
+      border:1px solid rgba(148,163,184,0.6);
+    }
+    .sky-label span.icon {
+      font-size:16px;
+      filter:drop-shadow(0 2px 3px rgba(0,0,0,0.8));
+    }
+
+    /* infoカード */
+    .env-panel {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:10px;
+    }
+    .env-card {
+      flex:1 1 120px;
+      background:rgba(15,23,42,0.95);
+      border-radius:12px;
+      padding:8px 10px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.8);
+      border:1px solid rgba(148,163,184,0.6);
+    }
+    .env-title {
+      font-size:13px;
+      font-weight:bold;
+      margin-bottom:3px;
+      color:#e0f2fe;
+      display:flex;
+      align-items:center;
+      gap:4px;
+    }
+    .env-title span.emoji {
+      font-size:17px;
+      filter:drop-shadow(0 2px 4px rgba(0,0,0,0.8));
+      animation:float 3s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-3px);} }
+    .env-value {
+      font-size:14px;
+      font-weight:bold;
+      margin-bottom:2px;
+      color:#fee2e2;
+    }
+    .env-sub {
+      font-size:11px;
+      color:#cbd5f5;
+    }
+
+    .sim-comment {
+      margin-top:10px;
+      font-size:13px;
+      line-height:1.6;
+      color:#e5e7eb;
+      background:rgba(15,23,42,0.95);
+      border-radius:12px;
+      padding:10px 12px;
+      border-left:3px solid #fb923c;
+      box-shadow:0 3px 10px rgba(0,0,0,0.85);
+    }
+    .sim-comment strong {
+      color:#fed7aa;
+      text-shadow:0 1px 2px rgba(0,0,0,0.8);
+    }
+
+    /* ▼ infoパネル（コンパクト） */
+    .info-panel {
+      background:rgba(15,23,42,0.96);
+      border-radius:16px;
+      box-shadow:0 8px 26px rgba(0,0,0,0.8);
+      padding:14px;
+      border:1px solid rgba(148,163,184,0.6);
+    }
+    .info-panel h3 {
+      color:#e0f2fe;
+      margin-bottom:8px;
+      font-size:16px;
+    }
+    .info-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));
+      gap:10px;
+    }
+    .info-item {
+      background:rgba(15,23,42,0.95);
+      padding:10px;
+      border-radius:10px;
+      border-left:3px solid #fb923c;
+    }
+    .info-item h4 {
+      color:#fed7aa;
+      margin-bottom:4px;
+      font-size:13px;
+    }
+    .info-item p {
+      color:#e5e7eb;
+      font-size:12px;
+      line-height:1.4;
+    }
+
+    /* ▼ 問題パネル */
+    .question-container {
+      background:rgba(15,23,42,0.96);
+      border-radius:16px;
+      box-shadow:0 8px 26px rgba(0,0,0,0.8);
+      padding:16px;
+      border:1px solid rgba(148,163,184,0.6);
+      margin-bottom:8px;
+    }
+    .question-text {
+      font-size:15px;
+      font-weight:bold;
+      color:#e5e7eb;
+      margin-bottom:10px;
+    }
+    .progress-bar {
+      background:#020617;
+      border-radius:999px;
+      height:7px;
+      margin:8px 0 12px;
+      overflow:hidden;
+      box-shadow:inset 0 0 4px rgba(15,23,42,0.95);
+    }
+    .progress-fill {
+      background:linear-gradient(135deg, #fb923c 0%, #22c55e 100%);
+      height:100%;
+      width:0%;
+      transition:width 0.3s ease;
+      box-shadow:0 0 10px rgba(248,181,70,0.8);
+    }
+    .choices {
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .choice {
+      padding:11px 13px;
+      background:rgba(15,23,42,0.92);
+      border:1.5px solid rgba(55,65,81,0.9);
+      border-radius:10px;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      font-size:13px;
+      min-height:44px;
+      display:flex;
+      align-items:center;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+      color:#e5e7eb;
+    }
+    .choice:hover {
+      background:rgba(31,41,55,0.95);
+      border-color:#fb923c;
+    }
+    .choice.correct {
+      background:#16a34a;
+      color:white;
+      border-color:#16a34a;
+      animation:correctPulse 0.6s ease;
+      box-shadow:0 0 12px rgba(22,163,74,0.9);
+    }
+    .choice.incorrect {
+      background:#b91c1c;
+      color:white;
+      border-color:#b91c1c;
+      animation:wrongShake 0.6s ease;
+      box-shadow:0 0 12px rgba(185,28,28,0.9);
+    }
+    @keyframes correctPulse {
+      0%,100%{transform:scale(1);}
+      50%{transform:scale(1.04);}
+    }
+    @keyframes wrongShake {
+      0%,100%{transform:translateX(0);}
+      25%{transform:translateX(-8px);}
+      75%{transform:translateX(8px);}
+    }
+
+    .explanation {
+      margin-top:12px;
+      padding:10px;
+      background:rgba(15,23,42,0.95);
+      border-radius:10px;
+      border-left:3px solid #22c55e;
+      display:none;
+    }
+    .explanation.show { display:block; }
+    .explanation h4 {
+      color:#bbf7d0;
+      margin-bottom:6px;
+      font-size:13px;
+    }
+    .explanation p {
+      color:#e5e7eb;
+      line-height:1.5;
+      font-size:12px;
+    }
+
+    .navigation {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-top:14px;
+    }
+    .nav-btn {
+      padding:11px 18px;
+      border:none;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      min-height:44px;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .nav-btn:disabled {
+      opacity:0.4;
+      cursor:not-allowed;
+    }
+    .prev-btn {
+      background:#4b5563;
+      color:#e5e7eb;
+    }
+    .prev-btn:hover:not(:disabled) { background:#374151; }
+    .next-btn {
+      background:linear-gradient(135deg,#fb923c,#22c55e);
+      color:#0b1120;
+      box-shadow:0 3px 10px rgba(248,181,70,0.7);
+    }
+    .next-btn:hover:not(:disabled) { filter:brightness(1.05); }
+
+    * { touch-action:manipulation; }
+    .choice, .nav-btn, .home-btn, .spring-btn {
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+
+    @media (max-width:768px){
+      body { overflow-x:hidden; }
+      .header { padding:8px 10px; }
+      .home-btn { padding:8px 14px; font-size:12px; }
+      .lesson-title { font-size:14px; margin:0 6px; }
+      .main-container { padding:10px; gap:10px; }
+      .sim-area { padding:10px 10px 14px; }
+      .sim-field { min-height:240px; padding:10px; }
+      .spring-scene { height:180px; }
+      .info-panel { padding:12px; }
+      .info-grid { grid-template-columns:1fr; }
+      .info-item { padding:9px; }
+      .question-container { padding:14px; }
+      .question-text { font-size:14px; }
+      .choice { font-size:12px; padding:9px 11px; }
+      .nav-btn { font-size:12px; padding:9px 14px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <button class="home-btn" onclick="goHome()">ホーム</button>
+    <div class="lesson-title">ばねと力シミュレーション</div>
+    <div style="width:80px;"></div>
+  </header>
+
+  <main class="main-container">
+    <!-- ▼ シミュレーション -->
+    <section class="sim-container">
+      <div class="sim-header">
+        <h2>ばねののびと力</h2>
+        <p>ばねの種類とおもりの数を変えて、「力が大きいほど伸びが大きい」ことを目で確かめよう。</p>
+      </div>
+
+      <div class="sim-area">
+        <div class="control-row">
+          <div class="control-label">ばねの種類</div>
+          <div class="spring-tabs">
+            <button class="spring-btn active" data-spring="soft" id="btnSoft">
+              <span class="emoji-icon">🌀</span>ばねA（やわらかい）
+            </button>
+            <button class="spring-btn" data-spring="hard" id="btnHard">
+              <span class="emoji-icon">🧷</span>ばねB（かたい）
+            </button>
+          </div>
+          <div class="mode-desc" id="springDesc">ばねA：同じ力でも大きくのびる</div>
+        </div>
+
+        <div class="control-row bottom">
+          <div class="control-label">おもりの数</div>
+          <div class="force-slider-wrap">
+            <input type="range" min="0" max="3" step="1" value="1" class="force-slider" id="forceSlider" />
+            <div class="force-steps">
+              <span>0こ</span>
+              <span>1こ</span>
+              <span>2こ</span>
+              <span>3こ</span>
+            </div>
+          </div>
+          <div class="mode-desc" id="forceDesc">1このおもり（約1N）</div>
+        </div>
+
+        <div class="sim-field">
+          <div class="spring-scene">
+            <div class="ceiling"></div>
+
+            <div class="spring" id="springBody"></div>
+            <div class="mass" id="massBlock">1こ</div>
+            
+            <!-- 力の矢印（可視化） -->
+            <div class="force-arrow force-arrow-down" id="forceArrowDown">
+              <svg width="40" height="30" viewBox="0 0 40 30">
+                <defs>
+                  <linearGradient id="forceGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#f97316;stop-opacity:0.8" />
+                    <stop offset="100%" style="stop-color:#ea580c;stop-opacity:1" />
+                  </linearGradient>
+                  <filter id="forceGlow">
+                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                    <feMerge>
+                      <feMergeNode in="coloredBlur"/>
+                      <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                  </filter>
+                </defs>
+                <line x1="20" y1="0" x2="20" y2="25" stroke="url(#forceGradient)" stroke-width="3" stroke-linecap="round" filter="url(#forceGlow)"/>
+                <polygon points="20,25 15,20 25,20" fill="url(#forceGradient)" filter="url(#forceGlow)"/>
+              </svg>
+            </div>
+
+            <div class="weight-icons" id="weightIcons">
+              <span>⚫</span>
+            </div>
+
+            <div class="stretch-bar-wrap">
+              <div class="stretch-bar-fill" id="stretchBar"></div>
+            </div>
+            <div class="stretch-label" id="stretchLabel">のび：2cm</div>
+
+            <div class="sky-tag" id="skyTag">ばねA・1こ：ゆったりとのびる</div>
+            <div class="sky-label">
+              <span class="icon" id="skyIcon">📏</span>
+              <span id="skyLabelText">おもりが多いほど、ばねののびは大きくなる</span>
+            </div>
+          </div>
+
+          <div class="env-panel">
+            <div class="env-card">
+              <div class="env-title"><span class="emoji">💪</span>力の大きさ</div>
+              <div class="env-value" id="forceText">約 1N（おもり1こ）</div>
+              <div class="env-sub">ここでは、おもり1こ分の重さをおよそ1Nの力と考える。</div>
+            </div>
+            <div class="env-card">
+              <div class="env-title"><span class="emoji">📐</span>ばねののび</div>
+              <div class="env-value" id="stretchText">ばねA：2cm のびる</div>
+              <div class="env-sub">同じばねでは、力が2倍・3倍になると、のびも2倍・3倍になる。</div>
+            </div>
+            <div class="env-card">
+              <div class="env-title"><span class="emoji">⚖️</span>AとBのちがい</div>
+              <div class="env-value" id="compareText">ばねAのほうがよくのびる</div>
+              <div class="env-sub">同じ力でも、やわらかいばねのほうが大きくのびる。</div>
+            </div>
+          </div>
+
+          <div class="sim-comment" id="simComment">
+            <strong>ばねののびは、そのばねに加わる力の大きさに比例します。</strong>同じばねなら、力が2倍・3倍になると、のびも2倍・3倍になります。また、ばねの種類によって、同じ力でものび方がちがいます。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ▼ 導入テキスト（コンパクト要点） -->
+    <section class="info-panel">
+      <h3>ばねと力のポイント</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <h4>① 力が大きいほど、ばねはよくのびる</h4>
+          <p>
+            同じばねにかかる<strong>力</strong>を大きくすると、そのばねの<strong>のび</strong>も大きくなる。おもりの数をふやすと、ばねがより長くなる。
+          </p>
+        </div>
+        <div class="info-item">
+          <h4>② 同じばねでは、比例の関係</h4>
+          <p>
+            同じばねを使うとき、力が2倍・3倍になると、ばねの<strong>のびも2倍・3倍</strong>になるような<strong>比例</strong>の関係になっている。
+          </p>
+        </div>
+        <div class="info-item">
+          <h4>③ ばねの種類によって、のび方がちがう</h4>
+          <p>
+            やわらかいばねと、かたいばねをくらべると、同じ力でも<strong>やわらかいばねのほうがよくのびる</strong>。ばねの性質によって、グラフの傾きが変わるイメージ。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ▼ わかる編 3問 -->
+    <section class="question-container">
+      <div class="question-text" id="questionText"></div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="choices" id="choicesContainer"></div>
+      <div class="explanation" id="explanationBox">
+        <h4>解説</h4>
+        <p id="explanationText"></p>
+      </div>
+
+      <div class="navigation">
+        <button class="nav-btn prev-btn" id="prevBtn">前の問題へ</button>
+        <button class="nav-btn next-btn" id="nextBtn">次の問題へ</button>
+      </div>
+      <div id="historyDisplay"></div>
+    </section>
+  </main>
+
+  <script>
+    /************ LearningTracker ************/
+    class LearningTracker {
+      constructor(lessonId) {
+        this.lessonId = lessonId;
+        this.storageKey = "stepnavi_science_" + lessonId;
+        this.currentSession = null;
+        this.history = this.loadHistory();
+      }
+
+      loadHistory() {
+        try {
+          const raw = localStorage.getItem(this.storageKey);
+          return raw ? JSON.parse(raw) : { sessions: [] };
+        } catch (e) {
+          console.warn("Failed to load history:", e);
+          return { sessions: [] };
+        }
+      }
+
+      startSession() {
+        this.currentSession = {
+          startedAt: Date.now(),
+          answered: 0,
+          correct: 0,
+          records: []
+        };
+      }
+
+      recordAnswer(questionIndex, isCorrect) {
+        if (!this.currentSession) this.startSession();
+        const now = Date.now();
+        this.currentSession.answered += 1;
+        if (isCorrect) this.currentSession.correct += 1;
+        this.currentSession.records.push({
+          questionIndex,
+          isCorrect,
+          answeredAt: now
+        });
+
+        this.postToParent("question:answered", {
+          lessonId: this.lessonId,
+          questionIndex,
+          isCorrect,
+          timestamp: now
+        });
+      }
+
+      completeLesson(totalQuestions) {
+        if (!this.currentSession) return;
+        const now = Date.now();
+        const durationMs = now - this.currentSession.startedAt;
+        const summary = {
+          ...this.currentSession,
+          finishedAt: now,
+          durationMs,
+          totalQuestions
+        };
+        this.history.sessions.push(summary);
+        try {
+          localStorage.setItem(this.storageKey, JSON.stringify(this.history));
+        } catch (e) {
+          console.warn("Failed to save history:", e);
+        }
+
+        this.postToParent("lesson:complete", {
+          lessonId: this.lessonId,
+          totalQuestions,
+          answered: this.currentSession.answered,
+          correct: this.currentSession.correct,
+          durationMs
+        });
+
+        this.currentSession = null;
+      }
+
+      postToParent(type, payload) {
+        try {
+          if (window.parent && window.parent !== window) {
+            window.parent.postMessage({ type, payload }, "*");
+          }
+        } catch (e) {
+          console.warn("postMessage failed:", e);
+        }
+      }
+    }
+
+    const LESSON_ID = "sci.physics.spring_force_sim";
+    const tracker = new LearningTracker(LESSON_ID);
+
+    /************ ばねシミュ制御 ************/
+    const btnSoft = document.getElementById("btnSoft");
+    const btnHard = document.getElementById("btnHard");
+    const springButtons = [btnSoft, btnHard];
+    const springDesc = document.getElementById("springDesc");
+
+    const forceSlider = document.getElementById("forceSlider");
+    const forceDesc = document.getElementById("forceDesc");
+
+    const springBody = document.getElementById("springBody");
+    const massBlock = document.getElementById("massBlock");
+    const weightIcons = document.getElementById("weightIcons");
+    const stretchBar = document.getElementById("stretchBar");
+    const stretchLabel = document.getElementById("stretchLabel");
+    const forceArrowDown = document.getElementById("forceArrowDown");
+
+    const forceText = document.getElementById("forceText");
+    const stretchText = document.getElementById("stretchText");
+    const compareText = document.getElementById("compareText");
+    const skyTag = document.getElementById("skyTag");
+    const skyIcon = document.getElementById("skyIcon");
+    const skyLabelText = document.getElementById("skyLabelText");
+    const simComment = document.getElementById("simComment");
+
+    let currentSpring = "soft"; // "soft" or "hard"
+
+    // 簡易データ（単位はcmイメージ）
+    // index: おもり0,1,2,3こ
+    const extensionData = {
+      soft: [0, 2, 4, 6],
+      hard: [0, 1, 2, 3]
+    };
+
+    function setSpring(type) {
+      currentSpring = type;
+      springButtons.forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.spring === type);
+      });
+      if (type === "soft") {
+        springDesc.textContent = "ばねA：同じ力でも大きくのびる（やわらかいばね）";
+        compareText.textContent = "ばねAのほうが大きくのびる";
+      } else {
+        springDesc.textContent = "ばねB：同じ力でもあまりのびない（かたいばね）";
+        compareText.textContent = "ばねBはのびが小さい";
+      }
+      updateSpringScene();
+    }
+
+    springButtons.forEach(btn => {
+      btn.addEventListener("click", () => setSpring(btn.dataset.spring));
+    });
+
+    forceSlider.addEventListener("input", () => {
+      updateSpringScene();
+    });
+
+    function updateSpringScene() {
+      const n = parseInt(forceSlider.value, 10); // おもりの数
+      const ext = extensionData[currentSpring][n]; // 伸び（cmイメージ）
+
+      // テキスト類
+      const forceN = n; // ここでは「1こ ≒ 1N」で単純化
+      const weightLabel = (n === 0) ? "0こ" : n + "こ";
+      forceDesc.textContent = weightLabel + "のおもり（約 " + forceN + "N）";
+      forceText.textContent = "約 " + forceN + "N（おもり" + weightLabel + "）";
+
+      massBlock.textContent = weightLabel;
+      updateWeightIcons(n);
+
+      stretchLabel.textContent = "のび：" + ext + "cm";
+      const springName = (currentSpring === "soft") ? "ばねA" : "ばねB";
+      stretchText.textContent = springName + "：" + ext + "cm のびる";
+
+      skyTag.textContent =
+        springName + "・" + weightLabel + "：力が大きいほどよくのびる";
+
+      if (currentSpring === "soft") {
+        skyIcon.textContent = "🌀";
+        skyLabelText.textContent = "やわらかいばねAは、同じ力でも大きくのびる";
+        simComment.innerHTML =
+          "<strong>ばねA（やわらかいばね）</strong>は、同じおもりの数でも<strong>ばねBより大きくのび</strong>ます。同じばねの中では、力が2倍・3倍になると、のびも2倍・3倍になります。";
+      } else {
+        skyIcon.textContent = "🧷";
+        skyLabelText.textContent = "かたいばねBは、同じ力でものびが小さい";
+        simComment.innerHTML =
+          "<strong>ばねB（かたいばね）</strong>は、同じおもりの数でも<strong>ばねAよりのびが小さく</strong>なります。ばねの性質によって、のびやすさが変わります。";
+      }
+
+      // ばねの長さ・おもりの位置
+      const baseLength = 80; // 基本長さ
+      const extra = ext * 4; // のびに応じて伸ばすpx
+      const totalLength = baseLength + extra;
+      springBody.style.height = totalLength + "px";
+      
+      // ばねの色を伸びに応じて変化（視覚的フィードバック）
+      if (springBody) {
+        const stretchRatio = ext / 6; // 最大伸びに対する比率
+        if (stretchRatio > 0.7) {
+          springBody.style.filter = 'drop-shadow(0 0 15px rgba(249,115,22,0.9)) drop-shadow(0 2px 4px rgba(0,0,0,0.5))';
+          springBody.style.background = `
+            repeating-linear-gradient(
+              180deg,
+              transparent 0px,
+              transparent 5px,
+              rgba(254,202,202,0.98) 5px,
+              rgba(254,202,202,0.98) 10px
+            ),
+            linear-gradient(180deg, rgba(249,115,22,0.4) 0%, rgba(254,243,199,0.95) 50%, rgba(249,115,22,0.4) 100%)
+          `;
+        } else if (stretchRatio > 0.4) {
+          springBody.style.filter = 'drop-shadow(0 0 12px rgba(252,211,77,0.9)) drop-shadow(0 2px 4px rgba(0,0,0,0.5))';
+          springBody.style.background = `
+            repeating-linear-gradient(
+              180deg,
+              transparent 0px,
+              transparent 5px,
+              rgba(254,243,199,0.98) 5px,
+              rgba(254,243,199,0.98) 10px
+            ),
+            linear-gradient(180deg, rgba(252,211,77,0.3) 0%, rgba(254,243,199,0.95) 50%, rgba(252,211,77,0.3) 100%)
+          `;
+        } else {
+          springBody.style.filter = 'drop-shadow(0 0 12px rgba(252,211,77,0.95)) drop-shadow(0 2px 4px rgba(0,0,0,0.5))';
+          springBody.style.background = `
+            repeating-linear-gradient(
+              180deg,
+              transparent 0px,
+              transparent 5px,
+              rgba(254,243,199,0.98) 5px,
+              rgba(254,243,199,0.98) 10px
+            ),
+            linear-gradient(180deg, rgba(252,211,77,0.3) 0%, rgba(254,243,199,0.95) 50%, rgba(252,211,77,0.3) 100%)
+          `;
+        }
+      }
+
+      const massTop = 20 + totalLength;
+      massBlock.style.top = massTop + "px";
+      
+      // 重りの色も伸びに応じて変化
+      if (massBlock) {
+        const stretchRatio = ext / 6;
+        if (stretchRatio > 0.7) {
+          massBlock.style.background = `
+            linear-gradient(135deg,#dc2626 0%,#b91c1c 50%,#991b1b 100%),
+            radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3) 0%, transparent 50%)
+          `;
+          massBlock.style.boxShadow = `
+            0 8px 20px rgba(0,0,0,0.9),
+            0 4px 8px rgba(220,38,38,0.6),
+            inset 0 2px 4px rgba(255,255,255,0.2),
+            inset 0 -2px 4px rgba(0,0,0,0.3)
+          `;
+        } else {
+          massBlock.style.background = `
+            linear-gradient(135deg,#fb923c 0%,#f97316 50%,#ea580c 100%),
+            radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3) 0%, transparent 50%)
+          `;
+          massBlock.style.boxShadow = `
+            0 8px 20px rgba(0,0,0,0.9),
+            0 4px 8px rgba(249,115,22,0.5),
+            inset 0 2px 4px rgba(255,255,255,0.2),
+            inset 0 -2px 4px rgba(0,0,0,0.3)
+          `;
+        }
+      }
+      
+      // 力の矢印を表示（おもりがある場合）
+      if (forceArrowDown) {
+        if (n > 0) {
+          forceArrowDown.style.top = (massTop + 42) + "px";
+          forceArrowDown.classList.add("show");
+        } else {
+          forceArrowDown.classList.remove("show");
+        }
+      }
+
+      // 伸びバー(0〜100px)
+      const maxExt = 6; // softの最大
+      const barHeight = (ext / maxExt) * 100;
+      stretchBar.style.height = barHeight + "%";
+      
+      // ばねの振動アニメーション（変化時）
+      if (springBody) {
+        springBody.style.animation = 'none';
+        setTimeout(() => {
+          springBody.style.animation = 'springBounce 0.3s ease-out';
+        }, 10);
+      }
+      
+      // 重りの落下アニメーション
+      if (massBlock) {
+        massBlock.style.animation = 'none';
+        setTimeout(() => {
+          massBlock.style.animation = 'massBounce 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+        }, 10);
+      }
+    }
+    
+    // 重りのバウンスアニメーション
+    const massBounceStyle = document.createElement('style');
+    massBounceStyle.textContent += `
+      @keyframes massBounce {
+        0% { transform: translateX(-50%) translateY(-5px) scale(1); }
+        50% { transform: translateX(-50%) translateY(2px) scale(1.02); }
+        100% { transform: translateX(-50%) translateY(0) scale(1); }
+      }
+    `;
+    document.head.appendChild(massBounceStyle);
+    
+    // ばねのバウンスアニメーション
+    const springBounceStyle = document.createElement('style');
+    springBounceStyle.textContent = `
+      @keyframes springBounce {
+        0% { transform: translateX(-50%) scaleY(1); }
+        50% { transform: translateX(-50%) scaleY(1.05); }
+        100% { transform: translateX(-50%) scaleY(1); }
+      }
+    `;
+    document.head.appendChild(springBounceStyle);
+
+    function updateWeightIcons(count) {
+      weightIcons.innerHTML = "";
+      for (let i = 0; i < count; i++) {
+        const span = document.createElement("span");
+        span.textContent = "⚫";
+        weightIcons.appendChild(span);
+      }
+      // 0このときはうっすら灰色で1個だけ表示しても良いが、ここでは空に
+    }
+
+    // 初期状態
+    setSpring("soft");
+    forceSlider.value = 1;
+    updateSpringScene();
+
+    /************ わかる編：問題データ ************/
+    const questions = [
+      {
+        id: "q1",
+        text: "同じばねにかける力（おもりの数）をふやしていくと、ばねののびはふつうどうなりますか？",
+        choices: [
+          "力が大きいほど、ばねののびも大きくなる",
+          "力が大きいほど、ばねののびは小さくなる",
+          "力を変えても、のびはいつも同じ",
+          "力が大きいと、ばねはまったくのびなくなる"
+        ],
+        correct: 0,
+        explanation:
+          "同じばねにかける<strong>力</strong>を大きくすると、そのばねの<strong>のび</strong>も大きくなります。おもり1こより2こ、2こより3このほうが、ばねは長くのびます。"
+      },
+      {
+        id: "q2",
+        text: "ばねAにおもりを1こつるしたときののびを1とすると、同じばねAにおもり3こをつるしたときののびとして、もっとも近い考え方はどれですか？",
+        choices: [
+          "だいたい3倍くらいのびる",
+          "だいたい2倍くらいのびる",
+          "だいたい半分くらいになる",
+          "ほとんど変わらない"
+        ],
+        correct: 0,
+        explanation:
+          "同じばねでは、かける力とばねののびが<strong>比例</strong>の関係になります。おもりが3倍になると、のびもおよそ3倍になると考えられます（実験では少しずれることもあります）。"
+      },
+      {
+        id: "q3",
+        text: "同じ力（同じ数のおもり）をかけたとき、ばねAとばねBをくらべると、どのように言えますか？",
+        choices: [
+          "やわらかいばねAのほうが、ばねBより大きくのびる",
+          "かたいばねBのほうが、ばねAより大きくのびる",
+          "ばねAもばねBものびはまったく同じ",
+          "どちらのばねものびているようには見えない"
+        ],
+        correct: 0,
+        explanation:
+          "ばねの性質によって、同じ力でも<strong>のびやすさ</strong>がちがいます。やわらかい<strong>ばねA</strong>のほうが、かたい<strong>ばねB</strong>より大きくのびるので、グラフにするとAの線のほうが傾きが大きくなります。"
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let answeredFlags = new Array(questions.length).fill(false);
+
+    const questionTextEl = document.getElementById("questionText");
+    const choicesContainer = document.getElementById("choicesContainer");
+    const explanationBox = document.getElementById("explanationBox");
+    const explanationText = document.getElementById("explanationText");
+    const progressFill = document.getElementById("progressFill");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    function renderQuestion(index) {
+      const q = questions[index];
+      questionTextEl.textContent = "Q" + (index + 1) + ". " + q.text;
+      choicesContainer.innerHTML = "";
+      explanationBox.classList.remove("show");
+      explanationText.innerHTML = "";
+
+      q.choices.forEach((choiceText, i) => {
+        const btn = document.createElement("button");
+        btn.className = "choice";
+        btn.textContent = choiceText;
+        btn.dataset.index = i;
+        btn.addEventListener("click", () => handleChoiceClick(index, i, btn));
+        choicesContainer.appendChild(btn);
+      });
+
+      updateProgress();
+      updateNavButtons();
+    }
+
+    function handleChoiceClick(qIndex, choiceIndex, btnEl) {
+      const q = questions[qIndex];
+
+      if (answeredFlags[qIndex]) return;
+
+      const allChoices = choicesContainer.querySelectorAll(".choice");
+      allChoices.forEach(el => el.disabled = true);
+
+      const isCorrect = (choiceIndex === q.correct);
+      answeredFlags[qIndex] = true;
+
+      if (isCorrect) {
+        btnEl.classList.add("correct");
+      } else {
+        btnEl.classList.add("incorrect");
+        const correctBtn = allChoices[q.correct];
+        if (correctBtn) correctBtn.classList.add("correct");
+      }
+
+      explanationBox.classList.add("show");
+      explanationText.innerHTML = q.explanation;
+
+      tracker.recordAnswer(qIndex, isCorrect);
+
+      updateProgress();
+      updateNavButtons();
+
+      if (answeredFlags.every(f => f)) {
+        // すべての問題に回答した場合、完了画面を表示
+        nextBtn.disabled = true;
+        prevBtn.disabled = true;
+        nextBtn.style.opacity = "0.5";
+        prevBtn.style.opacity = "0.5";
+        
+        setTimeout(() => {
+          if (answeredFlags.every(f => f)) {
+            showCompletionScreen();
+          }
+        }, 2000);
+      }
+    }
+
+    function updateProgress() {
+      const answeredCount = answeredFlags.filter(f => f).length;
+      const ratio = answeredCount / questions.length;
+      progressFill.style.width = (ratio * 100) + "%";
+    }
+
+    function updateNavButtons() {
+      // すべての問題に回答済みの場合は、完了画面表示中なのでボタンを無効化
+      if (answeredFlags.every(f => f)) {
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+        return;
+      }
+      prevBtn.disabled = (currentQuestionIndex === 0);
+      nextBtn.disabled = (currentQuestionIndex === questions.length - 1);
+    }
+
+    prevBtn.addEventListener("click", () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        renderQuestion(currentQuestionIndex);
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        renderQuestion(currentQuestionIndex);
+      } else {
+        // 最後の問題で「次の問題へ」をクリックした場合
+        if (answeredFlags.every(f => f)) {
+          showCompletionScreen();
+        }
+      }
+    });
+
+    tracker.startSession();
+    renderQuestion(currentQuestionIndex);
+
+    function showCompletionScreen() {
+      // 学習履歴を保存
+      tracker.saveSession();
+      
+      // レッスン完了時にチェックポイントを削除
+      clearCheckpoint();
+      
+      // UIを完了画面に変更
+      questionTextEl.textContent = "学習完了！おつかれさまでした。";
+      choicesContainer.innerHTML = "";
+      explanationBox.classList.remove("show");
+      explanationText.innerHTML = "";
+      
+      // ナビゲーションボタンを非表示
+      nextBtn.style.display = "none";
+      prevBtn.style.display = "none";
+      
+      // プログレスバーを100%に
+      progressFill.style.width = "100%";
+      
+      // 今回のセッション結果を表示
+      const historyDisplay = document.getElementById("historyDisplay");
+      if (historyDisplay) {
+        historyDisplay.innerHTML = showCurrentSessionResult();
+        historyDisplay.style.display = "block";
+        historyDisplay.style.visibility = "visible";
+        historyDisplay.style.opacity = "1";
+      }
+      
+      // 完了メッセージを親フレームに送信
+      const totalQuestions = questions.length;
+      const messageData = {
+        type: 'lesson:complete',
+        lessonId: LESSON_ID,
+        detail: {
+          correct: tracker.currentSession ? tracker.currentSession.correct : 0,
+          total: totalQuestions,
+          timeSec: tracker.currentSession ? Math.floor((Date.now() - tracker.currentSession.startedAt) / 1000) : 0
+        }
+      };
+      
+      try {
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage(messageData, "*");
+        } else {
+          window.parent.postMessage(messageData, "*");
+        }
+      } catch (e) {
+        console.warn("postMessage failed:", e);
+      }
+      
+      // completeLessonも呼び出して履歴に記録
+      tracker.completeLesson(totalQuestions);
+    }
+
+    function clearCheckpoint() {
+      try {
+        const checkpointKey = `checkpoint:${LESSON_ID}`;
+        localStorage.removeItem(checkpointKey);
+        return true;
+      } catch (error) {
+        console.error('❌ チェックポイント削除エラー:', error);
+        return false;
+      }
+    }
+
+    function showCurrentSessionResult() {
+      const session = tracker.currentSession;
+      if (!session) return '';
+      
+      const totalQuestions = questions.length;
+      const correct = session.correct || 0;
+      const scorePercent = totalQuestions > 0 ? 
+        Math.round((correct / totalQuestions) * 100) : 0;
+      
+      // 成績に応じたメッセージ
+      let resultMessage = '';
+      if (scorePercent >= 90) {
+        resultMessage = '🎉 素晴らしい成果です！';
+      } else if (scorePercent >= 70) {
+        resultMessage = '👍 よくできました！';
+      } else if (scorePercent >= 50) {
+        resultMessage = '💪 もう少し頑張りましょう！';
+      } else {
+        resultMessage = '📚 復習して再挑戦しましょう！';
+      }
+      
+      return `
+        <div style="padding: 16px; background: #f8f9fa; border-radius: 12px; margin-top: 12px;">
+          <h3 style="margin-bottom: 12px; color: #333; font-size: 16px;">今回の結果</h3>
+          <p style="margin: 8px 0; color: #555; font-size: 14px;">
+            <strong>正解数:</strong> ${correct} / ${totalQuestions} 問
+          </p>
+          <p style="margin: 8px 0; color: #555; font-size: 14px;">
+            <strong>正答率:</strong> ${scorePercent}%
+          </p>
+          <p style="margin: 12px 0 0 0; color: #1976d2; font-size: 15px; font-weight: bold;">
+            ${resultMessage}
+          </p>
+        </div>
+      `;
+    }
+
+    /************ ホームボタン ************/
+    function goHome() {
+      try {
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({ type: "navigate:home", payload: { from: LESSON_ID }}, "*");
+        } else {
+          console.log("goHome called (standalone)");
+        }
+      } catch (e) {
+        console.warn("goHome failed:", e);
+      }
+    }
+    window.goHome = goHome;
+  </script>
+</body>
+</html>

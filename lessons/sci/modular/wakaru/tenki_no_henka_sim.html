@@ -1162,6 +1162,14 @@
                 if (currentQuestion === lessonData.questions.length - 1) {
                     nextBtn.textContent = '学習完了';
                     nextBtn.disabled = false;
+                    
+                    // すべての問題に回答した場合、完了画面を表示
+                    const session = learningTracker.currentSession;
+                    if (session && session.answered && session.answered.length === lessonData.questions.length) {
+                        setTimeout(() => {
+                            completeLesson();
+                        }, 1500);
+                    }
                 }
             }, 500);
         }

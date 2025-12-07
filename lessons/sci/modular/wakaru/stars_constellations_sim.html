@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>シミュレーションで学ぶ理科 - 星と星座</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+      background: radial-gradient(circle at top, #0d1b2a 0%, #000814 45%, #02010a 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color:#f1f5f9;
+    }
+    .header {
+      background: rgba(3, 4, 94, 0.95);
+      padding: 10px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+    }
+    .home-btn {
+      background:linear-gradient(135deg,#00b4d8,#48cae4);
+      color:white;
+      border:none;
+      padding:10px 18px;
+      border-radius:20px;
+      font-size:14px;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      min-height:44px;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+      box-shadow:0 2px 8px rgba(0,0,0,0.4);
+    }
+    .home-btn:hover { background:#00a0c6; transform:translateY(-1px); }
+    .home-btn:active { transform:scale(0.97); }
+    .lesson-title {
+      font-size:18px;
+      font-weight:bold;
+      color:#e0f7fa;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      flex:1;
+      margin:0 10px;
+      text-align:center;
+    }
+    .main-container {
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      padding:15px;
+      gap:12px;
+    }
+
+    /* ▼ シミュ全体 */
+    .sim-container {
+      background:rgba(4, 18, 38, 0.96);
+      border-radius:18px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.7);
+      margin-bottom:10px;
+      overflow:hidden;
+      position:relative;
+      border:1px solid rgba(148, 163, 184, 0.4);
+    }
+    .sim-header {
+      background:radial-gradient(circle at top, #1b263b 0%, #0b1320 60%, #000814 100%);
+      color:#e0f7fa;
+      padding:14px 15px;
+      text-align:center;
+      border-bottom:1px solid rgba(148,163,184,0.4);
+    }
+    .sim-header h2 { font-size:20px; margin-bottom:5px; }
+    .sim-header p { font-size:13px; opacity:0.9; }
+
+    .sim-area {
+      padding:12px 12px 16px;
+    }
+
+    .control-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      margin-bottom:10px;
+    }
+    .control-label {
+      font-size:13px;
+      font-weight:bold;
+      color:#a5f3fc;
+      min-width:120px;
+    }
+    .season-tabs {
+      display:flex;
+      gap:8px;
+      flex:1;
+    }
+    .season-btn {
+      flex:1;
+      border:none;
+      border-radius:20px;
+      padding:10px 8px;
+      font-size:13px;
+      cursor:pointer;
+      background:rgba(25,118,210,0.25);
+      color:#bbdefb;
+      font-weight:bold;
+      min-height:40px;
+      transition:all .25s ease;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+      box-shadow:0 2px 6px rgba(0,0,0,0.6);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:4px;
+    }
+    .season-btn span.emoji{font-size:16px;}
+    .season-btn.active {
+      background:linear-gradient(135deg,#42a5f5,#ab47bc);
+      color:#fff;
+      box-shadow:0 4px 14px rgba(0,0,0,0.85);
+      transform:translateY(-1px);
+    }
+    .season-desc {
+      min-width:120px;
+      font-size:11px;
+      text-align:right;
+      color:#c5cae9;
+    }
+
+    .sim-field {
+      margin-top:6px;
+      display:grid;
+      grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);
+      gap:10px;
+    }
+
+    /* ▼ 公転図側 */
+    .orbit-panel {
+      position:relative;
+      border-radius:14px;
+      background:radial-gradient(circle at center,#1a237e 0%,#000015 55%,#000 100%);
+      min-height:230px;
+      overflow:hidden;
+      box-shadow:inset 0 0 30px rgba(0,0,0,0.9);
+      border:1px solid rgba(144,202,249,0.3);
+    }
+    .starfield {
+      position:absolute;
+      inset:0;
+      background-image:
+        radial-gradient(2px 2px at 10% 20%,rgba(255,255,255,0.9),transparent),
+        radial-gradient(1.5px 1.5px at 30% 80%,rgba(187,222,251,0.9),transparent),
+        radial-gradient(1.5px 1.5px at 70% 30%,rgba(255,255,255,0.8),transparent),
+        radial-gradient(2px 2px at 90% 60%,rgba(179,229,252,0.95),transparent),
+        radial-gradient(1px 1px at 20% 60%,rgba(255,255,255,0.7),transparent);
+      opacity:.6;
+      animation:twinkle 6s ease-in-out infinite alternate;
+    }
+    @keyframes twinkle {
+      0% {opacity:.4;transform:scale(1);}
+      50% {opacity:.9;transform:scale(1.02);}
+      100% {opacity:.5;transform:scale(1.01);}
+    }
+
+    .sun {
+      position:absolute;
+      left:50%;
+      top:50%;
+      width:56px;
+      height:56px;
+      margin:-28px 0 0 -28px;
+      border-radius:50%;
+      background:radial-gradient(circle at 30% 30%,#fff59d,#ffca28,#f57f17);
+      box-shadow:0 0 40px rgba(255,235,59,0.8),0 0 80px rgba(255,193,7,0.6);
+      animation:pulseSun 4s ease-in-out infinite;
+    }
+    @keyframes pulseSun {
+      0%,100% {transform:scale(1);}
+      50% {transform:scale(1.05);}
+    }
+
+    .orbit {
+      position:absolute;
+      left:50%;
+      top:50%;
+      width:200px;
+      height:140px;
+      margin:-70px 0 0 -100px;
+      border-radius:50%;
+      border:1px dashed rgba(144,202,249,0.6);
+      transform:rotate(-20deg);
+      box-shadow:0 0 20px rgba(144,202,249,0.4);
+    }
+
+    .earth-orbit-pos {
+      position:absolute;
+      width:100%;
+      height:100%;
+      transform-origin:50% 50%;
+      transition:transform .8s ease-in-out;
+    }
+    .earth {
+      position:absolute;
+      width:26px;
+      height:26px;
+      border-radius:50%;
+      background:radial-gradient(circle at 30% 30%,#e3f2fd,#42a5f5,#1a237e);
+      box-shadow:0 0 15px rgba(129,212,250,0.9);
+      top:50%;
+      left:100%;
+      margin:-13px 0 0 -13px;
+    }
+    .earth::after {
+      content:"🌏";
+      position:absolute;
+      inset:0;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size:18px;
+      text-shadow:0 0 6px rgba(0,0,0,0.7);
+    }
+
+    .night-arrow {
+      position:absolute;
+      left:50%;
+      top:50%;
+      width:100px;
+      height:2px;
+      background:linear-gradient(90deg,transparent,#bbdefb);
+      transform-origin:0 50%;
+      transform:rotate(0deg);
+      transition:transform .8s ease-in-out;
+      opacity:.9;
+    }
+    .night-arrow::after {
+      content:"夜の空の向き";
+      position:absolute;
+      right:-6px;
+      top:-18px;
+      font-size:11px;
+      color:#e3f2fd;
+      text-shadow:0 0 4px #000;
+    }
+
+    /* ▼ 夜空・星座パネル */
+    .sky-panel {
+      position:relative;
+      border-radius:14px;
+      background:radial-gradient(circle at top,#1a237e 0%,#000015 65%,#000 100%);
+      min-height:230px;
+      overflow:hidden;
+      box-shadow:inset 0 0 30px rgba(0,0,0,0.9);
+      border:1px solid rgba(179,136,255,0.5);
+    }
+    .sky-stars {
+      position:absolute;
+      inset:0;
+      background-image:
+        radial-gradient(1.5px 1.5px at 15% 10%,rgba(255,255,255,0.9),transparent),
+        radial-gradient(2px 2px at 60% 25%,rgba(206,147,216,0.95),transparent),
+        radial-gradient(1.5px 1.5px at 85% 70%,rgba(129,212,250,0.9),transparent),
+        radial-gradient(1.2px 1.2px at 35% 80%,rgba(255,255,255,0.8),transparent),
+        radial-gradient(1.2px 1.2px at 70% 50%,rgba(255,241,118,0.9),transparent);
+      opacity:.7;
+      animation:twinkle 5.5s ease-in-out infinite alternate;
+    }
+    .sky-horizon {
+      position:absolute;
+      left:-10%;
+      right:-10%;
+      bottom:-5%;
+      height:40%;
+      background:linear-gradient(to top,#263238 0%,transparent 80%);
+    }
+
+    .constellation-name {
+      position:absolute;
+      bottom:14px;
+      left:14px;
+      padding:7px 11px;
+      border-radius:18px;
+      background:rgba(0,0,0,0.7);
+      border:1px solid rgba(187,222,251,0.6);
+      font-size:12px;
+      display:flex;
+      align-items:center;
+      gap:5px;
+    }
+    .constellation-name span.emoji {
+      font-size:18px;
+      filter:drop-shadow(0 0 4px rgba(255,255,255,0.8));
+      animation:float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% {transform:translateY(0);}
+      50% {transform:translateY(-3px);}
+    }
+
+    .constellation-lines {
+      position:absolute;
+      inset:18% 10% 32% 10%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+    .constellation-svg {
+      width:100%;
+      height:100%;
+      filter:drop-shadow(0 0 6px rgba(255,255,255,0.7));
+    }
+    .constellation-svg line {
+      stroke:#fff;
+      stroke-width:1.2;
+      stroke-linecap:round;
+      stroke-dasharray:4 3;
+      animation:drawLine 4s linear infinite alternate;
+    }
+    .constellation-svg circle {
+      fill:#fff;
+      animation:twinkle 4s ease-in-out infinite alternate;
+    }
+    @keyframes drawLine {
+      0% {stroke-dashoffset:20;}
+      100% {stroke-dashoffset:0;}
+    }
+
+    /* 北斗七星（常時表示） */
+    .dipper {
+      position:absolute;
+      top:15%;
+      left:10%;
+      width:35%;
+      height:25%;
+    }
+    .dipper-svg {
+      width:100%;
+      height:100%;
+      filter:drop-shadow(0 0 4px rgba(255,255,255,0.6));
+    }
+    .dipper-svg line {
+      stroke:#e3f2fd;
+      stroke-width:1.5;
+      stroke-linecap:round;
+      opacity:0.8;
+    }
+    .dipper-svg circle {
+      fill:#fff;
+      opacity:0.9;
+    }
+
+    .season-caption {
+      position:absolute;
+      top:10px;
+      right:12px;
+      font-size:11px;
+      padding:5px 9px;
+      border-radius:14px;
+      background:rgba(0,0,0,0.65);
+      border:1px solid rgba(187,222,251,0.5);
+    }
+
+    .sim-comment {
+      margin-top:10px;
+      font-size:13px;
+      line-height:1.7;
+      color:#e3f2fd;
+      background:linear-gradient(135deg,rgba(13,71,161,0.8),rgba(81,45,168,0.85));
+      border-radius:12px;
+      padding:10px 12px;
+      border-left:5px solid #42a5f5;
+      box-shadow:0 2px 10px rgba(0,0,0,0.8);
+    }
+    .sim-comment strong {color:#fff59d;}
+
+    /* ▼ infoパネル */
+    .info-panel {
+      background:rgba(13,13,40,0.96);
+      border-radius:16px;
+      box-shadow:0 10px 35px rgba(0,0,0,0.8);
+      padding:18px;
+    }
+    .info-panel h3 {
+      font-size:17px;
+      margin-bottom:12px;
+      color:#e3f2fd;
+    }
+    .info-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:12px;
+    }
+    .info-item {
+      background:rgba(21,21,60,0.9);
+      padding:12px;
+      border-radius:10px;
+      border-left:4px solid #42a5f5;
+    }
+    .info-item h4 {
+      font-size:14px;
+      color:#bbdefb;
+      margin-bottom:6px;
+    }
+    .info-item p {
+      font-size:13px;
+      color:#e0e0e0;
+      line-height:1.5;
+    }
+
+    /* ▼ 問題パネル */
+    .question-container {
+      background:rgba(13,13,40,0.96);
+      border-radius:16px;
+      box-shadow:0 10px 35px rgba(0,0,0,0.8);
+      padding:18px;
+      margin-bottom:6px;
+    }
+    .question-text {
+      font-size:16px;
+      font-weight:bold;
+      margin-bottom:12px;
+    }
+    .progress-bar {
+      background:#263238;
+      border-radius:8px;
+      height:8px;
+      margin:10px 0 16px;
+      overflow:hidden;
+    }
+    .progress-fill {
+      background:linear-gradient(90deg,#42a5f5,#ab47bc);
+      height:100%;
+      width:0;
+      transition:width .3s ease;
+    }
+    .choices {
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .choice {
+      padding:12px 14px;
+      background:#1c2540;
+      border:2px solid #37474f;
+      border-radius:10px;
+      cursor:pointer;
+      transition:all .25s ease;
+      font-size:14px;
+      min-height:48px;
+      display:flex;
+      align-items:center;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .choice:hover {
+      background:#283655;
+      border-color:#64b5f6;
+    }
+    .choice.correct {
+      background:#2e7d32;
+      border-color:#81c784;
+      animation:correctPulse .6s ease;
+      color:#e8f5e9;
+    }
+    .choice.incorrect {
+      background:#b71c1c;
+      border-color:#ef9a9a;
+      animation:wrongShake .6s ease;
+      color:#ffebee;
+    }
+    @keyframes correctPulse {
+      0%,100% {transform:scale(1);}
+      50% {transform:scale(1.05);}
+    }
+    @keyframes wrongShake {
+      0%,100% {transform:translateX(0);}
+      25% {transform:translateX(-8px);}
+      75% {transform:translateX(8px);}
+    }
+    .explanation {
+      margin-top:14px;
+      padding:12px;
+      background:#1c2540;
+      border-radius:10px;
+      border-left:4px solid #42a5f5;
+      display:none;
+      font-size:13px;
+      line-height:1.6;
+    }
+    .explanation.show {display:block;}
+    .explanation h4 {
+      color:#bbdefb;
+      margin-bottom:6px;
+      font-size:13px;
+    }
+    .navigation {
+      margin-top:16px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+    .nav-btn {
+      padding:12px 20px;
+      border:none;
+      border-radius:22px;
+      font-size:14px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:all .25s ease;
+      min-height:44px;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .nav-btn:disabled {
+      opacity:.4;
+      cursor:not-allowed;
+    }
+    .prev-btn {
+      background:#546e7a;
+      color:#eceff1;
+    }
+    .prev-btn:hover:not(:disabled) {background:#455a64;}
+    .next-btn {
+      background:#42a5f5;
+      color:#0d47a1;
+    }
+    .next-btn:hover:not(:disabled) {background:#1e88e5;color:#e3f2fd;}
+
+    * {touch-action:manipulation;}
+    .choice,.nav-btn,.home-btn,.season-btn {-webkit-tap-highlight-color:transparent;}
+
+    @media(max-width:768px){
+      .main-container {padding:10px;}
+      .sim-field {
+        grid-template-columns:1fr;
+      }
+      .orbit-panel,.sky-panel {min-height:210px;}
+      .question-container,.info-panel {padding:15px;}
+      .question-text {font-size:15px;}
+      .choice {font-size:13px;padding:11px 12px;}
+      .info-grid {grid-template-columns:1fr;}
+      .lesson-title {font-size:14px;}
+    }
+  </style>
+</head>
+<body>
+<header class="header">
+  <button class="home-btn" onclick="goHome()">ホーム</button>
+  <div class="lesson-title">星と星座シミュレーション（季節と星座）</div>
+  <div style="width:80px;"></div>
+</header>
+
+<main class="main-container">
+  <!-- ▼ シミュレーションエリア -->
+  <section class="sim-container">
+    <div class="sim-header">
+      <h2>地球の公転と 季節の星座の見え方</h2>
+      <p>春・夏・秋・冬で「夜に見える星座」が変わるのは、地球が太陽のまわりを公転しているからだよ。</p>
+    </div>
+    <div class="sim-area">
+      <div class="control-row">
+        <div class="control-label">季節をえらぶ</div>
+        <div class="season-tabs">
+          <button class="season-btn active" data-season="spring" id="btnSpring">
+            <span class="emoji">🌸</span><span>春（春分のころ）</span>
+          </button>
+          <button class="season-btn" data-season="summer" id="btnSummer">
+            <span class="emoji">🌻</span><span>夏（夏至のころ）</span>
+          </button>
+          <button class="season-btn" data-season="autumn" id="btnAutumn">
+            <span class="emoji">🍁</span><span>秋（秋分のころ）</span>
+          </button>
+          <button class="season-btn" data-season="winter" id="btnWinter">
+            <span class="emoji">❄️</span><span>冬（冬至のころ）</span>
+          </button>
+        </div>
+        <div class="season-desc" id="seasonDesc">春の夜：しし座がよく見える</div>
+      </div>
+
+      <div class="sim-field">
+        <!-- 公転図 -->
+        <div class="orbit-panel">
+          <div class="starfield"></div>
+          <div class="sun"></div>
+          <div class="orbit"></div>
+          <div class="earth-orbit-pos" id="earthOrbit">
+            <div class="earth"></div>
+          </div>
+          <div class="night-arrow" id="nightArrow"></div>
+        </div>
+
+        <!-- 夜空 & 星座 -->
+        <div class="sky-panel">
+          <div class="sky-stars"></div>
+          <div class="sky-horizon"></div>
+
+          <div class="season-caption" id="skySeasonCaption">春の夜空</div>
+
+          <!-- 北斗七星（常時表示） -->
+          <div class="dipper">
+            <svg class="dipper-svg" viewBox="0 0 100 70">
+              <circle cx="15" cy="20" r="2"/>
+              <circle cx="25" cy="15" r="2"/>
+              <circle cx="35" cy="10" r="2"/>
+              <circle cx="45" cy="12" r="2"/>
+              <circle cx="50" cy="25" r="2"/>
+              <circle cx="55" cy="40" r="2"/>
+              <circle cx="60" cy="55" r="2"/>
+              <line x1="15" y1="20" x2="25" y2="15"/>
+              <line x1="25" y1="15" x2="35" y2="10"/>
+              <line x1="35" y1="10" x2="45" y2="12"/>
+              <line x1="45" y1="12" x2="50" y2="25"/>
+              <line x1="50" y1="25" x2="55" y2="40"/>
+              <line x1="55" y1="40" x2="60" y2="55"/>
+            </svg>
+          </div>
+
+          <div class="constellation-lines" id="constellationLines">
+            <!-- SVGはJSで差し替え -->
+            <svg class="constellation-svg" viewBox="0 0 100 60">
+              <circle cx="10" cy="40" r="1.5"/>
+              <circle cx="30" cy="25" r="1.5"/>
+              <circle cx="50" cy="20" r="1.5"/>
+              <circle cx="70" cy="30" r="1.5"/>
+              <circle cx="85" cy="15" r="1.5"/>
+              <line x1="10" y1="40" x2="30" y2="25"/>
+              <line x1="30" y1="25" x2="50" y2="20"/>
+              <line x1="50" y1="20" x2="70" y2="30"/>
+              <line x1="70" y1="30" x2="85" y2="15"/>
+            </svg>
+          </div>
+
+          <div class="constellation-name" id="constellationName">
+            <span class="emoji" id="constellationEmoji">🦁</span>
+            <span id="constellationText">春の代表的な星座：しし座</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sim-comment" id="simComment">
+        <strong>春分のころ</strong>、夜には太陽と反対側の空にある「しし座」などがよく見えるようになります。地球が太陽のまわりを動くことで、夜に向いている方向が少しずつ変わり、季節ごとに見える星座が変化します。
+      </div>
+    </div>
+  </section>
+
+  <!-- ▼ 導入テキスト(info-panel) -->
+  <section class="info-panel">
+    <h3>季節ごとに変わる星座</h3>
+    <div class="info-grid">
+      <div class="info-item">
+        <h4>① 地球の公転と季節の星座</h4>
+        <p>
+          地球は一年かけて太陽のまわりを<strong>公転</strong>しています。地球の位置が変わると、夜に太陽と反対側に見える宇宙の方向も変わるため、
+          春にはしし座、夏にはさそり座、秋にはペガスス座、冬にはオリオン座のように、季節ごとに主役になる星座が入れかわります。
+        </p>
+      </div>
+      <div class="info-item">
+        <h4>② 季節の代表的な星座</h4>
+        <p>
+          それぞれの季節には、形が分かりやすい<strong>代表的な星座</strong>があります。たとえば、春は<strong>しし座</strong>、夏は赤いアンタレスが目立つ<strong>さそり座</strong>、
+          秋は四角形の<strong>ペガスス座</strong>、冬は三つ星がならぶ<strong>オリオン座</strong>などです。
+        </p>
+      </div>
+      <div class="info-item">
+        <h4>③ 北斗七星について</h4>
+        <p>
+          <strong>北斗七星</strong>は、季節に関係なく北の空に見える星座です。ひしゃくの形をしていて、その先をたどると北極星を見つけることができます。
+          北斗七星は一年中見えるので、方角を知る手がかりとして昔から利用されてきました。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ▼ わかる編 3問 -->
+  <section class="question-container">
+    <div class="question-text" id="questionText"></div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="choices" id="choicesContainer"></div>
+    <div class="explanation" id="explanationBox">
+      <h4>解説</h4>
+      <p id="explanationText"></p>
+    </div>
+    <div class="navigation">
+      <button class="nav-btn prev-btn" id="prevBtn">前の問題へ</button>
+      <button class="nav-btn next-btn" id="nextBtn">次の問題へ</button>
+    </div>
+    <div id="historyDisplay"></div>
+  </section>
+</main>
+
+<script>
+  /************ LearningTracker ************/
+  class LearningTracker{
+    constructor(lessonId){
+      this.lessonId = lessonId;
+      this.storageKey = "stepnavi_science_" + lessonId;
+      this.currentSession = null;
+      this.history = this.loadHistory();
+    }
+    loadHistory(){
+      try{
+        const raw = localStorage.getItem(this.storageKey);
+        return raw ? JSON.parse(raw) : {sessions:[]};
+      }catch(e){
+        console.warn("Failed to load history:",e);
+        return {sessions:[]};
+      }
+    }
+    startSession(){
+      this.currentSession = {
+        startedAt:Date.now(),
+        answered:0,
+        correct:0,
+        records:[]
+      };
+    }
+    recordAnswer(questionIndex,isCorrect){
+      if(!this.currentSession) this.startSession();
+      const now = Date.now();
+      this.currentSession.answered++;
+      if(isCorrect) this.currentSession.correct++;
+      this.currentSession.records.push({
+        questionIndex,
+        isCorrect,
+        answeredAt:now
+      });
+      this.postToParent("question:answered",{
+        lessonId:this.lessonId,
+        questionIndex,
+        isCorrect,
+        timestamp:now
+      });
+    }
+    completeLesson(totalQuestions){
+      if(!this.currentSession) return;
+      const now = Date.now();
+      const durationMs = now - this.currentSession.startedAt;
+      const summary = {
+        ...this.currentSession,
+        finishedAt:now,
+        durationMs,
+        totalQuestions
+      };
+      this.history.sessions.push(summary);
+      try{
+        localStorage.setItem(this.storageKey,JSON.stringify(this.history));
+      }catch(e){
+        console.warn("Failed to save history:",e);
+      }
+      this.postToParent("lesson:complete",{
+        lessonId:this.lessonId,
+        totalQuestions,
+        answered:this.currentSession.answered,
+        correct:this.currentSession.correct,
+        durationMs
+      });
+      this.currentSession = null;
+    }
+    postToParent(type,payload){
+      try{
+        if(window.parent && window.parent !== window){
+          window.parent.postMessage({type,payload},"*");
+        }
+      }catch(e){
+        console.warn("postMessage failed:",e);
+      }
+    }
+  }
+
+  const LESSON_ID = "sci.earth.stars_constellations_sim";
+  const tracker = new LearningTracker(LESSON_ID);
+
+  /************ 季節シミュ制御 ************/
+  const earthOrbit = document.getElementById("earthOrbit");
+  const nightArrow = document.getElementById("nightArrow");
+  const seasonDesc = document.getElementById("seasonDesc");
+  const skySeasonCaption = document.getElementById("skySeasonCaption");
+  const constellationName = document.getElementById("constellationName");
+  const constellationEmoji = document.getElementById("constellationEmoji");
+  const constellationText = document.getElementById("constellationText");
+  const constellationLines = document.getElementById("constellationLines");
+  const simComment = document.getElementById("simComment");
+
+  const seasonButtons = [
+    document.getElementById("btnSpring"),
+    document.getElementById("btnSummer"),
+    document.getElementById("btnAutumn"),
+    document.getElementById("btnWinter")
+  ];
+
+  let currentSeason = "spring";
+
+  const seasonData = {
+    spring:{
+      orbitDeg:0,
+      nightDeg:180,
+      desc:"春の夜：しし座などがよく見える",
+      skyCaption:"春の夜空",
+      emoji:"🦁",
+      label:"春の代表的な星座：しし座",
+      comment:"<strong>春分のころ</strong>、夜にはしし座など春の星座がよく見えるようになります。地球が公転することで、夜に向いている方向が変わり、春には春の星座が主役になります。",
+      svg:`
+        <svg class="constellation-svg" viewBox="0 0 100 60">
+          <!-- しし座：ライオンの頭部（鎌形）、胴体、尾 -->
+          <circle cx="15" cy="15" r="1.5"/>
+          <circle cx="25" cy="20" r="1.5"/>
+          <circle cx="35" cy="25" r="1.5"/>
+          <circle cx="50" cy="30" r="2" fill="#fff59d"/>
+          <circle cx="65" cy="35" r="1.5"/>
+          <circle cx="75" cy="40" r="1.5"/>
+          <circle cx="80" cy="50" r="1.5"/>
+          <line x1="15" y1="15" x2="25" y2="20"/>
+          <line x1="25" y1="20" x2="35" y2="25"/>
+          <line x1="35" y1="25" x2="50" y2="30"/>
+          <line x1="50" y1="30" x2="65" y2="35"/>
+          <line x1="65" y1="35" x2="75" y2="40"/>
+          <line x1="75" y1="40" x2="80" y2="50"/>
+        </svg>`
+    },
+    summer:{
+      orbitDeg:90,
+      nightDeg:270,
+      desc:"夏の夜：さそり座などがよく見える",
+      skyCaption:"夏の夜空",
+      emoji:"🦂",
+      label:"夏の代表的な星座：さそり座",
+      comment:"<strong>夏至のころ</strong>、夜にはさそり座など夏の星座がよく見えるようになります。赤く光るアンタレスをふくむさそり座は、夏を代表する星座です。",
+      svg:`
+        <svg class="constellation-svg" viewBox="0 0 100 60">
+          <!-- さそり座：頭部、胴体、曲がった尾、アンタレス（心臓部分）を強調 -->
+          <circle cx="20" cy="12" r="1.5"/>
+          <circle cx="30" cy="18" r="1.5"/>
+          <circle cx="40" cy="25" r="2.5" fill="#ff6b6b"/>
+          <circle cx="50" cy="32" r="1.5"/>
+          <circle cx="60" cy="40" r="1.5"/>
+          <circle cx="68" cy="48" r="1.5"/>
+          <circle cx="75" cy="52" r="1.5"/>
+          <line x1="20" y1="12" x2="30" y2="18"/>
+          <line x1="30" y1="18" x2="40" y2="25"/>
+          <line x1="40" y1="25" x2="50" y2="32"/>
+          <line x1="50" y1="32" x2="60" y2="40"/>
+          <line x1="60" y1="40" x2="68" y2="48"/>
+          <line x1="68" y1="48" x2="75" y2="52"/>
+        </svg>`
+    },
+    autumn:{
+      orbitDeg:180,
+      nightDeg:0,
+      desc:"秋の夜：ペガスス座などがよく見える",
+      skyCaption:"秋の夜空",
+      emoji:"🐴",
+      label:"秋の代表的な星座：ペガスス座",
+      comment:"<strong>秋分のころ</strong>、夜にはペガスス座など秋の星座が高くのぼって見えるようになります。四角形の「秋の四辺形」が目印です。",
+      svg:`
+        <svg class="constellation-svg" viewBox="0 0 100 60">
+          <circle cx="20" cy="20" r="1.5"/>
+          <circle cx="60" cy="20" r="1.5"/>
+          <circle cx="60" cy="45" r="1.5"/>
+          <circle cx="20" cy="45" r="1.5"/>
+          <line x1="20" y1="20" x2="60" y2="20"/>
+          <line x1="60" y1="20" x2="60" y2="45"/>
+          <line x1="60" y1="45" x2="20" y2="45"/>
+          <line x1="20" y1="45" x2="20" y2="20"/>
+        </svg>`
+    },
+    winter:{
+      orbitDeg:270,
+      nightDeg:90,
+      desc:"冬の夜：オリオン座などがよく見える",
+      skyCaption:"冬の夜空",
+      emoji:"🏹",
+      label:"冬の代表的な星座：オリオン座",
+      comment:"<strong>冬至のころ</strong>、夜にはオリオン座など冬の星座がよく見えます。三つ星が一直線にならぶオリオン座は、冬の夜空でもっとも目立つ星座の一つです。",
+      svg:`
+        <svg class="constellation-svg" viewBox="0 0 100 60">
+          <!-- オリオン座：三つ星（ベルト）が中央、上下に明るい星 -->
+          <circle cx="50" cy="12" r="2" fill="#ff9800"/>
+          <circle cx="35" cy="28" r="1.5"/>
+          <circle cx="50" cy="28" r="2" fill="#fff59d"/>
+          <circle cx="65" cy="28" r="1.5"/>
+          <circle cx="50" cy="48" r="2" fill="#64b5f6"/>
+          <line x1="50" y1="12" x2="35" y2="28"/>
+          <line x1="50" y1="12" x2="65" y2="28"/>
+          <line x1="35" y1="28" x2="50" y2="28"/>
+          <line x1="50" y1="28" x2="65" y2="28"/>
+          <line x1="35" y1="28" x2="50" y2="48"/>
+          <line x1="65" y1="28" x2="50" y2="48"/>
+        </svg>`
+    }
+  };
+
+  function setSeason(season){
+    currentSeason = season;
+    seasonButtons.forEach(btn=>{
+      btn.classList.toggle("active",btn.dataset.season===season);
+    });
+
+    const data = seasonData[season];
+    earthOrbit.style.transform = "rotate(" + data.orbitDeg + "deg)";
+    nightArrow.style.transform = "rotate(" + data.nightDeg + "deg)";
+
+    seasonDesc.textContent = data.desc;
+    skySeasonCaption.textContent = data.skyCaption;
+    constellationEmoji.textContent = data.emoji;
+    constellationText.textContent = data.label;
+    simComment.innerHTML = data.comment;
+
+    constellationLines.innerHTML = data.svg;
+  }
+
+  seasonButtons.forEach(btn=>{
+    btn.addEventListener("click",()=>setSeason(btn.dataset.season));
+  });
+
+  setSeason("spring");
+
+  /************ わかる編：3問 ************/
+  const questions = [
+    {
+      id:"q1",
+      text:"季節によって夜に見える星座が変わる主なおもな理由はどれですか？",
+      choices:[
+        "地球が太陽のまわりを公転しているから",
+        "地球が1日に1回自転しているから",
+        "星が自分で動き回っているから",
+        "月の満ち欠けが変わるから"
+      ],
+      correct:0,
+      explanation:"季節ごとに見える星座が変わるのは、地球が一年かけて太陽のまわりを<strong>公転</strong>しているためです。地球の位置が変わると、夜に太陽と反対側に見える方向も変わり、その方向にある星座が季節の星座として見えるようになります。"
+    },
+    {
+      id:"q2",
+      text:"夏の夜空を代表する星座として、もっとも適しているものはどれですか？",
+      choices:[
+        "さそり座",
+        "オリオン座",
+        "しし座",
+        "ペガスス座"
+      ],
+      correct:0,
+      explanation:"夏の代表的な星座は<strong>さそり座</strong>です。赤く明るく光るアンタレスを中心に、曲がった尾のような形が特徴で、夏の夜空でとても目立つ星座です。"
+    },
+    {
+      id:"q3",
+      text:"冬の夜空で三つ星がならぶ形が目立つ、代表的な星座はどれですか？",
+      choices:[
+        "オリオン座",
+        "さそり座",
+        "しし座",
+        "おおぐま座"
+      ],
+      correct:0,
+      explanation:"冬の代表的な星座は<strong>オリオン座</strong>です。真ん中に三つ星が一直線にならぶ「三つ星」があり、その上下にも明るい星がならぶので、とても見つけやすい星座です。"
+    }
+  ];
+
+  let currentQuestionIndex = 0;
+  let answeredFlags = new Array(questions.length).fill(false);
+
+  const questionTextEl = document.getElementById("questionText");
+  const choicesContainer = document.getElementById("choicesContainer");
+  const explanationBox = document.getElementById("explanationBox");
+  const explanationText = document.getElementById("explanationText");
+  const progressFill = document.getElementById("progressFill");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+
+  function renderQuestion(index){
+    const q = questions[index];
+    questionTextEl.textContent = "Q" + (index+1) + ". " + q.text;
+    choicesContainer.innerHTML = "";
+    explanationBox.classList.remove("show");
+    explanationText.innerHTML = "";
+
+    q.choices.forEach((choiceText,i)=>{
+      const btn = document.createElement("button");
+      btn.className = "choice";
+      btn.textContent = choiceText;
+      btn.dataset.index = i;
+      btn.addEventListener("click",()=>handleChoiceClick(index,i,btn));
+      choicesContainer.appendChild(btn);
+    });
+
+    updateProgress();
+    updateNavButtons();
+  }
+
+  function handleChoiceClick(qIndex,choiceIndex,btnEl){
+    const q = questions[qIndex];
+    if(answeredFlags[qIndex]) return;
+    const allChoices = choicesContainer.querySelectorAll(".choice");
+    allChoices.forEach(el=>el.disabled = true);
+
+    const isCorrect = (choiceIndex === q.correct);
+    answeredFlags[qIndex] = true;
+
+    if(isCorrect){
+      btnEl.classList.add("correct");
+    }else{
+      btnEl.classList.add("incorrect");
+      const correctBtn = allChoices[q.correct];
+      if(correctBtn) correctBtn.classList.add("correct");
+    }
+
+    explanationBox.classList.add("show");
+    explanationText.innerHTML = q.explanation;
+
+    tracker.recordAnswer(qIndex,isCorrect);
+    
+    updateProgress();
+    updateNavButtons();
+    
+    if(answeredFlags.every(f=>f)){
+      // すべての問題に回答した場合、完了画面を表示
+      nextBtn.disabled = true;
+      prevBtn.disabled = true;
+      nextBtn.style.opacity = "0.5";
+      prevBtn.style.opacity = "0.5";
+      
+      setTimeout(() => {
+        if(answeredFlags.every(f=>f)){
+          showCompletionScreen();
+        }
+      }, 2000);
+    }
+  }
+
+  function updateProgress(){
+    const answeredCount = answeredFlags.filter(f=>f).length;
+    const ratio = answeredCount / questions.length;
+    progressFill.style.width = (ratio*100) + "%";
+  }
+
+  function updateNavButtons(){
+    // すべての問題に回答済みの場合は、完了画面表示中なのでボタンを無効化
+    if(answeredFlags.every(f=>f)){
+      prevBtn.disabled = true;
+      nextBtn.disabled = true;
+      return;
+    }
+    prevBtn.disabled = (currentQuestionIndex === 0);
+    nextBtn.disabled = (currentQuestionIndex === questions.length-1);
+  }
+
+  prevBtn.addEventListener("click",()=>{
+    if(currentQuestionIndex > 0){
+      currentQuestionIndex--;
+      renderQuestion(currentQuestionIndex);
+    }
+  });
+
+  nextBtn.addEventListener("click",()=>{
+    if(currentQuestionIndex < questions.length - 1){
+      currentQuestionIndex++;
+      renderQuestion(currentQuestionIndex);
+    } else {
+      // 最後の問題で「次の問題へ」をクリックした場合
+      if(answeredFlags.every(f=>f)){
+        showCompletionScreen();
+      }
+    }
+  });
+
+  tracker.startSession();
+  renderQuestion(currentQuestionIndex);
+
+  function showCompletionScreen() {
+    // 学習履歴を保存
+    tracker.saveSession();
+    
+    // レッスン完了時にチェックポイントを削除
+    clearCheckpoint();
+    
+    // UIを完了画面に変更
+    questionTextEl.textContent = "学習完了！おつかれさまでした。";
+    choicesContainer.innerHTML = "";
+    explanationBox.classList.remove("show");
+    explanationText.innerHTML = "";
+    
+    // ナビゲーションボタンを非表示
+    nextBtn.style.display = "none";
+    prevBtn.style.display = "none";
+    
+    // プログレスバーを100%に
+    progressFill.style.width = "100%";
+    
+    // 今回のセッション結果を表示
+    const historyDisplay = document.getElementById("historyDisplay");
+    if (historyDisplay) {
+      historyDisplay.innerHTML = showCurrentSessionResult();
+      historyDisplay.style.display = "block";
+      historyDisplay.style.visibility = "visible";
+      historyDisplay.style.opacity = "1";
+    }
+    
+    // 完了メッセージを親フレームに送信
+    const totalQuestions = questions.length;
+    const messageData = {
+      type: 'lesson:complete',
+      lessonId: LESSON_ID,
+      detail: {
+        correct: tracker.currentSession ? tracker.currentSession.correct : 0,
+        total: totalQuestions,
+        timeSec: tracker.currentSession ? Math.floor((Date.now() - tracker.currentSession.startedAt) / 1000) : 0
+      }
+    };
+    
+    try {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage(messageData, "*");
+      } else {
+        window.parent.postMessage(messageData, "*");
+      }
+    } catch (e) {
+      console.warn("postMessage failed:", e);
+    }
+    
+    // completeLessonも呼び出して履歴に記録
+    tracker.completeLesson(totalQuestions);
+  }
+
+  function clearCheckpoint() {
+    try {
+      const checkpointKey = `checkpoint:${LESSON_ID}`;
+      localStorage.removeItem(checkpointKey);
+      return true;
+    } catch (error) {
+      console.error('❌ チェックポイント削除エラー:', error);
+      return false;
+    }
+  }
+
+  function showCurrentSessionResult() {
+    const session = tracker.currentSession;
+    if (!session) return '';
+    
+    const totalQuestions = questions.length;
+    const correct = session.correct || 0;
+    const scorePercent = totalQuestions > 0 ? 
+      Math.round((correct / totalQuestions) * 100) : 0;
+    
+    // 成績に応じたメッセージ
+    let resultMessage = '';
+    if (scorePercent >= 90) {
+      resultMessage = '🎉 素晴らしい成果です！';
+    } else if (scorePercent >= 70) {
+      resultMessage = '👍 よくできました！';
+    } else if (scorePercent >= 50) {
+      resultMessage = '💪 もう少し頑張りましょう！';
+    } else {
+      resultMessage = '📚 復習して再挑戦しましょう！';
+    }
+    
+    return `
+      <div style="padding: 16px; background: #f8f9fa; border-radius: 12px; margin-top: 12px;">
+        <h3 style="margin-bottom: 12px; color: #333; font-size: 16px;">今回の結果</h3>
+        <p style="margin: 8px 0; color: #555; font-size: 14px;">
+          <strong>正解数:</strong> ${correct} / ${totalQuestions} 問
+        </p>
+        <p style="margin: 8px 0; color: #555; font-size: 14px;">
+          <strong>正答率:</strong> ${scorePercent}%
+        </p>
+        <p style="margin: 12px 0 0 0; color: #1976d2; font-size: 15px; font-weight: bold;">
+          ${resultMessage}
+        </p>
+      </div>
+    `;
+  }
+
+  /************ ホームボタン ************/
+  function goHome() {
+    try {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: "navigate:home", payload: { from: LESSON_ID }}, "*");
+      } else {
+        console.log("goHome called (standalone)");
+      }
+    } catch (e) {
+      console.warn("goHome failed:", e);
+    }
+  }
+  window.goHome = goHome;
+</script>
+</body>
+</html>

@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>シミュレーションで学ぶ理科 - 地震のしくみ</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+      background: linear-gradient(135deg, #e3f2fd 0%, #fbe9e7 40%, #fffde7 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .header {
+      background: rgba(255,255,255,0.95);
+      padding: 10px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .home-btn {
+      background:#42a5f5;
+      color:white;
+      border:none;
+      padding:10px 18px;
+      border-radius:20px;
+      font-size:14px;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      min-height:44px;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .home-btn:hover { background:#1e88e5; transform:translateY(-1px); }
+    .home-btn:active { transform:scale(0.98); }
+    .lesson-title {
+      font-size:18px;
+      font-weight:bold;
+      color:#333;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      flex:1;
+      margin:0 10px;
+    }
+    .main-container {
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      padding:15px;
+    }
+
+    /* ▼ シミュ全体 */
+    .sim-container {
+      background:white;
+      border-radius:15px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.15);
+      margin-bottom:15px;
+      overflow:hidden;
+      position:relative;
+    }
+    .sim-header {
+      background:linear-gradient(135deg, #ef5350 0%, #ffa726 100%);
+      color:white;
+      padding:15px;
+      text-align:center;
+    }
+    .sim-header h2 { font-size:20px; margin-bottom:5px; }
+    .sim-header p { font-size:14px; opacity:0.9; }
+
+    .sim-area {
+      padding:12px 12px 16px;
+      background:#ffebee;
+    }
+
+    .control-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      justify-content:center;
+      margin-bottom:10px;
+    }
+    .control-btn {
+      padding:12px 24px;
+      border:none;
+      border-radius:25px;
+      font-size:14px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      min-height:48px;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+      box-shadow:0 4px 12px rgba(0,0,0,0.2);
+    }
+    .control-btn:active {
+      transform:scale(0.95);
+    }
+    .control-btn:disabled {
+      opacity:0.6;
+      cursor:not-allowed;
+    }
+    .start-btn {
+      background:linear-gradient(135deg, #42a5f5 0%, #1e88e5 100%);
+      color:white;
+    }
+    .start-btn:hover:not(:disabled) {
+      background:linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+      transform:translateY(-2px);
+      box-shadow:0 6px 16px rgba(30,136,229,0.4);
+    }
+    .start-btn.active {
+      background:linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+      animation:pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow:0 4px 12px rgba(255,152,0,0.4); }
+      50% { box-shadow:0 4px 20px rgba(255,152,0,0.7); }
+    }
+    .reset-btn {
+      background:linear-gradient(135deg, #78909c 0%, #546e7a 100%);
+      color:white;
+    }
+    .reset-btn:hover:not(:disabled) {
+      background:linear-gradient(135deg, #546e7a 0%, #455a64 100%);
+      transform:translateY(-2px);
+      box-shadow:0 6px 16px rgba(84,110,122,0.4);
+    }
+    .control-info {
+      font-size:12px;
+      color:#666;
+      text-align:center;
+      width:100%;
+      margin-top:5px;
+      font-style:italic;
+    }
+
+    /* ▼ 地震シーン */
+    .sim-field {
+      position:relative;
+      margin-top:6px;
+      background:radial-gradient(circle at 50% -10%, #ffebee, #ffcdd2 45%, #f8bbd0 70%, #f3e5f5 100%);
+      border-radius:14px;
+      padding:14px;
+      overflow:hidden;
+      min-height:260px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.12), inset 0 1px 2px rgba(255,255,255,0.6);
+      border:1px solid rgba(255,255,255,0.6);
+    }
+
+    .quake-scene {
+      position:relative;
+      width:100%;
+      height:180px;
+      border-radius:12px;
+      overflow:hidden;
+      background:linear-gradient(to bottom, #bbdefb 0%, #90caf9 35%, #e0e0e0 36%, #ffccbc 60%, #d7ccc8 100%);
+      box-shadow:inset 0 3px 12px rgba(0,0,0,0.25), 0 4px 16px rgba(0,0,0,0.2);
+    }
+
+    /* 空・雲 */
+    .quake-sky {
+      position:absolute;
+      top:0; left:0; right:0;
+      height:40%;
+      background:linear-gradient(to bottom, #bbdefb, #90caf9);
+    }
+    .quake-cloud {
+      position:absolute;
+      top:15px;
+      left:20px;
+      width:70px;
+      height:30px;
+      background:radial-gradient(circle at 30% 30%, #ffffff, #e3f2fd);
+      border-radius:999px;
+      box-shadow:25px 5px 0 0 rgba(255,255,255,0.9), 55px 8px 0 0 rgba(227,242,253,0.9);
+      opacity:0.9;
+      animation:cloudMove 18s linear infinite;
+    }
+    .quake-cloud:nth-child(2) {
+      top:28px;
+      left:auto;
+      right:25px;
+      transform:scale(0.8);
+      animation-delay:-6s;
+    }
+    @keyframes cloudMove {
+      0% { transform:translateX(0); }
+      100% { transform:translateX(80px); }
+    }
+
+    /* 地表 */
+    .quake-ground {
+      position:absolute;
+      top:40%;
+      left:0; right:0;
+      height:14%;
+      background:linear-gradient(to top, #6d4c41 0%, #8d6e63 35%, #a1887f 80%, #d7ccc8 100%);
+      box-shadow:0 -2px 6px rgba(0,0,0,0.35);
+      transform-origin:center;
+    }
+
+    /* 地下の層（背景） */
+    .quake-underground {
+      position:absolute;
+      top:54%;
+      left:0; right:0;
+      bottom:0;
+      background:repeating-linear-gradient(
+        -12deg,
+        #5d4037 0,
+        #5d4037 10px,
+        #4e342e 10px,
+        #4e342e 20px
+      );
+      filter:brightness(0.95);
+      z-index:0;
+    }
+
+    /* プレート */
+    .plate {
+      position:absolute;
+      top:54%;
+      bottom:0;
+      background:repeating-linear-gradient(
+        -12deg,
+        #5d4037 0,
+        #5d4037 10px,
+        #4e342e 10px,
+        #4e342e 20px
+      );
+      filter:brightness(0.95);
+      transition:transform 0.5s ease;
+      z-index:1;
+    }
+    .plate-left {
+      left:0;
+      right:50%;
+      border-right:3px solid rgba(255,255,255,0.3);
+      transform-origin:right center;
+    }
+    .plate-right {
+      left:50%;
+      right:0;
+      border-left:3px solid rgba(255,255,255,0.3);
+      transform-origin:left center;
+    }
+    .plate.compressing {
+      animation:plateCompress 1.5s ease-in-out infinite;
+    }
+    @keyframes plateCompress {
+      0%,100% { transform:scaleX(1); }
+      50% { transform:scaleX(0.995); }
+    }
+    .plate-left.compressing {
+      animation:plateLeftCompress 1.5s ease-in-out infinite;
+    }
+    .plate-right.compressing {
+      animation:plateRightCompress 1.5s ease-in-out infinite;
+    }
+    @keyframes plateLeftCompress {
+      0%,100% { transform:translateX(0) scaleX(1); }
+      50% { transform:translateX(3px) scaleX(0.99); }
+    }
+    @keyframes plateRightCompress {
+      0%,100% { transform:translateX(0) scaleX(1); }
+      50% { transform:translateX(-3px) scaleX(0.99); }
+    }
+    
+    /* プレートがずれるアニメーション（地震発生時） */
+    .plate.slipping {
+      animation:none;
+    }
+    .plate-left.slipping {
+      animation:plateSlipLeft 0.8s ease-out forwards;
+    }
+    .plate-right.slipping {
+      animation:plateSlipRight 0.8s ease-out forwards;
+    }
+    @keyframes plateSlipLeft {
+      0% { transform:translateX(0) translateY(0); }
+      50% { transform:translateX(8px) translateY(-4px); }
+      100% { transform:translateX(12px) translateY(-6px); }
+    }
+    @keyframes plateSlipRight {
+      0% { transform:translateX(0) translateY(0); }
+      50% { transform:translateX(-8px) translateY(4px); }
+      100% { transform:translateX(-12px) translateY(6px); }
+    }
+    .plate-label {
+      position:absolute;
+      top:10px;
+      font-size:11px;
+      font-weight:bold;
+      color:rgba(255,255,255,0.9);
+      text-shadow:0 1px 3px rgba(0,0,0,0.5);
+      pointer-events:none;
+      z-index:2;
+    }
+    .plate-left .plate-label {
+      right:10px;
+    }
+    .plate-right .plate-label {
+      left:10px;
+    }
+    
+    /* プレートの動きを示す矢印 */
+    .plate-arrow {
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      font-size:24px;
+      color:rgba(255,255,255,0.9);
+      text-shadow:0 2px 6px rgba(0,0,0,0.6);
+      pointer-events:none;
+      z-index:2;
+      animation:arrowPulse 1.5s ease-in-out infinite;
+    }
+    @keyframes arrowPulse {
+      0%,100% { opacity:0.7; transform:translateY(-50%) scale(1); }
+      50% { opacity:1; transform:translateY(-50%) scale(1.1); }
+    }
+    .plate-left .plate-arrow {
+      right:20px;
+    }
+    .plate-right .plate-arrow {
+      left:20px;
+    }
+    .plate.compressing .plate-arrow {
+      animation:arrowPulse 1s ease-in-out infinite;
+      color:rgba(255,183,77,1);
+      text-shadow:0 2px 8px rgba(255,152,0,0.8);
+    }
+
+    /* 断層面 */
+    .fault-plane {
+      position:absolute;
+      top:54%;
+      left:50%;
+      width:8px;
+      height:60%;
+      background:linear-gradient(to bottom, 
+        rgba(255,255,255,0.95) 0%,
+        rgba(255,224,178,0.95) 30%,
+        rgba(255,183,77,0.9) 60%,
+        rgba(255,152,0,0.9) 100%
+      );
+      box-shadow:0 0 15px rgba(255,255,255,0.8), 
+                 0 0 25px rgba(255,152,0,0.5),
+                 inset 0 0 10px rgba(255,255,255,0.6);
+      transform-origin:top center;
+      transform:translateX(-50%) skewX(-18deg);
+      z-index:2;
+      transition:all 0.3s ease;
+    }
+    .fault-plane.stressed {
+      box-shadow:0 0 20px rgba(255,87,34,0.8), 
+                 0 0 35px rgba(255,152,0,0.7),
+                 inset 0 0 15px rgba(255,255,255,0.8);
+      background:linear-gradient(to bottom, 
+        rgba(255,255,255,1) 0%,
+        rgba(255,224,178,1) 20%,
+        rgba(255,183,77,1) 50%,
+        rgba(255,87,34,0.95) 80%,
+        rgba(244,67,54,0.9) 100%
+      );
+    }
+    .fault-label {
+      position:absolute;
+      top:20%;
+      left:50%;
+      transform:translateX(-50%) translateY(-50%);
+      font-size:11px;
+      font-weight:bold;
+      color:rgba(255,255,255,0.95);
+      text-shadow:0 1px 3px rgba(0,0,0,0.7);
+      pointer-events:none;
+      z-index:3;
+      white-space:nowrap;
+    }
+
+    /* 震源 */
+    .epicenter {
+      position:absolute;
+      top:64%;
+      left:50%;
+      width:24px;
+      height:24px;
+      border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, #ffebee, #e53935, #c62828);
+      box-shadow:0 0 0 0 rgba(244,67,54,0.7),
+                 0 0 0 0 rgba(244,67,54,0.5);
+      transform:translate(-50%, -50%);
+      z-index:4;
+      animation:epicenterPulse 2.3s ease-out infinite;
+    }
+    .epicenter.active {
+      animation:epicenterPulseActive 1s ease-out infinite;
+    }
+    @keyframes epicenterPulse {
+      0%   { box-shadow:0 0 0 0 rgba(244,67,54,0.7), 0 0 0 0 rgba(244,67,54,0.5); opacity:1; }
+      60%  { box-shadow:0 0 0 16px rgba(244,67,54,0.0), 0 0 0 24px rgba(244,67,54,0.0); opacity:1; }
+      100% { box-shadow:0 0 0 0 0 rgba(244,67,54,0.0), 0 0 0 0 rgba(244,67,54,0.0); opacity:1; }
+    }
+    @keyframes epicenterPulseActive {
+      0%   { box-shadow:0 0 0 0 rgba(244,67,54,0.9), 0 0 0 0 rgba(255,87,34,0.7); opacity:1; }
+      50%  { box-shadow:0 0 0 20px rgba(244,67,54,0.0), 0 0 0 30px rgba(255,87,34,0.0); opacity:1; }
+      100% { box-shadow:0 0 0 0 0 rgba(244,67,54,0.0), 0 0 0 0 rgba(255,87,34,0.0); opacity:1; }
+    }
+    .epicenter-label {
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%, -80%);
+      font-size:10px;
+      font-weight:bold;
+      color:rgba(255,255,255,0.95);
+      text-shadow:0 1px 3px rgba(0,0,0,0.8);
+      pointer-events:none;
+      z-index:5;
+      white-space:nowrap;
+    }
+
+
+    /* 波（地震波） */
+    .seismic-wave {
+      position:absolute;
+      top:50%;
+      left:50%;
+      width:60px;
+      height:60px;
+      border-radius:50%;
+      border:4px solid rgba(255,255,255,0.95);
+      opacity:0;
+      pointer-events:none;
+      transform:translate(-50%, -50%) scale(0.3);
+      z-index:3;
+    }
+    .seismic-wave.wave-1 {
+      border-color:rgba(255,255,255,0.95);
+      box-shadow:0 0 10px rgba(255,255,255,0.8);
+    }
+    .seismic-wave.wave-2 {
+      border-color:rgba(255,224,178,0.9);
+      box-shadow:0 0 15px rgba(255,224,178,0.7);
+    }
+    .seismic-wave.wave-3 {
+      border-color:rgba(255,183,77,0.85);
+      box-shadow:0 0 20px rgba(255,183,77,0.6);
+    }
+
+    /* 力の蓄積の視覚化（ゆがみエフェクト） */
+    .stress-effect {
+      position:absolute;
+      top:54%;
+      left:50%;
+      width:0;
+      height:0;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(255,152,0,0.3), rgba(255,87,34,0.2), transparent);
+      transform:translate(-50%, -50%);
+      pointer-events:none;
+      z-index:1;
+      transition:width 0.5s ease, height 0.5s ease;
+    }
+    .stress-effect.active {
+      width:200px;
+      height:200px;
+    }
+    .stress-effect.strong {
+      width:300px;
+      height:300px;
+      background:radial-gradient(circle, rgba(255,87,34,0.4), rgba(244,67,54,0.3), transparent);
+    }
+
+    /* 揺れアニメーション（シーン全体にクラス付与） */
+    .quake-scene.shake-weak .quake-ground {
+      animation:shakeWeak 0.5s linear infinite;
+    }
+    .quake-scene.shake-strong .quake-ground {
+      animation:shakeStrong 0.35s linear infinite;
+    }
+    @keyframes shakeWeak {
+      0%,100% { transform:translateX(0) rotate(0deg); }
+      25% { transform:translateX(-3px) rotate(-1deg); }
+      50% { transform:translateX(3px) rotate(1deg); }
+      75% { transform:translateX(-2px) rotate(-0.5deg); }
+    }
+    @keyframes shakeStrong {
+      0%,100% { transform:translateX(0) rotate(0deg); }
+      20% { transform:translateX(-6px) rotate(-2deg); }
+      40% { transform:translateX(6px) rotate(2deg); }
+      60% { transform:translateX(-5px) rotate(-2deg); }
+      80% { transform:translateX(5px) rotate(2deg); }
+    }
+
+    /* infoパネル・環境表示 */
+    .env-panel {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:10px;
+    }
+    .env-card {
+      flex:1 1 140px;
+      background:linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,255,255,0.95));
+      border-radius:12px;
+      padding:10px 12px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.6);
+      transition:transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .env-card:hover {
+      transform:translateY(-2px);
+      box-shadow:0 6px 16px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.8);
+    }
+    .env-title {
+      font-size:13px;
+      font-weight:bold;
+      margin-bottom:4px;
+      color:#b71c1c;
+      display:flex;
+      align-items:center;
+      gap:4px;
+    }
+    .env-title span.emoji {
+      font-size:18px;
+      filter:drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+      animation:float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform:translateY(0); }
+      50% { transform:translateY(-3px); }
+    }
+    .env-value {
+      font-size:14px;
+      font-weight:bold;
+      margin-bottom:4px;
+      color:#bf360c;
+    }
+    .env-bar-bg {
+      position:relative;
+      width:100%;
+      height:10px;
+      border-radius:999px;
+      background:#ffccbc;
+      overflow:hidden;
+    }
+    .env-bar-fill {
+      position:absolute;
+      top:0; left:0;
+      height:100%;
+      width:0%;
+      border-radius:999px;
+      background:linear-gradient(90deg, #ffcc80 0%, #ff9800 40%, #e64a19 80%, #b71c1c 100%);
+      transition:width 0.4s ease;
+      box-shadow:0 0 8px rgba(255,152,0,0.5), inset 0 1px 2px rgba(255,255,255,0.4);
+    }
+    .env-sub {
+      font-size:11px;
+      color:#555;
+      margin-top:3px;
+    }
+
+    .sim-comment {
+      margin-top:10px;
+      font-size:13px;
+      line-height:1.7;
+      color:#4a148c;
+      background:linear-gradient(135deg, rgba(243,229,245,0.95), rgba(225,190,231,0.9));
+      border-radius:12px;
+      padding:10px 12px;
+      border-left:5px solid #ab47bc;
+      box-shadow:0 2px 8px rgba(171,71,188,0.25);
+    }
+    .sim-comment strong {
+      color:#4a148c;
+      text-shadow:0 1px 2px rgba(255,255,255,0.7);
+    }
+
+    /* ▼ infoパネル */
+    .info-panel {
+      background:white;
+      border-radius:15px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.15);
+      padding:20px;
+      margin-bottom:15px;
+    }
+    .info-panel h3 {
+      color:#333;
+      margin-bottom:15px;
+      font-size:18px;
+    }
+    .info-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+      gap:15px;
+    }
+    .info-item {
+      background:#f8f9fa;
+      padding:15px;
+      border-radius:10px;
+      border-left:4px solid #ef5350;
+    }
+    .info-item h4 {
+      color:#d32f2f;
+      margin-bottom:8px;
+      font-size:14px;
+    }
+    .info-item p {
+      color:#555;
+      font-size:13px;
+      line-height:1.4;
+    }
+
+    /* ▼ 問題パネル */
+    .question-container {
+      background:white;
+      border-radius:15px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.15);
+      padding:20px;
+      margin-bottom:15px;
+    }
+    .question-text {
+      font-size:16px;
+      font-weight:bold;
+      color:#333;
+      margin-bottom:15px;
+    }
+    .choices {
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .choice {
+      padding:14px 16px;
+      background:#f8f9fa;
+      border:2px solid #e9ecef;
+      border-radius:10px;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      font-size:14px;
+      min-height:48px;
+      display:flex;
+      align-items:center;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .choice:hover {
+      background:#e9ecef;
+      border-color:#64b5f6;
+    }
+    .choice.selected {
+      background:#64b5f6;
+      color:white;
+      border-color:#1e88e5;
+    }
+    .choice.correct {
+      background:#28a745;
+      color:white;
+      border-color:#28a745;
+      animation:correctPulse 0.6s ease;
+    }
+    .choice.incorrect {
+      background:#dc3545;
+      color:white;
+      border-color:#dc3545;
+      animation:wrongShake 0.6s ease;
+    }
+    @keyframes correctPulse {
+      0%,100%{transform:scale(1);}
+      50%{transform:scale(1.05);}
+    }
+    @keyframes wrongShake {
+      0%,100%{transform:translateX(0);}
+      25%{transform:translateX(-10px);}
+      75%{transform:translateX(10px);}
+    }
+
+    .explanation {
+      margin-top:15px;
+      padding:15px;
+      background:#f8f9fa;
+      border-radius:10px;
+      border-left:4px solid #28a745;
+      display:none;
+    }
+    .explanation.show { display:block; }
+    .explanation h4 {
+      color:#28a745;
+      margin-bottom:10px;
+    }
+    .explanation p {
+      color:#666;
+      line-height:1.5;
+    }
+
+    .navigation {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-top:20px;
+    }
+    .nav-btn {
+      padding:14px 24px;
+      border:none;
+      border-radius:25px;
+      font-size:14px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      min-height:48px;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .nav-btn:disabled {
+      opacity:0.5;
+      cursor:not-allowed;
+    }
+    .prev-btn {
+      background:#6c757d;
+      color:white;
+    }
+    .prev-btn:hover:not(:disabled) { background:#5a6268; }
+    .next-btn {
+      background:#64b5f6;
+      color:#0d47a1;
+    }
+    .next-btn:hover:not(:disabled) { background:#42a5f5; }
+
+    .progress-bar {
+      background:#e9ecef;
+      border-radius:10px;
+      height:8px;
+      margin:15px 0;
+      overflow:hidden;
+    }
+    .progress-fill {
+      background:linear-gradient(135deg, #64b5f6 0%, #42a5f5 100%);
+      height:100%;
+      width:0%;
+      transition:width 0.3s ease;
+    }
+
+    * { touch-action:manipulation; }
+    .choice, .nav-btn, .home-btn {
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+
+    @media (max-width:768px){
+      body { overflow-x:hidden; }
+      .header { padding:8px 12px; }
+      .home-btn { padding:10px 16px; font-size:13px; }
+      .lesson-title { font-size:14px; margin:0 8px; text-align:center; }
+      .main-container { padding:10px; }
+      .info-grid { grid-template-columns:1fr; gap:12px; }
+      .info-panel { padding:16px; }
+      .info-item { padding:12px; }
+      .info-item h4 { font-size:13px; }
+      .info-item p { font-size:12px; }
+      .sim-area { padding:10px 10px 14px; }
+      .sim-field { min-height:240px; }
+      .quake-scene { height:160px; }
+      .control-btn { padding:10px 20px; font-size:13px; }
+      .control-info { font-size:11px; }
+      .plate-label, .fault-label, .epicenter-label {
+        font-size:10px;
+      }
+      .question-container { padding:16px; }
+      .question-text { font-size:15px; margin-bottom:12px; }
+      .choice { padding:12px 14px; font-size:13px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <button class="home-btn" onclick="goHome()">ホーム</button>
+    <div class="lesson-title">シミュレーションで学ぶ理科 - 地震のしくみ</div>
+    <div style="width:80px;"></div>
+  </header>
+
+  <main class="main-container">
+    <!-- ▼ シミュレーション -->
+    <section class="sim-container">
+      <div class="sim-header">
+        <h2>プレートにたまる力と ゆれのようす</h2>
+        <p>プレートにたまった力が急にずれると、地震が起こるよ。</p>
+        <p style="font-size:12px; opacity:0.85; margin-top:5px;">
+          ※実際の地震は何十年〜数千年かけて力がたまりますが、ここでは短縮して見ています
+        </p>
+      </div>
+
+      <div class="sim-area">
+        <div class="control-row">
+          <button class="control-btn start-btn" id="startBtn">
+            <span id="startBtnText">プレートを押し合う</span>
+          </button>
+          <button class="control-btn reset-btn" id="resetBtn" disabled>リセット</button>
+          <div class="control-info" id="controlInfo">
+            ※ボタンを押すと、プレートが押し合い始めます（実際は何十年もかかる過程を短縮して見ています）
+          </div>
+        </div>
+
+        <div class="sim-field">
+          <div class="quake-scene" id="quakeScene">
+            <div class="quake-sky">
+              <div class="quake-cloud"></div>
+              <div class="quake-cloud"></div>
+            </div>
+            <div class="quake-ground" id="quakeGround"></div>
+            <div class="quake-underground"></div>
+            
+            <!-- プレート -->
+            <div class="plate plate-left">
+              <div class="plate-label">プレートA</div>
+              <div class="plate-arrow">→</div>
+            </div>
+            <div class="plate plate-right">
+              <div class="plate-label">プレートB</div>
+              <div class="plate-arrow">←</div>
+            </div>
+            
+            <!-- 力の蓄積エフェクト -->
+            <div class="stress-effect" id="stressEffect"></div>
+            
+            <!-- 断層面 -->
+            <div class="fault-plane" id="faultPlane">
+              <div class="fault-label">断層面</div>
+            </div>
+            
+            <!-- 震源 -->
+            <div class="epicenter" id="epicenter">
+              <div class="epicenter-label">震源</div>
+            </div>
+
+            <!-- 地震波 -->
+            <div class="seismic-wave wave-1" id="wave1"></div>
+            <div class="seismic-wave wave-2" id="wave2"></div>
+            <div class="seismic-wave wave-3" id="wave3"></div>
+          </div>
+
+          <div class="env-panel">
+            <div class="env-card">
+              <div class="env-title"><span class="emoji">💥</span>ゆれの強さ（地表）</div>
+              <div class="env-value" id="strengthText">ほとんど感じない</div>
+              <div class="env-bar-bg">
+                <div class="env-bar-fill" id="strengthBar"></div>
+              </div>
+              <div class="env-sub">震源からはなれた地表で、人が感じるゆれの大きさ</div>
+            </div>
+            <div class="env-card">
+              <div class="env-title"><span class="emoji">📉</span>たまっていた力</div>
+              <div class="env-value" id="stressText">小さい（まだたまりはじめ）</div>
+              <div class="env-bar-bg">
+                <div class="env-bar-fill" id="stressBar"></div>
+              </div>
+              <div class="env-sub">プレートどうしが押し合ってたまっていた力の大きさ</div>
+            </div>
+          </div>
+
+          <div class="sim-comment" id="simComment">
+            <strong>力が小さいとき</strong>は、プレートの境目にまだ少ししか力がたまっていません。
+            地表では、ゆれをほとんど感じません。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ▼ 導入テキスト -->
+    <section class="info-panel">
+      <h3>地震はどのように起こる？</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <h4>① プレートに力がたまる</h4>
+          <p>
+            地球の表面は「プレート」とよばれる大きな岩の板でできていて、いつも少しずつ動いています。
+            プレートどうしが押し合うと、境目の岩が<strong>ゆがんで力をためて</strong>いきます。
+          </p>
+        </div>
+        <div class="info-item">
+          <h4>② がまんの限界で ずれ動く</h4>
+          <p>
+            たまった力が大きくなると、岩ががまんできなくなり、
+            <strong>「パキッ！」とずれて</strong>、そのまわりに強い振動が広がります。
+            このときの「岩のずれたところ」が震源です。
+          </p>
+        </div>
+        <div class="info-item">
+          <h4>③ ゆれが波となって広がる</h4>
+          <p>
+            岩のずれで生まれた振動は、<strong>地震波（じしんは）</strong>として四方八方に広がります。
+            地震波が地表に届くと、建物や地面がゆれます。
+            たまっていた力が大きいほど、ゆれも強くなります。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ▼ わかる編 3問 -->
+    <section class="question-container">
+      <div class="question-text" id="questionText"></div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="choices" id="choicesContainer"></div>
+      <div class="explanation" id="explanationBox">
+        <h4>解説</h4>
+        <p id="explanationText"></p>
+      </div>
+
+      <div class="navigation">
+        <button class="nav-btn prev-btn" id="prevBtn">前の問題へ</button>
+        <button class="nav-btn next-btn" id="nextBtn">次の問題へ</button>
+      </div>
+      <div id="historyDisplay"></div>
+    </section>
+  </main>
+
+  <script>
+    /************ LearningTracker ************/
+    class LearningTracker {
+      constructor(lessonId) {
+        this.lessonId = lessonId;
+        this.storageKey = "stepnavi_science_" + lessonId;
+        this.currentSession = null;
+        this.history = this.loadHistory();
+      }
+
+      loadHistory() {
+        try {
+          const raw = localStorage.getItem(this.storageKey);
+          return raw ? JSON.parse(raw) : { sessions: [] };
+        } catch (e) {
+          console.warn("Failed to load history:", e);
+          return { sessions: [] };
+        }
+      }
+
+      startSession() {
+        this.currentSession = {
+          startedAt: Date.now(),
+          answered: 0,
+          correct: 0,
+          records: []
+        };
+      }
+
+      recordAnswer(questionIndex, isCorrect) {
+        if (!this.currentSession) this.startSession();
+        const now = Date.now();
+        this.currentSession.answered += 1;
+        if (isCorrect) this.currentSession.correct += 1;
+        this.currentSession.records.push({
+          questionIndex,
+          isCorrect,
+          answeredAt: now
+        });
+
+        // 親アプリへ送信
+        this.postToParent("question:answered", {
+          lessonId: this.lessonId,
+          questionIndex,
+          isCorrect,
+          timestamp: now
+        });
+      }
+
+      completeLesson(totalQuestions) {
+        if (!this.currentSession) return;
+        const now = Date.now();
+        const durationMs = now - this.currentSession.startedAt;
+        const summary = {
+          ...this.currentSession,
+          finishedAt: now,
+          durationMs,
+          totalQuestions
+        };
+        this.history.sessions.push(summary);
+        try {
+          localStorage.setItem(this.storageKey, JSON.stringify(this.history));
+        } catch (e) {
+          console.warn("Failed to save history:", e);
+        }
+
+        this.postToParent("lesson:complete", {
+          lessonId: this.lessonId,
+          totalQuestions,
+          answered: this.currentSession.answered,
+          correct: this.currentSession.correct,
+          durationMs
+        });
+
+        this.currentSession = null;
+      }
+
+      postToParent(type, payload) {
+        try {
+          if (window.parent && window.parent !== window) {
+            window.parent.postMessage({ type, payload }, "*");
+          }
+        } catch (e) {
+          console.warn("postMessage failed:", e);
+        }
+      }
+    }
+
+    const LESSON_ID = "sci.earth.earthquake_structure_sim";
+    const tracker = new LearningTracker(LESSON_ID);
+
+    /************ 地震シミュレーション制御 ************/
+    const startBtn = document.getElementById("startBtn");
+    const startBtnText = document.getElementById("startBtnText");
+    const resetBtn = document.getElementById("resetBtn");
+    const controlInfo = document.getElementById("controlInfo");
+    const strengthText = document.getElementById("strengthText");
+    const strengthBar = document.getElementById("strengthBar");
+    const stressText = document.getElementById("stressText");
+    const stressBar = document.getElementById("stressBar");
+    const simComment = document.getElementById("simComment");
+
+    const quakeScene = document.getElementById("quakeScene");
+    const faultPlane = document.getElementById("faultPlane");
+    const epicenter = document.getElementById("epicenter");
+    const stressEffect = document.getElementById("stressEffect");
+    const plateLeft = document.querySelector(".plate-left");
+    const plateRight = document.querySelector(".plate-right");
+    const wave1 = document.getElementById("wave1");
+    const wave2 = document.getElementById("wave2");
+    const wave3 = document.getElementById("wave3");
+
+    let isRunning = false;
+    let stressLevel = 0; // 0-100
+    let animationFrame = null;
+    let lastUpdate = Date.now();
+
+    function resetWaves() {
+      [wave1, wave2, wave3].forEach((wave) => {
+        wave.style.opacity = "0";
+        wave.style.transform = "translate(-50%, -50%) scale(0.3)";
+        wave.style.transition = "none";
+      });
+    }
+
+    function triggerWaves(intensity) {
+      resetWaves();
+      const waveCount = intensity >= 80 ? 3 : intensity >= 40 ? 2 : 1;
+      const waves = [wave1, wave2, wave3].slice(0, waveCount);
+
+      waves.forEach((wave, idx) => {
+        setTimeout(() => {
+          wave.style.opacity = "1";
+          wave.style.transition = "transform 2s ease-out, opacity 2s ease-out";
+          wave.style.transform = "translate(-50%, -50%) scale(4)";
+          wave.style.opacity = "0";
+        }, idx * 150);
+      });
+    }
+
+    let earthquakeOccurred = false;
+    let earthquakeStartTime = null;
+    const EARTHQUAKE_DURATION = 5000; // 地震の継続時間（ミリ秒）
+
+    function updateQuakeSim() {
+      // シーンの揺れクラス（地震発生時のみ）
+      if (!earthquakeOccurred) {
+        quakeScene.classList.remove("shake-weak", "shake-strong");
+      }
+
+      faultPlane.classList.remove("stressed");
+      epicenter.classList.remove("active");
+      stressEffect.classList.remove("active", "strong");
+      plateLeft.classList.remove("compressing", "slipping");
+      plateRight.classList.remove("compressing", "slipping");
+
+      if (stressLevel < 20) {
+        strengthText.textContent = "ほとんど感じない";
+        stressText.textContent = "小さい（まだたまりはじめ）";
+        strengthBar.style.width = "5%";
+        stressBar.style.width = stressLevel + "%";
+        simComment.innerHTML = "<strong>力が小さいとき</strong>は、プレートの境目にまだ少ししか力がたまっていません。地表では、ゆれをほとんど感じません。";
+        controlInfo.textContent = "※ボタンを押すと、プレートが押し合い始めます（実際は何十年もかかる過程を短縮して見ています）";
+      } else if (stressLevel < 70) {
+        // 力がたまっている段階：まだ揺れは発生しない
+        strengthText.textContent = "ほとんど感じない";
+        stressText.textContent = "中くらい（ゆがみがたまっている）";
+        strengthBar.style.width = "10%"; // まだ揺れはないので低めに
+        stressBar.style.width = stressLevel + "%";
+        faultPlane.classList.add("stressed");
+        stressEffect.classList.add("active");
+        plateLeft.classList.add("compressing");
+        plateRight.classList.add("compressing");
+        simComment.innerHTML = "<strong>力が中くらい</strong>になると、岩のゆがみが大きくなります。しかし、まだ地震は起こっていないので、地表では揺れを感じません。";
+        controlInfo.textContent = "※プレートは常に動いているため、ボタンを離しても力はたまり続けます";
+      } else if (stressLevel < 100) {
+        // 力が大きくなってきた段階：まだ揺れは発生しない
+        strengthText.textContent = "ほとんど感じない";
+        stressText.textContent = "大きい（がまんの限界に近づいている！）";
+        strengthBar.style.width = "15%"; // まだ揺れはないので低めに
+        stressBar.style.width = stressLevel + "%";
+        faultPlane.classList.add("stressed");
+        epicenter.classList.add("active");
+        stressEffect.classList.add("active", "strong");
+        plateLeft.classList.add("compressing");
+        plateRight.classList.add("compressing");
+        simComment.innerHTML = "<strong>力が大きくなってきました</strong>。がまんの限界に近づいています。しかし、まだ断層はずれていないので、地表では揺れを感じません。";
+        controlInfo.textContent = "⚠️ がまんの限界に近づいています！";
+      } else {
+        // 地震発生！
+        if (!earthquakeOccurred) {
+          earthquakeOccurred = true;
+          earthquakeStartTime = Date.now();
+        }
+
+        const elapsed = Date.now() - earthquakeStartTime;
+        const isDuringQuake = elapsed < EARTHQUAKE_DURATION;
+
+        if (isDuringQuake) {
+          // 地震発生中：強い揺れ
+          strengthText.textContent = "強いゆれを感じる";
+          stressText.textContent = "がまんの限界！地震発生！";
+          strengthBar.style.width = "100%";
+          stressBar.style.width = "100%";
+          quakeScene.classList.add("shake-strong");
+          faultPlane.classList.add("stressed");
+          epicenter.classList.add("active");
+          stressEffect.classList.add("active", "strong");
+          
+          // プレートがずれる（最初の0.8秒のみ）
+          if (elapsed < 800) {
+            plateLeft.classList.remove("compressing");
+            plateRight.classList.remove("compressing");
+            plateLeft.classList.add("slipping");
+            plateRight.classList.add("slipping");
+            simComment.innerHTML = "<strong>たまった力ががまんの限界をこえました！</strong> プレートが断層面に沿って<strong>急にずれました</strong>！この瞬間に大きなエネルギーが発生し、強いゆれが広がります。";
+          } else {
+            // ずれた後は元の位置に戻る（ただし少しずれた状態を維持）
+            plateLeft.classList.remove("slipping");
+            plateRight.classList.remove("slipping");
+            plateLeft.style.transform = "translateX(12px) translateY(-6px)";
+            plateRight.style.transform = "translateX(-12px) translateY(6px)";
+            simComment.innerHTML = "<strong>プレートがずれました！</strong> この急激なずれによって発生した地震波が広がり、地表で強いゆれを感じます。";
+          }
+          
+          controlInfo.textContent = "💥 地震が発生しました！";
+          
+          // 地震波を発生（最初の1秒のみ）
+          if (elapsed < 1000) {
+            triggerWaves(100);
+          }
+        } else {
+          // 地震終了後：揺れは収まる
+          strengthText.textContent = "揺れが収まりました";
+          stressText.textContent = "地震発生済み";
+          strengthBar.style.width = "20%"; // 余震レベル
+          stressBar.style.width = "100%";
+          quakeScene.classList.remove("shake-strong");
+          quakeScene.classList.add("shake-weak"); // 弱い余震
+          simComment.innerHTML = "<strong>地震が発生しました</strong>。主な揺れは収まりましたが、小さな余震が続くことがあります。";
+          controlInfo.textContent = "💥 地震が発生しました！リセットボタンで最初に戻れます";
+        }
+      }
+    }
+
+    function startSimulation() {
+      if (isRunning) return;
+      
+      isRunning = true;
+      startBtn.classList.add("active");
+      startBtnText.textContent = "プレートが押し合っています...";
+      startBtn.disabled = true;
+      resetBtn.disabled = false;
+      lastUpdate = Date.now();
+
+      function animate() {
+        if (!isRunning) return;
+
+        const now = Date.now();
+        const deltaTime = (now - lastUpdate) / 1000; // 秒
+        lastUpdate = now;
+
+        // 力がたまる速度（毎秒約2%）
+        stressLevel = Math.min(100, stressLevel + deltaTime * 2);
+
+        updateQuakeSim();
+
+        // 地震発生後も一定時間アニメーションを継続
+        if (stressLevel < 100 || (earthquakeOccurred && (Date.now() - earthquakeStartTime) < EARTHQUAKE_DURATION)) {
+          animationFrame = requestAnimationFrame(animate);
+        } else if (earthquakeOccurred && (Date.now() - earthquakeStartTime) >= EARTHQUAKE_DURATION) {
+          // 地震終了後、自動停止
+          stopSimulation();
+        }
+      }
+
+      animate();
+    }
+
+    function stopSimulation() {
+      isRunning = false;
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+        animationFrame = null;
+      }
+      startBtn.classList.remove("active");
+      startBtnText.textContent = "プレートを押し合う";
+      startBtn.disabled = false;
+    }
+
+    function resetSimulation() {
+      stopSimulation();
+      stressLevel = 0;
+      earthquakeOccurred = false;
+      earthquakeStartTime = null;
+      resetWaves();
+      // プレートの位置をリセット
+      plateLeft.style.transform = "";
+      plateRight.style.transform = "";
+      updateQuakeSim();
+      resetBtn.disabled = true;
+      controlInfo.textContent = "※ボタンを押すと、プレートが押し合い始めます（実際は何十年もかかる過程を短縮して見ています）";
+    }
+
+    startBtn.addEventListener("click", startSimulation);
+    resetBtn.addEventListener("click", resetSimulation);
+
+    // 初期状態
+    updateQuakeSim();
+
+    /************ わかる編：問題データ ************/
+    const questions = [
+      {
+        id: "q1",
+        text: "地震が起こるとき、いちばん直接の原因になっているのはどれですか？",
+        choices: [
+          "地表の建物が重くなりすぎること",
+          "岩にたまった力が限界になって急にずれること",
+          "雲があつまって雨がふること",
+          "地球が太陽のまわりを回ること"
+        ],
+        correct: 1,
+        explanation:
+          "地震は、プレートの境目などで<strong>岩にたまった力が限界になり、急にずれ動く</strong>ことで起こります。建物の重さや雨、地球の公転は直接の原因ではありません。"
+      },
+      {
+        id: "q2",
+        text: "地震波（じしんは）について正しい説明はどれですか？",
+        choices: [
+          "地震波は、震源から広がるゆれの波で、地表に伝わると建物がゆれる。",
+          "地震波は、地表を流れる川の波のことだ。",
+          "地震波は、地震の前だけにふく特別な風のことだ。",
+          "地震波は、太陽の光がゆらいで見える現象のことだ。"
+        ],
+        correct: 0,
+        explanation:
+          "地震波は、岩のずれによって生まれた<strong>ゆれの波</strong>が四方に広がるものです。地表に届くと、建物や地面がゆれます。"
+      },
+      {
+        id: "q3",
+        text: "次のうち、ゆれが強くなりやすい地震の条件としてあてはまるものはどれですか？",
+        choices: [
+          "たまっていた力が小さく、ずれも小さい地震",
+          "たまっていた力が大きく、岩が大きくずれた地震",
+          "プレートがまったく動いていない地震",
+          "地震波が地表まで届かない地震"
+        ],
+        correct: 1,
+        explanation:
+          "一般に、<strong>たまっていた力が大きく、岩が大きくずれた地震</strong>ほど、周りに伝わるゆれも強くなります。プレートが動かないと地震は起こりません。"
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let answeredFlags = new Array(questions.length).fill(false);
+
+    const questionTextEl = document.getElementById("questionText");
+    const choicesContainer = document.getElementById("choicesContainer");
+    const explanationBox = document.getElementById("explanationBox");
+    const explanationText = document.getElementById("explanationText");
+    const progressFill = document.getElementById("progressFill");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    function renderQuestion(index) {
+      const q = questions[index];
+      questionTextEl.textContent = "Q" + (index + 1) + ". " + q.text;
+      choicesContainer.innerHTML = "";
+      explanationBox.classList.remove("show");
+      explanationText.innerHTML = "";
+
+      q.choices.forEach((choiceText, i) => {
+        const btn = document.createElement("button");
+        btn.className = "choice";
+        btn.textContent = choiceText;
+        btn.dataset.index = i;
+        btn.addEventListener("click", () => handleChoiceClick(index, i, btn));
+        choicesContainer.appendChild(btn);
+      });
+
+      updateProgress();
+      updateNavButtons();
+    }
+
+    function handleChoiceClick(qIndex, choiceIndex, btnEl) {
+      const q = questions[qIndex];
+
+      // すでに解答済みなら何もしない（連打防止）
+      if (answeredFlags[qIndex]) return;
+
+      const allChoices = choicesContainer.querySelectorAll(".choice");
+      allChoices.forEach(el => el.disabled = true);
+
+      const isCorrect = (choiceIndex === q.correct);
+      answeredFlags[qIndex] = true;
+
+      if (isCorrect) {
+        btnEl.classList.add("correct");
+      } else {
+        btnEl.classList.add("incorrect");
+        const correctBtn = allChoices[q.correct];
+        if (correctBtn) correctBtn.classList.add("correct");
+      }
+
+      explanationBox.classList.add("show");
+      explanationText.innerHTML = q.explanation;
+
+      tracker.recordAnswer(qIndex, isCorrect);
+
+      updateProgress();
+      updateNavButtons();
+
+      if (answeredFlags.every(f => f)) {
+        // すべての問題に回答した場合、完了画面を表示
+        nextBtn.disabled = true;
+        prevBtn.disabled = true;
+        nextBtn.style.opacity = "0.5";
+        prevBtn.style.opacity = "0.5";
+        
+        setTimeout(() => {
+          if (answeredFlags.every(f => f)) {
+            showCompletionScreen();
+          }
+        }, 2000);
+      }
+    }
+
+    function updateProgress() {
+      const answeredCount = answeredFlags.filter(f => f).length;
+      const ratio = answeredCount / questions.length;
+      progressFill.style.width = (ratio * 100) + "%";
+    }
+
+    function updateNavButtons() {
+      // すべての問題に回答済みの場合は、完了画面表示中なのでボタンを無効化
+      if (answeredFlags.every(f => f)) {
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+        return;
+      }
+      prevBtn.disabled = (currentQuestionIndex === 0);
+      nextBtn.disabled = (currentQuestionIndex === questions.length - 1);
+    }
+
+    prevBtn.addEventListener("click", () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        renderQuestion(currentQuestionIndex);
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        renderQuestion(currentQuestionIndex);
+      } else {
+        // 最後の問題で「次の問題へ」をクリックした場合
+        if (answeredFlags.every(f => f)) {
+          showCompletionScreen();
+        }
+      }
+    });
+
+    // 最初のセッション開始＆初期描画
+    tracker.startSession();
+    renderQuestion(currentQuestionIndex);
+
+    function showCompletionScreen() {
+      // 学習履歴を保存
+      tracker.saveSession();
+      
+      // レッスン完了時にチェックポイントを削除
+      clearCheckpoint();
+      
+      // UIを完了画面に変更
+      questionTextEl.textContent = "学習完了！おつかれさまでした。";
+      choicesContainer.innerHTML = "";
+      explanationBox.classList.remove("show");
+      explanationText.innerHTML = "";
+      
+      // ナビゲーションボタンを非表示
+      nextBtn.style.display = "none";
+      prevBtn.style.display = "none";
+      
+      // プログレスバーを100%に
+      progressFill.style.width = "100%";
+      
+      // 今回のセッション結果を表示
+      const historyDisplay = document.getElementById("historyDisplay");
+      if (historyDisplay) {
+        historyDisplay.innerHTML = showCurrentSessionResult();
+        historyDisplay.style.display = "block";
+        historyDisplay.style.visibility = "visible";
+        historyDisplay.style.opacity = "1";
+      }
+      
+      // 完了メッセージを親フレームに送信
+      const totalQuestions = questions.length;
+      const messageData = {
+        type: 'lesson:complete',
+        lessonId: LESSON_ID,
+        detail: {
+          correct: tracker.currentSession ? tracker.currentSession.correct : 0,
+          total: totalQuestions,
+          timeSec: tracker.currentSession ? Math.floor((Date.now() - tracker.currentSession.startedAt) / 1000) : 0
+        }
+      };
+      
+      try {
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage(messageData, "*");
+        } else {
+          window.parent.postMessage(messageData, "*");
+        }
+      } catch (e) {
+        console.warn("postMessage failed:", e);
+      }
+      
+      // completeLessonも呼び出して履歴に記録
+      tracker.completeLesson(totalQuestions);
+    }
+
+    function clearCheckpoint() {
+      try {
+        const checkpointKey = `checkpoint:${LESSON_ID}`;
+        localStorage.removeItem(checkpointKey);
+        return true;
+      } catch (error) {
+        console.error('❌ チェックポイント削除エラー:', error);
+        return false;
+      }
+    }
+
+    function showCurrentSessionResult() {
+      const session = tracker.currentSession;
+      if (!session) return '';
+      
+      const totalQuestions = questions.length;
+      const correct = session.correct || 0;
+      const scorePercent = totalQuestions > 0 ? 
+        Math.round((correct / totalQuestions) * 100) : 0;
+      
+      // 成績に応じたメッセージ
+      let resultMessage = '';
+      if (scorePercent >= 90) {
+        resultMessage = '🎉 素晴らしい成果です！';
+      } else if (scorePercent >= 70) {
+        resultMessage = '👍 よくできました！';
+      } else if (scorePercent >= 50) {
+        resultMessage = '💪 もう少し頑張りましょう！';
+      } else {
+        resultMessage = '📚 復習して再挑戦しましょう！';
+      }
+      
+      return `
+        <div style="padding: 16px; background: #f8f9fa; border-radius: 12px; margin-top: 12px;">
+          <h3 style="margin-bottom: 12px; color: #333; font-size: 16px;">今回の結果</h3>
+          <p style="margin: 8px 0; color: #555; font-size: 14px;">
+            <strong>正解数:</strong> ${correct} / ${totalQuestions} 問
+          </p>
+          <p style="margin: 8px 0; color: #555; font-size: 14px;">
+            <strong>正答率:</strong> ${scorePercent}%
+          </p>
+          <p style="margin: 12px 0 0 0; color: #1976d2; font-size: 15px; font-weight: bold;">
+            ${resultMessage}
+          </p>
+        </div>
+      `;
+    }
+
+    /************ ホームボタン ************/
+    function goHome() {
+      try {
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({ type: "navigate:home", payload: { from: LESSON_ID }}, "*");
+        } else {
+          // 単体動作用：何もしない or location.href="./"
+          console.log("goHome called (standalone)");
+        }
+      } catch (e) {
+        console.warn("goHome failed:", e);
+      }
+    }
+    window.goHome = goHome;
+  </script>
+</body>
+</html>

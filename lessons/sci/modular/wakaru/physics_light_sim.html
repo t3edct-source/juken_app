@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>シミュレーションで学ぶ理科 - 光の性質（反射と屈折）</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+      background: #f5f5f5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color:#333;
+    }
+    .header {
+      background: #fff;
+      padding: 10px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .home-btn {
+      background:linear-gradient(135deg,#38bdf8,#22c55e);
+      color:white;
+      border:none;
+      padding:10px 18px;
+      border-radius:999px;
+      font-size:14px;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      min-height:44px;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+      box-shadow:0 3px 10px rgba(56,189,248,0.7);
+    }
+    .home-btn:hover { filter:brightness(1.05); transform:translateY(-1px); }
+    .home-btn:active { transform:scale(0.97); }
+    .lesson-title {
+      font-size:18px;
+      font-weight:bold;
+      color:#333;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      flex:1;
+      margin:0 10px;
+      text-align:center;
+    }
+    .main-container {
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      padding:15px;
+      gap:12px;
+    }
+
+    /* ▼ シミュ全体 */
+    .sim-container {
+      background:#fff;
+      border-radius:12px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom:8px;
+      overflow:hidden;
+      border:1px solid #e0e0e0;
+    }
+    .sim-header {
+      background:#fff;
+      color:#333;
+      padding:14px 15px;
+      text-align:center;
+      border-bottom:1px solid #e0e0e0;
+    }
+    .sim-header h2 { font-size:20px; margin-bottom:4px; color:#1976d2; }
+    .sim-header p { font-size:13px; color:#666; }
+
+    .sim-area {
+      padding:12px 12px 16px;
+    }
+
+    .control-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      margin-bottom:8px;
+    }
+    .control-label {
+      font-size:13px;
+      font-weight:bold;
+      color:#333;
+      min-width:90px;
+    }
+
+    /* 媒質タブ */
+    .medium-tabs {
+      display:flex;
+      gap:8px;
+      flex:1;
+    }
+    .medium-btn {
+      flex:1;
+      border:none;
+      border-radius:8px;
+      padding:8px 10px;
+      font-size:12px;
+      cursor:pointer;
+      background:#f5f5f5;
+      color:#333;
+      font-weight:bold;
+      min-height:40px;
+      transition:all 0.25s ease;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+      box-shadow:none;
+      border:1px solid #ddd;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:4px;
+    }
+    .medium-btn.active {
+      background:#1976d2;
+      color:#fff;
+      box-shadow:0 2px 4px rgba(25,118,210,0.3);
+      transform:none;
+      border-color:#1976d2;
+    }
+
+    .emoji-icon {
+      font-size:16px;
+      filter:drop-shadow(0 1px 2px rgba(0,0,0,0.7));
+    }
+
+    .mode-desc {
+      font-size:11px;
+      color:#666;
+      min-width:120px;
+      text-align:right;
+    }
+
+    .control-row.bottom {
+      margin-top:6px;
+    }
+    .angle-slider-wrap {
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    .angle-slider {
+      width:100%;
+      -webkit-appearance:none;
+      height:6px;
+      border-radius:999px;
+      background:#e0e0e0;
+      outline:none;
+      box-shadow:none;
+    }
+    .angle-slider::-webkit-slider-thumb {
+      -webkit-appearance:none;
+      appearance:none;
+      width:22px;
+      height:22px;
+      border-radius:50%;
+      background:#1976d2;
+      box-shadow:0 2px 4px rgba(0,0,0,0.2);
+      cursor:pointer;
+      border:2px solid #fff;
+      margin-top:-8px;
+    }
+    .angle-slider::-moz-range-thumb {
+      width:22px;
+      height:22px;
+      border-radius:50%;
+      background:#1976d2;
+      border:2px solid #fff;
+      cursor:pointer;
+    }
+    .angle-steps {
+      display:flex;
+      justify-content:space-between;
+      font-size:11px;
+      color:#666;
+    }
+
+    /* ▼ 光シーン */
+    .sim-field {
+      position:relative;
+      margin-top:6px;
+      border-radius:12px;
+      padding:12px;
+      overflow:hidden;
+      min-height:260px;
+      background:#f9f9f9;
+      box-shadow:inset 0 0 0 1px #e0e0e0;
+    }
+
+    .light-scene {
+      position:relative;
+      width:100%;
+      height:190px;
+      border-radius:12px;
+      overflow:hidden;
+      background:#f0f0f0;
+      box-shadow:inset 0 0 0 1px #ddd;
+      border:1px solid #ddd;
+    }
+    
+
+    .medium-label-top,
+    .medium-label-bottom {
+      position:absolute;
+      left:10px;
+      padding:3px 8px;
+      font-size:11px;
+      border-radius:4px;
+      background:#fff;
+      color:#333;
+      border:1px solid #ddd;
+      box-shadow:0 1px 2px rgba(0,0,0,0.1);
+    }
+    .medium-label-top { top:10px; }
+    .medium-label-bottom { bottom:10px; }
+
+    /* SVG はそのまま拡大縮小 */
+    .light-svg {
+      width:100%;
+      height:100%;
+      display:block;
+    }
+
+    /* infoカード */
+    .env-panel {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:10px;
+    }
+    .env-card {
+      flex:1 1 120px;
+      background:rgba(15,23,42,0.95);
+      border-radius:12px;
+      padding:8px 10px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.8);
+      border:1px solid rgba(148,163,184,0.6);
+    }
+    .env-title {
+      font-size:13px;
+      font-weight:bold;
+      margin-bottom:3px;
+      color:#e0f2fe;
+      display:flex;
+      align-items:center;
+      gap:4px;
+    }
+    .env-title span.emoji {
+      font-size:17px;
+      filter:drop-shadow(0 2px 4px rgba(0,0,0,0.8));
+      animation:float 3s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-3px);} }
+    .env-value {
+      font-size:14px;
+      font-weight:bold;
+      margin-bottom:2px;
+      color:#bae6fd;
+    }
+    .env-sub {
+      font-size:11px;
+      color:#cbd5f5;
+    }
+
+    .sim-comment {
+      margin-top:10px;
+      font-size:13px;
+      line-height:1.6;
+      color:#333;
+      background:#fff;
+      border-radius:8px;
+      padding:10px 12px;
+      border-left:3px solid #1976d2;
+      box-shadow:0 1px 2px rgba(0,0,0,0.1);
+      border:1px solid #e0e0e0;
+    }
+    .sim-comment strong {
+      color:#1976d2;
+      text-shadow:none;
+    }
+
+    .sky-tag {
+      position:absolute;
+      top:10px;
+      right:10px;
+      padding:6px 10px;
+      font-size:11px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.95);
+      color:#bae6fd;
+      box-shadow:0 2px 8px rgba(0,0,0,0.8);
+      border:1px solid rgba(148,163,184,0.6);
+    }
+    .sky-label {
+      position:absolute;
+      bottom:10px;
+      right:10px;
+      padding:6px 10px;
+      font-size:12px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.95);
+      color:#e0f2fe;
+      display:flex;
+      align-items:center;
+      gap:6px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.8);
+      border:1px solid rgba(148,163,184,0.6);
+    }
+    .sky-label span.icon {
+      font-size:16px;
+      filter:drop-shadow(0 2px 3px rgba(0,0,0,0.8));
+    }
+
+    /* ▼ infoパネル（コンパクト） */
+    .info-panel {
+      background:rgba(15,23,42,0.96);
+      border-radius:16px;
+      box-shadow:0 8px 26px rgba(0,0,0,0.8);
+      padding:14px;
+      border:1px solid rgba(148,163,184,0.6);
+    }
+    .info-panel h3 {
+      color:#e0f2fe;
+      margin-bottom:8px;
+      font-size:16px;
+    }
+    .info-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));
+      gap:10px;
+    }
+    .info-item {
+      background:rgba(15,23,42,0.95);
+      padding:10px;
+      border-radius:10px;
+      border-left:3px solid #38bdf8;
+    }
+    .info-item h4 {
+      color:#bfdbfe;
+      margin-bottom:4px;
+      font-size:13px;
+    }
+    .info-item p {
+      color:#e5e7eb;
+      font-size:12px;
+      line-height:1.4;
+    }
+
+    /* ▼ 問題パネル */
+    .question-container {
+      background:#fff;
+      border-radius:12px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.1);
+      padding:16px;
+      border:1px solid #e0e0e0;
+      margin-bottom:8px;
+    }
+    .question-text {
+      font-size:15px;
+      font-weight:bold;
+      color:#333;
+      margin-bottom:10px;
+    }
+    .progress-bar {
+      background:#e0e0e0;
+      border-radius:999px;
+      height:7px;
+      margin:8px 0 12px;
+      overflow:hidden;
+      box-shadow:none;
+    }
+    .progress-fill {
+      background:#1976d2;
+      height:100%;
+      width:0%;
+      transition:width 0.3s ease;
+      box-shadow:none;
+    }
+    .choices {
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .choice {
+      padding:11px 13px;
+      background:#fff;
+      border:1.5px solid #ddd;
+      border-radius:8px;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      font-size:13px;
+      min-height:44px;
+      display:flex;
+      align-items:center;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+      color:#333;
+    }
+    .choice:hover {
+      background:#f5f5f5;
+      border-color:#1976d2;
+    }
+    .choice.correct {
+      background:#4caf50;
+      color:white;
+      border-color:#4caf50;
+      animation:correctPulse 0.6s ease;
+      box-shadow:0 2px 4px rgba(76,175,80,0.3);
+    }
+    .choice.incorrect {
+      background:#f44336;
+      color:white;
+      border-color:#f44336;
+      animation:wrongShake 0.6s ease;
+      box-shadow:0 2px 4px rgba(244,67,54,0.3);
+    }
+    @keyframes correctPulse {
+      0%,100%{transform:scale(1);}
+      50%{transform:scale(1.04);}
+    }
+    @keyframes wrongShake {
+      0%,100%{transform:translateX(0);}
+      25%{transform:translateX(-8px);}
+      75%{transform:translateX(8px);}
+    }
+
+    .explanation {
+      margin-top:12px;
+      padding:10px;
+      background:#fff;
+      border-radius:8px;
+      border-left:3px solid #4caf50;
+      border:1px solid #e0e0e0;
+      display:none;
+    }
+    .explanation.show { display:block; }
+    .explanation h4 {
+      color:#333;
+      margin-bottom:6px;
+      font-size:13px;
+    }
+    .explanation p {
+      color:#333;
+      line-height:1.5;
+      font-size:12px;
+    }
+
+    .navigation {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-top:14px;
+    }
+    .nav-btn {
+      padding:11px 18px;
+      border:none;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      min-height:44px;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .nav-btn:disabled {
+      opacity:0.4;
+      cursor:not-allowed;
+    }
+    .prev-btn {
+      background:#f5f5f5;
+      color:#333;
+      border:1px solid #ddd;
+    }
+    .prev-btn:hover:not(:disabled) { background:#e0e0e0; }
+    .next-btn {
+      background:#1976d2;
+      color:#fff;
+      box-shadow:0 2px 4px rgba(25,118,210,0.3);
+    }
+    .next-btn:hover:not(:disabled) { background:#1565c0; }
+
+    * { touch-action:manipulation; }
+    .choice, .nav-btn, .home-btn, .medium-btn {
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+
+    @media (max-width:768px){
+      body { overflow-x:hidden; }
+      .header { padding:8px 10px; }
+      .home-btn { padding:8px 14px; font-size:12px; }
+      .lesson-title { font-size:14px; margin:0 6px; }
+      .main-container { padding:10px; gap:10px; }
+      .sim-area { padding:10px 10px 14px; }
+      .sim-field { min-height:240px; padding:10px; }
+      .light-scene { height:180px; }
+      .info-panel { padding:12px; }
+      .info-grid { grid-template-columns:1fr; }
+      .info-item { padding:9px; }
+      .question-container { padding:14px; }
+      .question-text { font-size:14px; }
+      .choice { font-size:12px; padding:9px 11px; }
+      .nav-btn { font-size:12px; padding:9px 14px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <button class="home-btn" onclick="goHome()">ホーム</button>
+    <div class="lesson-title">光の性質シミュレーション（反射と屈折）</div>
+    <div style="width:80px;"></div>
+  </header>
+
+  <main class="main-container">
+    <!-- ▼ シミュレーション -->
+    <section class="sim-container">
+      <div class="sim-header">
+        <h2>光の進み方と 反射・屈折</h2>
+        <p>入射角を動かして、鏡での反射と水・ガラスでの屈折のようすを見てみよう。</p>
+      </div>
+
+      <div class="sim-area">
+        <div class="control-row">
+          <div class="control-label">下の物質</div>
+          <div class="medium-tabs">
+            <button class="medium-btn active" data-medium="water" id="btnWater">
+              <span class="emoji-icon">💧</span>水
+            </button>
+            <button class="medium-btn" data-medium="glass" id="btnGlass">
+              <span class="emoji-icon">🪟</span>ガラス
+            </button>
+          </div>
+          <div class="mode-desc" id="mediumDesc">空気から水へ進む光（屈折は少し曲がる）</div>
+        </div>
+
+        <div class="control-row bottom">
+          <div class="control-label">入射角</div>
+          <div class="angle-slider-wrap">
+            <input type="range" min="10" max="70" step="1" value="40" class="angle-slider" id="angleSlider" />
+            <div class="angle-steps">
+              <span>10°</span>
+              <span>40°</span>
+              <span>70°</span>
+            </div>
+          </div>
+          <div class="mode-desc" id="angleDesc">法線から 40° の角度で入る光</div>
+        </div>
+
+        <div class="sim-field">
+          <div class="light-scene" id="lightScene">
+            <div class="medium-label-top">空気</div>
+            <div class="medium-label-bottom" id="mediumLabelBottom">水</div>
+
+            <!-- SVGで光の線を描画 -->
+            <svg class="light-svg" viewBox="0 0 300 200" id="lightSvg">
+              <!-- 背景：空気と媒質の領域を視覚的に区別 -->
+              <defs>
+                <!-- 空気のグラデーション -->
+                <linearGradient id="airGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:rgba(240,248,255,0.5);stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:rgba(230,240,250,0.3);stop-opacity:1" />
+                </linearGradient>
+                
+                <!-- 水のグラデーション（青みがかった） -->
+                <linearGradient id="waterGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:rgba(173,216,230,0.4);stop-opacity:1" />
+                  <stop offset="50%" style="stop-color:rgba(135,206,250,0.5);stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:rgba(100,149,237,0.6);stop-opacity:1" />
+                </linearGradient>
+                
+                <!-- ガラスのグラデーション（透明感のある） -->
+                <linearGradient id="glassGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:rgba(220,220,220,0.3);stop-opacity:1" />
+                  <stop offset="50%" style="stop-color:rgba(200,200,200,0.4);stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:rgba(180,180,180,0.5);stop-opacity:1" />
+                </linearGradient>
+                
+                <!-- 水の波紋パターン -->
+                <pattern id="waterPattern" x="0" y="0" width="40" height="8" patternUnits="userSpaceOnUse">
+                  <path d="M 0 4 Q 10 2, 20 4 T 40 4" stroke="rgba(100,149,237,0.4)" stroke-width="1" fill="none" />
+                  <path d="M 0 6 Q 10 4, 20 6 T 40 6" stroke="rgba(135,206,250,0.3)" stroke-width="1" fill="none" />
+                  <animate attributeName="y" values="0;8;0" dur="3s" repeatCount="indefinite"/>
+                </pattern>
+                
+                <!-- ガラスの光沢パターン -->
+                <pattern id="glassPattern" x="0" y="0" width="60" height="100" patternUnits="userSpaceOnUse">
+                  <rect x="0" y="0" width="60" height="100" fill="rgba(203,213,225,0.1)"/>
+                  <line x1="0" y1="0" x2="60" y2="100" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+                  <line x1="30" y1="0" x2="30" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+                </pattern>
+                
+                <!-- 水の反射効果フィルター -->
+                <filter id="waterReflection" x="0%" y="0%" width="100%" height="100%">
+                  <feGaussianBlur in="SourceAlpha" stdDeviation="1" result="blur"/>
+                  <feOffset in="blur" dx="0" dy="1" result="offsetBlur"/>
+                  <feComponentTransfer>
+                    <feFuncA type="linear" slope="0.3"/>
+                  </feComponentTransfer>
+                  <feMerge>
+                    <feMergeNode/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+                
+                <!-- ガラスの光の屈折効果フィルター -->
+                <filter id="glassRefraction" x="0%" y="0%" width="100%" height="100%">
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="0.5" result="blur"/>
+                  <feOffset in="blur" dx="0" dy="0" result="offsetBlur"/>
+                  <feMerge>
+                    <feMergeNode in="SourceGraphic"/>
+                    <feMergeNode in="offsetBlur"/>
+                  </feMerge>
+                </filter>
+              </defs>
+              
+              <!-- 空気領域（上部） -->
+              <rect x="0" y="0" width="300" height="100" fill="url(#airGradient)" opacity="0.3" />
+              
+              <!-- 媒質領域（下部） - 水またはガラス -->
+              <g id="mediumGroup">
+                <!-- ベースのグラデーション -->
+                <rect id="mediumRect" x="0" y="100" width="300" height="100" fill="url(#waterGradient)" opacity="0.4" />
+                
+                <!-- 水の波紋パターン（水の場合のみ表示） -->
+                <rect id="waterPatternRect" x="0" y="100" width="300" height="100" fill="url(#waterPattern)" opacity="0.6" />
+                
+                <!-- ガラスの光沢パターン（ガラスの場合のみ表示） -->
+                <rect id="glassPatternRect" x="0" y="100" width="300" height="100" fill="url(#glassPattern)" opacity="0.4" style="display:none;" />
+                
+                <!-- 水の表面の反射ハイライト -->
+                <ellipse id="waterHighlight" cx="150" cy="100" rx="120" ry="8" fill="rgba(255,255,255,0.2)" opacity="0.5" />
+                
+                <!-- ガラスの光の屈折効果 -->
+                <rect id="glassRefractionRect" x="0" y="100" width="300" height="100" fill="rgba(255,255,255,0.05)" opacity="0.3" style="display:none;" />
+              </g>
+              
+              <!-- 境界面（グラデーション効果） -->
+              <defs>
+                <!-- 水の境界面グラデーション（青みがかった） -->
+                <linearGradient id="waterBoundaryGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:rgba(135,206,250,0.5);stop-opacity:1" />
+                  <stop offset="50%" style="stop-color:rgba(100,149,237,0.7);stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:rgba(135,206,250,0.5);stop-opacity:1" />
+                </linearGradient>
+                <!-- ガラスの境界面グラデーション（透明感のある） -->
+                <linearGradient id="glassBoundaryGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:rgba(200,200,200,0.5);stop-opacity:1" />
+                  <stop offset="50%" style="stop-color:rgba(150,150,150,0.8);stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:rgba(200,200,200,0.5);stop-opacity:1" />
+                </linearGradient>
+              </defs>
+              <!-- 境界面の線（水用） -->
+              <line id="waterBoundaryLine" x1="0" y1="100" x2="300" y2="100"
+                    stroke="url(#waterBoundaryGradient)" stroke-width="3"
+                    stroke-linecap="round" opacity="0.9" />
+              <!-- 境界面の線（ガラス用） -->
+              <line id="glassBoundaryLine" x1="0" y1="100" x2="300" y2="100"
+                    stroke="url(#glassBoundaryGradient)" stroke-width="3"
+                    stroke-linecap="round" opacity="0.9" style="display:none;" />
+              <!-- 境界面のハイライト（水用） -->
+              <line id="waterBoundaryHighlight" x1="0" y1="100" x2="300" y2="100"
+                    stroke="rgba(173,216,230,0.6)" stroke-width="1.5"
+                    stroke-linecap="round" />
+              <!-- 境界面のハイライト（ガラス用） -->
+              <line id="glassBoundaryHighlight" x1="0" y1="100" x2="300" y2="100"
+                    stroke="rgba(200,200,200,0.5)" stroke-width="1.5"
+                    stroke-linecap="round" style="display:none;" />
+
+              <!-- 法線（点線、より目立つように） -->
+              <line x1="150" y1="20" x2="150" y2="180"
+                    stroke="rgba(100,100,100,0.6)" stroke-width="1.5"
+                    stroke-dasharray="5,5" opacity="0.7" />
+              <!-- 法線のハイライト -->
+              <line x1="150" y1="20" x2="150" y2="180"
+                    stroke="rgba(150,150,150,0.3)" stroke-width="0.5"
+                    stroke-dasharray="5,5" />
+
+              <!-- 矢印マーカーの定義 -->
+              <defs>
+                <marker id="simpleArrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+                  <path d="M0,0 L0,10 L10,5 z" fill="#94a3b8" stroke="#64748b" stroke-width="0.5" />
+                </marker>
+              </defs>
+              
+              <!-- 光の表現（シンプル、加工なし） -->
+              <!-- 入射光（矢印付き） -->
+              <line id="incidentRay"
+                    x1="150" y1="100" x2="80" y2="40"
+                    stroke="#fef08a" stroke-width="3"
+                    stroke-linecap="round"
+                    marker-end="url(#simpleArrow)" />
+              <!-- 反射光（矢印付き） -->
+              <line id="reflectedRay"
+                    x1="150" y1="100" x2="220" y2="40"
+                    stroke="#fef08a" stroke-width="3"
+                    stroke-linecap="round"
+                    marker-end="url(#simpleArrow)" />
+              <!-- 屈折光（矢印付き） -->
+              <line id="refractedRay"
+                    x1="150" y1="100" x2="90" y2="160"
+                    stroke="#fef08a" stroke-width="3"
+                    stroke-linecap="round"
+                    marker-end="url(#simpleArrow)" />
+
+              <!-- 入射点マーカー（シンプル） -->
+              <circle cx="150" cy="100" r="4"
+                      fill="#facc15" stroke="#666" stroke-width="1" opacity="0.9" />
+            </svg>
+          </div>
+
+          <div class="sim-comment" id="simComment">
+            <strong>光は同じ物質の中ではまっすぐ進みます。</strong>境界面で一部は鏡のように<strong>反射</strong>し、一部は水やガラスの中へ<strong>屈折</strong>して進みます。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ▼ わかる編 3問 -->
+    <section class="question-container">
+      <div class="question-text" id="questionText"></div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="choices" id="choicesContainer"></div>
+      <div class="explanation" id="explanationBox">
+        <h4>解説</h4>
+        <p id="explanationText"></p>
+      </div>
+
+      <div class="navigation">
+        <button class="nav-btn prev-btn" id="prevBtn">前の問題へ</button>
+        <button class="nav-btn next-btn" id="nextBtn">次の問題へ</button>
+      </div>
+      <div id="historyDisplay"></div>
+    </section>
+  </main>
+
+  <script>
+    /************ LearningTracker ************/
+    class LearningTracker {
+      constructor(lessonId) {
+        this.lessonId = lessonId;
+        this.storageKey = "stepnavi_science_" + lessonId;
+        this.currentSession = null;
+        this.history = this.loadHistory();
+      }
+
+      loadHistory() {
+        try {
+          const raw = localStorage.getItem(this.storageKey);
+          return raw ? JSON.parse(raw) : { sessions: [] };
+        } catch (e) {
+          console.warn("Failed to load history:", e);
+          return { sessions: [] };
+        }
+      }
+
+      startSession() {
+        this.currentSession = {
+          startedAt: Date.now(),
+          answered: 0,
+          correct: 0,
+          records: []
+        };
+      }
+
+      recordAnswer(questionIndex, isCorrect) {
+        if (!this.currentSession) this.startSession();
+        const now = Date.now();
+        this.currentSession.answered += 1;
+        if (isCorrect) this.currentSession.correct += 1;
+        this.currentSession.records.push({
+          questionIndex,
+          isCorrect,
+          answeredAt: now
+        });
+
+        this.postToParent("question:answered", {
+          lessonId: this.lessonId,
+          questionIndex,
+          isCorrect,
+          timestamp: now
+        });
+      }
+
+      completeLesson(totalQuestions) {
+        if (!this.currentSession) return;
+        const now = Date.now();
+        const durationMs = now - this.currentSession.startedAt;
+        const summary = {
+          ...this.currentSession,
+          finishedAt: now,
+          durationMs,
+          totalQuestions
+        };
+        this.history.sessions.push(summary);
+        try {
+          localStorage.setItem(this.storageKey, JSON.stringify(this.history));
+        } catch (e) {
+          console.warn("Failed to save history:", e);
+        }
+
+        this.postToParent("lesson:complete", {
+          lessonId: this.lessonId,
+          totalQuestions,
+          answered: this.currentSession.answered,
+          correct: this.currentSession.correct,
+          durationMs
+        });
+
+        this.currentSession = null;
+      }
+
+      postToParent(type, payload) {
+        try {
+          if (window.parent && window.parent !== window) {
+            window.parent.postMessage({ type, payload }, "*");
+          }
+        } catch (e) {
+          console.warn("postMessage failed:", e);
+        }
+      }
+    }
+
+    const LESSON_ID = "sci.physics.light_properties_sim";
+    const tracker = new LearningTracker(LESSON_ID);
+
+    /************ 光シミュ制御（SVGで反射・屈折） ************/
+    const btnWater = document.getElementById("btnWater");
+    const btnGlass = document.getElementById("btnGlass");
+    const mediumButtons = [btnWater, btnGlass];
+    const mediumDesc = document.getElementById("mediumDesc");
+    const mediumLabelBottom = document.getElementById("mediumLabelBottom");
+
+    const angleSlider = document.getElementById("angleSlider");
+    const angleDesc = document.getElementById("angleDesc");
+
+    const incidentRay = document.getElementById("incidentRay");
+    const reflectedRay = document.getElementById("reflectedRay");
+    const refractedRay = document.getElementById("refractedRay");
+
+    const simComment = document.getElementById("simComment");
+
+    const lightSvg = document.getElementById("lightSvg");
+
+    let currentMedium = "water"; // "water" or "glass"
+
+    function setMedium(medium) {
+      currentMedium = medium;
+      mediumButtons.forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.medium === medium);
+      });
+
+      if (medium === "water") {
+        mediumDesc.textContent = "空気から水へ進む光（屈折は少し曲がる）";
+        mediumLabelBottom.textContent = "水";
+        // 媒質領域を水の表現に変更
+        const mediumRect = document.getElementById("mediumRect");
+        const waterPatternRect = document.getElementById("waterPatternRect");
+        const glassPatternRect = document.getElementById("glassPatternRect");
+        const waterHighlight = document.getElementById("waterHighlight");
+        const glassRefractionRect = document.getElementById("glassRefractionRect");
+        
+        if (mediumRect) {
+          mediumRect.setAttribute("fill", "url(#waterGradient)");
+          mediumRect.setAttribute("opacity", "0.4");
+        }
+        if (waterPatternRect) {
+          waterPatternRect.style.display = "block";
+        }
+        if (glassPatternRect) {
+          glassPatternRect.style.display = "none";
+        }
+        if (waterHighlight) {
+          waterHighlight.style.display = "block";
+        }
+        if (glassRefractionRect) {
+          glassRefractionRect.style.display = "none";
+        }
+        
+        // 境界面を水用に変更
+        const waterBoundaryLine = document.getElementById("waterBoundaryLine");
+        const glassBoundaryLine = document.getElementById("glassBoundaryLine");
+        const waterBoundaryHighlight = document.getElementById("waterBoundaryHighlight");
+        const glassBoundaryHighlight = document.getElementById("glassBoundaryHighlight");
+        if (waterBoundaryLine) waterBoundaryLine.style.display = "block";
+        if (glassBoundaryLine) glassBoundaryLine.style.display = "none";
+        if (waterBoundaryHighlight) waterBoundaryHighlight.style.display = "block";
+        if (glassBoundaryHighlight) glassBoundaryHighlight.style.display = "none";
+      } else {
+        mediumDesc.textContent = "空気からガラスへ進む光（もっと大きく曲がる）";
+        mediumLabelBottom.textContent = "ガラス";
+        // 媒質領域をガラスの表現に変更
+        const mediumRect = document.getElementById("mediumRect");
+        const waterPatternRect = document.getElementById("waterPatternRect");
+        const glassPatternRect = document.getElementById("glassPatternRect");
+        const waterHighlight = document.getElementById("waterHighlight");
+        const glassRefractionRect = document.getElementById("glassRefractionRect");
+        
+        if (mediumRect) {
+          mediumRect.setAttribute("fill", "url(#glassGradient)");
+          mediumRect.setAttribute("opacity", "0.35");
+        }
+        if (waterPatternRect) {
+          waterPatternRect.style.display = "none";
+        }
+        if (glassPatternRect) {
+          glassPatternRect.style.display = "block";
+        }
+        if (waterHighlight) {
+          waterHighlight.style.display = "none";
+        }
+        if (glassRefractionRect) {
+          glassRefractionRect.style.display = "block";
+        }
+        
+        // 境界面をガラス用に変更
+        const waterBoundaryLine = document.getElementById("waterBoundaryLine");
+        const glassBoundaryLine = document.getElementById("glassBoundaryLine");
+        const waterBoundaryHighlight = document.getElementById("waterBoundaryHighlight");
+        const glassBoundaryHighlight = document.getElementById("glassBoundaryHighlight");
+        if (waterBoundaryLine) waterBoundaryLine.style.display = "none";
+        if (glassBoundaryLine) glassBoundaryLine.style.display = "block";
+        if (waterBoundaryHighlight) waterBoundaryHighlight.style.display = "none";
+        if (glassBoundaryHighlight) glassBoundaryHighlight.style.display = "block";
+      }
+
+      updateLightScene();
+    }
+
+    mediumButtons.forEach(btn => {
+      btn.addEventListener("click", () => setMedium(btn.dataset.medium));
+    });
+
+    angleSlider.addEventListener("input", () => {
+      updateLightScene();
+    });
+
+    function updateLightScene() {
+      const angleDeg = parseInt(angleSlider.value, 10); // 法線からの入射角
+      angleDesc.textContent = "法線から " + angleDeg + "° の角度で入る光";
+
+      // SVG座標の中心（境界面と法線の交点）
+      const cx = 150;
+      const cy = 100;
+
+      const lengthAir = 90;    // 空気側の光の長さ
+      const lengthMedium = 90; // 媒質側の光の長さ
+
+      // 法線からの角度 → ラジアン
+      const a = angleDeg * Math.PI / 180;
+
+      // n1: 空気、n2: 水 or ガラス（単純モデル）
+      const n1 = 1.0;
+      const n2 = (currentMedium === "water") ? 1.33 : 1.5;
+
+      // 入射光（空気側）: 右上から左下に入ってくる
+      // 法線ベクトル（空気側）は (0, -1)。右側から来るので、時計回りに a 回転。
+      const dx_in = Math.sin(a);
+      const dy_in = -Math.cos(a);
+      const x1_in = cx + dx_in * lengthAir;
+      const y1_in = cy + dy_in * lengthAir;
+      // 入射光の座標を設定（矢印はマーカーで自動的に終点に配置される）
+      incidentRay.setAttribute("x1", x1_in);
+      incidentRay.setAttribute("y1", y1_in);
+      incidentRay.setAttribute("x2", cx);
+      incidentRay.setAttribute("y2", cy);
+
+      // 反射光（空気側）: 法線に対して対称（入射角 = 反射角）
+      // 右上から来た光は、左上に反射する（左側に出る）
+      const dx_ref = -Math.sin(a);
+      const dy_ref = -Math.cos(a);
+      const x2_ref = cx + dx_ref * lengthAir;
+      const y2_ref = cy + dy_ref * lengthAir;
+      // 反射光の座標を設定（矢印はマーカーで自動的に終点に配置される）
+      reflectedRay.setAttribute("x1", cx);
+      reflectedRay.setAttribute("y1", cy);
+      reflectedRay.setAttribute("x2", x2_ref);
+      reflectedRay.setAttribute("y2", y2_ref);
+
+      // 屈折光（媒質側）: スネルの法則 n1 sinθ1 = n2 sinθ2
+      const sinA = Math.sin(a);
+      let sinB = n1 / n2 * sinA;
+      if (sinB > 1) sinB = 1;  // 安全対策（この範囲ではほぼ起きない）
+
+      const b = Math.asin(sinB); // 媒質側の屈折角（法線から）
+
+      // 媒質側の法線は (0, 1)（下向き）。そこから左側へ反時計回りに b 回転。
+      const dx_re = -Math.sin(b);
+      const dy_re = Math.cos(b);
+      const x2_re = cx + dx_re * lengthMedium;
+      const y2_re = cy + dy_re * lengthMedium;
+      refractedRay.setAttribute("x1", cx);
+      refractedRay.setAttribute("y1", cy);
+      refractedRay.setAttribute("x2", x2_re);
+      refractedRay.setAttribute("y2", y2_re);
+
+      // 説明テキストを更新
+      if (currentMedium === "water") {
+        simComment.innerHTML =
+          "光は空気中では<strong>まっすぐ</strong>進み、境界で一部が<strong>反射</strong>し、一部が水の中へ<strong>屈折</strong>して進みます。水では、空気より少し<strong>法線の方向</strong>へ曲がります。";
+      } else {
+        simComment.innerHTML =
+          "ガラスは水より光を<strong>強く曲げる</strong>物質です。空気からガラスに入る光は、水の場合より大きく<strong>法線の方向へ</strong>折れ曲がります。";
+      }
+    }
+
+    // 初期化
+    setMedium("water");
+    angleSlider.value = 40;
+    updateLightScene();
+
+    /************ わかる編：問題データ ************/
+    const questions = [
+      {
+        id: "q1",
+        text: "光の進み方について、同じ物質の中ではどのように進むと考えればよいですか？",
+        choices: [
+          "いつもまっすぐ進む",
+          "ゆっくり曲がりながら進む",
+          "ジグザグに進む",
+          "止まったり動いたりをくり返す"
+        ],
+        correct: 0,
+        explanation:
+          "光は、空気の中・水の中・ガラスの中など、<strong>同じ物質の中ではいつもまっすぐ</strong>進むと考えます。影の形や懐中電灯の光の筋がまっすぐなのはこのためです。"
+      },
+      {
+        id: "q2",
+        text: "鏡で光が反射するとき、入射角と反射角について正しく言えることはどれですか？（角度は法線からの大きさでくらべます）",
+        choices: [
+          "入射角と反射角はいつも等しい",
+          "入射角のほうが必ず大きい",
+          "反射角のほうが必ず大きい",
+          "入射角と反射角は関係ない"
+        ],
+        correct: 0,
+        explanation:
+          "鏡での<strong>反射</strong>では、光が入ってくる角度（入射角）と、はね返る角度（反射角）が<strong>法線から見て同じ大きさ</strong>になります。これを「入射角 = 反射角」といいます。"
+      },
+      {
+        id: "q3",
+        text: "空気中を進んできた光が水やガラスの中に入るとき（屈折するとき）、光の向きはどう変わることが多いですか？",
+        choices: [
+          "法線の方向へ少し曲がる",
+          "法線から遠ざかるように曲がる",
+          "まったく曲がらず、そのまま進む",
+          "必ず元の方向にもどる"
+        ],
+        correct: 0,
+        explanation:
+          "空気から水やガラスのような物質に入るとき、光は境界で<strong>屈折</strong>して、ふつう<strong>法線の方向（境界に垂直な線）へ</strong>少し曲がります。逆に、水やガラスから空気へ出るときは、法線から遠ざかるように曲がります。"
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let answeredFlags = new Array(questions.length).fill(false);
+
+    const questionTextEl = document.getElementById("questionText");
+    const choicesContainer = document.getElementById("choicesContainer");
+    const explanationBox = document.getElementById("explanationBox");
+    const explanationText = document.getElementById("explanationText");
+    const progressFill = document.getElementById("progressFill");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    function renderQuestion(index) {
+      const q = questions[index];
+      questionTextEl.textContent = "Q" + (index + 1) + ". " + q.text;
+      choicesContainer.innerHTML = "";
+      explanationBox.classList.remove("show");
+      explanationText.innerHTML = "";
+
+      q.choices.forEach((choiceText, i) => {
+        const btn = document.createElement("button");
+        btn.className = "choice";
+        btn.textContent = choiceText;
+        btn.dataset.index = i;
+        btn.addEventListener("click", () => handleChoiceClick(index, i, btn));
+        choicesContainer.appendChild(btn);
+      });
+
+      updateProgress();
+      updateNavButtons();
+    }
+
+    function handleChoiceClick(qIndex, choiceIndex, btnEl) {
+      const q = questions[qIndex];
+
+      if (answeredFlags[qIndex]) return;
+
+      const allChoices = choicesContainer.querySelectorAll(".choice");
+      allChoices.forEach(el => el.disabled = true);
+
+      const isCorrect = (choiceIndex === q.correct);
+      answeredFlags[qIndex] = true;
+
+      if (isCorrect) {
+        btnEl.classList.add("correct");
+      } else {
+        btnEl.classList.add("incorrect");
+        const correctBtn = allChoices[q.correct];
+        if (correctBtn) correctBtn.classList.add("correct");
+      }
+
+      explanationBox.classList.add("show");
+      explanationText.innerHTML = q.explanation;
+
+      tracker.recordAnswer(qIndex, isCorrect);
+
+      updateProgress();
+      updateNavButtons();
+
+      if (answeredFlags.every(f => f)) {
+        // すべての問題に回答した場合、完了画面を表示
+        nextBtn.disabled = true;
+        prevBtn.disabled = true;
+        nextBtn.style.opacity = "0.5";
+        prevBtn.style.opacity = "0.5";
+        
+        setTimeout(() => {
+          if (answeredFlags.every(f => f)) {
+            showCompletionScreen();
+          }
+        }, 2000);
+      }
+    }
+
+    function updateProgress() {
+      const answeredCount = answeredFlags.filter(f => f).length;
+      const ratio = answeredCount / questions.length;
+      progressFill.style.width = (ratio * 100) + "%";
+    }
+
+    function updateNavButtons() {
+      // すべての問題に回答済みの場合は、完了画面表示中なのでボタンを無効化
+      if (answeredFlags.every(f => f)) {
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+        return;
+      }
+      prevBtn.disabled = (currentQuestionIndex === 0);
+      nextBtn.disabled = (currentQuestionIndex === questions.length - 1);
+    }
+
+    prevBtn.addEventListener("click", () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        renderQuestion(currentQuestionIndex);
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        renderQuestion(currentQuestionIndex);
+      } else {
+        // 最後の問題で「次の問題へ」をクリックした場合
+        if (answeredFlags.every(f => f)) {
+          showCompletionScreen();
+        }
+      }
+    });
+
+    tracker.startSession();
+    renderQuestion(currentQuestionIndex);
+
+    function showCompletionScreen() {
+      // 学習履歴を保存
+      tracker.saveSession();
+      
+      // レッスン完了時にチェックポイントを削除
+      clearCheckpoint();
+      
+      // UIを完了画面に変更
+      questionTextEl.textContent = "学習完了！おつかれさまでした。";
+      choicesContainer.innerHTML = "";
+      explanationBox.classList.remove("show");
+      explanationText.innerHTML = "";
+      
+      // ナビゲーションボタンを非表示
+      nextBtn.style.display = "none";
+      prevBtn.style.display = "none";
+      
+      // プログレスバーを100%に
+      progressFill.style.width = "100%";
+      
+      // 今回のセッション結果を表示
+      const historyDisplay = document.getElementById("historyDisplay");
+      if (historyDisplay) {
+        historyDisplay.innerHTML = showCurrentSessionResult();
+        historyDisplay.style.display = "block";
+        historyDisplay.style.visibility = "visible";
+        historyDisplay.style.opacity = "1";
+      }
+      
+      // 完了メッセージを親フレームに送信
+      const totalQuestions = questions.length;
+      const messageData = {
+        type: 'lesson:complete',
+        lessonId: LESSON_ID,
+        detail: {
+          correct: tracker.currentSession ? tracker.currentSession.correct : 0,
+          total: totalQuestions,
+          timeSec: tracker.currentSession ? Math.floor((Date.now() - tracker.currentSession.startedAt) / 1000) : 0
+        }
+      };
+      
+      try {
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage(messageData, "*");
+        } else {
+          window.parent.postMessage(messageData, "*");
+        }
+      } catch (e) {
+        console.warn("postMessage failed:", e);
+      }
+      
+      // completeLessonも呼び出して履歴に記録
+      tracker.completeLesson(totalQuestions);
+    }
+
+    function clearCheckpoint() {
+      try {
+        const checkpointKey = `checkpoint:${LESSON_ID}`;
+        localStorage.removeItem(checkpointKey);
+        return true;
+      } catch (error) {
+        console.error('❌ チェックポイント削除エラー:', error);
+        return false;
+      }
+    }
+
+    function showCurrentSessionResult() {
+      const session = tracker.currentSession;
+      if (!session) return '';
+      
+      const totalQuestions = questions.length;
+      const correct = session.correct || 0;
+      const scorePercent = totalQuestions > 0 ? 
+        Math.round((correct / totalQuestions) * 100) : 0;
+      
+      // 成績に応じたメッセージ
+      let resultMessage = '';
+      if (scorePercent >= 90) {
+        resultMessage = '🎉 素晴らしい成果です！';
+      } else if (scorePercent >= 70) {
+        resultMessage = '👍 よくできました！';
+      } else if (scorePercent >= 50) {
+        resultMessage = '💪 もう少し頑張りましょう！';
+      } else {
+        resultMessage = '📚 復習して再挑戦しましょう！';
+      }
+      
+      return `
+        <div style="padding: 16px; background: #f8f9fa; border-radius: 12px; margin-top: 12px;">
+          <h3 style="margin-bottom: 12px; color: #333; font-size: 16px;">今回の結果</h3>
+          <p style="margin: 8px 0; color: #555; font-size: 14px;">
+            <strong>正解数:</strong> ${correct} / ${totalQuestions} 問
+          </p>
+          <p style="margin: 8px 0; color: #555; font-size: 14px;">
+            <strong>正答率:</strong> ${scorePercent}%
+          </p>
+          <p style="margin: 12px 0 0 0; color: #1976d2; font-size: 15px; font-weight: bold;">
+            ${resultMessage}
+          </p>
+        </div>
+      `;
+    }
+
+    /************ ホームボタン ************/
+    function goHome(){
+      window.location.href = '/';
+    }
+  </script>
+</body>
+</html>

@@ -77,66 +77,70 @@
     }
     .sim-control-row {
       display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      align-items:center;
-      margin-bottom:10px;
+      flex-direction:column;
+      gap:8px;
+      margin-bottom:12px;
     }
     .sim-control-label {
-      font-size:14px;
+      font-size:13px;
       font-weight:bold;
       color:#1a237e;
-      min-width:180px;
       padding:4px 0;
       text-shadow:0 1px 2px rgba(255,255,255,0.8);
     }
     .slider {
-      flex:1;
+      width:100%;
       -webkit-appearance:none;
-      height:8px;
+      height:10px;
       border-radius:999px;
       background:linear-gradient(90deg, #c5cae9, #e1bee7);
       outline:none;
       box-shadow:inset 0 2px 4px rgba(0,0,0,0.1);
+      touch-action:pan-x;
     }
     .slider::-webkit-slider-thumb {
       -webkit-appearance:none;
-      width:24px; 
-      height:24px;
+      width:28px; 
+      height:28px;
       border-radius:50%;
       background:linear-gradient(135deg, #3949ab, #5c6bc0);
       box-shadow:0 0 0 4px rgba(57,73,171,0.3), 0 3px 8px rgba(0,0,0,0.3);
       cursor:pointer;
       transition:all 0.2s ease;
+      touch-action:pan-x;
     }
-    .slider::-webkit-slider-thumb:hover {
-      transform:scale(1.1);
+    .slider::-webkit-slider-thumb:active {
+      transform:scale(1.15);
       box-shadow:0 0 0 5px rgba(57,73,171,0.4), 0 4px 12px rgba(0,0,0,0.4);
     }
     .slider::-moz-range-thumb {
-      width:24px; 
-      height:24px;
+      width:28px; 
+      height:28px;
       border-radius:50%;
       background:linear-gradient(135deg, #3949ab, #5c6bc0);
       box-shadow:0 0 0 4px rgba(57,73,171,0.3), 0 3px 8px rgba(0,0,0,0.3);
       cursor:pointer;
       border:none;
       transition:all 0.2s ease;
+      touch-action:pan-x;
     }
-    .slider::-moz-range-thumb:hover {
-      transform:scale(1.1);
+    .slider::-moz-range-thumb:active {
+      transform:scale(1.15);
     }
     .value-display {
-      font-size:14px;
+      font-size:16px;
       font-weight:bold;
       color:#283593;
-      min-width:100px;
-      text-align:right;
+      text-align:center;
       background:linear-gradient(135deg, rgba(255,255,255,0.9), rgba(227,242,253,0.8));
-      padding:6px 12px;
+      padding:8px 16px;
       border-radius:8px;
       box-shadow:0 2px 6px rgba(0,0,0,0.1);
       border:1px solid rgba(57,73,171,0.2);
+      min-height:36px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
 
     .sim-field {
@@ -144,16 +148,17 @@
       margin-top:6px;
       background:linear-gradient(to bottom, #bbdefb 0%, #e8f5e9 55%, #c8e6c9 100%);
       border-radius:12px;
-      padding:12px;
+      padding:10px;
       overflow:hidden;
-      min-height:240px;
+      min-height:280px;
     }
 
     /* ▼ てんびんイメージ */
     .balance-area {
       position:relative;
       width:100%;
-      height:170px;
+      height:200px;
+      min-height:200px;
     }
 
     .support {
@@ -172,10 +177,11 @@
     .beam {
       position:absolute;
       left:50%;
-      bottom:90px;
+      bottom:100px;
       transform-origin:50% 50%;
-      width:240px;
-      height:14px;
+      width:90%;
+      max-width:280px;
+      height:12px;
       border-radius:10px;
       background:linear-gradient(to right, #283593 0%, #3949ab 25%, #1e88e5 50%, #29b6f6 75%, #43a047 100%);
       box-shadow:0 4px 12px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.3);
@@ -226,36 +232,48 @@
       position:absolute;
       top:100%;
       transform:translate(-50%, 0);
-      width:36px;
-      height:28px;
+      width:44px;
+      height:36px;
       border-radius:6px;
       background:linear-gradient(135deg, #ffb74d 0%, #ffa726 50%, #fb8c00 100%);
       box-shadow:0 3px 10px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.4), inset 0 -1px 2px rgba(0,0,0,0.2);
       display:flex;
       align-items:center;
       justify-content:center;
-      font-size:12px;
+      font-size:14px;
       font-weight:bold;
       color:#3e2723;
-      border:1px solid rgba(251,140,0,0.3);
-      transition:transform 0.2s ease, box-shadow 0.2s ease;
+      border:2px solid rgba(251,140,0,0.5);
+      transition:transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      cursor:pointer;
+      touch-action:none;
+      user-select:none;
+      -webkit-user-select:none;
+      z-index:5;
     }
-    .weight:hover {
-      transform:translate(-50%, -2px);
+    .weight:active {
+      transform:translate(-50%, -2px) scale(1.05);
       box-shadow:0 5px 15px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.5);
+    }
+    .weight.tapping {
+      animation:weightTap 0.3s ease;
+    }
+    @keyframes weightTap {
+      0%,100% { transform:translate(-50%, 0) scale(1); }
+      50% { transform:translate(-50%, -4px) scale(1.1); }
     }
 
     .weight-label {
       position:absolute;
-      top:-22px;
+      top:-24px;
       left:50%;
       transform:translateX(-50%);
-      font-size:11px;
+      font-size:10px;
       font-weight:bold;
       color:#1a237e;
       background:linear-gradient(135deg, rgba(255,255,255,0.95), rgba(227,242,253,0.9));
-      padding:3px 8px;
-      border-radius:8px;
+      padding:3px 6px;
+      border-radius:6px;
       box-shadow:0 2px 6px rgba(0,0,0,0.15);
       border:1px solid rgba(57,73,171,0.2);
       white-space:nowrap;
@@ -263,6 +281,62 @@
 
     .left-hook { left:25%; }
     .right-hook { right:25%; }
+    
+    /* 距離変更用の矢印ボタン */
+    .distance-control {
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      display:flex;
+      gap:4px;
+      align-items:center;
+      z-index:6;
+    }
+    .distance-btn {
+      width:32px;
+      height:32px;
+      border-radius:50%;
+      border:none;
+      background:linear-gradient(135deg, rgba(57,73,171,0.9), rgba(66,165,245,0.9));
+      color:white;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 2px 8px rgba(0,0,0,0.3);
+      transition:all 0.2s ease;
+      touch-action:manipulation;
+      -webkit-tap-highlight-color:transparent;
+      user-select:none;
+      -webkit-user-select:none;
+    }
+    .distance-btn:active {
+      transform:scale(0.9);
+      box-shadow:0 1px 4px rgba(0,0,0,0.3);
+    }
+    .distance-btn:hover {
+      background:linear-gradient(135deg, rgba(57,73,171,1), rgba(66,165,245,1));
+      box-shadow:0 3px 12px rgba(0,0,0,0.4);
+    }
+    .distance-value {
+      min-width:24px;
+      text-align:center;
+      font-size:12px;
+      font-weight:bold;
+      color:#1a237e;
+      background:rgba(255,255,255,0.9);
+      padding:4px 6px;
+      border-radius:6px;
+      box-shadow:0 1px 3px rgba(0,0,0,0.2);
+    }
+    .left-distance-control {
+      left:8px;
+    }
+    .right-distance-control {
+      right:8px;
+    }
 
     .ground {
       position:absolute;
@@ -275,47 +349,6 @@
       box-shadow:0 -4px 10px rgba(0,0,0,0.25) inset;
     }
 
-    .status-panel {
-      position:absolute;
-      right:8px;
-      top:8px;
-      width:100px;
-      height:140px;
-      border-radius:14px;
-      background:linear-gradient(135deg, rgba(255,255,255,0.98), rgba(227,242,253,0.95));
-      box-shadow:0 4px 12px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.5);
-      padding:10px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      font-size:11px;
-      color:#1a237e;
-      border:1px solid rgba(57,73,171,0.15);
-    }
-    .status-title {
-      text-align:center;
-      font-weight:bold;
-      margin-bottom:6px;
-      font-size:12px;
-      color:#283593;
-      padding-bottom:4px;
-      border-bottom:1px solid rgba(57,73,171,0.2);
-    }
-    .status-text {
-      font-size:11px;
-      line-height:1.5;
-      color:#1a237e;
-    }
-    .status-result {
-      margin-top:6px;
-      font-size:12px;
-      font-weight:bold;
-      text-align:center;
-      padding:6px 8px;
-      border-radius:10px;
-      box-shadow:0 2px 6px rgba(0,0,0,0.15);
-      transition:all 0.3s ease;
-    }
 
     .moment-panel {
       margin-top:10px;
@@ -329,15 +362,35 @@
       font-size:14px;
       font-weight:bold;
       color:#1a237e;
-      margin-bottom:8px;
-      padding-bottom:6px;
+      margin-bottom:10px;
+      padding-bottom:8px;
       border-bottom:2px solid rgba(57,73,171,0.2);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .moment-status {
+      font-size:12px;
+      font-weight:bold;
+      padding:6px 12px;
+      border-radius:20px;
+      color:white;
+      box-shadow:0 2px 6px rgba(0,0,0,0.2);
+    }
+    .moment-status.balanced {
+      background:#66bb6a;
+    }
+    .moment-status.right-down {
+      background:#42a5f5;
+    }
+    .moment-status.left-down {
+      background:#ef5350;
     }
     .moment-row {
       display:flex;
       justify-content:space-between;
       align-items:center;
-      font-size:13px;
+      font-size:12px;
       margin-bottom:6px;
       padding:4px 0;
     }
@@ -381,6 +434,23 @@
       color:#1a237e;
       text-align:right;
       font-weight:600;
+    }
+
+    .control-hint {
+      text-align:center;
+      padding:10px 12px;
+      font-size:12px;
+      color:#1a237e;
+      background:linear-gradient(135deg, rgba(255,255,255,0.95), rgba(227,242,253,0.9));
+      border-radius:10px;
+      margin-bottom:10px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.1);
+      border:1px solid rgba(57,73,171,0.2);
+      line-height:1.6;
+    }
+    .control-hint strong {
+      color:#283593;
+      font-weight:bold;
     }
 
     .sim-comment {
@@ -589,10 +659,56 @@
       touch-action:manipulation;
     }
 
+    /* スマホファースト：デフォルトがモバイル */
+    @media (min-width:769px){
+      /* デスクトップ向けの調整 */
+      .sim-control-row {
+        flex-direction:row;
+        align-items:center;
+      }
+      .sim-control-label {
+        min-width:180px;
+      }
+      .slider {
+        flex:1;
+      }
+      .value-display {
+        min-width:100px;
+        text-align:right;
+      }
+      .balance-area {
+        height:170px;
+      }
+      .beam {
+        width:240px;
+        max-width:none;
+      }
+      .status-panel {
+        width:100px;
+        height:140px;
+        font-size:11px;
+      }
+      .status-title {
+        font-size:12px;
+      }
+      .status-text {
+        font-size:11px;
+      }
+      .status-result {
+        font-size:12px;
+      }
+      .moment-title {
+        font-size:14px;
+      }
+      .moment-row {
+        font-size:13px;
+      }
+    }
+    
     @media (max-width:768px){
       body { overflow-x:hidden; }
       .header { padding:8px 12px; }
-      .home-btn { padding:10px 16px; font-size:13px; }
+      .home-btn { padding:10px 16px; font-size:13px; min-height:44px; }
       .lesson-title { font-size:14px; margin:0 8px; text-align:center; }
       .header > div:last-child { width:80px; }
       .main-container { padding:10px; }
@@ -602,26 +718,46 @@
       .info-item h4 { font-size:13px; }
       .info-item p { font-size:12px; }
       .sim-area { padding:10px 10px 14px; }
-      .sim-field { min-height:250px; }
+      .sim-field { min-height:280px; padding:8px; }
+      .balance-area { height:200px; min-height:200px; }
       .question-container { padding:16px; }
       .question-text { font-size:15px; margin-bottom:12px; }
       .choice { padding:14px 16px; font-size:14px; min-height:52px; }
       .navigation { flex-direction:column; gap:12px; margin-top:16px; }
-      .nav-btn { width:100%; padding:14px 20px; font-size:15px; }
-      .start-learning-btn { padding:16px 24px; font-size:15px; max-width:100%; }
+      .nav-btn { width:100%; padding:14px 20px; font-size:15px; min-height:48px; }
+      .start-learning-btn { padding:16px 24px; font-size:15px; max-width:100%; min-height:52px; }
       .explanation { padding:12px; font-size:13px; margin-top:12px; }
       .progress-bar { margin:12px 0; }
     }
     @media (max-width:480px){
       .header { padding:6px 10px; }
-      .home-btn { padding:8px 14px; font-size:12px; }
+      .home-btn { padding:8px 14px; font-size:12px; min-height:44px; }
       .lesson-title { font-size:12px; margin:0 6px; }
       .header > div:last-child { width:70px; }
       .main-container { padding:8px; }
+      .sim-area { padding:8px 8px 12px; }
+      .sim-field { min-height:260px; padding:6px; }
+      .balance-area { height:180px; min-height:180px; }
       .question-container { padding:12px; }
       .question-text { font-size:14px; }
       .choice { padding:12px 14px; font-size:13px; min-height:48px; }
       .info-panel { padding:12px; }
+      .moment-panel { padding:8px 10px; }
+      .moment-title { font-size:12px; }
+      .moment-row { font-size:11px; }
+      .distance-control {
+        gap:3px;
+      }
+      .distance-btn {
+        width:28px;
+        height:28px;
+        font-size:14px;
+      }
+      .distance-value {
+        font-size:11px;
+        padding:3px 5px;
+        min-width:20px;
+      }
     }
   </style>
 </head>
@@ -640,29 +776,17 @@
         <p>「重さ」と「距離」のちがいで、てんびんのつり合い方がどう変わるか体験しよう</p>
       </div>
       <div class="sim-area">
-        <div class="sim-control-row">
-          <div class="sim-control-label">左のおもりの重さ（1〜5）</div>
-          <input type="range" id="leftWeightSlider" class="slider" min="1" max="5" step="1" value="2">
-          <div class="value-display" id="leftWeightDisplay">2</div>
+        <!-- コントロールは非表示（おもりを直接操作） -->
+        <div class="control-hint">
+          💡 <strong>おもりをタップ</strong>：重さを変更（1→2→3→4→5→1）<br>
+          💡 <strong>矢印ボタン</strong>：距離を変更（支点からの目もり）
         </div>
-
-        <div class="sim-control-row">
-          <div class="sim-control-label">左のおもりの距離（支点からの目もり）</div>
-          <input type="range" id="leftDistSlider" class="slider" min="1" max="5" step="1" value="3">
-          <div class="value-display" id="leftDistDisplay">3</div>
-        </div>
-
-        <div class="sim-control-row">
-          <div class="sim-control-label">右のおもりの重さ（1〜5）</div>
-          <input type="range" id="rightWeightSlider" class="slider" min="1" max="5" step="1" value="3">
-          <div class="value-display" id="rightWeightDisplay">3</div>
-        </div>
-
-        <div class="sim-control-row">
-          <div class="sim-control-label">右のおもりの距離（支点からの目もり）</div>
-          <input type="range" id="rightDistSlider" class="slider" min="1" max="5" step="1" value="2">
-          <div class="value-display" id="rightDistDisplay">2</div>
-        </div>
+        
+        <!-- スライダーは非表示だが、値の保持のため残す -->
+        <input type="range" id="leftWeightSlider" class="slider" style="display:none;" min="1" max="5" step="1" value="2">
+        <input type="range" id="leftDistSlider" class="slider" style="display:none;" min="1" max="5" step="1" value="3">
+        <input type="range" id="rightWeightSlider" class="slider" style="display:none;" min="1" max="5" step="1" value="3">
+        <input type="range" id="rightDistSlider" class="slider" style="display:none;" min="1" max="5" step="1" value="2">
 
         <div class="sim-field">
           <div class="balance-area">
@@ -680,6 +804,13 @@
                   <span id="leftWeightText"></span>
                 </div>
               </div>
+              
+              <!-- 左の距離コントロール -->
+              <div class="distance-control left-distance-control">
+                <button class="distance-btn" id="leftDistDecrease" aria-label="距離を増やす">◁</button>
+                <div class="distance-value" id="leftDistValue">3</div>
+                <button class="distance-btn" id="leftDistIncrease" aria-label="距離を減らす">▷</button>
+              </div>
 
               <div class="hook right-hook" id="rightHook">
                 <div class="hook-circle"></div>
@@ -688,19 +819,22 @@
                   <span id="rightWeightText"></span>
                 </div>
               </div>
+              
+              <!-- 右の距離コントロール -->
+              <div class="distance-control right-distance-control">
+                <button class="distance-btn" id="rightDistDecrease" aria-label="距離を減らす">◁</button>
+                <div class="distance-value" id="rightDistValue">2</div>
+                <button class="distance-btn" id="rightDistIncrease" aria-label="距離を増やす">▷</button>
+              </div>
             </div>
 
-            <div class="status-panel">
-              <div>
-                <div class="status-title">つり合いのようす</div>
-                <div class="status-text" id="statusText"></div>
-              </div>
-              <div class="status-result" id="statusResult"></div>
-            </div>
           </div>
 
           <div class="moment-panel">
-            <div class="moment-title">左右の「はたらき」の大きさ（重さ×距離）</div>
+            <div class="moment-title">
+              <span>左右の「はたらき」の大きさ（重さ×距離）</span>
+              <span class="moment-status" id="momentStatus"></span>
+            </div>
             <div class="moment-row">
               <span class="label">左：</span>
               <span class="value" id="leftMomentText"></span>
@@ -797,10 +931,12 @@
     const rightMomentText = document.getElementById('rightMomentText');
     const balanceFill = document.getElementById('balanceFill');
     const balanceLabel = document.getElementById('balanceLabel');
+    const momentStatus = document.getElementById('momentStatus');
 
-    const statusText = document.getElementById('statusText');
-    const statusResult = document.getElementById('statusResult');
     const simCommentEl = document.getElementById('simComment');
+
+    const leftDistValue = document.getElementById('leftDistValue');
+    const rightDistValue = document.getElementById('rightDistValue');
 
     function updateDisplayText(){
       const lw = parseInt(leftWeightSlider.value, 10);
@@ -808,10 +944,15 @@
       const rw = parseInt(rightWeightSlider.value, 10);
       const rd = parseInt(rightDistSlider.value, 10);
 
-      leftWeightDisplay.textContent = lw;
-      leftDistDisplay.textContent = ld;
-      rightWeightDisplay.textContent = rw;
-      rightDistDisplay.textContent = rd;
+      // 表示用の要素が存在する場合のみ更新
+      if (leftWeightDisplay) leftWeightDisplay.textContent = lw;
+      if (leftDistDisplay) leftDistDisplay.textContent = ld;
+      if (rightWeightDisplay) rightWeightDisplay.textContent = rw;
+      if (rightDistDisplay) rightDistDisplay.textContent = rd;
+
+      // 距離表示を更新
+      if (leftDistValue) leftDistValue.textContent = ld;
+      if (rightDistValue) rightDistValue.textContent = rd;
 
       leftWeightText.textContent = lw;
       rightWeightText.textContent = rw;
@@ -824,12 +965,15 @@
       const rd = parseInt(rightDistSlider.value, 10);
 
       // 左右 1〜5 を、左右方向の位置にマップ（中央からのずれ）
-      const maxOffset = 80; // px
-      const leftOffsetRatio = ld / 5;  // 0.2〜1
-      const rightOffsetRatio = rd / 5;
+      // 距離1=支点に近い、距離5=支点から遠い
+      // 左：1で支点近く、5で左端（遠い）
+      // 右：1で支点近く、5で右端（遠い）
+      const leftOffsetRatio = ld / 5;  // 1→0.2, 5→1.0
+      const rightOffsetRatio = rd / 5; // 1→0.2, 5→1.0
 
-      leftHook.style.left = (50 - leftOffsetRatio * (maxOffset / 2) / 1.1) + '%';
-      rightHook.style.left = (50 + rightOffsetRatio * (maxOffset / 2) / 1.1) + '%';
+      // 中央50%から左右に最大20%ずつずらす
+      leftHook.style.left = (50 - leftOffsetRatio * 20) + '%';
+      rightHook.style.left = (50 + rightOffsetRatio * 20) + '%';
     }
 
     function updateBalance(){
@@ -870,37 +1014,22 @@
         ? 'translateX(0) scaleX(1)'
         : 'translateX(-' + widthPercent + '%) scaleX(1)';
 
+      // つり合いの状態を表示
+      momentStatus.classList.remove('balanced', 'right-down', 'left-down');
       if (diff === 0){
+        momentStatus.classList.add('balanced');
+        momentStatus.textContent = 'つり合っている';
         balanceLabel.textContent = '左右の重さ×距離が同じなので、てんびんはつり合っています。';
       } else if (diff > 0){
+        momentStatus.classList.add('right-down');
+        momentStatus.textContent = '右が下がる';
         balanceLabel.textContent = '右の「重さ×距離」が大きいので、右がわが下がります。';
       } else {
+        momentStatus.classList.add('left-down');
+        momentStatus.textContent = '左が下がる';
         balanceLabel.textContent = '左の「重さ×距離」が大きいので、左がわが下がります。';
       }
 
-      // ステータス表示
-      if (diff === 0){
-        statusText.innerHTML =
-          '左：' + leftMoment + '（' + lw + '×' + ld + '）<br>' +
-          '右：' + rightMoment + '（' + rw + '×' + rd + '）';
-        statusResult.style.background = '#66bb6a';
-        statusResult.style.color = '#fff';
-        statusResult.textContent = 'つり合っている';
-      } else if (diff > 0){
-        statusText.innerHTML =
-          '左：' + leftMoment + '（' + lw + '×' + ld + '）<br>' +
-          '右：' + rightMoment + '（' + rw + '×' + rd + '）';
-        statusResult.style.background = '#42a5f5';
-        statusResult.style.color = '#fff';
-        statusResult.textContent = '右が下がる';
-      } else {
-        statusText.innerHTML =
-          '左：' + leftMoment + '（' + lw + '×' + ld + '）<br>' +
-          '右：' + rightMoment + '（' + rw + '×' + rd + '）';
-        statusResult.style.background = '#ef5350';
-        statusResult.style.color = '#fff';
-        statusResult.textContent = '左が下がる';
-      }
 
       // コメント
       let comment = '';
@@ -926,6 +1055,97 @@
     leftDistSlider.addEventListener('input', updateBalance);
     rightWeightSlider.addEventListener('input', updateBalance);
     rightDistSlider.addEventListener('input', updateBalance);
+
+    /* ================================
+       ▼ おもりの直接操作（タップ）
+    ================================= */
+    // おもりをタップ：重さを変更
+    function handleWeightTap(weightElement, isLeft) {
+      const slider = isLeft ? leftWeightSlider : rightWeightSlider;
+      let currentValue = parseInt(slider.value, 10);
+      currentValue = (currentValue % 5) + 1; // 1→2→3→4→5→1
+      slider.value = currentValue;
+      
+      // タップアニメーション
+      weightElement.classList.add('tapping');
+      setTimeout(() => {
+        weightElement.classList.remove('tapping');
+      }, 300);
+      
+      updateBalance();
+    }
+
+    // 左のおもり：タップで重さ変更
+    leftWeightBlock.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      handleWeightTap(leftWeightBlock, true);
+    });
+
+    leftWeightBlock.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handleWeightTap(leftWeightBlock, true);
+    });
+
+    // 右のおもり：タップで重さ変更
+    rightWeightBlock.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      handleWeightTap(rightWeightBlock, false);
+    });
+
+    rightWeightBlock.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handleWeightTap(rightWeightBlock, false);
+    });
+
+    /* ================================
+       ▼ 距離変更用の矢印ボタン
+    ================================= */
+    const leftDistDecrease = document.getElementById('leftDistDecrease');
+    const leftDistIncrease = document.getElementById('leftDistIncrease');
+    const rightDistDecrease = document.getElementById('rightDistDecrease');
+    const rightDistIncrease = document.getElementById('rightDistIncrease');
+
+    function changeDistance(isLeft, isIncrease) {
+      const slider = isLeft ? leftDistSlider : rightDistSlider;
+      let currentValue = parseInt(slider.value, 10);
+      
+      if (isIncrease) {
+        currentValue = Math.min(5, currentValue + 1);
+      } else {
+        currentValue = Math.max(1, currentValue - 1);
+      }
+      
+      slider.value = currentValue;
+      updateBalance();
+    }
+
+    // 左の距離コントロール（左側は逆：◁で距離が増える、▷で距離が減る）
+    leftDistDecrease.addEventListener('click', () => changeDistance(true, true)); // ◁で距離を増やす
+    leftDistDecrease.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      changeDistance(true, true);
+    });
+    
+    leftDistIncrease.addEventListener('click', () => changeDistance(true, false)); // ▷で距離を減らす
+    leftDistIncrease.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      changeDistance(true, false);
+    });
+
+    // 右の距離コントロール
+    rightDistDecrease.addEventListener('click', () => changeDistance(false, false));
+    rightDistDecrease.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      changeDistance(false, false);
+    });
+    
+    rightDistIncrease.addEventListener('click', () => changeDistance(false, true));
+    rightDistIncrease.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      changeDistance(false, true);
+    });
 
     updateBalance(); // 初期表示
 
@@ -1179,6 +1399,17 @@
           Math.round(timeSpent/1000)
         );
         sendQuestionAnswerToParent(q, choiceIndex, isCorrect);
+        
+        // すべての問題に回答した場合、完了画面を表示
+        const session = learningTracker.currentSession;
+        if (session && session.answered && session.answered.length === lessonData.questions.length) {
+          const nextBtn = document.getElementById('next-btn');
+          if (nextBtn && nextBtn.textContent === '学習完了') {
+            setTimeout(() => {
+              completeLesson();
+            }, 1500);
+          }
+        }
       }, 500);
     }
 

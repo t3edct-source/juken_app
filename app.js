@@ -1203,8 +1203,9 @@ scienceUnits = [
       'sci.chemistry.water_three_states', // 水の変化・状態変化
       'sci.chemistry.water_three_states_sim', // 水の変化：温度と状態変化シミュレーション
       'sci.chemistry.combustion_air', // 燃焼と空気の成分
-      // 地学（7）
+      // 地学（8）
       'sci.earth.constellations_seasons', // 星と星座
+      'sci.earth.stars_constellations_sim', // 星と星座シミュレーション
       'sci.earth.sun_movement_shadow', // 太陽と影（基礎）
       'sci.earth.sun_movement_shadow_sim', // 太陽と影：影の長さシミュレーション
       'sci.earth.weather_changes', // 天気の変化
@@ -1219,29 +1220,34 @@ scienceUnits = [
     shortName: '小5',
     icon: '📚',
     lessons: [
-      // 物理（8）
+      // 物理（10）
       'sci.physics.current_voltage_circuit', // 電気の基礎（乾電池・回路）
       'sci.physics.current_voltage_circuit_sim', // 電気の基礎：乾電池と豆電球シミュレーション
       'sci.physics.current_effect_heating', // 電流の作用①（発熱）
       'sci.physics.current_effect_heating_sim', // 電流の作用①：発熱シミュレーション
       'sci.physics.current_effect_magnetic', // 電流の作用②（磁界）
       'sci.physics.current_effect_magnetic_sim', // 電流の作用②：磁界シミュレーション
+      'sci.physics.light_properties_sim', // 光の性質シミュレーション
+      'sci.physics.spring_force_sim', // ばねと力シミュレーション
       'sci.physics.lever_weight_basic', // てこのつり合い
       'sci.physics.spring_force', // ばねと力
       'sci.physics.light_properties', // 光の性質
       'sci.physics.force_motion', // 力と運動（浮力・かっ車・輪じく）
-      // 地学（4）
+      // 地学（6）
       'sci.earth.volcano_structure', // 火山のしくみ
       'sci.earth.volcano_structure_sim', // 火山のしくみ：マグマと噴火シミュレーション
       'sci.earth.earthquake_structure', // 地震のしくみ
+      'sci.earth.earthquake_structure_sim', // 地震のしくみシミュレーション
       'sci.earth.land_river_erosion', // 流水と地形の変化
       'sci.earth.clouds_fronts_weather_map', // 気象（雲・前線・天気図）
+      'sci.earth.weather_fronts_sim', // 天気の変化（低気圧と前線）シミュレーション
       // 生物（3）
       'sci.biology.food_chain', // 生物のつながり（食物連鎖）
       'sci.biology.human_body_digestion_respiration', // 人体①（消化・呼吸・血液）
       'sci.biology.human_body_nervous_motion', // 人体②（神経・運動）
-      // 化学（1）
-      'sci.chemistry.solubility_temperature' // 水溶液と溶解度
+      // 化学（2）
+      'sci.chemistry.solubility_temperature', // 水溶液と溶解度
+      'sci.chemistry.solubility_temperature_sim' // 水溶液と溶解度シミュレーション
     ]
   },
   {

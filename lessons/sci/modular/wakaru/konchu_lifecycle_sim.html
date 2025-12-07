@@ -1198,6 +1198,17 @@
           Math.round(timeSpent/1000)
         );
         sendQuestionAnswerToParent(q, choiceIndex, isCorrect);
+        
+        // すべての問題に回答した場合、完了画面を表示
+        const session = learningTracker.currentSession;
+        if (session && session.answered && session.answered.length === lessonData.questions.length) {
+          const nextBtn = document.getElementById('next-btn');
+          if (nextBtn && nextBtn.textContent === '学習完了') {
+            setTimeout(() => {
+              completeLesson();
+            }, 1500);
+          }
+        }
       }, 500);
     }
 

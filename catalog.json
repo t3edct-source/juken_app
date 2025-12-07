@@ -2056,6 +2056,23 @@
     "tags": []
   },
   {
+    "id": "sci.earth.stars_constellations_sim",
+    "grade": 4,
+    "subject": "sci",
+    "title": "シミュレーションで学ぶ理科 - 星と星座",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/stars_constellations_sim.html",
+    "format": "html",
+    "tags": [
+      "星",
+      "星座",
+      "北極星",
+      "季節",
+      "シミュレーション"
+    ]
+  },
+  {
     "id": "sci.earth.sun_movement_shadow",
     "grade": 4,
     "subject": "sci",
@@ -2382,6 +2399,38 @@
     ]
   },
   {
+    "id": "sci.physics.light_properties_sim",
+    "grade": 5,
+    "subject": "sci",
+    "title": "シミュレーションで学ぶ理科 - 光の性質",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/physics_light_sim.html",
+    "format": "html",
+    "tags": [
+      "光",
+      "反射",
+      "屈折",
+      "シミュレーション"
+    ]
+  },
+  {
+    "id": "sci.physics.spring_force_sim",
+    "grade": 5,
+    "subject": "sci",
+    "title": "シミュレーションで学ぶ理科 - ばねと力",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/physics_spring_force_sim.html",
+    "format": "html",
+    "tags": [
+      "ばね",
+      "力",
+      "弾性",
+      "シミュレーション"
+    ]
+  },
+  {
     "id": "sci.physics.lever_weight_basic",
     "grade": 5,
     "subject": "sci",
@@ -2488,6 +2537,25 @@
     "tags": []
   },
   {
+    "id": "sci.earth.earthquake_structure_sim",
+    "grade": 5,
+    "subject": "sci",
+    "title": "シミュレーションで学ぶ理科 - 地震のしくみ",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/jishin_sim.html",
+    "format": "html",
+    "tags": [
+      "地学",
+      "地震",
+      "プレート",
+      "断層",
+      "震源",
+      "地震波",
+      "シミュレーション"
+    ]
+  },
+  {
     "id": "sci.earth.land_river_erosion",
     "grade": 5,
     "subject": "sci",
@@ -2508,6 +2576,24 @@
     "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.clouds_fronts_weather_map&mode=wakaru",
     "format": "html",
     "tags": []
+  },
+  {
+    "id": "sci.earth.weather_fronts_sim",
+    "grade": 5,
+    "subject": "sci",
+    "title": "シミュレーションで学ぶ理科 - 天気の変化（低気圧と前線）",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/weather_fronts_sim.html",
+    "format": "html",
+    "tags": [
+      "低気圧",
+      "前線",
+      "天気",
+      "風",
+      "雨",
+      "シミュレーション"
+    ]
   },
   {
     "id": "sci.biology.food_chain",
@@ -2552,6 +2638,24 @@
     "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.chemistry.solubility_temperature&mode=wakaru",
     "format": "html",
     "tags": []
+  },
+  {
+    "id": "sci.chemistry.solubility_temperature_sim",
+    "grade": 5,
+    "subject": "sci",
+    "title": "シミュレーションで学ぶ理科 - 水溶液と溶解度",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/chemistry_solubility_sim.html",
+    "format": "html",
+    "tags": [
+      "水溶液",
+      "溶解度",
+      "食塩",
+      "ミョウバン",
+      "再結晶",
+      "シミュレーション"
+    ]
   },
   {
     "id": "sci.chemistry.dissolution_solution",
