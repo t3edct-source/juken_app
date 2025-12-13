@@ -1532,7 +1532,253 @@ socialDrillUnits = [
   }
 ];
 
-// おすすめ教材を選択する関数
+// レッスンIDから単元を特定する関数
+function getUnitFromLessonId(lessonId, subjectType) {
+  if (subjectType === 'sci' || subjectType === 'science_drill') {
+    // 理科：scienceUnitsのlessons配列から判定
+    for (const unit of scienceUnits) {
+      if (unit.lessons && unit.lessons.includes(lessonId)) {
+        return unit.id;
+      }
+    }
+    // scienceDrillUnitsのlessons配列からも判定
+    for (const unit of scienceDrillUnits) {
+      if (unit.lessons && unit.lessons.includes(lessonId)) {
+        // g4_drill → g4 に変換
+        return unit.id.replace('_drill', '');
+      }
+    }
+  } else if (subjectType === 'soc' || subjectType === 'social_drill') {
+    // 社会：socialUnitsのlessons配列から判定
+    for (const unit of socialUnits) {
+      if (unit.lessons && unit.lessons.includes(lessonId)) {
+        return unit.id;
+      }
+    }
+    // socialDrillUnitsのlessons配列からも判定
+    for (const unit of socialDrillUnits) {
+      if (unit.lessons && unit.lessons.includes(lessonId)) {
+        // geography_drill → geography に変換
+        return unit.id.replace('_drill', '');
+      }
+    }
+  }
+  return null;
+}
+
+// 単元が購入済みかチェック（単元内のレッスンのsku_requiredを確認）
+function isUnitPurchased(unitId, subjectType) {
+  // 単元内のレッスンを取得
+  let unitLessons = [];
+  if (subjectType === 'sci' || subjectType === 'science_drill') {
+    const wakaruUnit = unitId === 'g4' ? scienceUnits.find(u => u.id === 'g4') :
+                       unitId === 'g5' ? scienceUnits.find(u => u.id === 'g5') :
+                       unitId === 'g6' ? scienceUnits.find(u => u.id === 'g6') : null;
+    const oboeruUnit = unitId === 'g4' ? scienceDrillUnits.find(u => u.id === 'g4_drill') :
+                       unitId === 'g5' ? scienceDrillUnits.find(u => u.id === 'g5_drill') :
+                       unitId === 'g6' ? scienceDrillUnits.find(u => u.id === 'g6_drill') : null;
+    
+    if (wakaruUnit && wakaruUnit.lessons) {
+      unitLessons = unitLessons.concat(wakaruUnit.lessons);
+    }
+    if (oboeruUnit && oboeruUnit.lessons) {
+      unitLessons = unitLessons.concat(oboeruUnit.lessons);
+    }
+  } else if (subjectType === 'soc' || subjectType === 'social_drill') {
+    const wakaruUnit = unitId === 'geography' ? socialUnits.find(u => u.id === 'geography') :
+                       unitId === 'history' ? socialUnits.find(u => u.id === 'history') :
+                       unitId === 'civics' ? socialUnits.find(u => u.id === 'civics') :
+                       unitId === 'comprehensive' ? socialUnits.find(u => u.id === 'comprehensive') : null;
+    const oboeruUnit = unitId === 'geography' ? socialDrillUnits.find(u => u.id === 'geography_drill') :
+                       unitId === 'history' ? socialDrillUnits.find(u => u.id === 'history_drill') :
+                       unitId === 'civics' ? socialDrillUnits.find(u => u.id === 'civics_drill') :
+                       unitId === 'comprehensive' ? socialDrillUnits.find(u => u.id === 'comprehensive_drill') : null;
+    
+    if (wakaruUnit && wakaruUnit.lessons) {
+      unitLessons = unitLessons.concat(wakaruUnit.lessons);
+    }
+    if (oboeruUnit && oboeruUnit.lessons) {
+      unitLessons = unitLessons.concat(oboeruUnit.lessons);
+    }
+  }
+  
+  if (unitLessons.length === 0) {
+    return false;
+  }
+  
+  // 単元内のレッスンのsku_requiredを確認
+  // 単元内のレッスンで使用されているSKUを収集
+  const requiredSkus = new Set();
+  for (const lessonId of unitLessons) {
+    const lesson = state.catalog.find(l => l.id === lessonId);
+    if (lesson && lesson.sku_required) {
+      requiredSkus.add(lesson.sku_required);
+    }
+  }
+  
+  // すべての必要なSKUが購入済み、または無料（sku_requiredがnull）のレッスンのみなら購入済みとみなす
+  if (requiredSkus.size === 0) {
+    // すべてのレッスンが無料
+    return true;
+  }
+  
+  // 必要なSKUがすべて購入済みかチェック
+  for (const sku of requiredSkus) {
+    if (!hasEntitlement(sku)) {
+      return false;
+    }
+  }
+  
+  return true;
+}
+
+// おすすめ教材を選択する関数（ルートマップ用：単元ごとにわかる編→おぼえる編を交互に）
+function getRecommendedRouteMap(subjectGroup) {
+  const { name, subjects } = subjectGroup;
+  
+  // 単元の順序を定義
+  let unitOrder = [];
+  if (subjects.includes('sci') || subjects.includes('science_drill')) {
+    // 理科：学年順
+    unitOrder = ['g4', 'g5', 'g6'];
+  } else if (subjects.includes('soc') || subjects.includes('social_drill')) {
+    // 社会：分野順
+    unitOrder = ['geography', 'history', 'civics', 'comprehensive'];
+  }
+  
+  // 単元ごとにわかる編→おぼえる編の順でレッスンを並べる
+  const allRouteLessons = [];
+  
+  for (const unitId of unitOrder) {
+    // 購入済みの単元のみ処理
+    if (!isUnitPurchased(unitId, subjects[0])) {
+      continue;
+    }
+    
+    // わかる編のレッスンを取得
+    const wakaruUnit = unitId === 'g4' ? scienceUnits.find(u => u.id === 'g4') :
+                       unitId === 'g5' ? scienceUnits.find(u => u.id === 'g5') :
+                       unitId === 'g6' ? scienceUnits.find(u => u.id === 'g6') :
+                       unitId === 'geography' ? socialUnits.find(u => u.id === 'geography') :
+                       unitId === 'history' ? socialUnits.find(u => u.id === 'history') :
+                       unitId === 'civics' ? socialUnits.find(u => u.id === 'civics') :
+                       unitId === 'comprehensive' ? socialUnits.find(u => u.id === 'comprehensive') : null;
+    
+    // おぼえる編のレッスンを取得
+    const oboeruUnit = unitId === 'g4' ? scienceDrillUnits.find(u => u.id === 'g4_drill') :
+                       unitId === 'g5' ? scienceDrillUnits.find(u => u.id === 'g5_drill') :
+                       unitId === 'g6' ? scienceDrillUnits.find(u => u.id === 'g6_drill') :
+                       unitId === 'geography' ? socialDrillUnits.find(u => u.id === 'geography_drill') :
+                       unitId === 'history' ? socialDrillUnits.find(u => u.id === 'history_drill') :
+                       unitId === 'civics' ? socialDrillUnits.find(u => u.id === 'civics_drill') :
+                       unitId === 'comprehensive' ? socialDrillUnits.find(u => u.id === 'comprehensive_drill') : null;
+    
+    // わかる編のレッスンを追加
+    if (wakaruUnit && wakaruUnit.lessons) {
+      wakaruUnit.lessons.forEach(lessonId => {
+        const lesson = state.catalog.find(l => l.id === lessonId);
+        if (lesson) {
+          allRouteLessons.push({ ...lesson, unitId: unitId, unitType: 'wakaru' });
+        }
+      });
+    }
+    
+    // おぼえる編のレッスンを追加
+    if (oboeruUnit && oboeruUnit.lessons) {
+      oboeruUnit.lessons.forEach(lessonId => {
+        const lesson = state.catalog.find(l => l.id === lessonId);
+        if (lesson) {
+          allRouteLessons.push({ ...lesson, unitId: unitId, unitType: 'oboeru' });
+        }
+      });
+    }
+  }
+  
+  if (allRouteLessons.length === 0) {
+    return null;
+  }
+  
+  // 最後に学習したレッスンを特定（個別の単元を選んだ場合も考慮）
+  const completedLessons = allRouteLessons
+    .filter(entry => isLessonCompleted(entry.id))
+    .sort((a, b) => {
+      const progressA = getLessonProgress(a.id);
+      const progressB = getLessonProgress(b.id);
+      return (progressB?.at || 0) - (progressA?.at || 0);
+    });
+  
+  let currentIndex = 0;
+  let startUnitId = null;
+  
+  if (completedLessons.length > 0) {
+    // 最後に完了したレッスンの単元を特定
+    const lastCompleted = completedLessons[0];
+    startUnitId = lastCompleted.unitId;
+    
+    // その単元の最初のレッスンからスタート
+    const startUnitIndex = allRouteLessons.findIndex(entry => entry.unitId === startUnitId);
+    if (startUnitIndex !== -1) {
+      // その単元内で最後に完了したレッスンを探す
+      const unitCompletedLessons = allRouteLessons
+        .filter(entry => entry.unitId === startUnitId && isLessonCompleted(entry.id))
+        .sort((a, b) => {
+          const progressA = getLessonProgress(a.id);
+          const progressB = getLessonProgress(b.id);
+          return (progressB?.at || 0) - (progressA?.at || 0);
+        });
+      
+      if (unitCompletedLessons.length > 0) {
+        const lastUnitCompleted = unitCompletedLessons[0];
+        const lastUnitCompletedIndex = allRouteLessons.findIndex(entry => entry.id === lastUnitCompleted.id);
+        if (lastUnitCompletedIndex < allRouteLessons.length - 1) {
+          currentIndex = lastUnitCompletedIndex + 1;
+        } else {
+          // その単元がすべて完了している場合は、次の単元の最初のレッスンへ
+          const nextUnitIndex = unitOrder.findIndex(id => id === startUnitId) + 1;
+          if (nextUnitIndex < unitOrder.length) {
+            const nextUnitId = unitOrder[nextUnitIndex];
+            const nextUnitStartIndex = allRouteLessons.findIndex(entry => entry.unitId === nextUnitId);
+            if (nextUnitStartIndex !== -1) {
+              currentIndex = nextUnitStartIndex;
+            }
+          }
+        }
+      } else {
+        // その単元で完了したレッスンがない場合は、その単元の最初のレッスンから
+        currentIndex = startUnitIndex;
+      }
+    } else {
+      // 単元が見つからない場合は、最後に完了したレッスンの次のレッスン
+      const lastCompletedIndex = allRouteLessons.findIndex(entry => entry.id === lastCompleted.id);
+      if (lastCompletedIndex < allRouteLessons.length - 1) {
+        currentIndex = lastCompletedIndex + 1;
+      }
+    }
+  }
+  
+  // 前後2つずつ取得
+  const startIndex = Math.max(0, currentIndex - 2);
+  const endIndex = Math.min(allRouteLessons.length - 1, currentIndex + 2);
+  const routeSegment = allRouteLessons.slice(startIndex, endIndex + 1);
+  
+  // 各レッスンに位置情報を追加
+  return routeSegment.map((lesson, index) => {
+    const globalIndex = startIndex + index;
+    const position = globalIndex - currentIndex; // -2, -1, 0, 1, 2
+    const isCurrent = position === 0;
+    const isCompleted = isLessonCompleted(lesson.id);
+    
+    return {
+      ...lesson,
+      position: position, // -2, -1, 0, 1, 2
+      isCurrent: isCurrent,
+      isCompleted: isCompleted,
+      routeIndex: globalIndex
+    };
+  });
+}
+
+// おすすめ教材を選択する関数（従来版：1つずつ取得）
 function getRecommendedLessons() {
   const recommendations = [];
   
@@ -1717,6 +1963,59 @@ function calculateReviewPriority(score, daysSince) {
 function setupSubjectTabs() {
   const subjectTabs = document.querySelectorAll('.subject-tab');
   
+  // 375px以下でタブテキストを短縮表示
+  function updateTabTexts() {
+    const isSmallScreen = window.innerWidth <= 375;
+    subjectTabs.forEach(tab => {
+      const subject = tab.dataset.subject;
+      const originalText = tab.getAttribute('data-original-text') || tab.textContent;
+      if (!tab.getAttribute('data-original-text')) {
+        tab.setAttribute('data-original-text', originalText);
+      }
+      
+      if (isSmallScreen) {
+        // 375px以下では短縮テキストを使用
+        switch(subject) {
+          case 'science_drill':
+            tab.textContent = '🧪 理科おぼ';
+            break;
+          case 'social_drill':
+            tab.textContent = '📍 社会おぼ';
+            break;
+          case 'sci':
+            tab.textContent = '🔬 理科わ';
+            break;
+          case 'soc':
+            tab.textContent = '🌍 社会わ';
+            break;
+          case 'recommended':
+            tab.textContent = '⭐ おすすめ';
+            break;
+        }
+      } else {
+        // 通常サイズでは元のテキストを復元
+        const original = tab.getAttribute('data-original-text');
+        if (original) {
+          tab.textContent = original;
+        }
+      }
+    });
+  }
+  
+  // 初期設定
+  updateTabTexts();
+  
+  // リサイズ時に更新
+  let resizeTimer;
+  const handleResize = () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(updateTabTexts, 100);
+  };
+  
+  // 既存のリサイズリスナーを削除してから追加
+  window.removeEventListener('resize', handleResize);
+  window.addEventListener('resize', handleResize);
+  
   // 既存のイベントリスナーを削除
   subjectTabs.forEach(tab => {
     tab.removeEventListener('click', handleTabClick);
@@ -1892,23 +2191,101 @@ async function renderHome(){
   let displayCatalog;
   
   if (safeCurrentSubject === 'recommended') {
-    // おすすめ教材を取得
-    displayCatalog = getRecommendedLessons();
+    // ルートマップ形式で表示
+    const subjectGroups = [
+      { name: '理科', subjects: ['sci', 'science_drill'], icon: '🔬', colorClass: 'sci' },
+      { name: '社会', subjects: ['soc', 'social_drill'], icon: '🌍', colorClass: 'soc' }
+    ];
     
-    // おすすめ教材がない場合のメッセージ
-    if (displayCatalog.length === 0) {
-      list.innerHTML = `
-        <div class="col-span-full text-center py-8">
-          <div class="text-slate-500">
-            <p class="text-lg mb-2">🎉 素晴らしい！</p>
-            <p>すべての教材を完了しました。</p>
-            <p class="text-sm mt-2">完了した教材を「再学習」して理解を深めましょう。</p>
-          </div>
-        </div>
-      `;
-      setupSubjectTabs();
-      return;
-    }
+    list.innerHTML = '';
+    
+    subjectGroups.forEach(group => {
+      const routeLessons = getRecommendedRouteMap(group);
+      
+      if (!routeLessons || routeLessons.length === 0) {
+        return;
+      }
+      
+      // ルートマップコンテナを作成
+      const routeContainer = document.createElement('div');
+      routeContainer.className = 'route-map-container';
+      
+      // トラック（レッスン列）- ヘッダーなし
+      const track = document.createElement('div');
+      track.className = 'route-map-track';
+      
+      routeLessons.forEach((lesson, index) => {
+        const isCompleted = lesson.isCompleted;
+        const isCurrent = lesson.isCurrent;
+        const position = lesson.position;
+        const subjectName = getSubjectName(lesson.subject);
+        const hasAccess = !lesson.sku_required || hasEntitlement(lesson.sku_required);
+        
+        // ルートマップアイテム
+        const item = document.createElement('div');
+        item.className = `route-map-item position-${position}`;
+        item.onclick = () => setHash('lesson', lesson.id);
+        
+        // 現在のレッスンにはカード外の上部に▼を表示
+        if (isCurrent) {
+          const indicator = document.createElement('div');
+          indicator.className = 'route-map-card-indicator';
+          indicator.textContent = '▼';
+          item.appendChild(indicator);
+        }
+        
+        // カード
+        const card = document.createElement('div');
+        card.className = `route-map-card ${group.colorClass} ${isCompleted ? 'completed' : ''}`;
+        
+        // バッジ（完了・未完了のみ、「現在」は削除）
+        let badge = '';
+        if (isCompleted) {
+          badge = '<span class="route-map-card-badge completed">完了</span>';
+        } else {
+          badge = '<span class="route-map-card-badge pending">未完了</span>';
+        }
+        
+        // ボタン
+        const buttonText = isCompleted ? '再学習' : (hasAccess ? '開始' : '購入');
+        const buttonClass = hasAccess ? group.colorClass : 'locked';
+        
+        card.innerHTML = `
+          <div class="route-map-card-title">${escapeHtml(lesson.title)}</div>
+          <div class="route-map-card-meta">${subjectName} / 小${lesson.grade} ・ ${lesson.duration_min || '?'}分</div>
+          ${badge}
+          <button class="route-map-card-button ${buttonClass}">
+            ${buttonText}
+          </button>
+        `;
+        
+        // ボタンのクリックイベントを設定
+        const button = card.querySelector('.route-map-card-button');
+        if (button) {
+          button.addEventListener('click', (e) => {
+            e.stopPropagation();
+            setHash('lesson', lesson.id);
+          });
+        }
+        
+        item.appendChild(card);
+        track.appendChild(item);
+        
+        // 矢印（最後以外）
+        if (index < routeLessons.length - 1) {
+          const arrow = document.createElement('div');
+          arrow.className = 'route-map-arrow';
+          arrow.textContent = '→';
+          track.appendChild(arrow);
+        }
+      });
+      
+      routeContainer.appendChild(track);
+      list.appendChild(routeContainer);
+    });
+    
+    setupSubjectTabs();
+    return;
   } else {
     // 特定の教科の教材をフィルタリング
     displayCatalog = state.catalog.filter(entry => entry.subject === safeCurrentSubject);

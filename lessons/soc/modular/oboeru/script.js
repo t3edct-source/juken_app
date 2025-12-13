@@ -158,6 +158,17 @@ function generateShuffledIndices(length) {
 }
 
 function loadQuestion() {
+  // 問題切り替え時に常にページトップにスクロール（即座に）
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+  
+  // .question-content要素のスクロール位置もリセット
+  const questionContent = document.querySelector('.question-content');
+  if (questionContent) {
+    questionContent.scrollTop = 0;
+  }
+  
   const q = shuffledQuestions[current];
   
   // 進捗表示を追加
@@ -213,23 +224,34 @@ function loadQuestion() {
   }
   
   // 画面を上部にスクロール（次の問題を上部から表示）
-  setTimeout(() => {
-    // question-boxまたはquestion要素にスクロール
-    const questionBox = document.querySelector('.question-box');
-    const questionElement = document.getElementById('question');
-    const scrollTarget = questionBox || questionElement || document.body;
-    
-    if (scrollTarget) {
-      scrollTarget.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start',
-        inline: 'nearest'
-      });
-    } else {
-      // フォールバック: ページの先頭にスクロール
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+  // DOM更新後に複数回確実にトップにスクロール
+  requestAnimationFrame(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    const questionContent = document.querySelector('.question-content');
+    if (questionContent) {
+      questionContent.scrollTop = 0;
     }
-  }, 100); // 少し遅延させてDOM更新後に実行
+  });
+  
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    const questionContent = document.querySelector('.question-content');
+    if (questionContent) {
+      questionContent.scrollTop = 0;
+    }
+  }, 10);
+  
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const questionContent = document.querySelector('.question-content');
+    if (questionContent) {
+      questionContent.scrollTop = 0;
+    }
+  }, 100);
 }
 
 function handleAnswer(selected) {
@@ -369,6 +391,17 @@ function showCurrentSessionResult() {
 
 // 次の問題へ進む
 nextBtn.onclick = () => {
+  // 次の問題に進む前に即座にページトップにスクロール
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+  
+  // .question-content要素のスクロール位置もリセット
+  const questionContent = document.querySelector('.question-content');
+  if (questionContent) {
+    questionContent.scrollTop = 0;
+  }
+  
   const questionsArray = window.questions || questions;
   const totalQuestions = questionsArray ? questionsArray.length : 0;
   console.log('🔄 nextBtn.onclick 実行:', { current, totalQuestions: totalQuestions });
