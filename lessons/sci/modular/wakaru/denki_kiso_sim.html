@@ -147,7 +147,8 @@
 
     .sim-field {
       position:relative;
-      margin-top:6px;
+      margin-top:0;
+      margin-bottom:12px;
       background:linear-gradient(to bottom, #fffde7 0%, #fff3e0 50%, #ffecb3 100%);
       border-radius:12px;
       padding:12px;
@@ -609,20 +610,6 @@
         <p>乾電池の本数・つなぎ方・スイッチで、豆電球の明るさがどう変わるか体験しよう</p>
       </div>
       <div class="sim-area">
-        <div class="sim-control-row">
-          <div class="sim-control-label" id="batteryLabel">乾電池の本数</div>
-          <input type="range" id="batterySlider" class="battery-slider" min="0" max="3" step="1" value="1">
-          <div class="value-display" id="batteryDisplay">1 本</div>
-        </div>
-
-        <div class="sim-control-row">
-          <div class="sim-control-label">つなぎ方</div>
-          <div class="toggle-group">
-            <button class="toggle-btn selected" id="modeSeries">直列つなぎ</button>
-            <button class="toggle-btn" id="modeParallel">並列つなぎ</button>
-          </div>
-        </div>
-
         <div class="sim-field">
           <div class="circuit">
             <!-- wires -->
@@ -659,6 +646,21 @@
             乾電池の本数を動かしたり、<strong>直列つなぎ・並列つなぎ</strong>を切りかえてみよう。<br>
             スイッチが<strong>OFF</strong>だと、回路が切れているので電気は流れません。<br>
             スイッチを<strong>ON</strong>にすると、回路がつながり電流が流れます。
+          </div>
+        </div>
+
+        <!-- 操作UIを下に配置 -->
+        <div class="sim-control-row">
+          <div class="sim-control-label" id="batteryLabel">乾電池の本数</div>
+          <input type="range" id="batterySlider" class="battery-slider" min="0" max="3" step="1" value="1">
+          <div class="value-display" id="batteryDisplay">1 本</div>
+        </div>
+
+        <div class="sim-control-row">
+          <div class="sim-control-label">つなぎ方</div>
+          <div class="toggle-group">
+            <button class="toggle-btn selected" id="modeSeries">直列つなぎ</button>
+            <button class="toggle-btn" id="modeParallel">並列つなぎ</button>
           </div>
         </div>
       </div>

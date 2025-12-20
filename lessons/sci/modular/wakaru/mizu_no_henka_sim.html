@@ -132,7 +132,8 @@
     /* ▼ 水の状態フィールド */
     .sim-field {
       position: relative;
-      margin-top: 6px;
+      margin-top: 0;
+      margin-bottom: 12px;
       background: linear-gradient(to top, #b3e5fc 0%, #e1f5fe 50%, #ffffff 100%);
       border-radius: 12px;
       padding: 12px;
@@ -595,12 +596,6 @@
         <p>温度を変えて、水が「氷・水・水蒸気」とどう変わるか体験しよう</p>
       </div>
       <div class="sim-area">
-        <div class="sim-control-row">
-          <div class="sim-control-label">温度（-20〜120℃）を変えてみよう</div>
-          <input type="range" id="tempSlider" class="temp-slider" min="-20" max="120" step="1" value="20">
-          <div class="temp-display" id="tempDisplay">20℃</div>
-        </div>
-
         <div class="sim-field" id="waterField">
           <div class="state-label" id="stateLabel">状態：液体の水</div>
 
@@ -632,6 +627,14 @@
           スライダーを動かして、温度が<strong>0℃より下</strong>、<strong>0〜100℃</strong>、<strong>100℃より上</strong>のときで<br>
           水のようす（氷・水・水蒸気）がどう変わるか見てみよう。<br>
           それぞれの温度で、水の<strong>粒のようす</strong>もイメージしてみてね。
+        </div>
+      </div>
+
+        <!-- 操作UIを下に配置 -->
+        <div class="sim-control-row">
+          <div class="sim-control-label">温度（-20〜120℃）を変えてみよう</div>
+          <input type="range" id="tempSlider" class="temp-slider" min="-20" max="120" step="1" value="20">
+          <div class="temp-display" id="tempDisplay">20℃</div>
         </div>
       </div>
     </div>

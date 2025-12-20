@@ -311,6 +311,9 @@ function showPurchaseCancelMessage() {
 const state = {
   user: null,
   catalog: [],
+  catalogIndex: null, // インデックス化されたカタログ（Map形式）
+  catalogIndexByGrade: null, // 学年別インデックス
+  catalogIndexBySubject: null, // 教科別インデックス
   current: null,
   selectedGrade: null,
   selectedSubject: null,
@@ -825,7 +828,12 @@ window.startPurchase = startPurchase;
 // 🔐 実際のFirestore entitlementsをチェック
 function hasEntitlement(sku) { 
   if (!sku) return true; // SKU指定なしは常に許可
-  if (!state.user) return false; // 未認証は常に拒否
+  
+  // 開発・テスト用: 開発環境では未認証でもlocalStorageのpurchasesをチェック
+  const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  
+  // 本番環境では未認証の場合はFirebase entitlementsのみをチェック
+  if (!state.user && !isDevelopment) return false;
   
   // sku（packId、例：g5-soc）から対応するproductId（例：shakai_gakushu_5）を取得
   const pack = PACKS.find(p => p.id === sku);
@@ -837,6 +845,7 @@ function hasEntitlement(sku) {
   const hasFirebaseEntitlement = hasFirebaseEntitlementByPackId || hasFirebaseEntitlementByProductId;
   
   // 開発・テスト用: LocalStorage もチェック（フォールバック）
+  // 開発環境では未認証でもlocalStorageをチェック
   const localPurchases = JSON.parse(localStorage.getItem(LS_KEYS.purchases) || '[]');
   const hasLocalPurchase = localPurchases.includes(sku);
   
@@ -858,16 +867,143 @@ function hasEntitlement(sku) {
   return result;
 }
 
-function saveProgress(lessonId, score, detail){
-  const key = `progress:${lessonId}`;
-  const payload = { lessonId, score, detail, at: Date.now() };
-  console.log('進捗を保存します:', {key, payload});
-  try{ 
-    localStorage.setItem(key, JSON.stringify(payload));
-    console.log('進捗の保存に成功しました');
-  } catch(e) {
-    console.log('進捗の保存に失敗しました:', e);
+// 進捗データの統合管理（最適化版）
+const PROGRESS_STORAGE_KEY = 'progress';
+const PROGRESS_DATA_VERSION = 2; // データ構造のバージョン
+
+// 既存の分散データを統合形式に移行
+function migrateProgressData() {
+  try {
+    // 既に統合形式がある場合は移行不要
+    const existing = localStorage.getItem(PROGRESS_STORAGE_KEY);
+    if (existing) {
+      const data = JSON.parse(existing);
+      if (data.version === PROGRESS_DATA_VERSION) {
+        console.log('✅ 進捗データは既に最新形式です');
+        return false; // 移行不要
+      }
+    }
+    
+    console.log('🔄 進捗データの移行を開始します...');
+    const allProgress = {};
+    let migratedCount = 0;
+    
+    // 既存の分散データを収集
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith('progress:')) {
+        try {
+          const lessonId = key.replace('progress:', '');
+          const data = JSON.parse(localStorage.getItem(key));
+          allProgress[lessonId] = {
+            lessonId: data.lessonId || lessonId,
+            score: data.score,
+            detail: data.detail,
+            at: data.at || Date.now()
+          };
+          migratedCount++;
+        } catch (e) {
+          console.warn(`⚠️ 移行エラー (${key}):`, e);
+        }
+      }
+    }
+    
+    // 統合形式で保存
+    if (Object.keys(allProgress).length > 0) {
+      const unifiedData = {
+        version: PROGRESS_DATA_VERSION,
+        data: allProgress,
+        migratedAt: Date.now()
+      };
+      localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(unifiedData));
+      console.log(`✅ 進捗データ移行完了: ${migratedCount}件`);
+      
+      // 古い分散データを削除（オプション：安全のためコメントアウト）
+      // for (let i = 0; i < localStorage.length; i++) {
+      //   const key = localStorage.key(i);
+      //   if (key && key.startsWith('progress:')) {
+      //     localStorage.removeItem(key);
+      //   }
+      // }
+      
+      return true; // 移行完了
+    }
+    
+    // データがない場合は空の構造を作成
+    const emptyData = {
+      version: PROGRESS_DATA_VERSION,
+      data: {},
+      createdAt: Date.now()
+    };
+    localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(emptyData));
+    console.log('✅ 進捗データ構造を初期化しました');
+    return false;
+  } catch (e) {
+    console.error('❌ 進捗データ移行エラー:', e);
+    return false;
   }
+}
+
+// 統合形式の進捗データを取得
+function getUnifiedProgress() {
+  try {
+    const raw = localStorage.getItem(PROGRESS_STORAGE_KEY);
+    if (!raw) {
+      // 初回は空の構造を作成
+      const emptyData = {
+        version: PROGRESS_DATA_VERSION,
+        data: {},
+        createdAt: Date.now()
+      };
+      localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(emptyData));
+      return { version: PROGRESS_DATA_VERSION, data: {} };
+    }
+    
+    const parsed = JSON.parse(raw);
+    
+    // バージョン1（分散形式）の場合は移行
+    if (!parsed.version || parsed.version < PROGRESS_DATA_VERSION) {
+      migrateProgressData();
+      return getUnifiedProgress(); // 再帰的に取得
+    }
+    
+    return parsed;
+  } catch (e) {
+    console.error('❌ 進捗データ取得エラー:', e);
+    return { version: PROGRESS_DATA_VERSION, data: {} };
+  }
+}
+
+// 統合形式の進捗データを保存
+function saveUnifiedProgress(progressData) {
+  try {
+    const unified = {
+      version: PROGRESS_DATA_VERSION,
+      data: progressData,
+      updatedAt: Date.now()
+    };
+    localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(unified));
+  } catch (e) {
+    console.error('❌ 進捗データ保存エラー:', e);
+    // ストレージ容量不足の場合は古いデータを削除して再試行
+    if (e.name === 'QuotaExceededError') {
+      console.warn('⚠️ ストレージ容量不足。古いデータを削除します...');
+      // 古いデータの削除処理（必要に応じて実装）
+    }
+  }
+}
+
+function saveProgress(lessonId, score, detail){
+  // 統合形式で保存
+  const unified = getUnifiedProgress();
+  unified.data[lessonId] = {
+    lessonId,
+    score,
+    detail,
+    at: Date.now()
+  };
+  saveUnifiedProgress(unified.data);
+  console.log('✅ 進捗を保存しました:', { lessonId, score });
 }
 
 function saveLessonProgress(id, correct, total, seconds){
@@ -970,19 +1106,36 @@ function getProgressStorageKey(lessonId) {
   return progressKey;
 }
 
-// 教材の進捗状況を取得する関数
+// 教材の進捗状況を取得する関数（最適化版）
 function getLessonProgress(lessonId) {
-  const key = getProgressStorageKey(lessonId);
   try {
-    const progress = localStorage.getItem(key);
-    const result = progress ? JSON.parse(progress) : null;
+    const unified = getUnifiedProgress();
+    const result = unified.data[lessonId] || null;
     
-    console.log(`🔍 進捗データ取得: ${lessonId}`, {
-      key: key,
-      raw: progress,
-      parsed: result,
-      hasData: !!result
-    });
+    // 後方互換性: 統合形式にない場合は古い形式を確認
+    if (!result) {
+      const oldKey = `progress:${lessonId}`;
+      const oldData = localStorage.getItem(oldKey);
+      if (oldData) {
+        console.log(`🔄 古い形式のデータを発見: ${lessonId}`);
+        try {
+          const parsedOldData = JSON.parse(oldData);
+          // その場で統合形式に追加
+          const unified = getUnifiedProgress();
+          unified.data[lessonId] = {
+            lessonId: parsedOldData.lessonId || lessonId,
+            score: parsedOldData.score,
+            detail: parsedOldData.detail,
+            at: parsedOldData.at || Date.now()
+          };
+          saveUnifiedProgress(unified.data);
+          console.log(`✅ 古い形式のデータを統合形式に追加: ${lessonId}`);
+          return unified.data[lessonId];
+        } catch (e) {
+          console.error(`❌ 古い形式のデータ解析エラー: ${lessonId}`, e);
+        }
+      }
+    }
     
     return result;
   } catch (e) {
@@ -991,23 +1144,24 @@ function getLessonProgress(lessonId) {
   }
 }
 
-// 教材が完了しているかチェックする関数（分離されたID用）
+// 教材が完了しているかチェックする関数（最適化版）
 function isLessonCompleted(lessonId) {
-  // 分離されたIDを使用（mode判定不要）
-  const progressKey = `progress:${lessonId}`;
-  const progressData = localStorage.getItem(progressKey);
-  
-  if (!progressData) {
-    console.log(`❌ 進捗データなし: ${lessonId} → ${progressKey}`);
-    return false;
-  }
-  
   try {
-    const progress = JSON.parse(progressData);
+    const progress = getLessonProgress(lessonId);
+    
+    if (!progress) {
+      console.log(`📊 完了判定: ${lessonId} → 未完了 (進捗データなし)`);
+      return false;
+    }
+    
     const correctAnswers = progress.detail?.correct || 0;
     const isCompleted = correctAnswers > 0;
     
-    console.log(`📊 完了判定: ${lessonId} → ${isCompleted ? '完了' : '未完了'}`);
+    console.log(`📊 完了判定: ${lessonId} → ${isCompleted ? '完了' : '未完了'} (正答数: ${correctAnswers})`, {
+      progress,
+      detail: progress.detail,
+      correct: progress.detail?.correct
+    });
     return isCompleted;
   } catch (e) {
     console.error(`❌ 進捗データ解析エラー: ${lessonId}`, e);
@@ -1064,6 +1218,65 @@ function formatDate(date) {
   return `${year}/${month}/${day}`;
 }
 
+// カタログのインデックスを作成
+function buildCatalogIndex(catalog) {
+  const indexById = new Map();
+  const indexByGrade = new Map();
+  const indexBySubject = new Map();
+  
+  catalog.forEach(lesson => {
+    // ID別インデックス（O(1)検索用）
+    indexById.set(lesson.id, lesson);
+    
+    // 学年別インデックス
+    if (lesson.grade) {
+      if (!indexByGrade.has(lesson.grade)) {
+        indexByGrade.set(lesson.grade, []);
+      }
+      indexByGrade.get(lesson.grade).push(lesson);
+    }
+    
+    // 教科別インデックス
+    if (lesson.subject) {
+      if (!indexBySubject.has(lesson.subject)) {
+        indexBySubject.set(lesson.subject, []);
+      }
+      indexBySubject.get(lesson.subject).push(lesson);
+    }
+  });
+  
+  return {
+    byId: indexById,
+    byGrade: indexByGrade,
+    bySubject: indexBySubject
+  };
+}
+
+// カタログ検索のヘルパー関数（後方互換性と最適化）
+function findLessonById(lessonId) {
+  if (state.catalogIndex) {
+    return state.catalogIndex.get(lessonId) || null;
+  }
+  // フォールバック: インデックスがない場合は従来の方法
+  return state.catalog.find(l => l.id === lessonId) || null;
+}
+
+function filterLessonsBySubject(subject) {
+  if (state.catalogIndexBySubject) {
+    return state.catalogIndexBySubject.get(subject) || [];
+  }
+  // フォールバック
+  return state.catalog.filter(lesson => lesson.subject === subject);
+}
+
+function filterLessonsByGrade(grade) {
+  if (state.catalogIndexByGrade) {
+    return state.catalogIndexByGrade.get(grade) || [];
+  }
+  // フォールバック
+  return state.catalog.filter(lesson => lesson.grade === grade);
+}
+
 async function loadCatalog(){
   console.log('🔍 loadCatalog開始');
   const tryUrls = ['./catalog.json', '../catalog.json'];
@@ -1075,6 +1288,18 @@ async function loadCatalog(){
       if (res.ok){ 
         state.catalog = await res.json(); 
         console.log('🔍 catalog読み込み成功:', state.catalog.length, '件');
+        
+        // インデックスを作成
+        const indexes = buildCatalogIndex(state.catalog);
+        state.catalogIndex = indexes.byId;
+        state.catalogIndexByGrade = indexes.byGrade;
+        state.catalogIndexBySubject = indexes.bySubject;
+        console.log('🔍 カタログインデックス作成完了:', {
+          total: state.catalogIndex.size,
+          byGrade: Array.from(state.catalogIndexByGrade.keys()),
+          bySubject: Array.from(state.catalogIndexBySubject.keys())
+        });
+        
         lastErr=null; 
         break; 
       }
@@ -1090,6 +1315,11 @@ async function loadCatalog(){
       id:'demo.sample', title:'デモ教材', grade:5, subject:'math',
       path:'./output.html', duration_min:8, sku_required:null
     }];
+    // デモデータでもインデックスを作成
+    const indexes = buildCatalogIndex(state.catalog);
+    state.catalogIndex = indexes.byId;
+    state.catalogIndexByGrade = indexes.byGrade;
+    state.catalogIndexBySubject = indexes.bySubject;
     console.log('🔍 デモデータ設定完了:', state.catalog);
   }
   console.log('🔍 loadCatalog完了:', state.catalog);
@@ -1610,7 +1840,7 @@ function isUnitPurchased(unitId, subjectType) {
   // 単元内のレッスンで使用されているSKUを収集
   const requiredSkus = new Set();
   for (const lessonId of unitLessons) {
-    const lesson = state.catalog.find(l => l.id === lessonId);
+    const lesson = findLessonById(lessonId);
     if (lesson && lesson.sku_required) {
       requiredSkus.add(lesson.sku_required);
     }
@@ -1676,7 +1906,7 @@ function getRecommendedRouteMap(subjectGroup) {
     // わかる編のレッスンを追加
     if (wakaruUnit && wakaruUnit.lessons) {
       wakaruUnit.lessons.forEach(lessonId => {
-        const lesson = state.catalog.find(l => l.id === lessonId);
+        const lesson = findLessonById(lessonId);
         if (lesson) {
           allRouteLessons.push({ ...lesson, unitId: unitId, unitType: 'wakaru' });
         }
@@ -1686,7 +1916,7 @@ function getRecommendedRouteMap(subjectGroup) {
     // おぼえる編のレッスンを追加
     if (oboeruUnit && oboeruUnit.lessons) {
       oboeruUnit.lessons.forEach(lessonId => {
-        const lesson = state.catalog.find(l => l.id === lessonId);
+        const lesson = findLessonById(lessonId);
         if (lesson) {
           allRouteLessons.push({ ...lesson, unitId: unitId, unitType: 'oboeru' });
         }
@@ -1708,44 +1938,37 @@ function getRecommendedRouteMap(subjectGroup) {
     });
   
   let currentIndex = 0;
-  let startUnitId = null;
+  let currentUnitId = null;
   
   if (completedLessons.length > 0) {
     // 最後に完了したレッスンの単元を特定
     const lastCompleted = completedLessons[0];
-    startUnitId = lastCompleted.unitId;
+    currentUnitId = lastCompleted.unitId;
     
-    // その単元の最初のレッスンからスタート
-    const startUnitIndex = allRouteLessons.findIndex(entry => entry.unitId === startUnitId);
-    if (startUnitIndex !== -1) {
-      // その単元内で最後に完了したレッスンを探す
-      const unitCompletedLessons = allRouteLessons
-        .filter(entry => entry.unitId === startUnitId && isLessonCompleted(entry.id))
-        .sort((a, b) => {
-          const progressA = getLessonProgress(a.id);
-          const progressB = getLessonProgress(b.id);
-          return (progressB?.at || 0) - (progressA?.at || 0);
-        });
+    // その単元の最初のレッスンのインデックスを取得
+    const currentUnitStartIndex = allRouteLessons.findIndex(entry => entry.unitId === currentUnitId);
+    if (currentUnitStartIndex !== -1) {
+      // その単元内で最初の未完了レッスンを探す
+      const unitLessons = allRouteLessons.filter(entry => entry.unitId === currentUnitId);
+      const firstIncompleteInUnit = unitLessons.find(entry => !isLessonCompleted(entry.id));
       
-      if (unitCompletedLessons.length > 0) {
-        const lastUnitCompleted = unitCompletedLessons[0];
-        const lastUnitCompletedIndex = allRouteLessons.findIndex(entry => entry.id === lastUnitCompleted.id);
-        if (lastUnitCompletedIndex < allRouteLessons.length - 1) {
-          currentIndex = lastUnitCompletedIndex + 1;
-        } else {
-          // その単元がすべて完了している場合は、次の単元の最初のレッスンへ
-          const nextUnitIndex = unitOrder.findIndex(id => id === startUnitId) + 1;
-          if (nextUnitIndex < unitOrder.length) {
-            const nextUnitId = unitOrder[nextUnitIndex];
-            const nextUnitStartIndex = allRouteLessons.findIndex(entry => entry.unitId === nextUnitId);
-            if (nextUnitStartIndex !== -1) {
-              currentIndex = nextUnitStartIndex;
-            }
-          }
-        }
+      if (firstIncompleteInUnit) {
+        // 単元内に未完了のレッスンがある場合、そのレッスンを「現在」とする
+        currentIndex = allRouteLessons.findIndex(entry => entry.id === firstIncompleteInUnit.id);
       } else {
-        // その単元で完了したレッスンがない場合は、その単元の最初のレッスンから
-        currentIndex = startUnitIndex;
+        // その単元がすべて完了している場合は、次の単元の最初のレッスンへ
+        const nextUnitIndex = unitOrder.findIndex(id => id === currentUnitId) + 1;
+        if (nextUnitIndex < unitOrder.length) {
+          const nextUnitId = unitOrder[nextUnitIndex];
+          const nextUnitStartIndex = allRouteLessons.findIndex(entry => entry.unitId === nextUnitId);
+          if (nextUnitStartIndex !== -1) {
+            currentIndex = nextUnitStartIndex;
+            currentUnitId = nextUnitId;
+          }
+        } else {
+          // すべての単元が完了している場合は、最後のレッスンを「現在」とする
+          currentIndex = allRouteLessons.length - 1;
+        }
       }
     } else {
       // 単元が見つからない場合は、最後に完了したレッスンの次のレッスン
@@ -1754,23 +1977,33 @@ function getRecommendedRouteMap(subjectGroup) {
         currentIndex = lastCompletedIndex + 1;
       }
     }
+  } else {
+    // 完了したレッスンがない場合は、最初の単元の最初のレッスンから
+    if (unitOrder.length > 0) {
+      const firstUnitId = unitOrder[0];
+      const firstUnitStartIndex = allRouteLessons.findIndex(entry => entry.unitId === firstUnitId);
+      if (firstUnitStartIndex !== -1) {
+        currentIndex = firstUnitStartIndex;
+        currentUnitId = firstUnitId;
+      }
+    }
   }
   
-  // 前後2つずつ取得
-  const startIndex = Math.max(0, currentIndex - 2);
+  // 暫定対応：現在のレッスンの前を1つ、後を2つ表示（中央寄りに表示されるように）
+  const startIndex = Math.max(0, currentIndex - 1);
   const endIndex = Math.min(allRouteLessons.length - 1, currentIndex + 2);
   const routeSegment = allRouteLessons.slice(startIndex, endIndex + 1);
   
   // 各レッスンに位置情報を追加
   return routeSegment.map((lesson, index) => {
     const globalIndex = startIndex + index;
-    const position = globalIndex - currentIndex; // -2, -1, 0, 1, 2
+    const position = globalIndex - currentIndex; // -1, 0, 1, 2（前1つ、後2つ）
     const isCurrent = position === 0;
     const isCompleted = isLessonCompleted(lesson.id);
     
     return {
       ...lesson,
-      position: position, // -2, -1, 0, 1, 2
+      position: position, // -1, 0, 1, 2
       isCurrent: isCurrent,
       isCompleted: isCompleted,
       routeIndex: globalIndex
@@ -1814,8 +2047,7 @@ function getRecommendedLessons() {
     // わかる編→おぼえる編の順で処理
     for (const subject of group.subjects) {
       // カタログからその教科の教材を取得し、IDでソート（番号順）
-      const subjectLessons = state.catalog
-        .filter(entry => entry.subject === subject)
+      const subjectLessons = filterLessonsBySubject(subject)
         .sort((a, b) => a.id.localeCompare(b.id));
     
       if (subjectLessons.length === 0) {
@@ -1872,24 +2104,48 @@ function getRecommendedLessons() {
   return recommendations;
 }
 
-// おさらいレッスンを取得する関数
+// おさらいレッスンを取得する関数（1つだけ）
 function getReviewLesson() {
+  const reviewLessons = getReviewLessons(1);
+  return reviewLessons.length > 0 ? reviewLessons[0] : null;
+}
   
+// 複数のおさらいレッスンを取得する関数（最大数指定可能）
+function getReviewLessons(maxCount = 3) {
+  console.log('🔍 getReviewLessons: おさらいレッスンを検索開始 (maxCount:', maxCount, ')');
   // 全教科（理科・社会のわかる編・おぼえる編）から完了済みレッスンを取得
   const reviewCandidates = [];
   
   const allSubjects = ['sci', 'science_drill', 'soc', 'social_drill'];
   
+  let totalLessons = 0;
+  let completedLessons = 0;
+  let candidatesFound = 0;
+  
   allSubjects.forEach(subject => {
-    const subjectLessons = state.catalog.filter(lesson => lesson.subject === subject);
+    const subjectLessons = filterLessonsBySubject(subject);
+    totalLessons += subjectLessons.length;
     
     subjectLessons.forEach(lesson => {
+      // まず進捗データの存在を確認
+      const progress = getLessonProgress(lesson.id);
+      console.log(`🔍 おさらい候補チェック: ${lesson.id}`, {
+        hasProgress: !!progress,
+        progress: progress,
+        hasDetail: !!progress?.detail,
+        correct: progress?.detail?.correct
+      });
+      
       if (!isLessonCompleted(lesson.id)) {
+        console.log(`⏭️ スキップ: ${lesson.id} (未完了)`);
         return; // 未完了のレッスンはスキップ
       }
       
-      const progress = getLessonProgress(lesson.id);
+      completedLessons++;
+      console.log(`✅ 完了レッスン発見: ${lesson.id} (${completedLessons}件目)`);
+      
       if (!progress || !progress.detail) {
+        console.log(`⚠️ 進捗データ不備: ${lesson.id}`, progress);
         return;
       }
       
@@ -1910,7 +2166,8 @@ function getReviewLesson() {
       // 優先度を計算
       const priority = calculateReviewPriority(score, daysSince);
       
-      if (priority <= 3) { // 優先度1-3のもののみ候補に
+      if (priority <= 5) { // 優先度1-5のもののみ候補に（条件を緩和）
+        candidatesFound++;
         reviewCandidates.push({
           lesson,
           score,
@@ -1919,12 +2176,27 @@ function getReviewLesson() {
           priority,
           progress
         });
+        console.log('✅ おさらい候補を追加:', {
+          lessonId: lesson.id,
+          title: lesson.title,
+          score: (score * 100).toFixed(1) + '%',
+          daysSince: daysSince + '日前',
+          priority: priority
+        });
       }
     });
   });
   
+  console.log('🔍 getReviewLessons: 検索結果', {
+    totalLessons,
+    completedLessons,
+    candidatesFound,
+    reviewCandidatesCount: reviewCandidates.length
+  });
+  
   if (reviewCandidates.length === 0) {
-    return null;
+    console.log('⚠️ getReviewLessons: おさらい候補が見つかりませんでした');
+    return [];
   }
   
   // 優先度でソート（優先度の低い順→日数の多い順）
@@ -1935,7 +2207,10 @@ function getReviewLesson() {
     return b.daysSince - a.daysSince; // 同じ優先度なら古い順
   });
   
-  return reviewCandidates[0].lesson;
+  // 最大数まで返す
+  const result = reviewCandidates.slice(0, maxCount).map(candidate => candidate.lesson);
+  console.log('✅ getReviewLessons: 返却するおさらいレッスン数:', result.length);
+  return result;
 }
 
 // おさらいの優先度を計算する関数
@@ -1955,18 +2230,138 @@ function calculateReviewPriority(score, daysSince) {
     return 3;
   }
   
+  // 優先4: 満点でも30日以上経過していれば含める（条件を緩和）
+  if (score >= 1.0 && daysSince >= 30) {
+    return 4;
+  }
+  
+  // 優先5: 完了済みで1日以上経過していれば含める（さらに緩和）
+  if (daysSince >= 1) {
+    return 5;
+  }
+  
   // 条件外
   return 99;
 }
 
-// 教科別タブのイベントリスナーを設定
+// メインタブのイベントリスナーを設定
+function setupMainTabs() {
+  const mainTabs = document.querySelectorAll('.main-tab');
+  
+  mainTabs.forEach(tab => {
+    tab.addEventListener('click', handleMainTabClick);
+  });
+}
+
+// メインタブクリックハンドラー
+async function handleMainTabClick(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  
+  // 現在のスクロール位置を保存（複数回保存して確実に）
+  const scrollY = window.scrollY;
+  const scrollX = window.scrollX;
+  
+  const tab = event.currentTarget;
+  const mainTab = tab.dataset.mainTab;
+  
+  // フォーカスを即座に外してスクロールを防ぐ
+  tab.blur();
+  
+  // scroll-behavior: smoothを一時的に無効化
+  const htmlElement = document.documentElement;
+  const originalScrollBehavior = htmlElement.style.scrollBehavior;
+  htmlElement.style.scrollBehavior = 'auto';
+  
+  // スクロールを防ぐため、一時的にbodyのoverflowを制御
+  const originalOverflow = document.body.style.overflow;
+  document.body.style.overflow = 'hidden';
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${scrollY}px`;
+  document.body.style.width = '100%';
+  
+  // アクティブなメインタブを更新
+  document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+  
+  const subTabsContainer = document.getElementById('subTabsContainer');
+  
+  if (mainTab === 'recommended') {
+    // おすすめ学習を選択
+    if (subTabsContainer) {
+      subTabsContainer.style.display = 'none';
+    }
+    window.currentSubject = 'recommended';
+    updateSubjectHero('recommended');
+    await renderHome();
+  } else if (mainTab === 'list') {
+    // 学習リストを選択
+    if (subTabsContainer) {
+      subTabsContainer.style.display = 'block';
+    }
+    // デフォルトで最初のサブタブ（理科わかる）を選択
+    const firstSubTab = document.querySelector('.subject-tab[data-subject="sci"]');
+    if (firstSubTab && !document.querySelector('.subject-tab.active')) {
+      window.currentSubject = 'sci';
+      updateSubjectHero('sci');
+      document.querySelectorAll('.subject-tab').forEach(t => t.classList.remove('active'));
+      firstSubTab.classList.add('active');
+      await renderHome();
+    }
+  }
+  
+  // bodyのスタイルを元に戻す
+  document.body.style.overflow = originalOverflow;
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  
+  // scroll-behaviorを元に戻す
+  htmlElement.style.scrollBehavior = originalScrollBehavior;
+  
+  // スクロール位置を復元（DOM更新後に複数回実行して確実に復元）
+  window.scrollTo(0, scrollY);
+  
+  requestAnimationFrame(() => {
+    window.scrollTo(0, scrollY);
+    requestAnimationFrame(() => {
+      window.scrollTo(0, scrollY);
+      setTimeout(() => {
+        window.scrollTo(0, scrollY);
+        setTimeout(() => {
+          window.scrollTo(0, scrollY);
+        }, 50);
+      }, 10);
+    });
+  });
+}
+
+// 教科別タブ（サブタブ）のイベントリスナーを設定
+// グローバル変数でリスナー参照を保持（重複登録を防ぐため）
+let subjectTabsResizeHandler = null;
+let subjectTabsInitialized = false;
+
 function setupSubjectTabs() {
-  const subjectTabs = document.querySelectorAll('.subject-tab');
+  // 既に初期化済みの場合はスキップ（パフォーマンス最適化）
+  const container = document.getElementById('subTabsContainer');
+  if (!container) return;
+  
+  const subjectTabs = container.querySelectorAll('.subject-tab');
+  if (subjectTabs.length === 0) return;
+  
+  // 既にリスナーが登録されているかチェック
+  const firstTab = subjectTabs[0];
+  if (firstTab && firstTab.hasAttribute('data-listener-attached')) {
+    // テキスト更新のみ実行
+    updateSubjectTabTexts();
+    return;
+  }
   
   // 375px以下でタブテキストを短縮表示
   function updateTabTexts() {
     const isSmallScreen = window.innerWidth <= 375;
-    subjectTabs.forEach(tab => {
+    const tabs = document.querySelectorAll('.subject-tab');
+    tabs.forEach(tab => {
       const subject = tab.dataset.subject;
       const originalText = tab.getAttribute('data-original-text') || tab.textContent;
       if (!tab.getAttribute('data-original-text')) {
@@ -1988,9 +2383,6 @@ function setupSubjectTabs() {
           case 'soc':
             tab.textContent = '🌍 社会わ';
             break;
-          case 'recommended':
-            tab.textContent = '⭐ おすすめ';
-            break;
         }
       } else {
         // 通常サイズでは元のテキストを復元
@@ -2002,29 +2394,33 @@ function setupSubjectTabs() {
     });
   }
   
+  // グローバル関数として公開（リサイズハンドラー用）
+  window.updateSubjectTabTexts = updateTabTexts;
+  
   // 初期設定
   updateTabTexts();
   
-  // リサイズ時に更新
+  // リサイズ時に更新（重複登録を防ぐ）
+  if (subjectTabsResizeHandler) {
+    window.removeEventListener('resize', subjectTabsResizeHandler);
+  }
+  
   let resizeTimer;
-  const handleResize = () => {
+  subjectTabsResizeHandler = () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(updateTabTexts, 100);
   };
+  window.addEventListener('resize', subjectTabsResizeHandler);
   
-  // 既存のリサイズリスナーを削除してから追加
-  window.removeEventListener('resize', handleResize);
-  window.addEventListener('resize', handleResize);
-  
-  // 既存のイベントリスナーを削除
+  // イベントリスナーを追加（重複を防ぐため、data属性で管理）
   subjectTabs.forEach(tab => {
-    tab.removeEventListener('click', handleTabClick);
+    if (!tab.hasAttribute('data-listener-attached')) {
+      tab.addEventListener('click', handleTabClick);
+      tab.setAttribute('data-listener-attached', 'true');
+    }
   });
   
-  // 新しいイベントリスナーを追加
-  subjectTabs.forEach(tab => {
-    tab.addEventListener('click', handleTabClick);
-  });
+  subjectTabsInitialized = true;
 }
 
 // タブクリックハンドラーを分離
@@ -2033,15 +2429,29 @@ async function handleTabClick(event) {
   event.preventDefault();
   event.stopPropagation();
   
-  // 現在のスクロール位置を保存
+  // 現在のスクロール位置を保存（グローバル変数にも保存）
   const scrollY = window.scrollY;
   const scrollX = window.scrollX;
+  window._savedScrollY = scrollY;
+  window._savedScrollX = scrollX;
   
   const tab = event.currentTarget;
   console.log('📌 タブクリック:', tab.dataset.subject);
   
   // フォーカスを即座に外してスクロールを防ぐ
   tab.blur();
+  
+  // scroll-behavior: smoothを一時的に無効化
+  const htmlElement = document.documentElement;
+  const originalScrollBehavior = htmlElement.style.scrollBehavior;
+  htmlElement.style.scrollBehavior = 'auto';
+  
+  // スクロールを防ぐため、一時的にbodyのoverflowを制御
+  const originalOverflow = document.body.style.overflow;
+  document.body.style.overflow = 'hidden';
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${scrollY}px`;
+  document.body.style.width = '100%';
   
   const subjectTabs = document.querySelectorAll('.subject-tab');
       
@@ -2061,68 +2471,269 @@ async function handleTabClick(event) {
   console.log('📌 renderHome()を呼び出し');
   await renderHome();
   
-  // スクロール位置を復元（DOM更新後に複数回実行して確実に復元）
+  // bodyのスタイルを元に戻す（renderHome内で既に復元されている場合は上書きしない）
+  // renderHome内でbodyがfixedのままの場合は、ここで確実に元に戻す
+  if (document.body.style.position === 'fixed') {
+    document.body.style.overflow = originalOverflow;
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+  }
+  
+  // scroll-behaviorを元に戻す
+  htmlElement.style.scrollBehavior = originalScrollBehavior;
+  
+  // スクロール位置を復元（パフォーマンス最適化：呼び出し回数を減らす）
+  // renderHome内でも復元されるため、ここでは1回のみ実行
   requestAnimationFrame(() => {
-    window.scrollTo({
-      top: scrollY,
-      left: scrollX,
-      behavior: 'instant' // 即座に復元（smoothではない）
-    });
-    // 念のためもう一度実行
+    window.scrollTo({ top: scrollY, left: scrollX, behavior: 'instant' });
+    // 念のため、DOM更新完了後に再度実行
     setTimeout(() => {
-      window.scrollTo({
-        top: scrollY,
-        left: scrollX,
-        behavior: 'instant'
-      });
-    }, 0);
+      window.scrollTo({ top: scrollY, left: scrollX, behavior: 'instant' });
+      // グローバル変数をクリア
+      delete window._savedScrollY;
+      delete window._savedScrollX;
+    }, 50);
   });
 }
 
-async function renderHome(){
-  // currentSubjectの存在確認と初期化
-  if (typeof window.currentSubject === 'undefined' || window.currentSubject === null) {
-    window.currentSubject = 'recommended';
-    console.log('🔄 renderHome内でcurrentSubjectを初期化:', window.currentSubject);
-  }
-  
-  // ログイン画面を確実に非表示にする（戻るボタン時の一瞬の表示を防ぐ）
-  // state.userだけでなく、auth.currentUserも直接チェック（認証状態が確定する前でも対応）
+// 定数定義
+const SCROLL_ADJUST_DELAYS = [50, 200]; // スクロール調整のタイムアウト値（ms）
+const SUBJECT_GROUPS = [
+  { name: '理科', subjects: ['sci', 'science_drill'], icon: '🔬', colorClass: 'sci' },
+  { name: '社会', subjects: ['soc', 'social_drill'], icon: '🌍', colorClass: 'soc' }
+];
+const UNIT_SUBJECTS = ['sci', 'soc', 'science_drill', 'social_drill'];
+
+// ログインパネルを非表示にする共通関数
+function hideLoginPanel() {
   const loginPanel = document.querySelector('#authBox, .login-card, .auth-container');
   if (loginPanel) {
-    // ログイン済みかどうかを直接確認（state.userが未設定でもauth.currentUserで判定）
     const isLoggedIn = state.user || (typeof auth !== 'undefined' && auth.currentUser);
     if (isLoggedIn) {
-      // ログイン済みの場合は確実に非表示
       loginPanel.classList.add('hidden');
       loginPanel.style.display = 'none';
     }
   }
+}
+
+// currentSubjectの初期化と安全な取得
+function getSafeCurrentSubject() {
+  if (typeof window.currentSubject === 'undefined' || window.currentSubject === null) {
+    window.currentSubject = 'recommended';
+    console.log('🔄 renderHome内でcurrentSubjectを初期化:', window.currentSubject);
+  }
+  return window.currentSubject || 'recommended';
+}
+
+// ルートマップのスクロール位置を調整
+function adjustRouteMapScroll(track) {
+  const currentItem = track.querySelector('[data-current-lesson="true"]');
+  if (!currentItem || !track) return;
   
-  // currentSubjectの安全な取得
-  const safeCurrentSubject = window.currentSubject || 'recommended';
+  let totalWidth = 0;
+  let found = false;
   
+  for (const child of track.children) {
+    if (child === currentItem) {
+      found = true;
+      break;
+    }
+    totalWidth += child.offsetWidth;
+  }
+  
+  if (!found) return;
+  
+  const itemWidth = currentItem.offsetWidth;
+  const trackWidth = track.clientWidth;
+  const targetScrollLeft = totalWidth + (itemWidth / 2) - (trackWidth / 2);
+  const maxScrollLeft = track.scrollWidth - trackWidth;
+  const finalScrollLeft = Math.max(0, Math.min(targetScrollLeft, maxScrollLeft));
+  
+  track.scrollLeft = finalScrollLeft;
+}
+
+// ルートマップカードを作成
+function createRouteMapCard(lesson, group, isCurrent, isCompleted, hasAccess, subjectName) {
+  const item = document.createElement('div');
+  item.className = `route-map-item position-${lesson.position}`;
+  item.onclick = () => setHash('lesson', lesson.id);
+  
+  if (isCurrent) {
+    const indicator = document.createElement('div');
+    indicator.className = 'route-map-card-indicator';
+    indicator.textContent = '▼';
+    item.appendChild(indicator);
+    item.setAttribute('data-current-lesson', 'true');
+  }
+  
+  const card = document.createElement('div');
+  card.className = `route-map-card ${group.colorClass} ${isCompleted ? 'completed' : ''}`;
+  
+  const badge = isCompleted 
+    ? '<span class="route-map-card-badge completed">完了</span>'
+    : '<span class="route-map-card-badge pending">未完了</span>';
+  
+  const buttonText = isCompleted ? '再学習' : (hasAccess ? '開始' : '購入');
+  const buttonClass = hasAccess ? group.colorClass : 'locked';
+  
+  card.innerHTML = `
+    <div class="route-map-card-title">${escapeHtml(lesson.title)}</div>
+    <div class="route-map-card-meta">${subjectName} / 小${lesson.grade} ・ ${lesson.duration_min || '?'}分</div>
+    ${badge}
+    <button class="route-map-card-button ${buttonClass}">
+      ${buttonText}
+    </button>
+  `;
+  
+  const button = card.querySelector('.route-map-card-button');
+  if (button) {
+    button.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setHash('lesson', lesson.id);
+    });
+  }
+  
+  item.appendChild(card);
+  return item;
+}
+
+// ルートマップをレンダリング
+function renderRouteMap(group, list) {
+  const routeLessons = getRecommendedRouteMap(group);
+  if (!routeLessons || routeLessons.length === 0) return;
+  
+  // セクションラッパーを作成（理科と社会を完全に分離）
+  const sectionWrapper = document.createElement('div');
+  sectionWrapper.className = `route-map-section route-map-section-${group.colorClass}`;
+  
+  // ラベルを追加（うっすらと表示）
+  const label = document.createElement('div');
+  label.className = 'route-map-section-label';
+  label.textContent = group.name;
+  sectionWrapper.appendChild(label);
+  
+  // ルートマップコンテナ
+  const routeContainer = document.createElement('div');
+  routeContainer.className = 'route-map-container';
+  
+  const track = document.createElement('div');
+  track.className = 'route-map-track';
+  
+  const fragment = document.createDocumentFragment();
+  
+  routeLessons.forEach((lesson, index) => {
+    const isCompleted = lesson.isCompleted;
+    const isCurrent = lesson.isCurrent;
+    const subjectName = getSubjectName(lesson.subject);
+    const hasAccess = !lesson.sku_required || hasEntitlement(lesson.sku_required);
+    
+    const item = createRouteMapCard(lesson, group, isCurrent, isCompleted, hasAccess, subjectName);
+    fragment.appendChild(item);
+    
+    if (index < routeLessons.length - 1) {
+      const arrow = document.createElement('div');
+      arrow.className = 'route-map-arrow';
+      arrow.textContent = '→';
+      fragment.appendChild(arrow);
+    }
+  });
+  
+  track.appendChild(fragment);
+  routeContainer.appendChild(track);
+  sectionWrapper.appendChild(routeContainer);
+  list.appendChild(sectionWrapper);
+  
+  // スクロール位置を調整
+  SCROLL_ADJUST_DELAYS.forEach(delay => {
+    setTimeout(() => adjustRouteMapScroll(track), delay);
+  });
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => adjustRouteMapScroll(track));
+  });
+}
+
+// おさらいレッスン専用セクションをレンダリング（1つだけ、ルートマップ風カード）
+function renderReviewSection(list) {
+  console.log('🔄 renderReviewSection: おさらいレッスンセクションを描画開始');
+  const reviewLessons = getReviewLessons(1); // 1つだけ表示
+  console.log('🔄 renderReviewSection: 取得したおさらいレッスン数:', reviewLessons?.length || 0, reviewLessons);
+  if (!reviewLessons || reviewLessons.length === 0) {
+    console.log('⚠️ renderReviewSection: おさらいレッスンが見つかりませんでした');
+    return;
+  }
+  
+  const lesson = reviewLessons[0];
+  const isCompleted = isLessonCompleted(lesson.id);
+  const subjectName = getSubjectName(lesson.subject);
+  const hasAccess = !lesson.sku_required || hasEntitlement(lesson.sku_required);
+  
+  // セクションラッパーを作成（おさらい専用）
+  const sectionWrapper = document.createElement('div');
+  sectionWrapper.className = 'route-map-section route-map-section-review';
+  
+  // ラベルを追加（うっすらと表示）
+  const label = document.createElement('div');
+  label.className = 'route-map-section-label';
+  label.textContent = 'おさらい';
+  sectionWrapper.appendChild(label);
+  
+  // ルートマップコンテナ（理科・社会と同じ構造）
+  const routeContainer = document.createElement('div');
+  routeContainer.className = 'route-map-container';
+  
+  const track = document.createElement('div');
+  track.className = 'route-map-track review-track'; // 1つだけなので中央配置用のクラスを追加
+  
+  // カードアイテム（ルートマップ風）
+  const item = document.createElement('div');
+  item.className = 'route-map-item position-0'; // 中央サイズ
+  item.onclick = () => setHash('lesson', lesson.id);
+  
+  const card = document.createElement('div');
+  card.className = `route-map-card review ${lesson.subject} ${isCompleted ? 'completed' : ''}`;
+  
+  const badge = '<span class="route-map-card-badge review-badge">🔄 おさらい</span>';
+  const buttonText = '再学習';
+  const buttonClass = hasAccess ? 'review' : 'locked';
+  
+  card.innerHTML = `
+    <div class="route-map-card-title">${escapeHtml(lesson.title)}</div>
+    <div class="route-map-card-meta">${subjectName} / 小${lesson.grade} ・ ${lesson.duration_min || '?'}分</div>
+    ${badge}
+    <button class="route-map-card-button ${buttonClass}">
+      ${buttonText}
+    </button>
+  `;
+  
+  const button = card.querySelector('.route-map-card-button');
+  if (button) {
+    button.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setHash('lesson', lesson.id);
+    });
+  }
+  
+  item.appendChild(card);
+  track.appendChild(item);
+  routeContainer.appendChild(track);
+  sectionWrapper.appendChild(routeContainer);
+  list.appendChild(sectionWrapper);
+}
+
+// ホームレイアウトを設定
+function setupHomeLayout(subject) {
   const homeView = document.getElementById('homeView');
   const app = document.getElementById('app');
   
-  // 復習ダッシュボード専用表示は削除（復習レッスンは通常のおすすめレッスンに統合）
-  
-  // 理科・社会・おぼえる編の場合は2カラムレイアウトに変更
-  if (safeCurrentSubject === 'sci' || safeCurrentSubject === 'soc' || safeCurrentSubject === 'science_drill' || safeCurrentSubject === 'social_drill') {
+  if (UNIT_SUBJECTS.includes(subject)) {
     homeView.classList.add('math-full-width');
     app.classList.add('math-full-width');
     
-    // homeView の基本構造を復元（復習ダッシュボードから切り替えた場合）
     if (!document.getElementById('lessonList')) {
-      console.log('🔧 lessonList要素が見つからないため、基本構造を復元します');
-      
-      // 現在の教科に応じたヒーロー情報を取得
-      const subjectInfo = getSubjectHeroInfo(safeCurrentSubject);
-      
+      const subjectInfo = getSubjectHeroInfo(subject);
       homeView.innerHTML = `
-        <!-- 横長イラストエリア -->
         <div class="w-full h-32 sm:h-40 mb-4 sm:mb-6 overflow-hidden relative">
-          <!-- イラスト表示エリア -->
           <div id="subjectHero" class="w-full h-full ${subjectInfo.bgClass} flex items-center justify-center">
             <div class="text-white text-center">
               <div class="text-4xl mb-2">${subjectInfo.icon}</div>
@@ -2130,211 +2741,64 @@ async function renderHome(){
             </div>
           </div>
         </div>
-        
-        <!-- 教科別タブ -->
-        <div class="subject-tabs mb-4 sm:mb-6">
-          <button class="subject-tab" data-subject="recommended">⭐ おすすめ学習</button>
+        <div class="main-tabs mb-4 sm:mb-6">
+          <button class="main-tab" data-main-tab="recommended">⭐ おすすめ学習</button>
+          <button class="main-tab" data-main-tab="list">📚 学習リスト</button>
+        </div>
+        <div id="subTabsContainer" class="sub-tabs-container mb-4 sm:mb-6" style="display: none;">
+          <div class="subject-tabs">
           <button class="subject-tab" data-subject="sci">🔬 理科わかる</button>
           <button class="subject-tab" data-subject="science_drill">🧪 理科おぼえる</button>
           <button class="subject-tab" data-subject="soc">🌍 社会わかる</button>
           <button class="subject-tab" data-subject="social_drill">📍 社会おぼえる</button>
         </div>
-        
+        </div>
         <div id="lessonList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
       `;
       
-      // タブのイベントリスナーを再設定
+      setupMainTabs();
       setupSubjectTabs();
-      
-      // アクティブなタブを設定
-      const tabs = document.querySelectorAll('.subject-tab');
-      tabs.forEach(tab => {
-        tab.classList.remove('active');
-        if (tab.dataset.subject === safeCurrentSubject) {
+      // メインタブのアクティブ状態を設定
+      const mainTabs = document.querySelectorAll('.main-tab');
+      mainTabs.forEach(tab => {
+        if (subject === 'recommended' && tab.dataset.mainTab === 'recommended') {
           tab.classList.add('active');
+        } else if (subject !== 'recommended' && tab.dataset.mainTab === 'list') {
+          tab.classList.add('active');
+          // サブタブを表示
+          const subTabsContainer = document.getElementById('subTabsContainer');
+          if (subTabsContainer) {
+            subTabsContainer.style.display = 'block';
+          }
+        } else {
+          tab.classList.remove('active');
         }
       });
-      
-      // ヒーローを現在の教科に合わせて更新
-      updateSubjectHero(safeCurrentSubject);
+      // サブタブのアクティブ状態を設定
+      document.querySelectorAll('.subject-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.subject === subject);
+      });
+      updateSubjectHero(subject);
     }
-    
-    if (safeCurrentSubject === 'sci') {
-      await renderScienceUnits();
-    } else if (safeCurrentSubject === 'soc') {
-      await renderSocialUnits();
-    } else if (safeCurrentSubject === 'science_drill') {
-      await renderScienceDrillUnits();
-    } else if (safeCurrentSubject === 'social_drill') {
-      await renderSocialDrillUnits();
-    }
-    return;
   } else {
-    // 他の教科の場合は通常レイアウトに戻す
     homeView.classList.remove('math-full-width');
     app.classList.remove('math-full-width');
   }
-  
-  const list = document.getElementById('lessonList');
-  if (!list) {
-    console.error('❌ lessonList要素が見つかりません。基本構造を復元します。');
-    // 基本的なHTML構造を復元
-    homeView.innerHTML = `
-      <div id="lessonList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-    `;
-    // 再帰的に呼び出し
-    renderHome();
-    return;
-  }
-  list.innerHTML='';
-  
-  let displayCatalog;
-  
-  if (safeCurrentSubject === 'recommended') {
-    // ルートマップ形式で表示
-    const subjectGroups = [
-      { name: '理科', subjects: ['sci', 'science_drill'], icon: '🔬', colorClass: 'sci' },
-      { name: '社会', subjects: ['soc', 'social_drill'], icon: '🌍', colorClass: 'soc' }
-    ];
-    
-    list.innerHTML = '';
-    
-    subjectGroups.forEach(group => {
-      const routeLessons = getRecommendedRouteMap(group);
-      
-      if (!routeLessons || routeLessons.length === 0) {
-        return;
-      }
-      
-      // ルートマップコンテナを作成
-      const routeContainer = document.createElement('div');
-      routeContainer.className = 'route-map-container';
-      
-      // トラック（レッスン列）- ヘッダーなし
-      const track = document.createElement('div');
-      track.className = 'route-map-track';
-      
-      routeLessons.forEach((lesson, index) => {
-        const isCompleted = lesson.isCompleted;
-        const isCurrent = lesson.isCurrent;
-        const position = lesson.position;
-        const subjectName = getSubjectName(lesson.subject);
-        const hasAccess = !lesson.sku_required || hasEntitlement(lesson.sku_required);
-        
-        // ルートマップアイテム
-        const item = document.createElement('div');
-        item.className = `route-map-item position-${position}`;
-        item.onclick = () => setHash('lesson', lesson.id);
-        
-        // 現在のレッスンにはカード外の上部に▼を表示
-        if (isCurrent) {
-          const indicator = document.createElement('div');
-          indicator.className = 'route-map-card-indicator';
-          indicator.textContent = '▼';
-          item.appendChild(indicator);
-        }
-        
-        // カード
-        const card = document.createElement('div');
-        card.className = `route-map-card ${group.colorClass} ${isCompleted ? 'completed' : ''}`;
-        
-        // バッジ（完了・未完了のみ、「現在」は削除）
-        let badge = '';
-        if (isCompleted) {
-          badge = '<span class="route-map-card-badge completed">完了</span>';
-        } else {
-          badge = '<span class="route-map-card-badge pending">未完了</span>';
-        }
-        
-        // ボタン
-        const buttonText = isCompleted ? '再学習' : (hasAccess ? '開始' : '購入');
-        const buttonClass = hasAccess ? group.colorClass : 'locked';
-        
-        card.innerHTML = `
-          <div class="route-map-card-title">${escapeHtml(lesson.title)}</div>
-          <div class="route-map-card-meta">${subjectName} / 小${lesson.grade} ・ ${lesson.duration_min || '?'}分</div>
-          ${badge}
-          <button class="route-map-card-button ${buttonClass}">
-            ${buttonText}
-          </button>
-        `;
-        
-        // ボタンのクリックイベントを設定
-        const button = card.querySelector('.route-map-card-button');
-        if (button) {
-          button.addEventListener('click', (e) => {
-            e.stopPropagation();
-            setHash('lesson', lesson.id);
-          });
-        }
-        
-        item.appendChild(card);
-        track.appendChild(item);
-        
-        // 矢印（最後以外）
-        if (index < routeLessons.length - 1) {
-          const arrow = document.createElement('div');
-          arrow.className = 'route-map-arrow';
-          arrow.textContent = '→';
-          track.appendChild(arrow);
-        }
-      });
-      
-      routeContainer.appendChild(track);
-      list.appendChild(routeContainer);
-    });
-    
-    setupSubjectTabs();
-    return;
-  } else {
-    // 特定の教科の教材をフィルタリング
-    displayCatalog = state.catalog.filter(entry => entry.subject === safeCurrentSubject);
-    
-    // 理科おぼえる編の場合は単元別表示を使用
-    if (safeCurrentSubject === 'science_drill') {
-      await renderScienceDrillUnits();
-      return;
-    }
-    
-    // 社会おぼえる編の場合は単元別表示を使用
-    if (safeCurrentSubject === 'social_drill') {
-      await renderSocialDrillUnits();
-      return;
-    }
-    
-    // 完了した教材を下に表示するようにソート
-    displayCatalog = displayCatalog.sort((a, b) => {
-      const aCompleted = isLessonCompleted(a.id);
-      const bCompleted = isLessonCompleted(b.id);
-      
-      if (aCompleted === bCompleted) {
-        // 両方とも完了している、または両方とも未完了の場合は元の順序を維持
-        return 0;
-      } else if (aCompleted) {
-        // aが完了している場合は下に移動
-        return 1;
-      } else {
-        // bが完了している場合は下に移動
-        return -1;
-      }
-    });
-  }
-  
-  // DocumentFragmentを使用してDOM操作を最適化
-  const fragment = document.createDocumentFragment();
-  
-  displayCatalog.forEach((entry, index) => {
+}
+
+// レッスンカードを作成
+function createLessonCard(entry, safeCurrentSubject) {
     const div = document.createElement('div');
     const isCompleted = isLessonCompleted(entry.id);
-    
     const reviewClass = entry.type === 'review' ? 'review' : '';
     div.className = `card p-4 ${entry.subject} ${reviewClass} ${isCompleted ? 'completed' : ''}`;
     
-    const need = entry.sku_required ? `<span class="badge lock">要購入</span>` : `<span class="badge open">無料</span>`;
+  const need = entry.sku_required 
+    ? '<span class="badge lock">要購入</span>' 
+    : '<span class="badge open">無料</span>';
     const subjectName = getSubjectName(entry.subject);
-    const completionBadge = isCompleted ? `<span class="badge complete">完了</span>` : '';
+  const completionBadge = isCompleted ? '<span class="badge complete">完了</span>' : '';
     
-    // スコア情報を取得
     const scoreInfo = getLessonScoreInfo(entry.id);
     const scoreDisplay = scoreInfo ? 
       `<div class="text-xs text-slate-600 mb-1 flex items-center justify-between">
@@ -2342,51 +2806,41 @@ async function renderHome(){
         <span class="text-slate-500">${scoreInfo.formattedDate}</span>
       </div>` : '';
     
-    // おすすめタブの場合は特別な表示
     let recommendationBadge = '';
     let reviewInfo = '';
     let buttonColor = 'bg-blue-500 hover:bg-blue-600';
     
     if (safeCurrentSubject === 'recommended') {
-      // 教科に応じたテーマカラーを適用
-      if (entry.subject === 'sci' || entry.subject === 'science_drill') {
-        // 理科: 緑系
+    const isScience = entry.subject === 'sci' || entry.subject === 'science_drill';
+    const isSocial = entry.subject === 'soc' || entry.subject === 'social_drill';
+    
+    if (isScience) {
         div.classList.add('recommended-card', 'recommended-sci');
         buttonColor = 'bg-green-600 hover:bg-green-700';
-        if (entry.reviewType === 'osaarai') {
-          recommendationBadge = `<span class="badge recommend-simple" style="background: #16a34a; color: white;">🔄 おさらい</span>`;
-        } else {
-          recommendationBadge = `<span class="badge recommend-simple" style="background: #16a34a; color: white;">⭐ おすすめ</span>`;
-        }
-      } else if (entry.subject === 'soc' || entry.subject === 'social_drill') {
-        // 社会: オレンジ系
+      recommendationBadge = entry.reviewType === 'osaarai'
+        ? '<span class="badge recommend-simple" style="background: #16a34a; color: white;">🔄 おさらい</span>'
+        : '<span class="badge recommend-simple" style="background: #16a34a; color: white;">⭐ おすすめ</span>';
+    } else if (isSocial) {
         div.classList.add('recommended-card', 'recommended-soc');
         buttonColor = 'bg-orange-600 hover:bg-orange-700';
-        if (entry.reviewType === 'osaarai') {
-          recommendationBadge = `<span class="badge recommend-simple" style="background: #ea580c; color: white;">🔄 おさらい</span>`;
+      recommendationBadge = entry.reviewType === 'osaarai'
+        ? '<span class="badge recommend-simple" style="background: #ea580c; color: white;">🔄 おさらい</span>'
+        : '<span class="badge recommend-simple" style="background: #ea580c; color: white;">⭐ おすすめ</span>';
         } else {
-          recommendationBadge = `<span class="badge recommend-simple" style="background: #ea580c; color: white;">⭐ おすすめ</span>`;
-        }
-      } else {
-        // その他の教科（デフォルト）
         div.classList.add('recommended-card');
-        if (entry.reviewType === 'osaarai') {
-          recommendationBadge = `<span class="badge recommend-simple" style="background: #6b7280; color: white;">🔄 おさらい</span>`;
-        } else {
-          recommendationBadge = `<span class="badge recommend-simple" style="background: #6b7280; color: white;">⭐ おすすめ</span>`;
-        }
+      recommendationBadge = entry.reviewType === 'osaarai'
+        ? '<span class="badge recommend-simple" style="background: #6b7280; color: white;">🔄 おさらい</span>'
+        : '<span class="badge recommend-simple" style="background: #6b7280; color: white;">⭐ おすすめ</span>';
       }
       
       if (entry.reviewType === 'osaarai') {
-        // おさらい情報を取得
         const reviewProgress = getLessonProgress(entry.id);
         if (reviewProgress) {
           const scorePercent = Math.round((reviewProgress.score || 0) * 100);
           const lastStudyDate = reviewProgress.at ? new Date(reviewProgress.at) : null;
           if (lastStudyDate) {
             const daysSince = Math.floor((Date.now() - lastStudyDate.getTime()) / (1000 * 60 * 60 * 24));
-            const infoColor = (entry.subject === 'sci' || entry.subject === 'science_drill') ? 'text-green-700' : 
-                             (entry.subject === 'soc' || entry.subject === 'social_drill') ? 'text-orange-700' : 'text-slate-600';
+          const infoColor = isScience ? 'text-green-700' : (isSocial ? 'text-orange-700' : 'text-slate-600');
             reviewInfo = `<div class="text-xs ${infoColor} mb-1">前回のスコア: ${scorePercent}% ・ ${daysSince}日前に学習</div>`;
           }
         }
@@ -2410,19 +2864,210 @@ async function renderHome(){
       </div>
     `;
     
-    // カード全体をクリック可能にする
     div.style.cursor = 'pointer';
     div.onclick = () => setHash('lesson', entry.id);
     
-    fragment.appendChild(div);
+  return div;
+}
+
+async function renderHome(){
+  hideLoginPanel();
+  const safeCurrentSubject = getSafeCurrentSubject();
+  
+  // スクロール位置を保存（renderHome呼び出し前に保存されている場合は上書きしない）
+  const savedScrollY = window._savedScrollY !== undefined ? window._savedScrollY : window.scrollY;
+  const savedScrollX = window._savedScrollX !== undefined ? window._savedScrollX : window.scrollX;
+  
+  setupHomeLayout(safeCurrentSubject);
+  
+  // 単元別表示が必要な教科
+  if (UNIT_SUBJECTS.includes(safeCurrentSubject)) {
+    const renderMap = {
+      'sci': renderScienceUnits,
+      'soc': renderSocialUnits,
+      'science_drill': renderScienceDrillUnits,
+      'social_drill': renderSocialDrillUnits
+    };
+    
+    const renderFn = renderMap[safeCurrentSubject];
+    if (renderFn) {
+      await renderFn();
+    }
+    return;
+  }
+  
+  const list = document.getElementById('lessonList');
+  if (!list) {
+    console.error('❌ lessonList要素が見つかりません。基本構造を復元します。');
+    const homeView = document.getElementById('homeView');
+    if (homeView) {
+      homeView.innerHTML = '<div id="lessonList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>';
+      // 再帰呼び出しを避けるため、直接処理を続行
+      const newList = document.getElementById('lessonList');
+      if (!newList) {
+        console.error('❌ lessonList要素の作成に失敗しました。');
+        return;
+      }
+      // 新しいlistで処理を続行
+      const finalList = newList;
+      if (safeCurrentSubject === 'recommended') {
+        SUBJECT_GROUPS.forEach(group => renderRouteMap(group, finalList));
+        // おさらいレッスン専用セクションを追加
+        renderReviewSection(finalList);
+        setupMainTabs();
+        setupSubjectTabs();
+        return;
+      }
+      // その他の処理も同様に続行
+      return;
+    }
+    return;
+  }
+  
+  // DOM更新前にスクロール位置を固定
+  const htmlElement = document.documentElement;
+  const originalScrollBehavior = htmlElement.style.scrollBehavior;
+  htmlElement.style.scrollBehavior = 'auto';
+  
+  // DOM更新前にスクロール位置を完全にロック（handleTabClickで既にfixedの場合はスキップ）
+  const wasBodyFixed = document.body.style.position === 'fixed';
+  const originalOverflow = document.body.style.overflow;
+  if (!wasBodyFixed) {
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${savedScrollY}px`;
+    document.body.style.width = '100%';
+  }
+  
+  list.innerHTML = '';
+  
+  if (safeCurrentSubject === 'recommended') {
+    SUBJECT_GROUPS.forEach(group => renderRouteMap(group, list));
+    // おさらいレッスン専用セクションを追加
+    renderReviewSection(list);
+    
+    // setupMainTabsとsetupSubjectTabsは、必要な場合のみ呼び出す（パフォーマンス最適化）
+    const needsSetup = !document.querySelector('.subject-tab[data-listener-attached]') || 
+                       !document.querySelector('.main-tab[data-listener-attached]');
+    if (needsSetup) {
+      setupMainTabs();
+      setupSubjectTabs();
+    }
+    // メインタブの状態を設定
+    const mainTabs = document.querySelectorAll('.main-tab');
+    mainTabs.forEach(tab => {
+      if (tab.dataset.mainTab === 'recommended') {
+        tab.classList.add('active');
+      } else {
+        tab.classList.remove('active');
+      }
+    });
+    // サブタブを非表示
+    const subTabsContainer = document.getElementById('subTabsContainer');
+    if (subTabsContainer) {
+      subTabsContainer.style.display = 'none';
+    }
+    
+    // DOM更新後に確実にスクロール位置を復元
+    htmlElement.style.scrollBehavior = originalScrollBehavior;
+    
+    // bodyのスタイルを元に戻す前に、スクロール位置を確実に復元
+    // ただし、handleTabClickで既にfixedの場合は、ここでは復元しない（handleTabClickで復元される）
+    if (!wasBodyFixed) {
+      requestAnimationFrame(() => {
+        // まずbodyのスタイルを元に戻す
+        document.body.style.overflow = originalOverflow || '';
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        
+        // その後、スクロール位置を復元（パフォーマンス最適化：1回のみ）
+        window.scrollTo(0, savedScrollY);
+      });
+    }
+    // wasBodyFixedの場合は、handleTabClickで復元されるため、ここでは何もしない
+    return;
+  }
+  
+  let displayCatalog = filterLessonsBySubject(safeCurrentSubject);
+  
+  if (safeCurrentSubject === 'science_drill') {
+    await renderScienceDrillUnits();
+    htmlElement.style.scrollBehavior = originalScrollBehavior;
+    return;
+  }
+  
+  if (safeCurrentSubject === 'social_drill') {
+    await renderSocialDrillUnits();
+    htmlElement.style.scrollBehavior = originalScrollBehavior;
+    return;
+  }
+  
+  displayCatalog = displayCatalog.sort((a, b) => {
+    const aCompleted = isLessonCompleted(a.id);
+    const bCompleted = isLessonCompleted(b.id);
+    if (aCompleted === bCompleted) return 0;
+    return aCompleted ? 1 : -1;
   });
   
-  // 一度にDOMに追加（パフォーマンス向上）
+  const fragment = document.createDocumentFragment();
+  displayCatalog.forEach(entry => {
+    fragment.appendChild(createLessonCard(entry, safeCurrentSubject));
+  });
+  
+  // wasBodyFixedは既に宣言されているので、ここでは再宣言しない
+  // DOM更新前にスクロール位置を完全にロック（handleTabClickで既にfixedの場合はスキップ）
+  if (!wasBodyFixed) {
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${savedScrollY}px`;
+    document.body.style.width = '100%';
+  }
+  
   list.appendChild(fragment);
   
-  // 教科別タブのイベントリスナーを設定（既に設定済みの場合はスキップ）
-  if (!document.querySelector('.subject-tab[data-listener-attached]')) {
+  // DOM更新後に確実にスクロール位置を復元
+  htmlElement.style.scrollBehavior = originalScrollBehavior;
+  
+  // bodyのスタイルを元に戻す前に、スクロール位置を確実に復元
+  // ただし、handleTabClickで既にfixedの場合は、ここでは復元しない（handleTabClickで復元される）
+  if (!wasBodyFixed) {
+    requestAnimationFrame(() => {
+      // まずbodyのスタイルを元に戻す
+      document.body.style.overflow = originalOverflow || '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      
+      // その後、スクロール位置を復元（パフォーマンス最適化：1回のみ）
+      window.scrollTo(0, savedScrollY);
+    });
+  }
+  // wasBodyFixedの場合は、handleTabClickで復元されるため、ここでは何もしない
+  
+  // setupMainTabsとsetupSubjectTabsは、必要な場合のみ呼び出す（パフォーマンス最適化）
+  const needsSetup = !document.querySelector('.subject-tab[data-listener-attached]') || 
+                     !document.querySelector('.main-tab[data-listener-attached]');
+  if (needsSetup) {
+    setupMainTabs();
     setupSubjectTabs();
+  }
+  
+  // メインタブの状態を設定（学習リスト系のサブジェクトの場合）
+  if (['sci', 'soc', 'science_drill', 'social_drill'].includes(safeCurrentSubject)) {
+    const mainTabs = document.querySelectorAll('.main-tab');
+    mainTabs.forEach(tab => {
+      if (tab.dataset.mainTab === 'list') {
+        tab.classList.add('active');
+      } else {
+        tab.classList.remove('active');
+      }
+    });
+    // サブタブを表示
+    const subTabsContainer = document.getElementById('subTabsContainer');
+    if (subTabsContainer) {
+      subTabsContainer.style.display = 'block';
+    }
   }
 }
 
@@ -2480,11 +3125,9 @@ async function renderScienceUnits() {
         ) : [];
         
         const completedCount = g4Lessons.filter(lesson => {
-          const progressKey = getProgressStorageKey(lesson.id);
-          const progressData = localStorage.getItem(progressKey);
-          if (progressData) {
-            const parsed = JSON.parse(progressData);
-            const isCompleted = parsed.detail?.correct > 0;
+          const progress = getLessonProgress(lesson.id);
+          if (progress) {
+            const isCompleted = progress.detail?.correct > 0;
             console.log(`🔍 進捗チェック: ${lesson.id} → ${progressKey} → ${isCompleted ? '完了' : '未完了'}`);
             return isCompleted;
           }
@@ -2685,13 +3328,10 @@ async function renderSocialUnits() {
         }
         
         const completedCount = geographyLessons.filter(lesson => {
-          // 分離されたIDを使用（mode判定不要）
-          const progressKey = `progress:${lesson.id}`;
-          const progressData = localStorage.getItem(progressKey);
-          if (progressData) {
-            const parsed = JSON.parse(progressData);
-            console.log(`🔍 わかる編データ確認: ${lesson.id} → ${progressKey}`);
-            const isCompleted = parsed.detail?.correct > 0;
+          const progress = getLessonProgress(lesson.id);
+          if (progress) {
+            console.log(`🔍 わかる編データ確認: ${lesson.id}`);
+            const isCompleted = progress.detail?.correct > 0;
             console.log(`🔍 わかる編進捗チェック: ${lesson.id} → ${isCompleted ? '完了' : '未完了'}`);
             return isCompleted;
           }
@@ -2779,13 +3419,10 @@ async function renderScienceDrillUnits() {
         ) : [];
         
         const completedCount = g4Lessons.filter(lesson => {
-          // ID変換処理を適用
-          const progressKey = getProgressStorageKey(lesson.id);
-          const progressData = localStorage.getItem(progressKey);
-          if (progressData) {
-            const parsed = JSON.parse(progressData);
-            const isCompleted = parsed.detail?.correct > 0;
-            console.log(`🔍 進捗チェック: ${lesson.id} → ${progressKey} → ${isCompleted ? '完了' : '未完了'}`);
+          const progress = getLessonProgress(lesson.id);
+          if (progress) {
+            const isCompleted = progress.detail?.correct > 0;
+            console.log(`🔍 進捗チェック: ${lesson.id} → ${isCompleted ? '完了' : '未完了'}`);
             return isCompleted;
           }
           return false;
@@ -2944,13 +3581,10 @@ async function renderSocialDrillUnits() {
         ) : [];
         
         const completedCount = geographyLessons.filter(lesson => {
-          // ID変換処理を適用
-          const progressKey = getProgressStorageKey(lesson.id);
-          const progressData = localStorage.getItem(progressKey);
-          if (progressData) {
-            const parsed = JSON.parse(progressData);
-            const isCompleted = parsed.detail?.correct > 0;
-            console.log(`🔍 進捗チェック: ${lesson.id} → ${progressKey} → ${isCompleted ? '完了' : '未完了'}`);
+          const progress = getLessonProgress(lesson.id);
+          if (progress) {
+            const isCompleted = progress.detail?.correct > 0;
+            console.log(`🔍 進捗チェック: ${lesson.id} → ${isCompleted ? '完了' : '未完了'}`);
             return isCompleted;
           }
           return false;
@@ -3064,10 +3698,16 @@ function renderUnits(units) {
       return;
     }
     
-    // その単元のレッスンを取得
-    const unitLessons = state.catalog ? state.catalog.filter(lesson => 
-      unit.lessons.includes(lesson.id)
-    ) : [];
+    // その単元のレッスンを取得（最適化版）
+    const unitLessons = [];
+    if (state.catalog && unit.lessons) {
+      unit.lessons.forEach(lessonId => {
+        const lesson = findLessonById(lessonId);
+        if (lesson) {
+          unitLessons.push(lesson);
+        }
+      });
+    }
     
     console.log('🔍 unitLessons:', unitLessons);
     
@@ -3543,7 +4183,7 @@ function renderUnitLessons(unitId) {
 }
 
 function renderLesson(id){
-  const l = state.catalog.find(x=>x.id===id);
+  const l = findLessonById(id);
   if(!l){ alert('レッスンが見つかりません'); return setHash('home'); }
   if(l.sku_required && !hasEntitlement(l.sku_required)) {
     // 購入が必要な場合は購入モーダルを開く
@@ -3731,40 +4371,501 @@ console.log('⚠️ 旧メッセージリスナーは無効化されています
 
 function escapeHtml(s){return String(s).replace(/[&<>"']/g, m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]))}
 
-// PWAインストール機能
-let deferredPrompt;
+// PWAインストール関連
+let deferredPrompt = null;
+
+// モバイルデバイスかどうかを判定
+function isMobileDevice() {
+  // タッチデバイスかどうか
+  const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  // 画面幅が小さいかどうか
+  const isSmallScreen = window.matchMedia('(max-width: 768px)').matches;
+  // ユーザーエージェントでモバイルを判定
+  const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  
+  return hasTouchScreen || isSmallScreen || isMobileUA;
+}
+
+// PWAが既にインストールされているかどうかを判定
+function isPWAInstalled() {
+  // standaloneモードで動作している場合、既にインストール済み
+  if (window.matchMedia('(display-mode: standalone)').matches) {
+    return true;
+  }
+  // navigator.standalone（iOS Safari用）
+  if (window.navigator.standalone === true) {
+    return true;
+  }
+  return false;
+}
+
+// インストールボタンの表示状態を更新
+function updateInstallButtonVisibility() {
+  const installBtn = document.getElementById('installBtn');
+  const menuInstallBtn = document.getElementById('menuInstallBtn');
+  
+  // モバイルデバイスで、かつ未インストールの場合のみ表示
+  const shouldShow = isMobileDevice() && !isPWAInstalled() && deferredPrompt !== null;
+  
+  // モバイル判定（画面幅768px以下）
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  
+  if (installBtn) {
+    if (shouldShow && !isMobile) {
+      // デスクトップ: ヘッダーに表示
+      installBtn.classList.remove('hidden');
+    } else {
+      // モバイル: ヘッダーから非表示
+      installBtn.classList.add('hidden');
+    }
+  }
+  
+  if (menuInstallBtn) {
+    if (shouldShow) {
+      // メニュー内: モバイル・デスクトップ問わず表示
+      menuInstallBtn.classList.remove('hidden');
+    } else {
+      menuInstallBtn.classList.add('hidden');
+    }
+  }
+}
 
 window.addEventListener('beforeinstallprompt', (e) => {
   // インストールプロンプトを延期
   e.preventDefault();
   deferredPrompt = e;
   
-  // インストールボタンを表示
-  const installBtn = document.getElementById('installBtn');
-  if (installBtn) {
-    installBtn.classList.remove('hidden');
+  console.log('📱 PWAインストール可能');
+  console.log('📱 モバイルデバイス:', isMobileDevice());
+  console.log('📱 PWAインストール済み:', isPWAInstalled());
+  
+  // インストールボタンの表示状態を更新
+  updateInstallButtonVisibility();
+});
+
+// インストールモーダルを表示
+function showInstallModal() {
+  const installModal = document.getElementById('installModal');
+  if (installModal && deferredPrompt) {
+    installModal.classList.remove('hidden');
+    installModal.style.display = 'flex';
+    // アニメーション用
+    requestAnimationFrame(() => {
+      installModal.style.opacity = '1';
+    });
+    
+    // フォーカス管理
+    const confirmBtn = document.getElementById('confirmInstallBtn');
+    if (confirmBtn) {
+      setTimeout(() => confirmBtn.focus(), 100);
+    }
+  } else if (!deferredPrompt) {
+    console.warn('⚠️ インストールプロンプトが利用できません');
   }
+}
+
+// インストールモーダルを非表示
+function hideInstallModal() {
+  const installModal = document.getElementById('installModal');
+  if (installModal) {
+    installModal.style.opacity = '0';
+    setTimeout(() => {
+      installModal.classList.add('hidden');
+      installModal.style.display = 'none';
+    }, 300);
+  }
+}
+
+// インストール完了モーダルを表示
+function showInstallCompleteModal() {
+  const installCompleteModal = document.getElementById('installCompleteModal');
+  if (installCompleteModal) {
+    installCompleteModal.classList.remove('hidden');
+    installCompleteModal.style.display = 'flex';
+    // アニメーション用
+    requestAnimationFrame(() => {
+      installCompleteModal.style.opacity = '1';
+    });
+    
+    // フォーカス管理
+    const closeBtn = document.getElementById('closeInstallCompleteBtn');
+    if (closeBtn) {
+      setTimeout(() => closeBtn.focus(), 100);
+    }
+  }
+}
+
+// インストール完了モーダルを非表示
+function hideInstallCompleteModal() {
+  const installCompleteModal = document.getElementById('installCompleteModal');
+  if (installCompleteModal) {
+    installCompleteModal.style.opacity = '0';
+    setTimeout(() => {
+      installCompleteModal.classList.add('hidden');
+      installCompleteModal.style.display = 'none';
+    }, 300);
+  }
+}
+
+// ヘルプモーダルを表示
+function showHelpModal() {
+  const helpModal = document.getElementById('helpModal');
+  const helpContent = document.getElementById('helpContent');
+  
+  if (!helpModal || !helpContent) {
+    console.error('❌ ヘルプモーダルの要素が見つかりません');
+    return;
+  }
+  
+  // ヘルプコンテンツを生成
+  helpContent.innerHTML = generateHelpContent();
+  
+  // モーダルを表示
+  helpModal.classList.remove('hidden');
+  helpModal.style.display = 'flex';
+  
+  // アニメーション用（少し遅延を入れてスムーズに表示）
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      helpModal.style.opacity = '1';
+    });
+  });
+  
+  // フォーカス管理
+  const closeBtn = document.getElementById('helpModalClose');
+  if (closeBtn) {
+    setTimeout(() => closeBtn.focus(), 100);
+  }
+  
+  // イベントリスナーを設定（重複登録を防ぐ）
+  const closeBtnHandler = () => hideHelpModal();
+  const overlayHandler = (e) => {
+    if (e.target === helpModal) {
+      hideHelpModal();
+    }
+  };
+  const escapeHandler = (e) => {
+    if (e.key === 'Escape' && !helpModal.classList.contains('hidden')) {
+      hideHelpModal();
+    }
+  };
+  
+  // 既存のリスナーを削除してから追加
+  const newCloseBtn = document.getElementById('helpModalClose');
+  if (newCloseBtn) {
+    newCloseBtn.removeEventListener('click', closeBtnHandler);
+    newCloseBtn.addEventListener('click', closeBtnHandler);
+  }
+  helpModal.removeEventListener('click', overlayHandler);
+  helpModal.addEventListener('click', overlayHandler);
+  document.removeEventListener('keydown', escapeHandler);
+  document.addEventListener('keydown', escapeHandler);
+}
+
+// ヘルプモーダルを非表示
+function hideHelpModal() {
+  const helpModal = document.getElementById('helpModal');
+  if (helpModal) {
+    helpModal.style.opacity = '0';
+    setTimeout(() => {
+      helpModal.classList.add('hidden');
+      helpModal.style.display = 'none';
+    }, 300);
+  }
+}
+
+// ヘルプコンテンツを生成
+function generateHelpContent() {
+  return `
+    <div class="space-y-6">
+      <!-- はじめに -->
+      <section class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <h3 class="text-lg font-bold text-blue-900 mb-2 flex items-center gap-2">
+          <span aria-hidden="true">👋</span>
+          はじめに
+        </h3>
+        <p class="text-blue-800 text-sm leading-relaxed">
+          ステップナビへようこそ！このアプリは小4・小5・小6向けの理科・社会の学習アプリです。
+          このヘルプでは、アプリの使い方をご説明します。
+        </p>
+      </section>
+
+      <!-- 基本操作 -->
+      <section>
+        <h3 class="text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
+          <span aria-hidden="true">📱</span>
+          基本操作
+        </h3>
+        <div class="space-y-3">
+          <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
+            <h4 class="font-semibold text-slate-700 mb-2">1. タブの切り替え</h4>
+            <p class="text-slate-600 text-sm mb-2">
+              画面上部のタブをクリックして、学習したい内容を選びます：
+            </p>
+            <ul class="text-slate-600 text-sm space-y-1 ml-4 list-disc">
+              <li><strong>⭐ おすすめ学習</strong>：あなたに合ったレッスンを表示</li>
+              <li><strong>🔬 理科わかる</strong>：理科の理解を深めるレッスン</li>
+              <li><strong>🧪 理科おぼえる</strong>：理科の暗記・練習問題</li>
+              <li><strong>🌍 社会わかる</strong>：社会の理解を深めるレッスン</li>
+              <li><strong>📍 社会おぼえる</strong>：社会の暗記・練習問題</li>
+            </ul>
+          </div>
+          
+          <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
+            <h4 class="font-semibold text-slate-700 mb-2">2. レッスンの開始</h4>
+            <p class="text-slate-600 text-sm">
+              レッスンカードをクリックすると、学習を始められます。
+              進捗バーで学習の進み具合を確認できます。
+            </p>
+          </div>
+          
+          <div class="bg-slate-50 border border-slate-200 rounded-lg p-4">
+            <h4 class="font-semibold text-slate-700 mb-2">3. 学年の変更</h4>
+            <p class="text-slate-600 text-sm">
+              ヘッダーの学年ボタン（小4・小5・小6）をクリックして、学習する学年を変更できます。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- レッスンの進め方 -->
+      <section>
+        <h3 class="text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
+          <span aria-hidden="true">📚</span>
+          レッスンの進め方
+        </h3>
+        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+          <ol class="text-slate-700 text-sm space-y-2 ml-4 list-decimal">
+            <li>レッスンカードをクリックして学習を開始</li>
+            <li>問題に答えながら学習を進める</li>
+            <li>途中で中断した場合は、チェックポイントから再開できます</li>
+            <li>レッスン完了後、進捗が記録されます</li>
+            <li>完了したレッスンには「✅ 完了」バッジが表示されます</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- 購入について -->
+      <section>
+        <h3 class="text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
+          <span aria-hidden="true">💳</span>
+          購入について
+        </h3>
+        <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
+          <p class="text-slate-700 text-sm mb-2">
+            一部のコンテンツは購入が必要です。購入の流れは以下の通りです：
+          </p>
+          <ol class="text-slate-700 text-sm space-y-1 ml-4 list-decimal">
+            <li>「🔒 購入が必要」バッジが付いているレッスンをクリック</li>
+            <li>ログイン（初回のみ）</li>
+            <li>メール確認（メール・パスワードでログインした場合）</li>
+            <li>購入ボタンをクリックして決済</li>
+            <li>購入完了後、すぐに学習を始められます</li>
+          </ol>
+          <p class="text-slate-600 text-xs mt-3">
+            ※ 各パックは2,980円（税込）です。小4・小5・小6の理科・社会がそれぞれ購入できます。
+          </p>
+        </div>
+      </section>
+
+      <!-- メニュー機能 -->
+      <section>
+        <h3 class="text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
+          <span aria-hidden="true">☰</span>
+          メニュー機能
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="bg-purple-50 border border-purple-200 rounded-lg p-3">
+            <h4 class="font-semibold text-purple-900 text-sm mb-1">📊 学習統計</h4>
+            <p class="text-purple-800 text-xs">学習の進捗や成績を確認できます</p>
+          </div>
+          <div class="bg-red-50 border border-red-200 rounded-lg p-3">
+            <h4 class="font-semibold text-red-900 text-sm mb-1">🔥 連続学習記録</h4>
+            <p class="text-red-800 text-xs">毎日の学習を続けて記録を伸ばしましょう</p>
+          </div>
+          <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-3">
+            <h4 class="font-semibold text-indigo-900 text-sm mb-1">🎨 背景テーマ</h4>
+            <p class="text-indigo-800 text-xs">お気に入りの背景テーマを選べます</p>
+          </div>
+          <div class="bg-teal-50 border border-teal-200 rounded-lg p-3">
+            <h4 class="font-semibold text-teal-900 text-sm mb-1">💾 データの保存</h4>
+            <p class="text-teal-800 text-xs">学習データをバックアップできます</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- よくある質問 -->
+      <section>
+        <h3 class="text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
+          <span aria-hidden="true">❓</span>
+          よくある質問
+        </h3>
+        <div class="space-y-3">
+          <details class="bg-slate-50 border border-slate-200 rounded-lg">
+            <summary class="p-3 cursor-pointer font-semibold text-slate-700 hover:bg-slate-100 transition-colors">
+              Q: 途中で学習をやめても大丈夫ですか？
+            </summary>
+            <div class="p-3 pt-0 text-slate-600 text-sm">
+              A: はい、大丈夫です。チェックポイント機能により、途中から再開できます。
+            </div>
+          </details>
+          
+          <details class="bg-slate-50 border border-slate-200 rounded-lg">
+            <summary class="p-3 cursor-pointer font-semibold text-slate-700 hover:bg-slate-100 transition-colors">
+              Q: 進捗はどこで確認できますか？
+            </summary>
+            <div class="p-3 pt-0 text-slate-600 text-sm">
+              A: レッスンカードの進捗バーで確認できます。また、メニューの「📊 学習統計」から詳細な統計を確認できます。
+            </div>
+          </details>
+          
+          <details class="bg-slate-50 border border-slate-200 rounded-lg">
+            <summary class="p-3 cursor-pointer font-semibold text-slate-700 hover:bg-slate-100 transition-colors">
+              Q: アプリをホーム画面に追加できますか？
+            </summary>
+            <div class="p-3 pt-0 text-slate-600 text-sm">
+              A: はい、できます。メニューの「📱 アプリに追加」から追加できます（モバイルのみ）。
+            </div>
+          </details>
+          
+          <details class="bg-slate-50 border border-slate-200 rounded-lg">
+            <summary class="p-3 cursor-pointer font-semibold text-slate-700 hover:bg-slate-100 transition-colors">
+              Q: データは消えませんか？
+            </summary>
+            <div class="p-3 pt-0 text-slate-600 text-sm">
+              A: データはブラウザに保存されます。メニューの「💾 学習データを保存」からバックアップを取ることをおすすめします。
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- お問い合わせ -->
+      <section class="bg-slate-100 border border-slate-300 rounded-lg p-4">
+        <h3 class="text-lg font-bold text-slate-800 mb-2 flex items-center gap-2">
+          <span aria-hidden="true">📧</span>
+          お問い合わせ
+        </h3>
+        <p class="text-slate-700 text-sm">
+          ご不明な点がございましたら、お気軽にお問い合わせください。
+        </p>
+      </section>
+    </div>
+  `;
+}
+
+// インストール完了時の処理
+window.addEventListener('appinstalled', (e) => {
+  console.log('✅ PWAインストール完了');
+  deferredPrompt = null;
+  
+  // インストールボタンを非表示
+  updateInstallButtonVisibility();
+  
+  // インストール完了モーダルを表示
+  setTimeout(() => {
+    showInstallCompleteModal();
+  }, 500);
 });
 
 // インストールボタンのクリックイベント
 document.addEventListener('DOMContentLoaded', () => {
+  // 初期状態でインストールボタンの表示状態を更新
+  updateInstallButtonVisibility();
+  
   const installBtn = document.getElementById('installBtn');
   if (installBtn) {
-    installBtn.addEventListener('click', async () => {
+    installBtn.addEventListener('click', () => {
+      showInstallModal();
+    });
+  }
+  
+  // メニューのインストールボタン
+  const menuInstallBtn = document.getElementById('menuInstallBtn');
+  if (menuInstallBtn) {
+    menuInstallBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      showInstallModal();
+    });
+  }
+  
+  // インストールモーダルのボタン
+  const confirmInstallBtn = document.getElementById('confirmInstallBtn');
+  if (confirmInstallBtn) {
+    confirmInstallBtn.addEventListener('click', async () => {
       if (deferredPrompt) {
+        // インストールモーダルを閉じる
+        hideInstallModal();
+        
         // インストールプロンプトを表示
         deferredPrompt.prompt();
         
         // ユーザーの選択を待つ
         const { outcome } = await deferredPrompt.userChoice;
-        console.log('インストール結果:', outcome);
+        console.log('📱 インストール結果:', outcome);
+        
+        if (outcome === 'accepted') {
+          console.log('✅ ユーザーがインストールを承認しました');
+          // インストール完了モーダルを表示（appinstalledイベントで表示される）
+        } else {
+          console.log('❌ ユーザーがインストールを拒否しました');
+        }
         
         // プロンプトをクリア
         deferredPrompt = null;
         
-        // インストールボタンを非表示
-        installBtn.classList.add('hidden');
+        // インストールボタンの表示状態を更新
+        updateInstallButtonVisibility();
+      } else {
+        console.log('⚠️ インストールプロンプトが利用できません');
+        hideInstallModal();
       }
+    });
+  }
+  
+  const cancelInstallBtn = document.getElementById('cancelInstallBtn');
+  if (cancelInstallBtn) {
+    cancelInstallBtn.addEventListener('click', () => {
+      hideInstallModal();
+    });
+  }
+  
+  const closeInstallCompleteBtn = document.getElementById('closeInstallCompleteBtn');
+  if (closeInstallCompleteBtn) {
+    closeInstallCompleteBtn.addEventListener('click', () => {
+      hideInstallCompleteModal();
+    });
+  }
+  
+  // インストールモーダルの背景クリックで閉じる
+  const installModal = document.getElementById('installModal');
+  if (installModal) {
+    installModal.addEventListener('click', (e) => {
+      if (e.target === installModal) {
+        hideInstallModal();
+      }
+    });
+  }
+  
+  // インストール完了モーダルの背景クリックで閉じる
+  const installCompleteModal = document.getElementById('installCompleteModal');
+  if (installCompleteModal) {
+    installCompleteModal.addEventListener('click', (e) => {
+      if (e.target === installCompleteModal) {
+        hideInstallCompleteModal();
+      }
+    });
+  }
+  
+  // 画面サイズ変更時にも表示状態を更新
+  window.addEventListener('resize', () => {
+    updateInstallButtonVisibility();
+  });
+  
+  // display-mode変更時にも表示状態を更新（PWAインストール後）
+  if (window.matchMedia) {
+    const displayModeQuery = window.matchMedia('(display-mode: standalone)');
+    displayModeQuery.addEventListener('change', () => {
+      updateInstallButtonVisibility();
     });
   }
 });
@@ -3780,7 +4881,8 @@ const CURRENT_THEME_KEY = 'currentTheme';
 // ===== 学習データエクスポート/インポートシステム =====
 // エクスポート対象のキーパターン
 const EXPORT_KEY_PATTERNS = [
-  /^progress:/,           // 進捗データ
+  'progress',             // 進捗データ（統合形式）
+  /^progress:/,           // 進捗データ（旧形式：後方互換性のため）
   /^learningHistory/,     // 学習履歴
   /^checkpoint:/,         // チェックポイント
   'learningStreak',       // 連続学習日数
@@ -4120,6 +5222,9 @@ function openMenuPanel() {
     menuPanel.style.display = 'block';
     menuPanel.classList.remove('hidden');
     
+    // メニューを開く時にPWAインストールボタンの表示状態を更新
+    updateInstallButtonVisibility();
+    
     // アニメーション用に少し遅延
     setTimeout(() => {
       panelContent.classList.remove('translate-x-full');
@@ -4171,17 +5276,14 @@ function handleMenuAction(action) {
       openThemeModal();
       break;
     case 'install-app':
-      // PWAインストール（既存の機能を使用）
-      console.log('📱 アプリに追加');
-      const installBtn = document.getElementById('installBtn');
-      if (installBtn) {
-        installBtn.click();
-      }
+      // PWAインストールモーダルを表示
+      console.log('📱 PWAインストールボタンがクリックされました');
+      showInstallModal();
       break;
     case 'show-help':
-      // ヘルプを表示（将来実装）
+      // ヘルプを表示
       console.log('❓ ヘルプを表示');
-      alert('ヘルプ機能は準備中です');
+      showHelpModal();
       break;
     case 'show-account':
       // アカウント情報を表示
@@ -5057,6 +6159,13 @@ async function startup(){
   setupSubjectTabs();
   
   await loadCatalog();
+  
+  // 進捗データの移行処理を実行（分散形式 → 統合形式）
+  console.log('🔄 進捗データの移行を開始します...');
+  const progressMigrated = migrateProgressData();
+  if (progressMigrated) {
+    console.log('✅ 進捗データの移行が完了しました');
+  }
   
   // レッスンIDの移行処理を実行
   const hasMigration = migrateLessonProgress();
@@ -6718,8 +7827,13 @@ window.getReviewSystemStatus = getReviewSystemStatus;
 
 // 復習レッスン関数の露出（Phase 2で追加）
 // window.openReviewLesson = openReviewLesson; // 復習システム無効化のためコメントアウト
-window.acceptReviewNotification = acceptReviewNotification;
-window.closeReviewNotification = closeReviewNotification;
+// 復習システム無効化のため、空の関数を定義
+if (typeof acceptReviewNotification === 'undefined') {
+  window.acceptReviewNotification = function() { console.log('復習システムは無効化されています'); };
+}
+if (typeof closeReviewNotification === 'undefined') {
+  window.closeReviewNotification = function() { console.log('復習システムは無効化されています'); };
+}
 window.startReviewLesson = startReviewLesson;
 window.selectReviewAnswer = selectReviewAnswer;
 window.proceedToNextReviewQuestion = proceedToNextReviewQuestion;
@@ -7067,8 +8181,8 @@ function normalizeLessonId(raw) {
 
 // catalog.jsonからタイトルを取得
 function getTitleByLessonId(baseId) {
-  // catalog.json の id と突き合わせて日本語 title を返す
-  const hit = (state.catalog || []).find(x => x.id === baseId);
+  // catalog.json の id と突き合わせて日本語 title を返す（最適化版）
+  const hit = findLessonById(baseId);
   return hit?.title || '復習レッスン';
 }
 
@@ -7304,10 +8418,17 @@ async function importLearningData() {
     const dataToImport = importedData.data || importedData;
     
     // 最終確認
+    const progressCount = (dataToImport['progress'] ? 1 : 0) + 
+                          Object.keys(dataToImport).filter(k => k.startsWith('progress:')).length;
+    const historyCount = Object.keys(dataToImport).filter(k => k.startsWith('learningHistory')).length;
+    const otherCount = Object.keys(dataToImport).filter(k => 
+      k !== 'progress' && !k.startsWith('progress:') && !k.startsWith('learningHistory')
+    ).length;
+    
     const confirmMsg = `以下のデータを読み込みます：\n\n` +
-      `- 進捗データ: ${Object.keys(dataToImport).filter(k => k.startsWith('progress:')).length}件\n` +
-      `- 学習履歴: ${Object.keys(dataToImport).filter(k => k.startsWith('learningHistory')).length}件\n` +
-      `- その他: ${Object.keys(dataToImport).filter(k => !k.startsWith('progress:') && !k.startsWith('learningHistory')).length}件\n\n` +
+      `- 進捗データ: ${progressCount}件\n` +
+      `- 学習履歴: ${historyCount}件\n` +
+      `- その他: ${otherCount}件\n\n` +
       `現在のデータは上書きされます。よろしいですか？`;
     
     if (!confirm(confirmMsg)) {
@@ -8104,6 +9225,7 @@ function getStreakDetails() {
   // 最近の学習日を計算（過去30日間）
   const recentDays = [];
   const today = new Date();
+  today.setHours(0, 0, 0, 0); // 時刻をリセット
   const learnedDates = new Set();
   
   // 進捗データから学習日を取得
@@ -8112,6 +9234,7 @@ function getStreakDetails() {
       const progress = getLessonProgress(lesson.id);
       if (progress && progress.at) {
         const progressDate = new Date(progress.at);
+        progressDate.setHours(0, 0, 0, 0); // 時刻をリセット
         const dateStr = progressDate.toISOString().split('T')[0];
         learnedDates.add(dateStr);
       }
@@ -8123,11 +9246,39 @@ function getStreakDetails() {
     learnedDates.add(streakData.lastDate);
   }
   
-  for (let i = 29; i >= 0; i--) {
-    const date = new Date(today);
-    date.setDate(date.getDate() - i);
+  // 30日前の日付を取得
+  const startDate = new Date(today);
+  startDate.setDate(startDate.getDate() - 29);
+  startDate.setHours(0, 0, 0, 0);
+  
+  // 最初の日をその週の日曜日に合わせる
+  const firstDayOfWeek = startDate.getDay(); // 0=日曜日, 1=月曜日, ...
+  const calendarStartDate = new Date(startDate);
+  calendarStartDate.setDate(calendarStartDate.getDate() - firstDayOfWeek);
+  
+  // カレンダーに表示する日数（30日 + 最初の週の余分な日数）
+  const totalDays = 30 + firstDayOfWeek;
+  
+  for (let i = 0; i < totalDays; i++) {
+    const date = new Date(calendarStartDate);
+    date.setDate(calendarStartDate.getDate() + i);
+    date.setHours(0, 0, 0, 0);
     const dateStr = date.toISOString().split('T')[0];
-    const isToday = i === 0;
+    
+    // 30日前より前の日付は空白として扱う
+    if (date < startDate) {
+      recentDays.push({
+        date: date,
+        dateStr: dateStr,
+        isLearned: false,
+        dayOfWeek: date.getDay(),
+        isToday: false,
+        isEmpty: true // 空白セル用のフラグ
+      });
+      continue;
+    }
+    
+    const isToday = date.getTime() === today.getTime();
     
     // 学習したかどうかを判定
     const isLearned = learnedDates.has(dateStr) || 
@@ -8138,7 +9289,8 @@ function getStreakDetails() {
       dateStr: dateStr,
       isLearned: isLearned,
       dayOfWeek: date.getDay(),
-      isToday: isToday
+      isToday: isToday,
+      isEmpty: false
     });
   }
   
@@ -8242,6 +9394,15 @@ function showStreakModal() {
   
   // カレンダー日付
   details.recentDays.forEach((dayInfo, index) => {
+    // 空白セルの場合
+    if (dayInfo.isEmpty) {
+      html += `
+        <div class="aspect-square rounded-lg bg-transparent flex items-center justify-center text-xs font-semibold">
+        </div>
+      `;
+      return;
+    }
+    
     const dayNum = dayInfo.date.getDate();
     let bgColor, textColor, border;
     

@@ -136,7 +136,8 @@
     /* ▼ 天気図シーン */
     .sim-field {
       position:relative;
-      margin-top:6px;
+      margin-top:0;
+      margin-bottom:12px;
       border-radius:12px;
       padding:8px;
       overflow:hidden;
@@ -652,20 +653,6 @@
       </div>
 
       <div class="sim-area">
-        <div class="control-row">
-          <div class="control-label">時間の流れ</div>
-          <div class="time-slider-wrap">
-            <input type="range" min="0" max="3" step="1" value="0" class="time-slider" id="timeSlider" />
-            <div class="time-steps">
-              <span>① 遠くにある</span>
-              <span>② 近づく</span>
-              <span>③ 真上を通る</span>
-              <span>④ 東へ去る</span>
-            </div>
-          </div>
-          <div class="mode-desc" id="timeDesc">まだ離れていて、天気はまずまず</div>
-        </div>
-
         <div class="sim-field">
           <div class="map-scene" id="mapScene">
             <!-- 等圧線 -->
@@ -731,6 +718,21 @@
           <div class="sim-comment" id="simComment">
             <strong>① 低気圧がまだ遠いとき</strong>は、雲は少なめで、雨もほとんど降りません。風も弱いことが多いです。
           </div>
+        </div>
+
+        <!-- 操作UIを下に配置 -->
+        <div class="control-row">
+          <div class="control-label">時間の流れ</div>
+          <div class="time-slider-wrap">
+            <input type="range" min="0" max="3" step="1" value="0" class="time-slider" id="timeSlider" />
+            <div class="time-steps">
+              <span>① 遠くにある</span>
+              <span>② 近づく</span>
+              <span>③ 真上を通る</span>
+              <span>④ 東へ去る</span>
+            </div>
+          </div>
+          <div class="mode-desc" id="timeDesc">まだ離れていて、天気はまずまず</div>
         </div>
       </div>
     </section>

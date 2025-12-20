@@ -132,7 +132,8 @@
     /* ▼ 公転＋日照フィールド */
     .sim-field {
       position: relative;
-      margin-top: 6px;
+      margin-top: 0;
+      margin-bottom: 12px;
       background: radial-gradient(circle at 50% 0%, #fffde7 0%, #e3f2fd 40%, #b3e5fc 100%);
       border-radius: 12px;
       padding: 12px;
@@ -558,12 +559,6 @@
         <p>1年の中で、太陽の当たり方と昼の長さがどう変わるか体験しよう</p>
       </div>
       <div class="sim-area">
-        <div class="sim-control-row">
-          <div class="sim-control-label">1年の中の位置（0〜360°）</div>
-          <input type="range" id="yearSlider" class="year-slider" min="0" max="360" step="5" value="0">
-          <div class="season-display" id="seasonDisplay">春分ごろ</div>
-        </div>
-
         <div class="sim-field" id="orbitField">
           <div class="season-label spring">春</div>
           <div class="season-label summer">夏</div>
@@ -596,6 +591,14 @@
           スライダーを動かして、<strong>春分・夏至・秋分・冬至</strong>のときの地球の位置と、<strong>昼の長さ</strong>がどう変わるか見てみよう。<br>
           太陽の光が当たっている<strong>明るい部分</strong>が昼、<strong>暗い部分</strong>が夜です。<br>
           日本（赤いマーカー）では、夏至ごろに昼がいちばん<strong>長く</strong>、冬至ごろに昼がいちばん<strong>短く</strong>なります。
+        </div>
+      </div>
+
+        <!-- 操作UIを下に配置 -->
+        <div class="sim-control-row">
+          <div class="sim-control-label">1年の中の位置（0〜360°）</div>
+          <input type="range" id="yearSlider" class="year-slider" min="0" max="360" step="5" value="0">
+          <div class="season-display" id="seasonDisplay">春分ごろ</div>
         </div>
       </div>
     </div>

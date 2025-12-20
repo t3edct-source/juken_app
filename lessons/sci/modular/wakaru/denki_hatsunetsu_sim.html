@@ -121,7 +121,8 @@
 
     .sim-field {
       position:relative;
-      margin-top:6px;
+      margin-top:0;
+      margin-bottom:12px;
       background:linear-gradient(to bottom, #fff8e1 0%, #ffe0b2 60%, #ffcc80 100%);
       border-radius:12px;
       padding:12px;
@@ -555,18 +556,6 @@
         <p>電流の強さと流す時間で、電熱線のあたたまり方がどう変わるか体験しよう</p>
       </div>
       <div class="sim-area">
-        <div class="sim-control-row">
-          <div class="sim-control-label">電流の強さ（小 → 大）</div>
-          <input type="range" id="currentSlider" class="slider" min="0" max="3" step="1" value="1">
-          <div class="value-display" id="currentDisplay">弱め</div>
-        </div>
-
-        <div class="sim-control-row">
-          <div class="sim-control-label">流した時間（秒）</div>
-          <input type="range" id="timeSlider" class="slider" min="0" max="10" step="1" value="3">
-          <div class="value-display" id="timeDisplay">3 秒</div>
-        </div>
-
         <div class="sim-field">
           <div class="heater-box">
             <div class="terminal left">
@@ -607,6 +596,19 @@
             電流が<strong>強く</strong>、流す時間が<strong>長い</strong>ほど、電熱線から出る熱の量は<strong>大きく</strong>なります。<br>
             反対に、電流が弱かったり、すぐにスイッチを切ったりすると、あまりあたたまりません。
           </div>
+        </div>
+
+        <!-- 操作UIを下に配置 -->
+        <div class="sim-control-row">
+          <div class="sim-control-label">電流の強さ（小 → 大）</div>
+          <input type="range" id="currentSlider" class="slider" min="0" max="3" step="1" value="1">
+          <div class="value-display" id="currentDisplay">弱め</div>
+        </div>
+
+        <div class="sim-control-row">
+          <div class="sim-control-label">流した時間（秒）</div>
+          <input type="range" id="timeSlider" class="slider" min="0" max="10" step="1" value="3">
+          <div class="value-display" id="timeDisplay">3 秒</div>
         </div>
       </div>
     </div>

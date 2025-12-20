@@ -121,7 +121,8 @@
 
     .sim-field {
       position:relative;
-      margin-top:6px;
+      margin-top:0;
+      margin-bottom:12px;
       background:linear-gradient(to bottom, #bbdefb 0%, #e8f5e9 55%, #c8e6c9 100%);
       border-radius:14px;
       padding:14px;
@@ -380,41 +381,149 @@
       box-shadow:0 0 15px rgba(176,190,197,0.3);
     }
 
-    /* セミ（夏のみ表示） */
+    /* セミ（成虫として存在する期間のみ表示） */
     .cicada {
       position:absolute;
       top:20%;
       left:15%;
-      width:20px;
-      height:20px;
+      width:32px;
+      height:24px;
       z-index:5;
       opacity:0;
       transition:opacity 0.5s ease;
+      pointer-events:none;
     }
     .cicada.visible {
       opacity:1;
     }
     .cicada-body {
+      position:relative;
       width:100%;
       height:100%;
-      background:radial-gradient(circle at 30% 30%, #ffc107, #ff9800);
-      border-radius:50% 50% 40% 40%;
-      box-shadow:0 2px 6px rgba(0,0,0,0.3);
       animation:cicadaBuzz 2s ease-in-out infinite;
     }
     @keyframes cicadaBuzz {
       0%, 100% { transform:translateY(0) scale(1); }
       50% { transform:translateY(-3px) scale(1.05); }
     }
-    .cicada-wing {
+    .cicada-head {
+      position:absolute;
+      top:0;
+      left:50%;
+      transform:translateX(-50%);
+      width:10px;
+      height:8px;
+      background:radial-gradient(circle at 30% 30%, #8b4513, #654321);
+      border-radius:50% 50% 40% 40%;
+      box-shadow:0 1px 3px rgba(0,0,0,0.4);
+      z-index:3;
+    }
+    .cicada-head::before {
+      content:"";
       position:absolute;
       top:2px;
       left:2px;
-      width:16px;
-      height:12px;
-      background:rgba(255,255,255,0.7);
+      width:2px;
+      height:2px;
+      background:#000;
+      border-radius:50%;
+      box-shadow:4px 0 0 #000;
+    }
+    .cicada-wing {
+      position:absolute;
+      top:6px;
+      width:14px;
+      height:18px;
+      background:linear-gradient(135deg, rgba(139,69,19,0.9) 0%, rgba(101,67,33,0.95) 50%, rgba(139,69,19,0.85) 100%);
       border-radius:50% 0 50% 50%;
-      border:1px solid rgba(255,193,7,0.5);
+      border:1px solid rgba(101,67,33,0.8);
+      box-shadow:0 2px 4px rgba(0,0,0,0.3), inset 0 1px 2px rgba(255,255,255,0.2);
+      z-index:2;
+    }
+    .cicada-wing.wing-left {
+      left:2px;
+      transform:rotate(-5deg);
+    }
+    .cicada-wing.wing-right {
+      right:2px;
+      transform:rotate(5deg) scaleX(-1);
+    }
+    .cicada-wing::after {
+      content:"";
+      position:absolute;
+      top:30%;
+      left:20%;
+      width:60%;
+      height:40%;
+      border:1px solid rgba(101,67,33,0.6);
+      border-radius:50%;
+      opacity:0.5;
+    }
+
+    /* オタマジャクシ */
+    .tadpole {
+      position:absolute;
+      bottom:38%;
+      left:48%;
+      width:20px;
+      height:16px;
+      z-index:4;
+      opacity:0;
+      transition:opacity 0.5s ease;
+      pointer-events:none;
+    }
+    .tadpole.visible {
+      opacity:1;
+    }
+    .tadpole-body {
+      position:relative;
+      width:100%;
+      height:100%;
+      animation:tadpoleSwim 2.5s ease-in-out infinite;
+    }
+    @keyframes tadpoleSwim {
+      0%, 100% { transform:translateX(0) translateY(0); }
+      25% { transform:translateX(3px) translateY(-2px); }
+      50% { transform:translateX(0) translateY(0); }
+      75% { transform:translateX(-3px) translateY(2px); }
+    }
+    .tadpole-head {
+      position:absolute;
+      top:0;
+      left:0;
+      width:12px;
+      height:12px;
+      background:radial-gradient(circle at 30% 30%, #424242, #212121);
+      border-radius:50%;
+      box-shadow:0 1px 3px rgba(0,0,0,0.4);
+      z-index:2;
+    }
+    .tadpole-head::before {
+      content:"";
+      position:absolute;
+      top:3px;
+      left:3px;
+      width:2px;
+      height:2px;
+      background:#fff;
+      border-radius:50%;
+      box-shadow:4px 0 0 #fff;
+    }
+    .tadpole-tail {
+      position:absolute;
+      top:6px;
+      left:10px;
+      width:12px;
+      height:4px;
+      background:linear-gradient(90deg, #424242 0%, rgba(33,33,33,0.3) 100%);
+      border-radius:0 50% 50% 0;
+      transform-origin:left center;
+      animation:tailWiggle 0.8s ease-in-out infinite;
+      z-index:1;
+    }
+    @keyframes tailWiggle {
+      0%, 100% { transform:rotate(0deg); }
+      50% { transform:rotate(15deg); }
     }
 
     /* カエル */
@@ -422,21 +531,18 @@
       position:absolute;
       bottom:42%;
       left:45%;
-      width:24px;
-      height:18px;
       z-index:4;
       opacity:0;
       transition:opacity 0.5s ease, transform 0.5s ease;
+      pointer-events:none;
     }
     .frog.visible {
       opacity:1;
     }
-    .frog-body {
-      width:100%;
-      height:100%;
-      background:radial-gradient(circle at 30% 30%, #66bb6a, #4caf50);
-      border-radius:50% 50% 40% 40%;
-      box-shadow:0 2px 6px rgba(0,0,0,0.3);
+    .frog-icon {
+      font-size:32px;
+      display:block;
+      filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3));
       animation:frogHop 3s ease-in-out infinite;
     }
     @keyframes frogHop {
@@ -445,17 +551,6 @@
       50% { transform:translateY(0) scale(1); }
       75% { transform:translateY(-3px) scale(1.05); }
     }
-    .frog-eye {
-      position:absolute;
-      top:3px;
-      width:6px;
-      height:6px;
-      background:#ffffff;
-      border-radius:50%;
-      border:1px solid #333;
-    }
-    .frog-eye.left { left:4px; }
-    .frog-eye.right { right:4px; }
     .frog.underwater {
       opacity:0.3;
       transform:translateY(5px);
@@ -948,11 +1043,6 @@
         <p>月を動かして、気温・日照時間と生物の活動の変化を見てみよう</p>
       </div>
       <div class="sim-area">
-        <div class="month-row">
-          <div class="month-label">月（1〜12月）</div>
-          <input type="range" id="monthSlider" class="month-slider" min="1" max="12" step="1" value="4">
-          <div class="month-display" id="monthDisplay">4月（春）</div>
-        </div>
         <div class="sim-field">
           <!-- 季節の風景アニメーション -->
           <div class="season-landscape" id="seasonLandscape">
@@ -968,84 +1058,24 @@
               <div class="sakura-trunk"></div>
               <div class="sakura-crown" id="sakuraCrown"></div>
             </div>
-            <!-- セミ（夏のみ） -->
+            <!-- セミ（成虫として存在する期間のみ） -->
             <div class="cicada" id="cicada">
               <div class="cicada-body">
-                <div class="cicada-wing"></div>
+                <div class="cicada-head"></div>
+                <div class="cicada-wing wing-left"></div>
+                <div class="cicada-wing wing-right"></div>
+              </div>
+            </div>
+            <!-- オタマジャクシ（4-5月） -->
+            <div class="tadpole" id="tadpole">
+              <div class="tadpole-body">
+                <div class="tadpole-head"></div>
+                <div class="tadpole-tail"></div>
               </div>
             </div>
             <!-- カエル -->
             <div class="frog" id="frog">
-              <div class="frog-body">
-                <div class="frog-eye left"></div>
-                <div class="frog-eye right"></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 環境パネル -->
-          <div class="env-panel">
-            <div class="env-card">
-              <div class="env-title">
-                <span class="emoji">🌡️</span><span>気温のようす</span>
-              </div>
-              <div class="env-value" id="tempValue"></div>
-              <div class="env-bar-bg">
-                <div class="env-bar-fill" id="tempBar"></div>
-              </div>
-              <div class="env-sub" id="tempSub"></div>
-            </div>
-            <div class="env-card">
-              <div class="env-title">
-                <span class="emoji">☀️</span><span>日照時間のようす</span>
-              </div>
-              <div class="env-value" id="lightValue"></div>
-              <div class="env-bar-bg">
-                <div class="env-bar-fill" id="lightBar"></div>
-              </div>
-              <div class="env-sub" id="lightSub"></div>
-            </div>
-            <div class="env-card">
-              <div class="env-title">
-                <span class="emoji">📅</span><span>季節のまとめ</span>
-              </div>
-              <div style="margin-bottom:6px;">
-                <span class="season-badge" id="seasonBadge">春のはじまり</span>
-              </div>
-              <div class="env-sub" id="seasonSub">
-                春は、冬のあいだに準備していた芽がひらき、多くの生物が活動を始める季節です。
-              </div>
-            </div>
-          </div>
-
-          <!-- 生物パネル -->
-          <div class="life-panel-title">
-            <span>主な生物の活動のようす</span>
-          </div>
-          <div class="life-grid">
-            <div class="life-card" data-species="sakura">
-              <div class="life-header">
-                <div class="life-name"><span class="life-emoji">🌸</span><span>サクラ</span></div>
-                <div class="life-state-badge" id="sakuraState"></div>
-              </div>
-            </div>
-            <div class="life-card" data-species="frog">
-              <div class="life-header">
-                <div class="life-name"><span class="life-emoji">🐸</span><span>カエル</span></div>
-                <div class="life-state-badge" id="frogState"></div>
-              </div>
-            </div>
-            <div class="life-card" data-species="cicada">
-              <div class="life-header">
-                <div class="life-name"><span class="life-emoji">🐞</span><span>セミ</span></div>
-                <div class="life-state-badge" id="cicadaState"></div>
-              </div>
-            </div>
-            <div class="life-card" data-species="tree">
-              <div class="life-header">
-                <div class="life-name"><span class="life-emoji">🌳</span><span>落葉樹</span></div>
-                <div class="life-state-badge" id="treeState"></div>
-              </div>
+              <span class="frog-icon">🐸</span>
             </div>
           </div>
 
@@ -1054,6 +1084,13 @@
             例えば、春は気温と日照時間が少しずつ増え、サクラが<strong>つぼみから開花</strong>し、カエルも<strong>冬ごもりから目覚めて活動</strong>を始めます。<br>
             夏は気温も日照時間も高くなり、セミが<strong>成虫になって鳴く</strong>など、生き物の活動がとてもさかんになります。
           </div>
+        </div>
+
+        <!-- 操作UIを下に配置 -->
+        <div class="month-row">
+          <div class="month-label">月（1〜12月）</div>
+          <input type="range" id="monthSlider" class="month-slider" min="1" max="12" step="1" value="4">
+          <div class="month-display" id="monthDisplay">4月（春）</div>
         </div>
       </div>
     </div>
@@ -1101,22 +1138,6 @@
     ================================= */
     const monthSlider = document.getElementById('monthSlider');
     const monthDisplay = document.getElementById('monthDisplay');
-
-    const tempValue = document.getElementById('tempValue');
-    const tempBar = document.getElementById('tempBar');
-    const tempSub = document.getElementById('tempSub');
-
-    const lightValue = document.getElementById('lightValue');
-    const lightBar = document.getElementById('lightBar');
-    const lightSub = document.getElementById('lightSub');
-
-    const seasonBadge = document.getElementById('seasonBadge');
-    const seasonSub = document.getElementById('seasonSub');
-
-    const sakuraState = document.getElementById('sakuraState');
-    const frogState = document.getElementById('frogState');
-    const cicadaState = document.getElementById('cicadaState');
-    const treeState = document.getElementById('treeState');
 
     const simCommentEl = document.getElementById('simComment');
 
@@ -1474,10 +1495,6 @@
       simField.classList.remove('spring', 'summer', 'autumn', 'winter');
       simField.classList.add(seasonClass);
 
-      // 季節バッジのクラス設定
-      seasonBadge.classList.remove('spring', 'summer', 'autumn', 'winter');
-      seasonBadge.classList.add(seasonClass);
-
       // 季節の風景アニメーションを更新
       seasonLandscape.classList.remove('spring', 'summer', 'autumn', 'winter');
       seasonLandscape.classList.add(seasonClass);
@@ -1488,15 +1505,25 @@
       sakuraCrown.classList.remove('spring', 'summer', 'autumn', 'winter');
       sakuraCrown.classList.add(seasonClass);
 
-      // セミの表示（夏のみ）
-      if (month >= 7 && month <= 8) {
+      // セミの表示（成虫として存在する期間のみ表示：7-9月）
+      // 6月は羽化が始まる時期、10月以降は土の中で幼虫なので表示しない
+      if (month >= 7 && month <= 9) {
         cicada.classList.add('visible');
       } else {
         cicada.classList.remove('visible');
       }
 
-      // カエルの表示と状態（春から秋まで活動、冬は見えない）
-      if (month >= 3 && month <= 10) {
+      // オタマジャクシの表示（4-5月：産卵・オタマジャクシの時期）
+      const tadpole = document.getElementById('tadpole');
+      if (month >= 4 && month <= 5) {
+        tadpole.classList.add('visible');
+      } else {
+        tadpole.classList.remove('visible');
+      }
+
+      // カエルの表示と状態（カエルとして存在する期間のみ表示：6-10月）
+      // 3-5月は産卵・オタマジャクシの時期なので表示しない
+      if (month >= 6 && month <= 10) {
         frog.classList.add('visible');
         frog.classList.remove('underwater');
       } else {
@@ -1512,57 +1539,37 @@
       clearParticles();
       startParticleAnimation(seasonClass, month);
 
-      // 気温・日照の表示
-      const t = tempByMonth[month-1];
-      const l = lightByMonth[month-1];
-
-      const tempPercent = Math.min(100, Math.max(0, (t - 0) / 30 * 100));
-      const lightPercent = Math.min(100, Math.max(0, (l - 8) / 7 * 100));
-
-      tempBar.style.width = tempPercent + "%";
-      lightBar.style.width = lightPercent + "%";
-
-      tempValue.textContent = describeTemp(t);
-      tempSub.textContent = describeTempSub(t);
-
-      lightValue.textContent = describeLight(l);
-      lightSub.textContent = describeLightSub(l);
-
-      seasonBadge.textContent = seasonLabel;
-      seasonSub.textContent = getSeasonSummary(month);
-
-      // 生物の状態
-      const sak = getSakuraState(month);
-      sakuraState.textContent = sak.badge;
-      const sakuraCard = document.querySelector('[data-species="sakura"]');
-      sakuraCard.classList.toggle('active', month >= 3 && month <= 5);
-
-      const fr = getFrogState(month);
-      frogState.textContent = fr.badge;
-      const frogCard = document.querySelector('[data-species="frog"]');
-      frogCard.classList.toggle('active', month >= 3 && month <= 8);
-
-      const ci = getCicadaState(month);
-      cicadaState.textContent = ci.badge;
-      const cicadaCard = document.querySelector('[data-species="cicada"]');
-      cicadaCard.classList.toggle('active', month >= 6 && month <= 8);
-
-      const tr = getTreeState(month);
-      treeState.textContent = tr.badge;
-      const treeCard = document.querySelector('[data-species="tree"]');
-      treeCard.classList.toggle('active', month >= 3 && month <= 10);
-
       // コメント
       let comment = "";
       if (month === 3 || month === 4){
         comment =
           "春になると、気温と日照時間が少しずつ増え、サクラの<strong>つぼみ</strong>がふくらみ、落葉樹も<strong>新しい葉</strong>を出し始めます。<br>" +
           "カエルも冬ごもりから目覚めて活動を始めるなど、多くの生物にとって<strong>活動スタート</strong>の季節です。";
+      } else if (month === 5){
+        comment =
+          "5月は、気温と日照時間がさらに増え、サクラは<strong>花が終わって葉をしげらせ</strong>、落葉樹も<strong>葉が大きくなって</strong>光合成をさかんに行います。<br>" +
+          "カエルは<strong>産卵</strong>を行い、オタマジャクシが見られるようになるなど、生物の活動が<strong>いちばんさかん</strong>になっていく時期です。";
+      } else if (month === 6){
+        comment =
+          "6月は初夏で、気温も日照時間も高くなり始めます。<br>" +
+          "セミの幼虫が地上に出てきて<strong>羽化</strong>が始まり、植物も<strong>葉をしげらせて</strong>成長を続けます。";
       } else if (month === 7 || month === 8){
         comment =
           "夏は、気温も日照時間も一年でとても高く、生物の活動が<strong>いちばんさかん</strong>な季節です。<br>" +
           "セミは成虫として<strong>鳴き声</strong>をあげ、植物も<strong>葉をしげらせて光合成</strong>をさかんに行います。";
-      } else if (month === 11 || month === 12 || month === 1 || month === 2){
+      } else if (month === 9){
+        comment =
+          "9月は秋の始まりで、気温や日照時間が減り始めます。<br>" +
+          "サクラや落葉樹は<strong>葉が色づき始め</strong>、セミの成虫は少なくなり、カエルも<strong>活動をへらし</strong>始めます。";
+      } else if (month === 10){
+        comment =
+          "10月は秋で、気温や日照時間がさらに減っていきます。<br>" +
+          "落葉樹は<strong>紅葉</strong>が進み、やがて<strong>葉を落とし</strong>始め、多くの生物が冬に向けた準備を進めます。";
+      } else if (month === 11){
+        comment =
+          "11月は冬のはじめで、気温が下がり日照時間も短くなります。<br>" +
+          "落葉樹の<strong>葉が落ち</strong>、カエルやセミは<strong>見えない場所で冬ごもり</strong>を始め、多くの生物が活動をおさえながら冬に入っていきます。";
+      } else if (month === 12 || month === 1 || month === 2){
         comment =
           "冬は、気温が低く日照時間も短いため、多くの生物は活動をおさえます。<br>" +
           "サクラや落葉樹は<strong>葉を落として冬芽の中で準備</strong>をし、カエルやセミは<strong>見えない場所で冬ごもり</strong>をして、次の春や夏を待っています。";

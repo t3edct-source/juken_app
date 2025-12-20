@@ -12,9 +12,18 @@
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#2563eb" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="ステップナビ" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <link rel="apple-touch-icon" href="icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="128x128" href="icons/icon-128x128.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152x152.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="icons/icon-512x512.png" />
   
   <script src="https://cdn.tailwindcss.com"></script>
   
@@ -38,16 +47,30 @@
       </a>
       <nav class="flex items-center gap-3 text-sm">
         <!-- メニューボタン -->
-        <button id="menuBtn" class="px-3 py-2 rounded-lg bg-slate-500 text-white hover:bg-slate-600 shadow-sm transition-colors duration-200" title="メニュー">
+        <button id="menuBtn" class="px-3 py-2 rounded-lg bg-slate-500 text-white hover:bg-slate-600 shadow-sm transition-colors duration-200" 
+                aria-label="メニューを開く" 
+                aria-expanded="false" 
+                aria-controls="menuPanel"
+                title="メニュー">
           ☰
         </button>
         <!-- PWAインストールボタン -->
-        <button id="installBtn" class="px-3 py-2 rounded-lg bg-orange-500 text-white hover:bg-orange-600 hidden shadow-sm transition-colors duration-200">
+        <button id="installBtn" class="px-3 py-2 rounded-lg bg-orange-500 text-white hover:bg-orange-600 hidden shadow-sm transition-colors duration-200" 
+                aria-label="アプリをインストール">
           📱 アプリに追加
         </button>
-        <button id="purchaseBtn" class="px-3 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm transition-colors duration-200">💳 購入</button>
-        <button id="btnLogin" class="px-3 py-2 rounded-lg bg-orange-500 text-white hover:bg-orange-600 shadow-sm transition-colors duration-200">ログイン</button>
-        <button id="btnLogout" class="px-3 py-2 rounded-lg bg-gray-500 text-white hover:bg-gray-600 shadow-sm transition-colors duration-200 hidden">ログアウト</button>
+        <button id="purchaseBtn" class="px-3 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 shadow-sm transition-colors duration-200" 
+                aria-label="コンテンツを購入">
+          💳 購入
+        </button>
+        <button id="btnLogin" class="px-3 py-2 rounded-lg bg-orange-500 text-white hover:bg-orange-600 shadow-sm transition-colors duration-200" 
+                aria-label="ログイン">
+          ログイン
+        </button>
+        <button id="btnLogout" class="px-3 py-2 rounded-lg bg-gray-500 text-white hover:bg-gray-600 shadow-sm transition-colors duration-200 hidden" 
+                aria-label="ログアウト">
+          ログアウト
+        </button>
       </nav>
     </div>
   </header>
@@ -68,7 +91,7 @@
           <input id="email" type="email" placeholder="example@email.com" 
                  class="auth-input" required autocomplete="email"
                  aria-describedby="email-error">
-          <div id="email-error" class="input-error hidden"></div>
+          <div id="email-error" class="input-error hidden" role="alert" aria-live="assertive"></div>
         </div>
         
         <div class="input-group">
@@ -82,7 +105,7 @@
               👁️
             </button>
           </div>
-          <div id="pw-error" class="input-error hidden"></div>
+          <div id="pw-error" class="input-error hidden" role="alert" aria-live="assertive"></div>
         </div>
         
         <button type="submit" id="loginEmail" class="auth-btn auth-btn-primary">
@@ -214,13 +237,20 @@
         </div>
       </div>
       
-      <!-- 教科別タブ -->
-      <div class="subject-tabs mb-4 sm:mb-6">
-        <button class="subject-tab active" data-subject="recommended">⭐ おすすめ学習</button>
-        <button class="subject-tab" data-subject="sci">🔬 理科わかる</button>
-        <button class="subject-tab" data-subject="science_drill">🧪 理科おぼえる</button>
-        <button class="subject-tab" data-subject="soc">🌍 社会わかる</button>
-        <button class="subject-tab" data-subject="social_drill">📍 社会おぼえる</button>
+      <!-- メインタブ -->
+      <div class="main-tabs mb-4 sm:mb-6" role="tablist" aria-label="メインタブ">
+        <button class="main-tab active" data-main-tab="recommended" role="tab" aria-selected="true" aria-controls="recommended-panel">⭐ おすすめ学習</button>
+        <button class="main-tab" data-main-tab="list" role="tab" aria-selected="false" aria-controls="list-panel">📚 学習リスト</button>
+      </div>
+      
+      <!-- サブタブ（学習リスト選択時のみ表示） -->
+      <div id="subTabsContainer" class="sub-tabs-container mb-4 sm:mb-6" style="display: none;" role="tablist" aria-label="教科タブ">
+        <div class="subject-tabs">
+          <button class="subject-tab" data-subject="sci" role="tab" aria-label="理科わかる編を表示">🔬 理科わかる</button>
+          <button class="subject-tab" data-subject="science_drill" role="tab" aria-label="理科おぼえる編を表示">🧪 理科おぼえる</button>
+          <button class="subject-tab" data-subject="soc" role="tab" aria-label="社会わかる編を表示">🌍 社会わかる</button>
+          <button class="subject-tab" data-subject="social_drill" role="tab" aria-label="社会おぼえる編を表示">📍 社会おぼえる</button>
+        </div>
       </div>
       
       <div id="lessonList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
@@ -230,11 +260,14 @@
       <div class="flex items-center justify-between mb-4 px-6 sm:px-8 lg:px-10">
         <h2 id="lessonTitle" class="text-2xl font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">🎓 レッスン</h2>
         <div class="flex items-center gap-3">
-          <button id="memoToggleBtn" class="px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 text-sm font-bold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">📝 メモ</button>
-          <button id="fullscreenBtn" class="px-3 py-2 rounded-full bg-gradient-to-r from-green-500 to-blue-600 text-white hover:from-green-600 hover:to-blue-700 text-xs font-bold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
+          <button id="memoToggleBtn" class="px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 text-sm font-bold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105" 
+                  aria-label="メモ機能を開く">📝 メモ</button>
+          <button id="fullscreenBtn" class="px-3 py-2 rounded-full bg-gradient-to-r from-green-500 to-blue-600 text-white hover:from-green-600 hover:to-blue-700 text-xs font-bold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+                  aria-label="全画面表示に切り替え">
             📱 全画面
           </button>
-          <a href="#/home" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white text-sm font-bold rounded-full transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">← もどる</a>
+          <a href="#/home" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white text-sm font-bold rounded-full transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105" 
+             aria-label="ホームに戻る">← もどる</a>
         </div>
       </div>
       <div class="lesson-area card p-0 overflow-hidden mx-0">
@@ -257,62 +290,84 @@
   </main>
 
   <!-- メニューポップアップ -->
-  <div id="menuPanel" class="fixed inset-0 z-50 hidden" style="display: none;">
+  <div id="menuPanel" class="fixed inset-0 z-50 hidden" 
+       role="dialog" 
+       aria-modal="true" 
+       aria-labelledby="menuPanelTitle"
+       style="display: none;">
     <!-- 背景オーバーレイ -->
-    <div id="menuBackdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300"></div>
+    <div id="menuBackdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300" 
+         aria-hidden="true"></div>
     <!-- サイドパネル -->
     <div class="fixed top-0 right-0 h-full w-80 max-w-[90vw] bg-white shadow-2xl transform transition-transform duration-300 translate-x-full">
       <div class="h-full flex flex-col">
         <!-- ヘッダー -->
         <div class="sticky top-0 bg-gradient-to-r from-slate-50 to-slate-100 border-b border-slate-200 px-6 py-4 flex items-center justify-between z-10">
-          <h2 class="text-xl font-bold text-slate-800">メニュー</h2>
-          <button id="menuClose" class="text-slate-500 hover:text-slate-700 text-2xl font-bold transition-colors">&times;</button>
+          <h2 id="menuPanelTitle" class="text-xl font-bold text-slate-800">メニュー</h2>
+          <button id="menuClose" class="text-slate-500 hover:text-slate-700 text-2xl font-bold transition-colors" 
+                  aria-label="メニューを閉じる">&times;</button>
         </div>
         <!-- コンテンツ -->
         <div class="flex-1 overflow-y-auto px-4 py-4">
           <div class="space-y-2">
             <!-- 学習統計 -->
-            <button class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3" data-action="show-stats">
-              <span class="text-2xl">📊</span>
+            <button class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3" 
+                    data-action="show-stats"
+                    aria-label="学習統計を表示">
+              <span class="text-2xl" aria-hidden="true">📊</span>
               <span class="font-semibold text-slate-800">学習統計</span>
             </button>
             <!-- 連続学習記録 -->
-            <button class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3" data-action="show-streak">
-              <span class="text-2xl">🔥</span>
+            <button class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3" 
+                    data-action="show-streak"
+                    aria-label="連続学習記録を表示">
+              <span class="text-2xl" aria-hidden="true">🔥</span>
               <span class="font-semibold text-slate-800">連続学習記録</span>
             </button>
             <!-- 背景テーマ -->
-            <button class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3" data-action="show-theme">
-              <span class="text-2xl">🎨</span>
+            <button class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3" 
+                    data-action="show-theme"
+                    aria-label="背景テーマを選択">
+              <span class="text-2xl" aria-hidden="true">🎨</span>
               <span class="font-semibold text-slate-800">背景テーマ</span>
             </button>
             <!-- 履歴保存 -->
-            <button class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3" data-action="export-data">
-              <span class="text-2xl">💾</span>
+            <button class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3" 
+                    data-action="export-data"
+                    aria-label="学習データを保存">
+              <span class="text-2xl" aria-hidden="true">💾</span>
               <span class="font-semibold text-slate-800">学習データを保存</span>
             </button>
             <!-- 履歴読み込み -->
-            <button class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3" data-action="import-data">
-              <span class="text-2xl">📥</span>
+            <button class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3" 
+                    data-action="import-data"
+                    aria-label="学習データを読み込み">
+              <span class="text-2xl" aria-hidden="true">📥</span>
               <span class="font-semibold text-slate-800">学習データを読み込み</span>
             </button>
             <!-- 区切り線 -->
             <div class="border-t border-slate-200 my-2"></div>
             <!-- アカウント情報（ログイン時のみ表示 -->
-            <button id="menuAccountBtn" class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3 hidden" data-action="show-account">
-              <span class="text-2xl">👤</span>
+            <button id="menuAccountBtn" class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3 hidden" 
+                    data-action="show-account"
+                    aria-label="アカウント情報を表示">
+              <span class="text-2xl" aria-hidden="true">👤</span>
               <span class="font-semibold text-slate-800">アカウント情報</span>
             </button>
             <!-- アプリに追加 -->
-            <button id="menuInstallBtn" class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3 hidden" data-action="install-app">
-              <span class="text-2xl">📱</span>
+            <button id="menuInstallBtn" class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3 hidden" 
+                    data-action="install-app"
+                    aria-label="アプリをインストール">
+              <span class="text-2xl" aria-hidden="true">📱</span>
               <span class="font-semibold text-slate-800">アプリに追加</span>
             </button>
             <!-- 区切り線 -->
-            <div class="border-t border-slate-200 my-2"></div>
+            <div class="border-t border-slate-200 my-2" role="separator" aria-orientation="horizontal"></div>
             <!-- ヘルプ -->
-            <button class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3" data-action="show-help">
-              <span class="text-2xl">❓</span>
+            <button class="menu-item w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-3" 
+                    data-action="show-help"
+                    aria-label="ヘルプを表示">
+              <span class="text-2xl" aria-hidden="true">❓</span>
               <span class="font-semibold text-slate-800">ヘルプ</span>
             </button>
           </div>
@@ -322,11 +377,16 @@
   </div>
 
   <!-- テーマ選択モーダル -->
-  <div id="themeModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center" style="display: none;">
+  <div id="themeModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center" 
+       role="dialog" 
+       aria-modal="true" 
+       aria-labelledby="themeModalTitle"
+       style="display: none;">
     <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
       <div class="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between rounded-t-2xl">
-        <h2 class="text-xl font-bold text-slate-800">🎨 背景テーマを選択</h2>
-        <button id="themeModalClose" class="text-slate-500 hover:text-slate-700 text-2xl font-bold">&times;</button>
+        <h2 id="themeModalTitle" class="text-xl font-bold text-slate-800">🎨 背景テーマを選択</h2>
+        <button id="themeModalClose" class="text-slate-500 hover:text-slate-700 text-2xl font-bold" 
+                aria-label="モーダルを閉じる">&times;</button>
       </div>
       <div class="p-6">
         <p class="text-sm text-slate-600 mb-4">連続学習日数に応じて新しいテーマがアンロックされます！</p>
@@ -338,11 +398,16 @@
   </div>
 
   <!-- 学習統計モーダル -->
-  <div id="statsModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center" style="display: none;">
+  <div id="statsModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center" 
+       role="dialog" 
+       aria-modal="true" 
+       aria-labelledby="statsModalTitle"
+       style="display: none;">
     <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
       <div class="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between rounded-t-2xl z-10">
-        <h2 class="text-xl font-bold text-slate-800">📊 学習統計</h2>
-        <button id="statsModalClose" class="text-slate-500 hover:text-slate-700 text-2xl font-bold">&times;</button>
+        <h2 id="statsModalTitle" class="text-xl font-bold text-slate-800">📊 学習統計</h2>
+        <button id="statsModalClose" class="text-slate-500 hover:text-slate-700 text-2xl font-bold" 
+                aria-label="モーダルを閉じる">&times;</button>
       </div>
       <div class="p-6" id="statsContent">
         <!-- 統計コンテンツはJavaScriptで動的に生成 -->
@@ -351,11 +416,16 @@
   </div>
 
   <!-- 連続学習記録モーダル -->
-  <div id="streakModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center" style="display: none;">
+  <div id="streakModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center" 
+       role="dialog" 
+       aria-modal="true" 
+       aria-labelledby="streakModalTitle"
+       style="display: none;">
     <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
       <div class="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between rounded-t-2xl z-10">
-        <h2 class="text-xl font-bold text-slate-800">🔥 連続学習記録</h2>
-        <button id="streakModalClose" class="text-slate-500 hover:text-slate-700 text-2xl font-bold">&times;</button>
+        <h2 id="streakModalTitle" class="text-xl font-bold text-slate-800">🔥 連続学習記録</h2>
+        <button id="streakModalClose" class="text-slate-500 hover:text-slate-700 text-2xl font-bold" 
+                aria-label="モーダルを閉じる">&times;</button>
       </div>
       <div class="p-6" id="streakContent">
         <!-- 連続学習記録コンテンツはJavaScriptで動的に生成 -->
@@ -364,11 +434,16 @@
   </div>
 
   <!-- アカウント情報モーダル -->
-  <div id="accountModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center" style="display: none;">
+  <div id="accountModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center" 
+       role="dialog" 
+       aria-modal="true" 
+       aria-labelledby="accountModalTitle"
+       style="display: none;">
     <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
       <div class="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between rounded-t-2xl z-10">
-        <h2 class="text-xl font-bold text-slate-800">👤 アカウント情報</h2>
-        <button id="accountModalClose" class="text-slate-500 hover:text-slate-700 text-2xl font-bold">&times;</button>
+        <h2 id="accountModalTitle" class="text-xl font-bold text-slate-800">👤 アカウント情報</h2>
+        <button id="accountModalClose" class="text-slate-500 hover:text-slate-700 text-2xl font-bold" 
+                aria-label="モーダルを閉じる">&times;</button>
       </div>
       <div class="p-6" id="accountContent">
         <!-- アカウント情報コンテンツはJavaScriptで動的に生成 -->
@@ -401,6 +476,21 @@
             console.log('🗑️ 既存のService Workerをアン登録:', registration.scope);
             registration.unregister();
           });
+          
+          // キャッシュも削除
+          if ('caches' in window) {
+            caches.keys().then(cacheNames => {
+              console.log('🔍 キャッシュ名一覧:', cacheNames);
+              return Promise.all(
+                cacheNames.map(cacheName => {
+                  console.log('🗑️ キャッシュ削除:', cacheName);
+                  return caches.delete(cacheName);
+                })
+              );
+            }).then(() => {
+              console.log('✅ 全キャッシュ削除完了');
+            });
+          }
         });
       }
     } else {
@@ -421,12 +511,76 @@
     }
   </script>
 
+  <!-- PWAインストールモーダル -->
+  <div id="installModal" class="modal-overlay hidden" 
+       role="dialog" 
+       aria-modal="true" 
+       aria-labelledby="installModalTitle">
+    <div class="modal-container install-modal-container">
+      <div class="install-modal-content">
+        <div class="install-modal-icon">📱</div>
+        <h2 id="installModalTitle" class="install-modal-title">アプリをインストール</h2>
+        <p class="install-modal-description">
+          ステップナビをホーム画面に追加して、<br>
+          いつでも快適に学習できます
+        </p>
+        <div class="install-modal-features">
+          <div class="install-feature-item">
+            <span class="feature-icon">⚡</span>
+            <span class="feature-text">高速起動</span>
+          </div>
+          <div class="install-feature-item">
+            <span class="feature-icon">📴</span>
+            <span class="feature-text">オフライン対応</span>
+          </div>
+          <div class="install-feature-item">
+            <span class="feature-icon">🔔</span>
+            <span class="feature-text">通知対応</span>
+          </div>
+        </div>
+        <div class="install-modal-buttons">
+          <button id="confirmInstallBtn" class="install-btn-primary">
+            <span class="install-btn-icon">📥</span>
+            インストール
+          </button>
+          <button id="cancelInstallBtn" class="install-btn-secondary">
+            後で
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PWAインストール完了モーダル -->
+  <div id="installCompleteModal" class="modal-overlay hidden" 
+       role="dialog" 
+       aria-modal="true" 
+       aria-labelledby="installCompleteModalTitle">
+    <div class="modal-container install-complete-modal-container">
+      <div class="install-complete-modal-content">
+        <div class="install-complete-icon">🎉</div>
+        <h2 id="installCompleteModalTitle" class="install-complete-modal-title">インストール完了！</h2>
+        <p class="install-complete-modal-description">
+          ステップナビがホーム画面に追加されました。<br>
+          これからも楽しく学習を続けましょう！
+        </p>
+        <button id="closeInstallCompleteBtn" class="install-btn-primary">
+          学習を始める
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- 購入モーダル -->
-  <div id="purchaseModal" class="modal-overlay hidden">
+  <div id="purchaseModal" class="modal-overlay hidden" 
+       role="dialog" 
+       aria-modal="true" 
+       aria-labelledby="purchaseModalTitle">
     <div class="modal-container">
       <div class="modal-header">
-        <h2 class="modal-title">📚 コンテンツ詳細・購入</h2>
-        <button id="closePurchaseModal" class="modal-close-btn">&times;</button>
+        <h2 id="purchaseModalTitle" class="modal-title">📚 コンテンツ詳細・購入</h2>
+        <button id="closePurchaseModal" class="modal-close-btn" 
+                aria-label="モーダルを閉じる">&times;</button>
       </div>
       <div class="modal-body">
         <div class="modal-intro">
@@ -443,11 +597,15 @@
   </div>
 
   <!-- 購入確認モーダル -->
-  <div id="purchaseConfirmModal" class="modal-overlay hidden">
+  <div id="purchaseConfirmModal" class="modal-overlay hidden" 
+       role="dialog" 
+       aria-modal="true" 
+       aria-labelledby="purchaseConfirmModalTitle">
     <div class="modal-container purchase-confirm-modal">
       <div class="modal-header">
-        <h2 class="modal-title">💳 購入確認</h2>
-        <button id="closePurchaseConfirmModal" class="modal-close-btn">&times;</button>
+        <h2 id="purchaseConfirmModalTitle" class="modal-title">💳 購入確認</h2>
+        <button id="closePurchaseConfirmModal" class="modal-close-btn" 
+                aria-label="モーダルを閉じる">&times;</button>
       </div>
       <div class="modal-body">
         <div class="purchase-confirm-content">
@@ -477,12 +635,16 @@
   </div>
 
   <!-- 購入処理中モーダル -->
-  <div id="purchaseProcessingModal" class="modal-overlay hidden">
+  <div id="purchaseProcessingModal" class="modal-overlay hidden" 
+       role="dialog" 
+       aria-modal="true" 
+       aria-labelledby="purchaseProcessingModalTitle"
+       aria-busy="true">
     <div class="modal-container purchase-processing-modal">
       <div class="modal-body">
         <div class="processing-content">
-          <div class="processing-spinner"></div>
-          <h3 class="processing-title">購入処理中...</h3>
+          <div class="processing-spinner" aria-hidden="true"></div>
+          <h3 id="purchaseProcessingModalTitle" class="processing-title">購入処理中...</h3>
           <p class="processing-message">しばらくお待ちください</p>
         </div>
       </div>
@@ -490,11 +652,15 @@
   </div>
 
   <!-- 購入完了モーダル -->
-  <div id="purchaseCompleteModal" class="modal-overlay hidden">
+  <div id="purchaseCompleteModal" class="modal-overlay hidden" 
+       role="dialog" 
+       aria-modal="true" 
+       aria-labelledby="purchaseCompleteModalTitle">
     <div class="modal-container purchase-complete-modal">
       <div class="modal-header">
-        <h2 class="modal-title">🎉 購入完了</h2>
-        <button id="closePurchaseCompleteModal" class="modal-close-btn">&times;</button>
+        <h2 id="purchaseCompleteModalTitle" class="modal-title">🎉 購入完了</h2>
+        <button id="closePurchaseCompleteModal" class="modal-close-btn" 
+                aria-label="モーダルを閉じる">&times;</button>
       </div>
       <div class="modal-body">
         <div class="purchase-complete-content">
@@ -515,6 +681,27 @@
       <div class="modal-footer">
         <button id="startLearningFromPurchase" class="btn-primary">学習を始める</button>
         <button id="continueBrowsingBtn" class="btn-secondary">他のコンテンツを見る</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ヘルプモーダル -->
+  <div id="helpModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center transition-opacity duration-300" 
+       role="dialog" 
+       aria-modal="true" 
+       aria-labelledby="helpModalTitle"
+       style="display: none; opacity: 0;">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full mx-4 max-h-[90vh] overflow-hidden flex flex-col">
+      <div class="sticky top-0 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-slate-200 px-6 py-4 flex items-center justify-between rounded-t-2xl z-10">
+        <h2 id="helpModalTitle" class="text-xl font-bold text-slate-800 flex items-center gap-2">
+          <span aria-hidden="true">❓</span>
+          ヘルプ
+        </h2>
+        <button id="helpModalClose" class="text-slate-500 hover:text-slate-700 text-2xl font-bold transition-colors" 
+                aria-label="ヘルプを閉じる">&times;</button>
+      </div>
+      <div class="p-6 overflow-y-auto flex-1" id="helpContent">
+        <!-- ヘルプコンテンツはJavaScriptで動的に生成 -->
       </div>
     </div>
   </div>
@@ -1020,7 +1207,16 @@
   
   // 開発環境でのみ表示（本番公開時に削除予定）
   if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-    document.getElementById("devPurchaseSection").style.display = "block";
+    const devSection = document.getElementById("devPurchaseSection");
+    if (devSection) {
+      devSection.style.display = "block";
+    }
+  } else {
+    // 本番環境では非表示
+    const devSection = document.getElementById("devPurchaseSection");
+    if (devSection) {
+      devSection.style.display = "none";
+    }
   }
 </script>
 

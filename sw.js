@@ -1,7 +1,21 @@
-const CACHE_NAME = 'manabi-step-v28'; // バージョン必ず更新（最終強制更新版）
+const CACHE_NAME = 'manabi-step-v29'; // バージョン必ず更新（PWA完全対応版）
 const urlsToCache = [
+  // コアファイル
   '/', '/index.html', '/app.js', '/styles.css', '/manifest.json',
   '/firebaseConfig.js', '/catalog.json',
+  '/data/encouragement-messages.json',
+  
+  // アイコン
+  '/icons/icon-72x72.png',
+  '/icons/icon-96x96.png',
+  '/icons/icon-128x128.png',
+  '/icons/icon-144x144.png',
+  '/icons/icon-152x152.png',
+  '/icons/icon-192x192.png',
+  '/icons/icon-384x384.png',
+  '/icons/icon-512x512.png',
+  
+  // 社会レッスン（モジュール形式）
   '/lessons/soc/modular/index_modular.html',
   '/lessons/soc/modular/home_modular.html',
   '/lessons/soc/modular/script.js',
@@ -15,12 +29,25 @@ const urlsToCache = [
   '/lessons/soc/modular/oboeru/script.js',
   '/lessons/soc/modular/oboeru/style.css',
   '/lessons/soc/modular/oboeru/loader.js',
-  '/lessons/soc/modular/common-home-button.js'
+  '/lessons/soc/modular/common-home-button.js',
+  
+  // 理科レッスン（モジュール形式）
+  '/lessons/sci/modular/wakaru/index_modular.html',
+  '/lessons/sci/modular/wakaru/script.js',
+  '/lessons/sci/modular/wakaru/style.css',
+  '/lessons/sci/modular/wakaru/loader.js',
+  '/lessons/sci/modular/oboeru/index_modular.html',
+  '/lessons/sci/modular/oboeru/script.js',
+  '/lessons/sci/modular/oboeru/style.css',
+  '/lessons/sci/modular/oboeru/loader.js',
+  
+  // オフラインページ
+  '/offline.html'
 ];
 
 // 即時有効化
 self.addEventListener('install', (event) => {
-  console.log('🔄 Service Worker v28 インストール開始');
+  console.log('🔄 Service Worker v29 インストール開始（PWA完全対応版）');
   event.waitUntil((async () => {
     // 全ての古いキャッシュを削除
     const cacheNames = await caches.keys();
@@ -56,7 +83,7 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
-  console.log('🔄 Service Worker v28 アクティベート開始');
+  console.log('🔄 Service Worker v29 アクティベート開始（PWA完全対応版）');
   event.waitUntil((async () => {
     // 全ての古いキャッシュを削除
     const keys = await caches.keys();
@@ -71,7 +98,7 @@ self.addEventListener('activate', (event) => {
     
     // 全てのクライアントを制御
     await self.clients.claim();
-    console.log('✅ Service Worker v28 有効化完了');
+    console.log('✅ Service Worker v29 有効化完了（PWA完全対応版）');
   })());
 });
 
@@ -104,10 +131,24 @@ self.addEventListener('fetch', (event) => {
       }
       console.log('🌐 ネットワークから取得:', url.pathname);
       return fetch(req).then((res) => {
-        if (!res || res.status !== 200 || res.type !== 'basic') return res;
+        if (!res || res.status !== 200 || res.type !== 'basic') {
+          // ネットワークエラー時はオフラインページを返す（HTMLリクエストの場合）
+          if (req.headers.get('accept')?.includes('text/html')) {
+            return caches.match('/offline.html');
+          }
+          return res;
+        }
         const copy = res.clone();
         caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
         return res;
+      }).catch((error) => {
+        console.error('❌ ネットワークエラー:', error);
+        // HTMLリクエストの場合はオフラインページを返す
+        if (req.headers.get('accept')?.includes('text/html')) {
+          return caches.match('/offline.html');
+        }
+        // その他のリソースはエラーを返す
+        return new Response('オフラインです', { status: 503, statusText: 'Service Unavailable' });
       });
     })
   );

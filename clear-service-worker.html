@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Service Worker クリア</title>
+  <style>
+    body {
+      font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 10px 5px;
+    }
+    button:hover {
+      background: #1e40af;
+    }
+    .log {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f9f9f9;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 12px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .success {
+      color: green;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔧 Service Worker & キャッシュクリア</h1>
+    <p>このページでService Workerとキャッシュを完全にクリアできます。</p>
+    
+    <button onclick="clearAll()">すべてクリア</button>
+    <button onclick="clearServiceWorkers()">Service Workerのみ</button>
+    <button onclick="clearCaches()">キャッシュのみ</button>
+    
+    <div id="log" class="log"></div>
+  </div>
+
+  <script>
+    function log(message, type = 'info') {
+      const logDiv = document.getElementById('log');
+      const className = type === 'success' ? 'success' : type === 'error' ? 'error' : '';
+      logDiv.innerHTML += `<div class="${className}">[${new Date().toLocaleTimeString()}] ${message}</div>`;
+      logDiv.scrollTop = logDiv.scrollHeight;
+    }
+
+    function clearServiceWorkers() {
+      log('Service Workerをクリア中...');
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+          log(`登録済みService Worker: ${registrations.length}件`);
+          if (registrations.length === 0) {
+            log('Service Workerは登録されていません', 'success');
+            return;
+          }
+          return Promise.all(
+            registrations.map(registration => {
+              log(`Service Workerを削除: ${registration.scope}`);
+              return registration.unregister();
+            })
+          );
+        }).then(() => {
+          log('✅ Service Workerの削除が完了しました', 'success');
+        }).catch(error => {
+          log(`❌ エラー: ${error.message}`, 'error');
+        });
+      } else {
+        log('Service Workerはサポートされていません', 'error');
+      }
+    }
+
+    function clearCaches() {
+      log('キャッシュをクリア中...');
+      if ('caches' in window) {
+        caches.keys().then(cacheNames => {
+          log(`キャッシュ名一覧: ${cacheNames.length}件`);
+          if (cacheNames.length === 0) {
+            log('キャッシュは存在しません', 'success');
+            return;
+          }
+          return Promise.all(
+            cacheNames.map(cacheName => {
+              log(`キャッシュを削除: ${cacheName}`);
+              return caches.delete(cacheName);
+            })
+          );
+        }).then(() => {
+          log('✅ キャッシュの削除が完了しました', 'success');
+        }).catch(error => {
+          log(`❌ エラー: ${error.message}`, 'error');
+        });
+      } else {
+        log('Cache APIはサポートされていません', 'error');
+      }
+    }
+
+    function clearAll() {
+      log('=== すべてクリア開始 ===');
+      clearServiceWorkers();
+      setTimeout(() => {
+        clearCaches();
+        setTimeout(() => {
+          log('=== 完了 ===', 'success');
+          log('ページをリロードしてください', 'success');
+          if (confirm('ページをリロードしますか？')) {
+            window.location.reload(true);
+          }
+        }, 1000);
+      }, 1000);
+    }
+
+    // ページ読み込み時に現在の状態を表示
+    window.addEventListener('load', () => {
+      log('ページ読み込み完了');
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+          log(`現在登録されているService Worker: ${registrations.length}件`);
+        });
+      }
+      if ('caches' in window) {
+        caches.keys().then(cacheNames => {
+          log(`現在のキャッシュ: ${cacheNames.length}件`);
+        });
+      }
+    });
+  </script>
+</body>
+</html>
+

@@ -188,7 +188,8 @@
     /* ▼ シーン */
     .sim-field {
       position:relative;
-      margin-top:6px;
+      margin-top:0;
+      margin-bottom:12px;
       border-radius:16px;
       padding:12px;
       overflow:hidden;
@@ -681,33 +682,6 @@
       </div>
 
       <div class="sim-area">
-        <div class="control-row">
-          <div class="control-label">ばねの種類</div>
-          <div class="spring-tabs">
-            <button class="spring-btn active" data-spring="soft" id="btnSoft">
-              <span class="emoji-icon">🌀</span>ばねA（やわらかい）
-            </button>
-            <button class="spring-btn" data-spring="hard" id="btnHard">
-              <span class="emoji-icon">🧷</span>ばねB（かたい）
-            </button>
-          </div>
-          <div class="mode-desc" id="springDesc">ばねA：同じ力でも大きくのびる</div>
-        </div>
-
-        <div class="control-row bottom">
-          <div class="control-label">おもりの数</div>
-          <div class="force-slider-wrap">
-            <input type="range" min="0" max="3" step="1" value="1" class="force-slider" id="forceSlider" />
-            <div class="force-steps">
-              <span>0こ</span>
-              <span>1こ</span>
-              <span>2こ</span>
-              <span>3こ</span>
-            </div>
-          </div>
-          <div class="mode-desc" id="forceDesc">1このおもり（約1N）</div>
-        </div>
-
         <div class="sim-field">
           <div class="spring-scene">
             <div class="ceiling"></div>
@@ -773,6 +747,34 @@
           <div class="sim-comment" id="simComment">
             <strong>ばねののびは、そのばねに加わる力の大きさに比例します。</strong>同じばねなら、力が2倍・3倍になると、のびも2倍・3倍になります。また、ばねの種類によって、同じ力でものび方がちがいます。
           </div>
+        </div>
+
+        <!-- 操作UIを下に配置 -->
+        <div class="control-row">
+          <div class="control-label">ばねの種類</div>
+          <div class="spring-tabs">
+            <button class="spring-btn active" data-spring="A" id="btnSpringA">
+              <span class="emoji-icon">🟢</span>ばねA（やわらかい）
+            </button>
+            <button class="spring-btn" data-spring="B" id="btnSpringB">
+              <span class="emoji-icon">🔵</span>ばねB（かたい）
+            </button>
+          </div>
+          <div class="mode-desc" id="springDesc">ばねA：やわらかく、よくのびる</div>
+        </div>
+
+        <div class="control-row bottom">
+          <div class="control-label">おもりの数</div>
+          <div class="force-slider-wrap">
+            <input type="range" min="0" max="3" step="1" value="1" class="force-slider" id="forceSlider" />
+            <div class="force-steps">
+              <span>0こ</span>
+              <span>1こ</span>
+              <span>2こ</span>
+              <span>3こ</span>
+            </div>
+          </div>
+          <div class="mode-desc" id="forceDesc">1このおもり（約1N）</div>
         </div>
       </div>
     </section>

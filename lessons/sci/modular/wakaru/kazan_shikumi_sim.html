@@ -121,7 +121,8 @@
 
     .sim-field {
       position:relative;
-      margin-top:6px;
+      margin-top:0;
+      margin-bottom:12px;
       background:linear-gradient(to bottom, #ffe8d6 0%, #ffcc80 50%, #8bc34a 100%);
       border-radius:12px;
       padding:12px;
@@ -615,18 +616,6 @@
         <p>マグマのねばりけと気体の量をかえて、噴火のようすのちがいを体験しよう</p>
       </div>
       <div class="sim-area">
-        <div class="sim-control-row">
-          <div class="sim-control-label">マグマのねばりけ</div>
-          <input type="range" id="viscositySlider" class="slider" min="0" max="3" step="1" value="1">
-          <div class="value-display" id="viscosityDisplay">ややさらさら</div>
-        </div>
-
-        <div class="sim-control-row">
-          <div class="sim-control-label">マグマにふくまれる気体の量</div>
-          <input type="range" id="gasSlider" class="slider" min="0" max="3" step="1" value="2">
-          <div class="value-display" id="gasDisplay">ふつう</div>
-        </div>
-
         <div class="sim-field">
           <div class="volcano-area">
             <div class="ground"></div>
@@ -667,6 +656,19 @@
             マグマが<strong>さらさら</strong>で気体が<strong>少ない</strong>ときは、溶岩がなめらかに流れ出る、おだやかな噴火になります。<br>
             反対に、マグマが<strong>ねばねば</strong>で気体が<strong>多い</strong>ときは、気体が一気にふき出し、<strong>激しい噴火</strong>になります。
           </div>
+        </div>
+
+        <!-- 操作UIを下に配置 -->
+        <div class="sim-control-row">
+          <div class="sim-control-label">マグマのねばりけ</div>
+          <input type="range" id="viscositySlider" class="slider" min="0" max="3" step="1" value="1">
+          <div class="value-display" id="viscosityDisplay">ややさらさら</div>
+        </div>
+
+        <div class="sim-control-row">
+          <div class="sim-control-label">マグマにふくまれる気体の量</div>
+          <input type="range" id="gasSlider" class="slider" min="0" max="3" step="1" value="2">
+          <div class="value-display" id="gasDisplay">ふつう</div>
         </div>
       </div>
     </div>

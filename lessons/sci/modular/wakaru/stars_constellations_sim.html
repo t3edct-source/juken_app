@@ -135,7 +135,8 @@
     }
 
     .sim-field {
-      margin-top:6px;
+      margin-top:0;
+      margin-bottom:12px;
       display:grid;
       grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);
       gap:10px;
@@ -146,8 +147,8 @@
       position:relative;
       border-radius:14px;
       background:radial-gradient(circle at center,#1a237e 0%,#000015 55%,#000 100%);
-      min-height:230px;
-      overflow:hidden;
+      min-height:180px;
+      overflow:visible;
       box-shadow:inset 0 0 30px rgba(0,0,0,0.9);
       border:1px solid rgba(144,202,249,0.3);
     }
@@ -173,12 +174,12 @@
       position:absolute;
       left:50%;
       top:50%;
-      width:56px;
-      height:56px;
-      margin:-28px 0 0 -28px;
+      width:12px;
+      height:12px;
+      margin:-6px 0 0 -6px;
       border-radius:50%;
       background:radial-gradient(circle at 30% 30%,#fff59d,#ffca28,#f57f17);
-      box-shadow:0 0 40px rgba(255,235,59,0.8),0 0 80px rgba(255,193,7,0.6);
+      box-shadow:0 0 10px rgba(255,235,59,0.8),0 0 20px rgba(255,193,7,0.6);
       animation:pulseSun 4s ease-in-out infinite;
     }
     @keyframes pulseSun {
@@ -190,9 +191,9 @@
       position:absolute;
       left:50%;
       top:50%;
-      width:200px;
-      height:140px;
-      margin:-70px 0 0 -100px;
+      width:90px;
+      height:65px;
+      margin:-32.5px 0 0 -45px;
       border-radius:50%;
       border:1px dashed rgba(144,202,249,0.6);
       transform:rotate(-20deg);
@@ -201,21 +202,25 @@
 
     .earth-orbit-pos {
       position:absolute;
-      width:100%;
-      height:100%;
+      left:50%;
+      top:50%;
+      width:90px;
+      height:65px;
+      margin:-32.5px 0 0 -45px;
+      transform:rotate(-20deg);
       transform-origin:50% 50%;
       transition:transform .8s ease-in-out;
     }
     .earth {
       position:absolute;
-      width:26px;
-      height:26px;
+      width:9px;
+      height:9px;
       border-radius:50%;
       background:radial-gradient(circle at 30% 30%,#e3f2fd,#42a5f5,#1a237e);
-      box-shadow:0 0 15px rgba(129,212,250,0.9);
+      box-shadow:0 0 6px rgba(129,212,250,0.9);
       top:50%;
       left:100%;
-      margin:-13px 0 0 -13px;
+      margin:-4.5px 0 0 -4.5px;
     }
     .earth::after {
       content:"🌏";
@@ -224,30 +229,61 @@
       display:flex;
       justify-content:center;
       align-items:center;
-      font-size:18px;
-      text-shadow:0 0 6px rgba(0,0,0,0.7);
+      font-size:8px;
+      text-shadow:0 0 3px rgba(0,0,0,0.7);
     }
 
     .night-arrow {
       position:absolute;
-      left:50%;
       top:50%;
+      left:100%;
       width:100px;
-      height:2px;
-      background:linear-gradient(90deg,transparent,#bbdefb);
+      height:3px;
+      background:linear-gradient(90deg,transparent,rgba(187,222,251,0.9),#bbdefb);
       transform-origin:0 50%;
-      transform:rotate(0deg);
+      transform:translateY(-50%);
       transition:transform .8s ease-in-out;
-      opacity:.9;
+      opacity:1;
+      box-shadow:0 0 8px rgba(187,222,251,0.6);
     }
-    .night-arrow::after {
-      content:"夜の空の向き";
+    .night-arrow-label {
       position:absolute;
-      right:-6px;
-      top:-18px;
-      font-size:11px;
+      right:-8px;
+      top:-24px;
+      font-size:13px;
+      font-weight:600;
       color:#e3f2fd;
-      text-shadow:0 0 4px #000;
+      text-shadow:0 0 8px rgba(0,0,0,0.9), 0 0 4px rgba(187,222,251,0.8);
+      white-space:nowrap;
+      pointer-events:none;
+    }
+
+    .pole-star {
+      position:absolute;
+      top:12%;
+      left:50%;
+      width:4px;
+      height:4px;
+      margin:-2px 0 0 -2px;
+      border-radius:50%;
+      background:#fff;
+      box-shadow:0 0 8px rgba(255,255,255,0.9), 0 0 12px rgba(255,255,255,0.6);
+      opacity:0.9;
+      animation:twinkle 3s ease-in-out infinite alternate;
+      z-index:10;
+      /* 地軸の傾き（約23.4度）を考慮して、わずかに右にシフト */
+      transform:translateX(8px);
+    }
+    .pole-star::after {
+      content:"北極星";
+      position:absolute;
+      left:50%;
+      top:-20px;
+      transform:translateX(-50%);
+      font-size:10px;
+      color:#fff;
+      text-shadow:0 0 4px rgba(0,0,0,0.9);
+      white-space:nowrap;
     }
 
     /* ▼ 夜空・星座パネル */
@@ -542,7 +578,7 @@
       .sim-field {
         grid-template-columns:1fr;
       }
-      .orbit-panel,.sky-panel {min-height:210px;}
+      .orbit-panel {min-height:160px;}
       .question-container,.info-panel {padding:15px;}
       .question-text {font-size:15px;}
       .choice {font-size:13px;padding:11px 12px;}
@@ -566,87 +602,45 @@
       <p>春・夏・秋・冬で「夜に見える星座」が変わるのは、地球が太陽のまわりを公転しているからだよ。</p>
     </div>
     <div class="sim-area">
-      <div class="control-row">
-        <div class="control-label">季節をえらぶ</div>
-        <div class="season-tabs">
-          <button class="season-btn active" data-season="spring" id="btnSpring">
-            <span class="emoji">🌸</span><span>春（春分のころ）</span>
-          </button>
-          <button class="season-btn" data-season="summer" id="btnSummer">
-            <span class="emoji">🌻</span><span>夏（夏至のころ）</span>
-          </button>
-          <button class="season-btn" data-season="autumn" id="btnAutumn">
-            <span class="emoji">🍁</span><span>秋（秋分のころ）</span>
-          </button>
-          <button class="season-btn" data-season="winter" id="btnWinter">
-            <span class="emoji">❄️</span><span>冬（冬至のころ）</span>
-          </button>
-        </div>
-        <div class="season-desc" id="seasonDesc">春の夜：しし座がよく見える</div>
-      </div>
-
       <div class="sim-field">
         <!-- 公転図 -->
         <div class="orbit-panel">
           <div class="starfield"></div>
           <div class="sun"></div>
           <div class="orbit"></div>
+          <div class="pole-star"></div>
           <div class="earth-orbit-pos" id="earthOrbit">
             <div class="earth"></div>
-          </div>
-          <div class="night-arrow" id="nightArrow"></div>
-        </div>
-
-        <!-- 夜空 & 星座 -->
-        <div class="sky-panel">
-          <div class="sky-stars"></div>
-          <div class="sky-horizon"></div>
-
-          <div class="season-caption" id="skySeasonCaption">春の夜空</div>
-
-          <!-- 北斗七星（常時表示） -->
-          <div class="dipper">
-            <svg class="dipper-svg" viewBox="0 0 100 70">
-              <circle cx="15" cy="20" r="2"/>
-              <circle cx="25" cy="15" r="2"/>
-              <circle cx="35" cy="10" r="2"/>
-              <circle cx="45" cy="12" r="2"/>
-              <circle cx="50" cy="25" r="2"/>
-              <circle cx="55" cy="40" r="2"/>
-              <circle cx="60" cy="55" r="2"/>
-              <line x1="15" y1="20" x2="25" y2="15"/>
-              <line x1="25" y1="15" x2="35" y2="10"/>
-              <line x1="35" y1="10" x2="45" y2="12"/>
-              <line x1="45" y1="12" x2="50" y2="25"/>
-              <line x1="50" y1="25" x2="55" y2="40"/>
-              <line x1="55" y1="40" x2="60" y2="55"/>
-            </svg>
-          </div>
-
-          <div class="constellation-lines" id="constellationLines">
-            <!-- SVGはJSで差し替え -->
-            <svg class="constellation-svg" viewBox="0 0 100 60">
-              <circle cx="10" cy="40" r="1.5"/>
-              <circle cx="30" cy="25" r="1.5"/>
-              <circle cx="50" cy="20" r="1.5"/>
-              <circle cx="70" cy="30" r="1.5"/>
-              <circle cx="85" cy="15" r="1.5"/>
-              <line x1="10" y1="40" x2="30" y2="25"/>
-              <line x1="30" y1="25" x2="50" y2="20"/>
-              <line x1="50" y1="20" x2="70" y2="30"/>
-              <line x1="70" y1="30" x2="85" y2="15"/>
-            </svg>
-          </div>
-
-          <div class="constellation-name" id="constellationName">
-            <span class="emoji" id="constellationEmoji">🦁</span>
-            <span id="constellationText">春の代表的な星座：しし座</span>
+            <div class="night-arrow" id="nightArrow">
+              <div class="night-arrow-label" id="nightArrowLabel">夜の空の向き</div>
+            </div>
           </div>
         </div>
+
       </div>
 
       <div class="sim-comment" id="simComment">
         <strong>春分のころ</strong>、夜には太陽と反対側の空にある「しし座」などがよく見えるようになります。地球が太陽のまわりを動くことで、夜に向いている方向が少しずつ変わり、季節ごとに見える星座が変化します。
+      </div>
+
+      <!-- 操作UIを下に配置 -->
+      <div class="control-row">
+        <div class="control-label">季節をえらぶ</div>
+        <div class="season-tabs">
+          <button class="season-btn active" data-season="spring" id="btnSpring">
+            <span class="emoji">🌸</span><span>春</span>
+          </button>
+          <button class="season-btn" data-season="summer" id="btnSummer">
+            <span class="emoji">🌻</span><span>夏</span>
+          </button>
+          <button class="season-btn" data-season="autumn" id="btnAutumn">
+            <span class="emoji">🍁</span><span>秋</span>
+          </button>
+          <button class="season-btn" data-season="winter" id="btnWinter">
+            <span class="emoji">❄️</span><span>冬</span>
+          </button>
+        </div>
+        <div class="season-desc" id="seasonDesc">春の夜：しし座がよく見える</div>
       </div>
     </div>
   </section>
@@ -781,12 +775,8 @@
   /************ 季節シミュ制御 ************/
   const earthOrbit = document.getElementById("earthOrbit");
   const nightArrow = document.getElementById("nightArrow");
+  const nightArrowLabel = document.getElementById("nightArrowLabel");
   const seasonDesc = document.getElementById("seasonDesc");
-  const skySeasonCaption = document.getElementById("skySeasonCaption");
-  const constellationName = document.getElementById("constellationName");
-  const constellationEmoji = document.getElementById("constellationEmoji");
-  const constellationText = document.getElementById("constellationText");
-  const constellationLines = document.getElementById("constellationLines");
   const simComment = document.getElementById("simComment");
 
   const seasonButtons = [
@@ -801,99 +791,27 @@
   const seasonData = {
     spring:{
       orbitDeg:0,
-      nightDeg:180,
+      nightDeg:180, // orbitDeg(0) + 180
       desc:"春の夜：しし座などがよく見える",
-      skyCaption:"春の夜空",
-      emoji:"🦁",
-      label:"春の代表的な星座：しし座",
-      comment:"<strong>春分のころ</strong>、夜にはしし座など春の星座がよく見えるようになります。地球が公転することで、夜に向いている方向が変わり、春には春の星座が主役になります。",
-      svg:`
-        <svg class="constellation-svg" viewBox="0 0 100 60">
-          <!-- しし座：ライオンの頭部（鎌形）、胴体、尾 -->
-          <circle cx="15" cy="15" r="1.5"/>
-          <circle cx="25" cy="20" r="1.5"/>
-          <circle cx="35" cy="25" r="1.5"/>
-          <circle cx="50" cy="30" r="2" fill="#fff59d"/>
-          <circle cx="65" cy="35" r="1.5"/>
-          <circle cx="75" cy="40" r="1.5"/>
-          <circle cx="80" cy="50" r="1.5"/>
-          <line x1="15" y1="15" x2="25" y2="20"/>
-          <line x1="25" y1="20" x2="35" y2="25"/>
-          <line x1="35" y1="25" x2="50" y2="30"/>
-          <line x1="50" y1="30" x2="65" y2="35"/>
-          <line x1="65" y1="35" x2="75" y2="40"/>
-          <line x1="75" y1="40" x2="80" y2="50"/>
-        </svg>`
+      comment:"<strong>春分のころ</strong>、夜にはしし座など春の星座がよく見えるようになります。地球が公転することで、夜に向いている方向が変わり、春には春の星座が主役になります。"
     },
     summer:{
       orbitDeg:90,
-      nightDeg:270,
+      nightDeg:270, // orbitDeg(90) + 180
       desc:"夏の夜：さそり座などがよく見える",
-      skyCaption:"夏の夜空",
-      emoji:"🦂",
-      label:"夏の代表的な星座：さそり座",
-      comment:"<strong>夏至のころ</strong>、夜にはさそり座など夏の星座がよく見えるようになります。赤く光るアンタレスをふくむさそり座は、夏を代表する星座です。",
-      svg:`
-        <svg class="constellation-svg" viewBox="0 0 100 60">
-          <!-- さそり座：頭部、胴体、曲がった尾、アンタレス（心臓部分）を強調 -->
-          <circle cx="20" cy="12" r="1.5"/>
-          <circle cx="30" cy="18" r="1.5"/>
-          <circle cx="40" cy="25" r="2.5" fill="#ff6b6b"/>
-          <circle cx="50" cy="32" r="1.5"/>
-          <circle cx="60" cy="40" r="1.5"/>
-          <circle cx="68" cy="48" r="1.5"/>
-          <circle cx="75" cy="52" r="1.5"/>
-          <line x1="20" y1="12" x2="30" y2="18"/>
-          <line x1="30" y1="18" x2="40" y2="25"/>
-          <line x1="40" y1="25" x2="50" y2="32"/>
-          <line x1="50" y1="32" x2="60" y2="40"/>
-          <line x1="60" y1="40" x2="68" y2="48"/>
-          <line x1="68" y1="48" x2="75" y2="52"/>
-        </svg>`
+      comment:"<strong>夏至のころ</strong>、夜にはさそり座など夏の星座がよく見えるようになります。赤く光るアンタレスをふくむさそり座は、夏を代表する星座です。"
     },
     autumn:{
       orbitDeg:180,
-      nightDeg:0,
+      nightDeg:0, // orbitDeg(180) + 180 = 360 = 0
       desc:"秋の夜：ペガスス座などがよく見える",
-      skyCaption:"秋の夜空",
-      emoji:"🐴",
-      label:"秋の代表的な星座：ペガスス座",
-      comment:"<strong>秋分のころ</strong>、夜にはペガスス座など秋の星座が高くのぼって見えるようになります。四角形の「秋の四辺形」が目印です。",
-      svg:`
-        <svg class="constellation-svg" viewBox="0 0 100 60">
-          <circle cx="20" cy="20" r="1.5"/>
-          <circle cx="60" cy="20" r="1.5"/>
-          <circle cx="60" cy="45" r="1.5"/>
-          <circle cx="20" cy="45" r="1.5"/>
-          <line x1="20" y1="20" x2="60" y2="20"/>
-          <line x1="60" y1="20" x2="60" y2="45"/>
-          <line x1="60" y1="45" x2="20" y2="45"/>
-          <line x1="20" y1="45" x2="20" y2="20"/>
-        </svg>`
+      comment:"<strong>秋分のころ</strong>、夜にはペガスス座など秋の星座が高くのぼって見えるようになります。四角形の「秋の四辺形」が目印です。"
     },
     winter:{
       orbitDeg:270,
-      nightDeg:90,
+      nightDeg:90, // orbitDeg(270) + 180 = 450 = 90
       desc:"冬の夜：オリオン座などがよく見える",
-      skyCaption:"冬の夜空",
-      emoji:"🏹",
-      label:"冬の代表的な星座：オリオン座",
-      comment:"<strong>冬至のころ</strong>、夜にはオリオン座など冬の星座がよく見えます。三つ星が一直線にならぶオリオン座は、冬の夜空でもっとも目立つ星座の一つです。",
-      svg:`
-        <svg class="constellation-svg" viewBox="0 0 100 60">
-          <!-- オリオン座：三つ星（ベルト）が中央、上下に明るい星 -->
-          <circle cx="50" cy="12" r="2" fill="#ff9800"/>
-          <circle cx="35" cy="28" r="1.5"/>
-          <circle cx="50" cy="28" r="2" fill="#fff59d"/>
-          <circle cx="65" cy="28" r="1.5"/>
-          <circle cx="50" cy="48" r="2" fill="#64b5f6"/>
-          <line x1="50" y1="12" x2="35" y2="28"/>
-          <line x1="50" y1="12" x2="65" y2="28"/>
-          <line x1="35" y1="28" x2="50" y2="28"/>
-          <line x1="50" y1="28" x2="65" y2="28"/>
-          <line x1="35" y1="28" x2="50" y2="48"/>
-          <line x1="65" y1="28" x2="50" y2="48"/>
-        </svg>`
+      comment:"<strong>冬至のころ</strong>、夜にはオリオン座など冬の星座がよく見えます。三つ星が一直線にならぶオリオン座は、冬の夜空でもっとも目立つ星座の一つです。"
     }
   };
 
@@ -904,16 +822,17 @@
     });
 
     const data = seasonData[season];
+    // earth-orbit-posは初期回転-20deg + orbitDegで回転
+    const totalRotation = data.orbitDeg - 20;
     earthOrbit.style.transform = "rotate(" + data.orbitDeg + "deg)";
-    nightArrow.style.transform = "rotate(" + data.nightDeg + "deg)";
+    // 矢印はearth-orbit-posの中にあるので、earth-orbit-posの回転に合わせて太陽から遠ざかる方向（右方向）を指す
+    // 回転は不要（0度のまま）
+    nightArrow.style.transform = "translateY(-50%)";
+    // テキストラベルは常に正しい向きに保つため、逆方向に回転
+    nightArrowLabel.style.transform = "rotate(" + (-totalRotation) + "deg)";
 
     seasonDesc.textContent = data.desc;
-    skySeasonCaption.textContent = data.skyCaption;
-    constellationEmoji.textContent = data.emoji;
-    constellationText.textContent = data.label;
     simComment.innerHTML = data.comment;
-
-    constellationLines.innerHTML = data.svg;
   }
 
   seasonButtons.forEach(btn=>{
@@ -1179,12 +1098,22 @@
   function goHome() {
     try {
       if (window.parent && window.parent !== window) {
-        window.parent.postMessage({ type: "navigate:home", payload: { from: LESSON_ID }}, "*");
+        // app.jsで処理されているlesson:goBackメッセージを送信
+        window.parent.postMessage({ type: "lesson:goBack" }, "*");
+        console.log("🏠 ホームに戻るメッセージを送信しました");
       } else {
+        // 単体実行時は直接ホームに戻る
         console.log("goHome called (standalone)");
+        window.location.href = "/index.html";
       }
     } catch (e) {
       console.warn("goHome failed:", e);
+      // フォールバック: 直接ホームに戻る
+      try {
+        window.location.href = "/index.html";
+      } catch (e2) {
+        console.error("フォールバックも失敗:", e2);
+      }
     }
   }
   window.goHome = goHome;

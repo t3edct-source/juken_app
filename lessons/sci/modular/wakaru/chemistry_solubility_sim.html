@@ -195,7 +195,8 @@
     /* ▼ ビーカーシーン */
     .sim-field {
       position:relative;
-      margin-top:6px;
+      margin-top:0;
+      margin-bottom:12px;
       border-radius:12px;
       padding:8px;
       overflow:hidden;
@@ -696,35 +697,6 @@
       </div>
 
       <div class="sim-area">
-        <div class="control-row">
-          <div class="control-label">物質</div>
-          <div class="substance-tabs">
-            <button class="substance-btn active" data-substance="salt" id="btnSalt">
-              <span class="emoji-icon">🧂</span>食塩
-            </button>
-            <button class="substance-btn" data-substance="alum" id="btnAlum">
-              <span class="emoji-icon">💎</span>ミョウバン
-            </button>
-          </div>
-        </div>
-
-        <div class="control-row bottom">
-          <div class="control-label">温度</div>
-          <div class="temp-slider-wrap">
-            <input type="range" min="0" max="3" step="1" value="1" class="temp-slider" id="tempSlider" />
-            <div class="temp-steps">
-              <span>0℃</span>
-              <span>20℃</span>
-              <span>40℃</span>
-              <span>60℃</span>
-            </div>
-          </div>
-        </div>
-        
-        <div class="sim-description" id="simDescription">
-          <strong>食塩</strong>は温度を変えても溶解度はあまり変わらない。<strong>ミョウバン</strong>は温度が高いほどたくさんとける。
-        </div>
-
         <div class="sim-field">
           <div class="sky-tag" id="skyTag">食塩 20℃：溶解度のようす</div>
           <div class="beaker-scene" id="beakerScene">
@@ -778,6 +750,36 @@
             </div>
           </div>
 
+        </div>
+
+        <!-- 操作UIを下に配置 -->
+        <div class="control-row">
+          <div class="control-label">物質</div>
+          <div class="substance-tabs">
+            <button class="substance-btn active" data-substance="salt" id="btnSalt">
+              <span class="emoji-icon">🧂</span>食塩
+            </button>
+            <button class="substance-btn" data-substance="alum" id="btnAlum">
+              <span class="emoji-icon">💎</span>ミョウバン
+            </button>
+          </div>
+        </div>
+
+        <div class="control-row bottom">
+          <div class="control-label">温度</div>
+          <div class="temp-slider-wrap">
+            <input type="range" min="0" max="3" step="1" value="1" class="temp-slider" id="tempSlider" />
+            <div class="temp-steps">
+              <span>0℃</span>
+              <span>20℃</span>
+              <span>40℃</span>
+              <span>60℃</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="sim-description" id="simDescription">
+          <strong>食塩</strong>は温度を変えても溶解度はあまり変わらない。<strong>ミョウバン</strong>は温度が高いほどたくさんとける。
         </div>
       </div>
     </section>

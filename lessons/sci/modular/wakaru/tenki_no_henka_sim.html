@@ -161,7 +161,8 @@
         /* ▼ 実際のシミュレーション領域（前回の field を再利用） */
         .sim-field {
             position: relative;
-            margin-top: 4px;
+            margin-top: 0;
+            margin-bottom: 12px;
             background: linear-gradient(to top, #9be7ff 0%, #e3f2fd 60%, #e0f7fa 100%);
             border-radius: 12px;
             padding: 12px;
@@ -658,6 +659,26 @@
                 <p>高気圧と低気圧のならびを変えて、風と雲の動きを体験しよう</p>
             </div>
             <div class="sim-area">
+                <div class="sim-field" id="sim-field">
+                    <div class="zone-label zone-left zone-high" id="leftLabel">左：高気圧</div>
+                    <div class="zone-label zone-right zone-low" id="rightLabel">右：低気圧</div>
+
+                    <div class="cloud" id="cloud">雲</div>
+
+                    <div class="wind-arrows">
+                        <div class="wind-arrow" id="arrowLeft">←</div>
+                        <div class="wind-arrow" id="arrowRight">→</div>
+                    </div>
+
+                    <div class="ground"></div>
+                </div>
+
+                <div class="sim-comment" id="sim-comment">
+                    左を<strong>高気圧</strong>、右を<strong>低気圧</strong>にして「シミュレーションスタート」をおしてみよう。<br>
+                    空気はどちらからどちらへ動き、その結果<strong>雲</strong>はどう動くかな？
+                </div>
+
+                <!-- 操作UIを下に配置 -->
                 <div class="sim-control-row">
                     <div class="sim-control-group">
                         <div class="sim-control-label">左の空のようす</div>
@@ -688,25 +709,6 @@
                     </div>
 
                     <button class="sim-start-btn" id="startBtn">▶ シミュレーションスタート</button>
-                </div>
-
-                <div class="sim-field" id="sim-field">
-                    <div class="zone-label zone-left zone-high" id="leftLabel">左：高気圧</div>
-                    <div class="zone-label zone-right zone-low" id="rightLabel">右：低気圧</div>
-
-                    <div class="cloud" id="cloud">雲</div>
-
-                    <div class="wind-arrows">
-                        <div class="wind-arrow" id="arrowLeft">←</div>
-                        <div class="wind-arrow" id="arrowRight">→</div>
-                    </div>
-
-                    <div class="ground"></div>
-                </div>
-
-                <div class="sim-comment" id="sim-comment">
-                    左を<strong>高気圧</strong>、右を<strong>低気圧</strong>にして「シミュレーションスタート」をおしてみよう。<br>
-                    空気はどちらからどちらへ動き、その結果<strong>雲</strong>はどう動くかな？
                 </div>
             </div>
         </div>

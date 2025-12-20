@@ -86,52 +86,89 @@
     }
     .sim-control-row {
       display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
+      flex-direction: column;
+      gap: 8px;
       margin-bottom: 10px;
     }
     .sim-control-label {
       font-size: 13px;
       font-weight: bold;
       color: #333;
+      margin-bottom: 4px;
+      padding-left: 8px;
+    }
+    .time-slider-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding-left: 8px;
+      padding-right: 4px;
     }
     .time-display {
-      font-size: 14px;
+      font-size: 16px;
       font-weight: bold;
       color: #e65100;
-      min-width: 60px;
-      text-align: right;
+      min-width: 50px;
+      text-align: center;
+      line-height: 1.2;
+      padding: 4px 8px;
+      background: rgba(255, 111, 0, 0.1);
+      border-radius: 8px;
+      flex-shrink: 0;
     }
     .time-slider {
       flex: 1;
       -webkit-appearance: none;
-      height: 6px;
+      appearance: none;
+      height: 8px;
       border-radius: 999px;
       background: #ffe0b2;
       outline: none;
+      cursor: pointer;
+      touch-action: manipulation;
+      margin: 0;
+      padding: 0;
     }
     .time-slider::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 22px;
-      height: 22px;
+      appearance: none;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       background: #ff6f00;
-      box-shadow: 0 0 0 4px rgba(255, 167, 38, 0.3);
+      box-shadow: 0 2px 8px rgba(255, 111, 0, 0.4), 0 0 0 6px rgba(255, 167, 38, 0.2);
       cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .time-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.1);
+      box-shadow: 0 3px 12px rgba(255, 111, 0, 0.5), 0 0 0 8px rgba(255, 167, 38, 0.3);
+    }
+    .time-slider::-webkit-slider-thumb:active {
+      transform: scale(1.15);
     }
     .time-slider::-moz-range-thumb {
-      width: 22px;
-      height: 22px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       background: #ff6f00;
-      box-shadow: 0 0 0 4px rgba(255, 167, 38, 0.3);
+      box-shadow: 0 2px 8px rgba(255, 111, 0, 0.4), 0 0 0 6px rgba(255, 167, 38, 0.2);
       cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+    .time-slider::-moz-range-thumb:hover {
+      transform: scale(1.1);
+    }
+    .time-slider::-moz-range-thumb:active {
+      transform: scale(1.15);
     }
 
     .sim-field {
       position: relative;
-      margin-top: 6px;
+      margin-top: 0;
+      margin-bottom: 12px;
       background: linear-gradient(to top, #c5e1a5 0%, #e8f5e9 40%, #fffde7 100%);
       border-radius: 12px;
       padding: 12px;
@@ -193,11 +230,6 @@
       border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, #fffde7 0%, #ffeb3b 40%, #fbc02d 70%);
       box-shadow: 0 0 20px rgba(255, 235, 59, 0.8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      color: #f57f17;
       z-index: 1;
     }
     .sim-comment {
@@ -454,12 +486,6 @@
         <p>時間を動かして、太陽の高さと影の長さの変化を体験しよう</p>
       </div>
       <div class="sim-area">
-        <div class="sim-control-row">
-          <div class="sim-control-label">時間をえらぼう（朝6時〜夕方6時）</div>
-          <input type="range" id="timeSlider" class="time-slider" min="6" max="18" step="1" value="9">
-          <div class="time-display" id="timeDisplay">9時</div>
-        </div>
-
         <div class="sim-field" id="shadowField">
           <div class="ground-line"></div>
           <div class="person" id="person">
@@ -468,12 +494,22 @@
             </div>
           </div>
           <div class="shadow" id="shadow"></div>
-          <div class="sun" id="sun">☀</div>
+          <div class="sun" id="sun"></div>
         </div>
 
         <div class="sim-comment" id="sim-comment">
           スライダーを動かして、<strong>朝・昼・夕方</strong>で影の長さや向きがどう変わるか見てみよう。<br>
           太陽が<strong>高いとき</strong>と<strong>低いとき</strong>で、影はどうちがうかな？
+        </div>
+      </div>
+
+        <!-- 操作UIを下に配置 -->
+        <div class="sim-control-row">
+          <div class="sim-control-label">時間をえらぼう（朝6時〜夕方6時）</div>
+          <div class="time-slider-container">
+            <input type="range" id="timeSlider" class="time-slider" min="6" max="18" step="1" value="9">
+            <div class="time-display" id="timeDisplay">9時</div>
+          </div>
         </div>
       </div>
     </div>

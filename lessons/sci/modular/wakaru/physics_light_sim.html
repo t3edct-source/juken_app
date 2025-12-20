@@ -190,7 +190,8 @@
     /* ▼ 光シーン */
     .sim-field {
       position:relative;
-      margin-top:6px;
+      margin-top:0;
+      margin-bottom:12px;
       border-radius:12px;
       padding:12px;
       overflow:hidden;
@@ -533,32 +534,6 @@
       </div>
 
       <div class="sim-area">
-        <div class="control-row">
-          <div class="control-label">下の物質</div>
-          <div class="medium-tabs">
-            <button class="medium-btn active" data-medium="water" id="btnWater">
-              <span class="emoji-icon">💧</span>水
-            </button>
-            <button class="medium-btn" data-medium="glass" id="btnGlass">
-              <span class="emoji-icon">🪟</span>ガラス
-            </button>
-          </div>
-          <div class="mode-desc" id="mediumDesc">空気から水へ進む光（屈折は少し曲がる）</div>
-        </div>
-
-        <div class="control-row bottom">
-          <div class="control-label">入射角</div>
-          <div class="angle-slider-wrap">
-            <input type="range" min="10" max="70" step="1" value="40" class="angle-slider" id="angleSlider" />
-            <div class="angle-steps">
-              <span>10°</span>
-              <span>40°</span>
-              <span>70°</span>
-            </div>
-          </div>
-          <div class="mode-desc" id="angleDesc">法線から 40° の角度で入る光</div>
-        </div>
-
         <div class="sim-field">
           <div class="light-scene" id="lightScene">
             <div class="medium-label-top">空気</div>
@@ -724,6 +699,33 @@
           <div class="sim-comment" id="simComment">
             <strong>光は同じ物質の中ではまっすぐ進みます。</strong>境界面で一部は鏡のように<strong>反射</strong>し、一部は水やガラスの中へ<strong>屈折</strong>して進みます。
           </div>
+        </div>
+
+        <!-- 操作UIを下に配置 -->
+        <div class="control-row">
+          <div class="control-label">下の物質</div>
+          <div class="medium-tabs">
+            <button class="medium-btn active" data-medium="water" id="btnWater">
+              <span class="emoji-icon">💧</span>水
+            </button>
+            <button class="medium-btn" data-medium="glass" id="btnGlass">
+              <span class="emoji-icon">🪟</span>ガラス
+            </button>
+          </div>
+          <div class="mode-desc" id="mediumDesc">空気から水へ進む光（屈折は少し曲がる）</div>
+        </div>
+
+        <div class="control-row bottom">
+          <div class="control-label">入射角</div>
+          <div class="angle-slider-wrap">
+            <input type="range" min="10" max="70" step="1" value="40" class="angle-slider" id="angleSlider" />
+            <div class="angle-steps">
+              <span>10°</span>
+              <span>40°</span>
+              <span>70°</span>
+            </div>
+          </div>
+          <div class="mode-desc" id="angleDesc">法線から 40° の角度で入る光</div>
         </div>
       </div>
     </section>

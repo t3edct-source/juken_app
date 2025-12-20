@@ -142,7 +142,8 @@
     /* ▼ 地震シーン */
     .sim-field {
       position:relative;
-      margin-top:6px;
+      margin-top:0;
+      margin-bottom:12px;
       background:radial-gradient(circle at 50% -10%, #ffebee, #ffcdd2 45%, #f8bbd0 70%, #f3e5f5 100%);
       border-radius:14px;
       padding:14px;
@@ -795,16 +796,6 @@
       </div>
 
       <div class="sim-area">
-        <div class="control-row">
-          <button class="control-btn start-btn" id="startBtn">
-            <span id="startBtnText">プレートを押し合う</span>
-          </button>
-          <button class="control-btn reset-btn" id="resetBtn" disabled>リセット</button>
-          <div class="control-info" id="controlInfo">
-            ※ボタンを押すと、プレートが押し合い始めます（実際は何十年もかかる過程を短縮して見ています）
-          </div>
-        </div>
-
         <div class="sim-field">
           <div class="quake-scene" id="quakeScene">
             <div class="quake-sky">
@@ -865,6 +856,17 @@
           <div class="sim-comment" id="simComment">
             <strong>力が小さいとき</strong>は、プレートの境目にまだ少ししか力がたまっていません。
             地表では、ゆれをほとんど感じません。
+          </div>
+        </div>
+
+        <!-- 操作UIを下に配置 -->
+        <div class="control-row">
+          <button class="control-btn start-btn" id="startBtn">
+            <span id="startBtnText">プレートを押し合う</span>
+          </button>
+          <button class="control-btn reset-btn" id="resetBtn" disabled>リセット</button>
+          <div class="control-info" id="controlInfo">
+            ※ボタンを押すと、プレートが押し合い始めます（実際は何十年もかかる過程を短縮して見ています）
           </div>
         </div>
       </div>
@@ -1494,13 +1496,22 @@
     function goHome() {
       try {
         if (window.parent && window.parent !== window) {
-          window.parent.postMessage({ type: "navigate:home", payload: { from: LESSON_ID }}, "*");
+          // app.jsで処理されているlesson:goBackメッセージを送信
+          window.parent.postMessage({ type: "lesson:goBack" }, "*");
+          console.log("🏠 ホームに戻るメッセージを送信しました");
         } else {
-          // 単体動作用：何もしない or location.href="./"
+          // 単体実行時は直接ホームに戻る
           console.log("goHome called (standalone)");
+          window.location.href = "/index.html";
         }
       } catch (e) {
         console.warn("goHome failed:", e);
+        // フォールバック: 直接ホームに戻る
+        try {
+          window.location.href = "/index.html";
+        } catch (e2) {
+          console.error("フォールバックも失敗:", e2);
+        }
       }
     }
     window.goHome = goHome;

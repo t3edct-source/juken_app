@@ -145,7 +145,8 @@
 
     .sim-field {
       position:relative;
-      margin-top:6px;
+      margin-top:0;
+      margin-bottom:12px;
       background:linear-gradient(to bottom, #bbdefb 0%, #e8f5e9 55%, #c8e6c9 100%);
       border-radius:12px;
       padding:10px;
@@ -776,12 +777,6 @@
         <p>「重さ」と「距離」のちがいで、てんびんのつり合い方がどう変わるか体験しよう</p>
       </div>
       <div class="sim-area">
-        <!-- コントロールは非表示（おもりを直接操作） -->
-        <div class="control-hint">
-          💡 <strong>おもりをタップ</strong>：重さを変更（1→2→3→4→5→1）<br>
-          💡 <strong>矢印ボタン</strong>：距離を変更（支点からの目もり）
-        </div>
-        
         <!-- スライダーは非表示だが、値の保持のため残す -->
         <input type="range" id="leftWeightSlider" class="slider" style="display:none;" min="1" max="5" step="1" value="2">
         <input type="range" id="leftDistSlider" class="slider" style="display:none;" min="1" max="5" step="1" value="3">
@@ -854,6 +849,12 @@
             左右の「はたらきの大きさ（重さ×距離）」が<strong>同じ</strong>になると、てんびんは<strong>水平</strong>になり、つり合います。<br>
             どちらかの「重さ×距離」が<strong>大きい</strong>と、そのがわが<strong>下がる</strong>ことを覚えておきましょう。
           </div>
+        </div>
+
+        <!-- 操作UIを下に配置 -->
+        <div class="control-hint">
+          💡 <strong>おもりをタップ</strong>：重さを変更（1→2→3→4→5→1）<br>
+          💡 <strong>矢印ボタン</strong>：距離を変更（支点からの目もり）
         </div>
       </div>
     </div>

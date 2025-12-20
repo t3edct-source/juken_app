@@ -136,7 +136,8 @@
 
     .sim-field {
       position:relative;
-      margin-top:8px;
+      margin-top:0;
+      margin-bottom:12px;
       background:linear-gradient(135deg, rgba(187,222,251,0.95) 0%, rgba(232,245,233,0.95) 55%, rgba(200,230,201,0.95) 100%);
       border-radius:14px;
       padding:14px;
@@ -528,53 +529,62 @@
     /* ▼ 上段：はたらきパネル */
     .work-panel {
       display:flex;
-      flex-wrap:wrap;
-      gap:12px;
-      margin-bottom:12px;
+      flex-wrap:nowrap;
+      gap:6px;
+      margin-bottom:6px;
     }
     .work-card {
-      flex:1 1 160px;
+      flex:0 0 auto;
+      width:calc((100% - 12px) / 3);
+      min-width:0;
       background:linear-gradient(135deg, rgba(255,255,255,0.98), rgba(250,250,250,0.95));
-      border-radius:12px;
-      padding:12px 14px;
-      box-shadow:0 3px 10px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.05);
+      border-radius:8px;
+      padding:6px 8px;
+      box-shadow:0 2px 6px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.05);
       border:1px solid rgba(0,0,0,0.08);
       transition:all 0.3s ease;
     }
     .work-card:hover {
-      transform:translateY(-2px);
-      box-shadow:0 5px 14px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.1);
+      transform:translateY(-1px);
+      box-shadow:0 3px 8px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.1);
     }
     .work-title {
-      font-size:14px;
+      font-size:10px;
       font-weight:bold;
-      margin-bottom:8px;
+      margin-bottom:4px;
       color:#1a237e;
       display:flex;
       align-items:center;
-      gap:6px;
+      gap:4px;
       text-shadow:0 1px 2px rgba(255,255,255,0.8);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .work-title span:not(.emoji) {
+      overflow:hidden;
+      text-overflow:ellipsis;
     }
     .work-title span.emoji { 
-      font-size:20px;
-      filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+      font-size:14px;
+      filter:drop-shadow(0 1px 2px rgba(0,0,0,0.15));
     }
     .work-value {
-      font-size:13px;
+      font-size:10px;
       font-weight:600;
-      margin-bottom:6px;
+      margin-bottom:3px;
       color:#004d40;
       text-shadow:0 1px 2px rgba(255,255,255,0.8);
     }
     .work-bar-bg {
       position:relative;
       width:100%;
-      height:12px;
+      height:8px;
       border-radius:999px;
       background:linear-gradient(90deg, #e0e0e0, #cfd8dc);
       overflow:hidden;
-      margin-bottom:6px;
-      box-shadow:inset 0 2px 4px rgba(0,0,0,0.15);
+      margin-bottom:3px;
+      box-shadow:inset 0 1px 2px rgba(0,0,0,0.15);
       border:1px solid rgba(0,0,0,0.1);
     }
     .work-bar-fill {
@@ -585,12 +595,12 @@
       border-radius:999px;
       background:linear-gradient(90deg, #64b5f6 0%, #81c784 50%, #ffb74d 100%);
       transition:width 0.4s ease;
-      box-shadow:0 0 8px rgba(100,181,246,0.4), inset 0 1px 2px rgba(255,255,255,0.3);
+      box-shadow:0 0 4px rgba(100,181,246,0.4), inset 0 1px 1px rgba(255,255,255,0.3);
     }
     .work-sub {
-      font-size:11px;
+      font-size:9px;
       color:#555;
-      line-height:1.4;
+      line-height:1.3;
     }
 
     /* ▼ 下段：川の形と石・土 */
@@ -652,22 +662,6 @@
       box-shadow:0 2px 4px rgba(0,0,0,0.1);
     }
 
-    .sim-comment {
-      margin-top:12px;
-      font-size:13px;
-      line-height:1.7;
-      color:#1a237e;
-      background:linear-gradient(135deg, rgba(227,242,253,0.95), rgba(187,222,251,0.9));
-      border-radius:12px;
-      padding:12px 14px;
-      border-left:5px solid #42a5f5;
-      box-shadow:0 2px 8px rgba(66,165,245,0.15), 0 0 0 1px rgba(66,165,245,0.1);
-    }
-    .sim-comment strong { 
-      color:#0d47a1; 
-      font-weight:bold;
-      text-shadow:0 1px 2px rgba(255,255,255,0.5);
-    }
 
     /* ▼ infoパネル */
     .info-panel {
@@ -945,18 +939,6 @@
         <p>上流・中流・下流をえらんで、「けずる・運ぶ・積もらせる」川のはたらきをくらべてみよう</p>
       </div>
       <div class="sim-area">
-        <div class="river-tabs">
-          <button class="river-tab active" data-section="upper">
-            <span class="emoji">⛰️</span><span>上流（山あい）</span>
-          </button>
-          <button class="river-tab" data-section="middle">
-            <span class="emoji">🏞️</span><span>中流（谷〜平地）</span>
-          </button>
-          <button class="river-tab" data-section="lower">
-            <span class="emoji">🌊</span><span>下流（平野・河口）</span>
-          </button>
-        </div>
-
         <div class="sim-field">
           <!-- 川の流れアニメーション -->
           <div class="river-animation" id="riverAnimation">
@@ -987,7 +969,6 @@
               <div class="work-bar-bg">
                 <div class="work-bar-fill" id="speedBar"></div>
               </div>
-              <div class="work-sub" id="speedSub"></div>
             </div>
             <div class="work-card">
               <div class="work-title">
@@ -997,7 +978,6 @@
               <div class="work-bar-bg">
                 <div class="work-bar-fill" id="erodeBar"></div>
               </div>
-              <div class="work-sub" id="erodeSub"></div>
             </div>
             <div class="work-card">
               <div class="work-title">
@@ -1007,7 +987,6 @@
               <div class="work-bar-bg">
                 <div class="work-bar-fill" id="depositBar"></div>
               </div>
-              <div class="work-sub" id="depositSub"></div>
             </div>
           </div>
 
@@ -1027,12 +1006,19 @@
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="sim-comment" id="simComment">
-            川の上流では流れが<strong>速く</strong>、川底や川岸を<strong>強くけずる（侵食）</strong>はたらきが大きくなります。<br>
-            下流に行くほど流れは<strong>ゆるやか</strong>になり、運んできた土砂を<strong>積もらせる（堆積）</strong>はたらきが大きくなります。<br>
-            中流はその中間で、けずる・運ぶ・積もらせるはたらきがほどよくはたらき、川の横に広く平らな場所ができやすくなります。
-          </div>
+        <!-- 操作UIを下に配置 -->
+        <div class="river-tabs">
+          <button class="river-tab active" data-section="upper">
+            <span class="emoji">⛰️</span><span>上流（山あい）</span>
+          </button>
+          <button class="river-tab" data-section="middle">
+            <span class="emoji">🏞️</span><span>中流（谷〜平地）</span>
+          </button>
+          <button class="river-tab" data-section="lower">
+            <span class="emoji">🌊</span><span>下流（平野・河口）</span>
+          </button>
         </div>
       </div>
     </div>
@@ -1083,17 +1069,13 @@
 
     const speedValue = document.getElementById('speedValue');
     const speedBar = document.getElementById('speedBar');
-    const speedSub = document.getElementById('speedSub');
 
     const erodeValue = document.getElementById('erodeValue');
     const erodeBar = document.getElementById('erodeBar');
-    const erodeSub = document.getElementById('erodeSub');
 
     const depositValue = document.getElementById('depositValue');
     const depositBar = document.getElementById('depositBar');
-    const depositSub = document.getElementById('depositSub');
 
-    const simCommentEl = document.getElementById('simComment');
     const shapeBtnEmoji = document.getElementById('shapeBtnEmoji');
     
     const riverDetailModal = document.getElementById('riverDetailModal');
@@ -1315,16 +1297,8 @@
       erodeValue.textContent = data.erodeText;
       depositValue.textContent = data.depositText;
 
-      speedSub.textContent = data.speedSub;
-      erodeSub.textContent = data.erodeSub;
-      depositSub.textContent = data.depositSub;
-
       // ボタンのエモジを更新
       shapeBtnEmoji.textContent = data.shapeEmoji;
-
-      simCommentEl.innerHTML =
-        data.comment + '<br>' +
-        '上流・中流・下流で、川の流れの速さが変わると、「けずる」「運ぶ」「積もらせる」のどのはたらきが大きくなるかが変わることをおさえましょう。';
 
       // アニメーション要素を更新
       riverAnimation.className = `river-animation ${currentSection}`;

@@ -147,7 +147,8 @@
 
     .sim-field {
       position:relative;
-      margin-top:6px;
+      margin-top:0;
+      margin-bottom:12px;
       background:linear-gradient(to bottom, #e8eaf6 0%, #d1c4e9 55%, #b39ddb 100%);
       border-radius:12px;
       padding:12px;
@@ -648,26 +649,6 @@
         <p>電流の強さ・コイルの巻き数・鉄心で、電磁石の強さがどう変わるか体験しよう</p>
       </div>
       <div class="sim-area">
-        <div class="sim-control-row">
-          <div class="sim-control-label">電流の強さ（小 → 大）</div>
-          <input type="range" id="currentSlider" class="slider" min="0" max="3" step="1" value="1">
-          <div class="value-display" id="currentDisplay">弱め</div>
-        </div>
-
-        <div class="sim-control-row">
-          <div class="sim-control-label">コイルの巻き数（少 → 多）</div>
-          <input type="range" id="turnsSlider" class="slider" min="0" max="3" step="1" value="2">
-          <div class="value-display" id="turnsDisplay">ふつう</div>
-        </div>
-
-        <div class="sim-control-row">
-          <div class="sim-control-label">鉄心（てっしん）</div>
-          <div class="toggle-group">
-            <button class="toggle-btn selected" id="coreOnBtn">鉄心あり</button>
-            <button class="toggle-btn" id="coreOffBtn">鉄心なし</button>
-          </div>
-        </div>
-
         <div class="sim-field">
           <div class="magnet-area">
             <div class="core visible" id="core">
@@ -705,6 +686,27 @@
           <div class="sim-comment" id="simComment">
             「電流の強さ」と「コイルの巻き数」、そして<strong>鉄心</strong>のあり・なしをかえてみよう。<br>
             電流が<strong>強く</strong>、コイルの巻き数が<strong>多く</strong>、さらに<strong>鉄心あり</strong>にすると、電磁石はとても<strong>強く</strong>なります。
+          </div>
+        </div>
+
+        <!-- 操作UIを下に配置 -->
+        <div class="sim-control-row">
+          <div class="sim-control-label">電流の強さ（小 → 大）</div>
+          <input type="range" id="currentSlider" class="slider" min="0" max="3" step="1" value="1">
+          <div class="value-display" id="currentDisplay">弱め</div>
+        </div>
+
+        <div class="sim-control-row">
+          <div class="sim-control-label">コイルの巻き数（少 → 多）</div>
+          <input type="range" id="turnsSlider" class="slider" min="0" max="3" step="1" value="2">
+          <div class="value-display" id="turnsDisplay">ふつう</div>
+        </div>
+
+        <div class="sim-control-row">
+          <div class="sim-control-label">鉄心（てっしん）</div>
+          <div class="toggle-group">
+            <button class="toggle-btn selected" id="coreOnBtn">鉄心あり</button>
+            <button class="toggle-btn" id="coreOffBtn">鉄心なし</button>
           </div>
         </div>
       </div>
