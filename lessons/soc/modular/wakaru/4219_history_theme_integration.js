@@ -1,4 +1,4 @@
-window.introduction = "この総合問題では、歴史の**複数のテーマ**（政治・経済、外交、文化など）を統合的に問います。異なるテーマを関連付けて理解することで、歴史の流れをより深く把握できます。";
+window.introduction = "この総合問題では、歴史の複数のテーマ（政治・経済、外交、文化など）を統合的に問います。異なるテーマを関連付けて理解することで、歴史の流れをより深く把握できます。";
 
 window.questions = [
   {
@@ -11,7 +11,7 @@ window.questions = [
       "隋から金を借り、大和朝廷の財政を立て直すため"
     ],
     "answer": 0,
-    "source": "聖徳太子は、隋との**対等な外交関係**を築き、**仏教などの文化を導入**するために小野妹子を派遣しました。政治・外交・文化を統合した政策です。  \n聖徳太子は摂政として政治を主導し、小野妹子を遣隋使として派遣することで、外交と文化を同時に進めました。隋から学んだ仏教や律令制は、その後の日本の政治・文化の基盤となりました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">聖徳太子と小野妹子の関係\n\n👑 聖徳太子（摂政）\n    │\n    │ 派遣\n    ↓\n👤 小野妹子（遣隋使）\n    │\n    ├─→ 🌍 外交：対等な関係\n    ├─→ 📜 文化：仏教導入\n    └─→ 🏛️ 政治：律令制の準備\n\n政治・外交・文化の統合</div>",
+    "source": "聖徳太子は、隋との対等な外交関係を築き、仏教などの文化を導入するために小野妹子を派遣しました。政治・外交・文化を統合（とうごう）した政策（せいさく）です。  \n聖徳太子は摂政として政治を主導し、小野妹子を遣隋使として派遣することで、外交と文化を同時に進めました。隋から学んだ仏教や律令制は、その後の日本の政治・文化の基盤となりました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">聖徳太子と小野妹子の関係\n\n👑 聖徳太子（摂政）\n    │\n    │ 派遣\n    ↓\n👤 小野妹子（遣隋使）\n    │\n    ├─→ 🌍 外交：対等な関係\n    ├─→ 📜 文化：仏教導入\n    └─→ 🏛️ 政治：律令制の準備\n\n政治・外交・文化の統合</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -26,7 +26,7 @@ window.questions = [
       "公地公民制のみを行い、租庸調制と遣唐使は後回しにした"
     ],
     "answer": 0,
-    "source": "大化の改新では、**公地公民制**という政治改革により経済制度を整え、**唐との外交関係**を築きました。政治・経済・外交が統合されました。  \n中大兄皇子（後の天智天皇）は、政治改革として公地公民制を導入し、それに伴って租庸調制という経済制度を整えました。同時に、唐との外交関係を築くために遣唐使を派遣し、政治・経済・外交を統合的に進めました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">大化の改新の統合\n\n👑 中大兄皇子（天智天皇）\n    │\n    ├─→ 🏛️ 政治：公地公民制\n    │       ↓\n    │   💰 経済：租庸調制\n    │       ↓\n    │   🌍 外交：遣唐使\n    │\n    └─→ 政治・経済・外交の統合\n\n一つの改革が全体を動かす</div>",
+    "source": "大化の改新（たいかのかいしん）では、公地公民制（こうちこうみんせい）という政治改革により経済制度を整え、唐（とう）との外交関係を築きました。政治・経済・外交が統合（とうごう）されました。  \n中大兄皇子（なかのおおえのおうじ）（後の天智天皇（てんじてんのう））は、政治改革として公地公民制を導入し、それに伴って租庸調制（そようちょうせい）という経済制度を整えました。同時に、唐との外交関係を築くために遣唐使（けんとうし）を派遣し、政治・経済・外交を統合的に進めました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">大化の改新の統合\n\n👑 中大兄皇子（天智天皇）\n    │\n    ├─→ 🏛️ 政治：公地公民制\n    │       ↓\n    │   💰 経済：租庸調制\n    │       ↓\n    │   🌍 外交：遣唐使\n    │\n    └─→ 政治・経済・外交の統合\n\n一つの改革が全体を動かす</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -41,7 +41,7 @@ window.questions = [
       "租庸調制の発展が律令制と仏教文化を統合した"
     ],
     "answer": 0,
-    "source": "聖武天皇と行基の協力により、**国家仏教**が確立され、政治と文化が融合しました。行基の社会事業は経済にも貢献しました。  \n聖武天皇は国家仏教を確立し、政治と文化を融合させました。行基は民衆に仏教を広め、橋や道路などの社会事業を行い、経済にも貢献しました。政治権力者と民衆の橋渡しをする文化人が、政治・文化・経済を統合しました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">聖武天皇と行基の関係\n\n👑 聖武天皇（政治権力）\n    │\n    │ 協力\n    ↓\n👤 行基（文化人・社会事業）\n    │\n    ├─→ 🏛️ 政治：国家仏教の確立\n    ├─→ 📜 文化：仏教の普及\n    └─→ 💰 経済：社会事業（橋・道路）\n\n政治・文化・経済の統合</div>",
+    "source": "聖武天皇と行基の協力により、国家仏教が確立され、政治と文化が融合しました。行基の社会事業は経済にも貢献しました。  \n聖武天皇は国家仏教を確立し、政治と文化を融合させました。行基は民衆に仏教を広め、橋や道路などの社会事業を行い、経済にも貢献しました。政治権力者と民衆の橋渡しをする文化人が、政治・文化・経済を統合（とうごう）しました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">聖武天皇と行基の関係\n\n👑 聖武天皇（政治権力）\n    │\n    │ 協力\n    ↓\n👤 行基（文化人・社会事業）\n    │\n    ├─→ 🏛️ 政治：国家仏教の確立\n    ├─→ 📜 文化：仏教の普及\n    └─→ 💰 経済：社会事業（橋・道路）\n\n政治・文化・経済の統合</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -56,7 +56,7 @@ window.questions = [
       "唐から学んだ天台宗と真言宗が平安京遷都を決定した"
     ],
     "answer": 0,
-    "source": "桓武天皇の**平安京遷都**という政治的な都の移転と、最澄・空海が**唐から学んだ新仏教**の導入により、政治・文化・外交が統合されました。  \n桓武天皇は政治的な判断で平安京に都を移しました。同時に、最澄と空海が唐に渡り、天台宗と真言宗という新仏教を学びました。政治的な都の移転と、外交を通じた文化の導入が統合され、新しい時代が始まりました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">桓武天皇・最澄・空海の関係\n\n👑 桓武天皇\n    │\n    ├─→ 🏛️ 政治：平安京遷都\n    │\n    └─→ 🌍 外交：遣唐使の派遣\n            │\n            ↓\n    👤 最澄・空海（文化人）\n            │\n            ├─→ 📜 文化：天台宗・真言宗\n            └─→ 🏛️ 政治：新仏教の導入\n\n政治・文化・外交の統合</div>",
+    "source": "桓武天皇の平安京遷都という政治的な都の移転と、最澄・空海が唐から学んだ新仏教の導入により、政治・文化・外交が統合（とうごう）されました。  \n桓武天皇は政治的な判断で平安京に都を移しました。同時に、最澄と空海が唐に渡り、天台宗と真言宗という新仏教を学びました。政治的な都の移転と、外交を通じた文化の導入が統合され、新しい時代が始まりました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">桓武天皇・最澄・空海の関係\n\n👑 桓武天皇\n    │\n    ├─→ 🏛️ 政治：平安京遷都\n    │\n    └─→ 🌍 外交：遣唐使の派遣\n            │\n            ↓\n    👤 最澄・空海（文化人）\n            │\n            ├─→ 📜 文化：天台宗・真言宗\n            └─→ 🏛️ 政治：新仏教の導入\n\n政治・文化・外交の統合</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -71,7 +71,7 @@ window.questions = [
       "荘園経済の発展が摂関政治と源氏物語を分離させた"
     ],
     "answer": 0,
-    "source": "藤原道長の**摂関政治**という政治権力のもとで、紫式部の文学が発展しました。**荘園経済**が文化を支える基盤となりました。  \n藤原道長は摂関政治で政治権力を握りました。そのもとで、紫式部が源氏物語を書きました。荘園経済が文化を支える基盤となり、政治権力者と文化人、経済が統合されました。政治の反映として文化が発展し、経済がそれを支えました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">藤原道長と紫式部の関係\n\n👑 藤原道長（政治権力者）\n    │\n    ├─→ 🏛️ 政治：摂関政治\n    │       ↓\n    │   💰 経済：荘園経済\n    │       ↓\n    │   📜 文化：源氏物語（紫式部）\n    │\n    └─→ 政治・経済・文化の統合\n\n権力が文化を支える</div>",
+    "source": "藤原道長の摂関政治という政治権力のもとで、紫式部の文学が発展しました。荘園経済が文化を支える基盤となりました。  \n藤原道長は摂関政治で政治権力を握りました。そのもとで、紫式部が源氏物語を書きました。荘園経済が文化を支える基盤となり、政治権力者と文化人、経済が統合されました。政治の反映として文化が発展し、経済がそれを支えました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">藤原道長と紫式部の関係\n\n👑 藤原道長（政治権力者）\n    │\n    ├─→ 🏛️ 政治：摂関政治\n    │       ↓\n    │   💰 経済：荘園経済\n    │       ↓\n    │   📜 文化：源氏物語（紫式部）\n    │\n    └─→ 政治・経済・文化の統合\n\n権力が文化を支える</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -86,7 +86,7 @@ window.questions = [
       "荘園経済の発展が枕草子と源氏物語を統一した"
     ],
     "answer": 0,
-    "source": "清少納言と紫式部は同時代の文化人ですが、**政治的背景の違い**がそれぞれの文学に反映されています。文化・政治・経済の関係を示しています。  \n清少納言は一条天皇の中宮・定子に仕え、枕草子を書きました。紫式部は一条天皇の中宮・彰子（藤原道長の娘）に仕え、源氏物語を書きました。同じ時代の文化人でも、仕える人物の政治的背景の違いが、それぞれの文学の特徴に反映されています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">清少納言と紫式部の関係\n\n👑 一条天皇\n    │\n    ├─→ 👑 中宮・定子\n    │       ↓\n    │   👤 清少納言\n    │       ↓\n    │   📜 枕草子（明るい文学）\n    │\n    └─→ 👑 中宮・彰子（藤原道長の娘）\n            ↓\n        👤 紫式部\n            ↓\n        📜 源氏物語（深い文学）\n\n政治的背景が文化に反映</div>",
+    "source": "清少納言と紫式部は同時代の文化人ですが、政治的背景の違いがそれぞれの文学に反映されています。文化・政治・経済の関係を示しています。  \n清少納言は一条天皇の中宮・定子に仕え、枕草子を書きました。紫式部は一条天皇の中宮・彰子（藤原道長の娘）に仕え、源氏物語を書きました。同じ時代の文化人でも、仕える人物の政治的背景の違いが、それぞれの文学の特徴に反映されています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">清少納言と紫式部の関係\n\n👑 一条天皇\n    │\n    ├─→ 👑 中宮・定子\n    │       ↓\n    │   👤 清少納言\n    │       ↓\n    │   📜 枕草子（明るい文学）\n    │\n    └─→ 👑 中宮・彰子（藤原道長の娘）\n            ↓\n        👤 紫式部\n            ↓\n        📜 源氏物語（深い文学）\n\n政治的背景が文化に反映</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -101,7 +101,7 @@ window.questions = [
       "武家文化が先に形成され、その後で鎌倉幕府と御家人制度が整った"
     ],
     "answer": 0,
-    "source": "源頼朝と北条政子の夫婦の協力により、**鎌倉幕府**が確立され、**御家人制度**が経済を支え、**武家文化**が形成されました。  \n源頼朝と北条政子は夫婦として協力し、鎌倉幕府を確立しました。御家人制度という経済制度が幕府を支え、武家文化が形成されました。政治権力者夫婦の協力が、政治・経済・文化を統合しました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #e74c3c;\">源頼朝と北条政子の関係\n\n👤 源頼朝（政治指導者）\n    │\n    │ 夫婦の協力\n    ↓\n👤 北条政子（政治補佐）\n    │\n    ├─→ 🏛️ 政治：鎌倉幕府の確立\n    ├─→ 💰 経済：御家人制度\n    └─→ 📜 文化：武家文化の形成\n\n夫婦の協力が全体を動かす</div>",
+    "source": "源頼朝と北条政子の夫婦の協力により、鎌倉幕府が確立され、御家人制度が経済を支え、武家文化が形成されました。  \n源頼朝と北条政子は夫婦として協力し、鎌倉幕府を確立しました。御家人制度という経済制度が幕府を支え、武家文化が形成されました。政治権力者夫婦の協力が、政治・経済・文化を統合しました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #e74c3c;\">源頼朝と北条政子の関係\n\n👤 源頼朝（政治指導者）\n    │\n    │ 夫婦の協力\n    ↓\n👤 北条政子（政治補佐）\n    │\n    ├─→ 🏛️ 政治：鎌倉幕府の確立\n    ├─→ 💰 経済：御家人制度\n    └─→ 📜 文化：武家文化の形成\n\n夫婦の協力が全体を動かす</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -116,7 +116,7 @@ window.questions = [
       "日宋貿易が先に変わり、その後で鎌倉幕府が転換した"
     ],
     "answer": 0,
-    "source": "源頼朝と平清盛の対立により、**武家政権と朝廷**の対立が政治体制を転換させ、**土地制度と貿易政策**が変わりました。  \n源頼朝と平清盛の対立は、武家政権と朝廷の対立を象徴しています。この対立により政治体制が転換し、土地制度（荘園制から御家人制度へ）と貿易政策（日宋貿易）が変わりました。対立関係が政治・経済・外交の変化を引き起こしました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #e74c3c;\">源頼朝と平清盛の対立\n\n👤 源頼朝（武家政権）\n    │\n    │ 対立\n    ↓\n👤 平清盛（朝廷側）\n    │\n    ├─→ 🏛️ 政治：政治体制の転換\n    ├─→ 💰 経済：土地制度の変化\n    └─→ 🌍 外交：貿易政策の変化\n\n対立が変化を生む</div>",
+    "source": "源頼朝と平清盛の対立により、武家政権と朝廷の対立が政治体制を転換させ、土地制度と貿易政策が変わりました。  \n源頼朝と平清盛の対立は、武家政権と朝廷の対立を象徴しています。この対立により政治体制が転換し、土地制度（荘園制から御家人制度へ）と貿易政策（日宋貿易）が変わりました。対立関係が政治・経済・外交の変化を引き起こしました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #e74c3c;\">源頼朝と平清盛の対立\n\n👤 源頼朝（武家政権）\n    │\n    │ 対立\n    ↓\n👤 平清盛（朝廷側）\n    │\n    ├─→ 🏛️ 政治：政治体制の転換\n    ├─→ 💰 経済：土地制度の変化\n    └─→ 🌍 外交：貿易政策の変化\n\n対立が変化を生む</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -131,7 +131,7 @@ window.questions = [
       "荘園経済の発展が先で、その後で室町幕府と日明貿易が整った"
     ],
     "answer": 0,
-    "source": "足利義満の**日明貿易**により、室町幕府の政治権力と外交・経済が一体化し、**勘合貿易**が発展しました。  \n足利義満は室町幕府の将軍として、明との貿易（日明貿易）を進めました。勘合貿易という制度により、政治権力と外交・経済が一体化しました。政治権力者が外交と経済を統合的に進めた例です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #2c3e50;\">足利義満と日明貿易\n\n👑 足利義満（室町幕府将軍）\n    │\n    ├─→ 🏛️ 政治：室町幕府の権力\n    ├─→ 🌍 外交：明との関係\n    └─→ 💰 経済：勘合貿易\n            │\n            ↓\n        政治・外交・経済の一体化\n\n権力が貿易を統合</div>",
+    "source": "足利義満の日明貿易により、室町幕府の政治権力と外交・経済が一体化し、勘合貿易が発展しました。  \n足利義満は室町幕府の将軍として、明との貿易（日明貿易）を進めました。勘合貿易という制度により、政治権力と外交・経済が一体化しました。政治権力者が外交と経済を統合的に進めた例です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #2c3e50;\">足利義満と日明貿易\n\n👑 足利義満（室町幕府将軍）\n    │\n    ├─→ 🏛️ 政治：室町幕府の権力\n    ├─→ 🌍 外交：明との関係\n    └─→ 💰 経済：勘合貿易\n            │\n            ↓\n        政治・外交・経済の一体化\n\n権力が貿易を統合</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -146,7 +146,7 @@ window.questions = [
       "荘園経済の発展が先で、その後で室町幕府と能楽が整った"
     ],
     "answer": 0,
-    "source": "足利義満という**政治権力者による文化の保護**により、世阿弥の**能楽**が発展し、文化が経済を支えました。  \n足利義満は将軍として世阿弥の能楽を保護し、発展させました。政治権力者による文化の保護により、能楽が発展し、それが経済（観客の集客など）を支えました。政治・文化・経済が統合されました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #2c3e50;\">足利義満と世阿弥の関係\n\n👑 足利義満（政治権力者）\n    │\n    │ 保護\n    ↓\n👤 世阿弥（文化人）\n    │\n    ├─→ 🏛️ 政治：文化の保護\n    ├─→ 📜 文化：能楽の発展\n    └─→ 💰 経済：観客の集客\n\n権力が文化を支える</div>",
+    "source": "足利義満という政治権力者による文化の保護により、世阿弥の能楽が発展し、文化が経済を支えました。  \n足利義満は将軍として世阿弥の能楽を保護し、発展させました。政治権力者による文化の保護により、能楽が発展し、それが経済（観客の集客など）を支えました。政治・文化・経済が統合されました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #2c3e50;\">足利義満と世阿弥の関係\n\n👑 足利義満（政治権力者）\n    │\n    │ 保護\n    ↓\n👤 世阿弥（文化人）\n    │\n    ├─→ 🏛️ 政治：文化の保護\n    ├─→ 📜 文化：能楽の発展\n    └─→ 💰 経済：観客の集客\n\n権力が文化を支える</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -161,7 +161,7 @@ window.questions = [
       "日明貿易が先に発展し、その後で水墨画と茶の湯が整った"
     ],
     "answer": 0,
-    "source": "雪舟（水墨画）と能阿弥（茶の湯）は同時代の文化人で、**中国からの文化受容**により文化・政治・外交を統合しました。  \n雪舟は水墨画を、能阿弥は茶の湯を発展させました。どちらも中国からの文化受容により発展し、室町幕府の政治と日明貿易という外交がそれを支えました。文化・政治・外交が統合されました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #2c3e50;\">雪舟と能阿弥の関係\n\n👤 雪舟（水墨画）\n    │\n    │ 同時代の文化人\n    ↓\n👤 能阿弥（茶の湯）\n    │\n    ├─→ 📜 文化：中国からの受容\n    ├─→ 🏛️ 政治：室町幕府の支援\n    └─→ 🌍 外交：日明貿易\n\n文化・政治・外交の統合</div>",
+    "source": "雪舟（水墨画）と能阿弥（茶の湯）は同時代の文化人で、中国からの文化受容により文化・政治・外交を統合しました。  \n雪舟は水墨画を、能阿弥は茶の湯を発展させました。どちらも中国からの文化受容により発展し、室町幕府の政治と日明貿易という外交がそれを支えました。文化・政治・外交が統合されました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #2c3e50;\">雪舟と能阿弥の関係\n\n👤 雪舟（水墨画）\n    │\n    │ 同時代の文化人\n    ↓\n👤 能阿弥（茶の湯）\n    │\n    ├─→ 📜 文化：中国からの受容\n    ├─→ 🏛️ 政治：室町幕府の支援\n    └─→ 🌍 外交：日明貿易\n\n文化・政治・外交の統合</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -176,7 +176,7 @@ window.questions = [
       "禅文化が室町幕府を支配し、荘園経済は無関係だった"
     ],
     "answer": 0,
-    "source": "一休宗純（文化人）と足利義政（政治権力者）の時代は、**幕府の衰退**と**応仁の乱**による経済の混乱を示しています。  \n一休宗純は禅文化を代表する文化人、足利義政は室町幕府の将軍でした。この時代は、幕府の衰退と応仁の乱による経済の混乱を示しています。文化人と政治権力者の時代が、政治・経済の変化を反映しています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #2c3e50;\">一休宗純と足利義政の時代\n\n👤 一休宗純（文化人）\n    │\n    │ 同時代\n    ↓\n👑 足利義政（政治権力者）\n    │\n    ├─→ 🏛️ 政治：幕府の衰退\n    ├─→ 📜 文化：禅文化\n    └─→ 💰 経済：応仁の乱による混乱\n\n時代の変化を反映</div>",
+    "source": "一休宗純（文化人）と足利義政（政治権力者）の時代は、幕府の衰退と応仁の乱による経済の混乱を示しています。  \n一休宗純は禅文化を代表する文化人、足利義政は室町幕府の将軍でした。この時代は、幕府の衰退と応仁の乱による経済の混乱を示しています。文化人と政治権力者の時代が、政治・経済の変化を反映しています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #2c3e50;\">一休宗純と足利義政の時代\n\n👤 一休宗純（文化人）\n    │\n    │ 同時代\n    ↓\n👑 足利義政（政治権力者）\n    │\n    ├─→ 🏛️ 政治：幕府の衰退\n    ├─→ 📜 文化：禅文化\n    └─→ 💰 経済：応仁の乱による混乱\n\n時代の変化を反映</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -191,7 +191,7 @@ window.questions = [
       "南蛮貿易と鎖国のみが変わり、天下統一と楽市楽座は変わらなかった"
     ],
     "answer": 0,
-    "source": "織田信長・豊臣秀吉・徳川家康の**継承関係**により天下統一が進み、**楽市楽座・検地**などの経済政策と、**南蛮貿易・鎖国**などの外交政策が変化しました。  \n織田信長・豊臣秀吉・徳川家康は継承関係にあり、天下統一を進めました。織田信長は楽市楽座、豊臣秀吉は検地、徳川家康は鎖国というように、経済政策と外交政策が変化しました。3人の継承関係が政治・経済・外交を統合しました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #d35400;\">織田信長・豊臣秀吉・徳川家康の関係\n\n👤 織田信長\n    │\n    │ 継承\n    ↓\n👤 豊臣秀吉\n    │\n    │ 継承\n    ↓\n👤 徳川家康\n    │\n    ├─→ 🏛️ 政治：天下統一\n    ├─→ 💰 経済：楽市楽座・検地\n    └─→ 🌍 外交：南蛮貿易・鎖国\n\n継承が政策を変える</div>",
+    "source": "織田信長・豊臣秀吉・徳川家康の継承関係により天下統一が進み、楽市楽座・検地などの経済政策と、南蛮貿易・鎖国などの外交政策が変化しました。  \n織田信長・豊臣秀吉・徳川家康は継承関係にあり、天下統一を進めました。織田信長は楽市楽座、豊臣秀吉は検地、徳川家康は鎖国というように、経済政策と外交政策が変化しました。3人の継承関係が政治・経済・外交を統合しました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #d35400;\">織田信長・豊臣秀吉・徳川家康の関係\n\n👤 織田信長\n    │\n    │ 継承\n    ↓\n👤 豊臣秀吉\n    │\n    │ 継承\n    ↓\n👤 徳川家康\n    │\n    ├─→ 🏛️ 政治：天下統一\n    ├─→ 💰 経済：楽市楽座・検地\n    └─→ 🌍 外交：南蛮貿易・鎖国\n\n継承が政策を変える</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -206,7 +206,7 @@ window.questions = [
       "商業経済の発展が先で、その後で太閤検地と茶の湯が整った"
     ],
     "answer": 0,
-    "source": "豊臣秀吉という**政治権力者**と千利休の**茶の湯**の関係により、文化が**商業経済**を発展させました。  \n豊臣秀吉は政治権力者として千利休の茶の湯を保護し、発展させました。茶の湯が商業経済（茶器の取引など）を発展させ、政治・文化・経済が統合されました。政治権力と文化の関係が経済を動かしました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #d35400;\">豊臣秀吉と千利休の関係\n\n👑 豊臣秀吉（政治権力者）\n    │\n    │ 保護\n    ↓\n👤 千利休（文化人）\n    │\n    ├─→ 🏛️ 政治：権力者の保護\n    ├─→ 📜 文化：茶の湯の発展\n    └─→ 💰 経済：商業経済（茶器）\n\n文化が経済を動かす</div>",
+    "source": "豊臣秀吉という政治権力者と千利休の茶の湯の関係により、文化が商業経済を発展させました。  \n豊臣秀吉は政治権力者として千利休の茶の湯を保護し、発展させました。茶の湯が商業経済（茶器の取引など）を発展させ、政治・文化・経済が統合されました。政治権力と文化の関係が経済を動かしました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #d35400;\">豊臣秀吉と千利休の関係\n\n👑 豊臣秀吉（政治権力者）\n    │\n    │ 保護\n    ↓\n👤 千利休（文化人）\n    │\n    ├─→ 🏛️ 政治：権力者の保護\n    ├─→ 📜 文化：茶の湯の発展\n    └─→ 💰 経済：商業経済（茶器）\n\n文化が経済を動かす</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -221,7 +221,7 @@ window.questions = [
       "儒学が幕藩体制を決定し、石高制は無関係だった"
     ],
     "answer": 0,
-    "source": "徳川家康と本多正信の**主従関係**により、**幕藩体制**が確立され、**石高制**が経済を支え、**儒学**が文化を形成しました。  \n徳川家康と本多正信は主従関係にあり、幕藩体制を確立しました。石高制という経済制度が幕藩体制を支え、儒学が文化を形成しました。主従関係が政治・経済・文化を統合しました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #d35400;\">徳川家康と本多正信の関係\n\n👑 徳川家康（主君）\n    │\n    │ 主従関係\n    ↓\n👤 本多正信（家臣）\n    │\n    ├─→ 🏛️ 政治：幕藩体制の確立\n    ├─→ 💰 経済：石高制\n    └─→ 📜 文化：儒学\n\n主従関係が全体を統合</div>",
+    "source": "徳川家康と本多正信の主従関係により、幕藩体制が確立され、石高制が経済を支え、儒学が文化を形成しました。  \n徳川家康と本多正信は主従関係にあり、幕藩体制を確立しました。石高制という経済制度が幕藩体制を支え、儒学が文化を形成しました。主従関係が政治・経済・文化を統合しました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #d35400;\">徳川家康と本多正信の関係\n\n👑 徳川家康（主君）\n    │\n    │ 主従関係\n    ↓\n👤 本多正信（家臣）\n    │\n    ├─→ 🏛️ 政治：幕藩体制の確立\n    ├─→ 💰 経済：石高制\n    └─→ 📜 文化：儒学\n\n主従関係が全体を統合</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -236,7 +236,7 @@ window.questions = [
       "石高制と長崎貿易は変わらず、幕藩体制のみが変わった"
     ],
     "answer": 0,
-    "source": "徳川家光の**鎖国政策**と天草四郎の乱の対立により、**鎖国体制**が確立され、**貿易統制**と**キリスト教禁止**が進みました。  \n徳川家光の鎖国政策と天草四郎の乱の対立により、鎖国体制が確立されました。貿易統制（長崎貿易のみ）とキリスト教禁止が進み、政治・経済・外交が統合されました。対立関係が政策を決定しました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #d35400;\">徳川家光と天草四郎の対立\n\n👑 徳川家光（政治権力者）\n    │\n    │ 対立\n    ↓\n👤 天草四郎（反乱の指導者）\n    │\n    ├─→ 🏛️ 政治：鎖国体制の確立\n    ├─→ 💰 経済：貿易統制\n    └─→ 🌍 外交：キリスト教禁止\n\n対立が政策を決定</div>",
+    "source": "徳川家光の鎖国政策と天草四郎の乱の対立により、鎖国体制が確立され、貿易統制とキリスト教禁止が進みました。  \n徳川家光の鎖国政策と天草四郎の乱の対立により、鎖国体制が確立されました。貿易統制（長崎貿易のみ）とキリスト教禁止が進み、政治・経済・外交が統合されました。対立関係が政策を決定しました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #d35400;\">徳川家光と天草四郎の対立\n\n👑 徳川家光（政治権力者）\n    │\n    │ 対立\n    ↓\n👤 天草四郎（反乱の指導者）\n    │\n    ├─→ 🏛️ 政治：鎖国体制の確立\n    ├─→ 💰 経済：貿易統制\n    └─→ 🌍 外交：キリスト教禁止\n\n対立が政策を決定</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -251,7 +251,7 @@ window.questions = [
       "幕藩体制が俳諧を支配し、町人文化は無関係だった"
     ],
     "answer": 0,
-    "source": "松尾芭蕉の**俳諧**と元禄文化は、**町人文化**という経済と、**平和な時代**という政治の反映として発展しました。  \n松尾芭蕉の俳諧と元禄文化は、町人文化という経済の発展と、平和な時代という政治の安定の反映として発展しました。文化が経済と政治の反映として発展する例です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #d35400;\">松尾芭蕉と元禄文化\n\n👤 松尾芭蕉（文化人）\n    │\n    ├─→ 📜 文化：俳諧・元禄文化\n    │       ↑\n    │   💰 経済：町人文化（反映）\n    │       ↑\n    │   🏛️ 政治：平和な時代（反映）\n    │\n    └─→ 文化が経済・政治を反映\n\n反映としての文化</div>",
+    "source": "松尾芭蕉の俳諧と元禄文化は、町人文化という経済と、平和な時代という政治の反映として発展しました。  \n松尾芭蕉の俳諧と元禄文化は、町人文化という経済の発展と、平和な時代という政治の安定の反映として発展しました。文化が経済と政治の反映として発展する例です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #d35400;\">松尾芭蕉と元禄文化\n\n👤 松尾芭蕉（文化人）\n    │\n    ├─→ 📜 文化：俳諧・元禄文化\n    │       ↑\n    │   💰 経済：町人文化（反映）\n    │       ↑\n    │   🏛️ 政治：平和な時代（反映）\n    │\n    └─→ 文化が経済・政治を反映\n\n反映としての文化</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -266,7 +266,7 @@ window.questions = [
       "朝鮮通信使が先に発展し、その後で文治政治と儒学が整った"
     ],
     "answer": 0,
-    "source": "新井白石（学者）と徳川家宣（将軍）の関係により、**文治政治**が進み、**儒学**と**朝鮮通信使**の外交が発展しました。  \n新井白石は学者として徳川家宣に仕え、文治政治を進めました。儒学が文化を形成し、朝鮮通信使という外交が発展しました。学者と将軍の関係が政治・文化・外交を統合しました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #d35400;\">新井白石と徳川家宣の関係\n\n👑 徳川家宣（将軍）\n    │\n    │ 仕える\n    ↓\n👤 新井白石（学者）\n    │\n    ├─→ 🏛️ 政治：文治政治\n    ├─→ 📜 文化：儒学\n    └─→ 🌍 外交：朝鮮通信使\n\n学者が政治を動かす</div>",
+    "source": "新井白石（学者）と徳川家宣（将軍）の関係により、文治政治が進み、儒学と朝鮮通信使の外交が発展しました。  \n新井白石は学者として徳川家宣に仕え、文治政治を進めました。儒学が文化を形成し、朝鮮通信使という外交が発展しました。学者と将軍の関係が政治・文化・外交を統合しました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #d35400;\">新井白石と徳川家宣の関係\n\n👑 徳川家宣（将軍）\n    │\n    │ 仕える\n    ↓\n👤 新井白石（学者）\n    │\n    ├─→ 🏛️ 政治：文治政治\n    ├─→ 📜 文化：儒学\n    └─→ 🌍 外交：朝鮮通信使\n\n学者が政治を動かす</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -281,7 +281,7 @@ window.questions = [
       "開国論のみが重要で、大政奉還と日米修好通商条約は無関係だった"
     ],
     "answer": 0,
-    "source": "坂本龍馬と中岡慎太郎の**協力関係**により、**倒幕**が進み、**開国論**と**貿易**が発展しました。  \n坂本龍馬と中岡慎太郎は協力関係にあり、倒幕を進めました。開国論と貿易（日米修好通商条約など）が発展し、政治・外交・経済が統合されました。協力関係が政治変革を進めました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3498db;\">坂本龍馬と中岡慎太郎の関係\n\n👤 坂本龍馬\n    │\n    │ 協力\n    ↓\n👤 中岡慎太郎\n    │\n    ├─→ 🏛️ 政治：倒幕・大政奉還\n    ├─→ 🌍 外交：開国論\n    └─→ 💰 経済：貿易の発展\n\n協力が変革を進める</div>",
+    "source": "坂本龍馬と中岡慎太郎の協力関係により、倒幕が進み、開国論と貿易が発展しました。  \n坂本龍馬と中岡慎太郎は協力関係にあり、倒幕を進めました。開国論と貿易（日米修好通商条約など）が発展し、政治・外交・経済が統合されました。協力関係が政治変革を進めました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3498db;\">坂本龍馬と中岡慎太郎の関係\n\n👤 坂本龍馬\n    │\n    │ 協力\n    ↓\n👤 中岡慎太郎\n    │\n    ├─→ 🏛️ 政治：倒幕・大政奉還\n    ├─→ 🌍 外交：開国論\n    └─→ 💰 経済：貿易の発展\n\n協力が変革を進める</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -296,7 +296,7 @@ window.questions = [
       "文明開化が先に発展し、その後で明治政府と殖産興業が整った"
     ],
     "answer": 0,
-    "source": "大久保利通と木戸孝允の**協力と対立**により、**明治政府**が進み、**殖産興業**と**文明開化**が発展しました。  \n大久保利通と木戸孝允は協力と対立（征韓論など）を繰り返しながら、明治政府を進めました。殖産興業という経済政策と文明開化という文化政策が発展し、政治・経済・文化が統合されました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3498db;\">大久保利通と木戸孝允の関係\n\n👤 大久保利通\n    │\n    │ 協力と対立\n    ↓\n👤 木戸孝允\n    │\n    ├─→ 🏛️ 政治：明治政府\n    ├─→ 💰 経済：殖産興業\n    └─→ 📜 文化：文明開化\n\n協力と対立が進歩を生む</div>",
+    "source": "大久保利通と木戸孝允の協力と対立により、明治政府が進み、殖産興業と文明開化が発展しました。  \n大久保利通と木戸孝允は協力と対立（征韓論など）を繰り返しながら、明治政府を進めました。殖産興業という経済政策と文明開化という文化政策が発展し、政治・経済・文化が統合されました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3498db;\">大久保利通と木戸孝允の関係\n\n👤 大久保利通\n    │\n    │ 協力と対立\n    ↓\n👤 木戸孝允\n    │\n    ├─→ 🏛️ 政治：明治政府\n    ├─→ 💰 経済：殖産興業\n    └─→ 📜 文化：文明開化\n\n協力と対立が進歩を生む</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -311,7 +311,7 @@ window.questions = [
       "鹿鳴館が大日本帝国憲法と日英通商航海条約を決定した"
     ],
     "answer": 0,
-    "source": "伊藤博文と岩倉具視の関係により、**憲法制定**、**条約改正**、**欧化政策**が進みました。政治・外交・文化が統合されました。  \n伊藤博文と岩倉具視は政治指導者として、憲法制定（大日本帝国憲法）、条約改正（日英通商航海条約）、欧化政策（鹿鳴館）を進めました。政治・外交・文化が統合されました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3498db;\">伊藤博文と岩倉具視の関係\n\n👤 伊藤博文\n    │\n    │ 協力\n    ↓\n👤 岩倉具視\n    │\n    ├─→ 🏛️ 政治：憲法制定\n    ├─→ 🌍 外交：条約改正\n    └─→ 📜 文化：欧化政策\n\n指導者が全体を統合</div>",
+    "source": "伊藤博文と岩倉具視の関係により、憲法制定、条約改正、欧化政策が進みました。政治・外交・文化が統合されました。  \n伊藤博文と岩倉具視は政治指導者として、憲法制定（大日本帝国憲法）、条約改正（日英通商航海条約）、欧化政策（鹿鳴館）を進めました。政治・外交・文化が統合されました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3498db;\">伊藤博文と岩倉具視の関係\n\n👤 伊藤博文\n    │\n    │ 協力\n    ↓\n👤 岩倉具視\n    │\n    ├─→ 🏛️ 政治：憲法制定\n    ├─→ 🌍 外交：条約改正\n    └─→ 📜 文化：欧化政策\n\n指導者が全体を統合</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -326,7 +326,7 @@ window.questions = [
       "学問のすすめと大日本帝国憲法は無関係で、資本主義のみが重要だった"
     ],
     "answer": 0,
-    "source": "福沢諭吉の**啓蒙思想**により、**立憲政治**と**資本主義**が発展しました。文化人が政治・経済に与えた影響です。  \n福沢諭吉は「学問のすすめ」などの啓蒙思想により、立憲政治（大日本帝国憲法）と資本主義の発展に影響を与えました。文化人の思想が政治・経済に影響を与えた例です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3498db;\">福沢諭吉の思想の影響\n\n👤 福沢諭吉（文化人）\n    │\n    │ 啓蒙思想（学問のすすめ）\n    ↓\n    ├─→ 🏛️ 政治：立憲政治\n    └─→ 💰 経済：資本主義\n\n文化が政治・経済を動かす</div>",
+    "source": "福沢諭吉の啓蒙思想により、立憲政治と資本主義が発展しました。文化人が政治・経済に与えた影響です。  \n福沢諭吉は「学問のすすめ」などの啓蒙思想により、立憲政治（大日本帝国憲法）と資本主義の発展に影響を与えました。文化人の思想が政治・経済に影響を与えた例です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3498db;\">福沢諭吉の思想の影響\n\n👤 福沢諭吉（文化人）\n    │\n    │ 啓蒙思想（学問のすすめ）\n    ↓\n    ├─→ 🏛️ 政治：立憲政治\n    └─→ 💰 経済：資本主義\n\n文化が政治・経済を動かす</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -341,7 +341,7 @@ window.questions = [
       "日英通商航海条約と外務省は無関係で、資本主義のみが重要だった"
     ],
     "answer": 0,
-    "source": "陸奥宗光と小村寿太郎の**外交官の継承**により、**条約改正**が進み、**不平等条約の解消**が経済を発展させました。  \n陸奥宗光と小村寿太郎は外交官として継承関係にあり、条約改正（日英通商航海条約など）を進めました。不平等条約の解消が経済を発展させ、外交・政治・経済が統合されました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3498db;\">陸奥宗光と小村寿太郎の関係\n\n👤 陸奥宗光（外交官）\n    │\n    │ 継承\n    ↓\n👤 小村寿太郎（外交官）\n    │\n    ├─→ 🌍 外交：条約改正\n    ├─→ 🏛️ 政治：外務省\n    └─→ 💰 経済：不平等条約の解消\n\n継承が外交を進める</div>",
+    "source": "陸奥宗光と小村寿太郎の外交官の継承により、条約改正が進み、不平等条約の解消が経済を発展させました。  \n陸奥宗光と小村寿太郎は外交官として継承関係にあり、条約改正（日英通商航海条約など）を進めました。不平等条約の解消が経済を発展させ、外交・政治・経済が統合されました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3498db;\">陸奥宗光と小村寿太郎の関係\n\n👤 陸奥宗光（外交官）\n    │\n    │ 継承\n    ↓\n👤 小村寿太郎（外交官）\n    │\n    ├─→ 🌍 外交：条約改正\n    ├─→ 🏛️ 政治：外務省\n    └─→ 💰 経済：不平等条約の解消\n\n継承が外交を進める</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -356,7 +356,7 @@ window.questions = [
       "大正文化が原敬内閣と労働運動を決定した"
     ],
     "answer": 0,
-    "source": "原敬の**政党内閣**という政治改革により、**労働運動**と**大正文化**が発展しました。政治・経済・文化の関係を示しています。  \n原敬の政党内閣という政治改革により、労働運動（経済）と大正文化（文化）が発展しました。政治改革が経済と文化に影響を与えた例です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3498db;\">原敬と大正デモクラシー\n\n👤 原敬（政治指導者）\n    │\n    │ 政党内閣（政治改革）\n    ↓\n    ├─→ 🏛️ 政治：大正デモクラシー\n    ├─→ 💰 経済：労働運動\n    └─→ 📜 文化：大正文化\n\n政治改革が全体を動かす</div>",
+    "source": "原敬の政党内閣という政治改革により、労働運動と大正文化が発展しました。政治・経済・文化の関係を示しています。  \n原敬の政党内閣という政治改革により、労働運動（経済）と大正文化（文化）が発展しました。政治改革が経済と文化に影響を与えた例です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3498db;\">原敬と大正デモクラシー\n\n👤 原敬（政治指導者）\n    │\n    │ 政党内閣（政治改革）\n    ↓\n    ├─→ 🏛️ 政治：大正デモクラシー\n    ├─→ 💰 経済：労働運動\n    └─→ 📜 文化：大正文化\n\n政治改革が全体を動かす</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -371,7 +371,7 @@ window.questions = [
       "日米安全保障条約と高度経済成長は無関係で、日本国憲法のみが重要だった"
     ],
     "answer": 0,
-    "source": "吉田茂（政治指導者）とマッカーサー（占領軍）の関係により、**戦後復興**、**日米関係**、**経済復興**が進みました。  \n吉田茂は政治指導者として、マッカーサー（GHQ）と協力し、戦後復興を進めました。日本国憲法の制定、日米安全保障条約、経済復興が進み、政治・外交・経済が統合されました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #16a085;\">吉田茂とマッカーサーの関係\n\n👤 吉田茂（政治指導者）\n    │\n    │ 協力\n    ↓\n👤 マッカーサー（占領軍）\n    │\n    ├─→ 🏛️ 政治：戦後復興・日本国憲法\n    ├─→ 🌍 外交：日米関係\n    └─→ 💰 経済：経済復興\n\n協力が復興を進める</div>",
+    "source": "吉田茂（政治指導者）とマッカーサー（占領軍）の関係により、戦後復興、日米関係、経済復興が進みました。  \n吉田茂は政治指導者として、マッカーサー（GHQ）と協力し、戦後復興を進めました。日本国憲法の制定、日米安全保障条約、経済復興が進み、政治・外交・経済が統合されました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #16a085;\">吉田茂とマッカーサーの関係\n\n👤 吉田茂（政治指導者）\n    │\n    │ 協力\n    ↓\n👤 マッカーサー（占領軍）\n    │\n    ├─→ 🏛️ 政治：戦後復興・日本国憲法\n    ├─→ 🌍 外交：日米関係\n    └─→ 💰 経済：経済復興\n\n協力が復興を進める</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -386,7 +386,7 @@ window.questions = [
       "大衆文化が池田勇人の所得倍増計画と高度経済成長を決定した"
     ],
     "answer": 0,
-    "source": "池田勇人の**所得倍増計画**という政治政策により、**高度経済成長**と**大衆文化**が発展しました。政治・経済・文化の関係を示しています。  \n池田勇人の所得倍増計画という政治政策により、高度経済成長が進み、大衆文化が発展しました。政治政策が経済と文化に影響を与えた例です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #16a085;\">池田勇人と高度経済成長\n\n👤 池田勇人（政治指導者）\n    │\n    │ 所得倍増計画（政治政策）\n    ↓\n    ├─→ 🏛️ 政治：政策の実行\n    ├─→ 💰 経済：高度経済成長\n    └─→ 📜 文化：大衆文化\n\n政策が経済・文化を動かす</div>",
+    "source": "池田勇人の所得倍増計画という政治政策により、高度経済成長と大衆文化が発展しました。政治・経済・文化の関係を示しています。  \n池田勇人の所得倍増計画という政治政策により、高度経済成長が進み、大衆文化が発展しました。政治政策が経済と文化に影響を与えた例です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #16a085;\">池田勇人と高度経済成長\n\n👤 池田勇人（政治指導者）\n    │\n    │ 所得倍増計画（政治政策）\n    ↓\n    ├─→ 🏛️ 政治：政策の実行\n    ├─→ 💰 経済：高度経済成長\n    └─→ 📜 文化：大衆文化\n\n政策が経済・文化を動かす</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -401,7 +401,7 @@ window.questions = [
       "日米安全保障条約と石油危機対応は無関係で、自民党のみが重要だった"
     ],
     "answer": 0,
-    "source": "田中角栄と中曽根康弘の**政治指導者の継承**により、**保守政治**が進み、**石油危機対応**と**日米関係**が発展しました。  \n田中角栄と中曽根康弘は政治指導者として継承関係にあり、保守政治（自民党）を進めました。石油危機対応（経済）と日米関係（外交）が発展し、政治・経済・外交が統合されました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #16a085;\">田中角栄と中曽根康弘の関係\n\n👤 田中角栄（政治指導者）\n    │\n    │ 継承\n    ↓\n👤 中曽根康弘（政治指導者）\n    │\n    ├─→ 🏛️ 政治：保守政治（自民党）\n    ├─→ 💰 経済：石油危機対応\n    └─→ 🌍 外交：日米関係\n\n継承が政策を継続</div>",
+    "source": "田中角栄と中曽根康弘の政治指導者の継承により、保守政治が進み、石油危機対応と日米関係が発展しました。  \n田中角栄と中曽根康弘は政治指導者として継承関係にあり、保守政治（自民党）を進めました。石油危機対応（経済）と日米関係（外交）が発展し、政治・経済・外交が統合されました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #16a085;\">田中角栄と中曽根康弘の関係\n\n👤 田中角栄（政治指導者）\n    │\n    │ 継承\n    ↓\n👤 中曽根康弘（政治指導者）\n    │\n    ├─→ 🏛️ 政治：保守政治（自民党）\n    ├─→ 💰 経済：石油危機対応\n    └─→ 🌍 外交：日米関係\n\n継承が政策を継続</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -416,7 +416,7 @@ window.questions = [
       "グローバル化が小泉純一郎の構造改革と規制緩和を決定した"
     ],
     "answer": 0,
-    "source": "小泉純一郎の**構造改革**という政治改革により、**規制緩和**と**グローバル化**が進みました。政治・経済・文化の関係を示しています。  \n小泉純一郎の構造改革という政治改革により、規制緩和（経済）とグローバル化（文化）が進みました。政治改革が経済と文化に影響を与えた例です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #16a085;\">小泉純一郎と構造改革\n\n👤 小泉純一郎（政治指導者）\n    │\n    │ 構造改革（政治改革）\n    ↓\n    ├─→ 🏛️ 政治：改革の実行\n    ├─→ 💰 経済：規制緩和\n    └─→ 📜 文化：グローバル化\n\n改革が全体を動かす</div>",
+    "source": "小泉純一郎の構造改革という政治改革により、規制緩和とグローバル化が進みました。政治・経済・文化の関係を示しています。  \n小泉純一郎の構造改革という政治改革により、規制緩和（経済）とグローバル化（文化）が進みました。政治改革が経済と文化に影響を与えた例です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #16a085;\">小泉純一郎と構造改革\n\n👤 小泉純一郎（政治指導者）\n    │\n    │ 構造改革（政治改革）\n    ↓\n    ├─→ 🏛️ 政治：改革の実行\n    ├─→ 💰 経済：規制緩和\n    └─→ 📜 文化：グローバル化\n\n改革が全体を動かす</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -431,7 +431,7 @@ window.questions = [
       "積極的平和主義が安倍晋三の長期政権とアベノミクスを決定した"
     ],
     "answer": 0,
-    "source": "安倍晋三の**長期政権**により、**積極的平和主義**と**アベノミクス**が進み、政治・外交・経済が一体化しました。  \n安倍晋三の長期政権により、積極的平和主義（外交）とアベノミクス（経済）が進み、政治・外交・経済が一体化しました。長期政権が外交と経済を統合しました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #16a085;\">安倍晋三の外交政策\n\n👤 安倍晋三（政治指導者）\n    │\n    │ 長期政権\n    ↓\n    ├─→ 🏛️ 政治：長期政権の確立\n    ├─→ 🌍 外交：積極的平和主義\n    └─→ 💰 経済：アベノミクス\n\n長期政権が全体を統合</div>",
+    "source": "安倍晋三の長期政権により、積極的平和主義とアベノミクスが進み、政治・外交・経済が一体化しました。  \n安倍晋三の長期政権により、積極的平和主義（外交）とアベノミクス（経済）が進み、政治・外交・経済が一体化しました。長期政権が外交と経済を統合しました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #16a085;\">安倍晋三の外交政策\n\n👤 安倍晋三（政治指導者）\n    │\n    │ 長期政権\n    ↓\n    ├─→ 🏛️ 政治：長期政権の確立\n    ├─→ 🌍 外交：積極的平和主義\n    └─→ 💰 経済：アベノミクス\n\n長期政権が全体を統合</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -446,7 +446,7 @@ window.questions = [
       "文化産業が現代文化と政策を支配していた"
     ],
     "answer": 0,
-    "source": "現代の文化活動は、**政策への影響**と**文化産業**を通じて、文化・政治・経済の相互関係を示しています。  \n現代の文化活動は、政策への影響（政治）と文化産業（経済）を通じて、文化・政治・経済の相互関係を示しています。文化が政治と経済に影響を与え、逆に政治と経済も文化に影響を与える、相互関係です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #16a085;\">現代の文化活動\n\n📜 現代文化\n    │\n    ├─→ 🏛️ 政治：政策への影響\n    │       ↕️\n    └─→ 💰 経済：文化産業\n            ↕️\n        相互関係\n\n文化・政治・経済の相互関係</div>",
+    "source": "現代の文化活動は、政策への影響と文化産業を通じて、文化・政治・経済の相互関係を示しています。  \n現代の文化活動は、政策への影響（政治）と文化産業（経済）を通じて、文化・政治・経済の相互関係を示しています。文化が政治と経済に影響を与え、逆に政治と経済も文化に影響を与える、相互関係です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #16a085;\">現代の文化活動\n\n📜 現代文化\n    │\n    ├─→ 🏛️ 政治：政策への影響\n    │       ↕️\n    └─→ 💰 経済：文化産業\n            ↕️\n        相互関係\n\n文化・政治・経済の相互関係</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"

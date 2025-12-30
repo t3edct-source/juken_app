@@ -30,14 +30,14 @@ window.questions = [
       "小樽市"
     ],
     "answer": 0,
-    "source": "北海道の中心都市は札幌。道庁がおかれ、広い大通公園では冬に雪と氷の巨大な彫刻が並ぶ雪まつりが開かれます。碁盤の目の街路や地下街、路面電車が人の流れを支え、観光と暮らしがひとつになる\"北の玄関口\"。行政の頭脳と文化の舞台が同じ街にある、と覚えましょう。雪の都でも地下道や暖房の工夫で快適に動けます。行事とくらしが重なることが、道都の力です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">札幌の特徴\n\n🏛️ 道庁（行政の中心）\n    ↓\n🏙️ 大通公園\n    ↓\n❄️ 雪まつり（冬の祭り）\n    ↓\n🚇 地下街・路面電車\n    ↓\n🎯 観光と暮らしが一体\n\n北の玄関口として発展</div>",
+    "source": "北海道（ほっかいどう）の中心都市は札幌（さっぽろ）。道庁（どうちょう）がおかれ、広い大通公園（おおどおりこうえん）では冬に雪と氷の巨大な彫刻が並ぶ雪まつりが開かれます。碁盤の目の街路や地下街、路面電車が人の流れを支え、観光と暮らしがひとつになる\"北の玄関口\"。行政の頭脳と文化の舞台が同じ街にある、と覚えましょう。雪の都でも地下道や暖房の工夫で快適に動けます。行事とくらしが重なることが、道都の力です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">札幌の特徴\n\n🏛️ 道庁（行政の中心）\n    ↓\n🏙️ 大通公園\n    ↓\n❄️ 雪まつり（冬の祭り）\n    ↓\n🚇 地下街・路面電車\n    ↓\n🎯 観光と暮らしが一体\n\n北の玄関口として発展</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
   },
   {
     "qnum": 2,
-    "text": "日本最大級の平野で、石狩川が流れるのはどれですか。",
+    "text": "日本最大級の平野で、石狩川（いしかりがわ）が流れるのはどれですか。",
     "choices": [
       "石狩平野",
       "十勝平野",
@@ -240,7 +240,7 @@ window.questions = [
       "潮流"
     ],
     "answer": 0,
-    "source": "北海道は広い土地と強い季節風を生かして風力発電が進みます。草地や海沿いに風車がならび、再生可能エネルギーの比率を押し上げています。自然条件に合わせ\"風の通り道\"を設計し、系統や蓄電の工夫と合わせて暮らしの電気に変える取り組みが広がっています。送電や貯蔵の工夫も一緒に進めば、風の力はもっと使いやすくなります。自然と技術の二人三脚です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">北海道の風力発電\n\n💨 強い季節風\n    ↓\n🌾 広い土地（草地・海沿い）\n    ↓\n⚡ 風車（風力発電）\n    ↓\n🔋 蓄電・送電\n    ↓\n💡 再生可能エネルギー\n\n自然と技術の融合</div>",
+    "source": "北海道は広い土地と強い季節風を生かして風力発電が進みます。草地や海沿いに風車がならび、再生可能エネルギーの比率を押し上げています。自然条件に合わせ\"風の通り道\"を設計し、系統や蓄電の工夫と合わせて暮らしの電気に変える取り組みが広がっています。送電や貯蔵（ちょぞう）の工夫も一緒に進めば、風の力はもっと使いやすくなります。自然と技術の二人三脚です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">北海道の風力発電\n\n💨 強い季節風\n    ↓\n🌾 広い土地（草地・海沿い）\n    ↓\n⚡ 風車（風力発電）\n    ↓\n🔋 蓄電・送電\n    ↓\n💡 再生可能エネルギー\n\n自然と技術の融合</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"

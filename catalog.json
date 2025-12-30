@@ -266,6 +266,22 @@
     ]
   },
   {
+    "id": "soc.history.paleolithic_jomon_yayoi",
+    "grade": 5,
+    "subject": "soc",
+    "title": "旧石器・縄文・弥生時代",
+    "duration_min": 20,
+    "sku_required": "g5-soc",
+    "path": "lessons/soc/modular/oboeru/index_modular.html?era=4200_paleolithic_jomon_yayoi_with_sources&mode=wakaru",
+    "format": "modular",
+    "tags": [
+      "歴史",
+      "旧石器時代",
+      "縄文時代",
+      "弥生時代"
+    ]
+  },
+  {
     "id": "soc.history.kofun_asuka",
     "grade": 5,
     "subject": "soc",

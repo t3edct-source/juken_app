@@ -240,6 +240,23 @@
       0%, 100% { box-shadow: 0 4px 12px rgba(33,150,243,0.6), inset 0 2px 4px rgba(255,255,255,0.8); }
       50% { box-shadow: 0 6px 16px rgba(33,150,243,0.8), inset 0 2px 6px rgba(255,255,255,0.9); }
     }
+    @keyframes phaseGlow {
+      0%, 100% { 
+        filter: brightness(1) drop-shadow(0 0 0 rgba(33,150,243,0));
+      }
+      50% { 
+        filter: brightness(1.4) drop-shadow(0 0 20px rgba(33,150,243,0.8));
+      }
+    }
+    /* パーティクルエフェクト */
+    .phase-particle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 20;
+    }
     .ice::before,
     .ice::after {
       content: "";
@@ -701,6 +718,8 @@
       document.getElementById('bubble3')
     ];
     const beakerInnerRectRef = { width: 0, height: 0 };
+    let previousTemp = 20; // 前回の温度を保存
+    let previousState = 'water'; // 前回の状態を保存（'ice', 'water', 'steam'）
 
     function updateBeakerRect() {
       const inner = document.querySelector('.beaker-inner');
@@ -731,12 +750,14 @@
       // 状態と見た目
       let stateText = '';
       let comment = '';
+      let currentState = 'water';
 
       // 水のクラスをリセット
       waterEl.classList.remove('cold', 'warm', 'hot');
       iceEl.classList.remove('visible');
 
       if (t < 0) {
+        currentState = 'ice';
         stateText = '状態：固体（氷）';
         iceEl.classList.add('visible');
         iceEl.style.transform = 'translateX(-50%) translateY(0)';
@@ -753,6 +774,7 @@
           '水の粒が<strong>きっちり並んで</strong>いて、ほとんど動きません。';
 
       } else if (t >= 0 && t < 100) {
+        currentState = 'water';
         stateText = '状態：液体の水';
         stateLabel.classList.add('water-state');
         if (t < 5) {
@@ -811,6 +833,7 @@
         }
 
       } else {
+        currentState = 'steam';
         stateText = '状態：気体（水蒸気）';
         stateLabel.classList.add('steam-state');
         iceEl.style.transform = 'translateX(-50%) translateY(6px)';
@@ -838,6 +861,134 @@
 
       stateLabel.textContent = stateText;
       simCommentEl.innerHTML = comment;
+
+      // 0°Cと100°Cの境界を越えたときのエフェクト
+      if (previousTemp !== null) {
+        // 0°Cを越えたとき（氷↔水）
+        if ((previousTemp < 0 && t >= 0) || (previousTemp >= 0 && t < 0)) {
+          triggerPhaseChangeEffect('ice-water');
+        }
+        // 100°Cを越えたとき（水↔水蒸気）
+        if ((previousTemp < 100 && t >= 100) || (previousTemp >= 100 && t < 100)) {
+          triggerPhaseChangeEffect('water-steam');
+        }
+      }
+
+      previousTemp = t;
+      previousState = currentState;
+    }
+
+    // 状態変化のエフェクトとSE
+    function triggerPhaseChangeEffect(type) {
+      // 視覚エフェクト：パーティクルアニメーション
+      createPhaseChangeParticleEffect(type);
+      
+      // 音声エフェクト
+      playPhaseChangeSound(type);
+    }
+
+    // パーティクルエフェクト
+    function createPhaseChangeParticleEffect(type) {
+      const simField = document.getElementById('waterField');
+      const beaker = document.querySelector('.beaker');
+      const rect = beaker.getBoundingClientRect();
+      const fieldRect = simField.getBoundingClientRect();
+      
+      const centerX = rect.left - fieldRect.left + rect.width / 2;
+      const centerY = rect.top - fieldRect.top + rect.height / 2;
+
+      // パーティクルの色と数
+      let particleColor, particleCount;
+      if (type === 'ice-water') {
+        particleColor = 'rgba(144,202,249,0.9)'; // 青系（氷）
+        particleCount = 20;
+      } else {
+        particleColor = 'rgba(255,255,255,0.9)'; // 白系（水蒸気）
+        particleCount = 25;
+      }
+
+      // パーティクルを生成
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'phase-particle';
+        
+        const angle = (Math.PI * 2 * i) / particleCount;
+        const distance = 40 + Math.random() * 60;
+        const duration = 1000 + Math.random() * 500;
+        const endX = Math.cos(angle) * distance;
+        const endY = Math.sin(angle) * distance;
+        
+        particle.style.left = centerX + 'px';
+        particle.style.top = centerY + 'px';
+        particle.style.background = `radial-gradient(circle, ${particleColor} 0%, rgba(200,220,255,0.6) 100%)`;
+        
+        simField.appendChild(particle);
+        
+        // アニメーション
+        const startTime = Date.now();
+        const animate = () => {
+          const elapsed = Date.now() - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const easeOut = 1 - Math.pow(1 - progress, 3);
+          
+          particle.style.transform = `translate(${endX * easeOut}px, ${endY * easeOut}px) scale(${1 - progress * 0.5})`;
+          particle.style.opacity = 1 - progress;
+          
+          if (progress < 1) {
+            requestAnimationFrame(animate);
+          } else {
+            particle.remove();
+          }
+        };
+        requestAnimationFrame(animate);
+      }
+
+      // ビーカーの光るエフェクト
+      if (type === 'ice-water') {
+        iceEl.style.animation = 'phaseGlow 0.8s ease-out';
+        setTimeout(() => {
+          iceEl.style.animation = '';
+        }, 800);
+      } else {
+        steamEl.style.animation = 'phaseGlow 0.8s ease-out';
+        setTimeout(() => {
+          steamEl.style.animation = '';
+        }, 800);
+      }
+    }
+
+    // 音声エフェクト（Web Audio APIで生成）
+    function playPhaseChangeSound(type) {
+      try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        if (type === 'ice-water') {
+          // 氷→水：柔らかい音色
+          oscillator.type = 'sine';
+          oscillator.frequency.setValueAtTime(350, audioContext.currentTime);
+          oscillator.frequency.exponentialRampToValueAtTime(450, audioContext.currentTime + 0.3);
+        } else {
+          // 水→水蒸気：高めの音色
+          oscillator.type = 'sine';
+          oscillator.frequency.setValueAtTime(500, audioContext.currentTime);
+          oscillator.frequency.exponentialRampToValueAtTime(600, audioContext.currentTime + 0.3);
+        }
+        
+        gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+        gainNode.gain.linearRampToValueAtTime(0.12, audioContext.currentTime + 0.05);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.35);
+        
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.35);
+      } catch (e) {
+        // 音声が再生できない場合は無視
+        console.log('Audio not available');
+      }
     }
 
     tempSlider.addEventListener('input', updateWaterState);
@@ -847,6 +998,8 @@
 
     // 初期設定
     setupBubbles();
+    previousTemp = parseInt(tempSlider.value, 10);
+    previousState = previousTemp < 0 ? 'ice' : (previousTemp >= 100 ? 'steam' : 'water');
     updateWaterState();
 
     /* ================================

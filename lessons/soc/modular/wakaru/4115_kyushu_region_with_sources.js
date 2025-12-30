@@ -30,7 +30,7 @@ window.questions = [
       "長崎市"
     ],
     "answer": 0,
-    "source": "九州地方には、政令指定都市がいくつかあります。その中で、玄界灘に面する都市があります。この都市は九州最大の都市で、博多港や空港が近く、海外との往来も盛んです。この都市は福岡市と呼ばれ、九州地方の政令指定都市で玄界灘に面する都市として知られています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">福岡市（政令指定都市）\n\n🌊 玄界灘に面\n    ↓\n🏙️ 九州最大の都市\n    ↓\n🚢 博多港・✈️ 空港が近い\n    ↓\n🌏 海外との往来が盛ん\n    ↓\n🏙️ 福岡市（政令指定都市）</div>",
+    "source": "九州地方（きゅうしゅうちほう）には、政令指定都市がいくつかあります。その中で、玄界灘（げんかいなだ）に面する都市があります。この都市は九州最大の都市で、博多港（はかたこう）や空港が近く、海外との往来も盛んです。この都市は福岡市（ふくおかし）と呼ばれ、九州地方の政令指定都市で玄界灘に面する都市として知られています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">福岡市（政令指定都市）\n\n🌊 玄界灘に面\n    ↓\n🏙️ 九州最大の都市\n    ↓\n🚢 博多港・✈️ 空港が近い\n    ↓\n🌏 海外との往来が盛ん\n    ↓\n🏙️ 福岡市（政令指定都市）</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"

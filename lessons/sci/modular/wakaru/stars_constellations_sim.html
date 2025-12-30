@@ -452,29 +452,38 @@
 
     /* ▼ 問題パネル */
     .question-container {
-      background:rgba(13,13,40,0.96);
+      background:rgba(255,255,255,0.98);
       border-radius:16px;
-      box-shadow:0 10px 35px rgba(0,0,0,0.8);
-      padding:18px;
+      box-shadow:0 10px 35px rgba(0,0,0,0.3);
+      padding:20px;
       margin-bottom:6px;
+      border:2px solid rgba(66,165,245,0.3);
     }
     .question-text {
-      font-size:16px;
+      font-size:18px;
       font-weight:bold;
-      margin-bottom:12px;
+      margin-bottom:16px;
+      color:#1a237e;
+      line-height:1.7;
+      background:linear-gradient(135deg, rgba(66,165,245,0.1), rgba(171,71,188,0.1));
+      padding:14px 16px;
+      border-radius:10px;
+      border-left:4px solid #42a5f5;
     }
     .progress-bar {
-      background:#263238;
+      background:#e0e0e0;
       border-radius:8px;
-      height:8px;
-      margin:10px 0 16px;
+      height:10px;
+      margin:12px 0 18px;
       overflow:hidden;
+      box-shadow:inset 0 2px 4px rgba(0,0,0,0.1);
     }
     .progress-fill {
       background:linear-gradient(90deg,#42a5f5,#ab47bc);
       height:100%;
       width:0;
       transition:width .3s ease;
+      box-shadow:0 0 8px rgba(66,165,245,0.5);
     }
     .choices {
       display:flex;
@@ -482,34 +491,43 @@
       gap:10px;
     }
     .choice {
-      padding:12px 14px;
-      background:#1c2540;
-      border:2px solid #37474f;
+      padding:14px 16px;
+      background:#ffffff;
+      border:2px solid #e0e0e0;
       border-radius:10px;
       cursor:pointer;
       transition:all .25s ease;
-      font-size:14px;
-      min-height:48px;
+      font-size:15px;
+      min-height:52px;
       display:flex;
       align-items:center;
       -webkit-tap-highlight-color:transparent;
       touch-action:manipulation;
+      color:#212121;
+      font-weight:500;
+      box-shadow:0 2px 4px rgba(0,0,0,0.1);
     }
     .choice:hover {
-      background:#283655;
-      border-color:#64b5f6;
+      background:#f5f5f5;
+      border-color:#42a5f5;
+      box-shadow:0 4px 8px rgba(66,165,245,0.2);
+      transform:translateY(-1px);
     }
     .choice.correct {
-      background:#2e7d32;
-      border-color:#81c784;
+      background:#4caf50;
+      border-color:#66bb6a;
       animation:correctPulse .6s ease;
-      color:#e8f5e9;
+      color:#ffffff;
+      font-weight:bold;
+      box-shadow:0 4px 12px rgba(76,175,80,0.4);
     }
     .choice.incorrect {
-      background:#b71c1c;
-      border-color:#ef9a9a;
+      background:#f44336;
+      border-color:#ef5350;
       animation:wrongShake .6s ease;
-      color:#ffebee;
+      color:#ffffff;
+      font-weight:bold;
+      box-shadow:0 4px 12px rgba(244,67,54,0.4);
     }
     @keyframes correctPulse {
       0%,100% {transform:scale(1);}
@@ -521,20 +539,27 @@
       75% {transform:translateX(8px);}
     }
     .explanation {
-      margin-top:14px;
-      padding:12px;
-      background:#1c2540;
+      margin-top:16px;
+      padding:16px;
+      background:linear-gradient(135deg, rgba(66,165,245,0.1), rgba(171,71,188,0.1));
       border-radius:10px;
       border-left:4px solid #42a5f5;
       display:none;
-      font-size:13px;
-      line-height:1.6;
+      font-size:14px;
+      line-height:1.8;
+      color:#212121;
+      box-shadow:0 2px 8px rgba(0,0,0,0.1);
     }
     .explanation.show {display:block;}
     .explanation h4 {
-      color:#bbdefb;
-      margin-bottom:6px;
-      font-size:13px;
+      color:#1a237e;
+      margin-bottom:10px;
+      font-size:15px;
+      font-weight:bold;
+    }
+    .explanation p {
+      color:#424242;
+      margin:0;
     }
     .navigation {
       margin-top:16px;
@@ -560,15 +585,25 @@
       cursor:not-allowed;
     }
     .prev-btn {
-      background:#546e7a;
-      color:#eceff1;
+      background:#757575;
+      color:#ffffff;
+      font-weight:bold;
     }
-    .prev-btn:hover:not(:disabled) {background:#455a64;}
+    .prev-btn:hover:not(:disabled) {
+      background:#616161;
+      box-shadow:0 4px 8px rgba(0,0,0,0.2);
+    }
     .next-btn {
-      background:#42a5f5;
-      color:#0d47a1;
+      background:linear-gradient(135deg, #42a5f5, #ab47bc);
+      color:#ffffff;
+      font-weight:bold;
+      box-shadow:0 4px 12px rgba(66,165,245,0.4);
     }
-    .next-btn:hover:not(:disabled) {background:#1e88e5;color:#e3f2fd;}
+    .next-btn:hover:not(:disabled) {
+      background:linear-gradient(135deg, #1e88e5, #8e24aa);
+      box-shadow:0 6px 16px rgba(66,165,245,0.5);
+      transform:translateY(-1px);
+    }
 
     * {touch-action:manipulation;}
     .choice,.nav-btn,.home-btn,.season-btn {-webkit-tap-highlight-color:transparent;}
@@ -579,9 +614,22 @@
         grid-template-columns:1fr;
       }
       .orbit-panel {min-height:160px;}
-      .question-container,.info-panel {padding:15px;}
-      .question-text {font-size:15px;}
-      .choice {font-size:13px;padding:11px 12px;}
+      .question-container,.info-panel {padding:16px;}
+      .question-text {
+        font-size:16px;
+        padding:12px 14px;
+        line-height:1.6;
+      }
+      .choice {
+        font-size:14px;
+        padding:13px 15px;
+        min-height:50px;
+      }
+      .explanation {
+        font-size:13px;
+        padding:14px;
+        line-height:1.7;
+      }
       .info-grid {grid-template-columns:1fr;}
       .lesson-title {font-size:14px;}
     }
@@ -1079,15 +1127,15 @@
     }
     
     return `
-      <div style="padding: 16px; background: #f8f9fa; border-radius: 12px; margin-top: 12px;">
-        <h3 style="margin-bottom: 12px; color: #333; font-size: 16px;">今回の結果</h3>
-        <p style="margin: 8px 0; color: #555; font-size: 14px;">
-          <strong>正解数:</strong> ${correct} / ${totalQuestions} 問
+      <div style="padding: 20px; background: linear-gradient(135deg, rgba(66,165,245,0.1), rgba(171,71,188,0.1)); border-radius: 12px; margin-top: 16px; border: 2px solid rgba(66,165,245,0.3); box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        <h3 style="margin-bottom: 16px; color: #1a237e; font-size: 18px; font-weight: bold;">今回の結果</h3>
+        <p style="margin: 10px 0; color: #212121; font-size: 15px; line-height: 1.6;">
+          <strong style="color: #1a237e;">正解数:</strong> <span style="font-weight: bold; color: #42a5f5;">${correct}</span> / <span style="color: #424242;">${totalQuestions}</span> 問
         </p>
-        <p style="margin: 8px 0; color: #555; font-size: 14px;">
-          <strong>正答率:</strong> ${scorePercent}%
+        <p style="margin: 10px 0; color: #212121; font-size: 15px; line-height: 1.6;">
+          <strong style="color: #1a237e;">正答率:</strong> <span style="font-weight: bold; color: #ab47bc; font-size: 16px;">${scorePercent}%</span>
         </p>
-        <p style="margin: 12px 0 0 0; color: #1976d2; font-size: 15px; font-weight: bold;">
+        <p style="margin: 16px 0 0 0; color: #1a237e; font-size: 16px; font-weight: bold; padding-top: 12px; border-top: 2px solid rgba(66,165,245,0.3);">
           ${resultMessage}
         </p>
       </div>

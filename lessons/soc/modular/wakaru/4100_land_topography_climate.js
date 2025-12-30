@@ -9,7 +9,7 @@ window.questions = [
       "新潟県"
     ],
     "answer": 1,
-    "source": "岩手県はとても広くて実は全国2位。青森や新潟も広いけれど、いちばんではありません。ほんとうに最大なのは北海道。地図で見ると、まるで本州をまとめたような大きさです。広いぶん牧場や畑が多く、でも冬の雪かきや移動はとてもたいへんです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">都道府県の面積\n\n    🇯🇵 日本\n  ┌────────┐\n  │ 北海道  │ ← 最大\n  │ 約8.3万km² │\n  └────────┘\n    ↓\n  🗾 本州より広い\n\n岩手県（2位）より大きい</div>",
+    "source": "岩手県（いわてけん）はとても広くて実は全国2位。青森（あおもり）や新潟（にいがた）も広いけれど、いちばんではありません。ほんとうに最大なのは北海道（ほっかいどう）。地図で見ると、まるで本州をまとめたような大きさです。広いぶん牧場や畑が多く、でも冬の雪かきや移動はとてもたいへんです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">都道府県の面積\n\n    🇯🇵 日本\n  ┌────────┐\n  │ 北海道  │ ← 最大\n  │ 約8.3万km² │\n  └────────┘\n    ↓\n  🗾 本州より広い\n\n岩手県（2位）より大きい</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -39,7 +39,7 @@ window.questions = [
       "信濃川"
     ],
     "answer": 3,
-    "source": "利根川は流域が広く、石狩川は北海道最大。どちらも立派ですが、ほんとうに長いのは信濃川。長野では千曲川と呼ばれ、新潟に入ると名前が変わって日本海へ注ぎます。川を日本列島を横切る“長いベルト”と考えると、長さの違いが想像しやすいですね。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">信濃川の流れ\n\n⛰️ 長野県\n    │\n    │ 千曲川\n    ↓\n    │\n    │ 信濃川（367km）\n    ↓\n🌊 新潟県\n    │\n    ↓ 日本海へ\n\n日本最長の川</div>",
+    "source": "利根川（とねがわ）は流域が広く、石狩川（いしかりがわ）は北海道（ほっかいどう）最大。どちらも立派ですが、ほんとうに長いのは信濃川（しなのがわ）。長野（ながの）では千曲川（ちくまがわ）と呼ばれ、新潟（にいがた）に入ると名前が変わって日本海へ注ぎます。川を日本列島を横切る“長いベルト”と考えると、長さの違いが想像しやすいですね。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">信濃川の流れ\n\n⛰️ 長野県\n    │\n    │ 千曲川\n    ↓\n    │\n    │ 信濃川（367km）\n    ↓\n🌊 新潟県\n    │\n    ↓ 日本海へ\n\n日本最長の川</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -414,7 +414,7 @@ window.questions = [
       "洞爺湖"
     ],
     "answer": 1,
-    "source": "日本で最も深い湖は田沢湖（秋田県）。最大深度423mで、その深さは日本一です。カルデラ湖で、周りを山に囲まれています。深い青い色が特徴的で、観光地としても人気があります。まるで“山に抱かれた深い青い鏡”。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">田沢湖\n\n⛰️ 山に囲まれた\n    ↓\n┌─────────┐\n│  田沢湖    │\n│  最大深度  │\n│  423m      │\n│  （日本一深い）│\n└─────────┘\n    ↓\n🔵 深い青い色\n🌋 カルデラ湖\n\n山に抱かれた深い鏡</div>",
+    "source": "日本で最も深い湖は田沢湖（秋田県）。最大深度423mで、その深さは日本一です。カルデラ湖で、周りを山に囲まれています。深い青い色が特徴的で、観光地としても人気があります。まるで“山に抱かれた深い青い鏡”。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">田沢湖\n\n⛰️ 山に囲まれた\n    ↓\n┌────────────┐\n│ 田沢湖       │\n│ 最大深度     │\n│ 423m         │\n│ (日本一深い)  │\n└────────────┘\n    ↓\n🔵 深い青い色\n🌋 カルデラ湖\n    ↓\n山に抱かれた深い鏡</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"

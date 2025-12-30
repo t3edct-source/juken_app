@@ -10,10 +10,49 @@ const PRICE_TABLE = {
   shakai_gakushu_6: "price_1S8xYuHzyxbrJMQOKg7dBPI2", // 小6社会
 };
 
+// 許可するオリジンのリストを取得
+const getAllowedOrigins = () => {
+  // 環境変数から取得（推奨）
+  if (process.env.ALLOWED_ORIGINS) {
+    return process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim());
+  }
+  
+  // 環境変数が設定されていない場合、URL環境変数から推測
+  const defaultOrigins = [];
+  if (process.env.URL) {
+    defaultOrigins.push(process.env.URL);
+    // www 付きも追加（存在する場合）
+    if (process.env.URL.startsWith('https://')) {
+      const domain = process.env.URL.replace('https://', '');
+      if (!domain.startsWith('www.')) {
+        defaultOrigins.push(`https://www.${domain}`);
+      }
+    }
+  }
+  
+  // 開発環境用（本番では環境変数で管理することを推奨）
+  defaultOrigins.push('http://localhost:8888', 'http://127.0.0.1:8888');
+  
+  return defaultOrigins;
+};
+
+// オリジンの検証
+const isAllowedOrigin = (origin, allowedOrigins) => {
+  if (!origin) {
+    // オリジンがない場合（同一オリジンからのリクエスト）は許可
+    return true;
+  }
+  return allowedOrigins.includes(origin);
+};
+
 exports.handler = async (event) => {
-  // CORSヘッダーを追加
+  const allowedOrigins = getAllowedOrigins();
+  const origin = event.headers.origin || event.headers.Origin || '';
+  const isAllowed = isAllowedOrigin(origin, allowedOrigins);
+  
+  // CORSヘッダーを設定
   const headers = {
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': isAllowed ? (origin || allowedOrigins[0]) : allowedOrigins[0],
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
   };
@@ -27,10 +66,32 @@ exports.handler = async (event) => {
     };
   }
 
+  // オリジンが許可されていない場合（同一オリジンでない場合のみチェック）
+  if (origin && !isAllowed) {
+    console.warn('⚠️ 許可されていないオリジンからのアクセス:', {
+      origin,
+      allowedOrigins,
+      referer: event.headers.referer || event.headers.Referer,
+      ip: event.headers['x-forwarded-for'] || event.requestContext?.identity?.sourceIp,
+    });
+    return {
+      statusCode: 403,
+      headers,
+      body: JSON.stringify({ 
+        error: 'Origin not allowed',
+        message: 'このリクエストは許可されていないオリジンから送信されました。'
+      }),
+    };
+  }
+
   try {
     console.log('🔍 Function開始 - event:', {
       httpMethod: event.httpMethod,
-      headers: event.headers,
+      origin: origin || 'same-origin',
+      headers: {
+        'content-type': event.headers['content-type'] || event.headers['Content-Type'],
+        'user-agent': event.headers['user-agent'] || event.headers['User-Agent'],
+      },
       body: event.body ? event.body.substring(0, 200) : 'empty'
     });
 
@@ -45,7 +106,7 @@ exports.handler = async (event) => {
     }
 
     const { productId, uid } = JSON.parse(event.body);
-    console.log('📦 受信データ:', { productId, uid });
+    console.log('📦 受信データ:', { productId, uid, origin: origin || 'same-origin' });
 
     // 必須パラメータの検証
     if (!productId || !uid) {

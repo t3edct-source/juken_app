@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>プライバシーポリシー | ステップナビ</title>
+  <meta name="description" content="ステップナビのプライバシーポリシー">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body class="bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50 text-slate-800 min-h-screen">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- ヘッダー -->
+    <header class="mb-8">
+      <a href="index.html" class="inline-flex items-center gap-2 text-orange-600 hover:text-orange-700 mb-4">
+        <span>←</span>
+        <span>ホームに戻る</span>
+      </a>
+      <h1 class="text-3xl font-bold text-slate-800">プライバシーポリシー</h1>
+      <p class="text-slate-600 mt-2">最終更新日: 2025年1月27日</p>
+    </header>
+
+    <!-- 本文 -->
+    <div class="bg-white rounded-lg shadow-lg p-6 sm:p-8 space-y-6">
+      <section>
+        <h2 class="text-2xl font-bold text-slate-800 mb-4">1. はじめに</h2>
+        <p class="text-slate-700 leading-relaxed">
+          T3エデュケーション（以下「当社」）は、ステップナビ（以下「本サービス」）を提供するにあたり、ユーザーの個人情報の保護を重要な責務と考えています。
+          本プライバシーポリシーは、本サービスにおいて当社が収集、使用、保護する個人情報について説明するものです。
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-slate-800 mb-4">2. 収集する情報</h2>
+        <h3 class="text-xl font-semibold text-slate-700 mb-3">2.1 認証情報</h3>
+        <p class="text-slate-700 leading-relaxed mb-4">
+          本サービスでは、Firebase Authenticationを使用してユーザー認証を行います。以下の情報を収集する場合があります：
+        </p>
+        <ul class="list-disc list-inside text-slate-700 space-y-2 ml-4">
+          <li>メールアドレス（メール・パスワード認証の場合）</li>
+          <li>Googleアカウント情報（Google認証の場合）</li>
+          <li>表示名（ユーザーが設定した場合）</li>
+        </ul>
+
+        <h3 class="text-xl font-semibold text-slate-700 mb-3 mt-6">2.2 学習データ</h3>
+        <p class="text-slate-700 leading-relaxed mb-4">
+          本サービスでは、ユーザーの学習進捗を記録するため、以下のデータをブラウザのローカルストレージに保存します：
+        </p>
+        <ul class="list-disc list-inside text-slate-700 space-y-2 ml-4">
+          <li>レッスンの進捗状況</li>
+          <li>学習履歴（完了したレッスン、正答率など）</li>
+          <li>連続学習日数</li>
+          <li>学習統計データ</li>
+        </ul>
+        <p class="text-slate-700 leading-relaxed mt-4">
+          <strong>注意:</strong> これらのデータは主にユーザーのデバイスに保存されますが、Firestoreにも一部のデータ（購入情報など）が保存される場合があります。
+        </p>
+
+        <h3 class="text-xl font-semibold text-slate-700 mb-3 mt-6">2.3 決済情報</h3>
+        <p class="text-slate-700 leading-relaxed mb-4">
+          本サービスでは、Stripeを通じて決済処理を行います。以下の情報がStripeに送信されます：
+        </p>
+        <ul class="list-disc list-inside text-slate-700 space-y-2 ml-4">
+          <li>購入したコンテンツの情報</li>
+          <li>ユーザーID（購入履歴の紐付けのため）</li>
+        </ul>
+        <p class="text-slate-700 leading-relaxed mt-4">
+          <strong>注意:</strong> クレジットカード情報などの決済詳細情報は、当社ではなくStripeが直接処理します。当社はこれらの情報にアクセスできません。
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-slate-800 mb-4">3. 情報の使用目的</h2>
+        <p class="text-slate-700 leading-relaxed mb-4">
+          当社は、収集した情報を以下の目的で使用します：
+        </p>
+        <ul class="list-disc list-inside text-slate-700 space-y-2 ml-4">
+          <li>本サービスの提供、維持、改善</li>
+          <li>ユーザー認証とアカウント管理</li>
+          <li>学習進捗の記録と表示</li>
+          <li>購入コンテンツへのアクセス管理</li>
+          <li>お問い合わせへの対応</li>
+          <li>サービスに関する重要な通知の送信</li>
+          <li>不正利用の防止</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-slate-800 mb-4">4. 第三者サービスの使用</h2>
+        <p class="text-slate-700 leading-relaxed mb-4">
+          本サービスでは、以下の第三者サービスを使用しています：
+        </p>
+        <ul class="list-disc list-inside text-slate-700 space-y-2 ml-4">
+          <li><strong>Firebase（Google）:</strong> ユーザー認証、データベース（Firestore）</li>
+          <li><strong>Stripe:</strong> 決済処理</li>
+          <li><strong>Netlify:</strong> ホスティングサービス</li>
+        </ul>
+        <p class="text-slate-700 leading-relaxed mt-4">
+          これらのサービスは、それぞれのプライバシーポリシーに従って情報を処理します。
+          詳細については、各サービスのプライバシーポリシーをご確認ください。
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-slate-800 mb-4">5. データの保存と保護</h2>
+        <p class="text-slate-700 leading-relaxed mb-4">
+          当社は、収集した情報を適切に保護するため、以下の対策を講じています：
+        </p>
+        <ul class="list-disc list-inside text-slate-700 space-y-2 ml-4">
+          <li>HTTPSによる通信の暗号化</li>
+          <li>Firebaseのセキュリティ機能の活用</li>
+          <li>アクセス制御と認証の実装</li>
+        </ul>
+        <p class="text-slate-700 leading-relaxed mt-4">
+          ただし、インターネット上での情報の送信は完全に安全であることを保証するものではありません。
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-slate-800 mb-4">6. データの保存期間</h2>
+        <p class="text-slate-700 leading-relaxed">
+          当社は、本サービスの提供に必要な期間、ユーザーの情報を保存します。
+          アカウントが削除された場合、関連する情報も適切に削除されます。
+          ただし、法的義務や紛争解決のために必要な情報は、必要な期間保存される場合があります。
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-slate-800 mb-4">7. ユーザーの権利</h2>
+        <p class="text-slate-700 leading-relaxed mb-4">
+          ユーザーは、以下の権利を有します：
+        </p>
+        <ul class="list-disc list-inside text-slate-700 space-y-2 ml-4">
+          <li>個人情報へのアクセス権</li>
+          <li>個人情報の訂正・削除権</li>
+          <li>データのエクスポート権（本サービス内の機能として提供）</li>
+          <li>アカウントの削除権</li>
+        </ul>
+        <p class="text-slate-700 leading-relaxed mt-4">
+          これらの権利を行使する場合は、お問い合わせフォームまたはメールでご連絡ください。
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-slate-800 mb-4">8. お問い合わせ</h2>
+        <p class="text-slate-700 leading-relaxed">
+          本プライバシーポリシーに関するご質問やご意見がございましたら、以下の方法でお問い合わせください。
+        </p>
+        <div class="mt-4 p-4 bg-slate-50 rounded-lg">
+          <p class="text-slate-700">
+            <strong>T3エデュケーション</strong><br>
+            メール: <a href="mailto:info@t3ed.com" class="text-orange-600 hover:underline">info@t3ed.com</a>
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-slate-800 mb-4">9. プライバシーポリシーの変更</h2>
+        <p class="text-slate-700 leading-relaxed">
+          当社は、必要に応じて本プライバシーポリシーを変更する場合があります。
+          変更があった場合は、本ページに掲載し、重要な変更についてはユーザーに通知します。
+        </p>
+      </section>
+    </div>
+
+    <!-- フッター -->
+    <footer class="mt-8 text-center text-slate-600 text-sm">
+      <p>© 2025 T3エデュケーション</p>
+      <div class="mt-4 space-x-4">
+        <a href="privacy-policy.html" class="hover:text-orange-600">プライバシーポリシー</a>
+        <span>|</span>
+        <a href="terms-of-service.html" class="hover:text-orange-600">利用規約</a>
+        <span>|</span>
+        <a href="specified-commercial-transactions.html" class="hover:text-orange-600">特定商取引法に基づく表示</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
+
+

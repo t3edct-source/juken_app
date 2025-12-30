@@ -30,7 +30,7 @@ window.questions = [
       "田沢湖"
     ],
     "answer": 0,
-    "source": "近畿地方には、日本最大の面積を誇る湖があります。この湖は近畿の「水がめ」として暮らしを支え、船の通り道や電力の水源にもなり、周囲の歴史や文化も育てました。この湖は琵琶湖と呼ばれ、滋賀県にあります。霞ヶ浦や洞爺湖、田沢湖も有名ですが、広さでは琵琶湖が圧倒的で、近畿地方で最大の湖です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">琵琶湖（日本最大の湖）\n\n💧 日本最大の面積\n    ↓\n💧 琵琶湖\n    ↓\n💧 近畿の「水がめ」\n    ↓\n🚢 船の通り道\n⚡ 電力の水源\n    ↓\n📍 滋賀県</div>",
+    "source": "近畿地方（きんきちほう）には、日本最大の面積を誇る湖があります。この湖は近畿の「水がめ」として暮らしを支え、船の通り道や電力の水源にもなり、周囲の歴史や文化も育てました。この湖は琵琶湖（びわこ）と呼ばれ、滋賀県（しがけん）にあります。霞ヶ浦や洞爺湖、田沢湖も有名ですが、広さでは琵琶湖が圧倒的で、近畿地方で最大の湖です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">琵琶湖（日本最大の湖）\n\n💧 日本最大の面積\n    ↓\n💧 琵琶湖\n    ↓\n💧 近畿の「水がめ」\n    ↓\n🚢 船の通り道\n⚡ 電力の水源\n    ↓\n📍 滋賀県</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -60,7 +60,7 @@ window.questions = [
       "洲本市"
     ],
     "answer": 0,
-    "source": "兵庫県には、瀬戸内海に面した都市があります。この都市は国際貿易港を持ち、古くから海外との交易で栄えてきました。港にはコンテナ船が出入りし、国際物流の拠点として重要な役割を果たしています。この都市は神戸市と呼ばれ、瀬戸内海に面した兵庫県の代表的な都市です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">神戸市（国際貿易港）\n\n🌊 瀬戸内海に面\n    ↓\n🏙️ 神戸市（兵庫県）\n    ↓\n🚢 国際貿易港\n    ↓\n📦 コンテナ船が出入り\n    ↓\n🌏 国際物流の拠点</div>",
+    "source": "兵庫県（ひょうごけん）には、瀬戸内海（せとないかい）に面した都市があります。この都市は国際貿易港を持ち、古くから海外との交易で栄えてきました。港にはコンテナ船が出入りし、国際物流の拠点として重要な役割を果たしています。この都市は神戸市（こうべし）と呼ばれ、瀬戸内海に面した兵庫県の代表的な都市です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">神戸市（国際貿易港）\n\n🌊 瀬戸内海に面\n    ↓\n🏙️ 神戸市（兵庫県）\n    ↓\n🚢 国際貿易港\n    ↓\n📦 コンテナ船が出入り\n    ↓\n🌏 国際物流の拠点</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -90,7 +90,7 @@ window.questions = [
       "米沢盆地"
     ],
     "answer": 0,
-    "source": "奈良県北部には、山々に囲まれた平地が広がっています。この平地では、古くから都が置かれ、現在も古都の市街地が立地しています。古代の都の遺跡が残り、歴史的な街並みが保存されています。この平地は奈良盆地と呼ばれ、奈良県北部に位置しています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">奈良盆地（古都）\n\n⛰️ 山々に囲まれた\n    ↓\n🏞️ 奈良盆地（平地）\n    ↓\n🏛️ 古くから都が置かれた\n    ↓\n🏛️ 古代の都の遺跡が残る\n    ↓\n🏘️ 古都の市街地</div>",
+    "source": "奈良県北部には、山々に囲まれた平地が広がっています。この平地では、古くから都が置かれ、現在も古都の市街地が立地しています。古代の都の遺跡（いせき）が残り、歴史的な街並みが保存されています。この平地は奈良盆地と呼ばれ、奈良県北部に位置しています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">奈良盆地（古都）\n\n⛰️ 山々に囲まれた\n    ↓\n🏞️ 奈良盆地（平地）\n    ↓\n🏛️ 古くから都が置かれた\n    ↓\n🏛️ 古代の都の遺跡が残る\n    ↓\n🏘️ 古都の市街地</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -195,7 +195,7 @@ window.questions = [
       "加古川丘陵"
     ],
     "answer": 0,
-    "source": "奈良県北西部には、古墳群が見られる台地があります。この台地には古代の権力者の墓である古墳が数多く残されており、歴史的に重要な場所となっています。古墳は大きな土の盛り上がりで、古代の文化を伝える貴重な遺跡です。この台地は馬見丘陵と呼ばれ、奈良県北西部に位置しています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">馬見丘陵（古墳群）\n\n🏞️ 奈良県北西部の台地\n    ↓\n🏞️ 馬見丘陵\n    ↓\n🏛️ 古代の権力者の墓\n    ↓\n🏛️ 古墳群が見られる\n    ↓\n🏛️ 古代の文化を伝える遺跡</div>",
+    "source": "奈良県北西部には、古墳群が見られる台地があります。この台地には古代の権力者の墓である古墳が数多く残されており、歴史的に重要な場所となっています。古墳は大きな土の盛り上がりで、古代の文化を伝える貴重な遺跡（いせき）です。この台地は馬見丘陵と呼ばれ、奈良県北西部に位置しています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">馬見丘陵（古墳群）\n\n🏞️ 奈良県北西部の台地\n    ↓\n🏞️ 馬見丘陵\n    ↓\n🏛️ 古代の権力者の墓\n    ↓\n🏛️ 古墳群が見られる\n    ↓\n🏛️ 古代の文化を伝える遺跡</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"

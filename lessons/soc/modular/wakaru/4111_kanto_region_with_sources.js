@@ -30,7 +30,7 @@ window.questions = [
       "那珂川"
     ],
     "answer": 0,
-    "source": "関東平野を流れる大河川があります。この川は「坂東太郎」とも呼ばれ、日本最長の川として知られています。関東地方の水源として、農業用水や工業用水など、多くの用途に利用されています。この川は利根川と呼ばれ、上流から下流まで広大な流域を形成し、関東地方の発展を支えています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">利根川（坂東太郎）\n\n⛰️ 上流\n    ↓\n🌊 利根川（日本最長の川）\n    ↓\n🏞️ 関東平野を流れる\n    ↓\n💧 農業用水・工業用水\n    ↓\n🌊 東京湾に注ぐ</div>",
+    "source": "関東平野（かんとうへいや）を流れる大河川があります。この川は「坂東太郎（ばんどうたろう）」とも呼ばれ、日本最長の川として知られています。関東地方の水源として、農業用水や工業用水など、多くの用途に利用されています。この川は利根川（とねがわ）と呼ばれ、上流から下流まで広大な流域を形成し、関東地方の発展を支えています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">利根川（坂東太郎）\n\n⛰️ 上流\n    ↓\n🌊 利根川（日本最長の川）\n    ↓\n🏞️ 関東平野を流れる\n    ↓\n💧 農業用水・工業用水\n    ↓\n🌊 東京湾に注ぐ</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -45,7 +45,7 @@ window.questions = [
       "栃木県"
     ],
     "answer": 0,
-    "source": "日本第2位の面積を誇る湖があります。この湖は霞ヶ浦と呼ばれ、かつては海とつながっていた汽水湖でした。現在は水資源の供給地として重要な役割を果たしています。この湖がある都道府県は茨城県で、霞ヶ浦周辺は水田が広がる農業地域となっています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">霞ヶ浦\n\n🏞️ 日本第2位の面積\n    ↓\n🌊 かつては汽水湖\n    ↓\n💧 水資源の供給地\n    ↓\n🌾 周辺は水田が広がる\n    ↓\n📍 茨城県</div>",
+    "source": "日本第2位の面積を誇る湖があります。この湖は霞ヶ浦（かすみがうら）と呼ばれ、かつては海とつながっていた汽水湖（きすいこ）でした。現在は水資源の供給地として重要な役割を果たしています。この湖がある都道府県は茨城県（いばらきけん）で、霞ヶ浦周辺は水田が広がる農業地域となっています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">霞ヶ浦\n\n🏞️ 日本第2位の面積\n    ↓\n🌊 かつては汽水湖\n    ↓\n💧 水資源の供給地\n    ↓\n🌾 周辺は水田が広がる\n    ↓\n📍 茨城県</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"

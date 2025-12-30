@@ -9,7 +9,7 @@ window.questions = [
     text: "水が氷・水・水蒸気のように形を変えることをまとめて何という？",
     choices: ["水の三態", "水の循環", "水溶液", "状態変化"],
     answer: 0,
-    source: "水は、冷やすと氷のようにかたまり、あたためると空気の中に広がります。でも、水がべつのものに変わったわけではありません。同じ水が、固体・液体・気体という三つのすがたで存在しています。この三つのすがたをまとめて、水の三態といいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">水の三態\n\n【固体（氷）】\n    ● ● ●\n    ● ● ●  形が決まっている\n    ● ● ●  つぶつぶが規則正しく並ぶ\n\n【液体（水）】\n    ●  ●  ●\n     ● ● ●  形が決まっていない\n    ●  ●  ●  つぶつぶが動き回る\n\n【気体（水蒸気）】\n    ●     ●\n         ●\n    ●      形が決まっていない\n      ●    つぶつぶが自由に動く\n    ●     ●  すき間が大きい\n\n同じ水が、三つのすがたで存在</div>",
+    source: "水は、冷やすと氷のようにかたまり、あたためると空気の中に広がります。でも、水がべつのものに変わったわけではありません。同じ水が、固体・液体・気体という三つのすがたで存在しています。この三つのすがたをまとめて、水の三態といいます。<div style=\"text-align: center; margin: 1rem 0;\"><img src=\"../mizu.png\" alt=\"水の三態\" style=\"max-width: 100%; max-height: 60vh; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: contain;\" onerror=\"this.style.display='none';\"></div>",
     tags: [],
     difficulty: 1,
     asof: "2025-01-27"
@@ -19,7 +19,7 @@ window.questions = [
     text: "氷がとけて水になる変化を何という？",
     choices: ["融解", "凝固", "蒸発", "沸騰"],
     answer: 0,
-    source: "かたい氷をあたためると、だんだんやわらかくなり、水になります。このように、固体が液体に変わることを、**融解（ゆうかい）**といいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">融解（ゆうかい）\n\n【あたためる前】\n    ● ● ●\n    ● ● ●  氷（固体）\n    ● ● ●  形が決まっている\n        ↓\n    あたためる\n        ↓\n【あたためた後】\n    ●  ●  ●\n     ● ● ●  水（液体）\n    ●  ●  ●  形が決まっていない\n\n固体 → 液体</div>",
+    source: "かたい氷をあたためると、だんだんやわらかくなり、水になります。このように、固体が液体に変わることを、**融解（ゆうかい）**といいます。<div style=\"text-align: center; margin: 1rem 0;\"><img src=\"../yukai.png\" alt=\"融解\" style=\"max-width: 100%; max-height: 60vh; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: contain;\" onerror=\"this.style.display='none';\"></div>",
     tags: [],
     difficulty: 1,
     asof: "2025-01-27"
@@ -63,7 +63,7 @@ window.questions = [
     text: "水を加熱し続けたとき、沸騰している間の水の温度はどうなる？",
     choices: ["一定のまま変わらない", "上がり続ける", "下がり続ける", "0℃になる"],
     answer: 0,
-    source: "水をあたためると、はじめはどんどん温度が上がります。しかし、沸騰しているあいだは、温度は上がりません。あたためた熱が、水を気体に変えるために使われているからです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">沸騰中の温度変化\n\n【温度の変化】\n  温度\n    ↑\n 100℃│━━━━━━━━━━━━━━ 沸騰中（温度一定）\n     │\n     │  ↑\n     │  │ 温度が上がる\n     │  │\n   0℃└──┴──────────→ 時間\n\n沸騰中：\n  • 温度は上がらない\n  • 熱は水を気体に変えるために使われる</div>",
+    source: "水をあたためると、はじめはどんどん温度が上がります。しかし、沸騰しているあいだは、温度は上がりません。あたためた熱が、水を気体に変えるために使われているからです。<div style=\"text-align: center; margin: 1rem 0;\"><img src=\"../futto.jpg\" alt=\"沸騰中の温度変化\" style=\"max-width: 100%; max-height: 60vh; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: contain;\" onerror=\"this.style.display='none';\"></div>",
     tags: [],
     difficulty: 1,
     asof: "2025-01-27"
@@ -78,7 +78,7 @@ window.questions = [
       "氷が増えるから"
     ],
     answer: 0,
-    source: "氷がとけているあいだ、氷はまだ水になりきっていません。このときの熱は、温度を上げるためではなく、融解のために使われます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">氷がとけている間\n\n【温度の変化】\n  温度\n    ↑\n     │\n     │━━━━━━━━━━━━━━ 0℃（温度一定）\n     │  氷がとけている間\n     │\n   0℃└──────────────→ 時間\n\n【状態】\n    ● ● ●\n    ● ● ●  氷（固体）\n    ● ● ●\n    ────────\n    ●  ●  ●\n     ● ● ●  水（液体）\n    ●  ●  ●\n\n熱は融解のために使われる</div>",
+    source: "氷がとけているあいだ、氷はまだ水になりきっていません。このときの熱は、温度を上げるためではなく、融解のために使われます。<div style=\"text-align: center; margin: 1rem 0;\"><img src=\"../yukai.jpg\" alt=\"氷がとけている間\" style=\"max-width: 100%; max-height: 60vh; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: contain;\" onerror=\"this.style.display='none';\"></div>",
     tags: [],
     difficulty: 1,
     asof: "2025-01-27"
@@ -93,7 +93,7 @@ window.questions = [
       "水が軽くなるから"
     ],
     answer: 0,
-    source: "水が空気に出ていくのは、水の表面からです。表面が広いほど、空気にふれる部分が多くなります。そのため、表面積が大きいほど蒸発しやすくなります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">表面積と蒸発\n\n【広い皿】\n    ────────────────\n    ●  ●  ●  ●  ●  ●\n     ● ● ● ● ● ●  表面が広い\n    ●  ●  ●  ●  ●  ●\n    ────────────────\n    蒸発しやすい\n\n【細長い容器】\n    ────\n    ●  ●\n     ● ●  表面が狭い\n    ●  ●\n    ────\n    蒸発しにくい\n\n表面積が大きい → 蒸発しやすい</div>",
+    source: "水が空気に出ていくのは、水の表面からです。表面が広いほど、空気にふれる部分が多くなります。そのため、表面積が大きいほど蒸発しやすくなります。<div style=\"text-align: center; margin: 1rem 0;\"><img src=\"../johatsu.jpg\" alt=\"表面積と蒸発\" style=\"max-width: 100%; max-height: 60vh; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: contain;\" onerror=\"this.style.display='none';\"></div>",
     tags: [],
     difficulty: 1,
     asof: "2025-01-27"
@@ -108,7 +108,7 @@ window.questions = [
       "水の量が減るから"
     ],
     answer: 0,
-    source: "水が蒸発すると、まわりに水蒸気がたまります。風があると、この水蒸気が運び去られます。そのため、風があると蒸発は進みやすくなります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">風と蒸発\n\n【風がない場合】\n    ●     ●\n         ●\n    ●       ← 水蒸気がたまる\n      ●\n    ●     ●\n    ────────────\n    ●  ●  ●  水\n     ● ● ●\n    ●  ●  ●\n    蒸発が進みにくい\n\n【風がある場合】\n    ●     ●  ←→ 風が運び去る\n         ●\n    ●\n      ●\n    ●     ●\n    ────────────\n    ●  ●  ●  水\n     ● ● ●\n    ●  ●  ●\n    蒸発が進みやすい\n\n風がある → 蒸発しやすい</div>",
+    source: "水が蒸発すると、まわりに水蒸気がたまります。風があると、この水蒸気が運び去られます。そのため、風があると蒸発は進みやすくなります。<div style=\"text-align: center; margin: 1rem 0;\"><img src=\"../kazetojohatsu.jpg\" alt=\"風と蒸発\" style=\"max-width: 100%; max-height: 60vh; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: contain;\" onerror=\"this.style.display='none';\"></div>",
     tags: [],
     difficulty: 1,
     asof: "2025-01-27"
@@ -118,7 +118,7 @@ window.questions = [
     text: "水蒸気が冷やされて水の粒になる変化を何という？",
     choices: ["凝結", "蒸発", "融解", "凝固"],
     answer: 0,
-    source: "空気に出た水蒸気が冷やされると、また液体の水にもどります。このように、気体が液体に変わることを、**凝結（ぎょうけつ）**といいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">凝結（ぎょうけつ）\n\n【冷やす前】\n    ●     ●\n         ●\n    ●       ← 水蒸気（気体）\n      ●\n    ●     ●\n        ↓\n    冷やす\n        ↓\n【冷やした後】\n    ────────────\n    ●  ●  ●\n     ● ● ●  水（液体）\n    ●  ●  ●\n\n気体 → 液体</div>",
+    source: "空気に出た水蒸気が冷やされると、また液体の水にもどります。このように、気体が液体に変わることを、**凝結（ぎょうけつ）**といいます。<div style=\"text-align: center; margin: 1rem 0;\"><img src=\"../gyoketsu.jpg\" alt=\"凝結\" style=\"max-width: 100%; max-height: 60vh; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: contain;\" onerror=\"this.style.display='none';\"></div>",
     tags: [],
     difficulty: 1,
     asof: "2025-01-27"
@@ -133,7 +133,7 @@ window.questions = [
       "光を出しているから"
     ],
     answer: 0,
-    source: "やかんから出る白い湯気は、水蒸気そのものではありません。水蒸気が冷やされて、細かい水のつぶになったものです。そのつぶが光を反射するため、白く見えます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">湯気が白く見える理由\n\n【やかんから出る】\n    ●     ●\n         ●\n    ●       ← 水蒸気（見えない）\n      ●\n    ●     ●\n        ↓\n    冷やされる\n        ↓\n    ●  ●  ●\n     ● ● ●  細かい水のつぶ\n    ●  ●  ●  光を反射\n        ↓\n    白く見える（湯気）\n\n水蒸気 → 水のつぶ → 白く見える</div>",
+    source: "やかんから出る白い湯気は、水蒸気そのものではありません。水蒸気が冷やされて、細かい水のつぶになったものです。そのつぶが光を反射するため、白く見えます。<div style=\"text-align: center; margin: 1rem 0;\"><img src=\"../yuge.jpg\" alt=\"湯気が白く見える理由\" style=\"max-width: 100%; max-height: 60vh; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: contain;\" onerror=\"this.style.display='none';\"></div>",
     tags: [],
     difficulty: 1,
     asof: "2025-01-27"
@@ -143,7 +143,7 @@ window.questions = [
     text: "氷・水・水蒸気のうち、形が一定でないものの組み合わせはどれ？",
     choices: ["水と水蒸気", "氷だけ", "水だけ", "氷と水"],
     answer: 0,
-    source: "氷は形が決まっていますが、水や気体は入れものの形に合わせて変わります。このように、形が一定でないのは、水と水蒸気です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">形の違い\n\n【氷（固体）】\n    ┌─────┐\n    │ ● ● │\n    │ ● ● │  形が決まっている\n    │ ● ● │\n    └─────┘\n\n【水（液体）】\n    ┌─────┐\n    │●  ● │\n    │ ● ● │  入れものの形に合わせる\n    │●  ● │\n    └─────┘\n\n【水蒸気（気体）】\n    ┌─────┐\n    │●   ●│\n    │  ●  │  入れものの形に合わせる\n    │●   ●│\n    └─────┘\n\n形が一定でない：水と水蒸気</div>",
+    source: "氷は形が決まっていますが、水や気体は入れものの形に合わせて変わります。このように、形が一定でないのは、水と水蒸気です。<div style=\"text-align: center; margin: 1rem 0;\"><img src=\"../katachinochigai.png\" alt=\"形の違い\" style=\"max-width: 100%; max-height: 60vh; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: contain;\" onerror=\"this.style.display='none';\"></div>",
     tags: [],
     difficulty: 1,
     asof: "2025-01-27"
@@ -153,7 +153,7 @@ window.questions = [
     text: "同じ体積の水と水蒸気を比べたとき、重いのはどちら？",
     choices: ["水", "水蒸気", "同じ重さ", "条件で変わらない"],
     answer: 0,
-    source: "同じ体積で比べると、水は中がぎっしりつまっています。水蒸気は、つぶつぶの間にすき間がたくさんあります。そのため、同じ体積なら水の方が重くなります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">同じ体積での重さの違い\n\n【水（液体）】\n    ┌─────┐\n    │● ● ●│\n    │● ● ●│  ぎっしりつまっている\n    │● ● ●│  重い\n    └─────┘\n\n【水蒸気（気体）】\n    ┌─────┐\n    │●   ●│\n    │  ●  │  すき間がたくさん\n    │●   ●│  軽い\n    └─────┘\n\n同じ体積 → 水の方が重い</div>",
+    source: "同じ体積で比べると、水は中がぎっしりつまっています。水蒸気は、つぶつぶの間にすき間がたくさんあります。そのため、同じ体積なら水の方が重くなります。<div style=\"text-align: center; margin: 1rem 0;\"><img src=\"../omosanochigai.png\" alt=\"同じ体積での重さの違い\" style=\"max-width: 100%; max-height: 60vh; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: contain;\" onerror=\"this.style.display='none';\"></div>",
     tags: [],
     difficulty: 1,
     asof: "2025-01-27"
@@ -163,7 +163,7 @@ window.questions = [
     text: "水が液体から気体になるときに、一般に起こる変化として正しいものはどれ？",
     choices: ["体積が大きくなる", "色が変わる", "重さがなくなる", "においが出る"],
     answer: 0,
-    source: "水が液体から気体に変わると、つぶつぶの間が広がります。その結果、体積は大きくなります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">体積の変化\n\n【液体（水）】\n    ┌─────┐\n    │● ● ●│  体積：小さい\n    │● ● ●│\n    └─────┘\n        ↓\n    気体に変わる\n        ↓\n【気体（水蒸気）】\n    ┌─────────────┐\n    │●     ●     ●│  体積：大きい\n    │               │  つぶつぶの間が広がる\n    │●     ●     ●│\n    └─────────────┘\n\n液体 → 気体：体積が大きくなる</div>",
+    source: "水が液体から気体に変わると、つぶつぶの間が広がります。その結果、体積は大きくなります。<div style=\"text-align: center; margin: 1rem 0;\"><img src=\"../taisekinohenka.png\" alt=\"体積の変化\" style=\"max-width: 100%; max-height: 60vh; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: contain;\" onerror=\"this.style.display='none';\"></div>",
     tags: [],
     difficulty: 1,
     asof: "2025-01-27"
@@ -178,7 +178,7 @@ window.questions = [
       "すぐ水になるから"
     ],
     answer: 0,
-    source: "水蒸気は、色がなく、光をほとんど反射しません。そのため、水蒸気そのものは目に見えません。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">水蒸気が見えない理由\n\n【水蒸気】\n    ●     ●\n         ●\n    ●       ← 見えない\n      ●    色がない\n    ●     ●  光を反射しない\n\n【光の反射】\n    光 → 水蒸気 → 反射しない → 見えない\n\n水蒸気そのものは目に見えない</div>",
+    source: "水蒸気は、色がなく、光をほとんど反射しません。そのため、水蒸気そのものは目に見えません。<div style=\"text-align: center; margin: 1rem 0;\"><img src=\"../mienai.png\" alt=\"水蒸気が見えない理由\" style=\"max-width: 100%; max-height: 60vh; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: contain;\" onerror=\"this.style.display='none';\"></div>",
     tags: [],
     difficulty: 1,
     asof: "2025-01-27"
@@ -193,7 +193,7 @@ window.questions = [
       "温度が高いから"
     ],
     answer: 0,
-    source: "水が蒸発するのは、表面からです。浅い入れものでは、表面が広くなります。そのため、浅い容器の方が蒸発しやすくなります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">浅い容器と蒸発\n\n【浅い容器】\n    ────────────────\n    ●  ●  ●  ●  ●  ●\n     ● ● ● ● ● ●  表面が広い\n    ●  ●  ●  ●  ●  ●\n    ────────────────\n    蒸発しやすい\n\n【深い容器】\n    ┌─────┐\n    │●  ● │\n    │ ● ● │  表面が狭い\n    │●  ● │\n    │     │\n    └─────┘\n    蒸発しにくい\n\n浅い容器 → 表面が広い → 蒸発しやすい</div>",
+    source: "水が蒸発するのは、表面からです。浅い入れものでは、表面が広くなります。そのため、浅い容器の方が蒸発しやすくなります。<div style=\"text-align: center; margin: 1rem 0;\"><img src=\"../johatsuhikaku.png\" alt=\"浅い容器と蒸発\" style=\"max-width: 100%; max-height: 60vh; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: contain;\" onerror=\"this.style.display='none';\"></div>",
     tags: [],
     difficulty: 1,
     asof: "2025-01-27"
@@ -208,7 +208,7 @@ window.questions = [
       "体積が必ず小さくなる"
     ],
     answer: 0,
-    source: "水は冷やされると、0℃付近で氷になりはじめます。この温度を、凝固点といいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">凝固点（0℃）\n\n【温度の変化】\n  温度\n    ↑\n     │\n     │  ↓ 温度が下がる\n     │\n   0℃│━━━━━━━━━━━━━━ 凝固点\n     │  氷になりはじめる\n     │\n    └──────────────→ 時間\n\n【状態変化】\n    ●  ●  ●\n     ● ● ●  水（液体）\n    ●  ●  ●\n        ↓\n    0℃で\n        ↓\n    ● ● ●\n    ● ● ●  氷（固体）\n    ● ● ●\n\n0℃ = 凝固点</div>",
+    source: "水は冷やされると、0℃付近で氷になりはじめます。この温度を、凝固点といいます。<div style=\"text-align: center; margin: 1rem 0;\"><img src=\"../gyokoten.png\" alt=\"凝固点\" style=\"max-width: 100%; max-height: 60vh; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: contain;\" onerror=\"this.style.display='none';\"></div>",
     tags: [],
     difficulty: 1,
     asof: "2025-01-27"
@@ -218,7 +218,7 @@ window.questions = [
     text: "氷がとけ終わった直後の水の温度として最も適切なものはどれ？",
     choices: ["0℃", "100℃", "氷より低い", "周りの温度と同じ"],
     answer: 0,
-    source: "氷がすべてとけ終わった直後の水は、まだあたたかくなっていません。氷と同じく、0℃のままです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">氷がとけ終わった直後\n\n【温度の変化】\n  温度\n    ↑\n     │\n     │  ↑ 温度が上がる\n     │\n   0℃│━━━━━━━━━━━━━━ 0℃のまま\n     │  氷がとけている間\n     │\n    └──────────────→ 時間\n\n【状態】\n    ● ● ●\n    ● ● ●  氷（固体）\n    ● ● ●\n        ↓\n    とけ終わる\n        ↓\n    ●  ●  ●\n     ● ● ●  水（液体）\n    ●  ●  ●  まだ0℃</div>",
+    source: "氷がすべてとけ終わった直後の水は、まだあたたかくなっていません。氷と同じく、0℃のままです。<div style=\"text-align: center; margin: 1rem 0;\"><img src=\"../kotoke.png\" alt=\"氷がとけ終わった直後\" style=\"max-width: 100%; max-height: 60vh; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: contain;\" onerror=\"this.style.display='none';\"></div>",
     tags: [],
     difficulty: 1,
     asof: "2025-01-27"
@@ -228,7 +228,7 @@ window.questions = [
     text: "水が蒸発するとき、最も関係が深い条件はどれ？",
     choices: ["温度・風・表面積", "色・形・重さ", "におい・味", "容器の材質"],
     answer: 0,
-    source: "水の蒸発には、温度・風・表面積が関係します。このように、蒸発はまわりの条件に左右される現象です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">蒸発に関係する条件\n\n【温度】\n    温度が高い → 蒸発しやすい\n    温度が低い → 蒸発しにくい\n\n【風】\n    風がある → 水蒸気が運ばれる → 蒸発しやすい\n    風がない → 水蒸気がたまる → 蒸発しにくい\n\n【表面積】\n    表面積が大きい → 蒸発しやすい\n    表面積が小さい → 蒸発しにくい\n\n蒸発はまわりの条件に左右される</div>",
+    source: "水の蒸発には、温度・風・表面積が関係します。このように、蒸発はまわりの条件に左右される現象です。<div style=\"text-align: center; margin: 1rem 0;\"><img src=\"../jotaihenka.png\" alt=\"状態変化\" style=\"max-width: 100%; max-height: 60vh; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: contain;\" onerror=\"this.style.display='none';\"></div>",
     tags: [],
     difficulty: 1,
     asof: "2025-01-27"
@@ -258,7 +258,7 @@ window.questions = [
       "水が消えるから"
     ],
     answer: 0,
-    source: "ぬれた洗濯物には、水がしみこんでいます。この水は、洗濯物の表面から少しずつ空気の中に出ていきます。晴れていて風があると、この水は空気に出やすくなります。このように、水が空気に出ていくことを、蒸発といいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">洗濯物が早くかわく理由\n\n【ぬれた洗濯物】\n    ┌─────────┐\n    │●  ●  ● │\n    │ ● ● ● │  水がしみこんでいる\n    │●  ●  ● │\n    └─────────┘\n        ↓\n    表面から空気に出る\n        ↓\n    ●     ●\n         ●\n    ●       ← 水蒸気（気体）\n      ●\n    ●     ●\n\n【晴れて風がある】\n    • 温度が高い → 蒸発しやすい\n    • 風がある → 水蒸気が運ばれる → 蒸発しやすい\n\n早くかわく理由：蒸発が進みやすい</div>",
+    source: "ぬれた洗濯物には、水がしみこんでいます。この水は、洗濯物の表面から少しずつ空気の中に出ていきます。晴れていて風があると、この水は空気に出やすくなります。このように、水が空気に出ていくことを、蒸発といいます。<div style=\"text-align: center; margin: 1rem 0;\"><img src=\"../sentaku.png\" alt=\"洗濯物が早くかわく理由\" style=\"max-width: 100%; max-height: 60vh; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: contain;\" onerror=\"this.style.display='none';\"></div>",
     tags: [],
     difficulty: 1,
     asof: "2025-01-27"

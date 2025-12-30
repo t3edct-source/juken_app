@@ -1,4 +1,4 @@
-window.introduction = "この総合問題では、**政治・経済・社会制度**を複合的に問います。各制度がどのように関連し合っているかを理解することで、現代社会のしくみをより深く把握できます。";
+window.introduction = "この総合問題では、政治・経済・社会制度を複合的に問います。各制度がどのように関連し合っているかを理解することで、現代社会のしくみをより深く把握できます。";
 
 window.questions = [
   {
@@ -11,7 +11,7 @@ window.questions = [
       "天皇が内閣総理大臣を直接任命し、国会や裁判所は関与しないという、天皇主権の関係が表れている"
     ],
     "answer": 0,
-    "source": "**国会が内閣総理大臣を指名**し、**天皇が任命する**という、**立法と行政の関係**が表れています。三権分立の原則により、立法機関である国会が行政の長を選ぶしくみになっています。  \n三権分立は、権力を立法・行政・司法の3つに分け、互いに抑制し合うしくみです。内閣総理大臣の任命は、立法機関（国会）が行政の長を選ぶという、三権分立の原則を表しています。国会が指名し、天皇が任命するという手続きにより、立法と行政の関係が明確になります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3b82f6;\">三権分立と内閣総理大臣の任命（政治制度）\n\n🏛️ 国会（立法）\n    │\n    │ 指名\n    ↓\n👑 天皇（象徴）\n    │\n    │ 任命\n    ↓\n👤 内閣総理大臣（行政）\n    │\n    ↓\n🏛️ 内閣（行政）\n\n立法→行政の関係</div>",
+    "source": "国会（こっかい）が内閣総理大臣（ないかくそうりだいじん）を指名し、天皇（てんのう）が任命するという、立法と行政の関係が表れています。三権分立（さんけんぶんりつ）の原則により、立法機関である国会が行政の長を選ぶしくみになっています。  \n三権分立は、権力を立法・行政・司法の3つに分け、互いに抑制し合うしくみです。内閣総理大臣の任命は、立法機関（国会）が行政の長を選ぶという、三権分立の原則を表しています。国会が指名し、天皇が任命するという手続きにより、立法と行政の関係が明確になります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3b82f6;\">三権分立と内閣総理大臣の任命（政治制度）\n\n🏛️ 国会（立法）\n    │\n    │ 指名\n    ↓\n👑 天皇（象徴）\n    │\n    │ 任命\n    ↓\n👤 内閣総理大臣（行政）\n    │\n    ↓\n🏛️ 内閣（行政）\n\n立法→行政の関係</div>",
     "tags": ["三権分立", "内閣総理大臣", "国会", "天皇", "政治制度"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -26,7 +26,7 @@ window.questions = [
       "選挙は行われるが、議会は機能せず、法律は選挙によって直接制定される"
     ],
     "answer": 0,
-    "source": "**選挙で選ばれた議員が議会を構成**し、**議会が法律を制定する**という、**選挙→議会→立法の流れ**があります。選挙制度は議会制度の基礎となっています。  \n選挙制度は、国民が代表者を選ぶしくみです。選挙で選ばれた議員が議会（国会）を構成し、議会が法律を制定します。このように、選挙→議会→立法という流れにより、国民の意思が法律に反映されます。選挙制度が議会制度の基礎となっているのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3b82f6;\">選挙制度と議会制度の関係（政治制度）\n\n👥 国民\n    │\n    │ 選挙\n    ↓\n👤 議員（選ばれた代表）\n    │\n    │ 構成\n    ↓\n🏛️ 議会（国会）\n    │\n    │ 制定\n    ↓\n📜 法律\n\n選挙→議会→立法の流れ</div>",
+    "source": "選挙で選ばれた議員が議会を構成し、議会が法律を制定するという、選挙→議会→立法の流れがあります。選挙制度は議会制度の基礎となっています。  \n選挙制度は、国民が代表者を選ぶしくみです。選挙で選ばれた議員が議会（国会）を構成し、議会が法律を制定します。このように、選挙→議会→立法という流れにより、国民の意思が法律に反映されます。選挙制度が議会制度の基礎となっているのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3b82f6;\">選挙制度と議会制度の関係（政治制度）\n\n👥 国民\n    │\n    │ 選挙\n    ↓\n👤 議員（選ばれた代表）\n    │\n    │ 構成\n    ↓\n🏛️ 議会（国会）\n    │\n    │ 制定\n    ↓\n📜 法律\n\n選挙→議会→立法の流れ</div>",
     "tags": ["選挙制度", "議会制度", "国会", "法律", "政治制度"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -41,7 +41,7 @@ window.questions = [
       "社会保障制度は財政に依存せず、自己完結しており、税収とは無関係に運営されている"
     ],
     "answer": 0,
-    "source": "**税収などの財政収入が社会保障制度を支え**、**社会保障費が財政支出の大きな部分**を占めています。財政と社会保障制度は密接に関わっています。  \n財政は、税収などの収入と、社会保障費などの支出から成り立っています。社会保障制度（年金、医療、介護など）は、税収や社会保険料などの財政収入によって支えられています。一方で、社会保障費は財政支出の大きな部分を占めており、財政と社会保障制度は相互に影響し合っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">財政と社会保障制度の関係（経済制度）\n\n💰 財政収入\n    ├─→ 税収\n    └─→ 社会保険料\n    │\n    │ 支える\n    ↓\n🏥 社会保障制度\n    ├─→ 年金\n    ├─→ 医療\n    └─→ 介護\n    │\n    │ 支出\n    ↓\n💰 財政支出（大きな部分）\n\n相互依存の関係</div>",
+    "source": "税収などの財政収入が社会保障制度を支え、社会保障費が財政支出の大きな部分を占めています。財政と社会保障制度は密接に関わっています。  \n財政は、税収などの収入と、社会保障費などの支出から成り立っています。社会保障制度（年金、医療、介護など）は、税収や社会保険料などの財政収入によって支えられています。一方で、社会保障費は財政支出の大きな部分を占めており、財政と社会保障制度は相互に影響し合っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">財政と社会保障制度の関係（経済制度）\n\n💰 財政収入\n    ├─→ 税収\n    └─→ 社会保険料\n    │\n    │ 支える\n    ↓\n🏥 社会保障制度\n    ├─→ 年金\n    ├─→ 医療\n    └─→ 介護\n    │\n    │ 支出\n    ↓\n💰 財政支出（大きな部分）\n\n相互依存の関係</div>",
     "tags": ["財政", "社会保障制度", "税収", "経済制度"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -56,7 +56,7 @@ window.questions = [
       "金融政策と経済政策は同じ機関が担当し、役割分担はない"
     ],
     "answer": 0,
-    "source": "**日本銀行が金融政策を担当**し、**政府が経済政策を担当する**という、**役割分担**があります。金融政策と経済政策は協調して経済を安定させます。  \n金融政策は、日本銀行が金利を調整したり、お金の量をコントロールしたりする政策です。一方、経済政策は、政府が財政支出を増やしたり減らしたりする財政政策などです。日本銀行と政府は、それぞれの役割を分担しながら、協調して経済を安定させています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">金融政策と経済政策の関係（経済制度）\n\n🏦 日本銀行\n    │\n    │ 担当\n    ↓\n💹 金融政策\n    ├─→ 金利調整\n    └─→ お金の量の調整\n\n🏛️ 政府\n    │\n    │ 担当\n    ↓\n📊 経済政策（財政政策）\n    ├─→ 財政支出の増減\n    └─→ 税制の調整\n\n協調して経済を安定</div>",
+    "source": "日本銀行が金融政策を担当し、政府が経済政策を担当するという、役割分担があります。金融政策と経済政策は協調して経済を安定させます。  \n金融政策は、日本銀行が金利を調整したり、お金の量をコントロールしたりする政策です。一方、経済政策は、政府が財政支出を増やしたり減らしたりする財政政策などです。日本銀行と政府は、それぞれの役割を分担しながら、協調して経済を安定させています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">金融政策と経済政策の関係（経済制度）\n\n🏦 日本銀行\n    │\n    │ 担当\n    ↓\n💹 金融政策\n    ├─→ 金利調整\n    └─→ お金の量の調整\n\n🏛️ 政府\n    │\n    │ 担当\n    ↓\n📊 経済政策（財政政策）\n    ├─→ 財政支出の増減\n    └─→ 税制の調整\n\n協調して経済を安定</div>",
     "tags": ["金融政策", "経済政策", "日本銀行", "政府", "経済制度"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -71,7 +71,7 @@ window.questions = [
       "地方自治が国政を統括し、国政は地方自治の指示に従って運営されている"
     ],
     "answer": 0,
-    "source": "**地方自治は憲法で保障**され、**地方自治法で具体化**され、**国政と協調して運営**されています。地方自治と国政は相互に補完し合っています。  \n地方自治は、憲法第92条で「地方公共団体の組織及び運営に関する事項は、地方自治の本旨に基いて、法律でこれを定める」と保障されています。地方自治法により、都道府県や市町村が具体的な権限を持ち、国政と協調して運営されています。国政は全国的な政策を担当し、地方自治は地域の特性に応じた政策を担当するという、役割分担があります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3b82f6;\">地方自治と国政の関係（政治制度）\n\n📜 憲法（保障）\n    │\n    │ 具体化\n    ↓\n📋 地方自治法\n    │\n    ├─→ 🏛️ 国政（全国的な政策）\n    └─→ 🏘️ 地方自治（地域の政策）\n         │\n         └─→ 都道府県・市町村\n\n相互に補完し合う</div>",
+    "source": "地方自治は憲法で保障され、地方自治法で具体化され、国政と協調して運営されています。地方自治と国政は相互に補完し合っています。  \n地方自治は、憲法第92条で「地方公共団体の組織及び運営に関する事項は、地方自治の本旨に基いて、法律でこれを定める」と保障されています。地方自治法により、都道府県や市町村が具体的な権限を持ち、国政と協調して運営されています。国政は全国的な政策を担当し、地方自治は地域の特性に応じた政策を担当するという、役割分担があります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3b82f6;\">地方自治と国政の関係（政治制度）\n\n📜 憲法（保障）\n    │\n    │ 具体化\n    ↓\n📋 地方自治法\n    │\n    ├─→ 🏛️ 国政（全国的な政策）\n    └─→ 🏘️ 地方自治（地域の政策）\n         │\n         └─→ 都道府県・市町村\n\n相互に補完し合う</div>",
     "tags": ["地方自治", "国政", "憲法", "地方自治法", "政治制度"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -86,7 +86,7 @@ window.questions = [
       "条例が最高法規で、法律は条例に基づき、憲法は法律の範囲内で制定されるという、法の階層構造がある"
     ],
     "answer": 0,
-    "source": "**憲法が最高法規**で、**法律は憲法に基づき**、**条例は法律の範囲内で制定される**という、**法の階層構造**があります。上位の法が下位の法を拘束します。  \n法の階層構造は、憲法が最上位にあり、その下に法律、さらにその下に条例があります。憲法は国の最高法規であり、すべての法律は憲法に違反してはなりません。条例は、地方公共団体が法律の範囲内で制定するもので、法律に違反してはなりません。この階層構造により、法の統一性が保たれています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3b82f6;\">法の階層構造（政治制度）\n\n📜 憲法（最高法規）\n    │\n    │ 基づく\n    ↓\n📋 法律（国会が制定）\n    │\n    │ 範囲内で\n    ↓\n📄 条例（地方公共団体が制定）\n\n上位の法が下位の法を拘束</div>",
+    "source": "憲法が最高法規で、法律は憲法に基づき、条例は法律の範囲内で制定されるという、法の階層構造があります。上位の法が下位の法を拘束します。  \n法の階層構造は、憲法が最上位にあり、その下に法律、さらにその下に条例があります。憲法は国の最高法規であり、すべての法律は憲法に違反してはなりません。条例は、地方公共団体が法律の範囲内で制定するもので、法律に違反してはなりません。この階層構造により、法の統一性が保たれています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3b82f6;\">法の階層構造（政治制度）\n\n📜 憲法（最高法規）\n    │\n    │ 基づく\n    ↓\n📋 法律（国会が制定）\n    │\n    │ 範囲内で\n    ↓\n📄 条例（地方公共団体が制定）\n\n上位の法が下位の法を拘束</div>",
     "tags": ["憲法", "法律", "条例", "法の階層構造", "政治制度"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -101,7 +101,7 @@ window.questions = [
       "裁判所がすべてを統括し、国会と内閣は裁判所の指示に従ってのみ機能している"
     ],
     "answer": 0,
-    "source": "**三権分立の原則**により、**互いに抑制し合い、均衡を保つしくみ**になっています。国会（立法）、内閣（行政）、裁判所（司法）が相互にチェックし合います。  \n三権分立は、権力を立法・行政・司法の3つに分け、互いに抑制し合うしくみです。国会は法律を制定し、内閣は法律を執行し、裁判所は法律に基づいて裁判を行います。それぞれが独立して機能しながら、互いにチェックし合うことで、権力の濫用を防いでいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3b82f6;\">三権分立の相互関係（政治制度）\n\n🏛️ 国会（立法）\n    │ 法律を制定\n    │\n    ↕ 抑制・均衡\n    │\n👤 内閣（行政）\n    │ 法律を執行\n    │\n    ↕ 抑制・均衡\n    │\n⚖️ 裁判所（司法）\n    │ 法律に基づいて裁判\n    │\n    ↕ 抑制・均衡\n    │\n🏛️ 国会（立法）\n\n互いに抑制し合う</div>",
+    "source": "三権分立の原則により、互いに抑制し合い、均衡を保つしくみになっています。国会（立法）、内閣（行政）、裁判所（司法）が相互にチェックし合います。  \n三権分立は、権力を立法・行政・司法の3つに分け、互いに抑制し合うしくみです。国会は法律を制定し、内閣は法律を執行し、裁判所は法律に基づいて裁判を行います。それぞれが独立して機能しながら、互いにチェックし合うことで、権力の濫用を防いでいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3b82f6;\">三権分立の相互関係（政治制度）\n\n🏛️ 国会（立法）\n    │ 法律を制定\n    │\n    ↕ 抑制・均衡\n    │\n👤 内閣（行政）\n    │ 法律を執行\n    │\n    ↕ 抑制・均衡\n    │\n⚖️ 裁判所（司法）\n    │ 法律に基づいて裁判\n    │\n    ↕ 抑制・均衡\n    │\n🏛️ 国会（立法）\n\n互いに抑制し合う</div>",
     "tags": ["三権分立", "国会", "内閣", "裁判所", "政治制度"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -116,7 +116,7 @@ window.questions = [
       "選挙は行われるが、政党は機能せず、政権は選挙によって直接選ばれている"
     ],
     "answer": 0,
-    "source": "**選挙で政党が議席を獲得**し、**多数派政党が政権を担当する**という、**選挙→政党→政権の流れ**があります。選挙制度は政党政治の基礎となっています。  \n選挙制度は、国民が政党や候補者を選ぶしくみです。選挙で政党が議席を獲得し、多数派政党が政権を担当します。このように、選挙→政党→政権という流れにより、国民の意思が政治に反映されます。選挙制度が政党政治の基礎となっているのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3b82f6;\">選挙制度と政党政治の関係（政治制度）\n\n👥 国民\n    │\n    │ 選挙\n    ↓\n🏛️ 政党（議席獲得）\n    │\n    │ 多数派\n    ↓\n👤 政権（内閣）\n    │\n    │ 担当\n    ↓\n📜 政策の実行\n\n選挙→政党→政権の流れ</div>",
+    "source": "選挙で政党が議席を獲得し、多数派政党が政権を担当するという、選挙→政党→政権の流れがあります。選挙制度は政党政治の基礎となっています。  \n選挙制度は、国民が政党や候補者を選ぶしくみです。選挙で政党が議席を獲得し、多数派政党が政権を担当します。このように、選挙→政党→政権という流れにより、国民の意思が政治に反映されます。選挙制度が政党政治の基礎となっているのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3b82f6;\">選挙制度と政党政治の関係（政治制度）\n\n👥 国民\n    │\n    │ 選挙\n    ↓\n🏛️ 政党（議席獲得）\n    │\n    │ 多数派\n    ↓\n👤 政権（内閣）\n    │\n    │ 担当\n    ↓\n📜 政策の実行\n\n選挙→政党→政権の流れ</div>",
     "tags": ["選挙制度", "政党政治", "政権", "政治制度"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -131,7 +131,7 @@ window.questions = [
       "行政機関が内閣を統括し、内閣は行政機関の指示に従ってのみ機能している"
     ],
     "answer": 0,
-    "source": "**内閣総理大臣が各省の大臣を任命**し、**各省庁が行政を執行する**という、**内閣→行政機関の関係**があります。内閣が行政機関を統括しています。  \n内閣は、内閣総理大臣と各省の大臣から成り立っています。内閣総理大臣が各省の大臣を任命し、各省庁（総務省、財務省、文部科学省など）が行政を執行します。このように、内閣が行政機関を統括し、行政の一体性を保っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3b82f6;\">内閣と行政機関の関係（政治制度）\n\n👤 内閣総理大臣\n    │\n    │ 任命\n    ↓\n👥 各省の大臣\n    │\n    │ 統括\n    ↓\n🏛️ 各省庁\n    ├─→ 総務省\n    ├─→ 財務省\n    ├─→ 文部科学省\n    └─→ その他\n    │\n    │ 執行\n    ↓\n📜 行政の実行\n\n内閣→行政機関の関係</div>",
+    "source": "内閣総理大臣が各省の大臣を任命し、各省庁が行政を執行するという、内閣→行政機関の関係があります。内閣が行政機関を統括しています。  \n内閣は、内閣総理大臣と各省の大臣から成り立っています。内閣総理大臣が各省の大臣を任命し、各省庁（総務省、財務省、文部科学省など）が行政を執行します。このように、内閣が行政機関を統括し、行政の一体性を保っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3b82f6;\">内閣と行政機関の関係（政治制度）\n\n👤 内閣総理大臣\n    │\n    │ 任命\n    ↓\n👥 各省の大臣\n    │\n    │ 統括\n    ↓\n🏛️ 各省庁\n    ├─→ 総務省\n    ├─→ 財務省\n    ├─→ 文部科学省\n    └─→ その他\n    │\n    │ 執行\n    ↓\n📜 行政の実行\n\n内閣→行政機関の関係</div>",
     "tags": ["内閣", "行政機関", "内閣総理大臣", "政治制度"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -146,7 +146,7 @@ window.questions = [
       "法の支配が裁判所を廃止し、裁判所は機能していない"
     ],
     "answer": 0,
-    "source": "**裁判所が違憲立法審査権を持ち**、**法の支配を実現する役割**を担っています。裁判所は法の支配の要となっています。  \n法の支配は、すべての人が法に従い、法によって権力が制限されるという原則です。裁判所は、違憲立法審査権を持ち、法律や行政行為が憲法に違反していないかをチェックします。このように、裁判所が法の支配を実現する役割を担っているのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3b82f6;\">裁判所と法の支配の関係（政治制度）\n\n📜 憲法（最高法規）\n    │\n    │ 基づく\n    ↓\n⚖️ 裁判所\n    │\n    │ 違憲立法審査権\n    ↓\n✅ 法の支配の実現\n    ├─→ 法律の合憲性チェック\n    └─→ 行政行為の合法性チェック\n\n裁判所が法の支配の要</div>",
+    "source": "裁判所が違憲立法審査権を持ち、法の支配を実現する役割を担っています。裁判所は法の支配の要となっています。  \n法の支配は、すべての人が法に従い、法によって権力が制限されるという原則です。裁判所は、違憲立法審査権を持ち、法律や行政行為が憲法に違反していないかをチェックします。このように、裁判所が法の支配を実現する役割を担っているのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3b82f6;\">裁判所と法の支配の関係（政治制度）\n\n📜 憲法（最高法規）\n    │\n    │ 基づく\n    ↓\n⚖️ 裁判所\n    │\n    │ 違憲立法審査権\n    ↓\n✅ 法の支配の実現\n    ├─→ 法律の合憲性チェック\n    └─→ 行政行為の合法性チェック\n\n裁判所が法の支配の要</div>",
     "tags": ["裁判所", "法の支配", "違憲立法審査権", "政治制度"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -161,7 +161,7 @@ window.questions = [
       "住民参加が地方自治を廃止し、地方自治は機能していない"
     ],
     "answer": 0,
-    "source": "**住民投票や地方議会を通じて住民が地方自治に参加**し、**住民の意思が地方政治に反映されるしくみ**があります。住民参加は地方自治の基礎となっています。  \n地方自治は、住民が地域のことを自分たちで決めるしくみです。住民投票や地方議会を通じて、住民が地方自治に参加し、住民の意思が地方政治に反映されます。このように、住民参加が地方自治の基礎となっているのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3b82f6;\">地方自治と住民参加の関係（政治制度）\n\n👥 住民\n    │\n    ├─→ 📊 住民投票\n    └─→ 🏛️ 地方議会\n    │\n    │ 参加\n    ↓\n🏘️ 地方自治\n    │\n    │ 反映\n    ↓\n📜 地方政治（住民の意思）\n\n住民参加が地方自治の基礎</div>",
+    "source": "住民投票や地方議会を通じて住民が地方自治に参加し、住民の意思が地方政治に反映されるしくみがあります。住民参加は地方自治の基礎となっています。  \n地方自治は、住民が地域のことを自分たちで決めるしくみです。住民投票や地方議会を通じて、住民が地方自治に参加し、住民の意思が地方政治に反映されます。このように、住民参加が地方自治の基礎となっているのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3b82f6;\">地方自治と住民参加の関係（政治制度）\n\n👥 住民\n    │\n    ├─→ 📊 住民投票\n    └─→ 🏛️ 地方議会\n    │\n    │ 参加\n    ↓\n🏘️ 地方自治\n    │\n    │ 反映\n    ↓\n📜 地方政治（住民の意思）\n\n住民参加が地方自治の基礎</div>",
     "tags": ["地方自治", "住民参加", "住民投票", "地方議会", "政治制度"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -176,7 +176,7 @@ window.questions = [
       "国民投票が憲法改正を直接行い、国会は関与しない"
     ],
     "answer": 0,
-    "source": "**国会が憲法改正を発議**し、**国民投票で承認されれば憲法が改正される**という、**憲法改正手続き**があります。国民投票は憲法改正の最終的な承認機関です。  \n憲法改正は、国会が発議し、国民投票で承認されれば成立します。この手続きにより、国民の意思が直接反映されます。国民投票は、憲法改正の最終的な承認機関として、重要な役割を担っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3b82f6;\">憲法改正と国民投票の関係（政治制度）\n\n🏛️ 国会\n    │\n    │ 発議\n    ↓\n📜 憲法改正案\n    │\n    │ 承認\n    ↓\n👥 国民投票\n    │\n    │ 承認されれば\n    ↓\n✅ 憲法改正成立\n\n国民投票が最終的な承認機関</div>",
+    "source": "国会が憲法改正を発議し、国民投票で承認されれば憲法が改正されるという、憲法改正手続きがあります。国民投票は憲法改正の最終的な承認機関です。  \n憲法改正は、国会が発議し、国民投票で承認されれば成立します。この手続きにより、国民の意思が直接反映されます。国民投票は、憲法改正の最終的な承認機関として、重要な役割を担っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3b82f6;\">憲法改正と国民投票の関係（政治制度）\n\n🏛️ 国会\n    │\n    │ 発議\n    ↓\n📜 憲法改正案\n    │\n    │ 承認\n    ↓\n👥 国民投票\n    │\n    │ 承認されれば\n    ↓\n✅ 憲法改正成立\n\n国民投票が最終的な承認機関</div>",
     "tags": ["憲法改正", "国民投票", "国会", "政治制度"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -191,7 +191,7 @@ window.questions = [
       "金融政策と経済政策は同じ機関が担当し、役割分担はない"
     ],
     "answer": 0,
-    "source": "**日本銀行が金融政策（金利調整など）を行い**、**政府が経済政策（財政政策など）を行う**という、**役割分担**があります。金融政策と経済政策は協調して経済を安定させます。  \n金融政策は、日本銀行が金利を調整したり、お金の量をコントロールしたりする政策です。一方、経済政策は、政府が財政支出を増やしたり減らしたりする財政政策などです。日本銀行と政府は、それぞれの役割を分担しながら、協調して経済を安定させています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">金融制度と経済政策の関係（経済制度）\n\n🏦 日本銀行\n    │\n    │ 担当\n    ↓\n💹 金融政策\n    ├─→ 金利調整\n    └─→ お金の量の調整\n\n🏛️ 政府\n    │\n    │ 担当\n    ↓\n📊 経済政策（財政政策）\n    ├─→ 財政支出の増減\n    └─→ 税制の調整\n\n協調して経済を安定</div>",
+    "source": "日本銀行が金融政策（金利調整など）を行い、政府が経済政策（財政政策など）を行うという、役割分担があります。金融政策と経済政策は協調して経済を安定させます。  \n金融政策は、日本銀行が金利を調整したり、お金の量をコントロールしたりする政策です。一方、経済政策は、政府が財政支出を増やしたり減らしたりする財政政策などです。日本銀行と政府は、それぞれの役割を分担しながら、協調して経済を安定させています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">金融制度と経済政策の関係（経済制度）\n\n🏦 日本銀行\n    │\n    │ 担当\n    ↓\n💹 金融政策\n    ├─→ 金利調整\n    └─→ お金の量の調整\n\n🏛️ 政府\n    │\n    │ 担当\n    ↓\n📊 経済政策（財政政策）\n    ├─→ 財政支出の増減\n    └─→ 税制の調整\n\n協調して経済を安定</div>",
     "tags": ["金融制度", "経済政策", "日本銀行", "政府", "経済制度"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -206,7 +206,7 @@ window.questions = [
       "税収が税制を決定し、税制が財政を決定するという、税収→税制→財政の流れがある"
     ],
     "answer": 0,
-    "source": "**税制が税収を決定**し、**税収が財政の基礎となる**という、**税制→税収→財政の流れ**があります。税制は財政の基盤となっています。  \n税制は、どのような税をどのように課すかを決める制度です。税制が税収を決定し、税収が財政の基礎となります。このように、税制→税収→財政という流れにより、財政が成り立っています。税制は財政の基盤となっているのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">財政と税制の関係（経済制度）\n\n📋 税制（税の種類・税率）\n    │\n    │ 決定\n    ↓\n💰 税収（税の収入）\n    │\n    │ 基礎となる\n    ↓\n📊 財政（収入と支出）\n    ├─→ 税収\n    └─→ その他の収入\n\n税制→税収→財政の流れ</div>",
+    "source": "税制が税収を決定し、税収が財政の基礎となるという、税制→税収→財政の流れがあります。税制は財政の基盤となっています。  \n税制は、どのような税をどのように課すかを決める制度です。税制が税収を決定し、税収が財政の基礎となります。このように、税制→税収→財政という流れにより、財政が成り立っています。税制は財政の基盤となっているのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">財政と税制の関係（経済制度）\n\n📋 税制（税の種類・税率）\n    │\n    │ 決定\n    ↓\n💰 税収（税の収入）\n    │\n    │ 基礎となる\n    ↓\n📊 財政（収入と支出）\n    ├─→ 税収\n    └─→ その他の収入\n\n税制→税収→財政の流れ</div>",
     "tags": ["財政", "税制", "税収", "経済制度"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -221,7 +221,7 @@ window.questions = [
       "社会保障制度が財政を廃止し、財政は機能していない"
     ],
     "answer": 0,
-    "source": "**社会保障費が財政支出の大きな部分**を占め、**財政が社会保障制度を支えています**。社会保障制度と財政は密接に関わっています。  \n社会保障制度（年金、医療、介護など）は、税収や社会保険料などの財政収入によって支えられています。一方で、社会保障費は財政支出の大きな部分を占めており、財政と社会保障制度は相互に影響し合っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">社会保障制度と財政の関係（経済制度）\n\n💰 財政収入\n    ├─→ 税収\n    └─→ 社会保険料\n    │\n    │ 支える\n    ↓\n🏥 社会保障制度\n    ├─→ 年金\n    ├─→ 医療\n    └─→ 介護\n    │\n    │ 支出（大きな部分）\n    ↓\n💰 財政支出\n\n相互依存の関係</div>",
+    "source": "社会保障費が財政支出の大きな部分を占め、財政が社会保障制度を支えています。社会保障制度と財政は密接に関わっています。  \n社会保障制度（年金、医療、介護など）は、税収や社会保険料などの財政収入によって支えられています。一方で、社会保障費は財政支出の大きな部分を占めており、財政と社会保障制度は相互に影響し合っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">社会保障制度と財政の関係（経済制度）\n\n💰 財政収入\n    ├─→ 税収\n    └─→ 社会保険料\n    │\n    │ 支える\n    ↓\n🏥 社会保障制度\n    ├─→ 年金\n    ├─→ 医療\n    └─→ 介護\n    │\n    │ 支出（大きな部分）\n    ↓\n💰 財政支出\n\n相互依存の関係</div>",
     "tags": ["社会保障制度", "財政", "社会保障費", "経済制度"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -236,7 +236,7 @@ window.questions = [
       "社会保障が労働制度を廃止し、労働制度は機能していない"
     ],
     "answer": 0,
-    "source": "**雇用保険や年金制度など、労働と関連する社会保障制度**があり、**労働制度と社会保障が連携**しています。労働と社会保障は相互に補完し合っています。  \n労働制度は、働く人を守るしくみです。雇用保険や年金制度など、労働と関連する社会保障制度があり、労働制度と社会保障が連携しています。働く人が失業したときの雇用保険や、老後の年金など、労働と社会保障は密接に関わっています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">労働制度と社会保障の関係（社会制度）\n\n👷 労働制度\n    │\n    │ 連携\n    ↓\n🏥 社会保障制度\n    ├─→ 雇用保険（失業時）\n    ├─→ 年金制度（老後）\n    └─→ 労働災害保険\n    │\n    │ 補完\n    ↓\n👷 労働制度\n\n相互に補完し合う</div>",
+    "source": "雇用保険や年金制度など、労働と関連する社会保障制度があり、労働制度と社会保障が連携しています。労働と社会保障は相互に補完し合っています。  \n労働制度は、働く人を守るしくみです。雇用保険や年金制度など、労働と関連する社会保障制度があり、労働制度と社会保障が連携しています。働く人が失業したときの雇用保険や、老後の年金など、労働と社会保障は密接に関わっています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">労働制度と社会保障の関係（社会制度）\n\n👷 労働制度\n    │\n    │ 連携\n    ↓\n🏥 社会保障制度\n    ├─→ 雇用保険（失業時）\n    ├─→ 年金制度（老後）\n    └─→ 労働災害保険\n    │\n    │ 補完\n    ↓\n👷 労働制度\n\n相互に補完し合う</div>",
     "tags": ["労働制度", "社会保障", "雇用保険", "年金制度", "社会制度"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -251,7 +251,7 @@ window.questions = [
       "為替制度が貿易を廃止し、貿易は機能していない"
     ],
     "answer": 0,
-    "source": "**為替レートが貿易に影響を与え**、**貿易が為替レートに影響を与える**という、**相互関係**があります。貿易と為替制度は密接に関わっています。  \n為替レートは、異なる通貨の交換比率です。為替レートが変動すると、貿易に影響を与えます。例えば、円安になると輸出が増え、輸入が減ります。一方、貿易の動向が為替レートに影響を与えることもあります。このように、貿易と為替制度は相互に影響し合っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">貿易と為替制度の関係（経済制度）\n\n💱 為替レート\n    │\n    │ 影響\n    ↓\n🌍 貿易\n    ├─→ 輸出（円安で増加）\n    └─→ 輸入（円安で減少）\n    │\n    │ 影響\n    ↓\n💱 為替レート\n\n相互に影響し合う</div>",
+    "source": "為替レートが貿易に影響を与え、貿易が為替レートに影響を与えるという、相互関係があります。貿易と為替制度は密接に関わっています。  \n為替レートは、異なる通貨の交換比率です。為替レートが変動すると、貿易に影響を与えます。例えば、円安になると輸出が増え、輸入が減ります。一方、貿易の動向が為替レートに影響を与えることもあります。このように、貿易と為替制度は相互に影響し合っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">貿易と為替制度の関係（経済制度）\n\n💱 為替レート\n    │\n    │ 影響\n    ↓\n🌍 貿易\n    ├─→ 輸出（円安で増加）\n    └─→ 輸入（円安で減少）\n    │\n    │ 影響\n    ↓\n💱 為替レート\n\n相互に影響し合う</div>",
     "tags": ["貿易", "為替制度", "為替レート", "経済制度"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -266,7 +266,7 @@ window.questions = [
       "市場が企業を廃止し、企業は機能していない"
     ],
     "answer": 0,
-    "source": "**企業が市場で活動**し、**市場が企業の活動を規律する**という、**企業↔市場の関係**があります。企業と市場は相互に影響し合っています。  \n企業は、市場で商品やサービスを提供し、競争を通じて活動しています。一方、市場は、需要と供給の関係により、企業の活動を規律します。このように、企業と市場は相互に影響し合い、経済活動が成り立っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">企業と市場の関係（経済制度）\n\n🏢 企業\n    │\n    │ 活動（商品・サービス）\n    ↓\n📊 市場（需要と供給）\n    │\n    │ 規律（競争）\n    ↓\n🏢 企業\n\n相互に影響し合う</div>",
+    "source": "企業が市場で活動し、市場が企業の活動を規律するという、企業↔市場の関係があります。企業と市場は相互に影響し合っています。  \n企業は、市場で商品やサービスを提供し、競争を通じて活動しています。一方、市場は、需要と供給の関係により、企業の活動を規律します。このように、企業と市場は相互に影響し合い、経済活動が成り立っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">企業と市場の関係（経済制度）\n\n🏢 企業\n    │\n    │ 活動（商品・サービス）\n    ↓\n📊 市場（需要と供給）\n    │\n    │ 規律（競争）\n    ↓\n🏢 企業\n\n相互に影響し合う</div>",
     "tags": ["企業", "市場", "経済制度"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -281,7 +281,7 @@ window.questions = [
       "社会保障制度が財政を廃止し、財政は機能していない"
     ],
     "answer": 0,
-    "source": "**年金・医療・介護などの社会保障制度が財政支出の大きな部分**を占め、**財政が社会保障を支えています**。社会保障制度と財政は密接に関わっています。  \n社会保障制度（年金、医療、介護など）は、税収や社会保険料などの財政収入によって支えられています。一方で、社会保障費は財政支出の大きな部分を占めており、財政と社会保障制度は相互に影響し合っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">社会保障制度と財政の関係（経済制度）\n\n💰 財政収入\n    ├─→ 税収\n    └─→ 社会保険料\n    │\n    │ 支える\n    ↓\n🏥 社会保障制度\n    ├─→ 年金\n    ├─→ 医療\n    └─→ 介護\n    │\n    │ 支出（大きな部分）\n    ↓\n💰 財政支出\n\n相互依存の関係</div>",
+    "source": "年金・医療・介護などの社会保障制度が財政支出の大きな部分を占め、財政が社会保障を支えています。社会保障制度と財政は密接に関わっています。  \n社会保障制度（年金、医療、介護など）は、税収や社会保険料などの財政収入によって支えられています。一方で、社会保障費は財政支出の大きな部分を占めており、財政と社会保障制度は相互に影響し合っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">社会保障制度と財政の関係（経済制度）\n\n💰 財政収入\n    ├─→ 税収\n    └─→ 社会保険料\n    │\n    │ 支える\n    ↓\n🏥 社会保障制度\n    ├─→ 年金\n    ├─→ 医療\n    └─→ 介護\n    │\n    │ 支出（大きな部分）\n    ↓\n💰 財政支出\n\n相互依存の関係</div>",
     "tags": ["社会保障制度", "財政", "年金", "医療", "介護", "経済制度"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -296,7 +296,7 @@ window.questions = [
       "教育制度が社会を廃止し、社会は機能していない"
     ],
     "answer": 0,
-    "source": "**教育制度が社会の人材を育成**し、**社会が教育制度を支える**という、**相互関係**があります。教育制度と社会は相互に影響し合っています。  \n教育制度は、社会の人材を育成するしくみです。学校で学んだ人が社会で活躍し、社会が教育制度を支えます。このように、教育制度と社会は相互に影響し合い、社会の発展に貢献しています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">教育制度と社会の関係（社会制度）\n\n🏫 教育制度\n    │\n    │ 育成\n    ↓\n👥 人材\n    │\n    │ 活躍\n    ↓\n🌍 社会\n    │\n    │ 支える\n    ↓\n🏫 教育制度\n\n相互に影響し合う</div>",
+    "source": "教育制度が社会の人材を育成し、社会が教育制度を支えるという、相互関係があります。教育制度と社会は相互に影響し合っています。  \n教育制度は、社会の人材を育成するしくみです。学校で学んだ人が社会で活躍し、社会が教育制度を支えます。このように、教育制度と社会は相互に影響し合い、社会の発展に貢献しています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">教育制度と社会の関係（社会制度）\n\n🏫 教育制度\n    │\n    │ 育成\n    ↓\n👥 人材\n    │\n    │ 活躍\n    ↓\n🌍 社会\n    │\n    │ 支える\n    ↓\n🏫 教育制度\n\n相互に影響し合う</div>",
     "tags": ["教育制度", "社会", "人材育成", "社会制度"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -311,7 +311,7 @@ window.questions = [
       "社会保障が労働制度を廃止し、労働制度は機能していない"
     ],
     "answer": 0,
-    "source": "**労働と関連する社会保障制度（雇用保険、年金など）**があり、**労働制度と社会保障が連携**しています。労働と社会保障は相互に補完し合っています。  \n労働制度は、働く人を守るしくみです。雇用保険や年金制度など、労働と関連する社会保障制度があり、労働制度と社会保障が連携しています。働く人が失業したときの雇用保険や、老後の年金など、労働と社会保障は密接に関わっています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">労働制度と社会保障の関係（社会制度）\n\n👷 労働制度\n    │\n    │ 連携\n    ↓\n🏥 社会保障制度\n    ├─→ 雇用保険（失業時）\n    ├─→ 年金制度（老後）\n    └─→ 労働災害保険\n    │\n    │ 補完\n    ↓\n👷 労働制度\n\n相互に補完し合う</div>",
+    "source": "労働と関連する社会保障制度（雇用保険、年金など）があり、労働制度と社会保障が連携しています。労働と社会保障は相互に補完し合っています。  \n労働制度は、働く人を守るしくみです。雇用保険や年金制度など、労働と関連する社会保障制度があり、労働制度と社会保障が連携しています。働く人が失業したときの雇用保険や、老後の年金など、労働と社会保障は密接に関わっています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">労働制度と社会保障の関係（社会制度）\n\n👷 労働制度\n    │\n    │ 連携\n    ↓\n🏥 社会保障制度\n    ├─→ 雇用保険（失業時）\n    ├─→ 年金制度（老後）\n    └─→ 労働災害保険\n    │\n    │ 補完\n    ↓\n👷 労働制度\n\n相互に補完し合う</div>",
     "tags": ["労働制度", "社会保障", "雇用保険", "年金制度", "社会制度"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -326,7 +326,7 @@ window.questions = [
       "環境制度が経済を廃止し、経済は機能していない"
     ],
     "answer": 0,
-    "source": "**環境保護と経済活動のバランスを取るため**、**環境制度と経済政策が協調して運営**されています。環境制度と経済は相互に影響し合っています。  \n環境制度は、環境を守るしくみです。一方、経済活動は、環境に影響を与えることがあります。環境保護と経済活動のバランスを取るため、環境制度と経済政策が協調して運営されています。環境を守りながら、経済を発展させるという、持続可能な社会を目指しています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">環境制度と経済の関係（社会制度）\n\n🌍 環境制度\n    │\n    │ 協調\n    ↓\n📊 経済政策\n    │\n    │ バランス\n    ↓\n⚖️ 環境保護と経済活動\n    ├─→ 環境を守る\n    └─→ 経済を発展させる\n\n持続可能な社会を目指す</div>",
+    "source": "環境保護と経済活動のバランスを取るため、環境制度と経済政策が協調して運営されています。環境制度と経済は相互に影響し合っています。  \n環境制度は、環境を守るしくみです。一方、経済活動は、環境に影響を与えることがあります。環境保護と経済活動のバランスを取るため、環境制度と経済政策が協調して運営されています。環境を守りながら、経済を発展させるという、持続可能な社会を目指しています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">環境制度と経済の関係（社会制度）\n\n🌍 環境制度\n    │\n    │ 協調\n    ↓\n📊 経済政策\n    │\n    │ バランス\n    ↓\n⚖️ 環境保護と経済活動\n    ├─→ 環境を守る\n    └─→ 経済を発展させる\n\n持続可能な社会を目指す</div>",
     "tags": ["環境制度", "経済", "環境保護", "経済活動", "社会制度"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -341,7 +341,7 @@ window.questions = [
       "情報制度がプライバシーを廃止し、プライバシーは保護されていない"
     ],
     "answer": 0,
-    "source": "**個人情報保護法などにより**、**情報活用とプライバシー保護のバランスを取る制度**があります。情報制度とプライバシーは相互に調整されています。  \n情報制度は、情報を活用するしくみです。一方、プライバシーは、個人の情報を守る権利です。個人情報保護法などにより、情報活用とプライバシー保護のバランスを取る制度があります。情報を活用しながら、プライバシーを守るという、両立を目指しています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">情報制度とプライバシーの関係（社会制度）\n\n📱 情報制度\n    │\n    │ バランス\n    ↓\n⚖️ 情報活用とプライバシー保護\n    ├─→ 情報を活用\n    └─→ プライバシーを守る\n    │\n    │ 調整\n    ↓\n📜 個人情報保護法\n\n両立を目指す</div>",
+    "source": "個人情報保護法などにより、情報活用とプライバシー保護のバランスを取る制度があります。情報制度とプライバシーは相互に調整されています。  \n情報制度は、情報を活用するしくみです。一方、プライバシーは、個人の情報を守る権利です。個人情報保護法などにより、情報活用とプライバシー保護のバランスを取る制度があります。情報を活用しながら、プライバシーを守るという、両立を目指しています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">情報制度とプライバシーの関係（社会制度）\n\n📱 情報制度\n    │\n    │ バランス\n    ↓\n⚖️ 情報活用とプライバシー保護\n    ├─→ 情報を活用\n    └─→ プライバシーを守る\n    │\n    │ 調整\n    ↓\n📜 個人情報保護法\n\n両立を目指す</div>",
     "tags": ["情報制度", "プライバシー", "個人情報保護法", "社会制度"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -356,7 +356,7 @@ window.questions = [
       "制度が人権を廃止し、人権は保障されていない"
     ],
     "answer": 0,
-    "source": "**基本的人権が憲法で保障**され、**法律や制度により具体化**され、**人権が実現されています**。人権保障と制度は密接に関わっています。  \n基本的人権は、憲法で保障されています。法律や制度により、人権が具体化され、実現されています。例えば、教育を受ける権利は、教育基本法や学校教育法により具体化されています。このように、人権保障と制度は密接に関わっています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3b82f6;\">人権保障と制度の関係（政治制度）\n\n📜 憲法（基本的人権の保障）\n    │\n    │ 具体化\n    ↓\n📋 法律・制度\n    ├─→ 教育基本法\n    ├─→ 学校教育法\n    └─→ その他\n    │\n    │ 実現\n    ↓\n✅ 人権の実現\n\n人権保障と制度は密接に関わる</div>",
+    "source": "基本的人権が憲法で保障され、法律や制度により具体化され、人権が実現されています。人権保障と制度は密接に関わっています。  \n基本的人権は、憲法で保障されています。法律や制度により、人権が具体化され、実現されています。例えば、教育を受ける権利は、教育基本法や学校教育法により具体化されています。このように、人権保障と制度は密接に関わっています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3b82f6;\">人権保障と制度の関係（政治制度）\n\n📜 憲法（基本的人権の保障）\n    │\n    │ 具体化\n    ↓\n📋 法律・制度\n    ├─→ 教育基本法\n    ├─→ 学校教育法\n    └─→ その他\n    │\n    │ 実現\n    ↓\n✅ 人権の実現\n\n人権保障と制度は密接に関わる</div>",
     "tags": ["人権保障", "制度", "憲法", "基本的人権", "政治制度"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -371,7 +371,7 @@ window.questions = [
       "国際条約が国内法を廃止し、国内法は機能していない"
     ],
     "answer": 0,
-    "source": "**国際条約が批准されると国内法としての効力を持ち**、**国内法と協調して運用**されています。国際条約と国内法は相互に補完し合っています。  \n国際条約は、国と国との間で結ばれる約束です。国際条約が批准されると、国内法としての効力を持ち、国内法と協調して運用されます。このように、国際条約と国内法は相互に補完し合い、国際社会と国内社会の橋渡しをしています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #f59e0b;\">国際条約と国内法の関係（国際関係）\n\n🌍 国際条約\n    │\n    │ 批准\n    ↓\n📜 国内法としての効力\n    │\n    │ 協調\n    ↓\n📋 国内法\n    │\n    │ 運用\n    ↓\n✅ 国際社会と国内社会の橋渡し\n\n相互に補完し合う</div>",
+    "source": "国際条約が批准されると国内法としての効力を持ち、国内法と協調して運用されています。国際条約と国内法は相互に補完し合っています。  \n国際条約は、国と国との間で結ばれる約束です。国際条約が批准されると、国内法としての効力を持ち、国内法と協調して運用されます。このように、国際条約と国内法は相互に補完し合い、国際社会と国内社会の橋渡しをしています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #f59e0b;\">国際条約と国内法の関係（国際関係）\n\n🌍 国際条約\n    │\n    │ 批准\n    ↓\n📜 国内法としての効力\n    │\n    │ 協調\n    ↓\n📋 国内法\n    │\n    │ 運用\n    ↓\n✅ 国際社会と国内社会の橋渡し\n\n相互に補完し合う</div>",
     "tags": ["国際条約", "国内法", "批准", "国際関係"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -386,7 +386,7 @@ window.questions = [
       "内政が外交を廃止し、外交は機能していない"
     ],
     "answer": 0,
-    "source": "**外交政策と国内政策が相互に影響し合い**、**外交と内政が協調して運営**されています。外交と内政は相互に影響し合っています。  \n外交は、国と国との関係を扱う政策です。一方、内政は、国内の政策です。外交政策と国内政策が相互に影響し合い、外交と内政が協調して運営されています。例えば、貿易政策は外交と内政の両方に関わります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #f59e0b;\">外交と内政の関係（国際関係）\n\n🌍 外交政策\n    │\n    │ 相互に影響\n    ↓\n🏛️ 国内政策（内政）\n    │\n    │ 協調\n    ↓\n📊 政策の実行\n    ├─→ 貿易政策\n    └─→ その他\n\n相互に影響し合う</div>",
+    "source": "外交政策と国内政策が相互に影響し合い、外交と内政が協調して運営されています。外交と内政は相互に影響し合っています。  \n外交は、国と国との関係を扱う政策です。一方、内政は、国内の政策です。外交政策と国内政策が相互に影響し合い、外交と内政が協調して運営されています。例えば、貿易政策は外交と内政の両方に関わります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #f59e0b;\">外交と内政の関係（国際関係）\n\n🌍 外交政策\n    │\n    │ 相互に影響\n    ↓\n🏛️ 国内政策（内政）\n    │\n    │ 協調\n    ↓\n📊 政策の実行\n    ├─→ 貿易政策\n    └─→ その他\n\n相互に影響し合う</div>",
     "tags": ["外交", "内政", "外交政策", "国内政策", "国際関係"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -401,7 +401,7 @@ window.questions = [
       "国内経済が国際経済を廃止し、国際経済は機能していない"
     ],
     "answer": 0,
-    "source": "**貿易などの国際経済活動が国内経済に影響を与え**、**国内経済が国際経済に影響を与える**という、**相互関係**があります。国際経済と国内経済は密接に関わっています。  \n貿易などの国際経済活動は、国内経済に影響を与えます。例えば、輸出が増えると、国内の生産が増え、雇用が増えます。一方、国内経済の動向が国際経済に影響を与えることもあります。このように、国際経済と国内経済は相互に影響し合っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #f59e0b;\">国際経済と国内経済の関係（国際関係）\n\n🌍 国際経済\n    ├─→ 貿易\n    └─→ 投資\n    │\n    │ 影響\n    ↓\n🏛️ 国内経済\n    ├─→ 生産\n    ├─→ 雇用\n    └─→ 消費\n    │\n    │ 影響\n    ↓\n🌍 国際経済\n\n相互に影響し合う</div>",
+    "source": "貿易などの国際経済活動が国内経済に影響を与え、国内経済が国際経済に影響を与えるという、相互関係があります。国際経済と国内経済は密接に関わっています。  \n貿易などの国際経済活動は、国内経済に影響を与えます。例えば、輸出が増えると、国内の生産が増え、雇用が増えます。一方、国内経済の動向が国際経済に影響を与えることもあります。このように、国際経済と国内経済は相互に影響し合っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #f59e0b;\">国際経済と国内経済の関係（国際関係）\n\n🌍 国際経済\n    ├─→ 貿易\n    └─→ 投資\n    │\n    │ 影響\n    ↓\n🏛️ 国内経済\n    ├─→ 生産\n    ├─→ 雇用\n    └─→ 消費\n    │\n    │ 影響\n    ↓\n🌍 国際経済\n\n相互に影響し合う</div>",
     "tags": ["国際経済", "国内経済", "貿易", "国際関係"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -416,7 +416,7 @@ window.questions = [
       "国内制度が国際協力を廃止し、国際協力は機能していない"
     ],
     "answer": 0,
-    "source": "**ODAなどの国際協力が国内制度を活用**し、**国内制度が国際協力を支える**という、**相互関係**があります。国際協力と国内制度は相互に補完し合っています。  \nODA（政府開発援助）などの国際協力は、国内制度を活用して行われます。例えば、日本の教育制度や医療制度の経験を、開発途上国に伝えることがあります。一方、国内制度が国際協力を支えることもあります。このように、国際協力と国内制度は相互に補完し合っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #f59e0b;\">国際協力と国内制度の関係（国際関係）\n\n🌍 国際協力（ODAなど）\n    │\n    │ 活用\n    ↓\n🏛️ 国内制度\n    ├─→ 教育制度\n    ├─→ 医療制度\n    └─→ その他\n    │\n    │ 支える\n    ↓\n🌍 国際協力\n\n相互に補完し合う</div>",
+    "source": "ODAなどの国際協力が国内制度を活用し、国内制度が国際協力を支えるという、相互関係があります。国際協力と国内制度は相互に補完し合っています。  \nODA（政府開発援助）などの国際協力は、国内制度を活用して行われます。例えば、日本の教育制度や医療制度の経験を、開発途上国に伝えることがあります。一方、国内制度が国際協力を支えることもあります。このように、国際協力と国内制度は相互に補完し合っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #f59e0b;\">国際協力と国内制度の関係（国際関係）\n\n🌍 国際協力（ODAなど）\n    │\n    │ 活用\n    ↓\n🏛️ 国内制度\n    ├─→ 教育制度\n    ├─→ 医療制度\n    └─→ その他\n    │\n    │ 支える\n    ↓\n🌍 国際協力\n\n相互に補完し合う</div>",
     "tags": ["国際協力", "国内制度", "ODA", "国際関係"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -431,7 +431,7 @@ window.questions = [
       "国際基準が人権を廃止し、人権は保障されていない"
     ],
     "answer": 0,
-    "source": "**国際人権条約などの国際基準が国内法に取り入れられ**、**人権保障が国際基準に沿って実現**されています。人権と国際基準は相互に影響し合っています。  \n国際人権条約などの国際基準は、国内法に取り入れられ、人権保障が国際基準に沿って実現されています。例えば、子どもの権利条約は、国内法に取り入れられ、子どもの権利が保障されています。このように、人権と国際基準は相互に影響し合っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #f59e0b;\">人権と国際基準の関係（国際関係）\n\n🌍 国際基準（国際人権条約など）\n    │\n    │ 取り入れ\n    ↓\n📋 国内法\n    │\n    │ 実現\n    ↓\n✅ 人権保障\n    ├─→ 子どもの権利条約\n    └─→ その他\n\n相互に影響し合う</div>",
+    "source": "国際人権条約などの国際基準が国内法に取り入れられ、人権保障が国際基準に沿って実現されています。人権と国際基準は相互に影響し合っています。  \n国際人権条約などの国際基準は、国内法に取り入れられ、人権保障が国際基準に沿って実現されています。例えば、子どもの権利条約は、国内法に取り入れられ、子どもの権利が保障されています。このように、人権と国際基準は相互に影響し合っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #f59e0b;\">人権と国際基準の関係（国際関係）\n\n🌍 国際基準（国際人権条約など）\n    │\n    │ 取り入れ\n    ↓\n📋 国内法\n    │\n    │ 実現\n    ↓\n✅ 人権保障\n    ├─→ 子どもの権利条約\n    └─→ その他\n\n相互に影響し合う</div>",
     "tags": ["人権", "国際基準", "国際人権条約", "国際関係"],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -446,7 +446,7 @@ window.questions = [
       "国際協力が環境問題を廃止し、環境問題は解決されている"
     ],
     "answer": 0,
-    "source": "**地球温暖化などの環境問題に対応するため**、**国際協力と国内制度が協調して取り組んでいます**。環境問題と国際協力は密接に関わっています。  \n地球温暖化などの環境問題は、一国だけでは解決できません。国際協力と国内制度が協調して取り組む必要があります。例えば、パリ協定などの国際的な取り組みと、国内の環境政策が協調して、環境問題に対応しています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #f59e0b;\">環境問題と国際協力の関係（国際関係）\n\n🌍 環境問題（地球温暖化など）\n    │\n    │ 対応\n    ↓\n🤝 国際協力\n    ├─→ パリ協定\n    └─→ その他\n    │\n    │ 協調\n    ↓\n🏛️ 国内制度（環境政策）\n\n協調して取り組む</div>",
+    "source": "地球温暖化などの環境問題に対応するため、国際協力と国内制度が協調して取り組んでいます。環境問題と国際協力は密接に関わっています。  \n地球温暖化などの環境問題は、一国だけでは解決できません。国際協力と国内制度が協調して取り組む必要があります。例えば、パリ協定などの国際的な取り組みと、国内の環境政策が協調して、環境問題に対応しています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #f59e0b;\">環境問題と国際協力の関係（国際関係）\n\n🌍 環境問題（地球温暖化など）\n    │\n    │ 対応\n    ↓\n🤝 国際協力\n    ├─→ パリ協定\n    └─→ その他\n    │\n    │ 協調\n    ↓\n🏛️ 国内制度（環境政策）\n\n協調して取り組む</div>",
     "tags": ["環境問題", "国際協力", "地球温暖化", "パリ協定", "国際関係"],
     "difficulty": 1,
     "asof": "2025-09-23"

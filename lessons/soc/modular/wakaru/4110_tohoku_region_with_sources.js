@@ -30,7 +30,7 @@ window.questions = [
       "秋田市"
     ],
     "answer": 2,
-    "source": "宮城県の県庁所在地で、政令指定都市にも指定されている都市があります。奥羽山脈の東側、太平洋側に位置し、仙台平野を中心に発展しました。この都市は青葉城の城下町としても知られ、伊達政宗が開いた街として歴史があります。東北地方最大の都市であり、政治・経済・文化の中心地として、周辺の市町村とともに仙台都市圏を形成しています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">東北地方最大の都市\n\n🗺️ 奥羽山脈の東側\n    ↓\n🌊 太平洋側に位置\n    ↓\n🏞️ 仙台平野を中心に発展\n    ↓\n🏙️ 仙台市（政令指定都市）\n\n政治・経済・文化の中心地</div>",
+    "source": "宮城県（みやぎけん）の県庁所在地で、政令指定都市にも指定されている都市があります。奥羽山脈（おううさんみゃく）の東側、太平洋側に位置し、仙台平野（せんだいへいや）を中心に発展しました。この都市は青葉城の城下町としても知られ、伊達政宗が開いた街として歴史があります。東北地方最大の都市であり、政治・経済・文化の中心地として、周辺の市町村とともに仙台都市圏を形成しています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">東北地方最大の都市\n\n🗺️ 奥羽山脈の東側\n    ↓\n🌊 太平洋側に位置\n    ↓\n🏞️ 仙台平野を中心に発展\n    ↓\n🏙️ 仙台市（政令指定都市）\n\n政治・経済・文化の中心地</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -45,7 +45,7 @@ window.questions = [
       "海食崖のみの直線海岸"
     ],
     "answer": 0,
-    "source": "岩手県から宮城県にかけて続く複雑に入り組んだ海岸があります。山地が沈降して海に沈み、谷の部分だけが入り江として残った地形で、リアス海岸と呼ばれる特徴的な海岸です。深い湾は天然の良港となり、ワカメやカキなどの養殖が盛んです。一方で、津波の被害を受けやすい地形でもあり、防災対策が重要です。自然の恵みと災害の両面を持つ地形を理解しましょう。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">リアス海岸の形成\n\n⛰️ 山地が沈降\n    ↓\n🌊 海に沈む\n    ↓\n🌊 谷の部分が入り江に\n    ↓\n🌊 リアス海岸\n    ↓\n🐟 ワカメ・カキ養殖\n⚠️ 津波に注意</div>",
+    "source": "岩手県（いわてけん）から宮城県（みやぎけん）にかけて続く複雑に入り組んだ海岸があります。山地が沈降して海に沈み、谷の部分だけが入り江として残った地形で、リアス海岸（りあすかいがん）と呼ばれる特徴的な海岸です。深い湾は天然の良港となり、ワカメやカキなどの養殖が盛んです。一方で、津波の被害を受けやすい地形でもあり、防災対策が重要です。自然の恵みと災害の両面を持つ地形を理解しましょう。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">リアス海岸の形成\n\n⛰️ 山地が沈降\n    ↓\n🌊 海に沈む\n    ↓\n🌊 谷の部分が入り江に\n    ↓\n🌊 リアス海岸\n    ↓\n🐟 ワカメ・カキ養殖\n⚠️ 津波に注意</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -435,7 +435,7 @@ window.questions = [
       "花巻市"
     ],
     "answer": 0,
-    "source": "岩手県南西部に位置する町があります。平安時代末期に奥州藤原氏が栄えた地で、2011年に「平泉－仏国土（浄土）を表す建築・庭園及び考古学的遺跡群－」として世界遺産に登録されました。この町は平泉町と呼ばれ、中尊寺や毛越寺など、当時の繁栄を物語る寺院が残り、観光地としても人気です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">平泉町（世界遺産）\n\n🏛️ 平安時代末期\n    ↓\n👑 奥州藤原氏が栄えた\n    ↓\n🏛️ 中尊寺・毛越寺など\n    ↓\n🌍 2011年：世界遺産登録\n    ↓\n🗺️ 平泉町（観光地）</div>",
+    "source": "岩手県南西部に位置する町があります。平安時代末期に奥州藤原氏が栄えた地で、2011年に「平泉－仏国土（浄土）を表す建築・庭園及び考古学的遺跡（いせき）群－」として世界遺産に登録されました。この町は平泉町と呼ばれ、中尊寺や毛越寺など、当時の繁栄を物語る寺院が残り、観光地としても人気です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">平泉町（世界遺産）\n\n🏛️ 平安時代末期\n    ↓\n👑 奥州藤原氏が栄えた\n    ↓\n🏛️ 中尊寺・毛越寺など\n    ↓\n🌍 2011年：世界遺産登録\n    ↓\n🗺️ 平泉町（観光地）</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"

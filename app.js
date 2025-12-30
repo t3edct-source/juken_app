@@ -1457,11 +1457,11 @@ scienceUnits = [
       'sci.physics.current_effect_heating_sim', // 電流の作用①：発熱シミュレーション
       'sci.physics.current_effect_magnetic', // 電流の作用②（磁界）
       'sci.physics.current_effect_magnetic_sim', // 電流の作用②：磁界シミュレーション
-      'sci.physics.light_properties_sim', // 光の性質シミュレーション
-      'sci.physics.spring_force_sim', // ばねと力シミュレーション
       'sci.physics.lever_weight_basic', // てこのつり合い
       'sci.physics.spring_force', // ばねと力
+      'sci.physics.spring_force_sim', // ばねと力シミュレーション
       'sci.physics.light_properties', // 光の性質
+      'sci.physics.light_properties_sim', // 光の性質シミュレーション
       'sci.physics.force_motion', // 力と運動（浮力・かっ車・輪じく）
       // 地学（6）
       'sci.earth.volcano_structure', // 火山のしくみ
@@ -1541,6 +1541,7 @@ socialUnits = [
     name: '歴史分野',
     icon: '📜',
     lessons: [
+      'soc.history.paleolithic_jomon_yayoi',
       'soc.history.kofun_asuka',
       'soc.history.nara_period',
       'soc.history.heian_period',
@@ -3213,6 +3214,7 @@ async function renderSocialUnits() {
         name: '歴史分野',
         icon: '📜',
         lessons: [
+          'soc.history.paleolithic_jomon_yayoi',
           'soc.history.kofun_asuka',
           'soc.history.nara_period',
           'soc.history.heian_period',

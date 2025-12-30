@@ -30,7 +30,7 @@ window.questions = [
       "高松市"
     ],
     "answer": 0,
-    "source": "山陰地方には、県庁所在地となる都市があります。この都市は日本海側に位置し、山陰地方の行政や経済の中心地となっています。日本海に面した立地で、海運や漁業とも結びついています。この都市は鳥取市と呼ばれ、山陰地方の県庁所在地として知られています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">鳥取市（山陰地方）\n\n🌊 日本海側に位置\n    ↓\n🏙️ 山陰地方の中心地\n    ↓\n🏛️ 行政・経済の中心\n    ↓\n🚢 海運・漁業とも結びつく\n    ↓\n🏙️ 鳥取市（県庁所在地）</div>",
+    "source": "山陰地方（さんいんちほう）には、県庁所在地となる都市があります。この都市は日本海側に位置し、山陰地方の行政や経済の中心地となっています。日本海に面した立地で、海運や漁業とも結びついています。この都市は鳥取市（とっとりし）と呼ばれ、山陰地方の県庁所在地として知られています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">鳥取市（山陰地方）\n\n🌊 日本海側に位置\n    ↓\n🏙️ 山陰地方の中心地\n    ↓\n🏛️ 行政・経済の中心\n    ↓\n🚢 海運・漁業とも結びつく\n    ↓\n🏙️ 鳥取市（県庁所在地）</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"

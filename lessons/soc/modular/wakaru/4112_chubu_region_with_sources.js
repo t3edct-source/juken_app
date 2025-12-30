@@ -30,7 +30,7 @@ window.questions = [
       "四国地方"
     ],
     "answer": 0,
-    "source": "日本一長い川があります。この川は新潟県では信濃川、上流は千曲川と呼ばれ、日本海側を流れて米づくりの平野をうるおします。川の長さを軸に地方区分を見ると、太平洋側の関東や四国・九州ではなく、本州中央の地方に当たります。この地方は中部地方と呼ばれ、日本最長の川が流れる地域です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">日本最長の川\n\n⛰️ 上流（千曲川）\n    ↓\n🌊 信濃川（日本最長）\n    ↓\n🏞️ 日本海側を流れる\n    ↓\n🌾 米づくりの平野をうるおす\n    ↓\n🗺️ 中部地方</div>",
+    "source": "日本一長い川があります。この川は新潟県（にいがたけん）では信濃川（しなのがわ）、上流は千曲川（ちくまがわ）と呼ばれ、日本海側を流れて米づくりの平野をうるおします。川の長さを軸に地方区分を見ると、太平洋側の関東や四国・九州ではなく、本州中央の地方に当たります。この地方は中部地方と呼ばれ、日本最長の川が流れる地域です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">日本最長の川\n\n⛰️ 上流（千曲川）\n    ↓\n🌊 信濃川（日本最長）\n    ↓\n🏞️ 日本海側を流れる\n    ↓\n🌾 米づくりの平野をうるおす\n    ↓\n🗺️ 中部地方</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -45,7 +45,7 @@ window.questions = [
       "筑紫平野"
     ],
     "answer": 0,
-    "source": "信濃川と阿賀野川が山から運んだ土砂が海辺で広がり、広大な平野ができました。この平野では、「米の土」が広い田んぼをささえ、日本有数の穀倉地帯となっています。濃尾平野や関東平野も大きいですが、信濃川による穀倉地帯として、越後平野が知られています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">越後平野（穀倉地帯）\n\n⛰️ 山から土砂を運ぶ\n    ↓\n🌊 信濃川・阿賀野川\n    ↓\n🏞️ 海辺で広がる\n    ↓\n🏞️ 越後平野（広大な平野）\n    ↓\n🌾 日本有数の穀倉地帯</div>",
+    "source": "信濃川（しなのがわ）と阿賀野川（あがのがわ）が山から運んだ土砂が海辺で広がり、広大な平野ができました。この平野では、「米の土」が広い田んぼをささえ、日本有数の穀倉地帯となっています。濃尾平野（のうびへいや）や関東平野（かんとうへいや）も大きいですが、信濃川による穀倉地帯として、越後平野（えちごへいや）が知られています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">越後平野（穀倉地帯）\n\n⛰️ 山から土砂を運ぶ\n    ↓\n🌊 信濃川・阿賀野川\n    ↓\n🏞️ 海辺で広がる\n    ↓\n🏞️ 越後平野（広大な平野）\n    ↓\n🌾 日本有数の穀倉地帯</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -60,7 +60,7 @@ window.questions = [
       "石狩平野"
     ],
     "answer": 0,
-    "source": "木曽川・長良川・揖斐川が集まると、川の力で運ばれた土砂が厚く積もり、低く広い沖積平野になります。名古屋の周辺に広がるこの平野は濃尾平野と呼ばれています。庄内や仙台、石狩は別の地域の平野なので、流域の組み合わせで見分けましょう。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">濃尾平野\n\n🌊 木曽川・長良川・揖斐川\n    ↓\n🌊 3つの川が合流\n    ↓\n🏞️ 土砂が厚く積もる\n    ↓\n🏞️ 濃尾平野（沖積平野）\n    ↓\n🏙️ 名古屋の周辺</div>",
+    "source": "木曽川（きそがわ）・長良川（ながらがわ）・揖斐川（いびがわ）が集まると、川の力で運ばれた土砂が厚く積もり、低く広い沖積平野になります。名古屋（なごや）の周辺に広がるこの平野は濃尾平野（のうびへいや）と呼ばれています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">濃尾平野\n\n🌊 木曽川・長良川・揖斐川\n    ↓\n🌊 3つの川が合流\n    ↓\n🏞️ 土砂が厚く積もる\n    ↓\n🏞️ 濃尾平野（沖積平野）\n    ↓\n🏙️ 名古屋の周辺</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -135,7 +135,7 @@ window.questions = [
       "カキ"
     ],
     "answer": 0,
-    "source": "山からの川が運ぶ石や砂でできた扇状地は水はけがよく、果樹に向きます。山梨では日照と乾いた風をいかした果樹栽培が盛んです。特にブドウづくりが知られています。ミカンは温暖な沿岸、リンゴは寒冷地、カキは別の産地が有名。「気候と果物の相性」で整理するとスッと入ります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">山梨の扇状地（ブドウ）\n\n⛰️ 山からの川が運ぶ石・砂\n    ↓\n🏞️ 扇状地（水はけがよい）\n    ↓\n☀️ 日照と乾いた風\n    ↓\n🍇 果樹栽培が盛ん\n    ↓\n🍇 ブドウづくりが特に有名</div>",
+    "source": "山からの川が運ぶ石や砂でできた扇状地は水はけがよく、果樹に向きます。山梨では日照と乾いた風をいかした果樹栽培が盛んです。特にブドウづくりが知られています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">山梨の扇状地（ブドウ）\n\n⛰️ 山からの川が運ぶ石・砂\n    ↓\n🏞️ 扇状地（水はけがよい）\n    ↓\n☀️ 日照と乾いた風\n    ↓\n🍇 果樹栽培が盛ん\n    ↓\n🍇 ブドウづくりが特に有名</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -285,7 +285,7 @@ window.questions = [
       "リンゴ"
     ],
     "answer": 0,
-    "source": "富山平野では用水路や圃場整備などの土地改良が進み、広い田んぼで**米**づくりが安定しました。茶・ミカン・リンゴは気候や地形が異なる地域の主作物。北アルプスの雪どけ水が\"田んぼの命の線\"になっている、と考えると覚えやすいです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">富山平野（米づくり）\n\n⛰️ 北アルプスの雪どけ水\n    ↓\n💧 用水路・圃場整備\n    ↓\n🏞️ 土地改良が進む\n    ↓\n🌾 広い田んぼで米づくりが安定\n    ↓\n🌾 米（富山平野の主作物）</div>",
+    "source": "富山平野では用水路や圃場整備などの土地改良が進み、広い田んぼで米づくりが安定しました。茶・ミカン・リンゴは気候や地形が異なる地域の主作物。北アルプスの雪どけ水が\"田んぼの命の線\"になっている、と考えると覚えやすいです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">富山平野（米づくり）\n\n⛰️ 北アルプスの雪どけ水\n    ↓\n💧 用水路・圃場整備\n    ↓\n🏞️ 土地改良が進む\n    ↓\n🌾 広い田んぼで米づくりが安定\n    ↓\n🌾 米（富山平野の主作物）</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -450,7 +450,7 @@ window.questions = [
       "日高山脈"
     ],
     "answer": 0,
-    "source": "飛騨山脈は日本アルプスの一つで、岐阜県にあります。この山脈は険しい山々が連なり、雪や水を生み、下流の電力や農業を支えます。この山脈は北アルプスとも呼ばれ、南アルプス・中央アルプスは別の山脈、日高は北海道。山脈名は「位置と別名」で二重に覚えると確実です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">飛騨山脈（北アルプス）\n\n⛰️ 日本アルプスの一つ\n    ↓\n⛰️ 飛騨山脈（北アルプス）\n    ↓\n⛰️ 険しい山々が連なる\n    ↓\n❄️ 雪や水を生む\n    ↓\n⚡ 下流の電力・農業を支える</div>",
+    "source": "飛騨山脈は日本アルプスの一つで、岐阜県にあります。この山脈は険しい山々が連なり、雪や水を生み、下流の電力や農業を支えます。この山脈は北アルプスとも呼ばれています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">飛騨山脈（北アルプス）\n\n⛰️ 日本アルプスの一つ\n    ↓\n⛰️ 飛騨山脈（北アルプス）\n    ↓\n⛰️ 険しい山々が連なる\n    ↓\n❄️ 雪や水を生む\n    ↓\n⚡ 下流の電力・農業を支える</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -465,7 +465,7 @@ window.questions = [
       "三角州の拡大"
     ],
     "answer": 0,
-    "source": "日本海に面した湾には、海底が岸近くまで深く落ちこみ、海底谷と急深な海岸が発達している場所があります。大きな船が近くまで寄れる「深いおわん」のような地形で、深い海が岸近くまで迫るために発達した地形です。この湾は富山湾と呼ばれ、遠浅の干潟やサンゴ礁、三角州は別の環境。山がすぐ海へ落ちる日本海側ならではの風景です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">富山湾（急深な海岸）\n\n🌊 日本海に面した湾\n    ↓\n🌊 海底が岸近くまで深く落ち込む\n    ↓\n🌊 海底谷と急深な海岸\n    ↓\n🚢 大きな船が近くまで寄れる\n    ↓\n🌊 富山湾（深いおわんの地形）</div>",
+    "source": "日本海に面した湾には、海底が岸近くまで深く落ちこみ、海底谷と急深な海岸が発達している場所があります。大きな船が近くまで寄れる「深いおわん」のような地形で、深い海が岸近くまで迫るために発達した地形です。この湾は富山湾と呼ばれ、山がすぐ海へ落ちる日本海側ならではの風景です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">富山湾（急深な海岸）\n\n🌊 日本海に面した湾\n    ↓\n🌊 海底が岸近くまで深く落ち込む\n    ↓\n🌊 海底谷と急深な海岸\n    ↓\n🚢 大きな船が近くまで寄れる\n    ↓\n🌊 富山湾（深いおわんの地形）</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"

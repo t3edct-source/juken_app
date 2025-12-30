@@ -189,6 +189,24 @@
       transition:transform 0.3s ease;
       border:1px solid rgba(255,255,255,0.2);
     }
+    @keyframes beamGlow {
+      0%, 100% { 
+        filter: brightness(1) drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+      }
+      50% { 
+        filter: brightness(1.3) drop-shadow(0 0 25px rgba(102,187,106,0.8)) drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+      }
+    }
+    /* パーティクルエフェクト */
+    .balance-particle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: radial-gradient(circle, rgba(102,187,106,0.9) 0%, rgba(76,175,80,0.6) 100%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 20;
+    }
 
     .beam-scale {
       position:absolute;
@@ -939,6 +957,8 @@
     const leftDistValue = document.getElementById('leftDistValue');
     const rightDistValue = document.getElementById('rightDistValue');
 
+    let previousBalanceState = null; // 前回のつり合い状態を保存
+
     function updateDisplayText(){
       const lw = parseInt(leftWeightSlider.value, 10);
       const ld = parseInt(leftDistSlider.value, 10);
@@ -1016,20 +1036,31 @@
         : 'translateX(-' + widthPercent + '%) scaleX(1)';
 
       // つり合いの状態を表示
+      let currentBalanceState = null;
       momentStatus.classList.remove('balanced', 'right-down', 'left-down');
       if (diff === 0){
+        currentBalanceState = 'balanced';
         momentStatus.classList.add('balanced');
         momentStatus.textContent = 'つり合っている';
         balanceLabel.textContent = '左右の重さ×距離が同じなので、てんびんはつり合っています。';
       } else if (diff > 0){
+        currentBalanceState = 'right-down';
         momentStatus.classList.add('right-down');
         momentStatus.textContent = '右が下がる';
         balanceLabel.textContent = '右の「重さ×距離」が大きいので、右がわが下がります。';
       } else {
+        currentBalanceState = 'left-down';
         momentStatus.classList.add('left-down');
         momentStatus.textContent = '左が下がる';
         balanceLabel.textContent = '左の「重さ×距離」が大きいので、左がわが下がります。';
       }
+
+      // つりあった瞬間のエフェクト（前回がつり合っていなくて、今回つり合ったとき）
+      if (previousBalanceState !== null && previousBalanceState !== 'balanced' && currentBalanceState === 'balanced') {
+        triggerBalanceEffect();
+      }
+
+      previousBalanceState = currentBalanceState;
 
 
       // コメント
@@ -1147,6 +1178,102 @@
       e.preventDefault();
       changeDistance(false, true);
     });
+
+    // つりあった瞬間のエフェクトとSE
+    function triggerBalanceEffect() {
+      // 視覚エフェクト：パーティクルアニメーション
+      createBalanceParticleEffect();
+      
+      // 音声エフェクト
+      playBalanceSound();
+    }
+
+    // パーティクルエフェクト
+    function createBalanceParticleEffect() {
+      const balanceArea = document.querySelector('.balance-area');
+      const support = document.querySelector('.support');
+      const rect = support.getBoundingClientRect();
+      const areaRect = balanceArea.getBoundingClientRect();
+      
+      const centerX = rect.left - areaRect.left + rect.width / 2;
+      const centerY = rect.top - areaRect.top + rect.height / 2;
+
+      // パーティクルを生成
+      for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'balance-particle';
+        
+        const angle = (Math.PI * 2 * i) / 20;
+        const distance = 40 + Math.random() * 50;
+        const duration = 1000 + Math.random() * 400;
+        const endX = Math.cos(angle) * distance;
+        const endY = Math.sin(angle) * distance;
+        
+        particle.style.left = centerX + 'px';
+        particle.style.top = centerY + 'px';
+        
+        balanceArea.appendChild(particle);
+        
+        // アニメーション
+        const startTime = Date.now();
+        const animate = () => {
+          const elapsed = Date.now() - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const easeOut = 1 - Math.pow(1 - progress, 3);
+          
+          particle.style.transform = `translate(${endX * easeOut}px, ${endY * easeOut}px) scale(${1 - progress * 0.5})`;
+          particle.style.opacity = 1 - progress;
+          
+          if (progress < 1) {
+            requestAnimationFrame(animate);
+          } else {
+            particle.remove();
+          }
+        };
+        requestAnimationFrame(animate);
+      }
+
+      // てんびんの光るエフェクト
+      beam.style.animation = 'beamGlow 0.8s ease-out';
+      setTimeout(() => {
+        beam.style.animation = '';
+      }, 800);
+    }
+
+    // 音声エフェクト（Web Audio APIで生成）
+    function playBalanceSound() {
+      try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator1 = audioContext.createOscillator();
+        const oscillator2 = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator1.connect(gainNode);
+        oscillator2.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        // 成功音のような和音
+        oscillator1.type = 'sine';
+        oscillator1.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+        oscillator1.frequency.exponentialRampToValueAtTime(659.25, audioContext.currentTime + 0.2); // E5
+        
+        oscillator2.type = 'sine';
+        oscillator2.frequency.setValueAtTime(659.25, audioContext.currentTime); // E5
+        oscillator2.frequency.exponentialRampToValueAtTime(783.99, audioContext.currentTime + 0.2); // G5
+        
+        gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+        gainNode.gain.linearRampToValueAtTime(0.15, audioContext.currentTime + 0.05);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+        
+        oscillator1.start(audioContext.currentTime);
+        oscillator2.start(audioContext.currentTime);
+        oscillator1.stop(audioContext.currentTime + 0.4);
+        oscillator2.stop(audioContext.currentTime + 0.4);
+      } catch (e) {
+        // 音声が再生できない場合は無視
+        console.log('Audio not available');
+      }
+    }
 
     updateBalance(); // 初期表示
 

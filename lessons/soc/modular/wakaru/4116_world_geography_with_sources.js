@@ -9,7 +9,7 @@ window.questions = [
       "南アメリカ大陸"
     ],
     "answer": 0,
-    "source": "大陸は広い順にユーラシア、アフリカ、北アメリカ、南アメリカの並びです。名前の知名度や地図の見た目で勘ちがいしがちですが、地球儀で\"赤道から両側に長い大地\"を探すとユーラシアの大きさが一目で分かります。面積という一つの物差しで比べることが、迷いを減らすコツです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">大陸の面積（広い順）\n\n🌍 世界の大陸\n    ↓\n1️⃣ ユーラシア大陸（最大）\n2️⃣ アフリカ大陸\n3️⃣ 北アメリカ大陸\n4️⃣ 南アメリカ大陸\n    ↓\n🌍 赤道から両側に長い大地</div>",
+    "source": "大陸は広い順にユーラシア大陸（ゆーらしあたいりく）、アフリカ大陸（あふりかたいりく）、北アメリカ大陸（きたあめりかたいりく）、南アメリカ大陸（みなみあめりかたいりく）の並びです。名前の知名度や地図の見た目で勘ちがいしがちですが、地球儀で\"赤道から両側に長い大地\"を探すとユーラシアの大きさが一目で分かります。面積という一つの物差しで比べることが、迷いを減らすコツです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">大陸の面積（広い順）\n\n🌍 世界の大陸\n    ↓\n1️⃣ ユーラシア大陸（最大）\n2️⃣ アフリカ大陸\n3️⃣ 北アメリカ大陸\n4️⃣ 南アメリカ大陸\n    ↓\n🌍 赤道から両側に長い大地</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -24,7 +24,7 @@ window.questions = [
       "モンブラン"
     ],
     "answer": 0,
-    "source": "一番高い山はエベレスト（チョモランマ）。キリマンジャロはアフリカ最高峰、アコンカグアは南米の最高峰、モンブランはアルプスの代表です。世界一と各大陸一を取り違えやすいので、\"世界＝エベレスト、大陸ごとに別の一番\"と覚えましょう。数直線の頂点を思い浮かべると確実です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">世界で最も標高が高い山\n\n⛰️ 世界一\n    ↓\n⛰️ エベレスト（チョモランマ）\n    ↓\n⛰️ 各大陸の最高峰\n    ↓\n⛰️ アフリカ：キリマンジャロ\n⛰️ 南米：アコンカグア\n⛰️ アルプス：モンブラン</div>",
+    "source": "一番高い山はエベレスト（えべれすと）（チョモランマ）。キリマンジャロ（きりまんじゃろ）はアフリカ最高峰、アコンカグア（あこんかぐあ）は南米の最高峰、モンブラン（もんぶらん）はアルプス（あるぷす）の代表です。世界一と各大陸一を取り違えやすいので、\"世界＝エベレスト、大陸ごとに別の一番\"と覚えましょう。数直線の頂点を思い浮かべると確実です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">世界で最も標高が高い山\n\n⛰️ 世界一\n    ↓\n⛰️ エベレスト（チョモランマ）\n    ↓\n⛰️ 各大陸の最高峰\n    ↓\n⛰️ アフリカ：キリマンジャロ\n⛰️ 南米：アコンカグア\n⛰️ アルプス：モンブラン</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -39,7 +39,7 @@ window.questions = [
       "ミシガン湖"
     ],
     "answer": 0,
-    "source": "面積が最大の湖はカスピ海（名前は海でも塩湖）。バイカル湖は世界一深く、ビクトリア湖はアフリカ最大、ミシガン湖は五大湖の一つです。\"広さの王様＝カスピ海、深さの王様＝バイカル\"と役割で整理すると混同しません。地図で海陸境界線に囲まれた巨大な内海を探すのがコツです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">世界の湖（面積最大）\n\n💧 面積最大\n    ↓\n💧 カスピ海（塩湖）\n    ↓\n💧 その他の湖\n    ↓\n💧 バイカル湖（世界一深い）\n💧 ビクトリア湖（アフリカ最大）\n💧 ミシガン湖（五大湖の一つ）</div>",
+    "source": "面積が最大の湖はカスピ海（かすぴかい）（名前は海でも塩湖（えんこ））。バイカル湖（ばいかるこ）は世界一深く、ビクトリア湖（びくとりあこ）はアフリカ最大、ミシガン湖（みしがんこ）は五大湖（ごだいこ）の一つです。\"広さの王様＝カスピ海、深さの王様＝バイカル\"と役割で整理すると混同しません。地図で海陸境界線に囲まれた巨大な内海を探すのがコツです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">世界の湖（面積最大）\n\n💧 面積最大\n    ↓\n💧 カスピ海（塩湖）\n    ↓\n💧 その他の湖\n    ↓\n💧 バイカル湖（世界一深い）\n💧 ビクトリア湖（アフリカ最大）\n💧 ミシガン湖（五大湖の一つ）</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -189,7 +189,7 @@ window.questions = [
       "エチオピア"
     ],
     "answer": 0,
-    "source": "地中海に面する北アフリカの国ならエジプト。ケニアや南アフリカ、エチオピアは別の海や内陸に位置します。\"ナイル川が海へそそぐ扇形のデルタ\"を地図に思い描けば、地中海沿岸であることが確信できます。海の向きと川の出口を手がかりにしましょう。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">エジプト（地中海に面）\n\n🌍 北アフリカ\n    ↓\n🌊 ナイル川が流れる\n    ↓\n🌊 扇形のデルタができる\n    ↓\n🌊 地中海へそそぐ\n    ↓\n🌍 エジプト（地中海沿岸）</div>",
+    "source": "地中海に面する北アフリカの国ならエジプト。\"ナイル川が海へそそぐ扇形のデルタ\"を地図に思い描けば、地中海沿岸であることが確信できます。海の向きと川の出口を手がかりにしましょう。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">エジプト（地中海に面）\n\n🌍 北アフリカ\n    ↓\n🌊 ナイル川が流れる\n    ↓\n🌊 扇形のデルタができる\n    ↓\n🌊 地中海へそそぐ\n    ↓\n🌍 エジプト（地中海沿岸）</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -279,7 +279,7 @@ window.questions = [
       "ギザ"
     ],
     "answer": 0,
-    "source": "エジプトの首都はカイロ。アレクサンドリアは地中海沿いの港町、ルクソールやギザは古代遺跡で有名です。\"ナイル川の大カーブに寄りそう巨大都市＝カイロ\"と地図で思い浮かべれば、観光名所との取り違えを防げます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">エジプトの首都\n\n🌊 ナイル川\n    ↓\n🌊 大カーブに寄りそう\n    ↓\n🏛️ カイロ（首都）\n    「巨大都市」\n    ↓\n🏙️ その他の都市\n    🏙️ アレクサンドリア（港町）\n    🏛️ ルクソール・ギザ（古代遺跡）</div>",
+    "source": "エジプトの首都はカイロ。アレクサンドリアは地中海沿いの港町、ルクソールやギザは古代遺跡（いせき）で有名です。\"ナイル川の大カーブに寄りそう巨大都市＝カイロ\"と地図で思い浮かべれば、観光名所との取り違えを防げます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">エジプトの首都\n\n🌊 ナイル川\n    ↓\n🌊 大カーブに寄りそう\n    ↓\n🏛️ カイロ（首都）\n    「巨大都市」\n    ↓\n🏙️ その他の都市\n    🏙️ アレクサンドリア（港町）\n    🏛️ ルクソール・ギザ（古代遺跡）</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -399,7 +399,7 @@ window.questions = [
       "一年中少雨"
     ],
     "answer": 0,
-    "source": "地中海性気候は夏に雨が少なく乾き、冬に雨が多い（夏乾燥・冬雨）。逆や一年中一定は別の気候です。\"夏はカラッとオーブン、冬はしっとり洗車\"と季節の家事にたとえると、体感の違いで記憶に残ります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">地中海性気候（Cs）\n\n🌍 地中海沿岸\n    ↓\n🌡️ 夏：カラッと乾燥\n    「雨が少ない」\n    ↓\n🌡️ 冬：しっとり雨が多い\n    ↓\n🌡️ 地中海性気候（Cs）\n    「夏乾燥・冬雨」</div>",
+    "source": "地中海性気候は夏に雨が少なく乾き、冬に雨が多い（夏乾燥・冬雨）。\"夏はカラッとオーブン、冬はしっとり洗車\"と季節の家事にたとえると、体感の違いで記憶に残ります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">地中海性気候（Cs）\n\n🌍 地中海沿岸\n    ↓\n🌡️ 夏：カラッと乾燥\n    「雨が少ない」\n    ↓\n🌡️ 冬：しっとり雨が多い\n    ↓\n🌡️ 地中海性気候（Cs）\n    「夏乾燥・冬雨」</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
