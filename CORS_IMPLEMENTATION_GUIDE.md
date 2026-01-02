@@ -190,3 +190,7 @@ Netlify Functions のログで以下を確認：
 - [Netlify Functions ドキュメント](https://docs.netlify.com/functions/overview/)
 - [MDN: CORS](https://developer.mozilla.org/ja/docs/Web/HTTP/CORS)
 
+
+
+
+

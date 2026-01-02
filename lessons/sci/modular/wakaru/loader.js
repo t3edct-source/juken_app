@@ -13,8 +13,24 @@
     // 小4理科（生物）
     'sci.biology.seasons_living_things': 'seasons_living_things_spring.js',
     'sci.biology.seasons_living_things_summer': idToFileName('sci.biology.seasons_living_things_summer'),
+    'sci.biology.insect_body_lifecycle': idToFileName('sci.biology.insect_body_lifecycle'),
+    'sci.biology.medaka_lifecycle': idToFileName('sci.biology.medaka_lifecycle'),
+    'sci.biology.microscope_water_organisms': idToFileName('sci.biology.microscope_water_organisms'),
+    'sci.biology.animal_classification': idToFileName('sci.biology.animal_classification'),
+    'sci.biology.living_things_seasons': idToFileName('sci.biology.living_things_seasons'),
+    'sci.biology.environment_energy': idToFileName('sci.biology.environment_energy'),
+    'sci.biology.bones_muscles_senses': idToFileName('sci.biology.bones_muscles_senses'),
+    'sci.biology.human_birth': idToFileName('sci.biology.human_birth'),
+    'sci.biology.seeds_germination': idToFileName('sci.biology.seeds_germination'),
     'sci.biology.plants_growth_light': idToFileName('sci.biology.plants_growth_light'),
+    'sci.biology.photosynthesis': idToFileName('sci.biology.photosynthesis'),
+    'sci.biology.plant_structure': idToFileName('sci.biology.plant_structure'),
+    'sci.biology.transpiration_respiration': idToFileName('sci.biology.transpiration_respiration'),
     'sci.biology.plants_observation': idToFileName('sci.biology.plants_observation'),
+    'sci.biology.plant_classification': idToFileName('sci.biology.plant_classification'),
+    'sci.biology.digestion_absorption': idToFileName('sci.biology.digestion_absorption'),
+    'sci.biology.heart_blood_circulation': idToFileName('sci.biology.heart_blood_circulation'),
+    'sci.biology.respiration_excretion': idToFileName('sci.biology.respiration_excretion'),
     
     // 小4理科（物理）
     'sci.physics.weight_volume_basic': idToFileName('sci.physics.weight_volume_basic'),
@@ -29,6 +45,11 @@
     // 小4理科（地学）
     'sci.earth.constellations_seasons': idToFileName('sci.earth.constellations_seasons'),
     'sci.earth.sun_movement_shadow': idToFileName('sci.earth.sun_movement_shadow'),
+    'sci.earth.sun_movement': idToFileName('sci.earth.sun_movement'),
+    'sci.earth.moon_movement': idToFileName('sci.earth.moon_movement'),
+    'sci.earth.stars_movement': idToFileName('sci.earth.stars_movement'),
+    'sci.earth.seasonal_constellations': idToFileName('sci.earth.seasonal_constellations'),
+    'sci.earth.solar_system': idToFileName('sci.earth.solar_system'),
     'sci.earth.weather_changes': idToFileName('sci.earth.weather_changes'),
     'sci.earth.river_work': idToFileName('sci.earth.river_work'),
     
@@ -46,7 +67,15 @@
     // 小5理科（地学）
     'sci.earth.volcano_structure': idToFileName('sci.earth.volcano_structure'),
     'sci.earth.earthquake_structure': idToFileName('sci.earth.earthquake_structure'),
+    'sci.earth.strata_formation': idToFileName('sci.earth.strata_formation'),
+    'sci.earth.various_landforms': idToFileName('sci.earth.various_landforms'),
+    'sci.earth.volcano_land_change': idToFileName('sci.earth.volcano_land_change'),
+    'sci.earth.fossils_strata': idToFileName('sci.earth.fossils_strata'),
     'sci.earth.land_river_erosion': idToFileName('sci.earth.land_river_erosion'),
+    'sci.earth.weather_observation_pressure_wind': idToFileName('sci.earth.weather_observation_pressure_wind'),
+    'sci.earth.temperature_changes': idToFileName('sci.earth.temperature_changes'),
+    'sci.earth.front_weather_land_sea_breeze': idToFileName('sci.earth.front_weather_land_sea_breeze'),
+    'sci.earth.japan_weather': idToFileName('sci.earth.japan_weather'),
     'sci.earth.clouds_fronts_weather_map': idToFileName('sci.earth.clouds_fronts_weather_map'),
     
     // 小5理科（生物）

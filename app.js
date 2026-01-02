@@ -1416,11 +1416,15 @@ scienceUnits = [
     shortName: '小4',
     icon: '📚',
     lessons: [
-      // 生物（6）
+      // 生物（11）
       'sci.biology.seasons_living_things', // 季節と生物（春）
       'sci.biology.seasons_living_things_summer', // 季節と生物（夏〜冬）
       'sci.kisetsu_seibutsu_annual_wakaru', // 季節と生物シミュレーション
       'sci.konchu_lifecycle_wakaru', // 昆虫の年間ライフサイクルシミュレーション
+      'sci.biology.insect_body_lifecycle', // こん虫のからだと育ち方
+      'sci.biology.medaka_lifecycle', // メダカの育ち方
+      'sci.biology.microscope_water_organisms', // けんび鏡 水中の小さな生物
+      'sci.biology.seeds_germination', // 種子のつくりと発芽
       'sci.biology.plants_growth_light', // 植物の成長
       'sci.biology.plants_observation', // 花のつくりと受粉
       // 物理（4）
@@ -1433,11 +1437,14 @@ scienceUnits = [
       'sci.chemistry.water_three_states', // 水の変化・状態変化
       'sci.chemistry.water_three_states_sim', // 水の変化：温度と状態変化シミュレーション
       'sci.chemistry.combustion_air', // 燃焼と空気の成分
-      // 地学（8）
+      // 地学（9）
       'sci.earth.constellations_seasons', // 星と星座
       'sci.earth.stars_constellations_sim', // 星と星座シミュレーション
       'sci.earth.sun_movement_shadow', // 太陽と影（基礎）
       'sci.earth.sun_movement_shadow_sim', // 太陽と影：影の長さシミュレーション
+      'sci.earth.stars_movement', // 星の動き
+      'sci.earth.seasonal_constellations', // 四季の星座
+      'sci.earth.solar_system', // 太陽系
       'sci.earth.weather_changes', // 天気の変化
       'sci.earth.weather_changes_cloud_motion_model', // 天気の変化：雲が動くモデル
       'sci.earth.river_work', // 川のはたらき
@@ -1463,21 +1470,33 @@ scienceUnits = [
       'sci.physics.light_properties', // 光の性質
       'sci.physics.light_properties_sim', // 光の性質シミュレーション
       'sci.physics.force_motion', // 力と運動（浮力・かっ車・輪じく）
-      // 地学（6）
+      // 地学（14）
       'sci.earth.volcano_structure', // 火山のしくみ
       'sci.earth.volcano_structure_sim', // 火山のしくみ：マグマと噴火シミュレーション
-      'sci.earth.earthquake_structure', // 地震のしくみ
+      'sci.earth.earthquake_structure', // 地震と地震のしくみ（統合）
       'sci.earth.earthquake_structure_sim', // 地震のしくみシミュレーション
+      'sci.earth.strata_formation', // 地層のでき方と岩石（統合）
+      'sci.earth.various_landforms', // いろいろな地形
+      'sci.earth.volcano_land_change', // 火山と大地の変化
+      'sci.earth.fossils_strata', // 化石と地層のようす
       'sci.earth.land_river_erosion', // 流水と地形の変化
-      'sci.earth.clouds_fronts_weather_map', // 気象（雲・前線・天気図）
-      'sci.earth.weather_fronts_sim', // 天気の変化（低気圧と前線）シミュレーション
-      // 生物（3）
+      'sci.earth.sun_movement', // 太陽の動き（小4から移動）
+      'sci.earth.moon_movement', // 月の動き（小4から移動）
+      'sci.earth.weather_observation_pressure_wind', // 気象の観測と雲のでき方（統合）
+      'sci.earth.temperature_changes', // 気温の変化
+      // 生物（8）
+      'sci.biology.animal_classification', // 動物の分類（小4から移動）
+      'sci.biology.living_things_seasons', // 生物のくらしと四季（小4から移動）
       'sci.biology.food_chain', // 生物のつながり（食物連鎖）
-      'sci.biology.human_body_digestion_respiration', // 人体①（消化・呼吸・血液）
-      'sci.biology.human_body_nervous_motion', // 人体②（神経・運動）
-      // 化学（2）
+      'sci.biology.photosynthesis', // 光合成のしくみ（小4から移動）
+      'sci.biology.plant_structure', // 根・くき・葉のつくり（小4から移動）
+      'sci.biology.transpiration_respiration', // 蒸散・呼吸のしくみ（小4から移動）
+      'sci.biology.plant_classification', // 植物のなかま分け
+      'sci.biology.digestion_absorption', // 消化と吸収
+      // 化学（3）
       'sci.chemistry.solubility_temperature', // 水溶液と溶解度
-      'sci.chemistry.solubility_temperature_sim' // 水溶液と溶解度シミュレーション
+      'sci.chemistry.solubility_temperature_sim', // 水溶液と溶解度シミュレーション
+      'sci.chemistry.solution_dissolution' // 水よう液ともののとけ方
     ]
   },
   {
@@ -1486,6 +1505,20 @@ scienceUnits = [
     shortName: '小6',
     icon: '🎯',
     lessons: [
+      // 気象（前線・天気図）系（小5から移動）（4）
+      'sci.earth.front_weather_land_sea_breeze', // 前線と天気, 海陸風
+      'sci.earth.japan_weather', // 日本の天気
+      'sci.earth.clouds_fronts_weather_map', // 気象（雲・前線・天気図）
+      'sci.earth.weather_fronts_sim', // 天気の変化（低気圧と前線）シミュレーション
+      // 人体（循環/排出/感覚器/誕生）系（小5から移動）（4）
+      'sci.biology.heart_blood_circulation', // 心臓と血液のじゅんかん
+      'sci.biology.respiration_excretion', // 呼吸と排出
+      'sci.biology.bones_muscles_senses', // 骨と筋肉, 感覚器
+      'sci.biology.human_birth', // ヒトのたんじょう
+      // 応用レッスン（3）
+      'sci.biology.environment_energy', // 環境問題 エネルギー問題（小4から移動）
+      'sci.biology.human_body_digestion_respiration', // 人体①（消化・呼吸・血液）
+      'sci.biology.human_body_nervous_motion', // 人体②（神経・運動）
       // 物理総合（3）
       'sci.comprehensive.electricity_comprehensive', // 電気総合（回路／電力／発熱）
       'sci.comprehensive.light_sound_comprehensive', // 光・音の総合
@@ -1493,7 +1526,7 @@ scienceUnits = [
       // 化学総合（2）
       'sci.comprehensive.combustion_comprehensive', // 気体・燃焼総合（計算含む）
       'sci.comprehensive.water_solution_comprehensive', // 水溶液総合（酸・アルカリ・中和）
-      // 生物（2）
+      // 生物総合（2）
       'sci.comprehensive.animals_comprehensive', // 動物総合
       'sci.comprehensive.human_body_comprehensive', // ヒトの体総合（全分野の横断）
       // 地学総合（3）

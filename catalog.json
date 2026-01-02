@@ -1938,6 +1938,17 @@
     ]
   },
   {
+    "id": "sci.biology.seeds_germination",
+    "grade": 4,
+    "subject": "sci",
+    "title": "種子のつくりと発芽",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.biology.seeds_germination&mode=wakaru",
+    "format": "html",
+    "tags": ["種子", "発芽", "無胚乳種子", "胚乳種子", "実験"]
+  },
+  {
     "id": "sci.biology.plants_growth_light",
     "grade": 4,
     "subject": "sci",
@@ -1947,6 +1958,50 @@
     "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.biology.plants_growth_light&mode=wakaru",
     "format": "html",
     "tags": []
+  },
+  {
+    "id": "sci.biology.photosynthesis",
+    "grade": 5,
+    "subject": "sci",
+    "title": "光合成のしくみ",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.biology.photosynthesis&mode=wakaru",
+    "format": "html",
+    "tags": ["光合成", "でんぷん", "葉緑体", "実験", "ヨウ素液"]
+  },
+  {
+    "id": "sci.biology.plant_structure",
+    "grade": 5,
+    "subject": "sci",
+    "title": "根・くき・葉のつくり",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.biology.plant_structure&mode=wakaru",
+    "format": "html",
+    "tags": ["根", "くき", "葉", "道管", "師管", "維管束", "単子葉類", "双子葉類"]
+  },
+  {
+    "id": "sci.biology.transpiration_respiration",
+    "grade": 5,
+    "subject": "sci",
+    "title": "蒸散・呼吸のしくみ",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.biology.transpiration_respiration&mode=wakaru",
+    "format": "html",
+    "tags": ["蒸散", "呼吸", "気孔", "実験", "光合成"]
+  },
+  {
+    "id": "sci.biology.plant_classification",
+    "grade": 5,
+    "subject": "sci",
+    "title": "植物のなかま分け",
+    "duration_min": 25,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.biology.plant_classification&mode=wakaru",
+    "format": "html",
+    "tags": ["分類", "種子植物", "胞子植物", "被子植物", "裸子植物", "単子葉類", "双子葉類"]
   },
   {
     "id": "sci.biology.plants_observation",
@@ -2173,6 +2228,149 @@
       "下流",
       "シミュレーション"
     ]
+  },
+  {
+    "id": "sci.biology.insect_body_lifecycle",
+    "grade": 4,
+    "subject": "sci",
+    "title": "こん虫のからだと育ち方",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.biology.insect_body_lifecycle&mode=wakaru",
+    "format": "html",
+    "tags": ["昆虫", "からだ", "育ち方", "変態"]
+  },
+  {
+    "id": "sci.biology.medaka_lifecycle",
+    "grade": 4,
+    "subject": "sci",
+    "title": "メダカの育ち方",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.biology.medaka_lifecycle&mode=wakaru",
+    "format": "html",
+    "tags": ["メダカ", "育ち方", "卵", "ふ化"]
+  },
+  {
+    "id": "sci.biology.microscope_water_organisms",
+    "grade": 4,
+    "subject": "sci",
+    "title": "けんび鏡 水中の小さな生物",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.biology.microscope_water_organisms&mode=wakaru",
+    "format": "html",
+    "tags": ["けんび鏡", "水中", "小さな生物", "観察"]
+  },
+  {
+    "id": "sci.biology.animal_classification",
+    "grade": 5,
+    "subject": "sci",
+    "title": "動物の分類",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.biology.animal_classification&mode=wakaru",
+    "format": "html",
+    "tags": ["動物", "分類", "脊椎動物", "無脊椎動物"]
+  },
+  {
+    "id": "sci.biology.living_things_seasons",
+    "grade": 5,
+    "subject": "sci",
+    "title": "生物のくらしと四季",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.biology.living_things_seasons&mode=wakaru",
+    "format": "html",
+    "tags": ["生物", "くらし", "四季", "季節"]
+  },
+  {
+    "id": "sci.biology.environment_energy",
+    "grade": 6,
+    "subject": "sci",
+    "title": "環境問題 エネルギー問題",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.biology.environment_energy&mode=wakaru",
+    "format": "html",
+    "tags": ["環境問題", "エネルギー", "地球温暖化", "再生可能エネルギー"]
+  },
+  {
+    "id": "sci.biology.bones_muscles_senses",
+    "grade": 6,
+    "subject": "sci",
+    "title": "骨と筋肉, 感覚器",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.biology.bones_muscles_senses&mode=wakaru",
+    "format": "html",
+    "tags": ["骨", "筋肉", "感覚器", "人体"]
+  },
+  {
+    "id": "sci.biology.human_birth",
+    "grade": 6,
+    "subject": "sci",
+    "title": "ヒトのたんじょう",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.biology.human_birth&mode=wakaru",
+    "format": "html",
+    "tags": ["ヒト", "たんじょう", "受精", "妊娠", "出産"]
+  },
+  {
+    "id": "sci.earth.sun_movement",
+    "grade": 5,
+    "subject": "sci",
+    "title": "太陽の動き",
+    "duration_min": 25,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.sun_movement&mode=wakaru",
+    "format": "html",
+    "tags": ["太陽", "動き", "日の出", "日の入り", "南中"]
+  },
+  {
+    "id": "sci.earth.moon_movement",
+    "grade": 5,
+    "subject": "sci",
+    "title": "月の動き",
+    "duration_min": 25,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.moon_movement&mode=wakaru",
+    "format": "html",
+    "tags": ["月", "動き", "満ち欠け", "月齢"]
+  },
+  {
+    "id": "sci.earth.stars_movement",
+    "grade": 4,
+    "subject": "sci",
+    "title": "星の動き",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.stars_movement&mode=wakaru",
+    "format": "html",
+    "tags": ["星", "動き", "北極星", "日周運動", "年周運動"]
+  },
+  {
+    "id": "sci.earth.seasonal_constellations",
+    "grade": 4,
+    "subject": "sci",
+    "title": "四季の星座",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.seasonal_constellations&mode=wakaru",
+    "format": "html",
+    "tags": ["星座", "四季", "夏の大三角", "冬の大三角", "オリオン座"]
+  },
+  {
+    "id": "sci.earth.solar_system",
+    "grade": 4,
+    "subject": "sci",
+    "title": "太陽系",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.solar_system&mode=wakaru",
+    "format": "html",
+    "tags": ["太陽系", "惑星", "衛星", "彗星", "金星"]
   },
   {
     "id": "sci.biology.seasons_living_things_oboeru",
@@ -2545,12 +2743,12 @@
     "id": "sci.earth.earthquake_structure",
     "grade": 5,
     "subject": "sci",
-    "title": "地震のしくみ",
-    "duration_min": 15,
+    "title": "地震と地震のしくみ",
+    "duration_min": 40,
     "sku_required": null,
     "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.earthquake_structure&mode=wakaru",
     "format": "html",
-    "tags": []
+    "tags": ["地震", "震度", "マグニチュード", "地震波", "初期微動", "主要動", "プレート", "活断層", "液状化", "緊急地震速報"]
   },
   {
     "id": "sci.earth.earthquake_structure_sim",
@@ -2572,6 +2770,50 @@
     ]
   },
   {
+    "id": "sci.earth.strata_formation",
+    "grade": 5,
+    "subject": "sci",
+    "title": "地層のでき方と岩石",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.strata_formation&mode=wakaru",
+    "format": "html",
+    "tags": ["地層", "でき方", "堆積", "層理", "たい積岩", "火成岩", "岩石"]
+  },
+  {
+    "id": "sci.earth.various_landforms",
+    "grade": 5,
+    "subject": "sci",
+    "title": "いろいろな地形",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.various_landforms&mode=wakaru",
+    "format": "html",
+    "tags": ["地形", "V字谷", "三角州", "扇状地", "三日月湖"]
+  },
+  {
+    "id": "sci.earth.volcano_land_change",
+    "grade": 5,
+    "subject": "sci",
+    "title": "火山と大地の変化",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.volcano_land_change&mode=wakaru",
+    "format": "html",
+    "tags": ["火山", "大地の変化", "マグマ", "溶岩", "しゅう曲", "断層"]
+  },
+  {
+    "id": "sci.earth.fossils_strata",
+    "grade": 5,
+    "subject": "sci",
+    "title": "化石と地層のようす",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.fossils_strata&mode=wakaru",
+    "format": "html",
+    "tags": ["化石", "地層", "示準化石", "示相化石", "不整合"]
+  },
+  {
     "id": "sci.earth.land_river_erosion",
     "grade": 5,
     "subject": "sci",
@@ -2583,8 +2825,52 @@
     "tags": []
   },
   {
-    "id": "sci.earth.clouds_fronts_weather_map",
+    "id": "sci.earth.weather_observation_pressure_wind",
     "grade": 5,
+    "subject": "sci",
+    "title": "気象の観測と雲のでき方",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.weather_observation_pressure_wind&mode=wakaru",
+    "format": "html",
+    "tags": ["気象", "観測", "気圧", "風", "風向", "風速", "しつ度", "雲", "でき方", "露点", "フェーン現象"]
+  },
+  {
+    "id": "sci.earth.temperature_changes",
+    "grade": 5,
+    "subject": "sci",
+    "title": "気温の変化",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.temperature_changes&mode=wakaru",
+    "format": "html",
+    "tags": ["気温", "変化", "日較差", "年較差", "百葉箱"]
+  },
+  {
+    "id": "sci.earth.front_weather_land_sea_breeze",
+    "grade": 6,
+    "subject": "sci",
+    "title": "前線と天気, 海陸風",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.front_weather_land_sea_breeze&mode=wakaru",
+    "format": "html",
+    "tags": ["前線", "天気", "海陸風", "温暖前線", "寒冷前線"]
+  },
+  {
+    "id": "sci.earth.japan_weather",
+    "grade": 6,
+    "subject": "sci",
+    "title": "日本の天気",
+    "duration_min": 15,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.japan_weather&mode=wakaru",
+    "format": "html",
+    "tags": ["日本の天気", "季節", "梅雨", "台風", "冬型の気圧配置"]
+  },
+  {
+    "id": "sci.earth.clouds_fronts_weather_map",
+    "grade": 6,
     "subject": "sci",
     "title": "気象（雲・前線・天気図）",
     "duration_min": 15,
@@ -2595,7 +2881,7 @@
   },
   {
     "id": "sci.earth.weather_fronts_sim",
-    "grade": 5,
+    "grade": 6,
     "subject": "sci",
     "title": "シミュレーションで学ぶ理科 - 天気の変化（低気圧と前線）",
     "duration_min": 20,
@@ -2610,6 +2896,39 @@
       "雨",
       "シミュレーション"
     ]
+  },
+  {
+    "id": "sci.biology.digestion_absorption",
+    "grade": 5,
+    "subject": "sci",
+    "title": "消化と吸収",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.biology.digestion_absorption&mode=wakaru",
+    "format": "html",
+    "tags": ["消化", "吸収", "消化器官", "栄養"]
+  },
+  {
+    "id": "sci.biology.heart_blood_circulation",
+    "grade": 6,
+    "subject": "sci",
+    "title": "心臓と血液のじゅんかん",
+    "duration_min": 25,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.biology.heart_blood_circulation&mode=wakaru",
+    "format": "html",
+    "tags": ["心臓", "血液", "じゅんかん", "血管"]
+  },
+  {
+    "id": "sci.biology.respiration_excretion",
+    "grade": 6,
+    "subject": "sci",
+    "title": "呼吸と排出",
+    "duration_min": 25,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.biology.respiration_excretion&mode=wakaru",
+    "format": "html",
+    "tags": ["呼吸", "排出", "肺", "腎臓"]
   },
   {
     "id": "sci.biology.food_chain",
@@ -2654,6 +2973,17 @@
     "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.chemistry.solubility_temperature&mode=wakaru",
     "format": "html",
     "tags": []
+  },
+  {
+    "id": "sci.chemistry.solution_dissolution",
+    "grade": 5,
+    "subject": "sci",
+    "title": "水よう液ともののとけ方",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.chemistry.solution_dissolution&mode=wakaru",
+    "format": "html",
+    "tags": ["水よう液", "とけ方", "溶解度", "飽和"]
   },
   {
     "id": "sci.chemistry.solubility_temperature_sim",

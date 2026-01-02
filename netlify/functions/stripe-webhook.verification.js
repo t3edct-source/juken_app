@@ -129,3 +129,7 @@ exports.handler = async (event) => {
 // ← return の「外」に置く（必須）
 exports.config = { bodyParser: false };
 
+
+
+
+
