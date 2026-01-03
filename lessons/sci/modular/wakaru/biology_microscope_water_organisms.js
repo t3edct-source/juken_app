@@ -30,7 +30,7 @@ window.questions = [
       "すべて同じ"
     ],
     "answer": 0,
-    "source": "けんび鏡で、のぞく側のレンズを接眼レンズといいます。接眼レンズは、目に近い側のレンズです。",
+    "source": "けんび鏡で、のぞく側のレンズを接眼レンズといいます。接眼レンズは、目に近い側のレンズです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">けんび鏡のつくり\n\n  目\n    ↓\n  接眼レンズ（のぞく側）\n    ↓\n  対物レンズ（標本に近い側）\n    ↓\n  標本\n\n【接眼レンズ】\n  目に近い側のレンズ</div>",
     "tags": ["接眼レンズ", "けんび鏡", "レンズ"],
     "difficulty": 1,
     "asof": "2026-01-02"

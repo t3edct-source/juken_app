@@ -14,7 +14,7 @@ window.questions = [
       "すべて同じ"
     ],
     "answer": 0,
-    "source": "男性のからだで、精巣でつくられるものは精子です。精子の長さはおよそ0.06mmです。",
+    "source": "男性のからだで、精巣でつくられるものは精子です。精子の長さはおよそ0.06mmです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">精子のつくられ方\n\n  男性のからだ\n  ┌─────┐\n  │ 精巣 │ ← 精子をつくる\n  └─────┘\n      ↓\n  精子（長さ：約0.06mm）</div>",
     "tags": ["精子", "精巣", "男性"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -46,7 +46,7 @@ window.questions = [
       "すべて同じ"
     ],
     "answer": 1,
-    "source": "女性のからだで、卵巣でつくられるものは卵（卵子）です。卵の直径はおよそ0.14mmです。",
+    "source": "女性のからだで、卵巣でつくられるものは卵（卵子）です。卵の直径はおよそ0.14mmです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">卵のつくられ方\n\n  女性のからだ\n  ┌─────┐\n  │ 卵巣 │ ← 卵をつくる\n  └─────┘\n      ↓\n  卵（直径：約0.14mm）</div>",
     "tags": ["卵", "卵子", "卵巣", "女性"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -78,7 +78,7 @@ window.questions = [
       "すべて同じ"
     ],
     "answer": 0,
-    "source": "男性から出された精子と女性の体内にある卵が結びつくことを受精といいます。受精した卵を受精卵といいます。",
+    "source": "男性から出された精子と女性の体内にある卵が結びつくことを受精といいます。受精した卵を受精卵といいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">受精のしくみ\n\n  精子（男性）\n      ↓\n  結びつく\n      ↓\n  卵（女性）\n      ↓\n  受精卵</div>",
     "tags": ["受精", "精子", "卵"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -142,7 +142,7 @@ window.questions = [
       "時によって変わる"
     ],
     "answer": 0,
-    "source": "たいばんを通して、母親からたい児にわたされるものは、酸素や養分です。",
+    "source": "たいばんを通して、母親からたい児にわたされるものは、酸素や養分です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">たいばんを通した物質のやりとり\n\n  母親\n    ↓ 酸素・養分\n  たいばん\n    ↓\n  たい児\n\n【母親からたい児へ】\n  酸素、養分</div>",
     "tags": ["たいばん", "母親", "たい児", "酸素", "養分"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -158,7 +158,7 @@ window.questions = [
       "時によって変わる"
     ],
     "answer": 1,
-    "source": "たいばんを通して、たい児から母親にわたされるものは、二酸化炭素や不要物です。",
+    "source": "たいばんを通して、たい児から母親にわたされるものは、二酸化炭素や不要物です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">たいばんを通した物質のやりとり\n\n  たい児\n    ↓ 二酸化炭素・不要物\n  たいばん\n    ↓\n  母親\n\n【たい児から母親へ】\n  二酸化炭素、不要物</div>",
     "tags": ["たいばん", "たい児", "母親", "二酸化炭素", "不要物"],
     "difficulty": 1,
     "asof": "2026-01-02"

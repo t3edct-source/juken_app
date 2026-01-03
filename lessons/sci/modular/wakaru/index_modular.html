@@ -45,12 +45,13 @@
       'sci.biology.transpiration_respiration': '蒸散・呼吸のしくみ',
       'sci.biology.plants_observation': '花のつくりと受粉',
       'sci.biology.plant_classification': '植物のなかま分け',
+      'sci.biology.insect_body_lifecycle': 'こん虫のからだと育ち方',
+      'sci.biology.medaka_lifecycle': 'メダカの育ち方',
       'sci.physics.weight_volume_basic': 'つり合いとてんびん',
       'sci.physics.electricity_conductivity_basic': '電気（乾電池と豆電球）',
       'sci.physics.heat_properties': '熱の性質とものの変化',
-      'sci.chemistry.air_properties': '空気の性質',
-      'sci.chemistry.water_three_states': '水の変化・状態変化',
-      'sci.chemistry.combustion_air': '燃焼と空気の成分',
+      'sci.chemistry.air_combustion_integrated': '空気と燃焼（統合）',
+      'sci.chemistry.water_state_integrated': '水の状態変化（統合）',
       'sci.earth.constellations_seasons': '星と星座',
       'sci.earth.sun_movement_shadow': '太陽と影（基礎）',
       'sci.earth.weather_changes': '天気の変化',
@@ -61,10 +62,10 @@
       'sci.physics.current_effect_heating': '電流の作用①（発熱）',
       'sci.physics.current_effect_magnetic': '電流の作用②（磁界）',
       'sci.physics.lever_weight_basic': 'てこのつり合い',
-      'sci.physics.spring_force': 'ばねと力',
+      'sci.physics.spring_force_buoyancy_integrated': 'ばねと力・ばねと浮力統合版',
       'sci.physics.light_properties': '光の性質',
-      'sci.physics.force_motion': '力と運動（浮力・かっ車・輪じく）',
-      'sci.earth.volcano_structure': '火山のしくみ',
+      'sci.physics.force_motion_pulley_integrated': '力と運動（浮力・かっ車・輪じく）統合版',
+      'sci.earth.volcano_structure_land_change_integrated': '火山のしくみ・火山と大地の変化統合版',
       'sci.earth.earthquake_structure': '地震のしくみ',
       'sci.earth.land_river_erosion': '流水と地形の変化',
       'sci.earth.clouds_fronts_weather_map': '気象（雲・前線・天気図）',
@@ -95,7 +96,10 @@
       
       const eraLabelElement = document.getElementById("eraLabel");
       if (eraLabelElement && eraMap[currentEra]) {
-        eraLabelElement.textContent = eraMap[currentEra] || currentEra;
+        const lessonTitle = eraMap[currentEra] || currentEra;
+        eraLabelElement.textContent = lessonTitle;
+        // ブラウザのタブタイトルを実際のレッスンタイトルに更新
+        document.title = `中学受験理科｜${lessonTitle}`;
       }
     })();
     

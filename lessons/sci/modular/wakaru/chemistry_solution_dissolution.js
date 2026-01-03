@@ -14,7 +14,7 @@ window.questions = [
       "すべて同じ"
     ],
     "answer": 0,
-    "source": "水にものがとけている液を水よう液といいます。水に、砂糖などの固体や二酸化炭素などの気体、アルコールなどの液体がとけた液を水よう液といいます。",
+    "source": "水にものがとけている液を水よう液といいます。水に、砂糖などの固体や二酸化炭素などの気体、アルコールなどの液体がとけた液を水よう液といいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">水よう液のつくり方\n\n  水\n  ┌─────┐\n  │  水   │\n  │ 物質 │ ← 砂糖、二酸化炭素、アルコールなど\n  └─────┘\n      ↓ とける\n  水よう液\n\n【水よう液】\n  水にものがとけている液</div>",
     "tags": ["水よう液", "水", "とける"],
     "difficulty": 1,
     "asof": "2026-01-02"

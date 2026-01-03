@@ -14,7 +14,7 @@ window.questions = [
       "循環"
     ],
     "answer": 0,
-    "source": "消化とは、食物中の養分のつぶを、からだに吸収されやすいものに変えるはたらきです。消化によって、でんぷんはブドウ糖に、たんぱく質はアミノ酸に、しぼうはしぼう酸とモノグリセリドに分解されます。",
+    "source": "消化とは、食物中の養分のつぶを、からだに吸収されやすいものに変えるはたらきです。消化によって、でんぷんはブドウ糖に、たんぱく質はアミノ酸に、しぼうはしぼう酸とモノグリセリドに分解されます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">消化のしくみ\n\n  食物中の養分\n      ↓\n  消化（分解）\n      ↓\n  からだに吸収されやすいもの\n\n【例】\n  でんぷん → ブドウ糖\n  たんぱく質 → アミノ酸\n  しぼう → しぼう酸 + モノグリセリド</div>",
     "tags": ["消化", "吸収", "養分"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -30,7 +30,7 @@ window.questions = [
       "小腸"
     ],
     "answer": 0,
-    "source": "消化管は、口→食道→胃→十二指腸→小腸→大腸→こう門と続く食物の通り道です。消化管の各器官で、食べ物が順番に消化されていきます。",
+    "source": "消化管は、口→食道→胃→十二指腸→小腸→大腸→こう門と続く食物の通り道です。消化管の各器官で、食べ物が順番に消化されていきます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">消化管の通り道\n\n  口\n    ↓\n  食道\n    ↓\n  胃\n    ↓\n  十二指腸\n    ↓\n  小腸\n    ↓\n  大腸\n    ↓\n  こう門\n\n【消化管】\n  食物の通り道\n  各器官で順番に消化</div>",
     "tags": ["消化管", "食物の通り道"],
     "difficulty": 1,
     "asof": "2026-01-02"

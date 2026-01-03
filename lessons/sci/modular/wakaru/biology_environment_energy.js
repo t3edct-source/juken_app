@@ -14,7 +14,7 @@ window.questions = [
       "どれでもない"
     ],
     "answer": 0,
-    "source": "もともとその地域には生息していなかった生物が、人間によって持ちこまれて野生化したものを外来種といいます。",
+    "source": "もともとその地域には生息していなかった生物が、人間によって持ちこまれて野生化したものを外来種といいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">外来種\n\n  他の地域の生物\n      ↓\n  人間によって持ちこまれる\n      ↓\n  野生化\n      ↓\n  外来種\n\n【特徴】\n  もともとその地域には生息していなかった\n  人間によって持ちこまれた</div>",
     "tags": ["外来種", "野生化", "人間"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -62,7 +62,7 @@ window.questions = [
       "どれでもない"
     ],
     "answer": 0,
-    "source": "二酸化炭素の濃度が高くなることにより、地球の平均気温が少しずつ上がることを地球温暖化といいます。",
+    "source": "二酸化炭素の濃度が高くなることにより、地球の平均気温が少しずつ上がることを地球温暖化といいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">地球温暖化\n\n  二酸化炭素の濃度が高くなる\n      ↓\n  地球の平均気温が上がる\n      ↓\n  地球温暖化\n\n【原因】\n  二酸化炭素の濃度が高くなる\n\n【結果】\n  地球の平均気温が上がる</div>",
     "tags": ["地球温暖化", "二酸化炭素", "平均気温"],
     "difficulty": 1,
     "asof": "2026-01-02"

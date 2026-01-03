@@ -14,7 +14,7 @@ window.questions = [
       "すべて同じ"
     ],
     "answer": 0,
-    "source": "かたやひじ、ひざなどのように、よく動く部分の骨と骨のつなぎ目を関節といいます。関節では、筋肉が関節をまたいで別々の骨についています。",
+    "source": "かたやひじ、ひざなどのように、よく動く部分の骨と骨のつなぎ目を関節といいます。関節では、筋肉が関節をまたいで別々の骨についています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">関節のつくり\n\n  骨 ──┐\n        │\n     関節 ← 骨と骨のつなぎ目\n        │\n  骨 ──┘\n    │\n  筋肉（関節をまたいで別々の骨につく）\n\n【関節】\n  よく動く部分\n  骨と骨のつなぎ目</div>",
     "tags": ["関節", "骨", "つなぎ目"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -46,7 +46,7 @@ window.questions = [
       "測定できない"
     ],
     "answer": 0,
-    "source": "うでを曲げるとき、曲げる側の筋肉は縮みます。2つの筋肉が交互に縮んで、関節を曲げ、のばします。",
+    "source": "うでを曲げるとき、曲げる側の筋肉は縮みます。2つの筋肉が交互に縮んで、関節を曲げ、のばします。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">うでを曲げるしくみ\n\n【うでを曲げるとき】\n  曲げる側の筋肉：縮む\n  のばす側の筋肉：ゆるむ\n      ↓\n  関節が曲がる\n\n【うでをのばすとき】\n  のばす側の筋肉：縮む\n  曲げる側の筋肉：ゆるむ\n      ↓\n  関節がのびる\n\n2つの筋肉が交互に縮む</div>",
     "tags": ["うでを曲げる", "筋肉", "縮む"],
     "difficulty": 1,
     "asof": "2026-01-02"

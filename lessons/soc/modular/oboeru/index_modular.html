@@ -166,7 +166,10 @@
       
       const eraLabelElement = document.getElementById("eraLabel");
       if (eraLabelElement && eraMap[era]) {
-        eraLabelElement.textContent = eraMap[era] || era;
+        const lessonTitle = eraMap[era] || era;
+        eraLabelElement.textContent = lessonTitle;
+        // ブラウザのタブタイトルを実際のレッスンタイトルに更新
+        document.title = `中学受験社会｜${lessonTitle}`;
       }
     })();
     

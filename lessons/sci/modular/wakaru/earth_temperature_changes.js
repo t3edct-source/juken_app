@@ -14,7 +14,7 @@ window.questions = [
       "測定できない"
     ],
     "answer": 1,
-    "source": "気温は、直射日光が当たらない場所で、地面からの高さが1.2m〜1.5mのところではかります。",
+    "source": "気温は、直射日光が当たらない場所で、地面からの高さが1.2m〜1.5mのところではかります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">気温のはかり方\n\n  ┌─────┐\n  │ 温度計│\n  └─────┘\n    │\n    │ 1.2m〜1.5m\n    │\n  ──── 地面\n\n【条件】\n  直射日光が当たらない場所\n  地面からの高さ：1.2m〜1.5m</div>",
     "tags": ["気温", "直射日光", "当たらない"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -46,7 +46,7 @@ window.questions = [
       "どれでもない"
     ],
     "answer": 0,
-    "source": "百葉箱は、太陽からの熱を吸収しにくくするため、白色にぬってあります。",
+    "source": "百葉箱は、太陽からの熱を吸収しにくくするため、白色にぬってあります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">百葉箱の色\n\n  太陽の光\n      ↓\n  ┌─────┐\n  │百葉箱│ ← 白色（熱を吸収しにくい）\n  └─────┘\n\n【白色の理由】\n  太陽からの熱を\n  吸収しにくくする</div>",
     "tags": ["百葉箱", "白色", "熱"],
     "difficulty": 1,
     "asof": "2026-01-02"

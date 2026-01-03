@@ -14,7 +14,7 @@ window.questions = [
       "測定できない"
     ],
     "answer": 0,
-    "source": "星の色は、星の表面温度によってちがいます。表面温度が高い星ほど青白色に、低い星ほど赤色に見えます。",
+    "source": "星の色は、星の表面温度によってちがいます。表面温度が高い星ほど青白色に、低い星ほど赤色に見えます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">星の色と表面温度\n\n  表面温度：高い\n      ↓\n  青白色の星\n\n  表面温度：低い\n      ↓\n  赤色の星\n\n【関係】\n  温度が高い → 青白色\n  温度が低い → 赤色</div>",
     "tags": ["星の色", "表面温度"],
     "difficulty": 1,
     "asof": "2026-01-02"

@@ -165,7 +165,10 @@
       
       const eraLabelElement = document.getElementById("eraLabel");
       if (eraLabelElement && eraMap[currentEra]) {
-        eraLabelElement.textContent = eraMap[currentEra] || currentEra;
+        const lessonTitle = eraMap[currentEra] || currentEra;
+        eraLabelElement.textContent = lessonTitle;
+        // ブラウザのタブタイトルを実際のレッスンタイトルに更新
+        document.title = `中学受験社会｜${lessonTitle}`;
       }
     })();
     

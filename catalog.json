@@ -1971,26 +1971,15 @@
     "tags": ["光合成", "でんぷん", "葉緑体", "実験", "ヨウ素液"]
   },
   {
-    "id": "sci.biology.plant_structure",
+    "id": "sci.biology.plant_structure_transpiration_integrated",
     "grade": 5,
     "subject": "sci",
-    "title": "根・くき・葉のつくり",
-    "duration_min": 20,
+    "title": "植物のつくりとはたらき",
+    "duration_min": 40,
     "sku_required": null,
-    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.biology.plant_structure&mode=wakaru",
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.biology.plant_structure_transpiration_integrated&mode=wakaru",
     "format": "html",
-    "tags": ["根", "くき", "葉", "道管", "師管", "維管束", "単子葉類", "双子葉類"]
-  },
-  {
-    "id": "sci.biology.transpiration_respiration",
-    "grade": 5,
-    "subject": "sci",
-    "title": "蒸散・呼吸のしくみ",
-    "duration_min": 20,
-    "sku_required": null,
-    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.biology.transpiration_respiration&mode=wakaru",
-    "format": "html",
-    "tags": ["蒸散", "呼吸", "気孔", "実験", "光合成"]
+    "tags": ["根", "くき", "葉", "道管", "師管", "維管束", "単子葉類", "双子葉類", "蒸散", "呼吸", "気孔", "実験"]
   },
   {
     "id": "sci.biology.plant_classification",
@@ -2065,26 +2054,26 @@
     "tags": []
   },
   {
-    "id": "sci.chemistry.air_properties",
+    "id": "sci.chemistry.air_combustion_integrated",
     "grade": 4,
     "subject": "sci",
-    "title": "空気の性質",
-    "duration_min": 15,
+    "title": "空気と燃焼（統合）",
+    "duration_min": 40,
     "sku_required": null,
-    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.chemistry.air_properties&mode=wakaru",
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.chemistry.air_combustion_integrated&mode=wakaru",
     "format": "html",
-    "tags": []
+    "tags": ["空気", "燃焼", "酸素", "二酸化炭素", "窒素", "燃焼の三条件", "ろうそく", "木炭", "金属"]
   },
   {
-    "id": "sci.chemistry.water_three_states",
+    "id": "sci.chemistry.water_state_integrated",
     "grade": 4,
     "subject": "sci",
-    "title": "水の変化・状態変化",
-    "duration_min": 15,
+    "title": "水の状態変化（統合）",
+    "duration_min": 35,
     "sku_required": null,
-    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.chemistry.water_three_states&mode=wakaru",
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.chemistry.water_state_integrated&mode=wakaru",
     "format": "html",
-    "tags": []
+    "tags": ["水", "状態変化", "融解", "凝固", "蒸発", "沸騰", "凝結", "融点", "沸点", "水の三態"]
   },
   {
     "id": "sci.chemistry.water_three_states_sim",
@@ -2105,26 +2094,26 @@
     ]
   },
   {
-    "id": "sci.chemistry.combustion_air",
+    "id": "sci.chemistry.physics.lab_equipment",
     "grade": 4,
     "subject": "sci",
-    "title": "燃焼と空気の成分",
-    "duration_min": 15,
+    "title": "メスシリンダー, ろ過、 ガスバーナー",
+    "duration_min": 20,
     "sku_required": null,
-    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.chemistry.combustion_air&mode=wakaru",
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.chemistry.physics.lab_equipment&mode=wakaru",
     "format": "html",
-    "tags": []
+    "tags": ["実験器具", "メスシリンダー", "ろ過", "ガスバーナー", "使い方"]
   },
   {
-    "id": "sci.earth.constellations_seasons",
+    "id": "sci.earth.stars_constellations_integrated",
     "grade": 4,
     "subject": "sci",
-    "title": "星と星座",
-    "duration_min": 15,
+    "title": "星と星座・星の動き",
+    "duration_min": 30,
     "sku_required": null,
-    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.constellations_seasons&mode=wakaru",
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.stars_constellations_integrated&mode=wakaru",
     "format": "html",
-    "tags": []
+    "tags": ["星", "星座", "星の動き", "北極星", "日周運動", "年周運動", "四季の星座"]
   },
   {
     "id": "sci.earth.stars_constellations_sim",
@@ -2340,28 +2329,6 @@
     "tags": ["月", "動き", "満ち欠け", "月齢"]
   },
   {
-    "id": "sci.earth.stars_movement",
-    "grade": 4,
-    "subject": "sci",
-    "title": "星の動き",
-    "duration_min": 20,
-    "sku_required": null,
-    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.stars_movement&mode=wakaru",
-    "format": "html",
-    "tags": ["星", "動き", "北極星", "日周運動", "年周運動"]
-  },
-  {
-    "id": "sci.earth.seasonal_constellations",
-    "grade": 4,
-    "subject": "sci",
-    "title": "四季の星座",
-    "duration_min": 20,
-    "sku_required": null,
-    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.seasonal_constellations&mode=wakaru",
-    "format": "html",
-    "tags": ["星座", "四季", "夏の大三角", "冬の大三角", "オリオン座"]
-  },
-  {
     "id": "sci.earth.solar_system",
     "grade": 4,
     "subject": "sci",
@@ -2527,13 +2494,13 @@
     "tags": []
   },
   {
-    "id": "sci.physics.current_voltage_circuit",
+    "id": "sci.physics.current_circuit_integrated",
     "grade": 5,
     "subject": "sci",
-    "title": "電気の基礎（乾電池・回路）",
-    "duration_min": 15,
+    "title": "電気の基礎と回路を流れる電流の大きさ（統合）",
+    "duration_min": 20,
     "sku_required": null,
-    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.physics.current_voltage_circuit&mode=wakaru",
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.physics.current_circuit_integrated&mode=wakaru",
     "format": "html",
     "tags": []
   },
@@ -2656,15 +2623,15 @@
     "tags": []
   },
   {
-    "id": "sci.physics.spring_force",
+    "id": "sci.physics.spring_force_buoyancy_integrated",
     "grade": 5,
     "subject": "sci",
-    "title": "ばねと力",
-    "duration_min": 15,
+    "title": "ばねと力・ばねと浮力統合版",
+    "duration_min": 35,
     "sku_required": null,
-    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.physics.spring_force&mode=wakaru",
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.physics.spring_force_buoyancy_integrated&mode=wakaru",
     "format": "html",
-    "tags": []
+    "tags": ["ばね", "のび", "重さ", "比例", "直列つなぎ", "並列つなぎ", "力", "浮力"]
   },
   {
     "id": "sci.physics.light_properties",
@@ -2700,26 +2667,59 @@
     "tags": []
   },
   {
-    "id": "sci.physics.force_motion",
+    "id": "sci.physics.force_motion_pulley_integrated",
     "grade": 5,
     "subject": "sci",
-    "title": "力と運動（浮力・かっ車・輪じく）",
-    "duration_min": 15,
+    "title": "力と運動（浮力・かっ車・輪じく）統合版",
+    "duration_min": 38,
     "sku_required": null,
-    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.physics.force_motion&mode=wakaru",
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.physics.force_motion_pulley_integrated&mode=wakaru",
     "format": "html",
-    "tags": []
+    "tags": ["浮力", "滑車", "輪じく", "力", "運動"]
   },
   {
-    "id": "sci.earth.volcano_structure",
+    "id": "sci.physics.pendulum_moving_weight_integrated",
     "grade": 5,
     "subject": "sci",
-    "title": "火山のしくみ",
-    "duration_min": 15,
+    "title": "ふりことおもりの運動",
+    "duration_min": 40,
     "sku_required": null,
-    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.volcano_structure&mode=wakaru",
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.physics.pendulum_moving_weight_integrated&mode=wakaru",
     "format": "html",
-    "tags": []
+    "tags": ["ふりこ", "おもり", "周期", "長さ", "速さ", "はたらき", "しゃ面"]
+  },
+  {
+    "id": "sci.physics.balance",
+    "grade": 5,
+    "subject": "sci",
+    "title": "上皿てんびん",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.physics.balance&mode=wakaru",
+    "format": "html",
+    "tags": ["上皿てんびん", "重さ", "分銅", "つり合い", "はかり方"]
+  },
+  {
+    "id": "sci.physics.current_compass",
+    "grade": 5,
+    "subject": "sci",
+    "title": "流れる電流と方位磁針",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.physics.current_compass&mode=wakaru",
+    "format": "html",
+    "tags": ["電流", "磁界", "方位磁針", "右ねじの法則", "磁力線"]
+  },
+  {
+    "id": "sci.earth.volcano_structure_land_change_integrated",
+    "grade": 5,
+    "subject": "sci",
+    "title": "火山のしくみ・火山と大地の変化統合版",
+    "duration_min": 40,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.volcano_structure_land_change_integrated&mode=wakaru",
+    "format": "html",
+    "tags": ["火山", "マグマ", "溶岩", "火山灰", "しゅう曲", "断層", "整合", "不整合", "風化"]
   },
   {
     "id": "sci.earth.volcano_structure_sim",
@@ -2790,17 +2790,6 @@
     "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.various_landforms&mode=wakaru",
     "format": "html",
     "tags": ["地形", "V字谷", "三角州", "扇状地", "三日月湖"]
-  },
-  {
-    "id": "sci.earth.volcano_land_change",
-    "grade": 5,
-    "subject": "sci",
-    "title": "火山と大地の変化",
-    "duration_min": 20,
-    "sku_required": null,
-    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.volcano_land_change&mode=wakaru",
-    "format": "html",
-    "tags": ["火山", "大地の変化", "マグマ", "溶岩", "しゅう曲", "断層"]
   },
   {
     "id": "sci.earth.fossils_strata",
@@ -2964,26 +2953,37 @@
     "tags": []
   },
   {
-    "id": "sci.chemistry.solubility_temperature",
+    "id": "sci.chemistry.solution_integrated",
     "grade": 5,
     "subject": "sci",
-    "title": "水溶液と溶解度",
-    "duration_min": 15,
+    "title": "水溶液（溶解度・とけ方・濃さ）",
+    "duration_min": 35,
     "sku_required": null,
-    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.chemistry.solubility_temperature&mode=wakaru",
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.chemistry.solution_integrated&mode=wakaru",
     "format": "html",
-    "tags": []
+    "tags": ["水よう液", "溶解度", "とけ方", "濃さ", "計算", "百分率", "飽和", "うすめる", "蒸発"]
   },
   {
-    "id": "sci.chemistry.solution_dissolution",
-    "grade": 5,
+    "id": "sci.chemistry.physics.volume_change",
+    "grade": 4,
     "subject": "sci",
-    "title": "水よう液ともののとけ方",
+    "title": "空気・水・金属と体積変化",
     "duration_min": 20,
     "sku_required": null,
-    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.chemistry.solution_dissolution&mode=wakaru",
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.chemistry.physics.volume_change&mode=wakaru",
     "format": "html",
-    "tags": ["水よう液", "とけ方", "溶解度", "飽和"]
+    "tags": ["空気", "水", "金属", "体積", "温度", "バイメタル", "ぼう張率"]
+  },
+  {
+    "id": "sci.chemistry.physics.heat_transfer",
+    "grade": 5,
+    "subject": "sci",
+    "title": "熱の移動と温度の変化",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.chemistry.physics.heat_transfer&mode=wakaru",
+    "format": "html",
+    "tags": ["熱", "温度", "熱量", "カロリー", "計算"]
   },
   {
     "id": "sci.chemistry.solubility_temperature_sim",
@@ -3233,6 +3233,39 @@
     "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.comprehensive.water_solution_comprehensive&mode=wakaru",
     "format": "html",
     "tags": []
+  },
+  {
+    "id": "sci.chemistry.neutralization",
+    "grade": 6,
+    "subject": "sci",
+    "title": "中 和",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.chemistry.neutralization&mode=wakaru",
+    "format": "html",
+    "tags": ["中和", "酸", "アルカリ", "塩", "BTB液"]
+  },
+  {
+    "id": "sci.chemistry.solution_metal_reaction",
+    "grade": 6,
+    "subject": "sci",
+    "title": "水よう液と金属の反応",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.chemistry.solution_metal_reaction&mode=wakaru",
+    "format": "html",
+    "tags": ["水よう液", "金属", "反応", "水素", "計算"]
+  },
+  {
+    "id": "sci.chemistry.various_gases",
+    "grade": 6,
+    "subject": "sci",
+    "title": "いろいろな気体",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.chemistry.various_gases&mode=wakaru",
+    "format": "html",
+    "tags": ["気体", "水素", "アンモニア", "ちっ素", "塩化水素", "集め方"]
   },
   {
     "id": "sci.comprehensive.animals_comprehensive",

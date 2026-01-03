@@ -14,7 +14,7 @@ window.questions = [
       "すべて"
     ],
     "answer": 0,
-    "source": "セキツイ動物は、背骨をもっている動物のなかまです。セキツイ動物には、魚類、両生類、は虫類、鳥類、ほ乳類の5つのグループがあります。",
+    "source": "セキツイ動物は、背骨をもっている動物のなかまです。セキツイ動物には、魚類、両生類、は虫類、鳥類、ほ乳類の5つのグループがあります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">セキツイ動物\n\n  セキツイ動物\n  ┌─────────┐\n  │ 背骨   │ ← 特徴\n  └─────────┘\n      ↓\n  5つのグループ\n  ① 魚類\n  ② 両生類\n  ③ は虫類\n  ④ 鳥類\n  ⑤ ほ乳類</div>",
     "tags": ["セキツイ動物", "背骨", "動物の分類"],
     "difficulty": 1,
     "asof": "2026-01-02"

@@ -14,7 +14,7 @@ window.questions = [
       "どれでもない"
     ],
     "answer": 0,
-    "source": "太陽と、そのまわりを公転する8つのわく星などの天体の集まりを太陽系といいます。",
+    "source": "太陽と、そのまわりを公転する8つのわく星などの天体の集まりを太陽系といいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">太陽系\n\n      ☀️ 太陽\n        │\n        │ 公転\n        ↓\n  ┌─────────────┐\n  │ 8つのわく星  │\n  │ その他の天体 │\n  └─────────────┘\n\n【太陽系の構成】\n  太陽 + わく星 + その他の天体</div>",
     "tags": ["太陽系", "わく星", "天体"],
     "difficulty": 1,
     "asof": "2026-01-02"

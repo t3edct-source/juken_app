@@ -10,7 +10,7 @@ window.questions = [
       "維管束"
     ],
     "answer": 0,
-    "source": "根毛は、根の先のほうにある、毛のような無数の根です。根毛があることによって根の表面積が大きくなり、水や養分を効率よく吸収することができます。根毛はとても小さく、肉眼では見えにくいですが、植物が健康に育つうえで欠かせない重要な部分です。",
+    "source": "根毛は、根の先のほうにある、毛のような無数の根です。根毛があることによって根の表面積が大きくなり、水や養分を効率よく吸収することができます。根毛はとても小さく、肉眼では見えにくいですが、植物が健康に育つうえで欠かせない重要な部分です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">根毛の構造\n\n  根\n  ┌─────┐\n  │      │\n  │      │\n  └───┬─┘\n      │\n    ┌─┴─┐\n    │ │ │ │ ← 根毛（毛のような無数の根）\n    └─┴─┘\n\n【根毛の役割】\n  表面積が大きくなる\n      ↓\n  水や養分を効率よく吸収</div>",
     "tags": ["根", "根毛", "吸収"],
     "difficulty": 1,
     "asof": "2025-01-27"

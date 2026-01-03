@@ -30,7 +30,7 @@ window.questions = [
       "太陽の動き"
     ],
     "answer": 2,
-    "source": "月の1日の動きは、地球の自転が原因です。地球が自転することで、月が太陽と同じように、東から出て南の空を通り西にしずむように見えます。",
+    "source": "月の1日の動きは、地球の自転が原因です。地球が自転することで、月が太陽と同じように、東から出て南の空を通り西にしずむように見えます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">月の1日の動き\n\n  東 ←─── 月 ───→ 西\n      ↓\n  地球が自転\n      ↓\n  月が東から西へ動いて見える\n\n【動きの順番】\n  東 → 南の空 → 西</div>",
     "tags": ["月", "1日の動き", "地球の自転"],
     "difficulty": 1,
     "asof": "2026-01-02"

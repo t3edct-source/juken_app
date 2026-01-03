@@ -10,7 +10,7 @@ window.questions = [
       "受粉"
     ],
     "answer": 0,
-    "source": "蒸散は、植物が水を水蒸気として体外に放出することです。蒸散は、葉の表面にある気孔という小さなすきまから行われます。蒸散には、植物体内の水分量の調節、根からの水の吸収をさかんにする、体温の上昇を防ぐなどの役割があります。",
+    "source": "蒸散は、植物が水を水蒸気として体外に放出することです。蒸散は、葉の表面にある気孔という小さなすきまから行われます。蒸散には、植物体内の水分量の調節、根からの水の吸収をさかんにする、体温の上昇を防ぐなどの役割があります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">蒸散のしくみ\n\n  植物体内の水\n      ↓\n  気孔（葉の表面）\n      ↓\n  水蒸気として放出\n\n【蒸散の役割】\n  水分量の調節\n  根からの水の吸収をさかんにする\n  体温の上昇を防ぐ</div>",
     "tags": ["蒸散", "水蒸気", "気孔"],
     "difficulty": 1,
     "asof": "2025-01-27"

@@ -14,7 +14,7 @@ window.questions = [
       "一年中"
     ],
     "answer": 0,
-    "source": "タンポポは、春に花をさかせます。春に花をさかせる植物には、タンポポ、レンゲソウ、ナズナ、エンドウ、スミレ、アブラナ、シロツメクサなどがあります。",
+    "source": "タンポポは、春に花をさかせます。春に花をさかせる植物には、タンポポ、レンゲソウ、ナズナ、エンドウ、スミレ、アブラナ、シロツメクサなどがあります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">春に花をさかせる植物\n\n  春 🌸\n      ↓\n  タンポポ、レンゲソウ、\n  ナズナ、エンドウ、\n  スミレ、アブラナ、\n  シロツメクサなど\n\n【春の花】\n  多くの植物が花をさかせる季節</div>",
     "tags": ["タンポポ", "春", "花"],
     "difficulty": 1,
     "asof": "2026-01-02"

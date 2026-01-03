@@ -14,7 +14,7 @@ window.questions = [
       "すべて"
     ],
     "answer": 0,
-    "source": "太陽の1日の動きは、地球の自転による見かけの動きです。地球が自転することで、太陽が東から西へ動いて見えます。",
+    "source": "太陽の1日の動きは、地球の自転による見かけの動きです。地球が自転することで、太陽が東から西へ動いて見えます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">太陽の1日の動き\n\n  東 ←─── ☀️ ───→ 西\n      ↓\n  地球が自転\n      ↓\n  太陽が東から西へ動いて見える\n\n【原因】\n  地球の自転\n\n【結果】\n  見かけの動き</div>",
     "tags": ["太陽", "1日の動き", "自転", "見かけの動き"],
     "difficulty": 1,
     "asof": "2026-01-02"

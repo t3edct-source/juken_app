@@ -24,8 +24,7 @@
     'sci.biology.seeds_germination': idToFileName('sci.biology.seeds_germination'),
     'sci.biology.plants_growth_light': idToFileName('sci.biology.plants_growth_light'),
     'sci.biology.photosynthesis': idToFileName('sci.biology.photosynthesis'),
-    'sci.biology.plant_structure': idToFileName('sci.biology.plant_structure'),
-    'sci.biology.transpiration_respiration': idToFileName('sci.biology.transpiration_respiration'),
+    'sci.biology.plant_structure_transpiration_integrated': 'biology_plant_structure_transpiration_integrated.js', // 植物のつくりとはたらき（統合）
     'sci.biology.plants_observation': idToFileName('sci.biology.plants_observation'),
     'sci.biology.plant_classification': idToFileName('sci.biology.plant_classification'),
     'sci.biology.digestion_absorption': idToFileName('sci.biology.digestion_absorption'),
@@ -38,38 +37,37 @@
     'sci.physics.heat_properties': idToFileName('sci.physics.heat_properties'),
     
     // 小4理科（化学）
-    'sci.chemistry.air_properties': idToFileName('sci.chemistry.air_properties'),
-    'sci.chemistry.water_three_states': idToFileName('sci.chemistry.water_three_states'),
-    'sci.chemistry.combustion_air': idToFileName('sci.chemistry.combustion_air'),
+    'sci.chemistry.air_combustion_integrated': 'chemistry_air_combustion_integrated.js', // 空気と燃焼（統合）
+    'sci.chemistry.water_state_integrated': 'chemistry_water_state_integrated.js', // 水の状態変化（統合）
     
     // 小4理科（地学）
-    'sci.earth.constellations_seasons': idToFileName('sci.earth.constellations_seasons'),
+    'sci.earth.stars_constellations_integrated': 'earth_stars_constellations_integrated.js', // 星と星座・星の動き（統合）
     'sci.earth.sun_movement_shadow': idToFileName('sci.earth.sun_movement_shadow'),
     'sci.earth.sun_movement': idToFileName('sci.earth.sun_movement'),
     'sci.earth.moon_movement': idToFileName('sci.earth.moon_movement'),
-    'sci.earth.stars_movement': idToFileName('sci.earth.stars_movement'),
-    'sci.earth.seasonal_constellations': idToFileName('sci.earth.seasonal_constellations'),
     'sci.earth.solar_system': idToFileName('sci.earth.solar_system'),
     'sci.earth.weather_changes': idToFileName('sci.earth.weather_changes'),
     'sci.earth.river_work': idToFileName('sci.earth.river_work'),
     
     // 小5理科（物理）
-    'sci.physics.current_voltage_circuit': idToFileName('sci.physics.current_voltage_circuit'),
+    'sci.physics.current_circuit_integrated': 'physics_current_circuit_integrated.js',
     'sci.physics.current_effect_heating': 'physics_current_effect_heating.js',
     'sci.physics.current_effect_magnetic': 'physics_current_effect_magnetic.js',
     'sci.physics.lever_weight_basic': idToFileName('sci.physics.lever_weight_basic'),
-    'sci.physics.spring_force': idToFileName('sci.physics.spring_force'),
+    'sci.physics.spring_force_buoyancy_integrated': 'physics_spring_force_buoyancy_integrated.js', // ばねと力・ばねと浮力統合版
     'sci.physics.light_properties': idToFileName('sci.physics.light_properties'),
     'sci.physics.light_reflection_refraction': 'physics_light_reflection_refraction.js',
     'sci.physics.sound_properties': 'physics_sound_properties.js',
-    'sci.physics.force_motion': idToFileName('sci.physics.force_motion'),
+    'sci.physics.force_motion_pulley_integrated': 'physics_force_motion_pulley_integrated.js', // 力と運動（浮力・かっ車・輪じく）統合版
+    'sci.physics.pendulum_moving_weight_integrated': 'physics_pendulum_moving_weight_integrated.js', // ふりことおもりの運動（統合）
+    'sci.physics.balance': idToFileName('sci.physics.balance'),
+    'sci.physics.current_compass': idToFileName('sci.physics.current_compass'),
     
     // 小5理科（地学）
-    'sci.earth.volcano_structure': idToFileName('sci.earth.volcano_structure'),
+    'sci.earth.volcano_structure_land_change_integrated': 'earth_volcano_structure_land_change_integrated.js', // 火山のしくみ・火山と大地の変化統合版
     'sci.earth.earthquake_structure': idToFileName('sci.earth.earthquake_structure'),
     'sci.earth.strata_formation': idToFileName('sci.earth.strata_formation'),
     'sci.earth.various_landforms': idToFileName('sci.earth.various_landforms'),
-    'sci.earth.volcano_land_change': idToFileName('sci.earth.volcano_land_change'),
     'sci.earth.fossils_strata': idToFileName('sci.earth.fossils_strata'),
     'sci.earth.land_river_erosion': idToFileName('sci.earth.land_river_erosion'),
     'sci.earth.weather_observation_pressure_wind': idToFileName('sci.earth.weather_observation_pressure_wind'),
@@ -84,8 +82,13 @@
     'sci.biology.human_body_nervous_motion': idToFileName('sci.biology.human_body_nervous_motion'),
     
     // 小5理科（化学）
-    'sci.chemistry.solubility_temperature': idToFileName('sci.chemistry.solubility_temperature'),
-    'sci.chemistry.dissolution_solution': 'chemistry_dissolution_solution.js',
+    'sci.chemistry.solution_integrated': 'chemistry_solution_integrated.js', // 水溶液（溶解度・とけ方・濃さ）（統合）
+    'sci.chemistry.neutralization': idToFileName('sci.chemistry.neutralization'),
+    'sci.chemistry.solution_metal_reaction': idToFileName('sci.chemistry.solution_metal_reaction'),
+    'sci.chemistry.various_gases': idToFileName('sci.chemistry.various_gases'),
+    'sci.chemistry.physics.heat_transfer': 'chemistry_physics_heat_transfer.js',
+    'sci.chemistry.physics.volume_change': 'chemistry_physics_volume_change.js',
+    'sci.chemistry.physics.lab_equipment': 'chemistry_physics_lab_equipment.js',
     
     // 小6理科（総合）
     'sci.comprehensive.electricity_comprehensive': idToFileName('sci.comprehensive.electricity_comprehensive'),

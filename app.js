@@ -1286,31 +1286,51 @@ async function loadCatalog(){
     try{
       const res = await fetch(url);
       if (res.ok){ 
-        state.catalog = await res.json(); 
-        console.log('🔍 catalog読み込み成功:', state.catalog.length, '件');
-        
-        // インデックスを作成
-        const indexes = buildCatalogIndex(state.catalog);
-        state.catalogIndex = indexes.byId;
-        state.catalogIndexByGrade = indexes.byGrade;
-        state.catalogIndexBySubject = indexes.bySubject;
-        console.log('🔍 カタログインデックス作成完了:', {
-          total: state.catalogIndex.size,
-          byGrade: Array.from(state.catalogIndexByGrade.keys()),
-          bySubject: Array.from(state.catalogIndexBySubject.keys())
-        });
-        
-        lastErr=null; 
-        break; 
+        const text = await res.text();
+        console.log('🔍 レスポンス取得成功、JSONパース開始...');
+        try {
+          state.catalog = JSON.parse(text);
+          console.log('🔍 catalog読み込み成功:', state.catalog.length, '件');
+          
+          // インデックスを作成
+          const indexes = buildCatalogIndex(state.catalog);
+          state.catalogIndex = indexes.byId;
+          state.catalogIndexByGrade = indexes.byGrade;
+          state.catalogIndexBySubject = indexes.bySubject;
+          console.log('🔍 カタログインデックス作成完了:', {
+            total: state.catalogIndex.size,
+            byGrade: Array.from(state.catalogIndexByGrade.keys()),
+            bySubject: Array.from(state.catalogIndexBySubject.keys())
+          });
+          
+          // 統合レッスンの存在確認
+          const integratedLessons = ['sci.chemistry.air_combustion_integrated', 'sci.chemistry.water_state_integrated'];
+          integratedLessons.forEach(id => {
+            const found = state.catalog.find(l => l.id === id);
+            console.log(`🔍 統合レッスン確認: ${id} → ${found ? '✅ 存在' : '❌ 見つからない'}`);
+          });
+          
+          lastErr=null; 
+          break;
+        } catch (parseError) {
+          console.error('❌ JSONパースエラー:', parseError);
+          console.error('❌ エラー位置:', parseError.message);
+          // JSONの最初の1000文字を表示してデバッグ
+          console.error('❌ レスポンスの最初の1000文字:', text.substring(0, 1000));
+          lastErr = parseError;
+        }
+      } else {
+        lastErr = new Error(`${url} not ok: ${res.status} ${res.statusText}`);
+        console.error('❌ レスポンスエラー:', lastErr);
       }
-      lastErr = new Error(`${url} not ok`);
     }catch(e){ 
-      console.log('🔍 fetchエラー:', e.message);
+      console.error('❌ fetchエラー:', e);
       lastErr = e; 
     }
   }
   if (lastErr){
-    console.warn('catalog.json が見つからないため、デモデータを使用します。', lastErr);
+    console.error('❌ catalog.json の読み込みに失敗しました:', lastErr);
+    console.warn('⚠️ デモデータを使用します。');
     state.catalog = [{
       id:'demo.sample', title:'デモ教材', grade:5, subject:'math',
       path:'./output.html', duration_min:8, sku_required:null
@@ -1322,7 +1342,7 @@ async function loadCatalog(){
     state.catalogIndexBySubject = indexes.bySubject;
     console.log('🔍 デモデータ設定完了:', state.catalog);
   }
-  console.log('🔍 loadCatalog完了:', state.catalog);
+  console.log('🔍 loadCatalog完了:', state.catalog?.length || 0, '件');
 }
 
 function parseHash(){
@@ -1432,18 +1452,17 @@ scienceUnits = [
       'sci.tsuriai_tenbin_wakaru', // つり合いとてんびんシミュレーション
       'sci.physics.electricity_conductivity_basic', // 電気（乾電池と豆電球）
       'sci.physics.heat_properties', // 熱の性質とものの変化
-      // 化学（5）
-      'sci.chemistry.air_properties', // 空気の性質
-      'sci.chemistry.water_three_states', // 水の変化・状態変化
+      // 化学（4）
+      'sci.chemistry.air_combustion_integrated', // 空気と燃焼（統合）
+      'sci.chemistry.water_state_integrated', // 水の状態変化（統合）
       'sci.chemistry.water_three_states_sim', // 水の変化：温度と状態変化シミュレーション
-      'sci.chemistry.combustion_air', // 燃焼と空気の成分
-      // 地学（9）
-      'sci.earth.constellations_seasons', // 星と星座
+      'sci.chemistry.physics.lab_equipment', // メスシリンダー, ろ過、 ガスバーナー
+      'sci.chemistry.physics.volume_change', // 空気・水・金属と体積変化
+      // 地学（6）
+      'sci.earth.stars_constellations_integrated', // 星と星座・星の動き（統合）
       'sci.earth.stars_constellations_sim', // 星と星座シミュレーション
       'sci.earth.sun_movement_shadow', // 太陽と影（基礎）
       'sci.earth.sun_movement_shadow_sim', // 太陽と影：影の長さシミュレーション
-      'sci.earth.stars_movement', // 星の動き
-      'sci.earth.seasonal_constellations', // 四季の星座
       'sci.earth.solar_system', // 太陽系
       'sci.earth.weather_changes', // 天気の変化
       'sci.earth.weather_changes_cloud_motion_model', // 天気の変化：雲が動くモデル
@@ -1458,26 +1477,28 @@ scienceUnits = [
     icon: '📚',
     lessons: [
       // 物理（10）
-      'sci.physics.current_voltage_circuit', // 電気の基礎（乾電池・回路）
+      'sci.physics.current_circuit_integrated', // 電気の基礎と回路を流れる電流の大きさ（統合）
       'sci.physics.current_voltage_circuit_sim', // 電気の基礎：乾電池と豆電球シミュレーション
       'sci.physics.current_effect_heating', // 電流の作用①（発熱）
       'sci.physics.current_effect_heating_sim', // 電流の作用①：発熱シミュレーション
       'sci.physics.current_effect_magnetic', // 電流の作用②（磁界）
       'sci.physics.current_effect_magnetic_sim', // 電流の作用②：磁界シミュレーション
       'sci.physics.lever_weight_basic', // てこのつり合い
-      'sci.physics.spring_force', // ばねと力
+      'sci.physics.spring_force_buoyancy_integrated', // ばねと力・ばねと浮力統合版
       'sci.physics.spring_force_sim', // ばねと力シミュレーション
       'sci.physics.light_properties', // 光の性質
       'sci.physics.light_properties_sim', // 光の性質シミュレーション
-      'sci.physics.force_motion', // 力と運動（浮力・かっ車・輪じく）
+      'sci.physics.force_motion_pulley_integrated', // 力と運動（浮力・かっ車・輪じく）統合版
+      'sci.physics.pendulum_moving_weight_integrated', // ふりことおもりの運動（統合）
+      'sci.physics.balance', // 上皿てんびん
+      'sci.physics.current_compass', // 流れる電流と方位磁針
       // 地学（14）
-      'sci.earth.volcano_structure', // 火山のしくみ
+      'sci.earth.volcano_structure_land_change_integrated', // 火山のしくみ・火山と大地の変化統合版
       'sci.earth.volcano_structure_sim', // 火山のしくみ：マグマと噴火シミュレーション
       'sci.earth.earthquake_structure', // 地震と地震のしくみ（統合）
       'sci.earth.earthquake_structure_sim', // 地震のしくみシミュレーション
       'sci.earth.strata_formation', // 地層のでき方と岩石（統合）
       'sci.earth.various_landforms', // いろいろな地形
-      'sci.earth.volcano_land_change', // 火山と大地の変化
       'sci.earth.fossils_strata', // 化石と地層のようす
       'sci.earth.land_river_erosion', // 流水と地形の変化
       'sci.earth.sun_movement', // 太陽の動き（小4から移動）
@@ -1489,14 +1510,13 @@ scienceUnits = [
       'sci.biology.living_things_seasons', // 生物のくらしと四季（小4から移動）
       'sci.biology.food_chain', // 生物のつながり（食物連鎖）
       'sci.biology.photosynthesis', // 光合成のしくみ（小4から移動）
-      'sci.biology.plant_structure', // 根・くき・葉のつくり（小4から移動）
-      'sci.biology.transpiration_respiration', // 蒸散・呼吸のしくみ（小4から移動）
+      'sci.biology.plant_structure_transpiration_integrated', // 植物のつくりとはたらき（統合）
       'sci.biology.plant_classification', // 植物のなかま分け
       'sci.biology.digestion_absorption', // 消化と吸収
       // 化学（3）
-      'sci.chemistry.solubility_temperature', // 水溶液と溶解度
+      'sci.chemistry.solution_integrated', // 水溶液（溶解度・とけ方・濃さ）（統合）
       'sci.chemistry.solubility_temperature_sim', // 水溶液と溶解度シミュレーション
-      'sci.chemistry.solution_dissolution' // 水よう液ともののとけ方
+      'sci.chemistry.physics.heat_transfer' // 熱の移動と温度の変化
     ]
   },
   {
@@ -1526,6 +1546,10 @@ scienceUnits = [
       // 化学総合（2）
       'sci.comprehensive.combustion_comprehensive', // 気体・燃焼総合（計算含む）
       'sci.comprehensive.water_solution_comprehensive', // 水溶液総合（酸・アルカリ・中和）
+      // 化学（詳細）
+      'sci.chemistry.neutralization', // 中 和
+      'sci.chemistry.solution_metal_reaction', // 水よう液と金属の反応
+      'sci.chemistry.various_gases', // いろいろな気体
       // 生物総合（2）
       'sci.comprehensive.animals_comprehensive', // 動物総合
       'sci.comprehensive.human_body_comprehensive', // ヒトの体総合（全分野の横断）
@@ -3794,7 +3818,7 @@ function renderUnits(units) {
 }
 
 // 単元を選択
-function selectUnit(unitId) {
+async function selectUnit(unitId) {
   console.log('🔍 selectUnit called with unitId:', unitId);
   selectedUnit = unitId;
   
@@ -4001,7 +4025,7 @@ function selectUnit(unitId) {
   }
   
   renderUnits(currentUnits); // 単元一覧を再描画（選択状態を更新）
-  renderUnitLessons(unitId); // 選択された単元のレッスンを表示
+  await renderUnitLessons(unitId); // 選択された単元のレッスンを表示
 
   // モバイルでは選択後にレッスン領域へスムーズスクロール
   if (window.matchMedia('(max-width: 768px)').matches) {
@@ -4014,12 +4038,38 @@ function selectUnit(unitId) {
 }
 
 // 選択された単元のレッスンを表示
-function renderUnitLessons(unitId) {
+async function renderUnitLessons(unitId) {
+  console.log('🔍 renderUnitLessons called with unitId:', unitId);
   const container = document.getElementById('lessonsContainer');
-  if (!container) return;
+  if (!container) {
+    console.error('❌ lessonsContainer not found');
+    return;
+  }
+  
+  // state.catalogが空の場合は再読み込みを試みる
+  if (!state.catalog || state.catalog.length === 0) {
+    console.log('⚠️ state.catalog is empty, attempting to reload...');
+    try {
+      await loadCatalog();
+      console.log('✅ loadCatalog completed, catalog length:', state.catalog?.length || 0);
+      // 少し待機してから再試行
+      await new Promise(resolve => setTimeout(resolve, 100));
+    } catch (error) {
+      console.error('❌ loadCatalog failed:', error);
+      container.innerHTML = `
+        <div class="lessons-placeholder">
+          <div class="placeholder-icon">⚠️</div>
+          <h3 class="placeholder-title">カタログデータが読み込まれていません</h3>
+          <p class="placeholder-text">catalog.jsonの読み込みに失敗しました。ページをリロードしてください。</p>
+        </div>
+      `;
+      return;
+    }
+  }
   
   // 現在の教科に応じて適切な単元配列を選択
   const safeCurrentSubject = window.currentSubject || 'recommended';
+  console.log('🔍 safeCurrentSubject:', safeCurrentSubject);
   let currentUnits;
   if (safeCurrentSubject === 'sci') {
     currentUnits = scienceUnits;
@@ -4034,29 +4084,65 @@ function renderUnitLessons(unitId) {
     currentUnits = [];
   }
   
+  console.log('🔍 currentUnits:', currentUnits);
+  console.log('🔍 state.catalog length:', state.catalog?.length || 0);
+  
   const unit = currentUnits.find(u => u.id === unitId);
-  if (!unit) return;
+  if (!unit) {
+    console.error('❌ unit not found for unitId:', unitId);
+    return;
+  }
+  
+  console.log('🔍 unit found:', unit.name);
+  console.log('🔍 unit.lessons:', unit.lessons);
+  console.log('🔍 unit.lessons length:', unit.lessons.length);
   
   // その単元のレッスンを取得
   // unit.lessonsの順序を保持するために、配列の順序に基づいてソート
   const unitLessonsMap = new Map();
+  if (!state.catalog || state.catalog.length === 0) {
+    console.error('❌ state.catalog is still empty after reload attempt');
+    container.innerHTML = `
+      <div class="lessons-placeholder">
+        <div class="placeholder-icon">⚠️</div>
+        <h3 class="placeholder-title">カタログデータが読み込まれていません</h3>
+        <p class="placeholder-text">catalog.jsonの読み込みに失敗している可能性があります。ページをリロードしてください。</p>
+      </div>
+    `;
+    return;
+  }
+  
   state.catalog.forEach(lesson => {
     if (unit.lessons.includes(lesson.id)) {
       unitLessonsMap.set(lesson.id, lesson);
+      console.log('✅ レッスンが見つかりました:', lesson.id, lesson.title);
     }
   });
   
+  console.log('🔍 unitLessonsMap size:', unitLessonsMap.size);
+  
   // unit.lessonsの順序に従ってレッスンを並べる
   const sortedLessons = unit.lessons
-    .map(lessonId => unitLessonsMap.get(lessonId))
+    .map(lessonId => {
+      const lesson = unitLessonsMap.get(lessonId);
+      if (!lesson) {
+        console.warn('⚠️ レッスンが見つかりません:', lessonId);
+      }
+      return lesson;
+    })
     .filter(lesson => lesson !== undefined);
   
+  console.log('🔍 sortedLessons length:', sortedLessons.length);
+  console.log('🔍 sortedLessons:', sortedLessons.map(l => l.id));
+  
   if (sortedLessons.length === 0) {
+    console.error('❌ レッスンが見つかりません。unit.lessons:', unit.lessons);
+    console.error('❌ state.catalog内のレッスンID（最初の10件）:', state.catalog.slice(0, 10).map(l => l.id));
     container.innerHTML = `
       <div class="lessons-placeholder">
         <div class="placeholder-icon">⚠️</div>
         <h3 class="placeholder-title">レッスンが見つかりません</h3>
-        <p class="placeholder-text">この単元のレッスンデータが見つかりませんでした。</p>
+        <p class="placeholder-text">この単元のレッスンデータが見つかりませんでした。ブラウザのコンソールで詳細を確認してください。</p>
       </div>
     `;
     return;
@@ -6178,6 +6264,8 @@ function handlePurchaseCompleteKeydown(e) {
 }
 
 async function startup(){
+  console.log('🚀 startup関数が実行されました');
+  
   // 🎉 Stripe Checkout 結果をチェック（最初に実行）
   handleCheckoutResult();
   
@@ -6193,7 +6281,9 @@ async function startup(){
   // 📌 教科タブのイベントリスナーを設定
   setupSubjectTabs();
   
+  console.log('📚 loadCatalogを実行します...');
   await loadCatalog();
+  console.log('✅ loadCatalog完了後のstate.catalog:', state.catalog?.length || 0, '件');
   
   // 進捗データの移行処理を実行（分散形式 → 統合形式）
   console.log('🔄 進捗データの移行を開始します...');

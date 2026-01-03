@@ -14,7 +14,7 @@ window.questions = [
       "パイプ"
     ],
     "answer": 0,
-    "source": "心臓は、全身に血液を送り出すポンプのはたらきをしています。心臓が縮んだり広がったりすることで、血液が全身に送り出されます。",
+    "source": "心臓は、全身に血液を送り出すポンプのはたらきをしています。心臓が縮んだり広がったりすることで、血液が全身に送り出されます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">心臓のはたらき\n\n  心臓\n  ┌─────┐\n  │ 縮む │ ← ポンプ\n  │ 広がる│\n  └─────┘\n      ↓\n  血液を全身に送り出す\n\n【心臓の役割】\n  ポンプのはたらき\n  血液を全身に送る</div>",
     "tags": ["心臓", "ポンプ", "血液"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -30,7 +30,7 @@ window.questions = [
       "前心と後心"
     ],
     "answer": 0,
-    "source": "心臓のつくりは、心ぼうと心室からできています。心ぼうは血液がもどってくる部屋、心室は血液を送り出す部屋です。",
+    "source": "心臓のつくりは、心ぼうと心室からできています。心ぼうは血液がもどってくる部屋、心室は血液を送り出す部屋です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">心臓のつくり\n\n  心臓\n  ┌─────┐\n  │心ぼう│ ← 血液がもどってくる\n  ├─────┤\n  │心室  │ ← 血液を送り出す\n  └─────┘\n\n【心ぼう】\n  血液がもどってくる部屋\n\n【心室】\n  血液を送り出す部屋</div>",
     "tags": ["心臓", "心ぼう", "心室"],
     "difficulty": 1,
     "asof": "2026-01-02"

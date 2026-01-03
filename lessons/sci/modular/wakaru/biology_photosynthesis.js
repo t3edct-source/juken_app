@@ -26,7 +26,7 @@ window.questions = [
       "水とでんぷん"
     ],
     "answer": 0,
-    "source": "光合成の原料は、水と二酸化炭素です。水は根から吸収され、くきの道管を通って葉に運ばれます。二酸化炭素は、葉の表面にある気孔から空気中から取り入れられます。この2つが光合成の材料になります。",
+    "source": "光合成の原料は、水と二酸化炭素です。水は根から吸収され、くきの道管を通って葉に運ばれます。二酸化炭素は、葉の表面にある気孔から空気中から取り入れられます。この2つが光合成の材料になります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">光合成の原料\n\n  水 💧\n  根から吸収\n      ↓\n  くきの道管を通る\n      ↓\n  葉に運ばれる\n\n  二酸化炭素\n  気孔から取り入れる\n      ↓\n  葉に運ばれる\n\n【光合成の材料】\n  水 + 二酸化炭素</div>",
     "tags": ["光合成", "原料", "水", "二酸化炭素"],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -74,7 +74,7 @@ window.questions = [
       "水と二酸化炭素とでんぷん"
     ],
     "answer": 0,
-    "source": "光合成では、でんぷんと酸素がつくられます。でんぷんは植物の栄養分として使われ、酸素は空気中に放出されます。光合成は、水と二酸化炭素からでんぷんと酸素を作り出すはたらきです。",
+    "source": "光合成では、でんぷんと酸素がつくられます。でんぷんは植物の栄養分として使われ、酸素は空気中に放出されます。光合成は、水と二酸化炭素からでんぷんと酸素を作り出すはたらきです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">光合成でつくられるもの\n\n  水 + 二酸化炭素\n      ↓\n  光合成（葉緑体）\n      ↓\n  でんぷん + 酸素\n\n【でんぷん】\n  植物の栄養分として使われる\n\n【酸素】\n  空気中に放出される</div>",
     "tags": ["光合成", "でんぷん", "酸素"],
     "difficulty": 1,
     "asof": "2025-01-27"

@@ -10,7 +10,7 @@ window.questions = [
       "単子葉類"
     ],
     "answer": 0,
-    "source": "種子植物は、花がさき、種子をつくってなかまをふやす植物です。多くの植物がこの種類に当たります。種子植物は、子房があるかないかで、被子植物と裸子植物に分けられます。",
+    "source": "種子植物は、花がさき、種子をつくってなかまをふやす植物です。多くの植物がこの種類に当たります。種子植物は、子房があるかないかで、被子植物と裸子植物に分けられます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">種子植物の分類\n\n  種子植物\n  ┌─────────┐\n  │ 花がさく │\n  │ 種子をつくる│\n  └─────────┘\n      ↓\n  ┌─────┬─────┐\n  │被子植物│裸子植物│\n  │子房あり│子房なし│\n  └─────┴─────┘</div>",
     "tags": ["種子植物", "分類"],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -26,7 +26,7 @@ window.questions = [
       "単子葉類"
     ],
     "answer": 0,
-    "source": "被子植物は、はいしゅが子房の中にある植物です。受粉後、子房が果実になり、はいしゅが種子になります。被子植物は、単子葉類と双子葉類に分けられます。",
+    "source": "被子植物は、はいしゅが子房の中にある植物です。受粉後、子房が果実になり、はいしゅが種子になります。被子植物は、単子葉類と双子葉類に分けられます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">被子植物\n\n  ┌─────┐\n  │ 子房 │\n  │ はいしゅ│ ← 子房の中にある\n  └─────┘\n      ↓ 受粉後\n  果実 + 種子\n\n【分類】\n  単子葉類\n  双子葉類</div>",
     "tags": ["被子植物", "子房", "はいしゅ"],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -42,7 +42,7 @@ window.questions = [
       "単子葉類"
     ],
     "answer": 0,
-    "source": "裸子植物は、子房がなく、はいしゅがむき出しの植物です。受粉後、はいしゅが種子になりますが、果実はできません。マツ、イチョウ、スギ、ソテツなどが裸子植物の例です。",
+    "source": "裸子植物は、子房がなく、はいしゅがむき出しの植物です。受粉後、はいしゅが種子になりますが、果実はできません。マツ、イチョウ、スギ、ソテツなどが裸子植物の例です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">裸子植物\n\n  はいしゅ（むき出し）\n  ┌─────┐\n  │ はいしゅ│ ← 子房がない\n  └─────┘\n      ↓ 受粉後\n  種子（果実はできない）\n\n【例】\n  マツ、イチョウ、スギ、ソテツ</div>",
     "tags": ["裸子植物", "子房", "はいしゅ"],
     "difficulty": 1,
     "asof": "2025-01-27"

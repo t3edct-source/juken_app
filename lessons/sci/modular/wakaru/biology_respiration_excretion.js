@@ -14,7 +14,7 @@ window.questions = [
       "循環"
     ],
     "answer": 0,
-    "source": "呼吸とは、酸素をとり入れ、二酸化炭素や水（水蒸気）をからだの外に出すはたらきです。呼吸により、体に必要な酸素を取り入れ、不要な二酸化炭素を排出します。",
+    "source": "呼吸とは、酸素をとり入れ、二酸化炭素や水（水蒸気）をからだの外に出すはたらきです。呼吸により、体に必要な酸素を取り入れ、不要な二酸化炭素を排出します。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">呼吸のしくみ\n\n  空気（酸素）\n      ↓ とり入れる\n  からだの中\n      ↓\n  二酸化炭素・水（水蒸気）\n      ↓ 出す\n  からだの外\n\n【呼吸のはたらき】\n  酸素をとり入れる\n  二酸化炭素を出す</div>",
     "tags": ["呼吸", "酸素", "二酸化炭素"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -30,7 +30,7 @@ window.questions = [
       "肺胞"
     ],
     "answer": 0,
-    "source": "鼻や口から入った空気が運ばれる管を気管といいます。気管はのどから肺へつながる管で、空気を肺まで運びます。",
+    "source": "鼻や口から入った空気が運ばれる管を気管といいます。気管はのどから肺へつながる管で、空気を肺まで運びます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">気管の役割\n\n  鼻・口\n      ↓\n  気管（空気を運ぶ）\n      ↓\n  肺\n\n【気管のはたらき】\n  のどから肺へつながる\n  空気を肺まで運ぶ</div>",
     "tags": ["気管", "空気", "肺"],
     "difficulty": 1,
     "asof": "2026-01-02"

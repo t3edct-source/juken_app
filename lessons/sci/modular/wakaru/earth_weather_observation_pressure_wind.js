@@ -14,7 +14,7 @@ window.questions = [
       "すべて同じ"
     ],
     "answer": 0,
-    "source": "空全体を10として、雲がおおっている割合を雲量といいます。雲量によって天気が決まります。",
+    "source": "空全体を10として、雲がおおっている割合を雲量といいます。雲量によって天気が決まります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">雲量の考え方\n\n【空全体を10とする】\n  ┌─────────────┐\n  │ ☁️ ☁️ ☁️ ☁️ │ ← 雲が4\n  │ ☀️ ☀️ ☀️ ☀️ │ ← 空が6\n  │ ☀️ ☀️        │\n  └─────────────┘\n  雲量：4/10\n\n【天気の決め方】\n  雲量0~1：快晴\n  雲量2~8：晴れ\n  雲量9~10：くもり</div>",
     "tags": ["雲量", "雲", "割合"],
     "difficulty": 1,
     "asof": "2026-01-02"
