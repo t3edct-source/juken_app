@@ -298,3 +298,4 @@ with open("lesson_summary_comprehensive.txt", "w", encoding="utf-8") as f:
 
 print("包括的なレッスン一覧を lesson_summary_comprehensive.txt に出力しました。")
 
+

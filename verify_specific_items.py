@@ -107,3 +107,4 @@ print(f"3. 乾電池と豆電球: {len(battery_bulb_items)}件")
 print(f"\n電気関連全般: {len(electricity_all)}件")
 print(f"溶け方・溶解関連全般: {len(dissolution_all)}件")
 
+

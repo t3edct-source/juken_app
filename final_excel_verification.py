@@ -299,3 +299,4 @@ print(f"現在の対応数: {current_total_matched}/{total_excel} ({current_tota
 print(f"提案追加後の対応数: {proposed_total_matched}/{total_excel} ({proposed_total_matched/total_excel*100:.1f}%)")
 print(f"改善数: {proposed_total_matched - current_total_matched}項目")
 
+

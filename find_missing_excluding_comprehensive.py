@@ -264,3 +264,4 @@ print("\n学年別の不足項目数:")
 for grade in sorted(missing_by_grade.keys()):
     print(f"  {grade}年生: {len(missing_by_grade[grade])}項目")
 
+

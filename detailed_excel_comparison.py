@@ -258,3 +258,4 @@ if missing_with_proposals:
         for item in [m for m in missing_with_proposals if m["grade"] == grade]:
             print(f"  [{item['field']}] {item['unit']}")
 
+

@@ -81,3 +81,4 @@ for grade in sorted(excel_by_grade.keys()):
 
 print(f"\n総項目数: {len(excel_all_items)}")
 
+

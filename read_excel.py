@@ -35,3 +35,4 @@ for row_idx, row in enumerate(ws.iter_rows(values_only=True), 1):
 # JSON形式で出力
 print(json.dumps(data, ensure_ascii=False, indent=2))
 
+
