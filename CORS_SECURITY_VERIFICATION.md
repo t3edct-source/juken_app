@@ -333,8 +333,8 @@ ALLOWED_ORIGINS=https://your-site.netlify.app,https://www.your-site.netlify.app,
 
 ### ステップ3: コードの更新
 
-1. `create-checkout-session.improved.js` を参考に実装
-2. または `create-checkout-session.no-cors.js` を使用（CORS完全削除版）
+1. `create-checkout-session-improved.js` を参考に実装
+2. または `create-checkout-session-no-cors.js` を使用（CORS完全削除版）
 3. 実際のドメインに置き換える
 
 ### ステップ4: テスト
