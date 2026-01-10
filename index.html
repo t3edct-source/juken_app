@@ -3,26 +3,46 @@
 <!doctype html>
 <html lang="ja">
 <head>
-  <!-- Service Worker無効化（無限リロード対策） -->
+  <!-- Service Worker完全無効化（即座に実行） -->
   <script>
     (function() {
       'use strict';
-      // Service Workerを無効化（無限リロード対策）
+      // Service Workerを完全に無効化（即座に実行）
       if ('serviceWorker' in navigator) {
-        // 既存のService Workerをアン登録
-        navigator.serviceWorker.getRegistrations().then(registrations => {
-          registrations.forEach(registration => registration.unregister());
-          // キャッシュも削除
-          if ('caches' in window) {
-            caches.keys().then(cacheNames => {
-              return Promise.all(cacheNames.map(cacheName => caches.delete(cacheName)));
-            });
-          }
-        });
-        // Service Workerの登録をブロック
+        // Service Workerの登録を先にブロック（最優先）
+        const originalRegister = navigator.serviceWorker.register;
         navigator.serviceWorker.register = function() {
+          console.warn('🚫 Service Worker登録がブロックされました');
           return Promise.reject(new Error('Service Worker登録は無効化されています'));
         };
+        
+        // 既存のService Workerを即座にアン登録
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+          if (registrations.length > 0) {
+            console.log('🗑️ Service Workerを削除中:', registrations.length, '件');
+            registrations.forEach(registration => {
+              registration.unregister().then(success => {
+                if (success) {
+                  console.log('✅ Service Worker削除成功:', registration.scope);
+                }
+              });
+            });
+          }
+          
+          // 全キャッシュを即座に削除
+          if ('caches' in window) {
+            caches.keys().then(cacheNames => {
+              if (cacheNames.length > 0) {
+                console.log('🗑️ キャッシュを削除中:', cacheNames.length, '件');
+                return Promise.all(cacheNames.map(cacheName => caches.delete(cacheName)));
+              }
+            }).then(() => {
+              console.log('✅ 全キャッシュ削除完了');
+            });
+          }
+        }).catch(err => {
+          console.error('❌ Service Worker削除エラー:', err);
+        });
       }
     })();
   </script>
