@@ -3,6 +3,10 @@
   "private": true,
   "type": "commonjs",
   "engines": { "node": ">=18" },
+  "scripts": {
+    "update-version": "node update-version.js",
+    "build": "npm run update-version"
+  },
   "dependencies": {
     "stripe": "^14.0.0",
     "firebase-admin": "^12.0.0"
