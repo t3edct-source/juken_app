@@ -11,8 +11,18 @@ import {
 } from './firebaseConfig.js';
 
 // DOMContentLoadedでアプリケーション全体を初期化
-document.addEventListener('DOMContentLoaded', async () => {
-  console.log('🚀 DOMContentLoaded: app.js 初期化開始');
+// 🚨 無限リロード防止: 重複登録を防ぐ
+if (!window._domContentLoadedRegistered) {
+  window._domContentLoadedRegistered = true;
+  document.addEventListener('DOMContentLoaded', async () => {
+    // 🚨 無限リロード防止: 重複実行を防ぐ
+    if (window._domContentLoadedExecuted) {
+      console.log('⚠️ DOMContentLoaded は既に実行済みです。スキップします。');
+      return;
+    }
+    window._domContentLoadedExecuted = true;
+    
+    console.log('🚀 DOMContentLoaded: app.js 初期化開始');
   
   // ログイン画面を初期状態で確実に非表示にする（ゲートとして機能させない）
   const loginPanel = document.querySelector('#authBox, .login-card, .auth-container');
@@ -90,12 +100,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateAccountMenuButton();
     
     // UI更新処理があればここに追加
+    // 🚨 無限リロード防止: renderAppView()はrenderHome()を呼ぶため、条件付きで呼ぶ
     try {
-      if (typeof renderAppView === 'function') {
+      if (typeof renderAppView === 'function' && !window._isRenderingAppView) {
+        window._isRenderingAppView = true;
         renderAppView();
+        setTimeout(() => {
+          window._isRenderingAppView = false;
+        }, 500);
       }
     } catch (error) {
       console.warn('⚠️ UI更新中にエラー:', error);
+      window._isRenderingAppView = false;
     }
     
     console.log('🎯 UI切り替え完了:', isIn ? 'ログイン状態' : 'ログアウト状態');
@@ -195,8 +211,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   // メニューシステムを初期化
   initMenuSystem();
   
-  console.log('✅ DOMContentLoaded: app.js 初期化完了');
-});
+    console.log('✅ DOMContentLoaded: app.js 初期化完了');
+  });
+}
 
 // 🎉 Stripe Checkout 成功・キャンセル処理
 function handleCheckoutResult() {
@@ -464,8 +481,15 @@ function updateUIAfterEntitlementsChange() {
   console.log('🔄 entitlements変更によりUI更新開始');
   
   // 常にアプリビューを表示（LPは無効化）
-  console.log('📚 アプリビューを強制表示');
-  renderAppView();
+  // 🚨 無限リロード防止: 条件付きで呼ぶ
+  if (!window._isRenderingAppView) {
+    console.log('📚 アプリビューを強制表示');
+    window._isRenderingAppView = true;
+    renderAppView();
+    setTimeout(() => {
+      window._isRenderingAppView = false;
+    }, 500);
+  }
   
   // モーダルの更新
   renderModalContent();
@@ -1350,37 +1374,58 @@ function parseHash(){
   const [view, ...rest] = raw.split('/');
   return { view: view || 'home', arg: decodeURIComponent(rest.join('/')) };
 }
-function setHash(view, arg){ location.hash = arg ? `#/${view}/${encodeURIComponent(arg)}` : `#/${view}`; }
+function setHash(view, arg){ 
+  const newHash = arg ? `#/${view}/${encodeURIComponent(arg)}` : `#/${view}`;
+  // 🚨 無限リロード防止: 現在のハッシュと同じ場合は変更しない
+  if (location.hash !== newHash) {
+    location.hash = newHash;
+  }
+}
 
 function route(){
-  const { view, arg } = parseHash();
+  // 🚨 無限リロード防止: 既に実行中の場合にはスキップ
+  if (window._isRouting) {
+    console.log('⚠️ route() は既に実行中です。スキップします。');
+    return;
+  }
   
-  // ログイン画面を確実に非表示にする（戻るボタン時の一瞬の表示を防ぐ）
-  // state.userだけでなく、auth.currentUserも直接チェック（認証状態が確定する前でも対応）
-  const loginPanel = document.querySelector('#authBox, .login-card, .auth-container');
-  if (loginPanel) {
-    // ログイン済みかどうかを直接確認（state.userが未設定でもauth.currentUserで判定）
-    const isLoggedIn = state.user || (typeof auth !== 'undefined' && auth.currentUser);
-    if (isLoggedIn) {
-      // ログイン済みの場合は確実に非表示
-      loginPanel.classList.add('hidden');
-      loginPanel.style.display = 'none';
+  window._isRouting = true;
+  
+  try {
+    const { view, arg } = parseHash();
+    
+    // ログイン画面を確実に非表示にする（戻るボタン時の一瞬の表示を防ぐ）
+    // state.userだけでなく、auth.currentUserも直接チェック（認証状態が確定する前でも対応）
+    const loginPanel = document.querySelector('#authBox, .login-card, .auth-container');
+    if (loginPanel) {
+      // ログイン済みかどうかを直接確認（state.userが未設定でもauth.currentUserで判定）
+      const isLoggedIn = state.user || (typeof auth !== 'undefined' && auth.currentUser);
+      if (isLoggedIn) {
+        // ログイン済みの場合は確実に非表示
+        loginPanel.classList.add('hidden');
+        loginPanel.style.display = 'none';
+      }
     }
-  }
-  
-  showOnly(view);
-  if (view==='home') {
-    clearSessionResult(); // ホームに戻った時にセッション結果をクリア
-    renderHome();
-  }
-  else if (view==='lesson') renderLesson(arg);
-  else if (view==='purchase') renderPurchase(arg);
-  else if (view==='result') renderResult(arg);
-  else if (view==='review') renderReviewLesson(arg);
-  else { 
-    clearSessionResult(); // デフォルトでホームに戻る時もクリア
-    showOnly('home'); 
-    renderHome(); 
+    
+    showOnly(view);
+    if (view==='home') {
+      clearSessionResult(); // ホームに戻った時にセッション結果をクリア
+      renderHome();
+    }
+    else if (view==='lesson') renderLesson(arg);
+    else if (view==='purchase') renderPurchase(arg);
+    else if (view==='result') renderResult(arg);
+    else if (view==='review') renderReviewLesson(arg);
+    else { 
+      clearSessionResult(); // デフォルトでホームに戻る時もクリア
+      showOnly('home'); 
+      renderHome(); 
+    }
+  } finally {
+    // フラグをリセット（少し遅延させて確実に）
+    setTimeout(() => {
+      window._isRouting = false;
+    }, 100);
   }
 }
 function showOnly(which){
@@ -2400,12 +2445,25 @@ let subjectTabsResizeHandler = null;
 let subjectTabsInitialized = false;
 
 function setupSubjectTabs() {
+  // 🚨 無限リロード防止: 重複実行を防ぐ
+  if (window._subjectTabsSetup) {
+    console.log('⚠️ setupSubjectTabs() は既に実行済みです。スキップします。');
+    return;
+  }
+  window._subjectTabsSetup = true;
+  
   // 既に初期化済みの場合はスキップ（パフォーマンス最適化）
   const container = document.getElementById('subTabsContainer');
-  if (!container) return;
+  if (!container) {
+    window._subjectTabsSetup = false; // コンテナがない場合はリセット
+    return;
+  }
   
   const subjectTabs = container.querySelectorAll('.subject-tab');
-  if (subjectTabs.length === 0) return;
+  if (subjectTabs.length === 0) {
+    window._subjectTabsSetup = false; // タブがない場合はリセット
+    return;
+  }
   
   // 既にリスナーが登録されているかチェック
   const firstTab = subjectTabs[0];
@@ -2929,8 +2987,17 @@ function createLessonCard(entry, safeCurrentSubject) {
 }
 
 async function renderHome(){
-  hideLoginPanel();
-  const safeCurrentSubject = getSafeCurrentSubject();
+  // 🚨 無限リロード防止: 既に実行中の場合にはスキップ
+  if (window._isRenderingHome) {
+    console.log('⚠️ renderHome() は既に実行中です。スキップします。');
+    return;
+  }
+  
+  window._isRenderingHome = true;
+  
+  try {
+    hideLoginPanel();
+    const safeCurrentSubject = getSafeCurrentSubject();
   
   // スクロール位置を保存（renderHome呼び出し前に保存されている場合は上書きしない）
   const savedScrollY = window._savedScrollY !== undefined ? window._savedScrollY : window.scrollY;
@@ -3126,6 +3193,12 @@ async function renderHome(){
     if (subTabsContainer) {
       subTabsContainer.style.display = 'block';
     }
+  }
+  } finally {
+    // フラグをリセット（少し遅延させて確実に）
+    setTimeout(() => {
+      window._isRenderingHome = false;
+    }, 100);
   }
 }
 
@@ -4889,9 +4962,19 @@ window.addEventListener('appinstalled', (e) => {
 });
 
 // インストールボタンのクリックイベント
-document.addEventListener('DOMContentLoaded', () => {
-  // 初期状態でインストールボタンの表示状態を更新
-  updateInstallButtonVisibility();
+// 🚨 無限リロード防止: DOMContentLoadedの重複登録を防ぐ
+if (!window._installButtonDOMContentLoadedRegistered) {
+  window._installButtonDOMContentLoadedRegistered = true;
+  document.addEventListener('DOMContentLoaded', () => {
+    // 🚨 無限リロード防止: 重複実行を防ぐ
+    if (window._installButtonDOMContentLoadedExecuted) {
+      console.log('⚠️ インストールボタンのDOMContentLoaded は既に実行済みです。スキップします。');
+      return;
+    }
+    window._installButtonDOMContentLoadedExecuted = true;
+    
+    // 初期状態でインストールボタンの表示状態を更新
+    updateInstallButtonVisibility();
   
   const installBtn = document.getElementById('installBtn');
   if (installBtn) {
@@ -4977,19 +5060,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   
-  // 画面サイズ変更時にも表示状態を更新
-  window.addEventListener('resize', () => {
-    updateInstallButtonVisibility();
-  });
-  
-  // display-mode変更時にも表示状態を更新（PWAインストール後）
-  if (window.matchMedia) {
-    const displayModeQuery = window.matchMedia('(display-mode: standalone)');
-    displayModeQuery.addEventListener('change', () => {
+    // 画面サイズ変更時にも表示状態を更新
+    window.addEventListener('resize', () => {
       updateInstallButtonVisibility();
     });
-  }
-});
+    
+    // display-mode変更時にも表示状態を更新（PWAインストール後）
+    if (window.matchMedia) {
+      const displayModeQuery = window.matchMedia('(display-mode: standalone)');
+      displayModeQuery.addEventListener('change', () => {
+        updateInstallButtonVisibility();
+      });
+    }
+  });
+}
 
 // 励ましメッセージデータ（JSONから読み込む）
 let encouragementData = null;
@@ -5828,10 +5912,11 @@ function renderAppView(){
   }
   
   // アプリビュー表示後、強制的にホーム画面を描画
-  console.log('🏠 renderHome()を強制実行');
-  setTimeout(() => {
-    renderHome();
-  }, 100);
+  // 🚨 無限リロード防止: renderHome()はroute()から呼ばれるため、ここでは呼ばない
+  // console.log('🏠 renderHome()を強制実行');
+  // setTimeout(() => {
+  //   renderHome();
+  // }, 100);
 }
 
 function ensureGradeBanner(){
@@ -6264,6 +6349,13 @@ function handlePurchaseCompleteKeydown(e) {
 }
 
 async function startup(){
+  // 🚨 無限リロード防止: 重複実行を防ぐ
+  if (window._startupExecuted) {
+    console.log('⚠️ startup() は既に実行済みです。スキップします。');
+    return;
+  }
+  window._startupExecuted = true;
+  
   console.log('🚀 startup関数が実行されました');
   
   // 🎉 Stripe Checkout 結果をチェック（最初に実行）
@@ -6304,11 +6396,19 @@ async function startup(){
     }, 100);
   }
   
-  window.addEventListener('hashchange', route);
+  // 🚨 無限リロード防止: hashchangeイベントリスナーの重複登録を防ぐ
+  if (!window._hashChangeListenerAdded) {
+    window.addEventListener('hashchange', route);
+    window._hashChangeListenerAdded = true;
+    console.log('✅ hashchangeイベントリスナーを登録しました');
+  }
   
   // 初期ハッシュの設定
-  if (!location.hash) setHash('home');
+  if (!location.hash) {
+    setHash('home');
+  }
   
+  // 初期ルーティングを実行
   route();
   
   // 初期表示時の教科イラストを設定
@@ -6447,6 +6547,13 @@ window.openPurchaseModal = openPurchaseModal;
 
 // 🚀 グローバルイベント委譲の設定（②本格対応）
 function setupGlobalEventDelegation() {
+  // 🚨 無限リロード防止: 重複実行を防ぐ
+  if (window._globalEventDelegationSetup) {
+    console.log('⚠️ setupGlobalEventDelegation() は既に実行済みです。スキップします。');
+    return;
+  }
+  window._globalEventDelegationSetup = true;
+  
   console.log('🚀 グローバルイベント委譲を設定中...');
   
   // document全体でのクリックイベントを監視

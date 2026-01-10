@@ -3,6 +3,30 @@
 <!doctype html>
 <html lang="ja">
 <head>
+  <!-- Service Worker無効化（無限リロード対策） -->
+  <script>
+    (function() {
+      'use strict';
+      // Service Workerを無効化（無限リロード対策）
+      if ('serviceWorker' in navigator) {
+        // 既存のService Workerをアン登録
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+          registrations.forEach(registration => registration.unregister());
+          // キャッシュも削除
+          if ('caches' in window) {
+            caches.keys().then(cacheNames => {
+              return Promise.all(cacheNames.map(cacheName => caches.delete(cacheName)));
+            });
+          }
+        });
+        // Service Workerの登録をブロック
+        navigator.serviceWorker.register = function() {
+          return Promise.reject(new Error('Service Worker登録は無効化されています'));
+        };
+      }
+    })();
+  </script>
+  
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
   <title>ステップナビ | 中学受験理科・社会</title>
@@ -452,73 +476,11 @@
   </div>
 
   <footer class="border-t border-orange-200 bg-white/95 mt-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-      <div class="text-center">
-        <p class="text-slate-600 text-sm mb-3">© <span id="year"></span> T3エデュケーション</p>
-        <div class="flex flex-wrap justify-center gap-4 text-xs text-slate-500">
-          <a href="privacy-policy.html" class="hover:text-orange-600 transition-colors">プライバシーポリシー</a>
-          <span>|</span>
-          <a href="terms-of-service.html" class="hover:text-orange-600 transition-colors">利用規約</a>
-          <span>|</span>
-          <a href="specified-commercial-transactions.html" class="hover:text-orange-600 transition-colors">特定商取引法に基づく表示</a>
-        </div>
-      </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-center">
+      <p class="text-slate-600 text-sm">© <span id="year"></span> T3エデュケーション</p>
     </div>
   </footer>
 
-  <!-- Service Worker登録 -->
-  <script>
-    // ローカル開発時のService Worker無効化
-    const isLocalDev = location.hostname === 'localhost' || 
-                      location.hostname === '127.0.0.1' || 
-                      location.hostname === '0.0.0.0' ||
-                      location.port === '5500' ||
-                      location.port === '3000' ||
-                      location.port === '8080';
-    
-    if (isLocalDev) {
-      console.log('🚫 ローカル開発環境: Service Workerを無効化');
-      // 既存のService Workerをアン登録
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.getRegistrations().then(registrations => {
-          registrations.forEach(registration => {
-            console.log('🗑️ 既存のService Workerをアン登録:', registration.scope);
-            registration.unregister();
-          });
-          
-          // キャッシュも削除
-          if ('caches' in window) {
-            caches.keys().then(cacheNames => {
-              console.log('🔍 キャッシュ名一覧:', cacheNames);
-              return Promise.all(
-                cacheNames.map(cacheName => {
-                  console.log('🗑️ キャッシュ削除:', cacheName);
-                  return caches.delete(cacheName);
-                })
-              );
-            }).then(() => {
-              console.log('✅ 全キャッシュ削除完了');
-            });
-          }
-        });
-      }
-    } else {
-      // 本番環境でのService Worker登録
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          console.log('🔧 Service Worker登録開始');
-          navigator.serviceWorker.register('/sw.js')
-            .then((registration) => {
-              console.log('✅ Service Worker登録成功:', registration.scope);
-              console.log('✅ Service Workerバージョン:', registration.active?.scriptURL);
-            })
-            .catch((error) => {
-              console.log('❌ Service Worker登録失敗:', error);
-            });
-        });
-      }
-    }
-  </script>
 
   <!-- PWAインストールモーダル -->
   <div id="installModal" class="modal-overlay hidden" 
@@ -1179,7 +1141,7 @@
   }); // waitForFirebaseAuth().then() の終了
   </script>
 
-<script type="module" src="./app.js?v=20241219-016" onload="console.log('✅ app.js 読み込み完了')" onerror="console.error('❌ app.js 読み込み失敗')"></script>
+<script type="module" src="./app.js?v=20241219-016"></script>
 
 <!-- ===== 開発・テスト用：すべてをオープン（本番公開時に削除予定） ===== -->
 <div id="devPurchaseSection" style="position: fixed; bottom: 20px; right: 20px; background: rgba(255,255,255,0.95); padding: 15px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 2px solid #e5e7eb; z-index: 1000;">
