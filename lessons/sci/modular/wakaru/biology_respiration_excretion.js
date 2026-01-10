@@ -30,7 +30,7 @@ window.questions = [
       "肺胞"
     ],
     "answer": 0,
-    "source": "鼻や口から入った空気が運ばれる管を気管といいます。気管はのどから肺へつながる管で、空気を肺まで運びます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">気管の役割\n\n  鼻・口\n      ↓\n  気管（空気を運ぶ）\n      ↓\n  肺\n\n【気管のはたらき】\n  のどから肺へつながる\n  空気を肺まで運ぶ</div>",
+    "source": "鼻や口から入った空気が運ばれる管を気管といいます。気管はのどから肺へつながる管で、空気を肺まで運びます。気管の役割 鼻・口 ↓ 気管（空気を運ぶ） ↓ 肺 【気管のはたらき】 のどから肺へつながる 空気を肺まで運ぶ。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\"></div>",
     "tags": ["気管", "空気", "肺"],
     "difficulty": 1,
     "asof": "2026-01-02"

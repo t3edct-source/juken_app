@@ -14,7 +14,7 @@ window.questions = [
       "どれでもない"
     ],
     "answer": 0,
-    "source": "深くえぐれた谷をV字谷といいます。おもに川のしん食というはたらきによってできたものです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">V字谷\n\n  ┌─────┐\n  │      │\n  │  V   │ ← 深くえぐれた谷\n  │      │\n  └─────┘\n\n【でき方】\n  川のしん食\n      ↓\n  V字谷</div>",
+    "source": "深くえぐれた谷をV字谷といいます。おもに川のしん食というはたらきによってできたものです。V字谷 ┌─────┐ │ │ │ V │ ← 深くえぐれた谷 │ │ └─────┘ 【でき方】 川のしん食 ↓ V字谷。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\"></div>",
     "tags": ["V字谷", "谷", "しん食"],
     "difficulty": 1,
     "asof": "2026-01-02"

@@ -198,7 +198,7 @@ function loadQuestion() {
   
   questionEl.innerHTML = q.text || q.question;
   
-  // 図解の表示（visualフィールドがある場合）
+  // 図解の表示（visualフィールドがある場合のみ）
   if (q.visual && mode === "wakaru") {
     visualEl.textContent = q.visual;
     visualEl.style.display = "block";

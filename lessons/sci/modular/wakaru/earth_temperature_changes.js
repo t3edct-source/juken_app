@@ -46,7 +46,7 @@ window.questions = [
       "どれでもない"
     ],
     "answer": 0,
-    "source": "百葉箱は、太陽からの熱を吸収しにくくするため、白色にぬってあります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">百葉箱の色\n\n  太陽の光\n      ↓\n  ┌─────┐\n  │百葉箱│ ← 白色（熱を吸収しにくい）\n  └─────┘\n\n【白色の理由】\n  太陽からの熱を\n  吸収しにくくする</div>",
+    "source": "百葉箱は、太陽からの熱を吸収しにくくするため、白色にぬってあります。百葉箱の色 太陽の光 ↓ ┌─────┐ │百葉箱│ ← 白色（熱を吸収しにくい） └─────┘ 【白色の理由】 太陽からの熱を 吸収しにくくする。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\"></div>",
     "tags": ["百葉箱", "白色", "熱"],
     "difficulty": 1,
     "asof": "2026-01-02"

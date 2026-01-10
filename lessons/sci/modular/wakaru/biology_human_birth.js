@@ -14,7 +14,7 @@ window.questions = [
       "すべて同じ"
     ],
     "answer": 0,
-    "source": "男性のからだで、精巣でつくられるものは精子です。精子の長さはおよそ0.06mmです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">精子のつくられ方\n\n  男性のからだ\n  ┌─────┐\n  │ 精巣 │ ← 精子をつくる\n  └─────┘\n      ↓\n  精子（長さ：約0.06mm）</div>",
+    "source": "男性のからだで、精巣でつくられるものは精子です。精子の長さはおよそ0.06mmです。精子のつくられ方 男性のからだ ┌─────┐ │ 精巣 │ ← 精子をつくる └─────┘ ↓ 精子（長さ：約0.06mm）。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\"></div>",
     "tags": ["精子", "精巣", "男性"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -30,7 +30,7 @@ window.questions = [
       "100mm"
     ],
     "answer": 0,
-    "source": "精子の長さはおよそ0.06mmです。",
+    "source": "精子の長さはおよそ0.06mmです。精子は、精巣でつくられ、とても小さな細胞です。精子は、卵と結びついて受精するために、長い尾を使って泳ぐことができます。",
     "tags": ["精子", "長さ", "0.06mm"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -46,7 +46,7 @@ window.questions = [
       "すべて同じ"
     ],
     "answer": 1,
-    "source": "女性のからだで、卵巣でつくられるものは卵（卵子）です。卵の直径はおよそ0.14mmです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">卵のつくられ方\n\n  女性のからだ\n  ┌─────┐\n  │ 卵巣 │ ← 卵をつくる\n  └─────┘\n      ↓\n  卵（直径：約0.14mm）</div>",
+    "source": "女性のからだで、卵巣でつくられるものは卵（卵子）です。卵の直径はおよそ0.14mmです。卵のつくられ方 女性のからだ ┌─────┐ │ 卵巣 │ ← 卵をつくる └─────┘ ↓ 卵（直径：約0.14mm）。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\"></div>",
     "tags": ["卵", "卵子", "卵巣", "女性"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -62,7 +62,7 @@ window.questions = [
       "100mm"
     ],
     "answer": 1,
-    "source": "卵の直径はおよそ0.14mmです。",
+    "source": "卵の直径はおよそ0.14mmです。卵は、卵巣でつくられ、精子よりも大きい細胞です。卵は、精子と結びついて受精し、受精卵になります。",
     "tags": ["卵", "直径", "0.14mm"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -78,7 +78,7 @@ window.questions = [
       "すべて同じ"
     ],
     "answer": 0,
-    "source": "男性から出された精子と女性の体内にある卵が結びつくことを受精といいます。受精した卵を受精卵といいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">受精のしくみ\n\n  精子（男性）\n      ↓\n  結びつく\n      ↓\n  卵（女性）\n      ↓\n  受精卵</div>",
+    "source": "男性から出された精子と女性の体内にある卵が結びつくことを受精といいます。受精した卵を受精卵といいます。受精のしくみ 精子（男性） ↓ 結びつく ↓ 卵（女性） ↓ 受精卵。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\"></div>",
     "tags": ["受精", "精子", "卵"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -94,7 +94,7 @@ window.questions = [
       "すべて同じ"
     ],
     "answer": 2,
-    "source": "受精した卵を受精卵といいます。受精卵は、母親の体内で成長し、たい児になります。",
+    "source": "受精した卵を受精卵といいます。受精卵は、母親の体内で成長し、たい児になります。受精卵は、細胞分裂を繰り返しながら成長し、やがてたい児になります。",
     "tags": ["受精卵", "受精", "卵"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -110,7 +110,7 @@ window.questions = [
       "すべて同じ"
     ],
     "answer": 2,
-    "source": "たい児が育つところを子宮といいます。たい児は母親の子宮とよばれる部分で育ちます。",
+    "source": "たい児が育つところを子宮といいます。たい児は母親の子宮とよばれる部分で育ちます。子宮は、たい児が成長するための場所で、たい児を守るはたらきもします。",
     "tags": ["子宮", "たい児", "育つ"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -126,7 +126,7 @@ window.questions = [
       "すべて同じ"
     ],
     "answer": 3,
-    "source": "母親の毛細血管とたい児の毛細血管が集まっているところをたいばんといいます。たいばんを通して、物質がやりとりされます。",
+    "source": "母親の毛細血管とたい児の毛細血管が集まっているところをたいばんといいます。たいばんを通して、物質がやりとりされます。たいばんは、母親とたい児の間で、酸素や養分、二酸化炭素や不要物をやりとりする場所です。",
     "tags": ["たいばん", "毛細血管", "物質"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -142,7 +142,7 @@ window.questions = [
       "時によって変わる"
     ],
     "answer": 0,
-    "source": "たいばんを通して、母親からたい児にわたされるものは、酸素や養分です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">たいばんを通した物質のやりとり\n\n  母親\n    ↓ 酸素・養分\n  たいばん\n    ↓\n  たい児\n\n【母親からたい児へ】\n  酸素、養分</div>",
+    "source": "たいばんを通して、母親からたい児にわたされるものは、酸素や養分です。たいばんを通した物質のやりとり 母親 ↓ 酸素・養分 たいばん ↓ たい児 【母親からたい児へ】 酸素、養分。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\"></div>",
     "tags": ["たいばん", "母親", "たい児", "酸素", "養分"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -158,7 +158,7 @@ window.questions = [
       "時によって変わる"
     ],
     "answer": 1,
-    "source": "たいばんを通して、たい児から母親にわたされるものは、二酸化炭素や不要物です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">たいばんを通した物質のやりとり\n\n  たい児\n    ↓ 二酸化炭素・不要物\n  たいばん\n    ↓\n  母親\n\n【たい児から母親へ】\n  二酸化炭素、不要物</div>",
+    "source": "たいばんを通して、たい児から母親にわたされるものは、二酸化炭素や不要物です。たいばんを通した物質のやりとり たい児 ↓ 二酸化炭素・不要物 たいばん ↓ 母親 【たい児から母親へ】 二酸化炭素、不要物。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\"></div>",
     "tags": ["たいばん", "たい児", "母親", "二酸化炭素", "不要物"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -174,7 +174,7 @@ window.questions = [
       "すべて同じ"
     ],
     "answer": 0,
-    "source": "たい児とたいばんをつなぐ管をへそのおといいます。へそのおを通して、たい児とたいばんがつながっています。",
+    "source": "たい児とたいばんをつなぐ管をへそのおといいます。へそのおを通して、たい児とたいばんがつながっています。へそのおには、血管が通っており、たいばんを通して物質のやりとりが行われます。",
     "tags": ["へそのお", "たい児", "たいばん"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -190,7 +190,7 @@ window.questions = [
       "すべて同じ"
     ],
     "answer": 1,
-    "source": "たい児を包んでいる液体を羊水といいます。羊水は、たい児を守るはたらきをします。",
+    "source": "たい児を包んでいる液体を羊水といいます。羊水は、たい児を守るはたらきをします。羊水は、たい児が衝撃を受けないように守り、動きやすくするはたらきがあります。",
     "tags": ["羊水", "たい児", "液体"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -206,7 +206,7 @@ window.questions = [
       "どれでもない"
     ],
     "answer": 0,
-    "source": "たい児とは、母親の体内で育っている、生まれる前の子どものことです。",
+    "source": "たい児とは、母親の体内で育っている、生まれる前の子どものことです。たい児は、受精卵から成長し、母親の子宮で約10か月間育ちます。",
     "tags": ["たい児", "母親", "体内"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -222,7 +222,7 @@ window.questions = [
       "測定できない"
     ],
     "answer": 1,
-    "source": "精子と卵の大きさの関係として、卵の方が大きいのが正しいです。精子の長さはおよそ0.06mm、卵の直径はおよそ0.14mmです。",
+    "source": "精子と卵の大きさの関係として、卵の方が大きいのが正しいです。精子の長さはおよそ0.06mm、卵の直径はおよそ0.14mmです。卵は、精子よりも大きく、栄養をたくわえているため、大きくなっています。",
     "tags": ["精子", "卵", "大きさ"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -238,7 +238,7 @@ window.questions = [
       "どれでもない"
     ],
     "answer": 0,
-    "source": "たいばんのはたらきとして、母親とたい児の間で物質をやりとりするのが正しいです。酸素や養分が母親からたい児に、二酸化炭素や不要物がたい児から母親にわたされます。",
+    "source": "たいばんのはたらきとして、母親とたい児の間で物質をやりとりするのが正しいです。酸素や養分が母親からたい児に、二酸化炭素や不要物がたい児から母親にわたされます。たいばんは、母親とたい児の血液が直接混ざらないようにしながら、物質のやりとりを行います。",
     "tags": ["たいばん", "はたらき", "物質"],
     "difficulty": 2,
     "asof": "2026-01-02"
@@ -254,7 +254,7 @@ window.questions = [
       "どれでもない"
     ],
     "answer": 1,
-    "source": "羊水のはたらきとして、たい児を守るのが正しいです。羊水は、たい児を包んでいる液体で、たい児を守るはたらきをします。",
+    "source": "羊水のはたらきとして、たい児を守るのが正しいです。羊水は、たい児を包んでいる液体で、たい児を守るはたらきをします。羊水は、たい児が衝撃を受けないように守り、動きやすくするはたらきがあります。",
     "tags": ["羊水", "はたらき", "たい児"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -270,7 +270,7 @@ window.questions = [
       "どれでもない"
     ],
     "answer": 2,
-    "source": "へそのおのはたらきとして、たい児とたいばんをつなぐのが正しいです。へそのおを通して、たい児とたいばんがつながっています。",
+    "source": "へそのおのはたらきとして、たい児とたいばんをつなぐのが正しいです。へそのおを通して、たい児とたいばんがつながっています。へそのおには、血管が通っており、たいばんを通して物質のやりとりが行われます。",
     "tags": ["へそのお", "はたらき", "たい児", "たいばん"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -286,7 +286,7 @@ window.questions = [
       "すべて同じ"
     ],
     "answer": 0,
-    "source": "男性のからだで、精子をつくる器官は精巣です。精巣で精子がつくられます。",
+    "source": "男性のからだで、精子をつくる器官は精巣です。精巣で精子がつくられます。精巣は、男性のからだの中にあり、精子をつくるはたらきをしています。",
     "tags": ["精巣", "精子", "男性"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -302,7 +302,7 @@ window.questions = [
       "すべて同じ"
     ],
     "answer": 1,
-    "source": "女性のからだで、卵をつくる器官は卵巣です。卵巣で卵（卵子）がつくられます。",
+    "source": "女性のからだで、卵をつくる器官は卵巣です。卵巣で卵（卵子）がつくられます。卵巣は、女性のからだの中にあり、卵をつくるはたらきをしています。",
     "tags": ["卵巣", "卵", "女性"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -318,7 +318,7 @@ window.questions = [
       "時によって変わる"
     ],
     "answer": 0,
-    "source": "ヒトのたんじょうの順番は、精子と卵→受精→受精卵→たい児→生まれるです。",
+    "source": "ヒトのたんじょうの順番は、精子と卵→受精→受精卵→たい児→生まれるです。まず、精子と卵が結びついて受精し、受精卵になります。その後、受精卵が成長してたい児になり、やがて生まれます。",
     "tags": ["ヒトのたんじょう", "順番", "受精", "たい児"],
     "difficulty": 2,
     "asof": "2026-01-02"

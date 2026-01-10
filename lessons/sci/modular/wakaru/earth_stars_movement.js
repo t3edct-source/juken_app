@@ -14,7 +14,7 @@ window.questions = [
       "すべて同じ"
     ],
     "answer": 0,
-    "source": "星の1日の動きは、地球の自転による見かけの動きです。地球が自転することで、星が動いて見えます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">星の1日の動き\n\n  地球が自転\n      ↓\n  星が動いて見える\n      ↓\n  見かけの動き\n\n【原因】\n  地球の自転\n\n【結果】\n  星が動いて見える</div>",
+    "source": "星の1日の動きは、地球の自転による見かけの動きです。地球が自転することで、星が動いて見えます。星の1日の動き 地球が自転 ↓ 星が動いて見える ↓ 見かけの動き 【原因】 地球の自転 【結果】 星が動いて見える。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\"></div>",
     "tags": ["星", "1日の動き", "地球の自転", "見かけの動き"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -30,7 +30,7 @@ window.questions = [
       "測定できない"
     ],
     "answer": 0,
-    "source": "北の空の星の動きの向きは時計回りです。北極星を中心にして、星が時計回りに回転して見えます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">北の空の星の動き\n\n    北極星（中心）\n        ●\n       ╱ ╲\n      ╱   ╲\n     ╱     ╲\n    ⭐     ⭐\n     ╲     ╱\n      ╲   ╱\n       ╲ ╱\n        ↓\n    時計回り\n\n北極星を中心に時計回り</div>",
+    "source": "北の空の星の動きの向きは時計回りです。北極星を中心にして、星が時計回りに回転して見えます。北の空の星の動き 北極星（中心） ● ╱ ╲ ╱ ╲ ╱ ╲ ⭐ ⭐ ╲ ╱ ╲ ╱ ╲ ╱ ↓ 時計回り 北極星を中心に時計回り。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\"></div>",
     "tags": ["北の空", "星", "動き", "時計回り"],
     "difficulty": 1,
     "asof": "2026-01-02"
