@@ -519,11 +519,8 @@ nextBtn.onclick = () => {
           lessonId = lessonId + '_oboeru';
           console.log('🔍 覚える編のID変換:', lessonId);
         } else {
-          // わかる編はそのまま
-          console.log('🔍 わかる編のID変換:', lessonId);
-          // わかる編: _wakaruサフィックスを追加
-          lessonId = lessonId + '_wakaru';
-          console.log('🔍 わかる編のID変換:', lessonId);
+          // わかる編はそのまま（catalog.jsonのIDと一致させるため、サフィックスを追加しない）
+          console.log('🔍 わかる編のID変換（サフィックスなし）:', lessonId);
         }
         
         console.log('🔄 レッスンID変換:', era, '→', lessonId);

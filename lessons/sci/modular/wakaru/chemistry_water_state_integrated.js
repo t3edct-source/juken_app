@@ -11,7 +11,7 @@ window.questions = [
     text: "水が氷・水・水蒸気のように形を変えることをまとめて何という？",
     choices: ["水の三態", "水の循環", "水溶液", "状態変化"],
     answer: 0,
-    source: "水は、冷やすと氷のようにかたまり、あたためると空気の中に広がります。でも、水がべつのものに変わったわけではありません。同じ水が、固体・液体・気体という三つのすがたで存在しています。この三つのすがたをまとめて、水の三態といいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">水の三態\n\n  ① 固体（氷）\n  ┌─────┐\n  │ ●●● │ ← かたい、形が決まっている\n  │ ●●● │\n  └─────┘\n      ↓ あたためる\n  ② 液体（水）\n  ┌─────┐\n  │ ● ● │ ← やわらかい、形が変わる\n  │ ● ● │\n  └─────┘\n      ↓ あたためる\n  ③ 気体（水蒸気）\n  ●   ●   ● ← 広がる、見えない\n\n同じ水が三つのすがたで存在</div>",
+    source: "水は、冷やすと氷のようにかたまり、あたためると空気の中に広がります。でも、水がべつのものに変わったわけではありません。同じ水が、固体・液体・気体という三つのすがたで存在しています。この三つのすがたをまとめて、水の三態といいます。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated1.png\" alt=\"水の三態\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["水の三態", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -20,11 +20,9 @@ window.questions = [
     qnum: 2,
     text: "物質が温度によって、固体、液体、気体と状態を変えることを何といいますか？",
     choices: [
-      "状態変化",
-      "化学変化",
+      "状態変化",,
+      "化学変化",,
       "物理変化",
-      "どれでもない",
-      "わからない"
     ],
     answer: 0,
     source: "物質が温度によって、固体、液体、気体と状態を変えることを状態変化といいます。状態変化は、物質の分子の運動が温度によって変わることで起こります。温度が上がると分子の運動が活発になり、温度が下がると分子の運動が鈍くなります。この運動の変化により、物質の状態が変わります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">状態変化のしくみ\n\n【温度が低い】\n  分子の運動：鈍い\n      ↓\n  固体（氷）\n\n【温度が中】\n  分子の運動：普通\n      ↓\n  液体（水）\n\n【温度が高い】\n  分子の運動：活発\n      ↓\n  気体（水蒸気）\n\n温度が変わる → 分子の運動が変わる → 状態が変わる</div>",
@@ -37,7 +35,7 @@ window.questions = [
     text: "氷がとけて水になる変化を何という？",
     choices: ["融解", "凝固", "蒸発", "沸騰"],
     answer: 0,
-    source: "かたい氷をあたためると、だんだんやわらかくなり、水になります。このように、固体が液体に変わることを、融解（ゆうかい）といいます。融解は、温度が上がることで分子の運動が活発になり、分子間の結びつきが弱くなることで起こります。氷が水に変わる温度を融点といい、水の融点は0°Cです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">融解（固体→液体）\n\n  氷（固体）\n  ┌─────┐\n  │ ●●● │\n  │ ●●● │ ← かたい\n  └─────┘\n      ↓ あたためる（0°C以上）\n  水（液体）\n  ┌─────┐\n  │ ● ● │\n  │ ● ● │ ← やわらかい\n  └─────┘\n\n【融点】\n  0°C（水の場合）\n\n分子の運動が活発になる → 結びつきが弱くなる</div>",
+    source: "かたい氷をあたためると、だんだんやわらかくなり、水になります。このように、固体が液体に変わることを、融解（ゆうかい）といいます。融解は、温度が上がることで分子の運動が活発になり、分子間の結びつきが弱くなることで起こります。氷が水に変わる温度を融点といい、水の融点は0°Cです。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated3.png\" alt=\"融解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["融解", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -47,7 +45,7 @@ window.questions = [
     text: "水が冷やされて氷になる変化を何という？",
     choices: ["凝固", "融解", "蒸発", "沸騰"],
     answer: 0,
-    source: "水を冷やしていくと、動きが小さくなり、形の決まった氷になります。このように、液体が固体に変わることを、凝固（ぎょうこ）といいます。凝固は、温度が下がることで分子の運動が鈍くなり、分子間の結びつきが強くなることで起こります。水が氷に変わる温度を凝固点といい、水の凝固点は0°Cです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">凝固（液体→固体）\n\n  水（液体）\n  ┌─────┐\n  │ ● ● │\n  │ ● ● │ ← やわらかい\n  └─────┘\n      ↓ 冷やす（0°C以下）\n  氷（固体）\n  ┌─────┐\n  │ ●●● │\n  │ ●●● │ ← かたい\n  └─────┘\n\n【凝固点】\n  0°C（水の場合）\n\n分子の運動が鈍くなる → 結びつきが強くなる</div>",
+    source: "水を冷やしていくと、動きが小さくなり、形の決まった氷になります。このように、液体が固体に変わることを、凝固（ぎょうこ）といいます。凝固は、温度が下がることで分子の運動が鈍くなり、分子間の結びつきが強くなることで起こります。水が氷に変わる温度を凝固点といい、水の凝固点は0°Cです。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated4.png\" alt=\"凝固\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["凝固", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -57,7 +55,7 @@ window.questions = [
     text: "水が液体から気体に変わる変化を何という？",
     choices: ["蒸発", "凝固", "融解", "溶解"],
     answer: 0,
-    source: "水は、火にかけなくても、表面から少しずつ空気の中に出ていきます。このように、液体が少しずつ気体になることを、蒸発といいます。蒸発は、液体の表面にある分子が、運動エネルギーを得て気体になる現象です。温度が高いほど、表面積が大きいほど、風があるほど、蒸発は速くなります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">蒸発（液体→気体）\n\n  水（液体）\n  ┌─────┐\n  │ ● ● │\n  │ ● ● │\n  └─────┘\n    ↑ ↑ ↑\n    │ │ │ 表面から少しずつ\n    │ │ │\n  ● ● ● ← 水蒸気（気体）\n\n【蒸発の特徴】\n  表面から少しずつ\n  火にかけなくても起こる\n  温度が高いほど速い</div>",
+    source: "水は、火にかけなくても、表面から少しずつ空気の中に出ていきます。このように、液体が少しずつ気体になることを、蒸発といいます。蒸発は、液体の表面にある分子が、運動エネルギーを得て気体になる現象です。温度が高いほど、表面積が大きいほど、風があるほど、蒸発は速くなります。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated5.png\" alt=\"蒸発\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["蒸発", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -67,7 +65,7 @@ window.questions = [
     text: "水を加熱したとき、一定の温度で激しく気体になる現象を何という？",
     choices: ["沸騰", "蒸発", "融解", "凝固"],
     answer: 0,
-    source: "水をあたためつづけると、ある温度でブクブクと泡を出し、一気に気体になります。このように、水全体が激しく気体になることを、沸騰（ふっとう）といいます。沸騰は、液体の内部からも気体が発生する現象で、沸点で起こります。水の沸点は100°Cで、沸騰している間は温度が一定のままです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">沸騰（液体→気体）\n\n  水（液体）\n  ┌─────┐\n  │ ● ● │\n  │ ● ● │\n  │ ● ● │\n  └─────┘\n    ↑ ↑ ↑ ↑\n    │ │ │ │ 全体から激しく\n    │ │ │ │\n  ● ● ● ● ← 水蒸気（気体）\n\n【沸騰の特徴】\n  内部からも気体が発生\n  ブクブクと泡を出す\n  沸点：100°C（水の場合）</div>",
+    source: "水をあたためつづけると、ある温度でブクブクと泡を出し、一気に気体になります。このように、水全体が激しく気体になることを、沸騰（ふっとう）といいます。沸騰は、液体の内部からも気体が発生する現象で、沸点で起こります。水の沸点は100°Cで、沸騰している間は温度が一定のままです。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated6.png\" alt=\"沸騰\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["沸騰", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -77,7 +75,7 @@ window.questions = [
     text: "水蒸気が冷やされて水の粒になる変化を何という？",
     choices: ["凝結", "蒸発", "融解", "凝固"],
     answer: 0,
-    source: "空気に出た水蒸気が冷やされると、また液体の水にもどります。このように、気体が液体に変わることを、凝結（ぎょうけつ）といいます。凝結は、温度が下がることで気体の分子の運動が鈍くなり、分子間の結びつきが強くなることで起こります。雲や霧、露などは、水蒸気が凝結してできたものです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">凝結（気体→液体）\n\n  水蒸気（気体）\n  ●   ●   ●\n      ↓ 冷やす\n  水（液体）\n  ┌─────┐\n  │ ● ● │\n  │ ● ● │\n  └─────┘\n\n【凝結の例】\n  雲、霧、露\n\n分子の運動が鈍くなる → 結びつきが強くなる</div>",
+    source: "空気に出た水蒸気が冷やされると、また液体の水にもどります。このように、気体が液体に変わることを、凝結（ぎょうけつ）といいます。凝結は、温度が下がることで気体の分子の運動が鈍くなり、分子間の結びつきが強くなることで起こります。雲や霧、露などは、水蒸気が凝結してできたものです。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated7.png\" alt=\"凝結\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["凝結", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -86,14 +84,12 @@ window.questions = [
     qnum: 8,
     text: "固体が液体に変化するときの温度を何といいますか？",
     choices: [
-      "融点",
-      "沸点",
+      "融点",,
+      "沸点",,
       "凝固点",
-      "どれでもない",
-      "わからない"
     ],
     answer: 0,
-    source: "固体が液体に変化するときの温度を融点といいます。水の融点は0°Cです。融点は、物質によって決まった値があり、その温度で固体と液体が共存します。融点では、加えた熱は温度を上げるためではなく、状態変化のために使われます。そのため、融点では温度が一定のままです。",
+    source: "固体が液体に変化するときの温度を融点といいます。水の融点は0°Cです。融点は、物質によって決まった値があり、その温度で固体と液体が共存します。融点では、加えた熱は温度を上げるためではなく、状態変化のために使われます。そのため、融点では温度が一定のままです。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated8.png\" alt=\"融点\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["融点", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -102,14 +98,12 @@ window.questions = [
     qnum: 9,
     text: "液体が気体に変化するときの温度を何といいますか？",
     choices: [
-      "融点",
-      "沸点",
+      "融点",,
+      "沸点",,
       "凝固点",
-      "どれでもない",
-      "わからない"
     ],
     answer: 1,
-    source: "液体が気体に変化するときの温度を沸点といいます。水の沸点は100°Cです。沸点は、物質によって決まった値があり、その温度で液体と気体が共存します。沸点では、加えた熱は温度を上げるためではなく、状態変化のために使われます。そのため、沸点では温度が一定のままです。",
+    source: "液体が気体に変化するときの温度を沸点といいます。水の沸点は100°Cです。沸点は、物質によって決まった値があり、その温度で液体と気体が共存します。沸点では、加えた熱は温度を上げるためではなく、状態変化のために使われます。そのため、沸点では温度が一定のままです。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated9.png\" alt=\"沸点\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["沸点", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -119,7 +113,7 @@ window.questions = [
     text: "水を加熱し続けたとき、沸騰している間の水の温度はどうなる？",
     choices: ["一定のまま変わらない", "上がり続ける", "下がり続ける", "0℃になる"],
     answer: 0,
-    source: "水をあたためると、はじめはどんどん温度が上がります。しかし、沸騰しているあいだは、温度は上がりません。あたためた熱が、水を気体に変えるために使われているからです。",
+    source: "水をあたためると、はじめはどんどん温度が上がります。しかし、沸騰しているあいだは、温度は上がりません。あたためた熱が、水を気体に変えるために使われているからです。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated10.png\" alt=\"沸騰時の温度変化\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["沸騰", "温度", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -134,7 +128,7 @@ window.questions = [
       "氷が増えるから"
     ],
     answer: 0,
-    source: "氷がとけているあいだ、氷はまだ水になりきっていません。このときの熱は、温度を上げるためではなく、融解のために使われます。融点では、固体と液体が共存しており、加えた熱は分子間の結びつきを弱めるために使われます。そのため、氷がすべて水になるまで、温度は0°Cのままです。",
+    source: "氷がとけているあいだ、氷はまだ水になりきっていません。このときの熱は、温度を上げるためではなく、融解のために使われます。融点では、固体と液体が共存しており、加えた熱は分子間の結びつきを弱めるために使われます。そのため、氷がすべて水になるまで、温度は0°Cのままです。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated11.png\" alt=\"氷がとけている間の温度\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["融解", "温度", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -143,14 +137,12 @@ window.questions = [
     qnum: 12,
     text: "水が沸騰している間、加える熱は何に使われますか？",
     choices: [
-      "温度を上げる",
-      "状態変化に使われる",
+      "温度を上げる",,
+      "状態変化に使われる",,
       "両方",
-      "どれでもない",
-      "わからない"
     ],
     answer: 1,
-    source: "水が沸騰している間、加える熱は状態変化に使われます。そのため、温度は100°Cのまま変わらない。沸点では、液体と気体が共存しており、加えた熱は分子間の結びつきを弱めるために使われます。そのため、水がすべて水蒸気になるまで、温度は100°Cのままです。",
+    source: "水が沸騰している間、加える熱は状態変化に使われます。そのため、温度は100°Cのまま変わらない。沸点では、液体と気体が共存しており、加えた熱は分子間の結びつきを弱めるために使われます。そのため、水がすべて水蒸気になるまで、温度は100°Cのままです。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated12.png\" alt=\"沸騰時の熱の使われ方\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["沸騰", "熱", "状態変化", "基本"],
     difficulty: 2,
     asof: "2026-01-03"
@@ -165,7 +157,7 @@ window.questions = [
       "水が軽くなるから"
     ],
     answer: 0,
-    source: "水が空気に出ていくのは、水の表面からです。表面が広いほど、空気にふれる部分が多くなります。そのため、表面積が大きいほど蒸発しやすくなります。蒸発は、液体の表面にある分子が気体になる現象なので、表面積が大きいほど、より多くの分子が気体になる機会が増えます。このため、広い皿に入れた水の方が、細長い容器に入れた水より蒸発しやすくなります。",
+    source: "水が空気に出ていくのは、水の表面からです。表面が広いほど、空気にふれる部分が多くなります。そのため、表面積が大きいほど蒸発しやすくなります。蒸発は、液体の表面にある分子が気体になる現象なので、表面積が大きいほど、より多くの分子が気体になる機会が増えます。このため、広い皿に入れた水の方が、細長い容器に入れた水より蒸発しやすくなります。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated13.png\" alt=\"表面積と蒸発\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["蒸発", "表面積", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -180,7 +172,7 @@ window.questions = [
       "水の量が減るから"
     ],
     answer: 0,
-    source: "水が蒸発すると、まわりに水蒸気がたまります。風があると、この水蒸気が運び去られます。そのため、風があると蒸発は進みやすくなります。水蒸気がまわりにたまると、空気中の水蒸気の量が増え、蒸発が進みにくくなります。風があると、水蒸気が運び去られ、空気中の水蒸気の量が減るため、蒸発が進みやすくなります。",
+    source: "水が蒸発すると、まわりに水蒸気がたまります。風があると、この水蒸気が運び去られます。そのため、風があると蒸発は進みやすくなります。水蒸気がまわりにたまると、空気中の水蒸気の量が増え、蒸発が進みにくくなります。風があると、水蒸気が運び去られ、空気中の水蒸気の量が減るため、蒸発が進みやすくなります。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated14.png\" alt=\"風と蒸発\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["蒸発", "風", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -195,7 +187,7 @@ window.questions = [
       "光を出しているから"
     ],
     answer: 0,
-    source: "やかんから出る白い湯気は、水蒸気そのものではありません。水蒸気が冷やされて、細かい水のつぶになったものです。そのつぶが光を反射するため、白く見えます。",
+    source: "やかんから出る白い湯気は、水蒸気そのものではありません。水蒸気が冷やされて、細かい水のつぶになったものです。そのつぶが光を反射するため、白く見えます。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated15.png\" alt=\"湯気と水蒸気\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["湯気", "水蒸気", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -204,14 +196,12 @@ window.questions = [
     qnum: 16,
     text: "水が気体の状態になったものを何といいますか？",
     choices: [
-      "水蒸気",
-      "湯気",
+      "水蒸気",,
+      "湯気",,
       "水",
-      "どれでもない",
-      "わからない"
     ],
     answer: 0,
-    source: "水が気体の状態になったものを水蒸気といいます。水蒸気は目に見えません。水蒸気は、水の分子が気体の状態になったもので、色がなく光をほとんど反射しないため、目に見えません。湯気とは違い、水蒸気そのものは透明で見えません。",
+    source: "水が気体の状態になったものを水蒸気といいます。水蒸気は目に見えません。水蒸気は、水の分子が気体の状態になったもので、色がなく光をほとんど反射しないため、目に見えません。湯気とは違い、水蒸気そのものは透明で見えません。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated16.png\" alt=\"水蒸気\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["水蒸気", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -220,14 +210,12 @@ window.questions = [
     qnum: 17,
     text: "水は100°C以下でも水面から気体に変わります。この変化を何といいますか？",
     choices: [
-      "蒸発",
-      "沸騰",
+      "蒸発",,
+      "沸騰",,
       "凝固",
-      "どれでもない",
-      "わからない"
     ],
     answer: 0,
-    source: "水は100°C以下でも水面から気体に変わります。この変化を蒸発といいます。蒸発は、液体の表面にある分子が、運動エネルギーを得て気体になる現象です。沸騰とは違い、100°C以下でも起こり、液体の表面から少しずつ気体になります。",
+    source: "水は100°C以下でも水面から気体に変わります。この変化を蒸発といいます。蒸発は、液体の表面にある分子が、運動エネルギーを得て気体になる現象です。沸騰とは違い、100°C以下でも起こり、液体の表面から少しずつ気体になります。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated17.png\" alt=\"蒸発\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["蒸発", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -236,14 +224,12 @@ window.questions = [
     qnum: 18,
     text: "水の内部から水が水蒸気になる変化を何といいますか？",
     choices: [
-      "蒸発",
-      "沸騰",
+      "蒸発",,
+      "沸騰",,
       "凝固",
-      "どれでもない",
-      "わからない"
     ],
     answer: 1,
-    source: "水の内部から水が水蒸気になる変化を沸騰（ふっとう）といいます。水の中で水蒸気が発生するため、あわが出ます。沸騰は、液体の内部からも気体が発生する現象で、沸点で起こります。水の沸点は100°Cで、沸騰している間は温度が一定のままです。あわは、水の中で発生した水蒸気の気泡です。",
+    source: "水の内部から水が水蒸気になる変化を沸騰（ふっとう）といいます。水の中で水蒸気が発生するため、あわが出ます。沸騰は、液体の内部からも気体が発生する現象で、沸点で起こります。水の沸点は100°Cで、沸騰している間は温度が一定のままです。あわは、水の中で発生した水蒸気の気泡です。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated18.png\" alt=\"沸騰\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["沸騰", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -252,14 +238,12 @@ window.questions = [
     qnum: 19,
     text: "水を加熱したとき、目に見える白いけむりのようなものは何ですか？",
     choices: [
-      "水蒸気",
-      "湯気",
+      "水蒸気",,
+      "湯気",,
       "水",
-      "どれでもない",
-      "わからない"
     ],
     answer: 1,
-    source: "水を加熱したとき、目に見える白いけむりのようなものは湯気です。湯気は水蒸気が冷えて水のつぶになったものです。湯気は、水蒸気が冷やされて細かい水の粒になったもので、この粒が光を反射するため白く見えます。水蒸気そのものは目に見えませんが、湯気は目に見えます。",
+    source: "水を加熱したとき、目に見える白いけむりのようなものは湯気です。湯気は水蒸気が冷えて水のつぶになったものです。湯気は、水蒸気が冷やされて細かい水の粒になったもので、この粒が光を反射するため白く見えます。水蒸気そのものは目に見えませんが、湯気は目に見えます。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated19.png\" alt=\"湯気\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["湯気", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -268,14 +252,12 @@ window.questions = [
     qnum: 20,
     text: "水を加熱したとき、目に見えない気体の部分は何ですか？",
     choices: [
-      "水蒸気",
-      "湯気",
+      "水蒸気",,
+      "湯気",,
       "水",
-      "どれでもない",
-      "わからない"
     ],
     answer: 0,
-    source: "水を加熱したとき、目に見えない気体の部分は水蒸気です。水蒸気は目に見えません。水蒸気は、水の分子が気体の状態になったもので、色がなく光をほとんど反射しないため、目に見えません。湯気とは違い、水蒸気そのものは透明で見えません。",
+    source: "水を加熱したとき、目に見えない気体の部分は水蒸気です。水蒸気は目に見えません。水蒸気は、水の分子が気体の状態になったもので、色がなく光をほとんど反射しないため、目に見えません。湯気とは違い、水蒸気そのものは透明で見えません。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated20.png\" alt=\"水蒸気\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["水蒸気", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -284,14 +266,12 @@ window.questions = [
     qnum: 21,
     text: "状態変化のとき、重さはどうなりますか？",
     choices: [
-      "変わる",
-      "変わらない",
+      "変わる",,
+      "変わらない",,
       "場合による",
-      "わからない",
-      "どれでもない"
     ],
     answer: 1,
-    source: "状態変化のとき、重さは変わりません。体積は変化しますが、重さは変化しません。状態変化は、物質の形や広がり方が変わるだけで、物質そのものが変わるわけではありません。そのため、物質の量（重さ）は変わりません。これは、状態変化の重要な性質です。",
+    source: "状態変化のとき、重さは変わりません。体積は変化しますが、重さは変化しません。状態変化は、物質の形や広がり方が変わるだけで、物質そのものが変わるわけではありません。そのため、物質の量（重さ）は変わりません。これは、状態変化の重要な性質です。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated21.png\" alt=\"状態変化と重さ\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["状態変化", "重さ", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -300,14 +280,12 @@ window.questions = [
     qnum: 22,
     text: "状態変化のとき、体積はどうなりますか？",
     choices: [
-      "変わる",
-      "変わらない",
+      "変わる",,
+      "変わらない",,
       "場合による",
-      "わからない",
-      "どれでもない"
     ],
     answer: 0,
-    source: "状態変化のとき、体積は変化します。ふつう、物質の体積は、固体<液体<気体となります。これは、分子の間隔が状態によって変わるためです。固体では分子が密に詰まっていますが、液体や気体では分子の間隔が広がります。水は例外で、液体から固体になると体積が増えます。",
+    source: "状態変化のとき、体積は変化します。ふつう、物質の体積は、固体<液体<気体となります。これは、分子の間隔が状態によって変わるためです。固体では分子が密に詰まっていますが、液体や気体では分子の間隔が広がります。水は例外で、液体から固体になると体積が増えます。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated22.png\" alt=\"状態変化と体積\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["状態変化", "体積", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -316,14 +294,13 @@ window.questions = [
     qnum: 23,
     text: "水が液体から固体になると、体積は約何倍になりますか？",
     choices: [
-      "0.9倍",
-      "1.0倍",
-      "1.1倍",
+      "0.9倍",,
+      "1.0倍",,
+      "1.1倍",,
       "1.2倍",
-      "わからない"
     ],
     answer: 2,
-    source: "水が液体から固体になると、体積は約1.1倍になります。水は例外で、液体から固体になると体積が増えます。これは、水の分子が氷になるとき、規則正しく並ぶため、分子の間隔が広がるためです。そのため、氷は水に浮きます。ほとんどの物質は、液体から固体になると体積が減りますが、水は例外です。",
+    source: "水が液体から固体になると、体積は約1.1倍になります。水は例外で、液体から固体になると体積が増えます。これは、水の分子が氷になるとき、規則正しく並ぶため、分子の間隔が広がるためです。そのため、氷は水に浮きます。ほとんどの物質は、液体から固体になると体積が減りますが、水は例外です。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated23.png\" alt=\"水の体積変化\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["水", "体積", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -332,14 +309,13 @@ window.questions = [
     qnum: 24,
     text: "水が水蒸気になると体積は約何倍になりますか？",
     choices: [
-      "100倍",
-      "500倍",
-      "1000倍",
+      "100倍",,
+      "500倍",,
+      "1000倍",,
       "1700倍",
-      "わからない"
     ],
     answer: 3,
-    source: "水が水蒸気になると体積は約1700倍になります。これは、気体になると分子の間隔が非常に広がるためです。液体の水では分子が密に詰まっていますが、水蒸気では分子の間隔が非常に広がり、体積が大幅に増えます。この大きな体積の変化は、状態変化の特徴の一つです。",
+    source: "水が水蒸気になると体積は約1700倍になります。これは、気体になると分子の間隔が非常に広がるためです。液体の水では分子が密に詰まっていますが、水蒸気では分子の間隔が非常に広がり、体積が大幅に増えます。この大きな体積の変化は、状態変化の特徴の一つです。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated24.png\" alt=\"水蒸気の体積変化\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["水蒸気", "体積", "基本"],
     difficulty: 2,
     asof: "2026-01-03"
@@ -348,14 +324,12 @@ window.questions = [
     qnum: 25,
     text: "ふつう、物質の体積は、固体、液体、気体の順でどうなりますか？",
     choices: [
-      "固体<液体<気体",
-      "液体<固体<気体",
+      "固体<液体<気体",,
+      "液体<固体<気体",,
       "気体<液体<固体",
-      "どれでもない",
-      "わからない"
     ],
     answer: 0,
-    source: "ふつう、物質の体積は、固体<液体<気体となります。水は例外で、液体から固体になると体積が増えます。これは、分子の間隔が状態によって変わるためです。固体では分子が密に詰まっていますが、液体や気体では分子の間隔が広がります。水は、氷になるとき分子が規則正しく並ぶため、体積が増えます。",
+    source: "ふつう、物質の体積は、固体<液体<気体となります。水は例外で、液体から固体になると体積が増えます。これは、分子の間隔が状態によって変わるためです。固体では分子が密に詰まっていますが、液体や気体では分子の間隔が広がります。水は、氷になるとき分子が規則正しく並ぶため、体積が増えます。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated25.png\" alt=\"物質の体積の順序\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["体積", "状態変化", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -364,14 +338,12 @@ window.questions = [
     qnum: 26,
     text: "二酸化炭素の固体を何といいますか？",
     choices: [
-      "ドライアイス",
-      "氷",
+      "ドライアイス",,
+      "氷",,
       "雪",
-      "どれでもない",
-      "わからない"
     ],
     answer: 0,
-    source: "二酸化炭素の固体をドライアイスといいます。ドライアイスは、二酸化炭素を冷却して固体にしたもので、非常に冷たく、直接触ると凍傷になる危険があります。ドライアイスは、液体の状態を経ずに直接気体になる昇華という現象を起こします。",
+    source: "二酸化炭素の固体をドライアイスといいます。ドライアイスは、二酸化炭素を冷却して固体にしたもので、非常に冷たく、直接触ると凍傷になる危険があります。ドライアイスは、液体の状態を経ずに直接気体になる昇華という現象を起こします。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated26.png\" alt=\"ドライアイス\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["ドライアイス", "二酸化炭素", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -380,14 +352,12 @@ window.questions = [
     qnum: 27,
     text: "ドライアイスは、液体の状態をへずに、直接何になりますか？",
     choices: [
-      "固体",
-      "液体",
+      "固体",,
+      "液体",,
       "気体",
-      "どれでもない",
-      "わからない"
     ],
     answer: 2,
-    source: "ドライアイスは、液体の状態をへずに、直接気体になります。この変化を昇華といいます。昇華は、固体が直接気体になる現象で、逆に気体が直接固体になることも昇華といいます。ドライアイスは、常温では液体にならず、直接気体になるため、昇華を起こします。",
+    source: "ドライアイスは、液体の状態をへずに、直接気体になります。この変化を昇華といいます。昇華は、固体が直接気体になる現象で、逆に気体が直接固体になることも昇華といいます。ドライアイスは、常温では液体にならず、直接気体になるため、昇華を起こします。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated27.png\" alt=\"昇華\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["ドライアイス", "昇華", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -402,7 +372,7 @@ window.questions = [
       "すぐ水になるから"
     ],
     answer: 0,
-    source: "水蒸気は、色がなく、光をほとんど反射しません。そのため、水蒸気そのものは目に見えません。水蒸気は、水の分子が気体の状態になったもので、分子が非常に小さく、光をほとんど反射しないため、透明で見えません。湯気は、水蒸気が冷えて細かい水の粒になったもので、この粒が光を反射するため白く見えます。",
+    source: "水蒸気は、色がなく、光をほとんど反射しません。そのため、水蒸気そのものは目に見えません。水蒸気は、水の分子が気体の状態になったもので、分子が非常に小さく、光をほとんど反射しないため、透明で見えません。湯気は、水蒸気が冷えて細かい水の粒になったもので、この粒が光を反射するため白く見えます。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated28.png\" alt=\"水蒸気が見えない理由\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["水蒸気", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -417,7 +387,7 @@ window.questions = [
       "なくなる"
     ],
     answer: 0,
-    source: "水が液体から気体に変わっても、水そのものがなくなるわけではありません。形が変わるだけで、同じ水が空気の中に広がります。そのため、水全体の重さは変わりません。状態変化は、物質の形や広がり方が変わるだけで、物質そのものが変わるわけではありません。そのため、物質の量（重さ）は変わりません。これは、状態変化の重要な性質です。",
+    source: "水が液体から気体に変わっても、水そのものがなくなるわけではありません。形が変わるだけで、同じ水が空気の中に広がります。そのため、水全体の重さは変わりません。状態変化は、物質の形や広がり方が変わるだけで、物質そのものが変わるわけではありません。そのため、物質の量（重さ）は変わりません。これは、状態変化の重要な性質です。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated29.png\" alt=\"状態変化と重さ\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["状態変化", "重さ", "基本"],
     difficulty: 1,
     asof: "2026-01-03"
@@ -432,7 +402,7 @@ window.questions = [
       "早く答えることを重視する"
     ],
     answer: 0,
-    source: "水が氷になったり、水蒸気になったりしても、水そのものは同じです。変わるのは、すがたや広がり方です。理科では、このように何が変わり、何が変わらないかを見ることが大切です。状態変化では、物質の種類は変わらず、形や体積、温度などが変わります。一方、重さや物質の種類は変わりません。この見方を理解することで、状態変化を正しく理解できます。",
+    source: "水が氷になったり、水蒸気になったりしても、水そのものは同じです。変わるのは、すがたや広がり方です。理科では、このように何が変わり、何が変わらないかを見ることが大切です。状態変化では、物質の種類は変わらず、形や体積、温度などが変わります。一方、重さや物質の種類は変わりません。この見方を理解することで、状態変化を正しく理解できます。<img src=\"../images/chemistry/water_state/sci.chemistry.water_state_integrated30.png\" alt=\"状態変化の見方\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     tags: ["状態変化", "考え方", "基本"],
     difficulty: 1,
     asof: "2026-01-03"

@@ -10,7 +10,7 @@ window.questions = [
       "被子植物"
     ],
     "answer": 0,
-    "source": "無胚乳種子は、発芽に必要な養分を子葉にたくわえている種子です。インゲンマメ、ヒマワリ、ダイズ、アサガオ、ダイコン、クリ、ヘチマなどがこの種類に当たります。子葉が大きく発達していて、発芽のときにこの養分を使います。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【無胚乳種子】\n\n  種子\n  ┌─────┐\n  │ 種皮  │\n  │ 子葉  │ ← 養分をたくわえる\n  │ 子葉  │\n  │ 幼根  │\n  │ 胚じく│\n  │ 幼芽  │\n  └─────┘\n  \n  例: インゲンマメ、ヒマワリ、ダイズ</div>",
+    "source": "無胚乳種子は、発芽に必要な養分を子葉にたくわえている種子です。インゲンマメ、ヒマワリ、ダイズ、アサガオ、ダイコン、クリ、ヘチマなどがこの種類に当たります。子葉が大きく発達していて、発芽のときにこの養分を使います。<img src=\"../images/biology/seeds/sci.biology.seeds_germination1.png\" alt=\"無胚乳種子\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["種子", "無胚乳種子", "子葉"],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -26,7 +26,7 @@ window.questions = [
       "裸子植物"
     ],
     "answer": 0,
-    "source": "胚乳種子は、発芽に必要な養分を胚乳にたくわえている種子です。イネ、トウモロコシ、ムギなどの単子葉類や、カキ、オシロイバナなどがこの種類に当たります。胚乳という特別な部分に栄養をためこんでいます。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【胚乳種子】\n\n  種子\n  ┌─────┐\n  │ 種皮  │\n  │ 胚乳  │ ← 養分をたくわえる\n  │ 子葉  │\n  │ 幼根  │\n  │ 胚じく│\n  │ 幼芽  │\n  └─────┘\n  \n  例: イネ、トウモロコシ、ムギ、カキ</div>",
+    "source": "胚乳種子は、発芽に必要な養分を胚乳にたくわえている種子です。イネ、トウモロコシ、ムギなどの単子葉類や、カキ、オシロイバナなどがこの種類に当たります。胚乳という特別な部分に栄養をためこんでいます。<img src=\"../images/biology/seeds/sci.biology.seeds_germination2.png\" alt=\"胚乳種子\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["種子", "胚乳種子", "胚乳"],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -38,9 +38,7 @@ window.questions = [
       "無胚乳種子",
       "胚乳種子",
       "どちらでもない",
-      "両方",
-      "わからない"
-    ],
+      "両方"],
     "answer": 0,
     "source": "インゲンマメの種子は無胚乳種子です。発芽に必要な養分を子葉にたくわえているため、子葉が大きく発達しています。インゲンマメ、ヒマワリ、ダイズ、アサガオ、ダイコン、クリ、ヘチマなどが無胚乳種子の例です。",
     "tags": ["種子", "無胚乳種子", "インゲンマメ"],
@@ -58,7 +56,7 @@ window.questions = [
       "胚乳"
     ],
     "answer": 0,
-    "source": "種子の中にある「幼根」は、発芽したあと根になる部分です。発芽すると、幼根が下に向かって伸び、土の中に根を張ります。根は水や養分を吸収する大切な役割を持っています。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【種子の構造】\n\n  種子\n  ┌─────┐\n  │ 種皮  │\n  │ 子葉  │\n  │ 幼根  │ ← 発芽後、根になる\n  │ 胚じく│ ← 発芽後、くきになる\n  │ 幼芽  │ ← 発芽後、葉になる\n  └─────┘</div>",
+    "source": "種子の中にある「幼根」は、発芽したあと根になる部分です。発芽すると、幼根が下に向かって伸び、土の中に根を張ります。根は水や養分を吸収する大切な役割を持っています。<img src=\"../images/biology/seeds/sci.biology.seeds_germination4.png\" alt=\"種子の構造\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["種子", "幼根", "根"],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -74,7 +72,7 @@ window.questions = [
       "胚乳"
     ],
     "answer": 0,
-    "source": "種子の中にある「胚じく」は、発芽したあとくきになる部分です。発芽すると、胚じくが上に向かって伸び、くきとして成長します。くきは葉や花を支え、水や養分を運ぶ役割を持っています。",
+    "source": "種子の中にある「胚じく」は、発芽したあとくきになる部分です。発芽すると、胚じくが上に向かって伸び、くきとして成長します。くきは葉や花を支え、水や養分を運ぶ役割を持っています。<img src=\"../images/biology/seeds/sci.biology.seeds_germination5.png\" alt=\"胚じく\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["種子", "胚じく", "くき"],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -90,7 +88,7 @@ window.questions = [
       "胚乳"
     ],
     "answer": 0,
-    "source": "種子の中にある「幼芽」は、発芽したあと葉（本葉）になる部分です。発芽すると、幼芽が上に向かって伸び、やがて本葉として成長します。本葉は光合成を行い、植物が成長するための栄養を作ります。",
+    "source": "種子の中にある「幼芽」は、発芽したあと葉（本葉）になる部分です。発芽すると、幼芽が上に向かって伸び、やがて本葉として成長します。本葉は光合成を行い、植物が成長するための栄養を作ります。<img src=\"../images/biology/seeds/sci.biology.seeds_germination6.png\" alt=\"幼芽\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["種子", "幼芽", "葉"],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -166,7 +164,6 @@ window.questions = [
       "必要ない",
       "必要である",
       "場合による",
-      "わからない",
       "どちらでもよい"
     ],
     "answer": 0,
@@ -202,7 +199,7 @@ window.questions = [
       "実"
     ],
     "answer": 0,
-    "source": "発芽したあと、幼根は根になります。幼根が下に向かって伸び、土の中に根を張ります。根は水や養分を吸収する大切な役割を持っています。",
+    "source": "発芽したあと、幼根は根になります。幼根が下に向かって伸び、土の中に根を張ります。根は水や養分を吸収する大切な役割を持っています。<img src=\"../images/biology/seeds/sci.biology.seeds_germination13.png\" alt=\"幼根\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["発芽", "幼根", "根"],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -218,7 +215,7 @@ window.questions = [
       "実"
     ],
     "answer": 0,
-    "source": "発芽したあと、胚じくはくきになります。胚じくが上に向かって伸び、くきとして成長します。くきは葉や花を支え、水や養分を運ぶ役割を持っています。",
+    "source": "発芽したあと、胚じくはくきになります。胚じくが上に向かって伸び、くきとして成長します。くきは葉や花を支え、水や養分を運ぶ役割を持っています。<img src=\"../images/biology/seeds/sci.biology.seeds_germination14.png\" alt=\"胚じく\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["発芽", "胚じく", "くき"],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -234,7 +231,7 @@ window.questions = [
       "実"
     ],
     "answer": 0,
-    "source": "発芽したあと、幼芽は葉（本葉）になります。幼芽が上に向かって伸び、やがて本葉として成長します。本葉は光合成を行い、植物が成長するための栄養を作ります。",
+    "source": "発芽したあと、幼芽は葉（本葉）になります。幼芽が上に向かって伸び、やがて本葉として成長します。本葉は光合成を行い、植物が成長するための栄養を作ります。<img src=\"../images/biology/seeds/sci.biology.seeds_germination15.png\" alt=\"幼芽\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["発芽", "幼芽", "葉", "本葉"],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -250,7 +247,7 @@ window.questions = [
       "ゼンマイ、イヌワラビ"
     ],
     "answer": 0,
-    "source": "無胚乳種子の例は、インゲンマメ、ヒマワリ、ダイズ、アサガオ、ダイコン、クリ、ヘチマなどです。これらは発芽に必要な養分を子葉にたくわえている種子です。子葉が大きく発達していて、発芽のときにこの養分を使います。",
+    "source": "無胚乳種子の例は、インゲンマメ、ヒマワリ、ダイズ、アサガオ、ダイコン、クリ、ヘチマなどです。これらは発芽に必要な養分を子葉にたくわえている種子です。子葉が大きく発達していて、発芽のときにこの養分を使います。<img src=\"../images/biology/seeds/sci.biology.seeds_germination16.png\" alt=\"無胚乳種子の例\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["無胚乳種子", "例"],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -266,7 +263,7 @@ window.questions = [
       "ゼンマイ、イヌワラビ"
     ],
     "answer": 0,
-    "source": "胚乳種子の例は、イネ、トウモロコシ、ムギなどの単子葉類や、カキ、オシロイバナなどです。これらは発芽に必要な養分を胚乳にたくわえている種子です。胚乳という特別な部分に栄養をためこんでいます。",
+    "source": "胚乳種子の例は、イネ、トウモロコシ、ムギなどの単子葉類や、カキ、オシロイバナなどです。これらは発芽に必要な養分を胚乳にたくわえている種子です。胚乳という特別な部分に栄養をためこんでいます。<img src=\"../images/biology/seeds/sci.biology.seeds_germination17.png\" alt=\"胚乳種子の例\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["胚乳種子", "例"],
     "difficulty": 1,
     "asof": "2025-01-27"
