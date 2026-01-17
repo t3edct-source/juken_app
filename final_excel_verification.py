@@ -300,3 +300,4 @@ print(f"提案追加後の対応数: {proposed_total_matched}/{total_excel} ({pr
 print(f"改善数: {proposed_total_matched - current_total_matched}項目")
 
 
+

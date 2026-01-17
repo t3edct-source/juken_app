@@ -266,3 +266,4 @@ with open("lesson_summary_detailed.txt", "w", encoding="utf-8") as f:
 print("詳細なレッスン一覧を lesson_summary_detailed.txt に出力しました。")
 
 
+

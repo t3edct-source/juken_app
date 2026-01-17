@@ -138,7 +138,7 @@ window.questions = [
       "細胞壁と水の圧力による支え"
     ],
     "answer": 0,
-    "source": "光合成では、光・水・二酸化炭素の3つが材料として必要です。葉の表面にある気孔から二酸化炭素を取り入れ、根から吸い上げた水と合わせて葉緑体の中で栄養を作り出します。このとき酸素も同時につくられ、空気中へ出されます。植物が健康に育つには、この3つの材料がそろっていることが大切です。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【光合成の材料】\n\n  光 ☀️  +  水 💧  +  二酸化炭素\n      ↓\n  光合成\n      ↓\n  デンプン + 酸素</div>",
+    "source": "光合成では、光・水・二酸化炭素の3つが材料として必要です。葉の表面にある気孔から二酸化炭素を取り入れ、根から吸い上げた水と合わせて葉緑体の中で栄養を作り出します。このとき酸素も同時につくられ、空気中へ出されます。植物が健康に育つには、この3つの材料がそろっていることが大切です。<img src=\"../images/biology/plants_growth/plants_growth_light9.png\" alt=\"光合成の材料\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -170,7 +170,7 @@ window.questions = [
       "水分と養分を吸収するため"
     ],
     "answer": 0,
-    "source": "植物は昼に光合成を行いますが、夜は光がないため光合成ができません。そのかわり、昼夜どちらでも行っている「呼吸」が体を支えます。呼吸では酸素を取り入れ、体の中の栄養を使ってエネルギーをつくります。植物も動物と同じように呼吸を続け、つくったエネルギーで生命活動を保っています。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【植物の呼吸】\n\n  夜（光なし）\n      ↓\n  呼吸\n      ↓\n  酸素 + 栄養 → エネルギー</div>",
+    "source": "植物は昼に光合成を行いますが、夜は光がないため光合成ができません。そのかわり、昼夜どちらでも行っている「呼吸」が体を支えます。呼吸では酸素を取り入れ、体の中の栄養を使ってエネルギーをつくります。植物も動物と同じように呼吸を続け、つくったエネルギーで生命活動を保っています。<img src=\"../images/biology/plants_growth/plants_growth_light11.png\" alt=\"植物の呼吸\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -186,7 +186,7 @@ window.questions = [
       "水分と養分を吸収するため"
     ],
     "answer": 0,
-    "source": "成長点は、植物の茎や根の先端にある特別な部分で、細胞が盛んに分裂して新しい組織をつくります。成長点がはたらくことで、植物は上へ、下へと成長を続けることができます。茎の成長点は植物の背を伸ばし、根の成長点は土の中へ広がる力を生みます。成長の源といえる大切な部分です。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【成長点】\n\n  茎の先端\n      ↑\n  成長点（細胞分裂）\n      ↓\n  根の先端\n  \n  上へ下へ成長する</div>",
+    "source": "成長点は、植物の茎や根の先端にある特別な部分で、細胞が盛んに分裂して新しい組織をつくります。成長点がはたらくことで、植物は上へ、下へと成長を続けることができます。茎の成長点は植物の背を伸ばし、根の成長点は土の中へ広がる力を生みます。成長の源といえる大切な部分です。<img src=\"../images/biology/plants_growth/plants_growth_light12.png\" alt=\"成長点\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -202,7 +202,7 @@ window.questions = [
       "まだ光合成が不十分だから"
     ],
     "answer": 0,
-    "source": "茎の先端の成長点が傷つくと、そこから上へは成長できなくなります。しかし、そのかわりに横にある「わき芽」が活発に成長し、枝分かれするように伸び始めます。園芸で枝を増やしたいときに上の部分を切るのは、この性質を利用しているためです。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【成長点が傷ついたとき】\n\n  成長点が傷つく\n      ↓\n  上へ成長できない\n      ↓\n  わき芽が伸びる\n      ↓\n  枝分かれする</div>",
+    "source": "茎の先端の成長点が傷つくと、そこから上へは成長できなくなります。しかし、そのかわりに横にある「わき芽」が活発に成長し、枝分かれするように伸び始めます。園芸で枝を増やしたいときに上の部分を切るのは、この性質を利用しているためです。<img src=\"../images/biology/plants_growth/plants_growth_light13.png\" alt=\"成長点が傷ついたとき\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -218,7 +218,7 @@ window.questions = [
       "春から初夏"
     ],
     "answer": 0,
-    "source": "葉が広く大きくなることで、光を受ける面積が大きくなり、光合成がより効率的に行えるようになります。特に日当たりのよい場所では、葉を広げることでたくさんの光をとらえられ、植物の成長に有利になります。葉の形や広がりは、植物が生きる環境に合わせて工夫された形です。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【葉が広くなるメリット】\n\n  葉が広い\n  ┌─────────┐\n  │         │\n  │    🌿   │ ← 光を受ける面積が大きい\n  │         │\n  └─────────┘\n  \n  光合成が効率的</div>",
+    "source": "葉が広く大きくなることで、光を受ける面積が大きくなり、光合成がより効率的に行えるようになります。特に日当たりのよい場所では、葉を広げることでたくさんの光をとらえられ、植物の成長に有利になります。葉の形や広がりは、植物が生きる環境に合わせて工夫された形です。<img src=\"../images/biology/plants_growth/plants_growth_light14.png\" alt=\"葉が広くなるメリット\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -234,7 +234,7 @@ window.questions = [
       "成長初期の栄養を与える"
     ],
     "answer": 0,
-    "source": "日当たりの悪い場所で育つ植物は、光を求めて茎が細く長くのびることがあります。光を少しでも受けようと、葉を高い位置に運ぼうとするためです。この現象は「徒長（とちょう）」と呼ばれ、弱い光に合わせて体の形を変える植物の工夫といえます。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【日当たりが悪い場所】\n\n  日当たりが悪い\n      ↓\n  茎が細く長く伸びる\n      │\n      │\n      │（細長い）\n      ↓\n  光を求める</div>",
+    "source": "日当たりの悪い場所で育つ植物は、光を求めて茎が細く長くのびることがあります。光を少しでも受けようと、葉を高い位置に運ぼうとするためです。この現象は「徒長（とちょう）」と呼ばれ、弱い光に合わせて体の形を変える植物の工夫といえます。<img src=\"../images/biology/plants_growth/plants_growth_light15.png\" alt=\"日当たりが悪い場所\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -250,7 +250,7 @@ window.questions = [
       "水分と養分を吸収するため"
     ],
     "answer": 0,
-    "source": "植物の葉には気孔という小さな穴があり、そこから水分が空気中へ出ていきます。これが蒸散です。葉から水が出ていくと、茎や根から新しい水を吸い上げる力が生まれます。ストローで飲み物を吸うのに似たしくみで、蒸散は植物が水を吸い続けるための大切なはたらきです。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【蒸散】\n\n  葉の気孔\n      ↓\n  水分が出る（蒸散）\n      ↓\n  根から水を吸い上げる\n      ↓\n  茎を通って水が運ばれる</div>",
+    "source": "植物の葉には気孔という小さな穴があり、そこから水分が空気中へ出ていきます。これが蒸散です。葉から水が出ていくと、茎や根から新しい水を吸い上げる力が生まれます。ストローで飲み物を吸うのに似たしくみで、蒸散は植物が水を吸い続けるための大切なはたらきです。<img src=\"../images/biology/plants_growth/plants_growth_light16.png\" alt=\"蒸散\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -266,7 +266,7 @@ window.questions = [
       "茎や根に運ばれる"
     ],
     "answer": 0,
-    "source": "根の先端には「根冠」という帽子のような部分があり、土の中を進むときに根を守るはたらきをしています。根はとてもやわらかく、成長点も近くにあるため、すり傷や圧力に弱い部分です。根冠が先頭で土を押し分けることで、根が安全に伸びることができます。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【根冠の役割】\n\n  根の先端\n  ┌─────┐\n  │ 根冠  │ ← 帽子のような部分\n  │       │    根を守る\n  └─────┘\n      ↓\n  土の中を進む</div>",
+    "source": "根の先端には「根冠」という帽子のような部分があり、土の中を進むときに根を守るはたらきをしています。根はとてもやわらかく、成長点も近くにあるため、すり傷や圧力に弱い部分です。根冠が先頭で土を押し分けることで、根が安全に伸びることができます。<img src=\"../images/biology/plants_growth/plants_growth_light17.png\" alt=\"根冠の役割\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -282,7 +282,7 @@ window.questions = [
       "蒸散"
     ],
     "answer": 0,
-    "source": "維管束は、水や養分、光合成でつくった栄養を運ぶ「通り道」の集まりです。茎の中に束のように並んでおり、水を上へ運ぶ道と、栄養を全身に運ぶ道があります。植物が大きくなるためには、この維管束がしっかりはたらくことが欠かせません。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【維管束】\n\n  茎の中\n  ┌─────┐\n  │ ││││ │ ← 維管束（通り道）\n  │ ││││ │    水・養分を運ぶ\n  └─────┘\n  \n  根 ←→ 葉</div>",
+    "source": "維管束は、水や養分、光合成でつくった栄養を運ぶ「通り道」の集まりです。茎の中に束のように並んでおり、水を上へ運ぶ道と、栄養を全身に運ぶ道があります。植物が大きくなるためには、この維管束がしっかりはたらくことが欠かせません。<img src=\"../images/biology/plants_growth/plants_growth_light18.png\" alt=\"維管束\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -314,7 +314,7 @@ window.questions = [
       "茎が細長く伸びる"
     ],
     "answer": 0,
-    "source": "植物の体は、硬い細胞壁と細胞の中の水の圧力によって支えられています。細胞壁は植物細胞だけにある丈夫なつくりで、外側からしっかり体を守ります。また、細胞の中に水がたっぷり入ることでパンと張り、体がしおれずに立つことができます。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【植物の体を支えるしくみ】\n\n  細胞壁（硬い）\n  ┌─────┐\n  │ 水 💧 │ ← 水の圧力\n  │       │\n  └─────┘\n  \n  体がしおれずに立つ</div>",
+    "source": "植物の体は、硬い細胞壁と細胞の中の水の圧力によって支えられています。細胞壁は植物細胞だけにある丈夫なつくりで、外側からしっかり体を守ります。また、細胞の中に水がたっぷり入ることでパンと張り、体がしおれずに立つことができます。<img src=\"../images/biology/plants_growth/plants_growth_light20.png\" alt=\"植物の体を支えるしくみ\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -330,7 +330,7 @@ window.questions = [
       "根毛"
     ],
     "answer": 0,
-    "source": "光合成は、植物が光・水・二酸化炭素を使ってデンプンなどの栄養をつくるはたらきです。葉の中の葉緑体で行われ、植物が生きるためのエネルギーづくりの中心です。光があたる部分でさかんに行われるため、葉は光を受けやすい形をしています。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【光合成】\n\n  光 ☀️ + 水 💧 + CO₂\n      ↓\n  葉緑体\n      ↓\n  デンプン + 酸素</div>",
+    "source": "光合成は、植物が光・水・二酸化炭素を使ってデンプンなどの栄養をつくるはたらきです。葉の中の葉緑体で行われ、植物が生きるためのエネルギーづくりの中心です。光があたる部分でさかんに行われるため、葉は光を受けやすい形をしています。<img src=\"../images/biology/plants_growth/plants_growth_light21.png\" alt=\"光合成\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -346,7 +346,7 @@ window.questions = [
       "本葉"
     ],
     "answer": 0,
-    "source": "蒸散は、葉の気孔から水が水蒸気となって空気中へ出ていくはたらきです。このしくみによって根から水を吸い上げる力が生まれ、植物全体に水が行きわたります。また、葉の温度を下げる効果もあり、植物が暑さで弱らないように働きます。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【蒸散のはたらき】\n\n  葉の気孔\n      ↓\n  水蒸気が出る\n      ↓\n  根から水を吸い上げる\n  \n  水を吸い続けるしくみ</div>",
+    "source": "蒸散は、葉の気孔から水が水蒸気となって空気中へ出ていくはたらきです。このしくみによって根から水を吸い上げる力が生まれ、植物全体に水が行きわたります。また、葉の温度を下げる効果もあり、植物が暑さで弱らないように働きます。<img src=\"../images/biology/plants_growth/plants_growth_light22.png\" alt=\"蒸散のはたらき\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -362,7 +362,7 @@ window.questions = [
       "子葉"
     ],
     "answer": 0,
-    "source": "根毛は、根の表面から細く伸びた部分で、水や養分を吸収しやすくする役目があります。表面積が広がることで、多くの水分や養分を取り入れることができ、植物の成長を大きく助けます。根毛がしっかり働くことで、植物は健康に育つことができます。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【根毛】\n\n  根\n  ┌─────┐\n  │ ││││ │ ← 根毛（細かい毛）\n  │ ││││ │    水や養分を吸収\n  └─────┘</div>",
+    "source": "根毛は、根の表面から細く伸びた部分で、水や養分を吸収しやすくする役目があります。表面積が広がることで、多くの水分や養分を取り入れることができ、植物の成長を大きく助けます。根毛がしっかり働くことで、植物は健康に育つことができます。<img src=\"../images/biology/plants_growth/plants_growth_light23.png\" alt=\"根毛\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -378,7 +378,7 @@ window.questions = [
       "蒸散"
     ],
     "answer": 0,
-    "source": "子葉はタネの中にある最初の葉で、発芽後すぐに地上へ出て植物の成長を助けます。子葉には栄養がたくさんふくまれていて、本葉が育つまでの大切なエネルギー源になります。芽生えがしっかり育つための「スタート用バッテリー」のような役割です。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【子葉】\n\n  発芽後\n      ↓\n  子葉（最初の葉）\n  ┌─────┐\n  │ 栄養  │ ← スタート用バッテリー\n  │ たっぷり│\n  └─────┘</div>",
+    "source": "子葉はタネの中にある最初の葉で、発芽後すぐに地上へ出て植物の成長を助けます。子葉には栄養がたくさんふくまれていて、本葉が育つまでの大切なエネルギー源になります。芽生えがしっかり育つための「スタート用バッテリー」のような役割です。<img src=\"../images/biology/plants_growth/plants_growth_light24.png\" alt=\"子葉\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -394,7 +394,7 @@ window.questions = [
       "蒸散"
     ],
     "answer": 0,
-    "source": "本葉は、発芽後しばらくしてから出てくる、植物本来の形をした葉です。本葉が育つと光合成が本格的に行えるようになり、植物は自分で栄養をつくれるようになります。植物が「自立して育ち始める」節目となる葉です。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【本葉】\n\n  発芽後しばらく\n      ↓\n  本葉（本来の形）\n  ┌─────┐\n  │  🌿   │ ← 光合成が本格的\n  └─────┘\n  \n  自立して育ち始める</div>",
+    "source": "本葉は、発芽後しばらくしてから出てくる、植物本来の形をした葉です。本葉が育つと光合成が本格的に行えるようになり、植物は自分で栄養をつくれるようになります。植物が「自立して育ち始める」節目となる葉です。<img src=\"../images/biology/plants_growth/plants_growth_light25.png\" alt=\"本葉\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -410,7 +410,7 @@ window.questions = [
       "本葉"
     ],
     "answer": 0,
-    "source": "成長点では細胞分裂がさかんに行われ、新しい細胞が次々に作られます。茎や根の先端に位置し、植物が長く伸びるための原動力となります。成長点のはたらきがあることで、植物は上にも下にも広がって成長し続けられます。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【成長点の役割】\n\n  茎の先端\n      ↑\n  成長点（細胞分裂）\n      ↓\n  根の先端\n  \n  新しい細胞を作る</div>",
+    "source": "成長点では細胞分裂がさかんに行われ、新しい細胞が次々に作られます。茎や根の先端に位置し、植物が長く伸びるための原動力となります。成長点のはたらきがあることで、植物は上にも下にも広がって成長し続けられます。<img src=\"../images/biology/plants_growth/plants_growth_light26.png\" alt=\"成長点の役割\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -426,7 +426,7 @@ window.questions = [
       "子葉"
     ],
     "answer": 0,
-    "source": "維管束は、水や養分、光合成で作られた栄養などを全身に運ぶための「運搬システム」です。木の年輪のように茎の中に並んでおり、根から葉、葉から他の部分へと大切なものを運びます。植物の体を支えるしくみとして、とても重要です。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【維管束（運搬システム）】\n\n  根 ←→ 茎 ←→ 葉\n      ↑\n  維管束（通り道）\n  \n  水・養分・栄養を運ぶ</div>",
+    "source": "維管束は、水や養分、光合成で作られた栄養などを全身に運ぶための「運搬システム」です。木の年輪のように茎の中に並んでおり、根から葉、葉から他の部分へと大切なものを運びます。植物の体を支えるしくみとして、とても重要です。<img src=\"../images/biology/plants_growth/plants_growth_light27.png\" alt=\"維管束（運搬システム）\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -442,7 +442,7 @@ window.questions = [
       "蒸散"
     ],
     "answer": 0,
-    "source": "呼吸は、植物が体の中の栄養を使ってエネルギーを取り出すはたらきです。昼夜を問わず行われ、生命活動の土台となっています。光合成とは逆で、酸素を使って二酸化炭素を出すしくみです。呼吸によって得たエネルギーが、成長や維持に使われます。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【呼吸】\n\n  酸素 + 栄養\n      ↓\n  呼吸\n      ↓\n  エネルギー + 二酸化炭素\n  \n  昼夜行われる</div>",
+    "source": "呼吸は、植物が体の中の栄養を使ってエネルギーを取り出すはたらきです。昼夜を問わず行われ、生命活動の土台となっています。光合成とは逆で、酸素を使って二酸化炭素を出すしくみです。呼吸によって得たエネルギーが、成長や維持に使われます。<img src=\"../images/biology/plants_growth/plants_growth_light28.png\" alt=\"呼吸\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -474,7 +474,7 @@ window.questions = [
       "呼吸"
     ],
     "answer": 0,
-    "source": "植物は、土の中の養分を吸収して成長します。養分とは、植物が体をつくり、健康に育つために必要な成分のことです。窒素・リン・カリウムなどが代表で、これらを根が吸い上げて葉や茎へ運びます。養分が足りないと成長が弱まり、葉が黄色くなることもあります。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【養分】\n\n  土の中\n  ┌─────┐\n  │ 窒素  │\n  │ リン  │ ← 養分\n  │ カリウム│\n  └─────┘\n      ↓\n  根が吸収\n      ↓\n  葉や茎へ運ぶ</div>",
+    "source": "植物は、土の中の養分を吸収して成長します。養分とは、植物が体をつくり、健康に育つために必要な成分のことです。窒素・リン・カリウムなどが代表で、これらを根が吸い上げて葉や茎へ運びます。養分が足りないと成長が弱まり、葉が黄色くなることもあります。<img src=\"../images/biology/plants_growth/plants_growth_light30.png\" alt=\"養分\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"

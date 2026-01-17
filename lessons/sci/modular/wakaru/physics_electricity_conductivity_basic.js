@@ -10,7 +10,7 @@ window.questions = [
       "静電気"
     ],
     "answer": 0,
-    "source": "豆電球が光るのは、乾電池から「電流」という電気の流れが生まれ、導線や電球の中を通るためです。電流は、乾電池のプラス極からマイナス極へ向かって回路の中を流れます。電流がフィラメントという細い金属線を通ると、金属が熱をもち光を出します。電流が流れ続けているかどうかが、電球が光るか光らないかのポイントになります。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【電流が流れる】\n\n  ┌─[電池]─┐\n  │  +  -  │\n  │   ↓   │ ← 電流\n  │  [電球]│\n  │   💡   │\n  └────────┘\n  \n  プラス極 → マイナス極</div>",
+    "source": "豆電球が光るのは、乾電池から「電流」という電気の流れが生まれ、導線や電球の中を通るためです。電流は、乾電池のプラス極からマイナス極へ向かって回路の中を流れます。電流がフィラメントという細い金属線を通ると、金属が熱をもち光を出します。電流が流れ続いているかどうかが、電球が光るか光らないかのポイントになります。<img src=\"../images/physics/denki/electricity_conductivity_basic1.png\" alt=\"電流が流れる\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -26,7 +26,7 @@ window.questions = [
       "電球が壊れている"
     ],
     "answer": 0,
-    "source": "乾電池と電球をつなげるときは、電流がぐるりと一周できるように「ひとまとまりの回路」をつくる必要があります。プラス極 → 導線 → 電球 → 導線 → マイナス極 と連続してつながれば、電流が流れて電球は光ります。どこかが切れていたり、正しくつながっていないと電流は通れず、電球は光りません。回路がつながることが光るための条件です。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【ひとまとまりの回路】\n\n  ┌─[電池]─┐\n  │  +  -  │\n  │   ↓   │\n  │  [電球]│\n  │   💡   │\n  │   ↓   │\n  └────────┘\n  \n  ぐるりと一周できる</div>",
+    "source": "乾電池と電球をつなげるときは、電流がぐるりと一周できるように「ひとまとまりの回路」をつくる必要があります。プラス極 → 導線 → 電球 → 導線 → マイナス極 と連続してつながれば、電流が流れて電球は光ります。どこかが切れていたり、正しくつながっていないと電流は通れず、電球は光りません。回路がつながることが光るための条件です。<img src=\"../images/physics/denki/electricity_conductivity_basic2.png\" alt=\"ひとまとまりの回路\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -42,7 +42,7 @@ window.questions = [
       "逆流する"
     ],
     "answer": 0,
-    "source": "回路のどこかがはずれたり、スイッチが切れていると、電流は途中で道がなくなるため流れなくなります。電流は乾電池のプラス極からマイナス極まで一周する必要があり、どこか1か所でも切れていると進めません。電球がつかないときは、回路がきちんとつながっているかを確かめることが大切です。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【回路が切れている】\n\n  ┌─[電池]─┐\n  │  +  -  │\n  │   ↓   │\n  │  [電球]│\n  │   💡   │\n  │   ×   │ ← 切れている\n  └────────┘\n  \n  電流が流れない</div>",
+    "source": "回路のどこかがはずれたり、スイッチが切れていると、電流は途中で道がなくなるため流れなくなります。電流は乾電池のプラス極からマイナス極まで一周する必要があり、どこか1か所でも切れていると進めません。電球がつかないときは、回路がきちんとつながっているかを確かめることが大切です。<img src=\"../images/physics/denki/electricity_conductivity_basic3.png\" alt=\"回路が切れている\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -58,7 +58,7 @@ window.questions = [
       "閉回路"
     ],
     "answer": 0,
-    "source": "乾電池のプラス極とマイナス極を導線だけで直接つなぐと、電流が急に大量に流れてしまいます。このようなつなぎ方を「短絡（ショート）」といいます。電気の通り道に電球などの負荷がないため、電流が一気に増えます。短絡はとても危険で、乾電池が熱くなったり、導線がこげたりすることがあります。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【短絡（ショート）】\n\n  ┌─[電池]─┐\n  │  +  -  │\n  │   ↓   │\n  │   ⚡  │ ← 大量の電流\n  │   ↓   │\n  └────────┘\n  \n  危険！絶対にしない</div>",
+    "source": "乾電池のプラス極とマイナス極を導線だけで直接つなぐと、電流が急に大量に流れてしまいます。このようなつなぎ方を「短絡（ショート）」といいます。電気の通り道に電球などの負荷がないため、電流が一気に増えます。短絡はとても危険で、乾電池が熱くなったり、導線がこげたりすることがあります。<img src=\"../images/physics/denki/electricity_conductivity_basic4.png\" alt=\"短絡（ショート）\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -74,29 +74,13 @@ window.questions = [
       "電力が減るため"
     ],
     "answer": 0,
-    "source": "短絡では、ふだんよりはるかに大きな電流が流れるため、乾電池や導線が急に熱くなります。電流が集中して進むことで抵抗が小さくなり、熱が発生しやすくなるからです。場合によっては導線がこげたり、電池がふくらむなどの事故につながることもあります。安全のため、短絡は絶対にしてはいけません。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【短絡の危険性】\n\n  大きな電流\n      ↓\n  乾電池・導線が熱くなる\n      ↓\n  こげる・ふくらむ\n      ↓\n  事故の原因\n  \n  絶対にしない</div>",
+    "source": "短絡では、ふだんよりはるかに大きな電流が流れるため、乾電池や導線が急に熱くなります。電流が集中して進むことで抵抗が小さくなり、熱が発生しやすくなるからです。場合によっては導線がこげたり、電池がふくらむなどの事故につながることもあります。安全のため、短絡は絶対にしてはいけません。<img src=\"../images/physics/denki/electricity_conductivity_basic5.png\" alt=\"短絡の危険性\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
     "qnum": 6,
-    "text": "豆電球の金属部分は電流が通る道である。この部分を何という？",
-    "choices": [
-      "導線部分",
-      "不導体部分",
-      "フィラメント部分",
-      "ガラス部分",
-      "プラスチック部分"
-    ],
-    "answer": 0,
-    "source": "豆電球には、電流を通すための金属部分（口金や底部）があります。ここは導線と同じように電流が通る「導線部分」です。電球を回路につなぐときは、この金属部分が導線にしっかり触れている必要があります。ガラスの部分は電気を通さないため、金属部分だけが電流の通り道になります。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【豆電球の構造】\n\n  豆電球\n  ┌─────┐\n  │ 金属 │ ← 導線部分（電流が通る）\n  │ ガラス│ ← 不導体（電流が通らない）\n  │ 金属 │ ← 導線部分（電流が通る）\n  └─────┘</div>",
-    "tags": [],
-    "difficulty": 1,
-    "asof": "2025-01-27"
-  },
-  {
-    "qnum": 7,
     "text": "電球のガラス部分は電流が通らない。このような物質を何という？",
     "choices": [
       "不導体",
@@ -106,13 +90,13 @@ window.questions = [
       "抵抗体"
     ],
     "answer": 0,
-    "source": "ガラスやゴム、プラスチックなどのように、電流が通らない物質を「不導体」といいます。不導体は電気を通さないため、電流の道として使うことはできません。逆に、電気を通しにくい性質を利用して、電気が流れてほしくない部分を保護する役割にも使われています。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【不導体】\n\n  ガラス・ゴム・プラスチック\n  ┌─────┐\n  │  ×   │ ← 電流が通らない\n  │      │\n  └─────┘\n  \n  保護の役割</div>",
+    "source": "ガラスやゴム、プラスチックなどのように、電流が通らない物質を「不導体」といいます。不導体は電気を通さないため、電流の道として使うことはできません。逆に、電気を通しにくい性質を利用して、電気が流れてほしくない部分を保護する役割にも使われています。<img src=\"../images/physics/denki/electricity_conductivity_basic7.png\" alt=\"不導体\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 8,
+    "qnum": 7,
     "text": "電気が通る物質の代表例は？",
     "choices": [
       "金属",
@@ -122,13 +106,13 @@ window.questions = [
       "木"
     ],
     "answer": 0,
-    "source": "電気がよく通る物質を「導体」と呼び、その代表が金属です。銅やアルミニウムなどの金属は電気を通しやすく、導線として広く使われています。金属の内部には電気を運ぶ粒（電子）が動きやすく、電流が流れやすい性質があります。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【導体（金属）】\n\n  銅・アルミニウムなど\n  ┌─────┐\n  │  →   │ ← 電流が流れる\n  │  →   │\n  └─────┘\n  \n  導線として使われる</div>",
+    "source": "電気がよく通る物質を「導体」と呼び、その代表が金属です。銅やアルミニウムなどの金属は電気を通しやすく、導線として広く使われています。金属の内部には電気を運ぶ粒（電子）が動きやすく、電流が流れやすい性質があります。<img src=\"../images/physics/denki/electricity_conductivity_basic8.png\" alt=\"導体（金属）\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 9,
+    "qnum": 8,
     "text": "乾電池を2個つなぐと電球が明るくなるのはなぜ？",
     "choices": [
       "電流が多く流れるため",
@@ -138,13 +122,13 @@ window.questions = [
       "電力が減るため"
     ],
     "answer": 0,
-    "source": "乾電池を直列につなぐと、電気を押し出す力（電圧）が大きくなり、その分電流がたくさん流れます。電流が多く流れると、豆電球のフィラメントに強い電気の流れが生まれ、より熱くなるため明るく光ります。ただし電流が増えすぎると熱が出やすくなるため、むやみに電池を増やすのは危険です。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【電池を2個つなぐ】\n\n  ┌─[電池]─┐\n  │  +  -  │\n  │   ↓   │\n  │  [電池]│\n  │  +  -  │\n  │   ↓   │\n  │  [電球]│\n  │   💡💡 │ ← 明るく光る\n  └────────┘</div>",
+    "source": "乾電池を直列につなぐと、電気を押し出す力（電圧）が大きくなり、その分電流がたくさん流れます。電流が多く流れると、豆電球のフィラメントに強い電気の流れが生まれ、より熱くなるため明るく光ります。ただし電流が増えすぎると熱が出やすくなるため、むやみに電池を増やすのは危険です。<img src=\"../images/physics/denki/electricity_conductivity_basic9.png\" alt=\"電池を2個つなぐ\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 10,
+    "qnum": 9,
     "text": "電池を逆向きにつないだとき電球が光らない理由は？",
     "choices": [
       "電流の向きが反対で回路がつながらないため",
@@ -154,13 +138,13 @@ window.questions = [
       "電力が減るため"
     ],
     "answer": 0,
-    "source": "電池を逆向きにすると、電流が流れる向きが変わり、電球に電流がうまく流れなくなります。電流は決まった向きで流れることで電球を光らせるため、逆向きでは回路が正しくつながらず、電流が通らない状態になります。電池をつなぐときは、プラス極とマイナス極の向きに注意が必要です。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【電池を逆向きにつなぐ】\n\n  ┌─[電池]─┐\n  │  +  -  │\n  │   ↓   │\n  │  [電池]│\n  │  -  +  │ ← 逆向き\n  │   ×   │\n  │  [電球]│\n  │   💡   │ ← 光らない\n  └────────┘</div>",
+    "source": "電池を逆向きにすると、電流が流れる向きが変わり、電球に電流がうまく流れなくなります。電流は決まった向きで流れることで電球を光らせるため、逆向きでは回路が正しくつながらず、電流が通らない状態になります。電池をつなぐときは、プラス極とマイナス極の向きに注意が必要です。<img src=\"../images/physics/denki/electricity_conductivity_basic10.png\" alt=\"電池を逆向きにつなぐ\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 11,
+    "qnum": 10,
     "text": "電流が通る道が2つ以上ある回路を何という？",
     "choices": [
       "並列回路",
@@ -170,13 +154,13 @@ window.questions = [
       "短絡回路"
     ],
     "answer": 0,
-    "source": "並列回路は、電流が2つ以上の道に分かれて流れる回路です。分かれた道はそれぞれが独立して電流を流すため、どれか1つが切れても他の道には電流が流れます。家庭の電気も多くが並列回路になっており、複数の電気製品が同時に使える仕組みをつくっています。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【並列回路】\n\n  ┌─[電池]─┐\n  │  +  -  │\n  │   ↓   │\n  ├─[電球]─┤\n  │   💡   │\n  ├─[電球]─┤\n  │   💡   │\n  └────────┘\n  \n  2つ以上の道に分かれる</div>",
+    "source": "並列回路は、電流が2つ以上の道に分かれて流れる回路です。分かれた道はそれぞれが独立して電流を流すため、どれか1つが切れても他の道には電流が流れます。家庭の電気も多くが並列回路になっており、複数の電気製品が同時に使える仕組みをつくっています。<img src=\"../images/physics/denki/electricity_conductivity_basic11.png\" alt=\"並列回路\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 12,
+    "qnum": 11,
     "text": "電流の道が1つだけの回路を何という？",
     "choices": [
       "直列回路",
@@ -186,13 +170,13 @@ window.questions = [
       "短絡回路"
     ],
     "answer": 0,
-    "source": "直列回路とは、電流が流れる道が1つだけの回路です。電流は決まった1つの道を順番に通るので、途中にある電球や部品はすべて同じ電流が流れます。どこか1か所が切れると全体に電流が流れなくなるのが特徴です。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【直列回路】\n\n  ┌─[電池]─┐\n  │  +  -  │\n  │   ↓   │\n  │  [電球]│\n  │   💡   │\n  │   ↓   │\n  │  [電球]│\n  │   💡   │\n  └────────┘\n  \n  1つの道だけ</div>",
+    "source": "直列回路とは、電流が流れる道が1つだけの回路です。電流は決まった1つの道を順番に通るので、途中にある電球や部品はすべて同じ電流が流れます。どこか1か所が切れると全体に電流が流れなくなるのが特徴です。<img src=\"../images/physics/denki/electricity_conductivity_basic12.png\" alt=\"直列回路\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 13,
+    "qnum": 12,
     "text": "直列回路で豆電球を2つつなぐと暗くなるのはなぜ？",
     "choices": [
       "流れる電流が小さくなるため",
@@ -202,29 +186,13 @@ window.questions = [
       "電力が増えるため"
     ],
     "answer": 0,
-    "source": "直列回路では、すべての電球に同じ電流が流れます。しかし電球が増えると抵抗が大きくなり、流れる電流の量が減ってしまいます。電流が少ないとフィラメントがあまり熱くならず、光も弱くなるため暗く見えます。直列回路では電球の数が明るさに影響します。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【直列回路で電球が2つ】\n\n  ┌─[電池]─┐\n  │  +  -  │\n  │   ↓   │\n  │  [電球]│\n  │   💡   │ ← 暗い\n  │   ↓   │\n  │  [電球]│\n  │   💡   │ ← 暗い\n  └────────┘\n  \n  電流が小さくなる</div>",
+    "source": "直列回路では、すべての電球に同じ電流が流れます。しかし電球が増えると抵抗が大きくなり、流れる電流の量が減ってしまいます。電流が少ないとフィラメントがあまり熱くならず、光も弱くなるため暗く見えます。直列回路では電球の数が明るさに影響します。<img src=\"../images/physics/denki/electricity_conductivity_basic13.png\" alt=\"直列回路で電球が2つ\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 14,
-    "text": "乾電池が切れると電球が光らなくなる理由は？",
-    "choices": [
-      "電流を作れなくなるため",
-      "電圧が下がるため",
-      "抵抗が増えるため",
-      "電力が減るため",
-      "回路が切れるため"
-    ],
-    "answer": 0,
-    "source": "乾電池は内部のはたらきによって電流を生み出していますが、使い続けると電気を作る力が弱まり、やがて電流を生み出せなくなります。これが「電池が切れる」状態です。電流が作られなければ電球には電気が流れず、光らなくなります。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【電池が切れる】\n\n  ┌─[電池]─┐\n  │  +  -  │\n  │   ×   │ ← 電流を作れない\n  │  [電球]│\n  │   💡   │ ← 光らない\n  └────────┘</div>",
-    "tags": [],
-    "difficulty": 1,
-    "asof": "2025-01-27"
-  },
-  {
-    "qnum": 15,
+    "qnum": 13,
     "text": "電流は乾電池のどの極からどの極へ流れると考える？",
     "choices": [
       "プラス極からマイナス極へ",
@@ -234,13 +202,13 @@ window.questions = [
       "逆流する"
     ],
     "answer": 0,
-    "source": "電流の向きは、乾電池のプラス極から出て、回路を通ってマイナス極へ戻ると考えます。この向きをもとに回路を組むことで、正しく電球を光らせることができます。電流の向きは図示するときにもよく使われる大切な考え方です。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【電流の向き】\n\n  ┌─[電池]─┐\n  │  +  -  │\n  │   ↓   │ ← プラス極から\n  │  [電球]│\n  │   💡   │\n  │   ↓   │\n  └────────┘\n        ↓\n    マイナス極へ</div>",
+    "source": "電流の向きは、乾電池のプラス極から出て、回路を通ってマイナス極へ戻ると考えます。この向きをもとに回路を組むことで、正しく電球を光らせることができます。電流の向きは図示するときにもよく使われる大切な考え方です。<img src=\"../images/physics/denki/electricity_conductivity_basic15.png\" alt=\"電流の向き\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 16,
+    "qnum": 14,
     "text": "スイッチを切ると電球が消える理由は？",
     "choices": [
       "回路が切れるため",
@@ -250,13 +218,13 @@ window.questions = [
       "導線部分"
     ],
     "answer": 0,
-    "source": "スイッチを切ると、回路の一部が開いて道が途切れます。電流は途中で道がなくなると流れることができないため、電球に電気が届かず光が消えます。スイッチは回路をつないだり切ったりして、電流の流れをコントロールする装置です。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【スイッチを切る】\n\n  ┌─[電池]─┐\n  │  +  -  │\n  │   ↓   │\n  │ [スイッチ]│\n  │   OFF  │ ← 切れている\n  │   ×   │\n  │  [電球]│\n  │   💡   │ ← 光らない\n  └────────┘</div>",
+    "source": "スイッチを切ると、回路の一部が開いて道が途切れます。電流は途中で道がなくなると流れることができないため、電球に電気が届かず光が消えます。スイッチは回路をつないだり切ったりして、電流の流れをコントロールする装置です。<img src=\"../images/physics/denki/electricity_conductivity_basic16.png\" alt=\"スイッチを切る\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 17,
+    "qnum": 15,
     "text": "電池をたくさん直列につなぐと危険な理由は？",
     "choices": [
       "電流が増えて発熱しやすくなるため",
@@ -266,29 +234,13 @@ window.questions = [
       "直列回路"
     ],
     "answer": 0,
-    "source": "直列につなぐと電圧が大きくなり、電流がふだんよりたくさん流れるようになります。電流が大きすぎると電球や導線が熱をもち、こげたり事故につながるおそれがあります。必要以上に電池を増やすのは危険で、実験でも注意が必要です。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【電池をたくさんつなぐ】\n\n  ┌─[電池]─┐\n  │  +  -  │\n  │   ↓   │\n  │  [電池]│\n  │  +  -  │\n  │   ↓   │\n  │  [電池]│\n  │  +  -  │\n  │   ↓   │\n  │  [電球]│\n  │   ⚠️  │ ← 危険！\n  └────────┘\n  \n  電流が大きすぎる</div>",
+    "source": "直列につなぐと電圧が大きくなり、電流がふだんよりたくさん流れるようになります。電流が大きすぎると電球や導線が熱をもち、こげたり事故につながるおそれがあります。必要以上に電池を増やすのは危険で、実験でも注意が必要です。<img src=\"../images/physics/denki/electricity_conductivity_basic17.png\" alt=\"電池をたくさんつなぐ\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 18,
-    "text": "乾電池の電気を使いすぎると起こる現象は？",
-    "choices": [
-      "電圧が下がり明るさが弱くなる",
-      "大きな電流が流れて発熱するため",
-      "導線部分",
-      "プラス極からマイナス極へ",
-      "回路が切れるため"
-    ],
-    "answer": 0,
-    "source": "乾電池は使うほど電気を生み出す力が弱まり、電圧が下がります。電圧が低いと流れる電流も少なくなり、電球が暗くなったり光らなくなったりします。「電池が消耗した」と感じるときは、この電圧の低下が原因です。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【電池が消耗する】\n\n  使うほど\n      ↓\n  電圧が下がる\n      ↓\n  電流が少なくなる\n      ↓\n  電球が暗くなる</div>",
-    "tags": [],
-    "difficulty": 1,
-    "asof": "2025-01-27"
-  },
-  {
-    "qnum": 19,
+    "qnum": 16,
     "text": "豆電球の明るさを決める主な要因は？",
     "choices": [
       "流れる電流の大きさ",
@@ -298,13 +250,13 @@ window.questions = [
       "電流を作れなくなるため"
     ],
     "answer": 0,
-    "source": "電球のフィラメントは、電流が多く流れるほど強く熱せられ、明るく光ります。逆に電流が少ないと熱が弱く、光は弱まります。電球の明るさは、回路のつなぎ方や電池の個数によって変わる電流の量に大きく左右されます。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【明るさを決める要因】\n\n  電流が多い\n      ↓\n  フィラメントが熱くなる\n      ↓\n  明るく光る\n  \n  電流が少ない\n      ↓\n  暗く光る</div>",
+    "source": "電球のフィラメントは、電流が多く流れるほど強く熱せられ、明るく光ります。逆に電流が少ないと熱が弱く、光は弱まります。電球の明るさは、回路のつなぎ方や電池の個数によって変わる電流の量に大きく左右されます。<img src=\"../images/physics/denki/electricity_conductivity_basic19.png\" alt=\"明るさを決める要因\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 20,
+    "qnum": 17,
     "text": "乾電池の電気がなくなった状態を何という？",
     "choices": [
       "電池が消耗した",
@@ -320,119 +272,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 21,
-    "text": "電流が流れるひとまとまりのつながりを何という？",
-    "choices": [
-      "回路",
-      "導体",
-      "スイッチ",
-      "短絡",
-      "開回路"
-    ],
-    "answer": 0,
-    "source": "電流が進むためには、乾電池・導線・電球などが切れ目なくつながった「回路」が必要です。回路がひとまとまりにつながることで、電流がプラス極からマイナス極へ進む道ができます。回路が切れていれば電球は光りません。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【回路】\n\n  ┌─[電池]─┐\n  │  +  -  │\n  │   ↓   │\n  │  [導線]│\n  │   ↓   │\n  │  [電球]│\n  │   💡   │\n  │   ↓   │\n  └────────┘\n  \n  切れ目なくつながる</div>",
-    "tags": [],
-    "difficulty": 1,
-    "asof": "2025-01-27"
-  },
-  {
-    "qnum": 22,
-    "text": "電池のプラス極とマイナス極を直接つないでしまうことを何という？",
-    "choices": [
-      "短絡",
-      "開回路",
-      "不導体",
-      "負荷",
-      "導体"
-    ],
-    "answer": 0,
-    "source": "短絡は、電球などの負荷を通さずに電池の両極を直接つないでしまう状態です。電流が急に大量に流れ、電池や導線が熱くなって事故の原因になります。電気を使うときに絶対に避けるべきつなぎ方です。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【短絡】\n\n  ┌─[電池]─┐\n  │  +  -  │\n  │   ↓   │\n  │   ⚡  │ ← 直接つなぐ\n  │   ↓   │\n  └────────┘\n  \n  負荷がない\n  危険！</div>",
-    "tags": [],
-    "difficulty": 1,
-    "asof": "2025-01-27"
-  },
-  {
-    "qnum": 23,
-    "text": "電気が通る物質を何という？",
-    "choices": [
-      "導体",
-      "短絡",
-      "直列回路",
-      "回路",
-      "電源"
-    ],
-    "answer": 0,
-    "source": "電流が通りやすい物質を「導体」と呼びます。金属は導体の代表で、導線として使われています。導体には、電気を運ぶ粒（電子）が動きやすいという性質があります。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【導体】\n\n  金属（銅・アルミニウムなど）\n  ┌─────┐\n  │  →   │ ← 電流が流れる\n  │  →   │\n  └─────┘\n  \n  導線として使われる</div>",
-    "tags": [],
-    "difficulty": 1,
-    "asof": "2025-01-27"
-  },
-  {
-    "qnum": 24,
-    "text": "電気が通らない物質を何という？",
-    "choices": [
-      "不導体",
-      "並列回路",
-      "負荷",
-      "電源",
-      "開回路"
-    ],
-    "answer": 0,
-    "source": "ゴムやガラス、プラスチックのように、電流を通さない物質を「不導体」といいます。不導体は電気を通さない性質を利用して、電線のカバーやスイッチの外側など安全のためにも使われています。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【不導体】\n\n  ゴム・ガラス・プラスチック\n  ┌─────┐\n  │  ×   │ ← 電流が通らない\n  │      │\n  └─────┘\n  \n  安全のためにも使われる</div>",
-    "tags": [],
-    "difficulty": 1,
-    "asof": "2025-01-27"
-  },
-  {
-    "qnum": 25,
-    "text": "電流の向きを切り替えるための装置を何という？",
-    "choices": [
-      "スイッチ",
-      "回路",
-      "短絡",
-      "電源",
-      "導体"
-    ],
-    "answer": 0,
-    "source": "スイッチは、回路をつないだり切ったりして電流の流れをコントロールする装置です。スイッチを入れると回路がつながり電流が流れ、切ると回路が切れて電流が止まります。電気製品には欠かせない部品です。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【スイッチ】\n\n  スイッチON\n  ┌─────┐\n  │  ──  │ ← つながる\n  └─────┘\n  電流が流れる\n  \n  スイッチOFF\n  ┌─────┐\n  │  ×   │ ← 切れる\n  └─────┘\n  電流が止まる</div>",
-    "tags": [],
-    "difficulty": 1,
-    "asof": "2025-01-27"
-  },
-  {
-    "qnum": 26,
-    "text": "電流が1つの道だけを通る回路を何という？",
-    "choices": [
-      "直列回路",
-      "回路",
-      "短絡",
-      "開回路",
-      "負荷"
-    ],
-    "answer": 0,
-    "source": "直列回路は、電流がひとつの道を順番に流れる回路です。どこか一部が切れると、全体に電流が流れなくなります。電球はすべて同じ電流が流れるため、数が増えると暗くなります。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【直列回路】\n\n  ┌─[電池]─┐\n  │  +  -  │\n  │   ↓   │\n  │  [電球]│\n  │   💡   │\n  │   ↓   │\n  │  [電球]│\n  │   💡   │\n  └────────┘\n  \n  1つの道を順番に流れる</div>",
-    "tags": [],
-    "difficulty": 1,
-    "asof": "2025-01-27"
-  },
-  {
-    "qnum": 27,
-    "text": "電流が2つ以上の道に分かれる回路を何という？",
-    "choices": [
-      "並列回路",
-      "電源",
-      "負荷",
-      "導体",
-      "直列回路"
-    ],
-    "answer": 0,
-    "source": "並列回路では、電流が複数の道に分かれて流れます。各道が独立しているため、どれか1つの電球が切れても他の電球はつき続ける特徴があります。家庭の電気の多くが並列回路になっています。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【並列回路】\n\n  ┌─[電池]─┐\n  │  +  -  │\n  │   ↓   │\n  ├─[電球]─┤\n  │   💡   │\n  ├─[電球]─┤\n  │   💡   │\n  └────────┘\n  \n  複数の道に分かれる</div>",
-    "tags": [],
-    "difficulty": 1,
-    "asof": "2025-01-27"
-  },
-  {
-    "qnum": 28,
+    "qnum": 18,
     "text": "電球など電気の利用される部分を何という？",
     "choices": [
       "負荷",
@@ -448,7 +288,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 29,
+    "qnum": 19,
     "text": "乾電池のように電流を作り出すものを何という？",
     "choices": [
       "電源",
@@ -458,13 +298,13 @@ window.questions = [
       "導体"
     ],
     "answer": 0,
-    "source": "電源とは、電流を生み出す部分で、乾電池は代表的な電源です。電源があることで回路に電流が流れ、電球などの負荷が働きます。電源が弱くなると、電流が十分に流れず明るさも変わります。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【電源】\n\n  電源（乾電池）\n  ┌─────┐\n  │  +  -│\n  │      │ ← 電流を生み出す\n  └─────┘\n      ↓\n  回路に電流が流れる\n      ↓\n  負荷が働く</div>",
+    "source": "電源とは、電流を生み出す部分で、乾電池は代表的な電源です。電源があることで回路に電流が流れ、電球などの負荷が働きます。電源が弱くなると、電流が十分に流れず明るさも変わります。<img src=\"../images/physics/denki/electricity_conductivity_basic20.png\" alt=\"電源\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 30,
+    "qnum": 20,
     "text": "スイッチを切って電流が流れない状態を何という？",
     "choices": [
       "開回路",
@@ -474,10 +314,9 @@ window.questions = [
       "短絡"
     ],
     "answer": 0,
-    "source": "開回路とは、回路のどこかが開いていて電流が流れない状態です。スイッチを切ると開回路になり、電球には電流が進めないため光りません。スイッチを入れると回路が閉じて「閉回路」になり、電流が流れるようになります。<div style=\"font-family: monospace; white-space: pre; margin: 10px 0;\">【開回路】\n\n  ┌─[電池]─┐\n  │  +  -  │\n  │   ↓   │\n  │   ×   │ ← 開いている\n  │  [電球]│\n  │   💡   │ ← 光らない\n  └────────┘\n  \n  電流が流れない</div>",
+    "source": "開回路とは、回路のどこかが開いていて電流が流れない状態です。スイッチを切ると開回路になり、電球には電流が進めないため光りません。スイッチを入れると回路が閉じて「閉回路」になり、電流が流れるようになります。<img src=\"../images/physics/denki/electricity_conductivity_basic20n.png\" alt=\"開回路\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   }
 ];
-

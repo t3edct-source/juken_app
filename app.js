@@ -3824,12 +3824,6 @@ function renderUnits(units) {
     console.log('🔍 state.catalog:', state.catalog);
     console.log('🔍 unit.lessons:', unit.lessons);
     
-    // state.catalogが存在しない場合の安全な処理
-    if (!state.catalog) {
-      console.error('❌ state.catalog is undefined');
-      return;
-    }
-    
     // その単元のレッスンを取得（最適化版）
     const unitLessons = [];
     if (state.catalog && unit.lessons) {
@@ -3837,8 +3831,12 @@ function renderUnits(units) {
         const lesson = findLessonById(lessonId);
         if (lesson) {
           unitLessons.push(lesson);
+        } else {
+          console.warn(`⚠️ レッスンが見つかりません: ${lessonId} (単元: ${unit.name})`);
         }
       });
+    } else if (!state.catalog) {
+      console.warn(`⚠️ state.catalog is undefined (単元: ${unit.name})`);
     }
     
     console.log('🔍 unitLessons:', unitLessons);
