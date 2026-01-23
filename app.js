@@ -1498,11 +1498,11 @@ scienceUnits = [
       'sci.physics.electricity_conductivity_basic', // 電気（乾電池と豆電球）
       'sci.physics.heat_properties', // 熱の性質とものの変化
       // 化学（4）
-      'sci.chemistry.air_combustion_integrated', // 空気と燃焼（統合）
+      'sci.chemistry.air_combustion_integrated', // 空気と燃焼
       'sci.chemistry.water_state_integrated', // 水の状態変化（統合）
       'sci.chemistry.water_three_states_sim', // 水の変化：温度と状態変化シミュレーション
       'sci.chemistry.physics.lab_equipment', // メスシリンダー, ろ過、 ガスバーナー
-      'sci.chemistry.physics.volume_change', // 空気・水・金属と体積変化
+      // 'sci.chemistry.physics.volume_change', // 空気・水・金属と体積変化（削除済み）
       // 地学（6）
       'sci.earth.stars_constellations_integrated', // 星と星座・星の動き（統合）
       'sci.earth.stars_constellations_sim', // 星と星座シミュレーション

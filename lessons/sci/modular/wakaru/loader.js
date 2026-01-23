@@ -37,7 +37,7 @@
     'sci.physics.heat_properties': idToFileName('sci.physics.heat_properties'),
     
     // 小4理科（化学）
-    'sci.chemistry.air_combustion_integrated': 'chemistry_air_combustion_integrated.js', // 空気と燃焼（統合）
+    'sci.chemistry.air_combustion_integrated': 'chemistry_air_combustion_integrated.js', // 空気と燃焼
     'sci.chemistry.water_state_integrated': 'chemistry_water_state_integrated.js', // 水の状態変化（統合）
     
     // 小4理科（地学）
@@ -87,7 +87,7 @@
     'sci.chemistry.solution_metal_reaction': idToFileName('sci.chemistry.solution_metal_reaction'),
     'sci.chemistry.various_gases': idToFileName('sci.chemistry.various_gases'),
     'sci.chemistry.physics.heat_transfer': 'chemistry_physics_heat_transfer.js',
-    'sci.chemistry.physics.volume_change': 'chemistry_physics_volume_change.js',
+    // 'sci.chemistry.physics.volume_change': 'chemistry_physics_volume_change.js', // 削除済み
     'sci.chemistry.physics.lab_equipment': 'chemistry_physics_lab_equipment.js',
     
     // 小6理科（総合）

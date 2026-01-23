@@ -2057,7 +2057,7 @@
     "id": "sci.chemistry.air_combustion_integrated",
     "grade": 4,
     "subject": "sci",
-    "title": "空気と燃焼（統合）",
+    "title": "空気と燃焼",
     "duration_min": 40,
     "sku_required": null,
     "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.chemistry.air_combustion_integrated&mode=wakaru",
@@ -2962,17 +2962,6 @@
     "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.chemistry.solution_integrated&mode=wakaru",
     "format": "html",
     "tags": ["水よう液", "溶解度", "とけ方", "濃さ", "計算", "百分率", "飽和", "うすめる", "蒸発"]
-  },
-  {
-    "id": "sci.chemistry.physics.volume_change",
-    "grade": 4,
-    "subject": "sci",
-    "title": "空気・水・金属と体積変化",
-    "duration_min": 20,
-    "sku_required": null,
-    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.chemistry.physics.volume_change&mode=wakaru",
-    "format": "html",
-    "tags": ["空気", "水", "金属", "体積", "温度", "バイメタル", "ぼう張率"]
   },
   {
     "id": "sci.chemistry.physics.heat_transfer",
