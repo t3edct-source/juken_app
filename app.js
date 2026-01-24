@@ -1540,9 +1540,11 @@ scienceUnits = [
       // 地学（14）
       'sci.earth.volcano_structure_land_change_integrated', // 火山のしくみ・火山と大地の変化統合版
       'sci.earth.volcano_structure_sim', // 火山のしくみ：マグマと噴火シミュレーション
+      'sci.earth.earthquake_basic', // 地震の基礎
       'sci.earth.earthquake_structure', // 地震と地震のしくみ（統合）
       'sci.earth.earthquake_structure_sim', // 地震のしくみシミュレーション
-      'sci.earth.strata_formation', // 地層のでき方と岩石（統合）
+      'sci.earth.strata_formation', // 地層のでき方
+      'sci.earth.rocks', // 岩石
       'sci.earth.various_landforms', // いろいろな地形
       'sci.earth.fossils_strata', // 化石と地層のようす
       'sci.earth.land_river_erosion', // 流水と地形の変化

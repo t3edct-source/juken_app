@@ -2740,6 +2740,17 @@
     ]
   },
   {
+    "id": "sci.earth.earthquake_basic",
+    "grade": 5,
+    "subject": "sci",
+    "title": "地震の基礎",
+    "duration_min": 30,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.earthquake_basic&mode=wakaru",
+    "format": "html",
+    "tags": ["地震", "震源", "震央", "震度", "マグニチュード", "地震波", "P波", "S波"]
+  },
+  {
     "id": "sci.earth.earthquake_structure",
     "grade": 5,
     "subject": "sci",
@@ -2773,12 +2784,23 @@
     "id": "sci.earth.strata_formation",
     "grade": 5,
     "subject": "sci",
-    "title": "地層のでき方と岩石",
+    "title": "地層のでき方",
     "duration_min": 20,
     "sku_required": null,
     "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.strata_formation&mode=wakaru",
     "format": "html",
-    "tags": ["地層", "でき方", "堆積", "層理", "たい積岩", "火成岩", "岩石"]
+    "tags": ["地層", "でき方", "堆積", "層理", "かぎ層"]
+  },
+  {
+    "id": "sci.earth.rocks",
+    "grade": 5,
+    "subject": "sci",
+    "title": "岩石",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.earth.rocks&mode=wakaru",
+    "format": "html",
+    "tags": ["たい積岩", "火成岩", "岩石", "でい岩", "砂岩", "れき岩", "石灰岩", "ぎょう灰岩", "深成岩", "火山岩"]
   },
   {
     "id": "sci.earth.various_landforms",

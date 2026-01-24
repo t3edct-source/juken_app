@@ -65,8 +65,10 @@
     
     // 小5理科（地学）
     'sci.earth.volcano_structure_land_change_integrated': 'earth_volcano_structure_land_change_integrated.js', // 火山のしくみ・火山と大地の変化統合版
-    'sci.earth.earthquake_structure': idToFileName('sci.earth.earthquake_structure'),
+    'sci.earth.earthquake_basic': idToFileName('sci.earth.earthquake_basic'), // 地震の基礎
+    'sci.earth.earthquake_structure': idToFileName('sci.earth.earthquake_structure'), // 地震のしくみ（詳細）
     'sci.earth.strata_formation': idToFileName('sci.earth.strata_formation'),
+    'sci.earth.rocks': idToFileName('sci.earth.rocks'),
     'sci.earth.various_landforms': idToFileName('sci.earth.various_landforms'),
     'sci.earth.fossils_strata': idToFileName('sci.earth.fossils_strata'),
     'sci.earth.land_river_erosion': idToFileName('sci.earth.land_river_erosion'),

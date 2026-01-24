@@ -26,7 +26,7 @@ window.questions = [
       "微生物"
     ],
     "answer": 2,
-    "source": "食物連鎖の始まりには、光合成で自分の栄養を作る植物が位置することが多いです。植物は太陽の光を利用してエネルギーをつくり、他の生物の食べものになります。こうして植物が生み出した栄養が、草食動物やさらにその先の生物へと伝わり、生態系が成り立っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">食物連鎖の始まり\n\n【植物の位置】\n    食物連鎖の最初に位置する\n    光合成で自分の栄養を作る\n\n【植物の役割】\n    太陽の光を利用\n        ↓\n    エネルギーをつくる\n        ↓\n    他の生物の食べものになる\n        ↓\n    草食動物やその先の生物へ\n    栄養が伝わる\n\n植物の特徴：\n  • 食物連鎖の始まり\n  • 光合成で栄養を作る\n  • 他の生物の食べもの</div>",
+    "source": "食物連鎖の始まりには、光合成で自分の栄養を作る植物が位置することが多いです。植物は太陽の光を利用してエネルギーをつくり、他の生物の食べものになります。こうして植物が生み出した栄養が、草食動物やさらにその先の生物へと伝わり、生態系が成り立っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">食物連鎖の始まり  【植物の位置】     食物連鎖の最初に位置する     光合成で自分の栄養を作る  【植物の役割】     太陽の光を利用         ↓     エネルギーをつくる         ↓     他の生物の食べものになる         ↓     草食動物やその先の生物へ     栄養が伝わる  植物の特徴：   • 食物連鎖の始まり   • 光合成で栄養を作る   • 他の生物の食べもの</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -42,7 +42,7 @@ window.questions = [
       "繁殖ができるから"
     ],
     "answer": 2,
-    "source": "植物は光合成により、太陽の光と水、二酸化炭素から自分の栄養（有機物）を作り出します。このように「外から食べ物を取らなくても生きられる」性質をもち、生態系に栄養を供給する役目があります。だからこそ、食物連鎖では植物が最初に置かれることが多いのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">植物が最初になる理由\n\n【光合成】\n    太陽の光\n    水\n    二酸化炭素\n        ↓\n    自分の栄養（有機物）を作り出す\n\n【植物の性質】\n    外から食べ物を取らなくても\n    生きられる\n        ↓\n    生態系に栄養を供給する役目\n        ↓\n    食物連鎖の最初に置かれる\n\n植物の特徴：\n  • 光合成で栄養を作る\n  • 外から食べ物を取らない\n  • 生態系に栄養を供給</div>",
+    "source": "植物は光合成により、太陽の光と水、二酸化炭素から自分の栄養（有機物）を作り出します。このように「外から食べ物を取らなくても生きられる」性質をもち、生態系に栄養を供給する役目があります。だからこそ、食物連鎖では植物が最初に置かれることが多いのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">植物が最初になる理由  【光合成】     太陽の光     水     二酸化炭素         ↓     自分の栄養（有機物）を作り出す  【植物の性質】     外から食べ物を取らなくても     生きられる         ↓     生態系に栄養を供給する役目         ↓     食物連鎖の最初に置かれる  植物の特徴：   • 光合成で栄養を作る   • 外から食べ物を取らない   • 生態系に栄養を供給</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -58,29 +58,13 @@ window.questions = [
       "生産者"
     ],
     "answer": 0,
-    "source": "草食動物とは、植物を食べて生きる動物のことです。シカ、ウサギ、ウシなどが代表的で、植物から栄養をもらうことで成長します。草食動物は、食物連鎖の中では植物と肉食動物をつなぐ大事な存在で、生態系のバランスを支えているグループです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">草食動物とは\n\n【草食動物】\n    植物を食べて生きる動物\n    例：シカ、ウサギ、ウシ\n\n【草食動物の役割】\n    植物から栄養をもらう\n        ↓\n    成長する\n        ↓\n    植物と肉食動物をつなぐ\n        ↓\n    生態系のバランスを支える\n\n草食動物の特徴：\n  • 植物を食べる\n  • 植物と肉食動物をつなぐ\n  • 生態系のバランスを支える</div>",
+    "source": "草食動物とは、植物を食べて生きる動物のことです。シカ、ウサギ、ウシなどが代表的で、植物から栄養をもらうことで成長します。草食動物は、食物連鎖の中では植物と肉食動物をつなぐ大事な存在で、生態系のバランスを支えているグループです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">草食動物とは  【草食動物】     植物を食べて生きる動物     例：シカ、ウサギ、ウシ  【草食動物の役割】     植物から栄養をもらう         ↓     成長する         ↓     植物と肉食動物をつなぐ         ↓     生態系のバランスを支える  草食動物の特徴：   • 植物を食べる   • 植物と肉食動物をつなぐ   • 生態系のバランスを支える</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
     "qnum": 5,
-    "text": "草食動物を食べる動物を何という？",
-    "choices": [
-      "肉食動物",
-      "草食動物",
-      "雑食動物",
-      "分解者",
-      "生産者"
-    ],
-    "answer": 2,
-    "source": "肉食動物は、他の動物を食べて栄養を得る生物のことです。オオカミやタカなどが代表的で、草食動物を主に食べることでエネルギーを得ています。肉食動物がいることで、草食動物の数が増えすぎないように調節され、生態系全体のバランスが保たれます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">肉食動物とは\n\n【肉食動物】\n    他の動物を食べて栄養を得る\n    例：オオカミ、タカ\n\n【肉食動物の役割】\n    草食動物を主に食べる\n        ↓\n    エネルギーを得る\n        ↓\n    草食動物の数を調節\n        ↓\n    生態系全体のバランスが保たれる\n\n肉食動物の特徴：\n  • 他の動物を食べる\n  • 草食動物の数を調節\n  • 生態系のバランスを保つ</div>",
-    "tags": [],
-    "difficulty": 1,
-    "asof": "2025-01-27"
-  },
-  {
-    "qnum": 6,
     "text": "生物のつながりの中で弱ったり死んだ生物を分解する生き物は？",
     "choices": [
       "分解者",
@@ -90,13 +74,13 @@ window.questions = [
       "被食者"
     ],
     "answer": 0,
-    "source": "分解者とは、弱った生物や死んだ生物の体を分解して、土にもどす生き物のことです。キノコの仲間や細菌などが代表です。分解者がはたらくことで、土に栄養が返され、その栄養を植物が利用できます。生態系を「めぐり続けるしくみ」にする重要な役割をもっています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">分解者とは\n\n【分解者】\n    弱った生物や死んだ生物の体を\n    分解して、土にもどす\n    例：キノコ、細菌\n\n【分解者の役割】\n    死がいを分解\n        ↓\n    土に栄養が返される\n        ↓\n    植物が利用できる\n        ↓\n    生態系が「めぐり続けるしくみ」\n\n分解者の特徴：\n  • 死がいを分解する\n  • 栄養を土に返す\n  • 生態系を循環させる</div>",
+    "source": "分解者とは、弱った生物や死んだ生物の体を分解して、土にもどす生き物のことです。キノコの仲間や細菌などが代表です。分解者がはたらくことで、土に栄養が返され、その栄養を植物が利用できます。生態系を「めぐり続けるしくみ」にする重要な役割をもっています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">分解者とは  【分解者】     弱った生物や死んだ生物の体を     分解して、土にもどす     例：キノコ、細菌  【分解者の役割】     死がいを分解         ↓     土に栄養が返される         ↓     植物が利用できる         ↓     生態系が「めぐり続けるしくみ」  分解者の特徴：   • 死がいを分解する   • 栄養を土に返す   • 生態系を循環させる</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 7,
+    "qnum": 6,
     "text": "分解者に含まれる代表的な生物は？",
     "choices": [
       "菌や微生物",
@@ -106,13 +90,13 @@ window.questions = [
       "雑食動物"
     ],
     "answer": 2,
-    "source": "菌や微生物は、とても小さな体で生物の死がいや落ち葉などを細かく分解できます。ふだんは目に見えませんが、自然界のあらゆる場所に存在し、土を豊かにする大切なはたらきをしています。これらの生物がいないと、自然の中にふんや死がいがたまり、生態系が成り立ちません。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">菌や微生物の役割\n\n【菌や微生物】\n    とても小さな体\n    目に見えない\n    自然界のあらゆる場所に存在\n\n【菌や微生物の働き】\n    生物の死がいや落ち葉を\n    細かく分解\n        ↓\n    土を豊かにする\n        ↓\n    生態系が成り立つ\n\n【いないと】\n    ふんや死がいがたまる\n    生態系が成り立たない\n\n菌や微生物の特徴：\n  • 小さな体で分解する\n  • 土を豊かにする\n  • 生態系に不可欠</div>",
+    "source": "菌や微生物は、とても小さな体で生物の死がいや落ち葉などを細かく分解できます。ふだんは目に見えませんが、自然界のあらゆる場所に存在し、土を豊かにする大切なはたらきをしています。これらの生物がいないと、自然の中にふんや死がいがたまり、生態系が成り立ちません。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">菌や微生物の役割  【菌や微生物】     とても小さな体     目に見えない     自然界のあらゆる場所に存在  【菌や微生物の働き】     生物の死がいや落ち葉を     細かく分解         ↓     土を豊かにする         ↓     生態系が成り立つ  【いないと】     ふんや死がいがたまる     生態系が成り立たない  菌や微生物の特徴：   • 小さな体で分解する   • 土を豊かにする   • 生態系に不可欠</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 8,
+    "qnum": 7,
     "text": "食物連鎖が循環しているのは何が繰り返されているため？",
     "choices": [
       "エネルギーの流れ",
@@ -122,13 +106,13 @@ window.questions = [
       "季節の変化"
     ],
     "answer": 0,
-    "source": "食物連鎖が続いていくのは、生物の体の中で「エネルギーの流れ」が起きているからです。植物が作ったエネルギーを草食動物が受け取り、それを肉食動物がさらに受け取ります。最後には分解者が死がいを分解し、栄養を土にかえすことで食物連鎖がもう一度始められます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">エネルギーの流れ\n\n【エネルギーの流れ】\n    植物が作ったエネルギー\n        ↓\n    草食動物が受け取る\n        ↓\n    肉食動物がさらに受け取る\n        ↓\n    分解者が死がいを分解\n        ↓\n    栄養を土にかえす\n        ↓\n    食物連鎖がもう一度始まる\n\n【循環】\n    エネルギーの流れが繰り返される\n    食物連鎖が続いていく\n\nエネルギーの流れ：\n  • 植物→草食動物→肉食動物\n  • 分解者が土に返す\n  • 循環が続く</div>",
+    "source": "食物連鎖が続いていくのは、生物の体の中で「エネルギーの流れ」が起きているからです。植物が作ったエネルギーを草食動物が受け取り、それを肉食動物がさらに受け取ります。最後には分解者が死がいを分解し、栄養を土にかえすことで食物連鎖がもう一度始められます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">エネルギーの流れ  【エネルギーの流れ】     植物が作ったエネルギー         ↓     草食動物が受け取る         ↓     肉食動物がさらに受け取る         ↓     分解者が死がいを分解         ↓     栄養を土にかえす         ↓     食物連鎖がもう一度始まる  【循環】     エネルギーの流れが繰り返される     食物連鎖が続いていく  エネルギーの流れ：   • 植物→草食動物→肉食動物   • 分解者が土に返す   • 循環が続く</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 9,
+    "qnum": 8,
     "text": "生態系とは何のまとまり？",
     "choices": [
       "生物と環境のまとまり",
@@ -138,13 +122,13 @@ window.questions = [
       "個体群だけ"
     ],
     "answer": 3,
-    "source": "生態系とは、生き物と周りの環境（空気・水・光・土など）がまとまったしくみのことです。生物どうしの関係だけでなく、環境とのつながりも含めて考えます。生態系が正しくかかわり合うことで、多くの生物が生きられる自然のバランスが保たれています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">生態系とは\n\n【生態系】\n    生き物\n    ＋\n    周りの環境\n    （空気・水・光・土など）\n        ↓\n    まとまったしくみ\n\n【生態系の特徴】\n    生物どうしの関係\n    環境とのつながり\n        ↓\n    正しくかかわり合う\n        ↓\n    多くの生物が生きられる\n    自然のバランスが保たれる\n\n生態系の特徴：\n  • 生き物と環境のまとまり\n  • 生物どうしの関係\n  • 自然のバランスを保つ</div>",
+    "source": "生態系とは、生き物と周りの環境（空気・水・光・土など）がまとまったしくみのことです。生物どうしの関係だけでなく、環境とのつながりも含めて考えます。生態系が正しくかかわり合うことで、多くの生物が生きられる自然のバランスが保たれています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">生態系とは  【生態系】     生き物     ＋     周りの環境     （空気・水・光・土など）         ↓     まとまったしくみ  【生態系の特徴】     生物どうしの関係     環境とのつながり         ↓     正しくかかわり合う         ↓     多くの生物が生きられる     自然のバランスが保たれる  生態系の特徴：   • 生き物と環境のまとまり   • 生物どうしの関係   • 自然のバランスを保つ</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 10,
+    "qnum": 9,
     "text": "ある生物がいなくなると食物連鎖はどうなる？",
     "choices": [
       "バランスがくずれる",
@@ -154,13 +138,13 @@ window.questions = [
       "拡大する"
     ],
     "answer": 3,
-    "source": "生態系の中で一種類の生物がいなくなると、その生物を食べていた生き物のエサが減ったり、逆にその生物を食べられていた生き物が増えすぎたりします。このように食物連鎖のバランスがくずれ、連鎖全体が乱れてしまうため、生態系に大きな影響が出ます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">生物がいなくなると\n\n【一種類の生物がいなくなる】\n    その生物を食べていた生き物\n        ↓\n    エサが減る\n    数が減る\n\n    その生物を食べられていた生き物\n        ↓\n    増えすぎる\n\n【結果】\n    食物連鎖のバランスがくずれる\n    連鎖全体が乱れる\n        ↓\n    生態系に大きな影響\n\n生物がいなくなると：\n  • エサが減る生き物がいる\n  • 増えすぎる生き物がいる\n  • バランスがくずれる</div>",
+    "source": "生態系の中で一種類の生物がいなくなると、その生物を食べていた生き物のエサが減ったり、逆にその生物を食べられていた生き物が増えすぎたりします。このように食物連鎖のバランスがくずれ、連鎖全体が乱れてしまうため、生態系に大きな影響が出ます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">生物がいなくなると  【一種類の生物がいなくなる】     その生物を食べていた生き物         ↓     エサが減る     数が減る      その生物を食べられていた生き物         ↓     増えすぎる  【結果】     食物連鎖のバランスがくずれる     連鎖全体が乱れる         ↓     生態系に大きな影響  生物がいなくなると：   • エサが減る生き物がいる   • 増えすぎる生き物がいる   • バランスがくずれる</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 11,
+    "qnum": 10,
     "text": "生態系が安定するために重要なのは？",
     "choices": [
       "多様な生物がいること",
@@ -170,13 +154,13 @@ window.questions = [
       "分解者がいないこと"
     ],
     "answer": 4,
-    "source": "生態系が安定するには、多くの種類の生物が存在していることが大切です。生物の種類が多いほど、ある生き物が減っても他の生き物がその役割をある程度補うことができます。多様な生物が支え合うことで、自然のバランスが保たれます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">生態系が安定する条件\n\n【多様な生物がいること】\n    多くの種類の生物が存在\n        ↓\n    ある生き物が減っても\n    他の生き物が役割を補う\n        ↓\n    多様な生物が支え合う\n        ↓\n    自然のバランスが保たれる\n\n【安定する理由】\n    生物の種類が多い\n    役割を補い合える\n\n生態系が安定する条件：\n  • 多くの種類の生物\n  • 役割を補い合える\n  • 支え合う関係</div>",
+    "source": "生態系が安定するには、多くの種類の生物が存在していることが大切です。生物の種類が多いほど、ある生き物が減っても他の生き物がその役割をある程度補うことができます。多様な生物が支え合うことで、自然のバランスが保たれます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">生態系が安定する条件  【多様な生物がいること】     多くの種類の生物が存在         ↓     ある生き物が減っても     他の生き物が役割を補う         ↓     多様な生物が支え合う         ↓     自然のバランスが保たれる  【安定する理由】     生物の種類が多い     役割を補い合える  生態系が安定する条件：   • 多くの種類の生物   • 役割を補い合える   • 支え合う関係</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 12,
+    "qnum": 11,
     "text": "プランクトンは海の食物連鎖でどんな役割？",
     "choices": [
       "生産者",
@@ -186,13 +170,13 @@ window.questions = [
       "被食者"
     ],
     "answer": 0,
-    "source": "海の食物連鎖では、植物プランクトンがもっとも重要な「生産者」です。とても小さな生物ですが、光合成によって海の生き物のエネルギーの出発点となります。この植物プランクトンを動物プランクトンが食べ、さらに魚が食べることで海の食物連鎖が成り立っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">プランクトンの役割\n\n【植物プランクトン】\n    とても小さな生物\n    光合成を行う\n        ↓\n    海の生き物のエネルギーの\n    出発点（生産者）\n\n【海の食物連鎖】\n    植物プランクトン\n        ↓ 食べる\n    動物プランクトン\n        ↓ 食べる\n    魚\n        ↓\n    海の食物連鎖が成り立つ\n\nプランクトンの役割：\n  • 生産者として働く\n  • エネルギーの出発点\n  • 海の食物連鎖を支える</div>",
+    "source": "海の食物連鎖では、植物プランクトンがもっとも重要な「生産者」です。とても小さな生物ですが、光合成によって海の生き物のエネルギーの出発点となります。この植物プランクトンを動物プランクトンが食べ、さらに魚が食べることで海の食物連鎖が成り立っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">プランクトンの役割  【植物プランクトン】     とても小さな生物     光合成を行う         ↓     海の生き物のエネルギーの     出発点（生産者）  【海の食物連鎖】     植物プランクトン         ↓ 食べる     動物プランクトン         ↓ 食べる     魚         ↓     海の食物連鎖が成り立つ  プランクトンの役割：   • 生産者として働く   • エネルギーの出発点   • 海の食物連鎖を支える</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 13,
+    "qnum": 12,
     "text": "食物連鎖が一つに限らず複雑にからみ合ったものを何という？",
     "choices": [
       "食物網",
@@ -202,13 +186,13 @@ window.questions = [
       "個体群"
     ],
     "answer": 0,
-    "source": "食物網とは、いくつもの食物連鎖が複雑にからみ合った全体のしくみをいいます。自然界では食べる相手が一種類だけとは限らず、さまざまな関係が広がっています。食物網として見ることで、生態系のつながりをより正しく理解できます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">食物網とは\n\n【食物網】\n    いくつもの食物連鎖が\n    複雑にからみ合った全体のしくみ\n\n【自然界の関係】\n    食べる相手が一種類だけとは限らない\n    さまざまな関係が広がる\n        ↓\n    植物 ──→ 草食動物A ──→ 肉食動物\n    植物 ──→ 草食動物B ──→ 肉食動物\n    植物 ──→ 草食動物C ──→ 肉食動物\n        ↓\n    複雑にからみ合う\n\n【食物網の利点】\n    生態系のつながりを\n    より正しく理解できる\n\n食物網の特徴：\n  • 複数の食物連鎖がからみ合う\n  • さまざまな関係\n  • 生態系を正しく理解</div>",
+    "source": "食物網とは、いくつもの食物連鎖が複雑にからみ合った全体のしくみをいいます。自然界では食べる相手が一種類だけとは限らず、さまざまな関係が広がっています。食物網として見ることで、生態系のつながりをより正しく理解できます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">食物網とは  【食物網】     いくつもの食物連鎖が     複雑にからみ合った全体のしくみ  【自然界の関係】     食べる相手が一種類だけとは限らない     さまざまな関係が広がる         ↓     植物 ──→ 草食動物A ──→ 肉食動物     植物 ──→ 草食動物B ──→ 肉食動物     植物 ──→ 草食動物C ──→ 肉食動物         ↓     複雑にからみ合う  【食物網の利点】     生態系のつながりを     より正しく理解できる  食物網の特徴：   • 複数の食物連鎖がからみ合う   • さまざまな関係   • 生態系を正しく理解</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 14,
+    "qnum": 13,
     "text": "自然環境が壊れると食物連鎖はどうなる？",
     "choices": [
       "乱れる",
@@ -218,13 +202,13 @@ window.questions = [
       "拡大する"
     ],
     "answer": 1,
-    "source": "自然環境がこわされると、生き物が生活できる場所やエサが減ってしまいます。その結果、多くの生物で数が減ったり増えすぎたりし、食物連鎖のバランスが乱れます。自然環境を守ることは、生態系を守ることにつながっています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">自然環境が壊れると\n\n【自然環境が壊れる】\n    生き物が生活できる場所が減る\n    エサが減る\n        ↓\n    多くの生物で数が減る\n    増えすぎる\n        ↓\n    食物連鎖のバランスが乱れる\n\n【自然環境を守る】\n    生態系を守ることにつながる\n\n自然環境の影響：\n  • 生活できる場所が減る\n  • エサが減る\n  • バランスが乱れる</div>",
+    "source": "自然環境がこわされると、生き物が生活できる場所やエサが減ってしまいます。その結果、多くの生物で数が減ったり増えすぎたりし、食物連鎖のバランスが乱れます。自然環境を守ることは、生態系を守ることにつながっています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">自然環境が壊れると  【自然環境が壊れる】     生き物が生活できる場所が減る     エサが減る         ↓     多くの生物で数が減る     増えすぎる         ↓     食物連鎖のバランスが乱れる  【自然環境を守る】     生態系を守ることにつながる  自然環境の影響：   • 生活できる場所が減る   • エサが減る   • バランスが乱れる</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 15,
+    "qnum": 14,
     "text": "草原でウサギが減るとオオカミはどうなる？",
     "choices": [
       "エサが減って数が減る",
@@ -234,13 +218,13 @@ window.questions = [
       "休眠する"
     ],
     "answer": 3,
-    "source": "草原でウサギが減ると、ウサギを食べているオオカミなどの肉食動物はエサが不足し、数が減っていきます。また、その一方でウサギが食べていた植物は増えることがあります。このように、一つの生物の変化が食物連鎖全体に広く影響を与えます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">ウサギが減ると\n\n【ウサギが減る】\n    植物 ──→ ウサギ ──→ オオカミ\n              ↓ 減る\n\n【影響】\n    オオカミ：エサが不足\n    数が減る\n\n    植物：ウサギが食べない\n    増えることがある\n\n【結果】\n    一つの生物の変化が\n    食物連鎖全体に影響\n\nウサギが減ると：\n  • オオカミが減る\n  • 植物が増える\n  • 全体に影響</div>",
+    "source": "草原でウサギが減ると、ウサギを食べているオオカミなどの肉食動物はエサが不足し、数が減っていきます。また、その一方でウサギが食べていた植物は増えることがあります。このように、一つの生物の変化が食物連鎖全体に広く影響を与えます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">ウサギが減ると  【ウサギが減る】     植物 ──→ ウサギ ──→ オオカミ               ↓ 減る  【影響】     オオカミ：エサが不足     数が減る      植物：ウサギが食べない     増えることがある  【結果】     一つの生物の変化が     食物連鎖全体に影響  ウサギが減ると：   • オオカミが減る   • 植物が増える   • 全体に影響</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 16,
+    "qnum": 15,
     "text": "田んぼにはどんな生物のつながりが見られる？",
     "choices": [
       "小さな生態系",
@@ -250,13 +234,13 @@ window.questions = [
       "独立した関係"
     ],
     "answer": 3,
-    "source": "田んぼには、カエル・どじょう・虫・水草など、さまざまな生き物が暮らしています。そこでは食べる・食べられる関係が成り立ち、自然のバランスが見られます。このまとまりを「小さな生態系」と呼び、身近な場所でも食物連鎖が働いていることがわかります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">田んぼの小さな生態系\n\n【田んぼの生き物】\n    カエル・どじょう・虫・水草など\n    さまざまな生き物が暮らす\n\n【食物連鎖】\n    水草 ──→ 虫 ──→ カエル\n    水草 ──→ どじょう\n        ↓\n    食べる・食べられる関係が成り立つ\n    自然のバランスが見られる\n\n【小さな生態系】\n    身近な場所でも\n    食物連鎖が働いている\n\n田んぼの特徴：\n  • さまざまな生き物が暮らす\n  • 食物連鎖が成り立つ\n  • 小さな生態系</div>",
+    "source": "田んぼには、カエル・どじょう・虫・水草など、さまざまな生き物が暮らしています。そこでは食べる・食べられる関係が成り立ち、自然のバランスが見られます。このまとまりを「小さな生態系」と呼び、身近な場所でも食物連鎖が働いていることがわかります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">田んぼの小さな生態系  【田んぼの生き物】     カエル・どじょう・虫・水草など     さまざまな生き物が暮らす  【食物連鎖】     水草 ──→ 虫 ──→ カエル     水草 ──→ どじょう         ↓     食べる・食べられる関係が成り立つ     自然のバランスが見られる  【小さな生態系】     身近な場所でも     食物連鎖が働いている  田んぼの特徴：   • さまざまな生き物が暮らす   • 食物連鎖が成り立つ   • 小さな生態系</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 17,
+    "qnum": 16,
     "text": "生態系に人間の行動が影響する理由は？",
     "choices": [
       "生物の数や環境を変えるから",
@@ -266,13 +250,13 @@ window.questions = [
       "影響しないから"
     ],
     "answer": 3,
-    "source": "人間が森を切り開いたり、水を汚したりすると、生き物のすみかがなくなったり、エサが減ったりします。そのため、生物の数が変わり、生態系全体に影響が出てしまいます。自然環境に配慮した行動が、生態系を守ることにつながります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">人間の行動の影響\n\n【人間の行動】\n    森を切り開く\n    水を汚す\n        ↓\n    生き物のすみかがなくなる\n    エサが減る\n        ↓\n    生物の数が変わる\n        ↓\n    生態系全体に影響\n\n【自然環境に配慮】\n    生態系を守ることにつながる\n\n人間の行動の影響：\n  • すみかがなくなる\n  • エサが減る\n  • 生態系に影響</div>",
+    "source": "人間が森を切り開いたり、水を汚したりすると、生き物のすみかがなくなったり、エサが減ったりします。そのため、生物の数が変わり、生態系全体に影響が出てしまいます。自然環境に配慮した行動が、生態系を守ることにつながります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">人間の行動の影響  【人間の行動】     森を切り開く     水を汚す         ↓     生き物のすみかがなくなる     エサが減る         ↓     生物の数が変わる         ↓     生態系全体に影響  【自然環境に配慮】     生態系を守ることにつながる  人間の行動の影響：   • すみかがなくなる   • エサが減る   • 生態系に影響</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 18,
+    "qnum": 17,
     "text": "栄養を作り出す生物のことを何という？",
     "choices": [
       "生産者",
@@ -282,13 +266,13 @@ window.questions = [
       "被食者"
     ],
     "answer": 2,
-    "source": "生産者とは、光合成で自分の栄養を作り出す生物のことです。植物や植物プランクトンなどがこれにあたり、生態系のエネルギーの出発点です。生産者がいることで、草食動物や肉食動物へエネルギーが伝わり、食物連鎖が成り立ちます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">生産者とは\n\n【生産者】\n    光合成で自分の栄養を作り出す\n    例：植物、植物プランクトン\n\n【生産者の役割】\n    生態系のエネルギーの出発点\n        ↓\n    草食動物へエネルギーが伝わる\n    肉食動物へエネルギーが伝わる\n        ↓\n    食物連鎖が成り立つ\n\n生産者の特徴：\n  • 光合成で栄養を作る\n  • エネルギーの出発点\n  • 食物連鎖の基礎</div>",
+    "source": "生産者とは、光合成で自分の栄養を作り出す生物のことです。植物や植物プランクトンなどがこれにあたり、生態系のエネルギーの出発点です。生産者がいることで、草食動物や肉食動物へエネルギーが伝わり、食物連鎖が成り立ちます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">生産者とは  【生産者】     光合成で自分の栄養を作り出す     例：植物、植物プランクトン  【生産者の役割】     生態系のエネルギーの出発点         ↓     草食動物へエネルギーが伝わる     肉食動物へエネルギーが伝わる         ↓     食物連鎖が成り立つ  生産者の特徴：   • 光合成で栄養を作る   • エネルギーの出発点   • 食物連鎖の基礎</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 19,
+    "qnum": 18,
     "text": "ほかの生物を食べて生きる生物を何という？",
     "choices": [
       "消費者",
@@ -298,13 +282,13 @@ window.questions = [
       "被食者"
     ],
     "answer": 4,
-    "source": "消費者とは、他の生物を食べて栄養を得る生物のことです。草食動物・肉食動物・雑食動物などが含まれます。生産者が作ったエネルギーを利用して生きるため、生態系の中で重要な役割を担っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">消費者とは\n\n【消費者】\n    他の生物を食べて栄養を得る\n    例：草食動物・肉食動物・雑食動物\n\n【消費者の役割】\n    生産者が作ったエネルギーを\n    利用して生きる\n        ↓\n    生態系の中で重要な役割\n\n【消費者の種類】\n    草食動物：植物を食べる\n    肉食動物：他の動物を食べる\n    雑食動物：植物も動物も食べる\n\n消費者の特徴：\n  • 他の生物を食べる\n  • 生産者のエネルギーを利用\n  • 生態系で重要な役割</div>",
+    "source": "消費者とは、他の生物を食べて栄養を得る生物のことです。草食動物・肉食動物・雑食動物などが含まれます。生産者が作ったエネルギーを利用して生きるため、生態系の中で重要な役割を担っています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">消費者とは  【消費者】     他の生物を食べて栄養を得る     例：草食動物・肉食動物・雑食動物  【消費者の役割】     生産者が作ったエネルギーを     利用して生きる         ↓     生態系の中で重要な役割  【消費者の種類】     草食動物：植物を食べる     肉食動物：他の動物を食べる     雑食動物：植物も動物も食べる  消費者の特徴：   • 他の生物を食べる   • 生産者のエネルギーを利用   • 生態系で重要な役割</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 20,
+    "qnum": 19,
     "text": "分解者が自然界で果たす重要な役割は？",
     "choices": [
       "養分を土に返す",
@@ -314,13 +298,13 @@ window.questions = [
       "養分を蓄える"
     ],
     "answer": 2,
-    "source": "分解者は、死がいや落ち葉などを分解して土にもどし、栄養を自然に返す役割を持っています。これにより植物が再び成長でき、生態系のエネルギー循環が保たれます。分解者がいなければ、自然界のバランスは保てません。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">分解者の重要な役割\n\n【分解者の役割】\n    死がいや落ち葉を分解\n        ↓\n    土にもどす\n    栄養を自然に返す\n        ↓\n    植物が再び成長できる\n    生態系のエネルギー循環が保たれる\n\n【分解者がいないと】\n    自然界のバランスは保てない\n\n分解者の役割：\n  • 死がいを分解する\n  • 栄養を土に返す\n  • 循環を保つ</div>",
+    "source": "分解者は、死がいや落ち葉などを分解して土にもどし、栄養を自然に返す役割を持っています。これにより植物が再び成長でき、生態系のエネルギー循環が保たれます。分解者がいなければ、自然界のバランスは保てません。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">分解者の重要な役割  【分解者の役割】     死がいや落ち葉を分解         ↓     土にもどす     栄養を自然に返す         ↓     植物が再び成長できる     生態系のエネルギー循環が保たれる  【分解者がいないと】     自然界のバランスは保てない  分解者の役割：   • 死がいを分解する   • 栄養を土に返す   • 循環を保つ</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 21,
+    "qnum": 20,
     "text": "光合成で栄養を作る生物を何という？",
     "choices": [
       "生産者",
@@ -330,13 +314,13 @@ window.questions = [
       "被食者"
     ],
     "answer": 2,
-    "source": "生産者は、光合成を通して自ら栄養を作り出す生物です。植物や植物プランクトンなどがこれにあたり、食物連鎖の最初に位置します。生産者が作った栄養が、他のすべての生物のエネルギー源となるため、生態系を支えるもっとも重要な存在といえます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">生産者とは\n\n【生産者】\n    光合成を通して自ら栄養を作り出す\n    例：植物、植物プランクトン\n\n【生産者の位置】\n    食物連鎖の最初に位置\n        ↓\n    作った栄養が\n    他のすべての生物のエネルギー源\n        ↓\n    生態系を支える\n    もっとも重要な存在\n\n生産者の特徴：\n  • 光合成で栄養を作る\n  • 食物連鎖の最初\n  • 生態系の基礎</div>",
+    "source": "生産者は、光合成を通して自ら栄養を作り出す生物です。植物や植物プランクトンなどがこれにあたり、食物連鎖の最初に位置します。生産者が作った栄養が、他のすべての生物のエネルギー源となるため、生態系を支えるもっとも重要な存在といえます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">生産者とは  【生産者】     光合成を通して自ら栄養を作り出す     例：植物、植物プランクトン  【生産者の位置】     食物連鎖の最初に位置         ↓     作った栄養が     他のすべての生物のエネルギー源         ↓     生態系を支える     もっとも重要な存在  生産者の特徴：   • 光合成で栄養を作る   • 食物連鎖の最初   • 生態系の基礎</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 22,
+    "qnum": 21,
     "text": "植物を食べて生きる動物を何という？",
     "choices": [
       "草食動物",
@@ -346,13 +330,13 @@ window.questions = [
       "生産者"
     ],
     "answer": 2,
-    "source": "草食動物は、植物を食べて栄養を取る生物です。ウサギ、シカ、ウシなどが代表で、生産者からエネルギーを受け取る役割を担っています。草食動物がいることで、肉食動物へのエネルギーも伝わり、食物連鎖が円滑に回ります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">草食動物とは\n\n【草食動物】\n    植物を食べて栄養を取る\n    例：ウサギ、シカ、ウシ\n\n【草食動物の役割】\n    生産者からエネルギーを受け取る\n        ↓\n    肉食動物へのエネルギーも伝わる\n        ↓\n    食物連鎖が円滑に回る\n\n草食動物の特徴：\n  • 植物を食べる\n  • 生産者からエネルギーを受け取る\n  • 食物連鎖をつなぐ</div>",
+    "source": "草食動物は、植物を食べて栄養を取る生物です。ウサギ、シカ、ウシなどが代表で、生産者からエネルギーを受け取る役割を担っています。草食動物がいることで、肉食動物へのエネルギーも伝わり、食物連鎖が円滑に回ります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">草食動物とは  【草食動物】     植物を食べて栄養を取る     例：ウサギ、シカ、ウシ  【草食動物の役割】     生産者からエネルギーを受け取る         ↓     肉食動物へのエネルギーも伝わる         ↓     食物連鎖が円滑に回る  草食動物の特徴：   • 植物を食べる   • 生産者からエネルギーを受け取る   • 食物連鎖をつなぐ</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 23,
+    "qnum": 22,
     "text": "草食動物を食べる動物を何という？",
     "choices": [
       "草食動物",
@@ -362,13 +346,13 @@ window.questions = [
       "植物"
     ],
     "answer": 1,
-    "source": "肉食動物は、主に草食動物を食べて生きる生物です。タカやオオカミなどが当てはまり、食物連鎖の中で草食動物の数を調節する役割があります。肉食動物がいることで、生態系のバランスが適切に保たれます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">肉食動物とは\n\n【肉食動物】\n    主に草食動物を食べて生きる\n    例：タカ、オオカミ\n\n【肉食動物の役割】\n    草食動物の数を調節\n        ↓\n    生態系のバランスが適切に保たれる\n\n【食物連鎖での位置】\n    植物 → 草食動物 → 肉食動物\n\n肉食動物の特徴：\n  • 草食動物を食べる\n  • 数を調節する\n  • バランスを保つ</div>",
+    "source": "肉食動物は、主に草食動物を食べて生きる生物です。タカやオオカミなどが当てはまり、食物連鎖の中で草食動物の数を調節する役割があります。肉食動物がいることで、生態系のバランスが適切に保たれます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">肉食動物とは  【肉食動物】     主に草食動物を食べて生きる     例：タカ、オオカミ  【肉食動物の役割】     草食動物の数を調節         ↓     生態系のバランスが適切に保たれる  【食物連鎖での位置】     植物 → 草食動物 → 肉食動物  肉食動物の特徴：   • 草食動物を食べる   • 数を調節する   • バランスを保つ</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 24,
+    "qnum": 23,
     "text": "自然界で生物の死がいを分解する生物を何という？",
     "choices": [
       "分解者",
@@ -378,13 +362,13 @@ window.questions = [
       "被食者"
     ],
     "answer": 4,
-    "source": "分解者は、死んだ生物や落ち葉などを細かく分解し、土にもどす生物です。キノコや細菌が代表で、土に栄養を返す大切なはたらきを持っています。分解者のおかげで、植物が新しい栄養を利用でき、自然の循環が続きます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">分解者とは\n\n【分解者】\n    死んだ生物や落ち葉を\n    細かく分解し、土にもどす\n    例：キノコ、細菌\n\n【分解者の働き】\n    土に栄養を返す\n        ↓\n    植物が新しい栄養を利用できる\n        ↓\n    自然の循環が続く\n\n分解者の特徴：\n  • 死がいを分解する\n  • 栄養を土に返す\n  • 循環を続ける</div>",
+    "source": "分解者は、死んだ生物や落ち葉などを細かく分解し、土にもどす生物です。キノコや細菌が代表で、土に栄養を返す大切なはたらきを持っています。分解者のおかげで、植物が新しい栄養を利用でき、自然の循環が続きます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">分解者とは  【分解者】     死んだ生物や落ち葉を     細かく分解し、土にもどす     例：キノコ、細菌  【分解者の働き】     土に栄養を返す         ↓     植物が新しい栄養を利用できる         ↓     自然の循環が続く  分解者の特徴：   • 死がいを分解する   • 栄養を土に返す   • 循環を続ける</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 25,
+    "qnum": 24,
     "text": "生物同士の食べる・食べられる関係を何という？",
     "choices": [
       "食物連鎖",
@@ -394,13 +378,13 @@ window.questions = [
       "競争関係"
     ],
     "answer": 3,
-    "source": "食物連鎖は、生き物同士の「食べる・食べられる」という関係をつないだしくみです。植物→草食動物→肉食動物という流れで、エネルギーが伝わっていきます。自然のバランスを知るうえで欠かせない考え方です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">食物連鎖とは\n\n【食物連鎖】\n    「食べる・食べられる」の関係を\n    つないだしくみ\n\n【食物連鎖の流れ】\n    植物\n        ↓ 食べる\n    草食動物\n        ↓ 食べる\n    肉食動物\n        ↓\n    エネルギーが伝わる\n\n【食物連鎖の重要性】\n    自然のバランスを知るうえで\n    欠かせない考え方\n\n食物連鎖の特徴：\n  • 食べる・食べられるの関係\n  • エネルギーが伝わる\n  • 自然のバランス</div>",
+    "source": "食物連鎖は、生き物同士の「食べる・食べられる」という関係をつないだしくみです。植物→草食動物→肉食動物という流れで、エネルギーが伝わっていきます。自然のバランスを知るうえで欠かせない考え方です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">食物連鎖とは  【食物連鎖】     「食べる・食べられる」の関係を     つないだしくみ  【食物連鎖の流れ】     植物         ↓ 食べる     草食動物         ↓ 食べる     肉食動物         ↓     エネルギーが伝わる  【食物連鎖の重要性】     自然のバランスを知るうえで     欠かせない考え方  食物連鎖の特徴：   • 食べる・食べられるの関係   • エネルギーが伝わる   • 自然のバランス</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 26,
+    "qnum": 25,
     "text": "食物連鎖が複雑につながったものを何という？",
     "choices": [
       "食物網",
@@ -410,13 +394,13 @@ window.questions = [
       "個体群"
     ],
     "answer": 0,
-    "source": "食物網とは、いくつもの食物連鎖が重なり合ってできた、大きなつながりのことです。自然界では、生き物は一種類のエサだけではなく、複数の生き物を食べて生活しています。食物網として見ることで、生態系をより正しく理解できます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">食物網とは\n\n【食物網】\n    いくつもの食物連鎖が\n    重なり合ってできた大きなつながり\n\n【自然界の関係】\n    生き物は一種類のエサだけではない\n    複数の生き物を食べて生活\n        ↓\n    植物 ──→ 草食動物A ──→ 肉食動物\n    植物 ──→ 草食動物B ──→ 肉食動物\n    植物 ──→ 草食動物C ──→ 肉食動物\n        ↓\n    複雑にからみ合う\n\n【食物網の利点】\n    生態系をより正しく理解できる\n\n食物網の特徴：\n  • 複数の食物連鎖が重なる\n  • 複数のエサを食べる\n  • 生態系を正しく理解</div>",
+    "source": "食物網とは、いくつもの食物連鎖が重なり合ってできた、大きなつながりのことです。自然界では、生き物は一種類のエサだけではなく、複数の生き物を食べて生活しています。食物網として見ることで、生態系をより正しく理解できます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">食物網とは  【食物網】     いくつもの食物連鎖が     重なり合ってできた大きなつながり  【自然界の関係】     生き物は一種類のエサだけではない     複数の生き物を食べて生活         ↓     植物 ──→ 草食動物A ──→ 肉食動物     植物 ──→ 草食動物B ──→ 肉食動物     植物 ──→ 草食動物C ──→ 肉食動物         ↓     複雑にからみ合う  【食物網の利点】     生態系をより正しく理解できる  食物網の特徴：   • 複数の食物連鎖が重なる   • 複数のエサを食べる   • 生態系を正しく理解</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 27,
+    "qnum": 26,
     "text": "海の食物連鎖を支える最初の生物は？",
     "choices": [
       "植物プランクトン",
@@ -426,13 +410,13 @@ window.questions = [
       "サンゴ"
     ],
     "answer": 3,
-    "source": "海の食物連鎖では、植物プランクトンが生産者としてはたらきます。光合成で栄養を作り、それを動物プランクトン、魚へとつないでいきます。小さな生物ですが、海全体の生態系の出発点としてとても大切な存在です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">植物プランクトンの役割\n\n【植物プランクトン】\n    小さな生物\n    生産者としてはたらく\n\n【海の食物連鎖】\n    植物プランクトン（光合成）\n        ↓ 食べる\n    動物プランクトン\n        ↓ 食べる\n    魚\n        ↓\n    海全体の生態系の出発点\n\n植物プランクトンの特徴：\n  • 生産者として働く\n  • 光合成で栄養を作る\n  • 海の生態系の出発点</div>",
+    "source": "海の食物連鎖では、植物プランクトンが生産者としてはたらきます。光合成で栄養を作り、それを動物プランクトン、魚へとつないでいきます。小さな生物ですが、海全体の生態系の出発点としてとても大切な存在です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">植物プランクトンの役割  【植物プランクトン】     小さな生物     生産者としてはたらく  【海の食物連鎖】     植物プランクトン（光合成）         ↓ 食べる     動物プランクトン         ↓ 食べる     魚         ↓     海全体の生態系の出発点  植物プランクトンの特徴：   • 生産者として働く   • 光合成で栄養を作る   • 海の生態系の出発点</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 28,
+    "qnum": 27,
     "text": "他の生物を食べて栄養を得る生物を何という？",
     "choices": [
       "消費者",
@@ -442,29 +426,13 @@ window.questions = [
       "被食者"
     ],
     "answer": 3,
-    "source": "消費者は、他の生き物を食べて栄養を得る生物です。草食動物・肉食動物・雑食動物すべてがここに含まれます。生産者が作ったエネルギーを体に取り入れて生きる、生態系の中心的なグループです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">消費者とは\n\n【消費者】\n    他の生き物を食べて栄養を得る\n    例：草食動物・肉食動物・雑食動物\n\n【消費者の役割】\n    生産者が作ったエネルギーを\n    体に取り入れて生きる\n        ↓\n    生態系の中心的なグループ\n\n【消費者の種類】\n    草食動物：植物を食べる\n    肉食動物：他の動物を食べる\n    雑食動物：植物も動物も食べる\n\n消費者の特徴：\n  • 他の生き物を食べる\n  • 生産者のエネルギーを利用\n  • 生態系の中心</div>",
+    "source": "消費者は、他の生き物を食べて栄養を得る生物です。草食動物・肉食動物・雑食動物すべてがここに含まれます。生産者が作ったエネルギーを体に取り入れて生きる、生態系の中心的なグループです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">消費者とは  【消費者】     他の生き物を食べて栄養を得る     例：草食動物・肉食動物・雑食動物  【消費者の役割】     生産者が作ったエネルギーを     体に取り入れて生きる         ↓     生態系の中心的なグループ  【消費者の種類】     草食動物：植物を食べる     肉食動物：他の動物を食べる     雑食動物：植物も動物も食べる  消費者の特徴：   • 他の生き物を食べる   • 生産者のエネルギーを利用   • 生態系の中心</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 29,
-    "text": "生態系とは何のまとまり？",
-    "choices": [
-      "生物と環境",
-      "生物だけ",
-      "環境だけ",
-      "食物連鎖だけ",
-      "個体群だけ"
-    ],
-    "answer": 4,
-    "source": "生態系とは、生き物と周りの環境が支え合って成り立つまとまりです。生物同士のつながりだけでなく、水・光・土・空気なども含めて考えます。これらの関係がうまく働くことで、多くの生物が生きられる自然が保たれています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">生態系とは\n\n【生態系】\n    生き物\n    ＋\n    周りの環境\n    （水・光・土・空気など）\n        ↓\n    支え合って成り立つまとまり\n\n【生態系の特徴】\n    生物同士のつながり\n    環境とのつながり\n        ↓\n    うまく働く\n        ↓\n    多くの生物が生きられる\n    自然が保たれる\n\n生態系の特徴：\n  • 生き物と環境のまとまり\n  • 支え合う関係\n  • 自然を保つ</div>",
-    "tags": [],
-    "difficulty": 1,
-    "asof": "2025-01-27"
-  },
-  {
-    "qnum": 30,
+    "qnum": 28,
     "text": "分解者が作り出す土の栄養分を何という？",
     "choices": [
       "養分",
@@ -474,13 +442,13 @@ window.questions = [
       "ミネラル"
     ],
     "answer": 3,
-    "source": "分解者が生物の死がいや落ち葉を分解すると、植物が吸収できる形の栄養分が土にもどります。これを「養分」とよび、植物の成長に欠かせません。養分があることで、生産者が育ち、食物連鎖がもう一度始まることができます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">土の養分とは\n\n【分解者の働き】\n    生物の死がいや落ち葉を分解\n        ↓\n    植物が吸収できる形の栄養分が\n    土にもどる\n        ↓\n    これを「養分」とよぶ\n\n【養分の役割】\n    植物の成長に欠かせない\n        ↓\n    生産者が育つ\n        ↓\n    食物連鎖がもう一度始まる\n\n養分の特徴：\n  • 分解者が作り出す\n  • 植物の成長に必要\n  • 食物連鎖を循環させる</div>",
+    "source": "分解者が生物の死がいや落ち葉を分解すると、植物が吸収できる形の栄養分が土にもどります。これを「養分」とよび、植物の成長に欠かせません。養分があることで、生産者が育ち、食物連鎖がもう一度始まることができます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">土の養分とは  【分解者の働き】     生物の死がいや落ち葉を分解         ↓     植物が吸収できる形の栄養分が     土にもどる         ↓     これを「養分」とよぶ  【養分の役割】     植物の成長に欠かせない         ↓     生産者が育つ         ↓     食物連鎖がもう一度始まる  養分の特徴：   • 分解者が作り出す   • 植物の成長に必要   • 食物連鎖を循環させる</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
   },
   {
-    "qnum": 31,
+    "qnum": 29,
     "text": "生物の数のつり合いとして正しいのはどれ？",
     "choices": [
       "植物の数が最も多い",
@@ -495,7 +463,7 @@ window.questions = [
     "asof": "2026-01-02"
   },
   {
-    "qnum": 32,
+    "qnum": 30,
     "text": "生物の数の関係を図に表すと、どのような形になる？",
     "choices": [
       "植物を底辺とし、大形の肉食動物を頂点とするピラミッドの形",
@@ -511,7 +479,7 @@ window.questions = [
     "asof": "2026-01-02"
   },
   {
-    "qnum": 33,
+    "qnum": 31,
     "text": "つり合いがくずれたとき、生物の数はどうなる？",
     "choices": [
       "一時的に変化するが、やがてもとにもどる",
@@ -527,7 +495,7 @@ window.questions = [
     "asof": "2026-01-02"
   },
   {
-    "qnum": 34,
+    "qnum": 32,
     "text": "炭素のじゅんかんとして正しいのはどれ？",
     "choices": [
       "植物が光合成で二酸化炭素をとり入れる",
@@ -541,7 +509,7 @@ window.questions = [
     "asof": "2026-01-02"
   },
   {
-    "qnum": 35,
+    "qnum": 33,
     "text": "酸素のやりとりとして正しいのはどれ？",
     "choices": [
       "植物が光合成で酸素を出す",
@@ -556,7 +524,7 @@ window.questions = [
     "asof": "2026-01-02"
   },
   {
-    "qnum": 36,
+    "qnum": 34,
     "text": "食物連鎖の例として正しいのはどれ？",
     "choices": [
       "イネ→イナゴ→カエル→フクロウ",
