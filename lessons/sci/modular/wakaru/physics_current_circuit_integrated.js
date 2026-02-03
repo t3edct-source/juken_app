@@ -14,7 +14,7 @@ window.questions = [
       "電流の通り道が2本以上に分かれている回路"
     ],
     "answer": 0,
-    "source": "豆電球を光らせるには、「電源」と「電流の通るひとまとまりの道」がそろっていることが大切です。乾電池のプラス極とマイナス極を、豆電球を通るように導線でつなぎ、ぐるっと一周する道（回路）を作ると電流が流れます。この電流が豆電球の中のフィラメントを流れることで熱が発生し、その熱でフィラメントが光ります。どこか1か所でもつながっていないと電流が流れず、豆電球は光りません。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">基本的な回路の構造\n\n    [+] 乾電池（電源）\n    │\n    │ 導線\n    ↓\n   (●) 豆電球\n    │\n    │ 導線\n    ↓\n    [-] 乾電池（電源）\n    │\n    └─→ ぐるっと一周する道（回路）\n\n必要なもの：\n  ✓ 電源（乾電池）\n  ✓ 電流の通るひとまとまりの道（回路）\n  ✓ 電気部品（豆電球）\n\nどこか1か所でも切れると → 電流が流れない</div>",
+    "source": "豆電球を光らせるには、「電源」と「電流の通るひとまとまりの道」がそろっていることが大切です。乾電池のプラス極とマイナス極を、豆電球を通るように導線でつなぎ、ぐるっと一周する道（回路）を作ると電流が流れます。この電流が豆電球の中のフィラメントを流れることで熱が発生し、その熱でフィラメントが光ります。どこか1か所でもつながっていないと電流が流れず、豆電球は光りません。<img src=\"../images/physics/current_circuit_integrated/sci.physics.current_circuit_integrated&mode1.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -30,7 +30,7 @@ window.questions = [
       "電流の通り道が1本だけの回路"
     ],
     "answer": 2,
-    "source": "電流が1本の道だけを通る回路を直列回路といいます。乾電池や豆電球を一列に並べたように、「線の上に順番に並んでいる」イメージです。直列回路では、回路のどの場所でも電流の大きさが同じであり、1つが切れると全体が止まってしまうという特徴があります。「1本の道」「順番に並ぶ」というイメージで覚えるとわかりやすくなります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">直列回路の特徴\n\n    [+] 電池\n    │\n    ↓ 1本の道\n   (●) 電球1\n    │\n    ↓ 1本の道\n   (●) 電球2\n    │\n    ↓ 1本の道\n    [-] 電池\n\n特徴：\n  • 電流の通り道：1本だけ\n  • 順番に並んでいる\n  • どの場所でも電流は同じ\n  • 1つが切れると全体が止まる</div>",
+    "source": "電流が1本の道だけを通る回路を直列回路といいます。乾電池や豆電球を一列に並べたように、「線の上に順番に並んでいる」イメージです。直列回路では、回路のどの場所でも電流の大きさが同じであり、1つが切れると全体が止まってしまうという特徴があります。「1本の道」「順番に並ぶ」というイメージで覚えるとわかりやすくなります。<img src=\"../images/physics/current_circuit_integrated/sci.physics.current_circuit_integrated&mode2.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -46,7 +46,7 @@ window.questions = [
       "電流の通り道が2本以上に分かれている回路"
     ],
     "answer": 1,
-    "source": "電流が2本以上の道に分かれて流れる回路を並列回路といいます。豆電球を横に並べ、それぞれが電源のプラス極とマイナス極につながるような形です。並列回路では、枝ごとに流れる電流の大きさは違っても、電圧はどの枝でもほぼ同じになります。1つの枝が切れても他の枝には電流が流れ続ける、という性質も重要なポイントです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">並列回路の特徴\n\n    [+] 電池\n    │\n    ├─→ (●) 電球1 ──┐\n    │   道1            │\n    │                  │\n    └─→ (●) 電球2 ──┘\n        道2            │\n                       │\n    [-] 電池 ←────────┘\n\n特徴：\n  • 電流の通り道：2本以上に分かれる\n  • 横に並んでいる\n  • 各枝の電圧はほぼ同じ\n  • 1つの枝が切れても他の枝は動く</div>",
+    "source": "電流が2本以上の道に分かれて流れる回路を並列回路といいます。豆電球を横に並べ、それぞれが電源のプラス極とマイナス極につながるような形です。並列回路では、枝ごとに流れる電流の大きさは違っても、電圧はどの枝でもほぼ同じになります。1つの枝が切れても他の枝には電流が流れ続ける、という性質も重要なポイントです。<img src=\"../images/physics/current_circuit_integrated/sci.physics.current_circuit_integrated&mode3.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -62,7 +62,7 @@ window.questions = [
       "電流の通り道の終点"
     ],
     "answer": 3,
-    "source": "直列つなぎの回路は、電流の通り道が1本だけになっている回路です。乾電池や豆電球、スイッチなどを1列に並べるようにつなぐと、電流は同じ道を順番に通り抜けていきます。このとき電流は回路のどの場所でも同じ大きさで流れるのが特徴です。どこか1か所でも切れると電流が通れなくなり、回路全体で電気が流れなくなります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">直列つなぎの回路\n\n    [+] 電池\n    │\n    ↓\n   (●) 電球1\n    │\n    ↓\n   (●) 電球2\n    │\n    ↓\n    [-] 電池\n    │\n    └─→ 電流の通り道：1本だけ\n\n特徴：\n  • 電流は同じ道を順番に通る\n  • どの場所でも電流の大きさは同じ\n  • 1か所でも切れると全体が止まる</div>",
+    "source": "直列つなぎの回路は、電流の通り道が1本だけになっている回路です。乾電池や豆電球、スイッチなどを1列に並べるようにつなぐと、電流は同じ道を順番に通り抜けていきます。このとき電流は回路のどの場所でも同じ大きさで流れるのが特徴です。どこか1か所でも切れると電流が通れなくなり、回路全体で電気が流れなくなります。<img src=\"../images/physics/current_circuit_integrated/sci.physics.current_circuit_integrated&mode4.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -78,7 +78,7 @@ window.questions = [
       "暗くなる"
     ],
     "answer": 1,
-    "source": "直列回路では、電流の通り道が1本しかないため、その道の途中にある豆電球が1つでも切れると、そこで道が途切れてしまいます。道が途切れると電流はそれ以上先へ進むことができないので、他の電球にも電流が流れなくなります。その結果、切れていない電球もふくめて、回路上のすべての電球が消えてしまいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">直列回路で1つが切れたとき\n\n【正常なとき】\n    [+] 電池\n    │\n    ↓ 電流が流れる\n   (●) 光る\n    │\n    ↓ 電流が流れる\n   (●) 光る\n    │\n    [-] 電池\n\n【1つが切れたとき】\n    [+] 電池\n    │\n    ↓ 電流が流れる\n   (●) 光る\n    │\n    ↓ 道が途切れる！\n   (×) 切れた\n    │\n    ↓ 電流が流れない\n   (●) 消える\n    │\n    [-] 電池\n\n結果：全部消える</div>",
+    "source": "直列回路では、電流の通り道が1本しかないため、その道の途中にある豆電球が1つでも切れると、そこで道が途切れてしまいます。道が途切れると電流はそれ以上先へ進むことができないので、他の電球にも電流が流れなくなります。その結果、切れていない電球もふくめて、回路上のすべての電球が消えてしまいます。<img src=\"../images/physics/current_circuit_integrated/sci.physics.current_circuit_integrated&mode5.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -110,7 +110,7 @@ window.questions = [
       "電流の通り道が1本だけの回路"
     ],
     "answer": 3,
-    "source": "並列回路では、電流の通り道が枝分かれしているため、1つの枝にある豆電球が切れても、他の枝には別の道が残っています。切れた枝には電流が流れなくなりますが、他の枝にはこれまでどおり電流が流れます。そのため、切れた電球だけが消え、他の電球はついたまま光り続けます。家庭の照明も、このしくみを利用して並列でつながれていることが多いです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">並列回路で1つが切れたとき\n\n【正常なとき】\n    [+] 電池\n    │\n    ├─→ (●) 光る\n    │\n    └─→ (●) 光る\n    │\n    [-] 電池\n\n【1つが切れたとき】\n    [+] 電池\n    │\n    ├─→ (×) 切れた（消える）\n    │\n    └─→ (●) 光る（ついたまま）\n    │\n    [-] 電池\n\n結果：切れた電球だけ消える</div>",
+    "source": "並列回路では、電流の通り道が枝分かれしているため、1つの枝にある豆電球が切れても、他の枝には別の道が残っています。切れた枝には電流が流れなくなりますが、他の枝にはこれまでどおり電流が流れます。そのため、切れた電球だけが消え、他の電球はついたまま光り続けます。家庭の照明も、このしくみを利用して並列でつながれていることが多いです。<img src=\"../images/physics/current_circuit_integrated/sci.physics.current_circuit_integrated&mode7.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -126,7 +126,7 @@ window.questions = [
       "電源と電流の通るひとまとまりの道"
     ],
     "answer": 1,
-    "source": "直列回路では、電流の通り道が1本しかないため、電源から出た電流は途中で分かれることなく同じ道を通ります。このため、回路のどの場所で電流を測っても、電流の大きさは同じになります。豆電球の手前でも、あとでも、電流計で測ると同じ値になるのが直列回路の大切な特徴です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">直列回路の電流の大きさ\n\n    [+] 電池\n    │\n    ↓ 電流：I\n   [A] 電流計 → I（同じ）\n    │\n    ↓ 電流：I（同じ）\n   (●) 電球\n    │\n    ↓ 電流：I（同じ）\n   [A] 電流計 → I（同じ）\n    │\n    [-] 電池\n\n特徴：\n  • どの場所でも電流の大きさは同じ\n  • 電球の手前でも後ろでも同じ値\n  • 1本の道を同じ電流が流れる</div>",
+    "source": "直列回路では、電流の通り道が1本しかないため、電源から出た電流は途中で分かれることなく同じ道を通ります。このため、回路のどの場所で電流を測っても、電流の大きさは同じになります。豆電球の手前でも、あとでも、電流計で測ると同じ値になるのが直列回路の大切な特徴です。<img src=\"../images/physics/current_circuit_integrated/sci.physics.current_circuit_integrated&mode8.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -155,7 +155,7 @@ window.questions = [
       "枝ごとに分かれて流れる"
     ],
     "answer": 4,
-    "source": "並列回路では、電流は枝分かれしてそれぞれの道を通っていきます。電源から出た電流は、枝に分かれて流れ、再び合流します。そのため、枝ごとに流れる電流の大きさは異なりますが、すべての枝を合わせると、電源から出入りする電流の大きさと一致します。この「枝ごとに分かれつつ、合計は同じ」という法則が並列回路のポイントです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">並列回路の電流の大きさ\n\n    [+] 電池\n    │\n    ↓ 電流：I（全体）\n    ├─→ [A] → I1 ──┐\n    │    (●)         │\n    │                 │\n    └─→ [A] → I2 ──┘\n         (●)         │\n                      ↓\n    [-] 電池 ← I = I1 + I2\n\n特徴：\n  • 枝ごとに電流の大きさは異なる（I1, I2）\n  • すべての枝を合わせると全体と一致\n  • I = I1 + I2（合計は同じ）</div>",
+    "source": "並列回路では、電流は枝分かれしてそれぞれの道を通っていきます。電源から出た電流は、枝に分かれて流れ、再び合流します。そのため、枝ごとに流れる電流の大きさは異なりますが、すべての枝を合わせると、電源から出入りする電流の大きさと一致します。この「枝ごとに分かれつつ、合計は同じ」という法則が並列回路のポイントです。<img src=\"../images/physics/current_circuit_integrated/sci.physics.current_circuit_integrated&mode1.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -229,7 +229,7 @@ window.questions = [
       "他の電球はついたまま"
     ],
     "answer": 0,
-    "source": "電流とは、「単位時間あたりに流れる電気の量」を表す物理量です。大きな電流が流れているということは、それだけたくさんの電気のエネルギーが道を通って移動しているということになります。豆電球の明るさやモーターの回転の強さは、この電流の大きさと深く関係しています。電流は、電気の世界でエネルギーの流れを表す重要な指標です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">電流とは\n\n【電流の意味】\n  単位時間あたりに流れる電気の量\n\n【電流が大きいとき】\n    たくさんの電気エネルギー\n    ↓\n    豆電球：明るい\n    モーター：強く回る\n\n【電流が小さいとき】\n    少ない電気エネルギー\n    ↓\n    豆電球：暗い\n    モーター：弱く回る\n\n電流 = エネルギーの流れを表す指標</div>",
+    "source": "電流とは、「単位時間あたりに流れる電気の量」を表す物理量です。大きな電流が流れているということは、それだけたくさんの電気のエネルギーが道を通って移動しているということになります。豆電球の明るさやモーターの回転の強さは、この電流の大きさと深く関係しています。電流は、電気の世界でエネルギーの流れを表す重要な指標です。<img src=\"../images/physics/current_circuit_integrated/sci.physics.current_circuit_integrated&mode15.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -261,7 +261,7 @@ window.questions = [
       "電流の通り道が1本だけの回路"
     ],
     "answer": 3,
-    "source": "電圧とは、電流を押し出すはたらきの強さを表す量です。電源が高い電圧を持っているほど、電流を強く押し出すことができ、回路に大きな電流が流れやすくなります。水のたとえで言うと、高いところから水を流すほど勢いが強くなるのと似ています。乾電池の＋極と−極のあいだには電圧があり、それが電流を流す「元気」のもとになっています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">電圧とは\n\n【電圧の意味】\n  電流を押し出すはたらきの強さ\n\n【電圧が高いとき】\n    強い押し出す力\n    ↓\n    大きな電流が流れる\n    ↓\n    豆電球：明るい\n\n【電圧が低いとき】\n    弱い押し出す力\n    ↓\n    小さな電流が流れる\n    ↓\n    豆電球：暗い\n\n水のたとえ：\n  高いところ → 勢いが強い\n  低いところ → 勢いが弱い</div>",
+    "source": "電圧とは、電流を押し出すはたらきの強さを表す量です。電源が高い電圧を持っているほど、電流を強く押し出すことができ、回路に大きな電流が流れやすくなります。水のたとえで言うと、高いところから水を流すほど勢いが強くなるのと似ています。乾電池の＋極と−極のあいだには電圧があり、それが電流を流す「元気」のもとになっています。<img src=\"../images/physics/current_circuit_integrated/sci.physics.current_circuit_integrated&mode17.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -277,7 +277,7 @@ window.questions = [
       "他の電球はついたまま"
     ],
     "answer": 3,
-    "source": "乾電池を並列につなぐと、プラス極どうし、マイナス極どうしがそれぞれつながる形になります。このとき、電圧は1本の電池とほぼ同じ値のまま変わりません。たとえば1.5Vの乾電池を何本並列につないでも、全体の電圧は約1.5Vのままです。ただし、電池の「中身」は増えるので、同じ明るさでより長く電気を使えるようになると考えられます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">乾電池の並列つなぎ\n\n【1本のとき】\n    [+] 1.5V\n    │\n    ↓\n   (●) 電球\n    │\n    [-] 1.5V\n\n【2本並列のとき】\n    [+] 1.5V ──┐\n    │          │\n    [+] 1.5V ──┼─→ (●) 電球\n    │          │\n    [-] 1.5V ──┘\n    │\n    [-] 1.5V\n\n電圧：1.5V（1本と同じ）\n電池の中身：増える → 長く使える</div>",
+    "source": "乾電池を並列につなぐと、プラス極どうし、マイナス極どうしがそれぞれつながる形になります。このとき、電圧は1本の電池とほぼ同じ値のまま変わりません。たとえば1.5Vの乾電池を何本並列につないでも、全体の電圧は約1.5Vのままです。ただし、電池の「中身」は増えるので、同じ明るさでより長く電気を使えるようになると考えられます。<img src=\"../images/physics/current_circuit_integrated/sci.physics.current_circuit_integrated&mode18.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -293,7 +293,7 @@ window.questions = [
       "足し合わされて大きくなる"
     ],
     "answer": 4,
-    "source": "乾電池を直列につなぐと、1本1本の電圧が足し合わされて、全体の電圧が大きくなります。たとえば1.5Vの電池を2本直列につなぐと、合計で約3.0Vの電圧になります。電圧が大きくなるほど、回路に流れる電流も大きくなり、豆電球はより明るく光ります。ただし、電圧が高くなるぶん、電池のエネルギーは早く使い切られてしまいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">乾電池の直列つなぎ\n\n【1本のとき】\n    [+] 1.5V\n    │\n    ↓\n   (●) 電球\n    │\n    [-] 1.5V\n\n【2本直列のとき】\n    [+] 1.5V\n    │\n    [-] 1.5V [+] 1.5V\n    │         │\n    └────────┘\n    ↓ 合計：3.0V\n   (●) 電球（より明るい）\n    │\n    [-] 1.5V\n\n電圧：1.5V + 1.5V = 3.0V（足し合わされる）</div>",
+    "source": "乾電池を直列につなぐと、1本1本の電圧が足し合わされて、全体の電圧が大きくなります。たとえば1.5Vの電池を2本直列につなぐと、合計で約3.0Vの電圧になります。電圧が大きくなるほど、回路に流れる電流も大きくなり、豆電球はより明るく光ります。ただし、電圧が高くなるぶん、電池のエネルギーは早く使い切られてしまいます。<img src=\"../images/physics/current_circuit_integrated/sci.physics.current_circuit_integrated&mode19.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -309,7 +309,7 @@ window.questions = [
       "電源と電流の通るひとまとまりの道"
     ],
     "answer": 0,
-    "source": "電圧計は、回路のある部分にかかっている電圧をはかる器具です。調べたい部分の両端に並列につなぎ、その部分で電気のエネルギー差がどれくらいあるかを測定します。たとえば、乾電池1本の電圧や、豆電球の両端の電圧を調べることができます。電圧計を正しく並列につなぐことで、電源や部品のはたらきをより深く理解できます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">電圧計の役割\n\n【電圧計の使い方】\n    [+] 電池\n    │\n    ├─→ (●) 電球\n    │      │\n    │      [V] 電圧計（並列）\n    │      │  電圧を測る\n    └──────┘\n    [-] 電池\n\n役割：\n  • 電圧をはかる\n  • 調べたい部分の両端に並列につなぐ\n  • 電気のエネルギー差を測定する\n\n使う場面：\n  • 乾電池の電圧\n  • 豆電球の両端の電圧</div>",
+    "source": "電圧計は、回路のある部分にかかっている電圧をはかる器具です。調べたい部分の両端に並列につなぎ、その部分で電気のエネルギー差がどれくらいあるかを測定します。たとえば、乾電池1本の電圧や、豆電球の両端の電圧を調べることができます。電圧計を正しく並列につなぐことで、電源や部品のはたらきをより深く理解できます。<img src=\"../images/physics/current_circuit_integrated/sci.physics.current_circuit_integrated&mode20.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -325,7 +325,7 @@ window.questions = [
       "調べたい部分に並列につなぐ"
     ],
     "answer": 4,
-    "source": "電圧を調べるときには、電圧計を「調べたい部分の両端」に並列につなぎます。電圧とは、その部分の電気のエネルギーの差を表す量なので、両端をはさむようにしてつなぐ必要があります。もし電流計のように途中に直列につないでしまうと、回路のつくりそのものが変わってしまい、正しい電圧が測れません。電圧計は「はさむ」「ならべてつなぐ」と覚えるとよいでしょう。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">電圧計のつなぎ方\n\n【正しいつなぎ方】\n    [+] 電池\n    │\n    ├─→ (●) 電球\n    │      │\n    │      [V] 電圧計（並列）\n    │      │\n    └──────┘\n    [-] 電池\n\n✓ 調べたい部分の両端に並列につなぐ\n✓ 「はさむ」「ならべてつなぐ」\n\n【間違ったつなぎ方】\n    [+] 電池\n    │\n    ↓\n   [V] 電圧計（直列）\n    │\n    ↓\n   (●) 電球\n    │\n    [-] 電池\n\n✗ 直列につなぐと回路が変わる</div>",
+    "source": "電圧を調べるときには、電圧計を「調べたい部分の両端」に並列につなぎます。電圧とは、その部分の電気のエネルギーの差を表す量なので、両端をはさむようにしてつなぐ必要があります。もし電流計のように途中に直列につないでしまうと、回路のつくりそのものが変わってしまい、正しい電圧が測れません。電圧計は「はさむ」「ならべてつなぐ」と覚えるとよいでしょう。<img src=\"../images/physics/current_circuit_integrated/sci.physics.current_circuit_integrated&mode21.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -341,7 +341,7 @@ window.questions = [
       "暗くなる"
     ],
     "answer": 0,
-    "source": "乾電池を直列につなぐと電圧が大きくなるため、豆電球には大きな電流が流れ、明るく光るようになります。一方で、1本あたりから取り出すエネルギーの量も増えるので、電池は早く使い切られてしまいます。つまり、「明るくしたいけれど、電池は早く減る」というトレードオフが直列つなぎの特徴です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">直列つなぎの特徴\n\n【1本のとき】\n    電圧：1.5V\n    電流：小さい\n    明るさ：普通\n    電池の減り：普通\n\n【2本直列のとき】\n    電圧：3.0V（大きい）\n    電流：大きい\n    明るさ：明るい ✓\n    電池の減り：早い ✗\n\nトレードオフ：\n  明るくしたい ←→ 電池は早く減る</div>",
+    "source": "乾電池を直列につなぐと電圧が大きくなるため、豆電球には大きな電流が流れ、明るく光るようになります。一方で、1本あたりから取り出すエネルギーの量も増えるので、電池は早く使い切られてしまいます。つまり、「明るくしたいけれど、電池は早く減る」というトレードオフが直列つなぎの特徴です。<img src=\"../images/physics/current_circuit_integrated/sci.physics.current_circuit_integrated&mode22.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -357,7 +357,7 @@ window.questions = [
       "暗くなる"
     ],
     "answer": 2,
-    "source": "豆電球を並列につなぐと、電源のプラス極とマイナス極に対して、それぞれの電球が直接つながる形になります。そのため、1個だけつないだときとほぼ同じ電圧が各電球にかかり、基本的には1個のときとほぼ同じ明るさで光ります。ただし、たくさんつなぎすぎると、電源の限界を超えて全体として暗くなることもあります。教科書レベルでは「1個のときとほぼ同じ明るさ」と理解しておけば十分です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">豆電球の明るさの比較（並列）\n\n【1個のとき】\n    [+] 電池\n    │\n    ↓\n   (●) 明るい\n    │\n    [-] 電池\n\n【2個並列のとき】\n    [+] 電池\n    │\n    ├─→ (●) 明るい（ほぼ同じ）\n    │\n    └─→ (●) 明るい（ほぼ同じ）\n    │\n    [-] 電池\n\n各電球に同じ電圧がかかる → ほぼ同じ明るさ</div>",
+    "source": "豆電球を並列につなぐと、電源のプラス極とマイナス極に対して、それぞれの電球が直接つながる形になります。そのため、1個だけつないだときとほぼ同じ電圧が各電球にかかり、基本的には1個のときとほぼ同じ明るさで光ります。ただし、たくさんつなぎすぎると、電源の限界を超えて全体として暗くなることもあります。教科書レベルでは「1個のときとほぼ同じ明るさ」と理解しておけば十分です。<img src=\"../images/physics/current_circuit_integrated/sci.physics.current_circuit_integrated&mode23.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -370,7 +370,7 @@ window.questions = [
       "暗くなる",
     "1個のときと同じ"],
     "answer": 2,
-    "source": "豆電球を並列につなぐと、豆電球1個に流れる電流の大きさは変わらないので、豆電球の明るさは1個のときと同じです。並列つなぎでは、各電球が電源に直接つながっているため、各電球にかかる電圧は同じです。電圧が同じなら、各電球に流れる電流も同じ大きさになり、明るさも変わりません。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【並列つなぎと明るさ】\n\n【1個のとき】\n    [+] 電池\n    │\n    ↓ 電流：I（大きい）\n   (●) 明るい\n    │\n    [-] 電池\n\n【2個並列のとき】\n    [+] 電池\n    │\n    ├─→ 電流：I（同じ）\n    │    (●) 明るい（同じ）\n    │\n    └─→ 電流：I（同じ）\n         (●) 明るい（同じ）\n    │\n    [-] 電池\n\n結果：\n  • 各電球が電源に直接つながる\n  • 各電球にかかる電圧は同じ\n  • 各電球に流れる電流も同じ\n  • 明るさは1個のときと同じ</div>",
+    "source": "豆電球を並列につなぐと、豆電球1個に流れる電流の大きさは変わらないので、豆電球の明るさは1個のときと同じです。並列つなぎでは、各電球が電源に直接つながっているため、各電球にかかる電圧は同じです。電圧が同じなら、各電球に流れる電流も同じ大きさになり、明るさも変わりません。<img src=\"../images/physics/current_circuit_integrated/sci.physics.current_circuit_integrated&mode24.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["豆電球", "並列", "明るさ", "基本"],
     "difficulty": 1,
     "asof": "2026-01-03"
@@ -386,7 +386,7 @@ window.questions = [
       "暗くなる"
     ],
     "answer": 4,
-    "source": "豆電球を直列につなぐと、電流の通り道が1本しかないので、同じ電源でも1つの電球に流れる電流の量は少なくなります。その結果、1個だけのときよりも1つ1つの電球に届くエネルギーが小さくなり、明るさは暗くなります。電球の数を増やせば増やすほど、1個あたりの電流は分け合う形になり、さらに暗くなっていきます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">豆電球の明るさの比較（直列）\n\n【1個のとき】\n    [+] 電池\n    │\n    ↓ 電流：大きい\n   (●) 明るい\n    │\n    [-] 電池\n\n【2個直列のとき】\n    [+] 電池\n    │\n    ↓ 電流：小さい（分け合う）\n   (●) 暗い\n    │\n    ↓ 電流：小さい（分け合う）\n   (●) 暗い\n    │\n    [-] 電池\n\n電球が増える → 1個あたりの電流が減る → 暗くなる</div>",
+    "source": "豆電球を直列につなぐと、電流の通り道が1本しかないので、同じ電源でも1つの電球に流れる電流の量は少なくなります。その結果、1個だけのときよりも1つ1つの電球に届くエネルギーが小さくなり、明るさは暗くなります。電球の数を増やせば増やすほど、1個あたりの電流は分け合う形になり、さらに暗くなっていきます。<img src=\"../images/physics/current_circuit_integrated/sci.physics.current_circuit_integrated&mode25.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -399,7 +399,7 @@ window.questions = [
       "暗くなる",
     "変わらない"],
     "answer": 1,
-    "source": "豆電球を直列につなぐと、電流が減るので、豆電球は1個のときより暗くなります。直列つなぎでは、電球が増えると回路全体の抵抗が大きくなり、同じ電圧でも流れる電流が小さくなります。電流が小さいと、各電球に流れる電気エネルギーも少なくなるため、電球の明るさは暗くなります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【直列つなぎと明るさ】\n\n【1個のとき】\n    [+] 電池\n    │\n    ↓ 電流：大きい\n   (●) 明るい\n    │\n    [-] 電池\n\n【2個直列のとき】\n    [+] 電池\n    │\n    ↓ 電流：小さい（減る）\n   (●) 暗い\n    │\n    ↓ 電流：小さい\n   (●) 暗い\n    │\n    [-] 電池\n\n結果：\n  • 電球が増える → 抵抗が大きくなる\n  • 同じ電圧でも電流が小さくなる\n  • 各電球に流れるエネルギーが少ない\n  • 明るさは暗くなる</div>",
+    "source": "豆電球を直列につなぐと、電流が減るので、豆電球は1個のときより暗くなります。直列つなぎでは、電球が増えると回路全体の抵抗が大きくなり、同じ電圧でも流れる電流が小さくなります。電流が小さいと、各電球に流れる電気エネルギーも少なくなるため、電球の明るさは暗くなります。<img src=\"../images/physics/current_circuit_integrated/sci.physics.current_circuit_integrated&mode26.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["豆電球", "直列", "明るさ", "基本"],
     "difficulty": 1,
     "asof": "2026-01-03"
@@ -415,7 +415,7 @@ window.questions = [
       "より明るく光る"
     ],
     "answer": 4,
-    "source": "電流が大きいほど、豆電球のフィラメントにはたくさんの電気エネルギーが流れ込みます。そのエネルギーが熱に変わることでフィラメントの温度が上がり、より強く光るようになります。逆に電流が小さいと、フィラメントの温度もそれほど上がらず、光は弱くなります。電流の大きさは、豆電球の明るさと直接関係していると考えられます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">電流の大きさと明るさの関係\n\n【電流が大きいとき】\n    電流：大きい\n    ↓\n    フィラメント：たくさんのエネルギー\n    ↓\n    温度：高い\n    ↓\n    明るさ：明るい ✓\n\n【電流が小さいとき】\n    電流：小さい\n    ↓\n    フィラメント：少ないエネルギー\n    ↓\n    温度：低い\n    ↓\n    明るさ：暗い\n\n電流の大きさ ↑ → 明るさ ↑</div>",
+    "source": "電流が大きいほど、豆電球のフィラメントにはたくさんの電気エネルギーが流れ込みます。そのエネルギーが熱に変わることでフィラメントの温度が上がり、より強く光るようになります。逆に電流が小さいと、フィラメントの温度もそれほど上がらず、光は弱くなります。電流の大きさは、豆電球の明るさと直接関係していると考えられます。<img src=\"../images/physics/current_circuit_integrated/sci.physics.current_circuit_integrated&mode27.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -428,7 +428,7 @@ window.questions = [
       "短くなる",
     "変わらない"],
     "answer": 1,
-    "source": "豆電球を並列につなぐと、電池から流れる電流が増えるので、電池のもちは短いです。並列つなぎでは、電球が増えると回路全体の抵抗が小さくなるため、同じ電圧でも流れる電流が大きくなります。電流が大きいと、電池から取り出すエネルギーの量も多くなるため、電池は早く消耗してしまいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【並列つなぎと電池のもち】\n\n【1個のとき】\n    [+] 電池\n    │\n    ↓ 電流：小さい\n   (●) 電球\n    │\n    [-] 電池\n    → 電池のもち：長い\n\n【2個並列のとき】\n    [+] 電池\n    │\n    ↓ 電流：大きい（増える）\n    ├─→ (●) 電球1\n    │\n    └─→ (●) 電球2\n    │\n    [-] 電池\n    → 電池のもち：短い\n\n結果：\n  • 電流が大きい → エネルギーを多く使う\n  • 電池が早く消耗する\n  • 電池のもちは短い</div>",
+    "source": "豆電球を並列につなぐと、電池から流れる電流が増えるので、電池のもちは短いです。並列つなぎでは、電球が増えると回路全体の抵抗が小さくなるため、同じ電圧でも流れる電流が大きくなります。電流が大きいと、電池から取り出すエネルギーの量も多くなるため、電池は早く消耗してしまいます。<img src=\"../images/physics/current_circuit_integrated/sci.physics.current_circuit_integrated&mode28.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["豆電球", "並列", "電池", "基本"],
     "difficulty": 1,
     "asof": "2026-01-03"
@@ -441,7 +441,7 @@ window.questions = [
       "短くなる",
     "変わらない"],
     "answer": 0,
-    "source": "豆電球を直列につなぐと、電池から流れる電流が減るので、電池のもちは長いです。直列つなぎでは、電球が増えると回路全体の抵抗が大きくなり、同じ電圧でも流れる電流が小さくなります。電流が小さいと、電池から取り出すエネルギーの量も少なくなるため、電池の消耗が遅くなり、長持ちします。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【直列つなぎと電池のもち】\n\n【1個のとき】\n    [+] 電池\n    │\n    ↓ 電流：大きい\n   (●) 電球\n    │\n    [-] 電池\n    → 電池のもち：普通\n\n【2個直列のとき】\n    [+] 電池\n    │\n    ↓ 電流：小さい（減る）\n   (●) 電球1\n    │\n    ↓ 電流：小さい\n   (●) 電球2\n    │\n    [-] 電池\n    → 電池のもち：長い\n\n結果：\n  • 電流が小さい → エネルギーを少なく使う\n  • 電池の消耗が遅い\n  • 電池が長持ちする</div>",
+    "source": "豆電球を直列につなぐと、電池から流れる電流が減るので、電池のもちは長いです。直列つなぎでは、電球が増えると回路全体の抵抗が大きくなり、同じ電圧でも流れる電流が小さくなります。電流が小さいと、電池から取り出すエネルギーの量も少なくなるため、電池の消耗が遅くなり、長持ちします。<img src=\"../images/physics/current_circuit_integrated/sci.physics.current_circuit_integrated&mode29.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["豆電球", "直列", "電池", "基本"],
     "difficulty": 1,
     "asof": "2026-01-03"
@@ -457,7 +457,7 @@ window.questions = [
       "電流の通り道が1本だけの回路"
     ],
     "answer": 2,
-    "source": "電源とは、電気エネルギーを取り出すもとになる装置のことです。乾電池やボタン電池、コンセントから供給される電気などは、いずれも電源としてはたらきます。電源は電圧を生み出し、その電圧によって電流が回路を流れます。電源がなければ、どんなに回路をきれいにつないでも電流は流れず、電気製品を動かすことはできません。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">電源とは\n\n【電源の種類】\n  • 乾電池\n  • ボタン電池\n  • コンセント（家庭用）\n\n【電源の役割】\n    [+] 電源\n    │  電圧を生み出す\n    ↓\n    電流が流れる\n    ↓\n   (●) 電気製品が動く\n    │\n    [-] 電源\n\n電源がないと：\n  × 電流が流れない\n  × 電気製品が動かない\n\n電源 = 電気エネルギーの元</div>",
+    "source": "電源とは、電気エネルギーを取り出すもとになる装置のことです。乾電池やボタン電池、コンセントから供給される電気などは、いずれも電源としてはたらきます。電源は電圧を生み出し、その電圧によって電流が回路を流れます。電源がなければ、どんなに回路をきれいにつないでも電流は流れず、電気製品を動かすことはできません。<img src=\"../images/physics/current_circuit_integrated/sci.physics.current_circuit_integrated&mode30.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"

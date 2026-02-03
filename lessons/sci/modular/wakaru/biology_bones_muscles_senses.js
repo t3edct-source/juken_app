@@ -14,7 +14,7 @@ window.questions = [
       "すべて同じ"
     ],
     "answer": 0,
-    "source": "かたやひじ、ひざなどのように、よく動く部分の骨と骨のつなぎ目を関節といいます。関節では、筋肉が関節をまたいで別々の骨についています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">関節のつくり\n\n  骨 ──┐\n        │\n     関節 ← 骨と骨のつなぎ目\n        │\n  骨 ──┘\n    │\n  筋肉（関節をまたいで別々の骨につく）\n\n【関節】\n  よく動く部分\n  骨と骨のつなぎ目</div>",
+    "source": "かたやひじ、ひざなどのように、よく動く部分の骨と骨のつなぎ目を関節といいます。関節では、筋肉が関節をまたいで別々の骨についています。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses1.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["関節", "骨", "つなぎ目"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -30,7 +30,7 @@ window.questions = [
       "すべて同じ"
     ],
     "answer": 1,
-    "source": "筋肉が骨とつながっている部分をけんといいます。けんは、筋肉と骨をつなぐはたらきをします。けんは、筋肉の端の部分で、骨にしっかりとつながっています。筋肉が縮むと、けんを通じて骨が引っ張られ、関節が動きます。けんは、筋肉の力を骨に伝える大切な役割をしています。",
+    "source": "筋肉が骨とつながっている部分をけんといいます。けんは、筋肉と骨をつなぐはたらきをします。けんは、筋肉の端の部分で、骨にしっかりとつながっています。筋肉が縮むと、けんを通じて骨が引っ張られ、関節が動きます。けんは、筋肉の力を骨に伝える大切な役割をしています。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses2.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["けん", "筋肉", "骨"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -46,7 +46,7 @@ window.questions = [
       "測定できない"
     ],
     "answer": 0,
-    "source": "うでを曲げるとき、曲げる側の筋肉は縮みます。2つの筋肉が交互に縮んで、関節を曲げ、のばします。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">うでを曲げるしくみ\n\n【うでを曲げるとき】\n  曲げる側の筋肉：縮む\n  のばす側の筋肉：ゆるむ\n      ↓\n  関節が曲がる\n\n【うでをのばすとき】\n  のばす側の筋肉：縮む\n  曲げる側の筋肉：ゆるむ\n      ↓\n  関節がのびる\n\n2つの筋肉が交互に縮む</div>",
+    "source": "うでを曲げるとき、曲げる側の筋肉は縮みます。2つの筋肉が交互に縮んで、関節を曲げ、のばします。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses3.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["うでを曲げる", "筋肉", "縮む"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -62,7 +62,7 @@ window.questions = [
       "測定できない"
     ],
     "answer": 1,
-    "source": "うでを曲げるとき、のばす側の筋肉はゆるみます。2つの筋肉が交互に縮んで、関節を曲げ、のばします。曲げる側の筋肉が縮むと、のばす側の筋肉はゆるんで、関節が曲がります。このように、2つの筋肉が協力して働くことで、うでを自由に動かすことができます。",
+    "source": "うでを曲げるとき、のばす側の筋肉はゆるみます。2つの筋肉が交互に縮んで、関節を曲げ、のばします。曲げる側の筋肉が縮むと、のばす側の筋肉はゆるんで、関節が曲がります。このように、2つの筋肉が協力して働くことで、うでを自由に動かすことができます。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses4.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["うでを曲げる", "筋肉", "ゆるむ"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -78,7 +78,7 @@ window.questions = [
       "測定できない"
     ],
     "answer": 0,
-    "source": "うでをのばすとき、のばす側の筋肉は縮みます。2つの筋肉が交互に縮んで、関節を曲げ、のばします。のばす側の筋肉が縮むと、曲げる側の筋肉はゆるんで、関節がのびます。このように、2つの筋肉が交互に働くことで、うでを自由に動かすことができます。",
+    "source": "うでをのばすとき、のばす側の筋肉は縮みます。2つの筋肉が交互に縮んで、関節を曲げ、のばします。のばす側の筋肉が縮むと、曲げる側の筋肉はゆるんで、関節がのびます。このように、2つの筋肉が交互に働くことで、うでを自由に動かすことができます。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses5.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["うでをのばす", "筋肉", "縮む"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -94,7 +94,7 @@ window.questions = [
       "測定できない"
     ],
     "answer": 1,
-    "source": "うでをのばすとき、曲げる側の筋肉はゆるみます。2つの筋肉が交互に縮んで、関節を曲げ、のばします。のばす側の筋肉が縮むと、曲げる側の筋肉はゆるんで、関節がのびます。このように、2つの筋肉が協力して働くことで、うでを自由に動かすことができます。",
+    "source": "うでをのばすとき、曲げる側の筋肉はゆるみます。2つの筋肉が交互に縮んで、関節を曲げ、のばします。のばす側の筋肉が縮むと、曲げる側の筋肉はゆるんで、関節がのびます。このように、2つの筋肉が協力して働くことで、うでを自由に動かすことができます。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses6.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["うでをのばす", "筋肉", "ゆるむ"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -110,7 +110,7 @@ window.questions = [
       "300個"
     ],
     "answer": 2,
-    "source": "ヒトの骨は約200個あります。骨ずいで、赤血球、白血球、血小板がつくられます。骨は、からだを支え、内臓を守るはたらきをしています。骨の中心部分にある骨ずいでは、血液の成分である赤血球、白血球、血小板がつくられています。骨は、からだの形を作るだけでなく、血液をつくる場所でもあります。",
+    "source": "ヒトの骨は約200個あります。骨ずいで、赤血球、白血球、血小板がつくられます。骨は、からだを支え、内臓を守るはたらきをしています。骨の中心部分にある骨ずいでは、血液の成分である赤血球、白血球、血小板がつくられています。骨は、からだの形を作るだけでなく、血液をつくる場所でもあります。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses7.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["ヒトの骨", "200個", "骨ずい"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -124,7 +124,7 @@ window.questions = [
       "血小板",
       "すべて"],
     "answer": 3,
-    "source": "骨ずいで、赤血球、白血球、血小板がつくられます。骨ずいは骨の中心部分です。骨ずいは、骨の中心にある柔らかい部分で、ここで血液の成分がつくられています。赤血球は酸素を運び、白血球は病気からからだを守り、血小板は血を止めるはたらきをします。骨ずいは、血液をつくる大切な場所です。",
+    "source": "骨ずいで、赤血球、白血球、血小板がつくられます。骨ずいは骨の中心部分です。骨ずいは、骨の中心にある柔らかい部分で、ここで血液の成分がつくられています。赤血球は酸素を運び、白血球は病気からからだを守り、血小板は血を止めるはたらきをします。骨ずいは、血液をつくる大切な場所です。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses8.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["骨ずい", "赤血球", "白血球", "血小板"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -140,7 +140,7 @@ window.questions = [
       "すべて"
     ],
     "answer": 2,
-    "source": "頭骨（頭がい骨）は脳を守っています。骨と骨がほう合でつながり、が動かないようになっているつながり方です。頭骨は、脳を守る硬いかごのような形をしています。頭骨の骨と骨は、ほう合というつながり方でしっかりとつながっており、動かないようになっています。これにより、脳がけがから守られています。",
+    "source": "頭骨（頭がい骨）は脳を守っています。骨と骨がほう合でつながり、が動かないようになっているつながり方です。頭骨は、脳を守る硬いかごのような形をしています。頭骨の骨と骨は、ほう合というつながり方でしっかりとつながっており、動かないようになっています。これにより、脳がけがから守られています。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses9.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["頭骨", "頭がい骨", "脳"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -156,7 +156,7 @@ window.questions = [
       "内臓"
     ],
     "answer": 2,
-    "source": "ろっ骨は胸骨や背骨とつながり、心臓や肺を守っています。ろっ骨は、胸の周りを囲む骨で、かごのような形をしています。ろっ骨があることで、心臓や肺がけがから守られています。ろっ骨は、胸骨や背骨とつながっており、呼吸をするときに少し動いて、肺が広がりやすくなっています。",
+    "source": "ろっ骨は胸骨や背骨とつながり、心臓や肺を守っています。ろっ骨は、胸の周りを囲む骨で、かごのような形をしています。ろっ骨があることで、心臓や肺がけがから守られています。ろっ骨は、胸骨や背骨とつながっており、呼吸をするときに少し動いて、肺が広がりやすくなっています。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses10.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["ろっ骨", "心臓", "肺"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -172,7 +172,7 @@ window.questions = [
       "すべて"
     ],
     "answer": 2,
-    "source": "背骨は、ゆるやかなS字形になっていて、体重の負担をやわらげています。背骨は短いいくつかの骨がつながり、わずかに動きます。背骨がS字形になっていることで、体重の負担が分散され、からだへの負担がやわらげられています。背骨は、いくつかの短い骨がつながってできており、少しずつ動くことができるため、からだを曲げたり、ひねったりすることができます。",
+    "source": "背骨は、ゆるやかなS字形になっていて、体重の負担をやわらげています。背骨は短いいくつかの骨がつながり、わずかに動きます。背骨がS字形になっていることで、体重の負担が分散され、からだへの負担がやわらげられています。背骨は、いくつかの短い骨がつながってできており、少しずつ動くことができるため、からだを曲げたり、ひねったりすることができます。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses11.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["背骨", "S字形", "体重"],
     "difficulty": 2,
     "asof": "2026-01-02"
@@ -188,7 +188,7 @@ window.questions = [
       "すべて"
     ],
     "answer": 3,
-    "source": "骨ばんは、内臓を支え、女性ではたい児を支えるために発達しています。骨ばんは、おなかの下の部分にある骨で、内臓を支えるはたらきをしています。女性では、骨ばんが広く発達しており、おなかの中で育つ赤ちゃんを支えることができます。骨ばんは、からだの中心を支える大切な骨です。",
+    "source": "骨ばんは、内臓を支え、女性ではたい児を支えるために発達しています。骨ばんは、おなかの下の部分にある骨で、内臓を支えるはたらきをしています。女性では、骨ばんが広く発達しており、おなかの中で育つ赤ちゃんを支えることができます。骨ばんは、からだの中心を支える大切な骨です。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses12.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["骨ばん", "内臓", "たい児"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -204,7 +204,7 @@ window.questions = [
       "視神経"
     ],
     "answer": 0,
-    "source": "目に入る光の量を調節する部分をこうさいといいます。こうさいは、カメラのしぼりにあたります。こうさいは、目の色のついた部分で、明るいところでは小さくなり、暗いところでは大きくなります。こうさいが大きくなったり小さくなったりすることで、目に入る光の量を調節し、見やすくしています。",
+    "source": "目に入る光の量を調節する部分をこうさいといいます。こうさいは、カメラのしぼりにあたります。こうさいは、目の色のついた部分で、明るいところでは小さくなり、暗いところでは大きくなります。こうさいが大きくなったり小さくなったりすることで、目に入る光の量を調節し、見やすくしています。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses13.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["こうさい", "光", "調節"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -220,7 +220,7 @@ window.questions = [
       "視神経"
     ],
     "answer": 3,
-    "source": "目で、像を結ぶ部分をもうまくといいます。もうまくは、カメラのフィルムにあたります。もうまくは、目の奥にある部分で、レンズを通った光が像を結ぶ場所です。もうまくにできた像は、視神経を通じて脳に伝えられ、私たちは物を見ることができます。もうまくは、目で見た情報を受け取る大切な部分です。",
+    "source": "目で、像を結ぶ部分をもうまくといいます。もうまくは、カメラのフィルムにあたります。もうまくは、目の奥にある部分で、レンズを通った光が像を結ぶ場所です。もうまくにできた像は、視神経を通じて脳に伝えられ、私たちは物を見ることができます。もうまくは、目で見た情報を受け取る大切な部分です。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses14.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["もうまく", "像", "フィルム"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -236,7 +236,7 @@ window.questions = [
       "測定できない"
     ],
     "answer": 1,
-    "source": "ひとみは明るいところでは小さくなります。目に入る光の量を少なくするためです。ひとみは、目の真ん中にある黒い部分で、明るいところでは小さくなり、暗いところでは大きくなります。明るいところで小さくなることで、目に入る光の量を減らし、目を守っています。",
+    "source": "ひとみは明るいところでは小さくなります。目に入る光の量を少なくするためです。ひとみは、目の真ん中にある黒い部分で、明るいところでは小さくなり、暗いところでは大きくなります。明るいところで小さくなることで、目に入る光の量を減らし、目を守っています。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses15.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["ひとみ", "明るい", "小さくなる"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -252,7 +252,7 @@ window.questions = [
       "測定できない"
     ],
     "answer": 0,
-    "source": "ひとみは暗いところでは大きくなります。目に入る光の量を多くするためです。ひとみは、目の真ん中にある黒い部分で、暗いところでは大きくなり、明るいところでは小さくなります。暗いところで大きくなることで、目に入る光の量を増やし、暗いところでも物を見やすくしています。",
+    "source": "ひとみは暗いところでは大きくなります。目に入る光の量を多くするためです。ひとみは、目の真ん中にある黒い部分で、暗いところでは大きくなり、明るいところでは小さくなります。暗いところで大きくなることで、目に入る光の量を増やし、暗いところでも物を見やすくしています。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses16.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["ひとみ", "暗い", "大きくなる"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -268,7 +268,7 @@ window.questions = [
       "測定できない"
     ],
     "answer": 1,
-    "source": "レンズは、遠くを見るときはうすく、近くを見るときは厚くなります。レンズは、目の奥にある部分で、光を曲げて、もうまくに像を結ぶはたらきをします。遠くを見るときはレンズがうすくなり、近くを見るときはレンズが厚くなります。レンズの厚さを変えることで、遠くの物も近くの物もはっきりと見ることができます。",
+    "source": "レンズは、遠くを見るときはうすく、近くを見るときは厚くなります。レンズは、目の奥にある部分で、光を曲げて、もうまくに像を結ぶはたらきをします。遠くを見るときはレンズがうすくなり、近くを見るときはレンズが厚くなります。レンズの厚さを変えることで、遠くの物も近くの物もはっきりと見ることができます。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses17.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["レンズ", "遠く", "近く", "うすく", "厚く"],
     "difficulty": 2,
     "asof": "2026-01-02"
@@ -284,7 +284,7 @@ window.questions = [
       "すべて"
     ],
     "answer": 3,
-    "source": "もうまくにできた像を視神経が脳に伝えます。視神経がつながっているところをもう点といいます。もうまくにできた像は、視神経という神経を通じて脳に伝えられます。視神経がつながっているところをもう点といい、ここでは像ができないため、物が見えません。視神経は、目で見た情報を脳に伝える大切な役割をしています。",
+    "source": "もうまくにできた像を視神経が脳に伝えます。視神経がつながっているところをもう点といいます。もうまくにできた像は、視神経という神経を通じて脳に伝えられます。視神経がつながっているところをもう点といい、ここでは像ができないため、物が見えません。視神経は、目で見た情報を脳に伝える大切な役割をしています。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses18.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["視神経", "もうまく", "像", "脳"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -300,7 +300,7 @@ window.questions = [
       "半規管"
     ],
     "answer": 2,
-    "source": "耳で、空気のしん動で最初にふるえる部分をこまくといいます。こまくがふるえると、耳小骨、うずまき管、ちょう神経と伝わります。こまくは、耳の奥にある薄い膜で、音のしん動でふるえます。こまくがふるえると、そのしん動が耳小骨、うずまき管、ちょう神経と伝わり、最終的に脳に伝えられて、私たちは音を聞くことができます。",
+    "source": "耳で、空気のしん動で最初にふるえる部分をこまくといいます。こまくがふるえると、耳小骨、うずまき管、ちょう神経と伝わります。こまくは、耳の奥にある薄い膜で、音のしん動でふるえます。こまくがふるえると、そのしん動が耳小骨、うずまき管、ちょう神経と伝わり、最終的に脳に伝えられて、私たちは音を聞くことができます。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses19.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["こまく", "空気", "しん動", "ふるえる"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -316,7 +316,7 @@ window.questions = [
       "半規管"
     ],
     "answer": 4,
-    "source": "からだのかたむきや回転を感じる部分を半規管といいます。半規管などで、かたむきや回転を感じます。半規管は、耳の奥にある部分で、からだのかたむきや回転を感じるはたらきをします。半規管の中にはリンパ液が入っており、からだがかたむいたり回転したりすると、リンパ液が動いて、その動きを感じることができます。",
+    "source": "からだのかたむきや回転を感じる部分を半規管といいます。半規管などで、かたむきや回転を感じます。半規管は、耳の奥にある部分で、からだのかたむきや回転を感じるはたらきをします。半規管の中にはリンパ液が入っており、からだがかたむいたり回転したりすると、リンパ液が動いて、その動きを感じることができます。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses20.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["半規管", "かたむき", "回転"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -332,7 +332,7 @@ window.questions = [
       "半規管"
     ],
     "answer": 1,
-    "source": "耳で、しん動を信号に変えてちょう神経に伝える部分をうずまき管といいます。うずまき管は、音のしん動を信号に変えて、ちょう神経に伝えます。うずまき管は、耳の奥にあるうずまきのような形をした部分で、こまくから伝わったしん動を信号に変えます。その信号は、ちょう神経を通じて脳に伝えられ、私たちは音を聞くことができます。",
+    "source": "耳で、しん動を信号に変えてちょう神経に伝える部分をうずまき管といいます。うずまき管は、音のしん動を信号に変えて、ちょう神経に伝えます。うずまき管は、耳の奥にあるうずまきのような形をした部分で、こまくから伝わったしん動を信号に変えます。その信号は、ちょう神経を通じて脳に伝えられ、私たちは音を聞くことができます。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses21.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["うずまき管", "しん動", "信号", "ちょう神経"],
     "difficulty": 2,
     "asof": "2026-01-02"
@@ -348,7 +348,7 @@ window.questions = [
       "すべて同じ"
     ],
     "answer": 1,
-    "source": "頭骨（頭がい骨）の骨と骨のつながり方をほう合といいます。ほう合は、が動かないようになっているつながり方です。ほう合は、骨と骨ががっちりとつながっており、動かないようになっているつながり方です。頭骨の骨と骨は、ほう合でつながっているため、しっかりと固定されており、脳をしっかりと守ることができます。",
+    "source": "頭骨（頭がい骨）の骨と骨のつながり方をほう合といいます。ほう合は、が動かないようになっているつながり方です。ほう合は、骨と骨ががっちりとつながっており、動かないようになっているつながり方です。頭骨の骨と骨は、ほう合でつながっているため、しっかりと固定されており、脳をしっかりと守ることができます。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses22.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["頭骨", "ほう合", "つながり方"],
     "difficulty": 2,
     "asof": "2026-01-02"
@@ -364,7 +364,7 @@ window.questions = [
       "測定できない"
     ],
     "answer": 1,
-    "source": "背骨は、短いいくつかの骨がつながり、わずかに動きます。ゆるやかなS字形になっていて、体重の負担をやわらげています。背骨は、いくつかの短い骨がつながってできており、少しずつ動くことができるため、からだを曲げたり、ひねったりすることができます。S字形になっていることで、体重の負担が分散され、からだへの負担がやわらげられています。",
+    "source": "背骨は、短いいくつかの骨がつながり、わずかに動きます。ゆるやかなS字形になっていて、体重の負担をやわらげています。背骨は、いくつかの短い骨がつながってできており、少しずつ動くことができるため、からだを曲げたり、ひねったりすることができます。S字形になっていることで、体重の負担が分散され、からだへの負担がやわらげられています。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses23.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["背骨", "わずかに動く", "S字形"],
     "difficulty": 2,
     "asof": "2026-01-02"
@@ -380,7 +380,7 @@ window.questions = [
       "時によって変わる"
     ],
     "answer": 2,
-    "source": "関節を曲げ、のばすために、2つの筋肉は交互に縮みます。一方の筋肉が縮むと、もう一方の筋肉はゆるみます。関節を動かすためには、2つの筋肉が協力して働く必要があります。一方の筋肉が縮むと、もう一方の筋肉はゆるみ、関節が動きます。このように、2つの筋肉が交互に働くことで、関節を自由に動かすことができます。",
+    "source": "関節を曲げ、のばすために、2つの筋肉は交互に縮みます。一方の筋肉が縮むと、もう一方の筋肉はゆるみます。関節を動かすためには、2つの筋肉が協力して働く必要があります。一方の筋肉が縮むと、もう一方の筋肉はゆるみ、関節が動きます。このように、2つの筋肉が交互に働くことで、関節を自由に動かすことができます。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses24.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["関節", "筋肉", "交互に縮む"],
     "difficulty": 2,
     "asof": "2026-01-02"
@@ -396,7 +396,7 @@ window.questions = [
       "視神経"
     ],
     "answer": 0,
-    "source": "目で、カメラのしぼりにあたる部分はこうさいです。こうさいは、目に入る光の量を調節します。こうさいは、目の色のついた部分で、カメラのしぼりのように、目に入る光の量を調節するはたらきをします。明るいところでは小さくなり、暗いところでは大きくなることで、目に入る光の量を調節し、見やすくしています。",
+    "source": "目で、カメラのしぼりにあたる部分はこうさいです。こうさいは、目に入る光の量を調節します。こうさいは、目の色のついた部分で、カメラのしぼりのように、目に入る光の量を調節するはたらきをします。明るいところでは小さくなり、暗いところでは大きくなることで、目に入る光の量を調節し、見やすくしています。<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses25.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["こうさい", "カメラ", "しぼり"],
     "difficulty": 2,
     "asof": "2026-01-02"
@@ -412,7 +412,7 @@ window.questions = [
       "筋肉だけのつくり"
     ],
     "answer": 0,
-    "source": "外骨格は、体の表面がかたいからでおおわれ、その内側に筋肉があるつくり。こん虫、クモ、エビ、カニなどが該当する",
+    "source": "外骨格は、体の表面がかたいからでおおわれ、その内側に筋肉があるつくり。こん虫、クモ、エビ、カニなどが該当する<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses26.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -427,7 +427,7 @@ window.questions = [
       "カエル、イモリ"
     ],
     "answer": 0,
-    "source": "外骨格を持つ動物には、こん虫、クモ、エビ、カニなどの節足動物が含まれる",
+    "source": "外骨格を持つ動物には、こん虫、クモ、エビ、カニなどの節足動物が含まれる<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses27.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -442,7 +442,7 @@ window.questions = [
       "筋肉だけのつくり"
     ],
     "answer": 0,
-    "source": "内骨格は、体の内部に骨があり、その外側に筋肉があるつくり。ヒト、イヌ、メダカ、カエルなどのせきつい動物が該当する",
+    "source": "内骨格は、体の内部に骨があり、その外側に筋肉があるつくり。ヒト、イヌ、メダカ、カエルなどのせきつい動物が該当する<img src=\"../images/biology/bones_muscles_senses/bones_muscles_senses28.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"

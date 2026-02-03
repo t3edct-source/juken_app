@@ -12,7 +12,7 @@ window.questions = [
       "二酸化炭素",
       "何も発生しない"],
     "answer": 1,
-    "source": "うすい塩酸に、鉄、アルミニウム、マグネシウムなどの金属を入れると、金属があわを出してとけ、水素が発生します。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">金属と塩酸の反応\n\n  うすい塩酸\n  ┌─────┐\n  │      │\n  │ 金属 │ ← 鉄、アルミニウム、マグネシウム\n  └─────┘\n      ↓\n  あわを出してとける\n      ↓\n  水素が発生\n\n【反応】\n  金属 + 塩酸 → 水素</div>",
+    "source": "うすい塩酸に、鉄、アルミニウム、マグネシウムなどの金属を入れると、金属があわを出してとけ、水素が発生します。<img src=\"../images/chemistry/solution_metal_reaction/solution_metal_reaction1.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["塩酸", "金属", "水素", "基本"],
     "difficulty": 1,
     "asof": "2026-01-03"
@@ -25,7 +25,7 @@ window.questions = [
       "発生しない",
       "場合による"],
     "answer": 1,
-    "source": "うすい塩酸に銅を入れても、気体は発生しません。銅は塩酸と反応しない金属です。",
+    "source": "うすい塩酸に銅を入れても、気体は発生しません。銅は塩酸と反応しない金属です。<img src=\"../images/chemistry/solution_metal_reaction/solution_metal_reaction2.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["塩酸", "銅", "反応", "基本"],
     "difficulty": 1,
     "asof": "2026-01-03"
@@ -39,7 +39,7 @@ window.questions = [
       "3つ",
       "4つ"],
     "answer": 2,
-    "source": "うすい塩酸に鉄、アルミニウム、マグネシウムを入れると、水素が発生します。銅は反応しないので、3つです。",
+    "source": "うすい塩酸に鉄、アルミニウム、マグネシウムを入れると、水素が発生します。銅は反応しないので、3つです。<img src=\"../images/chemistry/solution_metal_reaction/solution_metal_reaction3.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["塩酸", "金属", "反応", "基本"],
     "difficulty": 1,
     "asof": "2026-01-03"
@@ -52,7 +52,7 @@ window.questions = [
       "別の物質",
       "何も残らない"],
     "answer": 1,
-    "source": "金属がとけた液を蒸発させると、もとの金属とはまったく別の固体が残ります。例えば、鉄と塩酸の反応では、塩化鉄が残ります。",
+    "source": "金属がとけた液を蒸発させると、もとの金属とはまったく別の固体が残ります。例えば、鉄と塩酸の反応では、塩化鉄が残ります。<img src=\"../images/chemistry/solution_metal_reaction/solution_metal_reaction4.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["金属", "蒸発", "固体", "基本"],
     "difficulty": 1,
     "asof": "2026-01-03"
@@ -65,7 +65,7 @@ window.questions = [
       "塩酸の体積",
       "時間"],
     "answer": 0,
-    "source": "一定量のうすい塩酸に金属を入れるとき、過不足なく反応するまでは、発生する水素の体積は金属の重さに比例して増えます。",
+    "source": "一定量のうすい塩酸に金属を入れるとき、過不足なく反応するまでは、発生する水素の体積は金属の重さに比例して増えます。<img src=\"../images/chemistry/solution_metal_reaction/solution_metal_reaction5.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["塩酸", "金属", "水素", "比例", "基本"],
     "difficulty": 2,
     "asof": "2026-01-03"
@@ -78,7 +78,7 @@ window.questions = [
       "塩酸が残る",
       "どちらも残らない"],
     "answer": 0,
-    "source": "一定量のうすい塩酸に金属を入れるとき、過不足なく反応したあとは、金属が残ります。塩酸はすべて反応してなくなります。",
+    "source": "一定量のうすい塩酸に金属を入れるとき、過不足なく反応したあとは、金属が残ります。塩酸はすべて反応してなくなります。<img src=\"../images/chemistry/solution_metal_reaction/solution_metal_reaction6.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["塩酸", "金属", "反応", "基本"],
     "difficulty": 2,
     "asof": "2026-01-03"
@@ -91,7 +91,7 @@ window.questions = [
       "塩酸の体積",
       "時間"],
     "answer": 1,
-    "source": "一定量の金属にうすい塩酸を入れるとき、過不足なく反応するまでは、発生する水素の体積は塩酸の体積に比例して増えます。",
+    "source": "一定量の金属にうすい塩酸を入れるとき、過不足なく反応するまでは、発生する水素の体積は塩酸の体積に比例して増えます。<img src=\"../images/chemistry/solution_metal_reaction/solution_metal_reaction7.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["塩酸", "金属", "水素", "比例", "基本"],
     "difficulty": 2,
     "asof": "2026-01-03"
@@ -104,7 +104,7 @@ window.questions = [
       "塩酸が残る",
       "どちらも残らない"],
     "answer": 1,
-    "source": "一定量の金属にうすい塩酸を入れるとき、過不足なく反応したあとは、塩酸が残ります。金属はすべて反応してなくなります。",
+    "source": "一定量の金属にうすい塩酸を入れるとき、過不足なく反応したあとは、塩酸が残ります。金属はすべて反応してなくなります。<img src=\"../images/chemistry/solution_metal_reaction/solution_metal_reaction8.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["塩酸", "金属", "反応", "基本"],
     "difficulty": 2,
     "asof": "2026-01-03"

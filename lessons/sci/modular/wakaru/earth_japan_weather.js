@@ -14,7 +14,7 @@ window.questions = [
       "すべて同じ"
     ],
     "answer": 0,
-    "source": "日本の天気が移り変わるのは、偏西風が西から東にふいているからです。偏西風により、天気が西から東へと移り変わります。偏西風は、中緯度地域で常に西から東に吹いている強い風で、高気圧や低気圧を運びます。このため、日本の天気は西から東へと順番に変化していきます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">偏西風と天気の移り変わり\n\n  西 ←─── 偏西風 ───→ 東\n      ↓\n  高気圧・低気圧が運ばれる\n      ↓\n  天気が西から東へ移り変わる\n\n【偏西風の特徴】\n  中緯度地域で常に吹く\n  西から東へ</div>",
+    "source": "日本の天気が移り変わるのは、偏西風が西から東にふいているからです。偏西風により、天気が西から東へと移り変わります。偏西風は、中緯度地域で常に西から東に吹いている強い風で、高気圧や低気圧を運びます。このため、日本の天気は西から東へと順番に変化していきます。<img src=\"../images/earth/japan_weather/japan_weather1.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["偏西風", "西から東", "天気"],
     "difficulty": 1,
     "asof": "2026-01-02"

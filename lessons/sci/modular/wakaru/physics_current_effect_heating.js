@@ -10,7 +10,7 @@ window.questions = [
       "発音"
     ],
     "answer": 4,
-    "source": "電流が金属の導線を通るとき、電子は金属の内部にある粒子と次々にぶつかりながら進みます。この衝突によって電子が持つエネルギーの一部が熱に変わり、導線そのものがあたたまります。電流が大きいほど衝突の回数も増え、熱の発生量も大きくなります。これが「電流の発熱作用」で、電熱線や電気ストーブなど多くの電気製品の基本原理になっています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">電流の発熱作用\n\n    [+] 電池\n    │\n    ↓ 電流が流れる\n   ━━━ 導線\n    │  電子が粒子とぶつかる\n    │  ↓\n    │  熱に変わる\n    │  ↓\n    ↓ 導線があたたまる\n   (●) 電球\n    │\n    [-] 電池\n\n発熱のしくみ：\n  電子 → 粒子と衝突 → 熱に変わる\n\n電流が大きい → 衝突が多い → 熱が多い</div>",
+    "source": "電流が金属の導線を通るとき、電子は金属の内部にある粒子と次々にぶつかりながら進みます。この衝突によって電子が持つエネルギーの一部が熱に変わり、導線そのものがあたたまります。電流が大きいほど衝突の回数も増え、熱の発生量も大きくなります。これが「電流の発熱作用」で、電熱線や電気ストーブなど多くの電気製品の基本原理になっています。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode1.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -26,7 +26,7 @@ window.questions = [
       "大きくなる"
     ],
     "answer": 4,
-    "source": "電流が大きいほど、電子が金属の粒子とぶつかる回数が増えます。その結果、熱に変わるエネルギーも多くなり、発熱量は大きくなります。電流と発熱の関係は、電流が2倍になると発熱は4倍になるというように、電流の大きさの2乗に比例して大きくなります。例えば、電流が3倍になると発熱は9倍になります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【電流の大きさと発熱】\n\n【電流が小さいとき】\n    [+] 電池\n    │\n    ↓ 電流：小さい\n   ━━━ 導線\n    │  衝突：少ない\n    ↓ 発熱：少ない\n   (●) 電球（あまり熱くない）\n    │\n    [-] 電池\n\n【電流が大きいとき】\n    [+] 電池（大）\n    │\n    ↓ 電流：大きい\n   ━━━ 導線\n    │  衝突：多い\n    ↓ 発熱：多い\n   (●) 電球（熱い）\n    │\n    [-] 電池\n\n関係：\n  • 電流が2倍 → 発熱は4倍（2²倍）\n  • 電流が3倍 → 発熱は9倍（3²倍）\n  • 電流の2乗に比例</div>",
+    "source": "電流が大きいほど、電子が金属の粒子とぶつかる回数が増えます。その結果、熱に変わるエネルギーも多くなり、発熱量は大きくなります。電流と発熱の関係は、電流が2倍になると発熱は4倍になるというように、電流の大きさの2乗に比例して大きくなります。例えば、電流が3倍になると発熱は9倍になります。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode2.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -42,7 +42,7 @@ window.questions = [
       "導線の長さ"
     ],
     "answer": 3,
-    "source": "発熱の大きさは、電流の大きさと抵抗の大きさで決まります。電流が大きいほど、また抵抗が大きいほど、発熱量は大きくなります。これは、電流が大きいと電子の衝突が増え、抵抗が大きいと電子が進みにくくなって衝突が増えるためです。発熱量は、電流の2乗と抵抗の積に比例します。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【発熱量を決める要因】\n\n発熱量 = 電流² × 抵抗\n\n【電流が大きい】\n    [+] 電池\n    │\n    ↓ 電流：大きい\n   ━━━ 導線\n    │  衝突：多い\n    ↓ 発熱：多い\n   (●) 電球（熱い）\n    │\n    [-] 電池\n\n【抵抗が大きい】\n    [+] 電池\n    │\n    ↓ 電流：同じ\n   ━━━ ニクロム線（抵抗大）\n    │  進みにくい\n    │  衝突：多い\n    ↓ 発熱：多い\n   (●) 電球（熱い）\n    │\n    [-] 電池\n\n要因：\n  • 電流が大きい → 発熱が多い\n  • 抵抗が大きい → 発熱が多い</div>",
+    "source": "発熱の大きさは、電流の大きさと抵抗の大きさで決まります。電流が大きいほど、また抵抗が大きいほど、発熱量は大きくなります。これは、電流が大きいと電子の衝突が増え、抵抗が大きいと電子が進みにくくなって衝突が増えるためです。発熱量は、電流の2乗と抵抗の積に比例します。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode3.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -58,7 +58,7 @@ window.questions = [
       "半分になる"
     ],
     "answer": 2,
-    "source": "抵抗が大きい導線では、電子が粒子とぶつかる回数が増えるため、発熱量は大きくなります。抵抗が大きいほど、電子が進みにくくなり、その分衝突が増えて熱が多く発生します。例えば、ニクロム線は抵抗が大きいため、同じ電流でも銅線より多くの熱を発生させます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【抵抗の大きさと発熱】\n\n【抵抗が小さい導線（銅線）】\n    [+] 電池\n    │\n    ↓ 電流：同じ\n   ━━━ 銅線（抵抗：小）\n    │  電子がスムーズに動く\n    │  衝突：少ない\n    ↓ 発熱：少ない\n   (●) 電球（あまり熱くない）\n    │\n    [-] 電池\n\n【抵抗が大きい導線（ニクロム線）】\n    [+] 電池\n    │\n    ↓ 電流：同じ\n   ━━━ ニクロム線（抵抗：大）\n    │  電子が進みにくい\n    │  衝突：多い\n    ↓ 発熱：多い\n   (●) 電球（熱い）\n    │\n    [-] 電池\n\n結果：\n  • 抵抗が大きい → 衝突が多い → 発熱が多い</div>",
+    "source": "抵抗が大きい導線では、電子が粒子とぶつかる回数が増えるため、発熱量は大きくなります。抵抗が大きいほど、電子が進みにくくなり、その分衝突が増えて熱が多く発生します。例えば、ニクロム線は抵抗が大きいため、同じ電流でも銅線より多くの熱を発生させます。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode4.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -74,7 +74,7 @@ window.questions = [
       "導線が長くて発熱しやすいから"
     ],
     "answer": 1,
-    "source": "ニクロム線は電気抵抗が大きく、電流を流したときに効率よく熱を生み出す特性があります。また、高温になっても形が変わりにくく、長時間加熱しても切れにくい丈夫さがあります。さらに酸化しにくく、空気にふれても劣化が遅いのも重要なポイントです。こうした特徴から、電気ストーブやトースターなど、多くの電熱器具に最適な材料として用いられています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">ニクロム線の特徴\n\n【ニクロム線】\n    [+] 電池\n    │\n    ↓\n   ━━━ ニクロム線\n    │  抵抗：大きい\n    │  発熱：多い\n    │  高温でも丈夫\n    │  酸化しにくい\n    ↓\n   (●) 電球（明るい）\n    │\n    [-] 電池\n\n特徴：\n  ✓ 抵抗が大きい → 発熱しやすい\n  ✓ 高温でも形が変わらない\n  ✓ 長時間使っても切れにくい\n  ✓ 酸化しにくい</div>",
+    "source": "ニクロム線は電気抵抗が大きく、電流を流したときに効率よく熱を生み出す特性があります。また、高温になっても形が変わりにくく、長時間加熱しても切れにくい丈夫さがあります。さらに酸化しにくく、空気にふれても劣化が遅いのも重要なポイントです。こうした特徴から、電気ストーブやトースターなど、多くの電熱器具に最適な材料として用いられています。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode5.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -90,7 +90,7 @@ window.questions = [
       "半分になる"
     ],
     "answer": 1,
-    "source": "電熱線を長くすると、電流が通る距離が増えるため電気抵抗が高くなります。抵抗が大きいと回路に流れる電流は小さくなり、その結果として発生する熱の量も減少します。逆に電熱線を短くすると抵抗が小さくなり、多くの電流が流れて強い熱が生まれます。電熱線の長さを調整することで、加熱の強さを自由に変えられるしくみになっています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">電熱線の長さと発熱\n\n【短い電熱線】\n    [+] 電池\n    │\n    ↓\n   ━━ 短い（抵抗：小）\n    │  電流：大きい\n    ↓  発熱：多い\n   (●) 電球（熱い）\n    │\n    [-] 電池\n\n【長い電熱線】\n    [+] 電池\n    │\n    ↓\n   ━━━━━━━━━━━━━ 長い（抵抗：大）\n    │  電流：小さい\n    ↓  発熱：少ない\n   (●) 電球（あまり熱くない）\n    │\n    [-] 電池\n\n長い → 抵抗大 → 電流小 → 発熱小</div>",
+    "source": "電熱線を長くすると、電流が通る距離が増えるため電気抵抗が高くなります。抵抗が大きいと回路に流れる電流は小さくなり、その結果として発生する熱の量も減少します。逆に電熱線を短くすると抵抗が小さくなり、多くの電流が流れて強い熱が生まれます。電熱線の長さを調整することで、加熱の強さを自由に変えられるしくみになっています。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode6.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -106,7 +106,7 @@ window.questions = [
       "半分になる"
     ],
     "answer": 1,
-    "source": "細い導線は電流が通る道がせまく、金属内部で電子が動けるスペースも限られています。そのため電子が粒子とぶつかる回数が自然と多くなり、熱に変わるエネルギーも増えます。同じ電流を流した場合、太い導線より細い導線のほうが抵抗が大きく、温度が上がりやすくなります。電熱線によく細いニクロム線が使われるのも、この性質が理由です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">導線の太さと発熱\n\n【細い導線】\n    [+] 電池\n    │\n    ↓ 電流：同じ\n   ━ 細い（道がせまい）\n    │  衝突が多い\n    ↓ 熱：多い\n   (●) 電球（熱い）\n    │\n    [-] 電池\n\n【太い導線】\n    [+] 電池\n    │\n    ↓ 電流：同じ\n   ═══ 太い（道が広い）\n    │  衝突が少ない\n    ↓ 熱：少ない\n   (●) 電球（あまり熱くない）\n    │\n    [-] 電池\n\n細い → 抵抗大 → 発熱大</div>",
+    "source": "細い導線は電流が通る道がせまく、金属内部で電子が動けるスペースも限られています。そのため電子が粒子とぶつかる回数が自然と多くなり、熱に変わるエネルギーも増えます。同じ電流を流した場合、太い導線より細い導線のほうが抵抗が大きく、温度が上がりやすくなります。電熱線によく細いニクロム線が使われるのも、この性質が理由です。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode7.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -122,7 +122,7 @@ window.questions = [
       "大きくなる"
     ],
     "answer": 2,
-    "source": "乾電池を直列につなぐと電圧が大きくなり、電流を押し出す力が強まります。電熱線にはより大きな電流が流れるため、内部での衝突も増え、熱が多く発生します。つまり電圧が高くなるほど同じ電熱線でも温度は上昇しやすくなります。乾電池の数を変えるだけで発熱量を調整できるのはこのためです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">乾電池の数と発熱\n\n【1本のとき】\n    [+] 1.5V\n    │\n    ↓ 電流：小さい\n   ━━━ 電熱線\n    │  発熱：少ない\n    ↓\n   (●) 電球（あまり熱くない）\n    │\n    [-] 1.5V\n\n【2本直列のとき】\n    [+] 1.5V\n    │\n    [-] 1.5V [+] 1.5V\n    │         │\n    └────────┘\n    ↓ 電圧：3.0V（大きい）\n    ↓ 電流：大きい\n   ━━━ 電熱線\n    │  発熱：多い\n    ↓\n   (●) 電球（熱い）\n    │\n    [-] 1.5V\n\n電池を増やす → 電圧大 → 電流大 → 発熱大</div>",
+    "source": "乾電池を直列につなぐと電圧が大きくなり、電流を押し出す力が強まります。電熱線にはより大きな電流が流れるため、内部での衝突も増え、熱が多く発生します。つまり電圧が高くなるほど同じ電熱線でも温度は上昇しやすくなります。乾電池の数を変えるだけで発熱量を調整できるのはこのためです。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode8.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -138,7 +138,7 @@ window.questions = [
       "半分になる"
     ],
     "answer": 2,
-    "source": "電流の向きを変えても、電子が粒子とぶつかる回数は変わりません。発熱は衝突の回数によって決まるため、電流の向きが変わっても発熱量は変わりません。交流電流でも直流電流でも、同じ電流の大きさなら発熱量は同じになります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【電流の向きと発熱】\n\n【直流電流（一方向）】\n    [+] 電池\n    │\n    ↓ 電流：→\n   ━━━ 導線\n    │  衝突：同じ回数\n    ↓ 発熱：同じ\n   (●) 電球\n    │\n    [-] 電池\n\n【交流電流（向きが変わる）】\n    [+] 電池（AC）\n    │\n    ↓ 電流：→ ← → ←\n   ━━━ 導線\n    │  衝突：同じ回数\n    ↓ 発熱：同じ\n   (●) 電球\n    │\n    [-] 電池\n\n結果：\n  • 電流の向きが変わっても衝突回数は同じ\n  • 発熱量は変わらない</div>",
+    "source": "電流の向きを変えても、電子が粒子とぶつかる回数は変わりません。発熱は衝突の回数によって決まるため、電流の向きが変わっても発熱量は変わりません。交流電流でも直流電流でも、同じ電流の大きさなら発熱量は同じになります。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode9.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -154,7 +154,7 @@ window.questions = [
       "抵抗"
     ],
     "answer": 2,
-    "source": "金属には「電流を通しやすさ＝電気抵抗」がそれぞれ異なる特徴があります。抵抗が大きい金属では電子の進みにくさが大きく、粒子との衝突も増えるため、電流が流れるとより多くの熱を生じます。逆に、抵抗が小さい銅などは熱が出にくい金属です。同じ電流でも、ニクロム線・鉄・銅で温度上昇が異なるのは、この抵抗のちがいによるものです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【金属の種類と発熱】\n\n【銅線（抵抗：小）】\n    [+] 電池\n    │\n    ↓ 電流：同じ\n   ━━━ 銅線\n    │  電子がスムーズ\n    │  衝突：少ない\n    ↓ 発熱：少ない\n   (●) 電球（あまり熱くない）\n    │\n    [-] 電池\n\n【ニクロム線（抵抗：大）】\n    [+] 電池\n    │\n    ↓ 電流：同じ\n   ━━━ ニクロム線\n    │  電子が進みにくい\n    │  衝突：多い\n    ↓ 発熱：多い\n   (●) 電球（熱い）\n    │\n    [-] 電池\n\n比較：\n  銅 < 鉄 < ニクロム線（抵抗の順）\n  発熱：銅 < 鉄 < ニクロム線</div>",
+    "source": "金属には「電流を通しやすさ＝電気抵抗」がそれぞれ異なる特徴があります。抵抗が大きい金属では電子の進みにくさが大きく、粒子との衝突も増えるため、電流が流れるとより多くの熱を生じます。逆に、抵抗が小さい銅などは熱が出にくい金属です。同じ電流でも、ニクロム線・鉄・銅で温度上昇が異なるのは、この抵抗のちがいによるものです。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode10.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -170,7 +170,7 @@ window.questions = [
       "抵抗"
     ],
     "answer": 1,
-    "source": "電熱線は、電流を流すと熱が出るように作られた特別な金属の線です。普通の銅線より抵抗が大きく、同じ電流でも多くの熱を生み出します。電気ストーブやトースターなど、熱を必要とする電気製品の中には、必ずこの電熱線が使われています。ニクロム線は電熱線の代表的な材料で、抵抗が大きく、高温でも丈夫です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【電熱線の利用】\n\n【電気ストーブ】\n    [+] 電池\n    │\n    ↓\n   ━━━ 電熱線（ニクロム線）\n    │  抵抗：大きい\n    │  発熱：多い\n    │  高温でも丈夫\n    ↓\n   [反射板] → 熱を前に集める\n    │\n    [-] 電池\n\n【トースター】\n    [+] 電池\n    │\n    ↓\n   ━━━ 電熱線\n    │  パンを焼く\n    │\n    [-] 電池\n\n使われている家電：\n  • 電気ストーブ\n  • トースター\n  • 電気ポット\n  • ドライヤー</div>",
+    "source": "電熱線は、電流を流すと熱が出るように作られた特別な金属の線です。普通の銅線より抵抗が大きく、同じ電流でも多くの熱を生み出します。電気ストーブやトースターなど、熱を必要とする電気製品の中には、必ずこの電熱線が使われています。ニクロム線は電熱線の代表的な材料で、抵抗が大きく、高温でも丈夫です。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode11.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -186,7 +186,7 @@ window.questions = [
       "銅線"
     ],
     "answer": 2,
-    "source": "電線には「このくらいの電流までなら安全」という決まりがあります。ところが、それより多い電流が流れると、電線の中で電子が粒子と強くぶつかるようになり、急にたくさんの熱が生まれます。電線が熱くなりすぎると、まわりのゴムのカバーが溶けたり、中の金属がこげたりして、とても危険です。最悪の場合、火花が出て火事につながることもあります。このため、家にはヒューズやブレーカーがあり、危ない電流が流れた時には、自動で電気を止めて安全を守るしくみになっています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【発熱を利用した安全装置】\n\n【ヒューズのしくみ】\n    [+] 電池\n    │\n    ↓ 過電流が流れる\n   ━━━ ヒューズ（細い金属線）\n    │  発熱：多い\n    │  熱で切れる\n    │  ↓\n    │  [切れる] → 電気が止まる\n    │\n    [-] 電池\n\n役割：\n  • 過電流を検知\n  • 発熱で切れる\n  • 電気を自動で止める\n  • 火事を防ぐ\n\n安全装置：\n  • ヒューズ\n  • ブレーカー</div>",
+    "source": "電線には「このくらいの電流までなら安全」という決まりがあります。ところが、それより多い電流が流れると、電線の中で電子が粒子と強くぶつかるようになり、急にたくさんの熱が生まれます。電線が熱くなりすぎると、まわりのゴムのカバーが溶けたり、中の金属がこげたりして、とても危険です。最悪の場合、火花が出て火事につながることもあります。このため、家にはヒューズやブレーカーがあり、危ない電流が流れた時には、自動で電気を止めて安全を守るしくみになっています。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode12.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -202,7 +202,7 @@ window.questions = [
       "抵抗が大きくて発熱しやすいから"
     ],
     "answer": 1,
-    "source": "ヒューズは、危ない電流が流れた時に自動で回路を切ってくれる、安全のための部品です。中には細い金属の線があり、過電流が流れるとその部分が熱で切れて電気を止めます。ヒューズが切れることで、電線や電気製品がこわれたり発火したりするのを防ぎます。電化製品の内部や車の電気回りなど、いろいろな場所で使われています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【ヒューズが切れるとき】\n\n【正常な電流】\n    [+] 電池\n    │\n    ↓ 電流：適切\n   ━━━ ヒューズ\n    │  発熱：少ない\n    │  切れない\n    ↓\n   (●) 電球（正常）\n    │\n    [-] 電池\n\n【大きな電流が流れたとき】\n    [+] 電池（大）\n    │\n    ↓ 電流：大きすぎる！\n   ━━━ ヒューズ\n    │  発熱：多い\n    │  熱で切れる\n    │  [切れる] → 電気が止まる\n    │\n    [-] 電池\n\n結果：\n  • 電線や電気製品を守る\n  • 火事を防ぐ</div>",
+    "source": "ヒューズは、危ない電流が流れた時に自動で回路を切ってくれる、安全のための部品です。中には細い金属の線があり、過電流が流れるとその部分が熱で切れて電気を止めます。ヒューズが切れることで、電線や電気製品がこわれたり発火したりするのを防ぎます。電化製品の内部や車の電気回りなど、いろいろな場所で使われています。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode13.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -218,7 +218,7 @@ window.questions = [
       "電流が大きいほど発熱が大きい"
     ],
     "answer": 0,
-    "source": "抵抗が小さい導線では、電子がスムーズに動けるため、電流は流れやすくなります。抵抗が小さいほど、電子が粒子とぶつかる回数が減り、電流が流れやすくなります。例えば、銅線は抵抗が小さいため、電流が流れやすく、発熱も少ないです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【抵抗が小さい導線と電流】\n\n【抵抗が小さい導線（銅線）】\n    [+] 電池\n    │\n    ↓\n   ━━━ 銅線（抵抗：小）\n    │  電子がスムーズに動く\n    │  衝突：少ない\n    │  電流：流れやすい\n    ↓ 発熱：少ない\n   (●) 電球\n    │\n    [-] 電池\n\n特徴：\n  • 電子がスムーズに動く\n  • 衝突が少ない\n  • 電流が流れやすい\n  • 発熱が少ない</div>",
+    "source": "抵抗が小さい導線では、電子がスムーズに動けるため、電流は流れやすくなります。抵抗が小さいほど、電子が粒子とぶつかる回数が減り、電流が流れやすくなります。例えば、銅線は抵抗が小さいため、電流が流れやすく、発熱も少ないです。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode14.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -234,7 +234,7 @@ window.questions = [
       "発熱"
     ],
     "answer": 3,
-    "source": "導線の抵抗は、細く長いほど大きくなります。細い導線は電流が通る道がせまく、長い導線は電流が通る距離が長くなるため、どちらも抵抗が大きくなります。例えば、同じ太さの導線でも、長さが2倍になると抵抗も2倍になります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【導線の抵抗が大きくなる条件】\n\n【太く短い導線】\n    [+] 電池\n    │\n    ↓\n   ═══ 太い・短い\n    │  抵抗：小さい\n    │\n    [-] 電池\n\n【細く長い導線】\n    [+] 電池\n    │\n    ↓\n   ━━━━━━━━━━━━━ 細い・長い\n    │  抵抗：大きい\n    │\n    [-] 電池\n\n条件：\n  • 細い → 道がせまい → 抵抗大\n  • 長い → 距離が長い → 抵抗大\n  • 細く長い → 抵抗が大きい</div>",
+    "source": "導線の抵抗は、細く長いほど大きくなります。細い導線は電流が通る道がせまく、長い導線は電流が通る距離が長くなるため、どちらも抵抗が大きくなります。例えば、同じ太さの導線でも、長さが2倍になると抵抗も2倍になります。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode15.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -250,7 +250,7 @@ window.questions = [
       "大きくなる"
     ],
     "answer": 1,
-    "source": "発熱量が大きすぎると、電気製品の内部の部品が高温になり、こわれたり、発火したりすることがあります。安全に使うためには、適切な発熱量を保つことが大切です。そのため、ヒューズやブレーカーなどの安全装置が使われ、過電流を防いでいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【発熱量が大きすぎると】\n\n【適切な発熱量】\n    [+] 電池\n    │\n    ↓ 電流：適切\n   ━━━ 導線\n    │  発熱：適切\n    ↓\n   (●) 電気製品（正常）\n    │\n    [-] 電池\n\n【発熱量が大きすぎる】\n    [+] 電池（大）\n    │\n    ↓ 電流：大きすぎる\n   ━━━ 導線\n    │  発熱：多すぎる\n    │  高温になる\n    ↓\n   (●) 電気製品\n    │  こわれる\n    │  発火する可能性\n    │\n    [-] 電池\n\n対策：\n  • ヒューズやブレーカーで過電流を防ぐ</div>",
+    "source": "発熱量が大きすぎると、電気製品の内部の部品が高温になり、こわれたり、発火したりすることがあります。安全に使うためには、適切な発熱量を保つことが大切です。そのため、ヒューズやブレーカーなどの安全装置が使われ、過電流を防いでいます。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode16.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -266,7 +266,7 @@ window.questions = [
       "銅線"
     ],
     "answer": 0,
-    "source": "電気ストーブの電熱線は、熱を四方に広げながら温まります。しかし、電熱線の後ろには大きな金属の反射板があり、そこで熱が反射して前の方向へ集まるしくみになっています。これによって、前にいる人が特に暖かく感じるのです。また、反射板が少し曲がった形になっていることで、広い範囲に熱を届けやすくしています。電気ストーブは「電熱線の発熱」と「反射板の反射」を組み合わせて、効率よく部屋を暖めているのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【電気ストーブが赤くなる理由】\n\n【電気ストーブの構造】\n    [+] 電池\n    │\n    ↓\n   ━━━ 電熱線（ニクロム線）\n    │  発熱：多い\n    │  高温になる\n    │  赤く光る\n    │\n   [反射板] ← 熱を前に反射\n    │\n    ↓ 熱が前に集まる\n   [人] 暖かく感じる\n    │\n    [-] 電池\n\nしくみ：\n  • 電熱線が発熱して高温になる\n  • 高温で赤く光る\n  • 反射板が熱を前に集める</div>",
+    "source": "電気ストーブの電熱線は、熱を四方に広げながら温まります。しかし、電熱線の後ろには大きな金属の反射板があり、そこで熱が反射して前の方向へ集まるしくみになっています。これによって、前にいる人が特に暖かく感じるのです。また、反射板が少し曲がった形になっていることで、広い範囲に熱を届けやすくしています。電気ストーブは「電熱線の発熱」と「反射板の反射」を組み合わせて、効率よく部屋を暖めているのです。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode17.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -282,7 +282,7 @@ window.questions = [
       "抵抗を小さくする"
     ],
     "answer": 4,
-    "source": "電気の無駄な発熱を防ぐためには、抵抗を小さくすることが必要です。抵抗が小さいと、電子が粒子とぶつかる回数が減り、発熱量も小さくなります。例えば、電線には抵抗が小さい銅線が使われ、無駄な発熱を防いでいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【無駄な発熱を防ぐ方法】\n\n【抵抗が大きい導線】\n    [+] 電池\n    │\n    ↓\n   ━━━ ニクロム線（抵抗：大）\n    │  衝突：多い\n    ↓ 発熱：多い（無駄）\n   (●) 電球\n    │\n    [-] 電池\n\n【抵抗が小さい導線】\n    [+] 電池\n    │\n    ↓\n   ━━━ 銅線（抵抗：小）\n    │  衝突：少ない\n    ↓ 発熱：少ない（効率的）\n   (●) 電球\n    │\n    [-] 電池\n\n方法：\n  • 抵抗を小さくする\n  • 銅線を使う\n  • 無駄な発熱を防ぐ</div>",
+    "source": "電気の無駄な発熱を防ぐためには、抵抗を小さくすることが必要です。抵抗が小さいと、電子が粒子とぶつかる回数が減り、発熱量も小さくなります。例えば、電線には抵抗が小さい銅線が使われ、無駄な発熱を防いでいます。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode18.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -298,7 +298,7 @@ window.questions = [
       "大電流が流れているとき"
     ],
     "answer": 4,
-    "source": "コンセントが熱くなるのは、大電流が流れているときです。大電流が流れると、コンセント内部で電子が粒子と強くぶつかり、熱が発生します。コンセントが熱くなりすぎると、火事の原因になることもあるため、注意が必要です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【コンセントが熱くなるとき】\n\n【正常な電流】\n    [+] 電池\n    │\n    ↓ 電流：適切\n   [コンセント]\n    │  発熱：少ない\n    │  熱くならない\n    ↓\n   (●) 電気製品\n    │\n    [-] 電池\n\n【大電流が流れているとき】\n    [+] 電池（大）\n    │\n    ↓ 電流：大きすぎる\n   [コンセント]\n    │  発熱：多い\n    │  熱くなる！\n    │  危険\n    ↓\n   (●) 電気製品\n    │\n    [-] 電池\n\n注意：\n  • 大電流 → 発熱が多い → 熱くなる\n  • 火事の原因になる可能性</div>",
+    "source": "コンセントが熱くなるのは、大電流が流れているときです。大電流が流れると、コンセント内部で電子が粒子と強くぶつかり、熱が発生します。コンセントが熱くなりすぎると、火事の原因になることもあるため、注意が必要です。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode19.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -314,7 +314,7 @@ window.questions = [
       "発熱"
     ],
     "answer": 3,
-    "source": "電流と発熱の関係は、電流が大きいほど発熱が大きいという基本的な考え方で表されます。電流が大きいほど、電子が粒子とぶつかる回数が増え、熱の発生量も大きくなります。発熱量は、電流の2乗に比例するため、電流が2倍になると発熱は4倍になります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【電流と発熱の基本的な関係】\n\n【電流が小さいとき】\n    [+] 電池\n    │\n    ↓ 電流：小さい\n   ━━━ 導線\n    │  衝突：少ない\n    ↓ 発熱：小さい\n   (●) 電球\n    │\n    [-] 電池\n\n【電流が大きいとき】\n    [+] 電池（大）\n    │\n    ↓ 電流：大きい\n   ━━━ 導線\n    │  衝突：多い\n    ↓ 発熱：大きい\n   (●) 電球\n    │\n    [-] 電池\n\n基本的な考え方：\n  電流が大きいほど → 発熱が大きい\n\n関係：\n  電流が2倍 → 発熱は4倍（2²倍）</div>",
+    "source": "電流と発熱の関係は、電流が大きいほど発熱が大きいという基本的な考え方で表されます。電流が大きいほど、電子が粒子とぶつかる回数が増え、熱の発生量も大きくなります。発熱量は、電流の2乗に比例するため、電流が2倍になると発熱は4倍になります。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode20.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -330,7 +330,7 @@ window.questions = [
       "発熱"
     ],
     "answer": 4,
-    "source": "電流が金属の中を流れると、電子が粒子とぶつかり合い、そのときに電気のエネルギーの一部が熱に変わります。この現象を「発熱作用」といいます。電気ストーブ・トースター・電気ポットなど、身のまわりの電気製品は、この発熱作用を利用してあたためたり調理したりしています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【発熱作用】\n\n    [+] 電池\n    │\n    ↓ 電流が流れる\n   ━━━ 導線（金属）\n    │  電子が粒子とぶつかる\n    │  ↓\n    │  電気のエネルギー\n    │  ↓\n    │  熱に変わる\n    │  ↓\n    ↓ 導線が熱を持つ\n   (●) 電球\n    │\n    [-] 電池\n\n現象：\n  電流が流れる → 電子が衝突 → 熱に変わる\n\n利用：\n  • 電気ストーブ\n  • トースター\n  • 電気ポット</div>",
+    "source": "電流が金属の中を流れると、電子が粒子とぶつかり合い、そのときに電気のエネルギーの一部が熱に変わります。この現象を「発熱作用」といいます。電気ストーブ・トースター・電気ポットなど、身のまわりの電気製品は、この発熱作用を利用してあたためたり調理したりしています。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode21.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -346,7 +346,7 @@ window.questions = [
       "発熱"
     ],
     "answer": 0,
-    "source": "抵抗とは、電流がどれくらい「流れにくいか」を表す言葉です。抵抗が大きい金属では、電子が粒子とぶつかりやすく、電流が進みにくくなります。そのぶん、電子がぶつかる時にたくさんの熱が生まれます。逆に、抵抗が小さい金属では、電子がスムーズに動けるため、熱はあまり出ません。身のまわりの電気製品では、この「抵抗の大きさ」をうまく利用することで、必要な量の熱を得たり、安全に電気を使ったりできるようになっています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【抵抗とは】\n\n【抵抗が大きい金属】\n    [+] 電池\n    │\n    ↓ 電流：流れにくい\n   ━━━ ニクロム線（抵抗：大）\n    │  電子がぶつかりやすい\n    │  熱が多く生まれる\n    ↓\n   (●) 電球\n    │\n    [-] 電池\n\n【抵抗が小さい金属】\n    [+] 電池\n    │\n    ↓ 電流：流れやすい\n   ━━━ 銅線（抵抗：小）\n    │  電子がスムーズ\n    │  熱はあまり出ない\n    ↓\n   (●) 電球\n    │\n    [-] 電池\n\n抵抗：\n  電流の「流れにくさ」を表す量</div>",
+    "source": "抵抗とは、電流がどれくらい「流れにくいか」を表す言葉です。抵抗が大きい金属では、電子が粒子とぶつかりやすく、電流が進みにくくなります。そのぶん、電子がぶつかる時にたくさんの熱が生まれます。逆に、抵抗が小さい金属では、電子がスムーズに動けるため、熱はあまり出ません。身のまわりの電気製品では、この「抵抗の大きさ」をうまく利用することで、必要な量の熱を得たり、安全に電気を使ったりできるようになっています。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode22.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -362,7 +362,7 @@ window.questions = [
       "銅線"
     ],
     "answer": 2,
-    "source": "ヒューズは、危ない電流が流れた時に自動で回路を切ってくれる、安全のための部品です。中には細い金属の線があり、過電流が流れるとその部分が熱で切れて電気を止めます。ヒューズが切れることで、電線や電気製品がこわれたり発火したりするのを防ぎます。電化製品の内部や車の電気回りなど、いろいろな場所で使われています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【電流が大きすぎると切れる安全装置】\n\n【ヒューズのしくみ】\n    [+] 電池（大）\n    │\n    ↓ 電流：大きすぎる\n   ━━━ ヒューズ（細い金属線）\n    │  発熱：多い\n    │  熱で切れる\n    │  [切れる] → 電気が止まる\n    │\n    [-] 電池\n\n役割：\n  • 過電流を検知\n  • 発熱で切れる\n  • 電気を自動で止める\n  • 電線や電気製品を守る\n\n安全装置：\n  ヒューズ</div>",
+    "source": "ヒューズは、危ない電流が流れた時に自動で回路を切ってくれる、安全のための部品です。中には細い金属の線があり、過電流が流れるとその部分が熱で切れて電気を止めます。ヒューズが切れることで、電線や電気製品がこわれたり発火したりするのを防ぎます。電化製品の内部や車の電気回りなど、いろいろな場所で使われています。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode23.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -378,7 +378,7 @@ window.questions = [
       "銅線"
     ],
     "answer": 0,
-    "source": "電気ストーブは、電熱線に電流を流して作られる熱を使い、周りを温める暖房器具です。電熱線が赤くなるほど高温になり、その熱を前に向けて反射板が反射することで、効率よく人や部屋を温めます。電気の発熱作用を身近に感じられる代表的な電気製品です。反射板があることで、熱が前の方向に集まり、効率よく温めることができます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【発熱を利用した家庭の器具】\n\n【電気ストーブ】\n    [+] 電池\n    │\n    ↓\n   ━━━ 電熱線\n    │  発熱：多い\n    │  赤く光る\n    │\n   [反射板] → 熱を前に集める\n    │\n    ↓ 暖房\n   [人] 暖かく感じる\n    │\n    [-] 電池\n\n代表例：\n  • 電気ストーブ\n  • トースター\n  • 電気ポット\n  • ドライヤー</div>",
+    "source": "電気ストーブは、電熱線に電流を流して作られる熱を使い、周りを温める暖房器具です。電熱線が赤くなるほど高温になり、その熱を前に向けて反射板が反射することで、効率よく人や部屋を温めます。電気の発熱作用を身近に感じられる代表的な電気製品です。反射板があることで、熱が前の方向に集まり、効率よく温めることができます。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode24.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -394,7 +394,7 @@ window.questions = [
       "抵抗が大きくて発熱しやすいから"
     ],
     "answer": 3,
-    "source": "発熱量を大きくする要因は、電流の大きさと抵抗の大きさです。電流が大きいほど、また抵抗が大きいほど、発熱量は大きくなります。発熱量は、電流の2乗と抵抗の積に比例するため、電流を2倍にすると発熱は4倍になります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【発熱量を大きくする要因】\n\n発熱量 = 電流² × 抵抗\n\n【電流が大きい】\n    [+] 電池（大）\n    │\n    ↓ 電流：大きい\n   ━━━ 導線\n    │  発熱：多い\n    ↓\n   (●) 電球（熱い）\n    │\n    [-] 電池\n\n【抵抗が大きい】\n    [+] 電池\n    │\n    ↓ 電流：同じ\n   ━━━ ニクロム線（抵抗：大）\n    │  発熱：多い\n    ↓\n   (●) 電球（熱い）\n    │\n    [-] 電池\n\n要因：\n  • 電流の大きさ\n  • 抵抗の大きさ</div>",
+    "source": "発熱量を大きくする要因は、電流の大きさと抵抗の大きさです。電流が大きいほど、また抵抗が大きいほど、発熱量は大きくなります。発熱量は、電流の2乗と抵抗の積に比例するため、電流を2倍にすると発熱は4倍になります。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode25.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -410,7 +410,7 @@ window.questions = [
       "電熱線"
     ],
     "answer": 4,
-    "source": "電熱線とは、電流を流すと熱が出るように作られた特別な金属の線です。普通の銅線より抵抗が大きく、同じ電流でも多くの熱を生み出します。電気ストーブやトースターなど、熱を必要とする電気製品の中には、必ずこの電熱線が使われています。ニクロム線は電熱線の代表的な材料で、抵抗が大きく、高温でも丈夫です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【電熱線とは】\n\n【電熱線（ニクロム線）】\n    [+] 電池\n    │\n    ↓\n   ━━━ 電熱線（ニクロム線）\n    │  抵抗：特に大きい\n    │  発熱：多い\n    │  高温でも丈夫\n    ↓\n   (●) 電球（熱い）\n    │\n    [-] 電池\n\n特徴：\n  • 抵抗が特に大きい\n  • 同じ電流でも多くの熱を生む\n  • 高温でも丈夫\n\n使われている製品：\n  • 電気ストーブ\n  • トースター</div>",
+    "source": "電熱線とは、電流を流すと熱が出るように作られた特別な金属の線です。普通の銅線より抵抗が大きく、同じ電流でも多くの熱を生み出します。電気ストーブやトースターなど、熱を必要とする電気製品の中には、必ずこの電熱線が使われています。ニクロム線は電熱線の代表的な材料で、抵抗が大きく、高温でも丈夫です。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode26.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -426,7 +426,7 @@ window.questions = [
       "大きくなる"
     ],
     "answer": 1,
-    "source": "導線の太さが太いほど、電流が通る道が広くなるため、抵抗は小さくなります。太い導線では、電子がスムーズに動けるため、粒子とぶつかる回数が減り、抵抗が小さくなります。例えば、同じ長さの導線でも、太さが2倍になると抵抗は半分になります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【導線の太さと抵抗】\n\n【細い導線】\n    [+] 電池\n    │\n    ↓ 電流：同じ\n   ━ 細い（道がせまい）\n    │  衝突：多い\n    │  抵抗：大きい\n    ↓\n   (●) 電球\n    │\n    [-] 電池\n\n【太い導線】\n    [+] 電池\n    │\n    ↓ 電流：同じ\n   ═══ 太い（道が広い）\n    │  衝突：少ない\n    │  抵抗：小さい\n    ↓\n   (●) 電球\n    │\n    [-] 電池\n\n関係：\n  太い → 道が広い → 抵抗が小さい</div>",
+    "source": "導線の太さが太いほど、電流が通る道が広くなるため、抵抗は小さくなります。太い導線では、電子がスムーズに動けるため、粒子とぶつかる回数が減り、抵抗が小さくなります。例えば、同じ長さの導線でも、太さが2倍になると抵抗は半分になります。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode27.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -442,7 +442,7 @@ window.questions = [
       "より温まる"
     ],
     "answer": 1,
-    "source": "導線の長さが長いほど、電流が通る距離が長くなるため、抵抗は大きくなります。長い導線では、電子が粒子とぶつかる回数が増え、抵抗が大きくなります。例えば、同じ太さの導線でも、長さが2倍になると抵抗も2倍になります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【導線の長さと抵抗】\n\n【短い導線】\n    [+] 電池\n    │\n    ↓ 電流：同じ\n   ━━ 短い（距離：短い）\n    │  衝突：少ない\n    │  抵抗：小さい\n    ↓\n   (●) 電球\n    │\n    [-] 電池\n\n【長い導線】\n    [+] 電池\n    │\n    ↓ 電流：同じ\n   ━━━━━━━━━━━━━ 長い（距離：長い）\n    │  衝突：多い\n    │  抵抗：大きい\n    ↓\n   (●) 電球\n    │\n    [-] 電池\n\n関係：\n  長い → 距離が長い → 抵抗が大きい</div>",
+    "source": "導線の長さが長いほど、電流が通る距離が長くなるため、抵抗は大きくなります。長い導線では、電子が粒子とぶつかる回数が増え、抵抗が大きくなります。例えば、同じ太さの導線でも、長さが2倍になると抵抗も2倍になります。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode28.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -458,7 +458,7 @@ window.questions = [
       "抵抗"
     ],
     "answer": 0,
-    "source": "白熱電球の中には、とても細い金属の線（フィラメント）が入っています。ここに電流が流れると、金属の中で電子が粒子と強くぶつかり、短い時間で大量の熱が生まれます。フィラメントは特別な金属でできており、高い温度になると赤く光り、その光が電球の明かりになります。しかし、光を出すためにはフィラメントを数百度以上に熱する必要があり、そのぶん発熱も大きくなります。LED電球があまり熱くならないのは、光を出すしくみが全く違い、金属を高温にしなくても明るくできるからです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【白熱とは】\n\n【白熱電球】\n    [+] 電池\n    │\n    ↓ 電流が流れる\n   ━━━ フィラメント（細い金属線）\n    │  電子が強くぶつかる\n    │  大量の熱が生まれる\n    │  数百度以上に熱する\n    │  ↓\n    │  赤く光る（白熱）\n    │  ↓\n    ↓ 光を出す\n   (●) 電球（明るい）\n    │\n    [-] 電池\n\n状態：\n  電流が流れる → 光を出すほど熱くなる → 白熱</div>",
+    "source": "白熱電球の中には、とても細い金属の線（フィラメント）が入っています。ここに電流が流れると、金属の中で電子が粒子と強くぶつかり、短い時間で大量の熱が生まれます。フィラメントは特別な金属でできており、高い温度になると赤く光り、その光が電球の明かりになります。しかし、光を出すためにはフィラメントを数百度以上に熱する必要があり、そのぶん発熱も大きくなります。LED電球があまり熱くならないのは、光を出すしくみが全く違い、金属を高温にしなくても明るくできるからです。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode29.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -474,7 +474,7 @@ window.questions = [
       "銅"
     ],
     "answer": 4,
-    "source": "抵抗が小さく電流をよく通す金属の例は銅です。銅は抵抗が小さく、電子がスムーズに動けるため、電流が流れやすく、発熱も少ない金属です。そのため、電線には銅線が使われ、無駄な発熱を防いでいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【抵抗が小さく電流をよく通す金属】\n\n【銅】\n    [+] 電池\n    │\n    ↓\n   ━━━ 銅線\n    │  抵抗：小さい\n    │  電子がスムーズに動く\n    │  電流：流れやすい\n    │  発熱：少ない\n    ↓\n   (●) 電球\n    │\n    [-] 電池\n\n特徴：\n  • 抵抗が小さい\n  • 電流をよく通す\n  • 発熱が少ない\n\n利用：\n  • 電線に使われる\n  • 無駄な発熱を防ぐ</div>",
+    "source": "抵抗が小さく電流をよく通す金属の例は銅です。銅は抵抗が小さく、電子がスムーズに動けるため、電流が流れやすく、発熱も少ない金属です。そのため、電線には銅線が使われ、無駄な発熱を防いでいます。<img src=\"../images/physics/current_effect_heating/sci.physics.current_effect_heating&mode30.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"

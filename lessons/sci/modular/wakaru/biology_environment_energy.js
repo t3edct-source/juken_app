@@ -12,7 +12,7 @@ window.questions = [
       "絶滅種",
       "すべて"],
     "answer": 0,
-    "source": "もともとその地域には生息していなかった生物が、人間によって持ちこまれて野生化したものを外来種といいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">外来種\n\n  他の地域の生物\n      ↓\n  人間によって持ちこまれる\n      ↓\n  野生化\n      ↓\n  外来種\n\n【特徴】\n  もともとその地域には生息していなかった\n  人間によって持ちこまれた</div>",
+    "source": "もともとその地域には生息していなかった生物が、人間によって持ちこまれて野生化したものを外来種といいます。<img src=\"../images/biology/environment_energy/environment_energy1.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["外来種", "野生化", "人間"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -27,7 +27,7 @@ window.questions = [
       "時によって変わる"
     ],
     "answer": 0,
-    "source": "外来種の例として、ブラックバス、マングース、アメリカザリガニ、セイヨウタンポポなどがあります。外来種は、もともとその地域にいなかった生物で、人間の活動によって持ち込まれたものです。外来種は、在来種に影響を与えることがあります。",
+    "source": "外来種の例として、ブラックバス、マングース、アメリカザリガニ、セイヨウタンポポなどがあります。外来種は、もともとその地域にいなかった生物で、人間の活動によって持ち込まれたものです。外来種は、在来種に影響を与えることがあります。<img src=\"../images/biology/environment_energy/environment_energy2.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["外来種", "ブラックバス", "マングース"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -42,7 +42,7 @@ window.questions = [
       "時によって変わる"
     ],
     "answer": 2,
-    "source": "外来種のひ害として、在来種を食べて生息環境をうばう、農作物を食べるなどがあります。例えば、ブラックバスは在来種の魚を食べて数を減らし、マングースは在来種の小動物を食べて生態系に影響を与えます。",
+    "source": "外来種のひ害として、在来種を食べて生息環境をうばう、農作物を食べるなどがあります。例えば、ブラックバスは在来種の魚を食べて数を減らし、マングースは在来種の小動物を食べて生態系に影響を与えます。<img src=\"../images/biology/environment_energy/environment_energy3.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["外来種", "ひ害", "在来種"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -56,7 +56,7 @@ window.questions = [
       "酸性雨",
       "すべて"],
     "answer": 0,
-    "source": "二酸化炭素の濃度が高くなることにより、地球の平均気温が少しずつ上がることを地球温暖化といいます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">地球温暖化\n\n  二酸化炭素の濃度が高くなる\n      ↓\n  地球の平均気温が上がる\n      ↓\n  地球温暖化\n\n【原因】\n  二酸化炭素の濃度が高くなる\n\n【結果】\n  地球の平均気温が上がる</div>",
+    "source": "二酸化炭素の濃度が高くなることにより、地球の平均気温が少しずつ上がることを地球温暖化といいます。<img src=\"../images/biology/environment_energy/environment_energy4.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["地球温暖化", "二酸化炭素", "平均気温"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -70,7 +70,7 @@ window.questions = [
       "酸性雨",
       "すべて"],
     "answer": 1,
-    "source": "宇宙空間に放出される熱の一部が、大気中の二酸化炭素などに吸収されて放出され、大気があたためられる現象を温室効果といいます。温室効果があることで、地球の平均気温が約15°Cに保たれています。温室効果が強くなりすぎると、地球温暖化が進みます。",
+    "source": "宇宙空間に放出される熱の一部が、大気中の二酸化炭素などに吸収されて放出され、大気があたためられる現象を温室効果といいます。温室効果があることで、地球の平均気温が約15°Cに保たれています。温室効果が強くなりすぎると、地球温暖化が進みます。<img src=\"../images/biology/environment_energy/environment_energy5.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["温室効果", "二酸化炭素", "大気"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -84,7 +84,7 @@ window.questions = [
       "窒素",
       "すべて"],
     "answer": 0,
-    "source": "温室効果ガスとして主なものは二酸化炭素です。石炭や石油などの化石燃料を燃やすことで増えます。二酸化炭素の他にも、メタンや一酸化二窒素なども温室効果ガスです。これらのガスが増えると、地球温暖化が進みます。",
+    "source": "温室効果ガスとして主なものは二酸化炭素です。石炭や石油などの化石燃料を燃やすことで増えます。二酸化炭素の他にも、メタンや一酸化二窒素なども温室効果ガスです。これらのガスが増えると、地球温暖化が進みます。<img src=\"../images/biology/environment_energy/environment_energy6.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["温室効果ガス", "二酸化炭素", "化石燃料"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -99,7 +99,7 @@ window.questions = [
       "時によって変わる"
     ],
     "answer": 0,
-    "source": "酸性雨とは、pHが低い雨のことです。工場や自動車から出る排気ガスが原因で起こります。排気ガスにふくまれる硫黄酸化物や窒素酸化物が、雨に溶けて酸性になります。酸性雨は、森林や湖に影響を与えることがあります。",
+    "source": "酸性雨とは、pHが低い雨のことです。工場や自動車から出る排気ガスが原因で起こります。排気ガスにふくまれる硫黄酸化物や窒素酸化物が、雨に溶けて酸性になります。酸性雨は、森林や湖に影響を与えることがあります。<img src=\"../images/biology/environment_energy/environment_energy7.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["酸性雨", "pH", "排気ガス"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -114,7 +114,7 @@ window.questions = [
       "時によって変わる"
     ],
     "answer": 2,
-    "source": "オゾン層とは、地球を包むオゾンの層で、有害な紫外線を吸収するはたらきがあります。オゾン層があることで、地上に届く有害な紫外線の量が減り、生物が守られています。オゾン層が薄くなると、有害な紫外線が多く届くようになります。",
+    "source": "オゾン層とは、地球を包むオゾンの層で、有害な紫外線を吸収するはたらきがあります。オゾン層があることで、地上に届く有害な紫外線の量が減り、生物が守られています。オゾン層が薄くなると、有害な紫外線が多く届くようになります。<img src=\"../images/biology/environment_energy/environment_energy8.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["オゾン層", "紫外線", "地球"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -129,7 +129,7 @@ window.questions = [
       "時によって変わる"
     ],
     "answer": 1,
-    "source": "再生可能エネルギーとは、自然の力でつくられるエネルギーのことです。太陽光、風力、水力、地熱、バイオマスなどがあります。再生可能エネルギーは、使ってもなくならないエネルギーで、環境にやさしいエネルギーです。",
+    "source": "再生可能エネルギーとは、自然の力でつくられるエネルギーのことです。太陽光、風力、水力、地熱、バイオマスなどがあります。再生可能エネルギーは、使ってもなくならないエネルギーで、環境にやさしいエネルギーです。<img src=\"../images/biology/environment_energy/environment_energy9.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["再生可能エネルギー", "自然", "エネルギー"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -144,7 +144,7 @@ window.questions = [
       "時によって変わる"
     ],
     "answer": 2,
-    "source": "再生可能エネルギーの例として、太陽光発電、風力発電、水力発電、地熱発電、バイオマス発電などがあります。これらの発電方法は、二酸化炭素を出さないか、出しても少ないため、環境にやさしい発電方法です。",
+    "source": "再生可能エネルギーの例として、太陽光発電、風力発電、水力発電、地熱発電、バイオマス発電などがあります。これらの発電方法は、二酸化炭素を出さないか、出しても少ないため、環境にやさしい発電方法です。<img src=\"../images/biology/environment_energy/environment_energy10.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["再生可能エネルギー", "太陽光", "風力"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -159,7 +159,7 @@ window.questions = [
       "時によって変わる"
     ],
     "answer": 0,
-    "source": "火力発電の燃料として使われるのは、石炭、石油、天然ガスなどの化石燃料です。化石燃料を燃やすことで、二酸化炭素が発生し、地球温暖化の原因になります。火力発電は、日本で最も多く使われている発電方法です。",
+    "source": "火力発電の燃料として使われるのは、石炭、石油、天然ガスなどの化石燃料です。化石燃料を燃やすことで、二酸化炭素が発生し、地球温暖化の原因になります。火力発電は、日本で最も多く使われている発電方法です。<img src=\"../images/biology/environment_energy/environment_energy11.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["火力発電", "燃料", "化石燃料"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -174,7 +174,7 @@ window.questions = [
       "時によって変わる"
     ],
     "answer": 1,
-    "source": "原子力発電の燃料として使われるのは、ウランです。ウランを核分裂させて熱を出し、その熱で水を沸騰させて蒸気を作り、タービンを回して電気を作ります。原子力発電は、二酸化炭素を出さない発電方法ですが、放射性廃棄物の問題があります。",
+    "source": "原子力発電の燃料として使われるのは、ウランです。ウランを核分裂させて熱を出し、その熱で水を沸騰させて蒸気を作り、タービンを回して電気を作ります。原子力発電は、二酸化炭素を出さない発電方法ですが、放射性廃棄物の問題があります。<img src=\"../images/biology/environment_energy/environment_energy12.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["原子力発電", "燃料", "ウラン"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -189,7 +189,7 @@ window.questions = [
       "時によって変わる"
     ],
     "answer": 2,
-    "source": "太陽光発電の特徴として、太陽の光を電気に変える、再生可能エネルギーであるなどがあります。太陽光発電は、太陽の光があれば発電できるため、二酸化炭素を出さない環境にやさしい発電方法です。",
+    "source": "太陽光発電の特徴として、太陽の光を電気に変える、再生可能エネルギーであるなどがあります。太陽光発電は、太陽の光があれば発電できるため、二酸化炭素を出さない環境にやさしい発電方法です。<img src=\"../images/biology/environment_energy/environment_energy13.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["太陽光発電", "太陽", "電気"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -204,7 +204,7 @@ window.questions = [
       "時によって変わる"
     ],
     "answer": 2,
-    "source": "風力発電の特徴として、風の力を電気に変える、再生可能エネルギーであるなどがあります。風力発電は、風の力で風車を回し、その回転で電気を作ります。風があれば発電できるため、二酸化炭素を出さない環境にやさしい発電方法です。",
+    "source": "風力発電の特徴として、風の力を電気に変える、再生可能エネルギーであるなどがあります。風力発電は、風の力で風車を回し、その回転で電気を作ります。風があれば発電できるため、二酸化炭素を出さない環境にやさしい発電方法です。<img src=\"../images/biology/environment_energy/environment_energy14.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["風力発電", "風", "電気"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -219,7 +219,7 @@ window.questions = [
       "時によって変わる"
     ],
     "answer": 2,
-    "source": "水力発電の特徴として、水の力を電気に変える、再生可能エネルギーであるなどがあります。水力発電は、高いところから落ちる水の力でタービンを回し、電気を作ります。水があれば発電できるため、二酸化炭素を出さない環境にやさしい発電方法です。",
+    "source": "水力発電の特徴として、水の力を電気に変える、再生可能エネルギーであるなどがあります。水力発電は、高いところから落ちる水の力でタービンを回し、電気を作ります。水があれば発電できるため、二酸化炭素を出さない環境にやさしい発電方法です。<img src=\"../images/biology/environment_energy/environment_energy15.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["水力発電", "水", "電気"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -234,7 +234,7 @@ window.questions = [
       "時によって変わる"
     ],
     "answer": 2,
-    "source": "地熱発電の特徴として、地熱を電気に変える、再生可能エネルギーであるなどがあります。地熱発電は、地下の熱で水を沸騰させて蒸気を作り、タービンを回して電気を作ります。地熱はなくならないため、二酸化炭素を出さない環境にやさしい発電方法です。",
+    "source": "地熱発電の特徴として、地熱を電気に変える、再生可能エネルギーであるなどがあります。地熱発電は、地下の熱で水を沸騰させて蒸気を作り、タービンを回して電気を作ります。地熱はなくならないため、二酸化炭素を出さない環境にやさしい発電方法です。<img src=\"../images/biology/environment_energy/environment_energy16.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["地熱発電", "地熱", "電気"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -249,7 +249,7 @@ window.questions = [
       "時によって変わる"
     ],
     "answer": 2,
-    "source": "バイオマス発電の特徴として、生物資源を電気に変える、再生可能エネルギーであるなどがあります。バイオマス発電は、木材や植物などの生物資源を燃やして電気を作ります。生物資源は育てればまた使えるため、再生可能エネルギーです。",
+    "source": "バイオマス発電の特徴として、生物資源を電気に変える、再生可能エネルギーであるなどがあります。バイオマス発電は、木材や植物などの生物資源を燃やして電気を作ります。生物資源は育てればまた使えるため、再生可能エネルギーです。<img src=\"../images/biology/environment_energy/environment_energy17.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["バイオマス発電", "生物資源", "電気"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -264,7 +264,7 @@ window.questions = [
       "時によって変わる"
     ],
     "answer": 2,
-    "source": "燃料電池の特徴として、水素と酸素を反応させて電気をつくる、二酸化炭素を出さないなどがあります。燃料電池は、水素と酸素を反応させて電気を作り、出るのは水だけです。二酸化炭素を出さないため、環境にやさしい発電方法です。",
+    "source": "燃料電池の特徴として、水素と酸素を反応させて電気をつくる、二酸化炭素を出さないなどがあります。燃料電池は、水素と酸素を反応させて電気を作り、出るのは水だけです。二酸化炭素を出さないため、環境にやさしい発電方法です。<img src=\"../images/biology/environment_energy/environment_energy18.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["燃料電池", "水素", "酸素"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -279,7 +279,7 @@ window.questions = [
       "時によって変わる"
     ],
     "answer": 2,
-    "source": "地球温暖化の原因として、二酸化炭素の濃度が高くなる、温室効果ガスが増えるなどがあります。二酸化炭素などの温室効果ガスが増えると、温室効果が強くなり、地球の平均気温が上がります。地球温暖化が進むと、海面が上がったり、気候が変わったりします。",
+    "source": "地球温暖化の原因として、二酸化炭素の濃度が高くなる、温室効果ガスが増えるなどがあります。二酸化炭素などの温室効果ガスが増えると、温室効果が強くなり、地球の平均気温が上がります。地球温暖化が進むと、海面が上がったり、気候が変わったりします。<img src=\"../images/biology/environment_energy/environment_energy19.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["地球温暖化", "原因", "二酸化炭素"],
     "difficulty": 1,
     "asof": "2026-01-02"
@@ -294,7 +294,7 @@ window.questions = [
       "時によって変わる"
     ],
     "answer": 2,
-    "source": "環境問題とエネルギー問題の対策として、再生可能エネルギーを使う、省エネルギーを進めるなどがあります。再生可能エネルギーを使うことで、二酸化炭素の発生を減らし、省エネルギーを進めることで、エネルギーの無駄を減らすことができます。",
+    "source": "環境問題とエネルギー問題の対策として、再生可能エネルギーを使う、省エネルギーを進めるなどがあります。再生可能エネルギーを使うことで、二酸化炭素の発生を減らし、省エネルギーを進めることで、エネルギーの無駄を減らすことができます。<img src=\"../images/biology/environment_energy/environment_energy20.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["環境問題", "エネルギー問題", "対策"],
     "difficulty": 1,
     "asof": "2026-01-02"

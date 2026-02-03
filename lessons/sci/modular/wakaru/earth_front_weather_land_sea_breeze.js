@@ -14,7 +14,7 @@ window.questions = [
       "低気圧"
     ],
     "answer": 0,
-    "source": "大きな空気のかたまりを気団といいます。性質の異なる2つの気団（暖気と寒気）がぶつかり合うところで前線面ができます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">気団と前線面\n\n  暖気（暖かい空気）\n      ↓\n  ───────── ← 前線面\n      ↑\n  寒気（冷たい空気）\n\n【前線面】\n  性質の異なる2つの気団が\n  ぶつかり合うところ</div>",
+    "source": "大きな空気のかたまりを気団といいます。性質の異なる2つの気団（暖気と寒気）がぶつかり合うところで前線面ができます。<img src=\"../images/earth/front_weather_land_sea_breeze/front_weather_land_sea_breeze1.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["気団", "空気", "かたまり"],
     "difficulty": 1,
     "asof": "2026-01-02"
