@@ -39,6 +39,7 @@
     // 小4理科（化学）
     'sci.chemistry.air_combustion_integrated': 'chemistry_air_combustion_integrated.js', // 空気と燃焼
     'sci.chemistry.water_state_integrated': 'chemistry_water_state_integrated.js', // 水の状態変化（統合）
+    'sci.chemistry.solution_integrated': 'chemistry_solution_integrated.js', // 水溶液（溶解度・とけ方・濃さ）（統合）
     
     // 小4理科（地学）
     'sci.earth.stars_constellations_integrated': 'earth_stars_constellations_integrated.js', // 星と星座・星の動き（統合）
