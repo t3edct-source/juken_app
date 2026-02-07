@@ -105,6 +105,7 @@
     'sci.comprehensive.strata_comprehensive': idToFileName('sci.comprehensive.strata_comprehensive'),
     'sci.comprehensive.weather_comprehensive': idToFileName('sci.comprehensive.weather_comprehensive'),
     'sci.comprehensive.physics_comprehensive': idToFileName('sci.comprehensive.physics_comprehensive'),
+    'sci.comprehensive.physics_comprehensive_advanced': 'comprehensive_physics_comprehensive_advanced.js',
     'sci.comprehensive.chemistry_comprehensive': idToFileName('sci.comprehensive.chemistry_comprehensive'),
     'sci.comprehensive.biology_comprehensive': idToFileName('sci.comprehensive.biology_comprehensive'),
     'sci.comprehensive.earth_science_comprehensive': idToFileName('sci.comprehensive.earth_science_comprehensive')

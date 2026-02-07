@@ -1636,6 +1636,7 @@ scienceUnits = [
       'sci.comprehensive.weather_comprehensive', // 気象総合（前線／台風／天気図読み取り）
       // 【最終段階：4分野総合】（4）
       'sci.comprehensive.physics_comprehensive', // 物理総合（光・音・電気・力・エネルギー）
+      'sci.comprehensive.physics_comprehensive_advanced', // 物理総合（最難関中対応）
       'sci.comprehensive.chemistry_comprehensive', // 化学総合（酸・アルカリ・燃焼・溶解・物質保存）
       'sci.comprehensive.biology_comprehensive', // 生物総合（呼吸・循環・消化・エネルギー）
       'sci.comprehensive.earth_science_comprehensive' // 地学総合（地層・天気・天体・地球の動き）

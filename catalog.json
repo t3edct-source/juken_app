@@ -3202,6 +3202,17 @@
     "tags": []
   },
   {
+    "id": "sci.comprehensive.physics_comprehensive_advanced",
+    "grade": 6,
+    "subject": "sci",
+    "title": "物理総合（最難関中対応）",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.comprehensive.physics_comprehensive_advanced&mode=wakaru",
+    "format": "html",
+    "tags": ["最難関", "物理", "総合", "応用"]
+  },
+  {
     "id": "sci.comprehensive.chemistry_comprehensive",
     "grade": 6,
     "subject": "sci",
