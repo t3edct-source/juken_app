@@ -115,8 +115,7 @@ window.questions = [
       "50倍",
       "400倍",
       "4倍",
-      "30倍",
-      "4000倍"
+      "30倍"
     ],
     "answer": 1,
     "source": "接眼レンズが10倍、対物レンズが40倍のとき、けんび鏡の倍率は10×40=400倍になります。けんび鏡の倍率は、接眼レンズの倍率と対物レンズの倍率をかけることで求められます。倍率が高いほど、標本が大きく見えますが、視野は狭くなり、明るさも暗くなります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【倍率の計算例】\n\n  接眼レンズ: 10倍\n  対物レンズ: 40倍\n      ↓\n  けんび鏡の倍率 = 10 × 40 = 400倍\n\n【倍率が高いと】\n  標本が大きく見える\n  視野が狭くなる\n  明るさが暗くなる</div>",
@@ -130,8 +129,8 @@ window.questions = [
     "choices": [
       "プレパラートを動かした方向と同じ方向",
       "プレパラートを動かした方向と反対の方向",
-      "動かない",
-      "斜め方向"
+      "斜め方向",
+      "回転する"
     ],
     "answer": 1,
     "source": "プレパラートを動かすとき、見える像はプレパラートを動かした方向と反対の方向に動きます。これは、けんび鏡のレンズが像を上下左右逆に映すためです。プレパラートを右に動かすと、像は左に動いて見えます。この性質を理解することで、けんび鏡で標本を観察するときに、像の位置を正確に把握できます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【プレパラートと像の動き】\n\n  プレパラートを右に動かす\n      ↓\n  像は左に動いて見える\n\n  プレパラートを上に動かす\n      ↓\n  像は下に動いて見える\n\n  ※ けんび鏡は像を逆に映す</div>",
@@ -241,8 +240,7 @@ window.questions = [
       "右",
       "左",
       "上",
-      "下",
-      "動かない"
+      "下"
     ],
     "answer": 1,
     "source": "けんび鏡で、プレパラートを右に動かしたとき、見える像は左に動きます。けんび鏡のレンズが像を上下左右逆に映すためです。プレパラートを動かすと、像は反対方向に動いて見えます。この性質を理解することで、けんび鏡で標本を観察するときに、像の位置を正確に把握できます。<img src=\"../images/biology/microscope/sci.biology.microscope_water_organisms16.png\" alt=\"プレパラートと像の動き\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
@@ -257,8 +255,7 @@ window.questions = [
       "上",
       "下",
       "右",
-      "左",
-      "動かない"
+      "左"
     ],
     "answer": 1,
     "source": "けんび鏡で、プレパラートを上に動かしたとき、見える像は下に動きます。けんび鏡のレンズが像を上下左右逆に映すためです。プレパラートを動かすと、像は反対方向に動いて見えます。この性質を理解することで、けんび鏡で標本を観察するときに、像の位置を正確に把握できます。<img src=\"../images/biology/microscope/sci.biology.microscope_water_organisms17.png\" alt=\"プレパラートと像の動き\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
@@ -272,8 +269,8 @@ window.questions = [
     "choices": [
       "明るくなる",
       "暗くなる",
-      "変わらない",
-      "一定になる"
+      "明るさが一定になる",
+      "明るさが変動する"
     ],
     "answer": 1,
     "source": "けんび鏡の倍率を上げると、視野の明るさは暗くなります。倍率が高いほど、光が集まりにくくなるためです。倍率を上げると、見える範囲が狭くなり、光も集まりにくくなります。倍率を変えるときは、視野の明るさも変わることを理解しておくことが大切です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">【倍率と視野の明るさ】\n\n  倍率が低い → 視野が明るい\n  倍率が高い → 視野が暗い\n\n  ※ 倍率が高いほど光が集まりにくい</div>",
@@ -287,8 +284,8 @@ window.questions = [
     "choices": [
       "広くなる",
       "狭くなる",
-      "変わらない",
-      "一定になる"
+      "広さが一定になる",
+      "広さが変動する"
     ],
     "answer": 1,
     "source": "けんび鏡の倍率を上げると、視野の広さは狭くなります。倍率が高いほど、見える範囲が狭くなるためです。倍率を上げると、標本が大きく見えますが、見える範囲は狭くなります。倍率を変えるときは、視野の広さも変わることを理解しておくことが大切です。<img src=\"../images/biology/microscope/sci.biology.microscope_water_organisms19.png\" alt=\"倍率と視野の広さ\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",

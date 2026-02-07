@@ -3191,6 +3191,50 @@
     "tags": []
   },
   {
+    "id": "sci.comprehensive.physics_comprehensive",
+    "grade": 6,
+    "subject": "sci",
+    "title": "物理総合",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.comprehensive.physics_comprehensive&mode=wakaru",
+    "format": "html",
+    "tags": []
+  },
+  {
+    "id": "sci.comprehensive.chemistry_comprehensive",
+    "grade": 6,
+    "subject": "sci",
+    "title": "化学総合",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.comprehensive.chemistry_comprehensive&mode=wakaru",
+    "format": "html",
+    "tags": []
+  },
+  {
+    "id": "sci.comprehensive.biology_comprehensive",
+    "grade": 6,
+    "subject": "sci",
+    "title": "生物総合",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.comprehensive.biology_comprehensive&mode=wakaru",
+    "format": "html",
+    "tags": []
+  },
+  {
+    "id": "sci.comprehensive.earth_science_comprehensive",
+    "grade": 6,
+    "subject": "sci",
+    "title": "地学総合",
+    "duration_min": 20,
+    "sku_required": null,
+    "path": "lessons/sci/modular/wakaru/index_modular.html?era=sci.comprehensive.earth_science_comprehensive&mode=wakaru",
+    "format": "html",
+    "tags": []
+  },
+  {
     "id": "sci.comprehensive.electricity_comprehensive",
     "grade": 6,
     "subject": "sci",

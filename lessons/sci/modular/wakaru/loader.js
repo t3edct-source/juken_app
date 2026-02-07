@@ -103,7 +103,11 @@
     'sci.comprehensive.human_body_comprehensive': idToFileName('sci.comprehensive.human_body_comprehensive'),
     'sci.comprehensive.astronomy_comprehensive': idToFileName('sci.comprehensive.astronomy_comprehensive'),
     'sci.comprehensive.strata_comprehensive': idToFileName('sci.comprehensive.strata_comprehensive'),
-    'sci.comprehensive.weather_comprehensive': idToFileName('sci.comprehensive.weather_comprehensive')
+    'sci.comprehensive.weather_comprehensive': idToFileName('sci.comprehensive.weather_comprehensive'),
+    'sci.comprehensive.physics_comprehensive': idToFileName('sci.comprehensive.physics_comprehensive'),
+    'sci.comprehensive.chemistry_comprehensive': idToFileName('sci.comprehensive.chemistry_comprehensive'),
+    'sci.comprehensive.biology_comprehensive': idToFileName('sci.comprehensive.biology_comprehensive'),
+    'sci.comprehensive.earth_science_comprehensive': idToFileName('sci.comprehensive.earth_science_comprehensive')
   };
 
   const file = map[era];

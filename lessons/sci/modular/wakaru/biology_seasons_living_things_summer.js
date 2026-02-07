@@ -309,7 +309,7 @@ window.questions = [
       "発芽"
     ],
     "answer": 0,
-    "source": "光合成は、植物が二酸化炭素と水から栄養をつくる基本的なはたらきです。春になると光の量が増え、気温も上がるため、光合成に適した条件がそろいます。光合成が活発になると、植物は芽や葉、根などを成長させるためのエネルギーをたくさんつくることができます。春の成長ラッシュを支えているのは、この光合成のはたらきなのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">光合成のしくみ\n\n☀️ 強い光\n    │\n    ↓\n🌿 光合成\n    ├─→ 二酸化炭素 + 水\n    └─→ 栄養（でんぷんなど）\n    │\n    ↓\n⚡ エネルギーをつくる\n    │\n    ↓\n🌱 成長に使う\n    ├─→ 芽\n    ├─→ 葉\n    └─→ 根\n\n光 + CO₂ + H₂O → 栄養 → 成長</div>",
+    "source": "光合成は、植物が二酸化炭素と水から栄養をつくる基本的なはたらきです。夏になると光の量が増え、気温も上がるため、光合成に適した条件がそろいます。光合成が活発になると、植物は芽や葉、根などを成長させるためのエネルギーをたくさんつくることができます。夏の成長を支えているのは、この光合成のはたらきなのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">光合成のしくみ\n\n☀️ 夏の強い光\n    │\n    ↓\n🌿 光合成\n    ├─→ 二酸化炭素 + 水\n    └─→ 栄養（でんぷんなど）\n    │\n    ↓\n⚡ エネルギーをつくる\n    │\n    ↓\n🌱 成長に使う\n    ├─→ 芽\n    ├─→ 葉\n    └─→ 根\n\n光 + CO₂ + H₂O → 栄養 → 成長</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"

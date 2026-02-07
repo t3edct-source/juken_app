@@ -13,8 +13,7 @@ window.questions = [
       "星",
       "星座",
       "惑星",
-      "衛星",
-      "彗星"
+      "衛星"
     ],
     "answer": 0,
     "source": "夜空に見えるたくさんの光る点は「星」とよばれます。星はたいへん遠くにあるため、どの方向を見ても光の点のように見えます。明るさや色がちがって見えるのは、星ごとに温度や大きさ、地球からの距離が異なるためです。<img src=\"../images/earth/stars_constellations_integrated1.png\" alt=\"夜空の星\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
@@ -29,8 +28,7 @@ window.questions = [
       "星座",
       "星団",
       "星雲",
-      "銀河",
-      "惑星"
+      "銀河"
     ],
     "answer": 0,
     "source": "星座は夜空を整理するための正式な区分で、国際的に88に決められています。これによって、星の位置を正確に記録したり、天体を見つけやすくしたりできます。<img src=\"../images/earth/stars_constellations_integrated2.png\" alt=\"88の星座\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
@@ -45,8 +43,7 @@ window.questions = [
       "星の並び",
       "星の明るさ",
       "星の色",
-      "星の数",
-      "星の大きさ"
+      "星の数"
     ],
     "answer": 0,
     "source": "星座は、夜空にある星の並びを線で結んで形に見立てたものです。星どうしには実際のつながりはありませんが、地球から見ると特定の形にまとまって見えるため、昔の人々は動物や人物、道具の姿にたとえて名前をつけました。<img src=\"../images/earth/stars_constellations_integrated3.png\" alt=\"星座のつくり方\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
@@ -61,8 +58,7 @@ window.questions = [
       "1等星",
       "6等星",
       "10等星",
-      "時によって変わる",
-      "測定できない"
+      "時によって変わる"
     ],
     "answer": 0,
     "source": "星の明るさの階級として、最も明るく見える星を1等星といいます。肉眼で見える最も暗い星を6等星として、6階級に分けます。<img src=\"../images/earth/stars_constellations_integrated4.png\" alt=\"星の明るさの階級\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
@@ -77,8 +73,7 @@ window.questions = [
       "星の表面温度",
       "星の大きさ",
       "星の距離",
-      "時によって変わる",
-      "測定できない"
+      "時によって変わる"
     ],
     "answer": 0,
     "source": "星の色は、星の表面温度によってちがいます。表面温度が高い星ほど青白色に、低い星ほど赤色に見えます。<img src=\"../images/earth/stars_constellations_integrated5.png\" alt=\"星の色と表面温度\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
@@ -121,8 +116,7 @@ window.questions = [
       "地球が公転しているから",
       "地球が自転しているから",
       "星が動いているから",
-      "月の位置が変わるから",
-      "太陽の位置が変わるから"
+      "月の位置が変わるから"
     ],
     "answer": 0,
     "source": "季節によって見える星座が変わるのは、地球が太陽のまわりを一年かけて公転しているためです。地球の位置が変わると、夜に太陽と反対側に見える宇宙の方向も変わり、見える星座が変化します。<img src=\"../images/earth/stars_constellations_integrated8.png\" alt=\"季節と星座\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
@@ -136,7 +130,7 @@ window.questions = [
     "choices": [
       "ベガ、アルタイル、デネブ",
       "ベテルギウス、シリウス、プロキオン",
-      "すべて",
+      "リゲル、シリウス、プロキオン",
       "時によって変わる"
     ],
     "answer": 0,
@@ -151,7 +145,7 @@ window.questions = [
     "choices": [
       "ベガ、アルタイル、デネブ",
       "ベテルギウス、シリウス、プロキオン",
-      "すべて",
+      "リゲル、シリウス、プロキオン",
       "時によって変わる"
     ],
     "answer": 1,
@@ -167,8 +161,7 @@ window.questions = [
       "ベガ",
       "アルタイル",
       "シリウス",
-      "プロキオン",
-      "すべて同じ"
+      "プロキオン"
     ],
     "answer": 2,
     "source": "全天で最も明るい星はシリウスです。おおいぬ座の1等星で、冬の大三角をつくる星の一つです。<img src=\"../images/earth/stars_constellations_integrated11.png\" alt=\"シリウス\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
@@ -183,8 +176,7 @@ window.questions = [
       "ベガ",
       "アルタイル",
       "アンタレス",
-      "シリウス",
-      "すべて同じ"
+      "シリウス"
     ],
     "answer": 2,
     "source": "さそり座の1等星はアンタレスです。さそり座は、夏の南の低い空にS字形に並んで見られます。<img src=\"../images/earth/stars_constellations_integrated12.png\" alt=\"さそり座\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
@@ -214,8 +206,7 @@ window.questions = [
       "季節や方角",
       "時間",
       "天気",
-      "月の満ち欠け",
-      "星の明るさ"
+      "月の満ち欠け"
     ],
     "answer": 0,
     "source": "星座は、昔から季節や方角を知る手がかりとして利用されてきました。季節によって見える星座が決まっているため、星空を見ればおおよその季節がわかります。また、北極星や北斗七星の位置関係を使えば、方角を知ることもできます。<img src=\"../images/earth/stars_constellations_integrated14.png\" alt=\"星座の利用\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
@@ -250,8 +241,7 @@ window.questions = [
       "東から西へ動く",
       "西から東へ動く",
       "動かない",
-      "時によって変わる",
-      "測定できない"
+      "時によって変わる"
     ],
     "answer": 0,
     "source": "星の1日の動きで、東の空の星は東から西へ動きます。地球の自転により、星が東から西へ動いて見えます。<img src=\"../images/earth/stars_constellations_integrated16.png\" alt=\"東の空の星の動き\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
@@ -266,8 +256,7 @@ window.questions = [
       "北極星",
       "北斗七星",
       "シリウス",
-      "ベガ",
-      "カノープス"
+      "ベガ"
     ],
     "answer": 0,
     "source": "北極星は、「北」の方角を示す代表的な星として知られています。この星はほぼ地球の自転軸の延長線上に位置しているため、夜空でほとんど動きません。<img src=\"../images/earth/stars_constellations_integrated17.png\" alt=\"北極星の位置\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
@@ -282,8 +271,7 @@ window.questions = [
       "北斗七星",
       "カシオペア座",
       "こぐま座",
-      "りゅう座",
-      "ペルセウス座"
+      "りゅう座"
     ],
     "answer": 0,
     "source": "北斗七星は北極星を探すときの目印としてよく使われます。北斗七星のひしゃくの形をした部分の端にある2つの星を結び、その線を伸ばしていくと北極星の位置にたどり着きます。<img src=\"../images/earth/stars_constellations_integrated18.png\" alt=\"北斗七星で北極星を見つける\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
@@ -313,8 +301,7 @@ window.questions = [
       "東から西へ動く",
       "西から東へ動く",
       "動かない",
-      "時によって変わる",
-      "測定できない"
+      "時によって変わる"
     ],
     "answer": 0,
     "source": "星の1日の動きで、西の空の星も東から西へ動きます。地球の自転により、すべての星が東から西へ動いて見えます。これは東の空の星と同じ動きです。<img src=\"../images/earth/stars_constellations_integrated20.png\" alt=\"西の空の星の動き\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
@@ -328,7 +315,7 @@ window.questions = [
     "choices": [
       "北斗七星のひしゃくの先の2つの星を結んだ線を延ばす",
       "カシオペヤ座のWの形から見つける",
-      "すべて",
+      "オリオン座の三つ星から見つける",
       "時によって変わる"
     ],
     "answer": 2,
@@ -344,8 +331,7 @@ window.questions = [
       "時計回り",
       "反時計回り",
       "動かない",
-      "時によって変わる",
-      "測定できない"
+      "時によって変わる"
     ],
     "answer": 0,
     "source": "北の空の星の動きの向きは時計回りです。北極星を中心にして、星が時計回りに回転して見えます。<img src=\"../images/earth/stars_constellations_integrated22.png\" alt=\"北の空の星の動き\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
@@ -360,8 +346,7 @@ window.questions = [
       "時計回り",
       "反時計回り",
       "動かない",
-      "時によって変わる",
-      "測定できない"
+      "時によって変わる"
     ],
     "answer": 1,
     "source": "南の空の星の動きの向きは反時計回りです。南の空では、星が反時計回りに動いて見えます。<img src=\"../images/earth/stars_constellations_integrated23.png\" alt=\"南の空の星の動き\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
@@ -376,8 +361,7 @@ window.questions = [
       "地球の自転",
       "地球の公転",
       "星の自転",
-      "星の公転",
-      "すべて同じ"
+      "星の公転"
     ],
     "answer": 1,
     "source": "星の1年の動きは、地球の公転による見かけの動きです。地球が太陽のまわりを公転することで、星の位置が1年かけて変わって見えます。<img src=\"../images/earth/stars_constellations_integrated24.png\" alt=\"星の1年の動き\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
@@ -392,8 +376,7 @@ window.questions = [
       "地球の自転による",
       "地球の公転による",
       "星の自転による",
-      "時によって変わる",
-      "特別な理由はない"
+      "時によって変わる"
     ],
     "answer": 1,
     "source": "1年のうち、同じ時刻に見える星の位置が変わる理由は、地球の公転によるものです。地球が太陽のまわりを公転することで、星の位置が1年かけて変わって見えます。<img src=\"../images/earth/stars_constellations_integrated25.png\" alt=\"星の位置が変わる理由\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
@@ -408,8 +391,7 @@ window.questions = [
       "1日の動きは地球の自転による、1年の動きは地球の公転による",
       "1日の動きは地球の公転による、1年の動きは地球の自転による",
       "どちらも同じ",
-      "時によって変わる",
-      "測定できない"
+      "時によって変わる"
     ],
     "answer": 0,
     "source": "星の1日の動きと1年の動きのちがいとして、1日の動きは地球の自転による、1年の動きは地球の公転によるのが正しいです。<img src=\"../images/earth/stars_constellations_integrated26.png\" alt=\"1日の動きと1年の動き\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
@@ -424,8 +406,7 @@ window.questions = [
       "15度",
       "30度",
       "45度",
-      "60度",
-      "90度"
+      "60度"
     ],
     "answer": 1,
     "source": "1か月後、同じ時刻に見える星の位置は、約30度ずれます。1年で360度ずれるため、1か月では約30度（360度÷12か月）ずれます。<img src=\"../images/earth/stars_constellations_integrated27.png\" alt=\"1か月後の星の位置\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
@@ -440,8 +421,7 @@ window.questions = [
       "30度",
       "60度",
       "90度",
-      "120度",
-      "180度"
+      "120度"
     ],
     "answer": 2,
     "source": "3か月後、同じ時刻に見える星の位置は、約90度ずれます。1か月で約30度ずれるため、3か月では約90度（30度×3）ずれます。<img src=\"../images/earth/stars_constellations_integrated28.png\" alt=\"3か月後の星の位置\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
@@ -456,8 +436,7 @@ window.questions = [
       "Aの位置",
       "Aから30度時計回りの位置",
       "Aから30度反時計回りの位置",
-      "Aから90度時計回りの位置",
-      "時によって変わる"
+      "Aから90度時計回りの位置"
     ],
     "answer": 1,
     "source": "ある日の午後9時に、カシオペヤ座がAの位置に見えた場合、1か月後の午後9時には、Aから30度時計回りの位置に見えます。1か月で約30度ずれるためです。<img src=\"../images/earth/stars_constellations_integrated29.png\" alt=\"カシオペヤ座の位置変化\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
@@ -472,8 +451,7 @@ window.questions = [
       "大気のゆらぎによるため",
       "星が動いているため",
       "星の明るさが変わるため",
-      "雲が通るため",
-      "月の光の影響"
+      "雲が通るため"
     ],
     "answer": 0,
     "source": "星の光は、地球の大気を通って私たちの目に届きます。この大気は、温度のちがいや風の動きによってつねにゆらいでいます。光は空気の密度が変わると曲がる性質があるため、星の光がわずかに曲げられ続け、強く見えたり弱く見えたりします。これが「星が瞬く」ように見える原因です。<img src=\"../images/earth/stars_constellations_integrated30.png\" alt=\"星が瞬く理由\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",

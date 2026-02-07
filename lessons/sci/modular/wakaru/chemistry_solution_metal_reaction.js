@@ -23,7 +23,8 @@ window.questions = [
     "choices": [
       "発生する",
       "発生しない",
-      "場合による"],
+      "場合による",
+      "時によって変わる"],
     "answer": 1,
     "source": "うすい塩酸に銅を入れても、気体は発生しません。銅は塩酸と反応しない金属です。<img src=\"../images/chemistry/solution_metal_reaction/solution_metal_reaction2.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["塩酸", "銅", "反応", "基本"],
@@ -50,7 +51,8 @@ window.questions = [
     "choices": [
       "同じ物質",
       "別の物質",
-      "何も残らない"],
+      "何も残らない",
+      "時によって変わる"],
     "answer": 1,
     "source": "金属がとけた液を蒸発させると、もとの金属とはまったく別の固体が残ります。例えば、鉄と塩酸の反応では、塩化鉄が残ります。<img src=\"../images/chemistry/solution_metal_reaction/solution_metal_reaction4.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["金属", "蒸発", "固体", "基本"],
@@ -63,7 +65,8 @@ window.questions = [
     "choices": [
       "金属の重さ",
       "塩酸の体積",
-      "時間"],
+      "時間",
+      "温度"],
     "answer": 0,
     "source": "一定量のうすい塩酸に金属を入れるとき、過不足なく反応するまでは、発生する水素の体積は金属の重さに比例して増えます。<img src=\"../images/chemistry/solution_metal_reaction/solution_metal_reaction5.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["塩酸", "金属", "水素", "比例", "基本"],
@@ -76,7 +79,8 @@ window.questions = [
     "choices": [
       "金属が残る",
       "塩酸が残る",
-      "どちらも残らない"],
+      "どちらも残らない",
+      "どちらも残る"],
     "answer": 0,
     "source": "一定量のうすい塩酸に金属を入れるとき、過不足なく反応したあとは、金属が残ります。塩酸はすべて反応してなくなります。<img src=\"../images/chemistry/solution_metal_reaction/solution_metal_reaction6.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["塩酸", "金属", "反応", "基本"],
@@ -89,7 +93,8 @@ window.questions = [
     "choices": [
       "金属の重さ",
       "塩酸の体積",
-      "時間"],
+      "時間",
+      "温度"],
     "answer": 1,
     "source": "一定量の金属にうすい塩酸を入れるとき、過不足なく反応するまでは、発生する水素の体積は塩酸の体積に比例して増えます。<img src=\"../images/chemistry/solution_metal_reaction/solution_metal_reaction7.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["塩酸", "金属", "水素", "比例", "基本"],
@@ -102,7 +107,8 @@ window.questions = [
     "choices": [
       "金属が残る",
       "塩酸が残る",
-      "どちらも残らない"],
+      "どちらも残らない",
+      "どちらも残る"],
     "answer": 1,
     "source": "一定量の金属にうすい塩酸を入れるとき、過不足なく反応したあとは、塩酸が残ります。金属はすべて反応してなくなります。<img src=\"../images/chemistry/solution_metal_reaction/solution_metal_reaction8.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["塩酸", "金属", "反応", "基本"],
@@ -129,7 +135,8 @@ window.questions = [
     "choices": [
       "発生する",
       "発生しない",
-      "場合による"],
+      "場合による",
+      "時によって変わる"],
     "answer": 1,
     "source": "水酸化ナトリウム水よう液に、鉄、マグネシウム、銅を入れても、気体は発生しません。アルミニウムだけが水素を発生します。",
     "tags": ["水酸化ナトリウム", "金属", "反応", "基本"],
@@ -156,7 +163,8 @@ window.questions = [
     "choices": [
       "すべての範囲",
       "過不足なく反応するまでの範囲",
-      "過不足なく反応したあとの範囲"],
+      "過不足なく反応したあとの範囲",
+      "比例しない"],
     "answer": 1,
     "source": "一定量のうすい塩酸に金属を入れるとき、過不足なく反応するまでは、発生する水素の体積は金属の重さに比例して増えます。それ以後は、水素の体積は増えず、金属が残ります。",
     "tags": ["塩酸", "金属", "水素", "比例", "基本"],
@@ -170,8 +178,7 @@ window.questions = [
       "1.5g",
       "2.0g",
       "2.5g",
-      "3.0g",
-      "計算できない"
+      "3.0g"
     ],
     "answer": 1,
     "source": "水素の体積がアルミニウムの重さに比例して増えるのは、過不足なく反応するまでです。2.0gまでは比例して増え、2.5gでも同じ体積なので、2.0gが過不足なく反応する重さです。",
@@ -186,8 +193,7 @@ window.questions = [
       "0.5g",
       "1.0g",
       "1.5g",
-      "2.0g",
-      "計算できない"
+      "2.0g"
     ],
     "answer": 2,
     "source": "過不足なく反応するアルミニウムは2.0gなので、3.5gを入れると、3.5-2.0=1.5gのアルミニウムが反応せずに残ります。",
@@ -217,7 +223,8 @@ window.questions = [
     "choices": [
       "成り立つ",
       "成り立たない",
-      "場合による"],
+      "場合による",
+      "時によって変わる"],
     "answer": 0,
     "source": "過不足なく反応するまでは、水素の体積は金属の重さに比例するので、0.1:120=□:420の比例式が成り立ちます。",
     "tags": ["塩酸", "マグネシウム", "反応", "計算", "比例"],
@@ -262,7 +269,8 @@ window.questions = [
     "choices": [
       "グラフが直線になっている部分の最後の点",
       "グラフが水平になっている部分の最初の点",
-      "グラフが曲がっている点"],
+      "グラフが曲がっている点",
+      "グラフの最初の点"],
     "answer": 0,
     "source": "一定量のうすい塩酸に金属を入れるとき、過不足なく反応する点は、グラフが直線になっている部分の最後の点です。それ以後は、グラフが水平になり、金属が残ります。",
     "tags": ["塩酸", "金属", "グラフ", "反応", "基本"],
@@ -275,7 +283,8 @@ window.questions = [
     "choices": [
       "グラフが直線になっている部分の最後の点",
       "グラフが水平になっている部分の最初の点",
-      "グラフが曲がっている点"],
+      "グラフが曲がっている点",
+      "グラフの最初の点"],
     "answer": 0,
     "source": "一定量の金属にうすい塩酸を入れるとき、過不足なく反応する点は、グラフが直線になっている部分の最後の点です。それ以後は、グラフが水平になり、塩酸が残ります。",
     "tags": ["塩酸", "金属", "グラフ", "反応", "基本"],

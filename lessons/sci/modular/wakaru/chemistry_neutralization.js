@@ -12,7 +12,7 @@ window.questions = [
       "分解",
       "燃焼"],
     "answer": 0,
-    "source": "酸性の水よう液とアルカリ性の水よう液を混ぜ合わせると、たがいの性質を打ち消し合う反応が起こります。この反応を中和といいます。中和では、酸の水素イオンとアルカリの水酸化物イオンが反応して水ができ、残りのイオンが結合して塩ができます。<img src=\"../images/chemistry/neutralization/neutralization1.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
+    "source": "酸性の水よう液とアルカリ性の水よう液を混ぜ合わせると、たがいの性質を打ち消し合う反応が起こります。この反応を中和といいます。中和では、酸の水素イオンとアルカリの水酸化物イオンが反応して水ができ、残りのイオンが結合して塩ができます。<img src=\"../images/chemistry/neutralization/neutralization1.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["中和", "酸性", "アルカリ性", "基本"],
     "difficulty": 1,
     "asof": "2026-01-03"
@@ -23,9 +23,10 @@ window.questions = [
     "choices": [
       "酸性",
       "中性",
-      "アルカリ性"],
+      "アルカリ性",
+      "時によって変わる"],
     "answer": 1,
-    "source": "酸性の水よう液とアルカリ性の水よう液がちょうど中和すると、液の性質は中性になります。これは、酸の水素イオンとアルカリの水酸化物イオンがすべて反応して水になり、水素イオンも水酸化物イオンも残らないためです。<img src=\"../images/chemistry/neutralization/neutralization2.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
+    "source": "酸性の水よう液とアルカリ性の水よう液がちょうど中和すると、液の性質は中性になります。これは、酸の水素イオンとアルカリの水酸化物イオンがすべて反応して水になり、水素イオンも水酸化物イオンも残らないためです。<img src=\"../images/chemistry/neutralization/neutralization2.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["中和", "中性", "基本"],
     "difficulty": 1,
     "asof": "2026-01-03"
@@ -39,7 +40,7 @@ window.questions = [
       "アルカリ",
       "水よう液"],
     "answer": 0,
-    "source": "中和が起こると、水と新しい物質ができます。この新しい物質を塩といいます。例えば、塩酸と水酸化ナトリウム水よう液の中和では、水と食塩ができます。塩は、酸の陰イオンとアルカリの陽イオンが結合してできる物質で、水に溶けやすいものが多いです。<img src=\"../images/chemistry/neutralization/neutralization3.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
+    "source": "中和が起こると、水と新しい物質ができます。この新しい物質を塩といいます。例えば、塩酸と水酸化ナトリウム水よう液の中和では、水と食塩ができます。塩は、酸の陰イオンとアルカリの陽イオンが結合してできる物質で、水に溶けやすいものが多いです。<img src=\"../images/chemistry/neutralization/neutralization3.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["中和", "塩", "基本"],
     "difficulty": 1,
     "asof": "2026-01-03"
@@ -53,7 +54,7 @@ window.questions = [
       "塩化カルシウム",
       "硫酸ナトリウム"],
     "answer": 0,
-    "source": "塩酸と水酸化ナトリウム水よう液の中和では、水と食塩ができます。塩酸の水素イオンと水酸化ナトリウムの水酸化物イオンが反応して水ができ、塩素イオンとナトリウムイオンが結合して食塩（塩化ナトリウム）ができます。<img src=\"../images/chemistry/neutralization/neutralization4.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
+    "source": "塩酸と水酸化ナトリウム水よう液の中和では、水と食塩ができます。塩酸の水素イオンと水酸化ナトリウムの水酸化物イオンが反応して水ができ、塩素イオンとナトリウムイオンが結合して食塩（塩化ナトリウム）ができます。<img src=\"../images/chemistry/neutralization/neutralization4.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["中和", "塩", "食塩", "塩酸", "水酸化ナトリウム"],
     "difficulty": 1,
     "asof": "2026-01-03"
@@ -67,7 +68,7 @@ window.questions = [
       "中性→酸性→アルカリ性",
       "変化しない"],
     "answer": 0,
-    "source": "BTB液を加えた塩酸（黄色）に水酸化ナトリウム水よう液を少しずつ加えていくと、水よう液の性質は酸性→中性（緑色）→アルカリ性（青色）と変化します。BTB液は、酸性で黄色、中性で緑色、アルカリ性で青色を示す指示薬です。<img src=\"../images/chemistry/neutralization/neutralization5.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
+    "source": "BTB液を加えた塩酸（黄色）に水酸化ナトリウム水よう液を少しずつ加えていくと、水よう液の性質は酸性→中性（緑色）→アルカリ性（青色）と変化します。BTB液は、酸性で黄色、中性で緑色、アルカリ性で青色を示す指示薬です。<img src=\"../images/chemistry/neutralization/neutralization5.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["中和", "BTB液", "性質の変化"],
     "difficulty": 2,
     "asof": "2026-01-03"
@@ -81,7 +82,7 @@ window.questions = [
       "水よう液が青色になったとき",
       "水よう液が無色になったとき"],
     "answer": 1,
-    "source": "BTB液を加えた塩酸に水酸化ナトリウム水よう液を少しずつ加えていくと、中性になったのは、水よう液が緑色になったときです。BTB液は、中性で緑色を示すため、緑色になったときがちょうど中和したときです。<img src=\"../images/chemistry/neutralization/neutralization6.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
+    "source": "BTB液を加えた塩酸に水酸化ナトリウム水よう液を少しずつ加えていくと、中性になったのは、水よう液が緑色になったときです。BTB液は、中性で緑色を示すため、緑色になったときがちょうど中和したときです。<img src=\"../images/chemistry/neutralization/neutralization6.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["中和", "BTB液", "中性", "緑色"],
     "difficulty": 2,
     "asof": "2026-01-03"
@@ -95,7 +96,7 @@ window.questions = [
       "両方",
       "どちらでもない"],
     "answer": 0,
-    "source": "酸性から中性の間は中和の反応が起こっていますが、中性からアルカリ性の間は中和の反応は起こっていません。中和は、酸とアルカリが反応する反応なので、中性になった後は、もう中和は起こりません。アルカリ性になるのは、アルカリが余っているためです。<img src=\"../images/chemistry/neutralization/neutralization7.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
+    "source": "酸性から中性の間は中和の反応が起こっていますが、中性からアルカリ性の間は中和の反応は起こっていません。中和は、酸とアルカリが反応する反応なので、中性になった後は、もう中和は起こりません。アルカリ性になるのは、アルカリが余っているためです。<img src=\"../images/chemistry/neutralization/neutralization7.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["中和", "反応", "基本"],
     "difficulty": 2,
     "asof": "2026-01-03"
@@ -109,7 +110,7 @@ window.questions = [
       "塩酸だけが残る",
       "水酸化ナトリウムだけが残る"],
     "answer": 1,
-    "source": "塩酸と水酸化ナトリウム水よう液を混ぜ合わせてちょうど中和した水よう液の水を蒸発させると、食塩（白い固体）が残ります。中和によってできた食塩は、水に溶けているため、水を蒸発させると結晶として残ります。<img src=\"../images/chemistry/neutralization/neutralization8.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
+    "source": "塩酸と水酸化ナトリウム水よう液を混ぜ合わせてちょうど中和した水よう液の水を蒸発させると、食塩（白い固体）が残ります。中和によってできた食塩は、水に溶けているため、水を蒸発させると結晶として残ります。<img src=\"../images/chemistry/neutralization/neutralization8.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["中和", "食塩", "蒸発"],
     "difficulty": 2,
     "asof": "2026-01-03"
@@ -123,7 +124,7 @@ window.questions = [
       "青色",
       "無色"],
     "answer": 0,
-    "source": "20cm³加えたところで緑色（中性）になったので、10cm³加えたときはまだ酸性なので、黄色です。中和が完了する前は、まだ塩酸が残っているため、水よう液は酸性を示し、BTB液は黄色になります。<img src=\"../images/chemistry/neutralization/neutralization9.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
+    "source": "20cm³加えたところで緑色（中性）になったので、10cm³加えたときはまだ酸性なので、黄色です。中和が完了する前は、まだ塩酸が残っているため、水よう液は酸性を示し、BTB液は黄色になります。<img src=\"../images/chemistry/neutralization/neutralization9.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["中和", "BTB液", "色の変化", "計算"],
     "difficulty": 2,
     "asof": "2026-01-03"
@@ -137,7 +138,7 @@ window.questions = [
       "3種類",
       "何も残らない"],
     "answer": 1,
-    "source": "20cm³でちょうど中和するので、30cm³加えたときはアルカリ性になっています。水を蒸発させると、食塩と加えた水酸化ナトリウムの2種類の固体が得られます。中和によってできた食塩と、余った水酸化ナトリウムが残ります。<img src=\"../images/chemistry/neutralization/neutralization10.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
+    "source": "20cm³でちょうど中和するので、30cm³加えたときはアルカリ性になっています。水を蒸発させると、食塩と加えた水酸化ナトリウムの2種類の固体が得られます。中和によってできた食塩と、余った水酸化ナトリウムが残ります。<img src=\"../images/chemistry/neutralization/neutralization10.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["中和", "蒸発", "固体", "計算"],
     "difficulty": 3,
     "asof": "2026-01-03"
@@ -149,11 +150,10 @@ window.questions = [
       "10cm³",
       "20cm³",
       "30cm³",
-      "40cm³",
-      "計算できない"
+      "40cm³"
     ],
     "answer": 1,
-    "source": "濃さが一定のとき、塩酸と水酸化ナトリウム水よう液がちょうど中和するときの体積の間には比例関係があります。水酸化ナトリウム水よう液20cm³とちょうど中和する塩酸は20cm³です。これは、同じ濃さの酸とアルカリは、同じ体積で中和するためです。<img src=\"../images/chemistry/neutralization/neutralization11.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
+    "source": "濃さが一定のとき、塩酸と水酸化ナトリウム水よう液がちょうど中和するときの体積の間には比例関係があります。水酸化ナトリウム水よう液20cm³とちょうど中和する塩酸は20cm³です。これは、同じ濃さの酸とアルカリは、同じ体積で中和するためです。<img src=\"../images/chemistry/neutralization/neutralization11.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["中和", "体積", "比例関係", "計算"],
     "difficulty": 2,
     "asof": "2026-01-03"
@@ -165,11 +165,10 @@ window.questions = [
       "A",
       "B",
       "C",
-      "D",
-      "E"
+      "D"
     ],
     "answer": 2,
-    "source": "塩酸10cm³とちょうど中和する水酸化ナトリウム水よう液は10cm³です。したがって、C（10cm³）がちょうど中和しています。濃さが一定のとき、同じ体積の酸とアルカリが中和するため、塩酸10cm³には水酸化ナトリウム水よう液10cm³が必要です。<img src=\"../images/chemistry/neutralization/neutralization12.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
+    "source": "塩酸10cm³とちょうど中和する水酸化ナトリウム水よう液は10cm³です。したがって、C（10cm³）がちょうど中和しています。濃さが一定のとき、同じ体積の酸とアルカリが中和するため、塩酸10cm³には水酸化ナトリウム水よう液10cm³が必要です。<img src=\"../images/chemistry/neutralization/neutralization12.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["中和", "体積", "計算"],
     "difficulty": 2,
     "asof": "2026-01-03"
@@ -181,11 +180,10 @@ window.questions = [
       "1つ",
       "2つ",
       "3つ",
-      "4つ",
-      "5つ"
+      "4つ"
     ],
     "answer": 2,
-    "source": "水を蒸発させたとき、1種類の固体だけが残るのは、ちょうど中和しているときだけです。A（0cm³）は塩酸だけ、C（10cm³）は食塩だけ、E（20cm³）は水酸化ナトリウムだけが残ります。しかし、ちょうど中和しているのはCだけなので、1種類の固体だけが残るのはCだけです。実際には、ちょうど中和しているときだけ食塩が残ります。Aは塩酸が残り、Eは水酸化ナトリウムが残りますが、これらは1種類です。しかし、問題文では「1種類の固体だけが残るもの」とあるので、ちょうど中和しているCだけが該当します。<img src=\"../images/chemistry/neutralization/neutralization13.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
+    "source": "水を蒸発させたとき、1種類の固体だけが残るのは、ちょうど中和しているときだけです。A（0cm³）は塩酸だけ、C（10cm³）は食塩だけ、E（20cm³）は水酸化ナトリウムだけが残ります。しかし、ちょうど中和しているのはCだけなので、1種類の固体だけが残るのはCだけです。実際には、ちょうど中和しているときだけ食塩が残ります。Aは塩酸が残り、Eは水酸化ナトリウムが残りますが、これらは1種類です。しかし、問題文では「1種類の固体だけが残るもの」とあるので、ちょうど中和しているCだけが該当します。<img src=\"../images/chemistry/neutralization/neutralization13.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["中和", "蒸発", "固体", "計算"],
     "difficulty": 3,
     "asof": "2026-01-03"
@@ -197,11 +195,10 @@ window.questions = [
       "A",
       "B",
       "C",
-      "D",
-      "E"
+      "D"
     ],
     "answer": 2,
-    "source": "マグネシウムを加えたときに水素が発生するのは、酸性の水よう液です。水素の発生量が最も少ないのは、酸性が最も弱い、つまりちょうど中和に近いCです。マグネシウムは酸と反応して水素を発生させるため、酸性が弱いほど、水素の発生量は少なくなります。<img src=\"../images/chemistry/neutralization/neutralization14.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
+    "source": "マグネシウムを加えたときに水素が発生するのは、酸性の水よう液です。水素の発生量が最も少ないのは、酸性が最も弱い、つまりちょうど中和に近いCです。マグネシウムは酸と反応して水素を発生させるため、酸性が弱いほど、水素の発生量は少なくなります。<img src=\"../images/chemistry/neutralization/neutralization14.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["中和", "マグネシウム", "水素", "計算"],
     "difficulty": 3,
     "asof": "2026-01-03"
@@ -213,11 +210,10 @@ window.questions = [
       "5cm³",
       "10cm³",
       "15cm³",
-      "20cm³",
-      "計算できない"
+      "20cm³"
     ],
     "answer": 1,
-    "source": "濃さが一定のとき、塩酸と水酸化ナトリウム水よう液がちょうど中和するときの体積の間には比例関係があります。うすい塩酸10cm³をちょうど中和するには、水酸化ナトリウム水よう液を10cm³加えればよいです。同じ濃さの酸とアルカリは、同じ体積で中和するためです。<img src=\"../images/chemistry/neutralization/neutralization15.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
+    "source": "濃さが一定のとき、塩酸と水酸化ナトリウム水よう液がちょうど中和するときの体積の間には比例関係があります。うすい塩酸10cm³をちょうど中和するには、水酸化ナトリウム水よう液を10cm³加えればよいです。同じ濃さの酸とアルカリは、同じ体積で中和するためです。<img src=\"../images/chemistry/neutralization/neutralization15.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["中和", "体積", "比例関係", "計算"],
     "difficulty": 2,
     "asof": "2026-01-03"
@@ -229,11 +225,10 @@ window.questions = [
       "12cm³",
       "20cm³",
       "24cm³",
-      "30cm³",
-      "計算できない"
+      "30cm³"
     ],
     "answer": 2,
-    "source": "濃さが一定のとき、塩酸と水酸化ナトリウム水よう液がちょうど中和するときの体積の間には比例関係があります。塩酸24cm³をちょうど中和するには、水酸化ナトリウム水よう液を24cm³加えればよいです。同じ濃さの酸とアルカリは、同じ体積で中和するためです。<img src=\"../images/chemistry/neutralization/neutralization16.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
+    "source": "濃さが一定のとき、塩酸と水酸化ナトリウム水よう液がちょうど中和するときの体積の間には比例関係があります。塩酸24cm³をちょうど中和するには、水酸化ナトリウム水よう液を24cm³加えればよいです。同じ濃さの酸とアルカリは、同じ体積で中和するためです。<img src=\"../images/chemistry/neutralization/neutralization16.jpg\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["中和", "体積", "比例関係", "計算"],
     "difficulty": 2,
     "asof": "2026-01-03"
@@ -286,7 +281,8 @@ window.questions = [
     "choices": [
       "比例関係",
       "反比例関係",
-      "関係がない"],
+      "関係がない",
+      "時によって変わる"],
     "answer": 0,
     "source": "濃さが一定のとき、塩酸と水酸化ナトリウム水よう液がちょうど中和するときの体積の間には、比例関係があります。同じ濃さの酸とアルカリは、同じ体積で中和するため、体積が2倍になれば、中和に必要な体積も2倍になります。<img src=\"../images/chemistry/neutralization/neutralization20.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["中和", "体積", "比例関係", "基本"],

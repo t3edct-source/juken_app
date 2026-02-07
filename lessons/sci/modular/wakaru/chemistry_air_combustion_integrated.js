@@ -250,7 +250,9 @@ window.questions = [
     "choices": [
       "固体のまま",
       "液体に変わって",
-      "気体に変わって"],
+      "気体に変わって",
+      "そのまま燃えない"
+    ],
     "answer": 2,
     "source": "ろうそくが燃えるとき、固体のろうはとけて液体になり、しんをのぼっていって、しんの先で気体となって燃えます。このように、ろうそくのろうは固体→液体→気体という順に状態変化しながら燃焼します。しんの先で気体になったろうが酸素と結びついて燃えるため、しんの先だけが燃えているように見えるのです。<img src=\"../images/chemistry/air_combustion_integrated/combustion_integrated21.png\" alt=\"ろうそくが燃えるときの状態変化\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["ろうそく", "燃え方", "状態変化", "基本"],
@@ -264,7 +266,8 @@ window.questions = [
       "2つ",
       "3つ",
       "4つ",
-      "5つ"],
+      "5つ"
+    ],
     "answer": 1,
     "source": "ろうそくのほのおは、外側から順に外えん、内えん、えん心の3つの部分に分かれています。外えんは酸素とよく触れるため完全燃焼し、最も温度が高くなります。内えんは酸素が少ないため不完全燃焼し、すすができて明るく光ります。えん心はしんの周りで、まだ気体になっていない部分です。<img src=\"../images/chemistry/air_combustion_integrated/combustion_integrated22.png\" alt=\"ろうそくのほのおの3つの部分\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["ろうそく", "ほのお", "基本"],
@@ -277,7 +280,9 @@ window.questions = [
     "choices": [
       "外えん",
       "内えん",
-      "えん心"],
+      "えん心",
+      "中心"
+    ],
     "answer": 0,
     "source": "ろうそくのほのおの中で、最も外側の部分を外えんといいます。外えんは最も外側なので酸素とよくふれ、完全燃焼しています。最も温度が高いです。<img src=\"../images/chemistry/air_combustion_integrated/combustion_integrated23.png\" alt=\"ろうそくのほのおの外えん\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["ろうそく", "ほのお", "外えん", "基本"],
@@ -290,7 +295,9 @@ window.questions = [
     "choices": [
       "外えん",
       "内えん",
-      "えん心"],
+      "えん心",
+      "中心"
+    ],
     "answer": 1,
     "source": "ろうそくのほのおの中で、最も明るくかがやいている部分は内えんです。内えんは酸素とじゅうぶんふれないため不完全燃焼していて、すすができます。すすが熱せられて最も明るくかがやいています。<img src=\"../images/chemistry/air_combustion_integrated/combustion_integrated24.png\" alt=\"ろうそくのほのおの内えん\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["ろうそく", "ほのお", "明るさ", "基本"],
@@ -303,7 +310,9 @@ window.questions = [
     "choices": [
       "木炭",
       "木ガス",
-      "木さく液"],
+      "木さく液",
+      "木タール"
+    ],
     "answer": 0,
     "source": "木をむし焼きにすると、気体や液体が出て、木炭（炭）が残ります。むし焼きとは、空気を少なくして加熱する方法で、完全に燃やさずに木を分解します。このとき、木に含まれていた水素や酸素などが気体や液体として出ていき、主に炭素からなる木炭が残ります。木炭は燃料として使われます。<img src=\"../images/chemistry/air_combustion_integrated/combustion_integrated25.png\" alt=\"木をむし焼きにしたときに残る木炭\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["木", "むし焼き", "木炭", "基本"],
@@ -316,7 +325,9 @@ window.questions = [
     "choices": [
       "木炭",
       "木ガス",
-      "木さく液"],
+      "木さく液",
+      "木タール"
+    ],
     "answer": 1,
     "source": "木をむし焼きにしたとき、発生した気体を木ガスといいます。木ガスは水素をふくんでいるので燃えます。<img src=\"../images/chemistry/air_combustion_integrated/combustion_integrated26.png\" alt=\"木ガス\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["木", "むし焼き", "木ガス", "基本"],
@@ -343,7 +354,9 @@ window.questions = [
     "choices": [
       "ほのおを出して燃える",
       "ほのおを出さず、真っ赤になって燃える",
-      "燃えない"],
+      "燃えない",
+      "白い煙を出して燃える"
+    ],
     "answer": 1,
     "source": "木炭は、ほのおを出さず、真っ赤になって燃えます。水素をふくむ気体がふくまれていないからです。<img src=\"../images/chemistry/air_combustion_integrated/combustion_integrated28.png\" alt=\"木炭の燃え方\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["木炭", "燃え方", "基本"],
@@ -356,7 +369,9 @@ window.questions = [
     "choices": [
       "燃焼",
       "酸化",
-      "還元"],
+      "還元",
+      "分解"
+    ],
     "answer": 1,
     "source": "マグネシウムや銅などの金属を加熱すると、酸素と結びついて、別の物質に変わります。この変化を酸化といいます。マグネシウム+酸素→酸化マグネシウム、銅+酸素→酸化銅となります。<img src=\"../images/chemistry/air_combustion_integrated/combustion_integrated29.png\" alt=\"金属の酸化\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["金属", "燃え方", "酸化", "基本"],
@@ -369,7 +384,9 @@ window.questions = [
     "choices": [
       "小さくなっている",
       "変わらない",
-      "大きくなっている"],
+      "大きくなっている",
+      "半分になっている"
+    ],
     "answer": 2,
     "source": "金属が燃えたあとにできた物質の重さは、もとの金属の重さと比べて大きくなっています。結びついた酸素の分だけ重くなるためです。<img src=\"../images/chemistry/air_combustion_integrated/combustion_integrated30.png\" alt=\"金属が燃えたあとの重さ\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": ["金属", "燃え方", "重さ", "基本"],

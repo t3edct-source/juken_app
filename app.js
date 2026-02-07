@@ -1461,6 +1461,34 @@ function getSubjectName(subject) {
   return subjectMap[subject] || subject;
 }
 
+// レッスンIDから理科の分野を判定する関数
+function getScienceField(lessonId) {
+  if (!lessonId) return '';
+  
+  const id = lessonId.toLowerCase();
+  if (id.includes('biology') || id.includes('生物')) {
+    return '【生物】';
+  } else if (id.includes('physics') || id.includes('物理') || id.includes('電気') || id.includes('電流') || id.includes('光') || id.includes('音') || id.includes('力') || id.includes('てこ') || id.includes('ばね') || id.includes('つり合い')) {
+    return '【物理】';
+  } else if (id.includes('chemistry') || id.includes('化学') || id.includes('水') || id.includes('空気') || id.includes('燃焼') || id.includes('溶液') || id.includes('酸') || id.includes('アルカリ') || id.includes('溶解度')) {
+    return '【化学】';
+  } else if (id.includes('earth') || id.includes('地学') || id.includes('天気') || id.includes('星') || id.includes('太陽') || id.includes('地震') || id.includes('火山') || id.includes('地層') || id.includes('川') || id.includes('星座')) {
+    return '【地学】';
+  }
+  return '';
+}
+
+// タイトルに分野タグを追加する関数（理科のみ）
+function formatLessonTitle(title, lessonId, subject) {
+  if (subject === 'sci' || subject === 'science_drill') {
+    const field = getScienceField(lessonId);
+    if (field) {
+      return field + ' ' + title;
+    }
+  }
+  return title;
+}
+
 // 現在選択されている教科（windowオブジェクトで管理）
 window.currentSubject = 'recommended';
 
@@ -1572,20 +1600,26 @@ scienceUnits = [
     shortName: '小6',
     icon: '🎯',
     lessons: [
-      // 気象（前線・天気図）系（小5から移動）（4）
+      // 【第1段階：基礎レッスン】（11）
+      // 気象（前線・天気図）系（4）
       'sci.earth.front_weather_land_sea_breeze', // 前線と天気, 海陸風
       'sci.earth.japan_weather', // 日本の天気
       'sci.earth.clouds_fronts_weather_map', // 気象（雲・前線・天気図）
       'sci.earth.weather_fronts_sim', // 天気の変化（低気圧と前線）シミュレーション
-      // 人体（循環/排出/感覚器/誕生）系（小5から移動）（4）
+      // 人体（循環/排出/感覚器/誕生）系（4）
       'sci.biology.heart_blood_circulation', // 心臓と血液のじゅんかん
       'sci.biology.respiration_excretion', // 呼吸と排出
       'sci.biology.bones_muscles_senses', // 骨と筋肉, 感覚器
       'sci.biology.human_birth', // ヒトのたんじょう
-      // 応用レッスン（3）
+      // 化学（詳細）（3）
+      'sci.chemistry.neutralization', // 中 和
+      'sci.chemistry.solution_metal_reaction', // 水よう液と金属の反応
+      'sci.chemistry.various_gases', // いろいろな気体
+      // 【第2段階：応用レッスン】（3）
       'sci.biology.environment_energy', // 環境問題 エネルギー問題（小4から移動）
       'sci.biology.human_body_digestion_respiration', // 人体①（消化・呼吸・血液）
       'sci.biology.human_body_nervous_motion', // 人体②（神経・運動）
+      // 【第3段階：総合レッスン】（10）
       // 物理総合（3）
       'sci.comprehensive.electricity_comprehensive', // 電気総合（回路／電力／発熱）
       'sci.comprehensive.light_sound_comprehensive', // 光・音の総合
@@ -1593,17 +1627,18 @@ scienceUnits = [
       // 化学総合（2）
       'sci.comprehensive.combustion_comprehensive', // 気体・燃焼総合（計算含む）
       'sci.comprehensive.water_solution_comprehensive', // 水溶液総合（酸・アルカリ・中和）
-      // 化学（詳細）
-      'sci.chemistry.neutralization', // 中 和
-      'sci.chemistry.solution_metal_reaction', // 水よう液と金属の反応
-      'sci.chemistry.various_gases', // いろいろな気体
       // 生物総合（2）
       'sci.comprehensive.animals_comprehensive', // 動物総合
       'sci.comprehensive.human_body_comprehensive', // ヒトの体総合（全分野の横断）
       // 地学総合（3）
       'sci.comprehensive.astronomy_comprehensive', // 天体総合（太陽・月・地球・惑星）
       'sci.comprehensive.strata_comprehensive', // 大地の変化総合（地層／化石／火山／地震）
-      'sci.comprehensive.weather_comprehensive' // 気象総合（前線／台風／天気図読み取り）
+      'sci.comprehensive.weather_comprehensive', // 気象総合（前線／台風／天気図読み取り）
+      // 【最終段階：4分野総合】（4）
+      'sci.comprehensive.physics_comprehensive', // 物理総合（光・音・電気・力・エネルギー）
+      'sci.comprehensive.chemistry_comprehensive', // 化学総合（酸・アルカリ・燃焼・溶解・物質保存）
+      'sci.comprehensive.biology_comprehensive', // 生物総合（呼吸・循環・消化・エネルギー）
+      'sci.comprehensive.earth_science_comprehensive' // 地学総合（地層・天気・天体・地球の動き）
     ]
   }
 ];
@@ -2694,9 +2729,10 @@ function createRouteMapCard(lesson, group, isCurrent, isCompleted, hasAccess, su
   
   const buttonText = isCompleted ? '再学習' : (hasAccess ? '開始' : '購入');
   const buttonClass = hasAccess ? group.colorClass : 'locked';
+  const displayTitle = formatLessonTitle(lesson.title, lesson.id, lesson.subject);
   
   card.innerHTML = `
-    <div class="route-map-card-title">${escapeHtml(lesson.title)}</div>
+    <div class="route-map-card-title">${escapeHtml(displayTitle)}</div>
     <div class="route-map-card-meta">${subjectName} / 小${lesson.grade} ・ ${lesson.duration_min || '?'}分</div>
     ${badge}
     <button class="route-map-card-button ${buttonClass}">
@@ -2814,9 +2850,10 @@ function renderReviewSection(list) {
   const badge = '<span class="route-map-card-badge review-badge">🔄 おさらい</span>';
   const buttonText = '再学習';
   const buttonClass = hasAccess ? 'review' : 'locked';
+  const displayTitle = formatLessonTitle(lesson.title, lesson.id, lesson.subject);
   
   card.innerHTML = `
-    <div class="route-map-card-title">${escapeHtml(lesson.title)}</div>
+    <div class="route-map-card-title">${escapeHtml(displayTitle)}</div>
     <div class="route-map-card-meta">${subjectName} / 小${lesson.grade} ・ ${lesson.duration_min || '?'}分</div>
     ${badge}
     <button class="route-map-card-button ${buttonClass}">
@@ -2965,9 +3002,10 @@ function createLessonCard(entry, safeCurrentSubject) {
       }
     }
     
+    const displayTitle = formatLessonTitle(entry.title, entry.id, entry.subject);
     div.innerHTML = `
       <div class="flex items-start justify-between mb-2">
-        <h3 class="font-semibold flex-1">${escapeHtml(entry.title)}</h3>
+        <h3 class="font-semibold flex-1">${escapeHtml(displayTitle)}</h3>
         <div class="flex gap-1">
           ${recommendationBadge}
           ${completionBadge}
@@ -4288,7 +4326,8 @@ async function renderUnitLessons(unitId) {
     
     const titleSpan = document.createElement('span');
     titleSpan.className = 'lesson-title';
-    titleSpan.textContent = lesson.title;
+    const displayTitle = formatLessonTitle(lesson.title, lesson.id, lesson.subject);
+    titleSpan.textContent = displayTitle;
     if (isLocked) {
       titleSpan.classList.add('locked-title');
     }
@@ -7594,10 +7633,14 @@ function renderReviewLessonsSection() {
             <p class="section-description">間違えた問題を集めた復習レッスンです</p>
           </div>
           <div class="review-lessons-grid">
-            ${state.reviewLessons.map(lesson => `
+            ${state.reviewLessons.map(lesson => {
+              const originalLesson = lesson.originalLessonId ? findLessonById(normalizeLessonId(lesson.originalLessonId)) : null;
+              const subject = originalLesson?.subject || 'review';
+              const displayTitle = formatLessonTitle(lesson.title, lesson.originalLessonId || lesson.id, subject);
+              return `
               <div class="review-lesson-card" data-action="open-review" data-review-id="${lesson.id}">
                 <div class="lesson-card-header">
-                  <h3 class="lesson-card-title">${escapeHtml(lesson.title)}</h3>
+                  <h3 class="lesson-card-title">${escapeHtml(displayTitle)}</h3>
                   <div class="lesson-card-meta">
                     <span class="question-count">${lesson.questions.length}問</span>
                     <span class="created-date">${new Date(lesson.createdAt).toLocaleDateString()}</span>
@@ -7619,7 +7662,8 @@ function renderReviewLessonsSection() {
                   </button>
                 </div>
               </div>
-            `).join('')}
+            `;
+            }).join('')}
           </div>
         </div>
       ` : ''}
