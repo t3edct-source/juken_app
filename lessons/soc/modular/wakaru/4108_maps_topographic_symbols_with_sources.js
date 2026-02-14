@@ -99,7 +99,7 @@ window.questions = [
       "90度"
     ],
     "answer": 0,
-    "source": "120度や150度、90度ではありません。日本標準時は東経135度の子午線（明石）を基準に決めています。国じゅうの時計を合わせる“真ん中の線”。時間は“見えない経度”とつながっているとイメージしましょう。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">日本標準時\n\n🌍 東経135度の子午線\n    ↓\n🏙️ 明石\n    ↓\n⏰ 日本標準時の基準\n    ↓\n🕐 国じゅうの時計を合わせる\n\n真ん中の線\n見えない経度</div>",
+    "source": "120度や150度、90度ではありません。日本標準時は東経135度の子午線（明石）を基準に決めています。国じゅうの時計を合わせる"真ん中の線"。時間は"見えない経度"とつながっているとイメージしましょう。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">日本標準時\n\n🌍 東経135度の子午線\n    ↓\n🏙️ 明石\n    ↓\n⏰ 日本標準時の基準\n    ↓\n🕐 国じゅうの時計を合わせる\n\n真ん中の線\n見えない経度</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"

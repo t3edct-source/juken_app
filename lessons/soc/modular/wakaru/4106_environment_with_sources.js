@@ -249,7 +249,7 @@ window.questions = [
       "樹木の伐採"
     ],
     "answer": 0,
-    "source": "生ごみを焼却するだけでは温室効果ガスは減りません。製品をすぐ捨てるのも逆効果。リユース（くり返し使う）や修理は、新しく作るエネルギーを減らせます。物の寿命をのばすことは“見えない省エネ”。買い方・使い方から工夫しましょう。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">騒音対策\n\n🛣️ 道路\n    ↓\n🔊 騒音\n    ↓\n🧱 防音壁を設置\n    ↓\n🔇 音をさえぎる\n\n静かな環境をつくる</div>",
+    "source": "化石燃料の増焼や舗装の破壊、樹木の伐採は騒音を増やす原因になります。防音壁の設置は、道路や工場からの騒音をさえぎり、静かな環境をつくる有効な対策です。音を物理的にさえぎることで、周辺の生活環境を守ります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4facfe;\">騒音対策\n\n🛣️ 道路\n    ↓\n🔊 騒音\n    ↓\n🧱 防音壁を設置\n    ↓\n🔇 音をさえぎる\n\n静かな環境をつくる</div>",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -436,7 +436,7 @@ window.questions = [
   },
   {
     "qnum": 30,
-    "text": "循環型社会づくりの基本となる日本の考え方に最も近いのはどれですか。\nこの調子で、次は 4107 情報（30問） に進められます。続けますか？\nあなた:\n続けてください。30問ずつ区切らずにそのまま続けていってください。\nChatGPT:\n了解です。直前までの基準（曖昧さ回避・一意解・教科書レベルの近似肢・時事で変動しにくい事実・背景は一文）に戻し、4107→4108→4109→… の順で続けます（hardthinkerモード）。\nまずは 4107・4108・4109 を一気に提示します。続き（4110以降）もこの流れで作成していきます。",
+    "text": "循環型社会づくりの基本となる日本の考え方に最も近いのはどれですか。",
     "choices": [
       "3Rの推進",
       "化石燃料の大量消費",

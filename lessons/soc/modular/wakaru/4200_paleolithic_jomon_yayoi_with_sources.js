@@ -10,7 +10,7 @@ window.questions = [
       "古墳時代"
     ],
     "answer": 0,
-    "source": "旧石器は「獲る」時代。打製石器で狩りや採集を行い、移動のくらしが中心でした。土器も稲作もまだありません。\n獲物や木の実を追って場所を移す生活が基本で、煮て保存できる器がないため、食事はその場その場で済ませます。※縄文の厚手土器や弥生の水田と混同に注意。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">旧石器時代のくらし\n\n  🏃 移動のくらし\n      │\n  ┌──┴──┐\n  │       │\n 🦌狩り  🌰採集\n  │       │\n  🪨打製石器\n  │\n  ⚡ その場で食べる\n  (保存できない)</div>",
+    "source": "旧石器は「獲る」時代。打製石器で狩りや採集を行い、移動のくらしが中心でした。土器も稲作もまだありません。\n獲物や木の実を追って場所を移す生活が基本で、煮て保存できる器がないため、食事はその場その場で済ませます。※縄文の厚手土器や弥生の水田と混同に注意。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi1.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -25,7 +25,7 @@ window.questions = [
       "平安時代"
     ],
     "answer": 0,
-    "source": "縄文は「ためる」。厚手の縄文土器（じょうもんどき）で煮て保存し、磨製石器（ませいせっき）を使い、竪穴住居（たてあなじゅうきょ）に住む定住型のくらしが広がりました。\n海辺には食べかすが積もった貝塚（かいづか）ができ、当時の食や環境がわかります。宗教を思わせる土偶（どぐう）や石の並び（環状列石（かんじょうれっせき））も現れました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">縄文時代のくらし\n\n  🏠 定住（竪穴住居（たてあなじゅうきょ））\n      │\n  ┌──┴──┐\n  │       │\n 🍲煮る  💾保存\n  │       │\n  🪨厚手の縄文土器\n  │\n  🐚貝塚（ごみ置き場）\n  │\n  🙏土偶・環状列石</div>",
+    "source": "縄文は「ためる」。厚手の縄文土器（じょうもんどき）で煮て保存し、磨製石器（ませいせっき）を使い、竪穴住居（たてあなじゅうきょ）に住む定住型のくらしが広がりました。\n海辺には食べかすが積もった貝塚（かいづか）ができ、当時の食や環境がわかります。宗教を思わせる土偶（どぐう）や石の並び（環状列石（かんじょうれっせき））も現れました。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi2.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -40,7 +40,7 @@ window.questions = [
       "吉野ヶ里遺跡"
     ],
     "answer": 0,
-    "source": "岩宿遺跡（いわじゅくいせき）は、日本に旧石器文化があったことを示します。土器より古い地層から打製石器が見つかりました。\nそれまで「日本に旧石器はない」とする見方をくつがえし、文化の始まりが世界と同様に古くさかのぼると分かりました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">地層の順番（古い順）\n\n  ┌─────────────┐\n  │ 旧石器時代    │ ← 打製石器\n  │ (土器なし)    │\n  ├─────────────┤\n  │ 縄文時代      │ ← 縄文土器\n  │ (厚手土器)    │\n  ├─────────────┤\n  │ 弥生時代      │ ← 弥生土器\n  │ (薄手土器)    │\n  └─────────────┘\n\n岩宿遺跡（いわじゅくいせき）：土器より古い層から石器発見</div>",
+    "source": "岩宿遺跡（いわじゅくいせき）は、日本に旧石器文化があったことを示します。土器より古い地層から打製石器が見つかりました。\nそれまで「日本に旧石器はない」とする見方をくつがえし、文化の始まりが世界と同様に古くさかのぼると分かりました。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi3.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -55,7 +55,7 @@ window.questions = [
       "寝殿造"
     ],
     "answer": 0,
-    "source": "縄文の家の基本は竪穴住居（たてあなじゅうきょ）。地面を少し掘り下げて柱を立て、屋根をかけます。地中に近いので夏はすずしく冬は温かいのが利点です。\n床面は円形や方形で、中央の炉を囲んで調理や作業が行われます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">竪穴住居の構造\n\n      ╱╲ 屋根\n     ╱  ╲\n    ╱    ╲\n   ┌──────┐\n   │  🔥  │ 炉（中央）\n   │      │\n   └──────┘\n   ╱      ╲\n  ╱        ╲ 地面を掘る\n ╱          ╲\n\n夏：涼しい 冬：温かい</div>",
+    "source": "縄文の家の基本は竪穴住居（たてあなじゅうきょ）。地面を少し掘り下げて柱を立て、屋根をかけます。地中に近いので夏はすずしく冬は温かいのが利点です。\n床面は円形や方形で、中央の炉を囲んで調理や作業が行われます。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi4.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -70,7 +70,7 @@ window.questions = [
       "条坊"
     ],
     "answer": 0,
-    "source": "貝殻や動物の骨、壊れた道具が積もった「昔のごみ置き場」が貝塚（かいづか）。だからこそ当時の食と環境が丸ごとわかります。\n貝の種類や魚骨の違いから、季節や海の塩分、周辺の森のようすまで推定できるのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">貝塚の構造\n\n  ┌─────────────┐\n  │ 貝殻・魚骨    │\n  │ 動物の骨      │\n  │ 壊れた道具    │\n  └─────────────┘\n       ↓\n  ごみ置き場\n       ↓\n  情報の宝庫\n  (食・環境・季節)</div>",
+    "source": "貝殻や動物の骨、壊れた道具が積もった「昔のごみ置き場」が貝塚（かいづか）。だからこそ当時の食と環境が丸ごとわかります。\n貝の種類や魚骨の違いから、季節や海の塩分、周辺の森のようすまで推定できるのです。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi5.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -85,7 +85,7 @@ window.questions = [
       "吉胡貝塚"
     ],
     "answer": 0,
-    "source": "大森貝塚（おおもりかいづか）は、東京にある有名な縄文の貝塚（かいづか）。外国人教師モースの発掘・研究で、縄文のらしが広く知られるきっかけになりました。\n亀ヶ岡（かめがおか）・加曽利（かそり）・吉胡（よしご）も貝塚（かいづか）ですが場所や時期が異なります。教科書の「貝塚と言えば？」でまず出る看板例が大森です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">大森貝塚の位置\n\n  🗾 東京\n      │\n      │ 大森貝塚（おおもりかいづか）\n      │ (1877年発見)\n      │\n  👨‍🏫 モース\n  (外国人教師)\n      │\n      ↓\n  日本の考古学の\n  出発点</div>",
+    "source": "大森貝塚（おおもりかいづか）は、東京にある有名な縄文の貝塚（かいづか）。外国人教師モースの発掘・研究で、縄文のらしが広く知られるきっかけになりました。\n亀ヶ岡（かめがおか）・加曽利（かそり）・吉胡（よしご）も貝塚（かいづか）ですが場所や時期が異なります。教科書の「貝塚と言えば？」でまず出る看板例が大森です。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi6.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -100,7 +100,7 @@ window.questions = [
       "吉野ヶ里遺跡"
     ],
     "answer": 0,
-    "source": "大湯環状列石（おおゆかんじょうれっせき）は、秋田県の大きな石の円（ストーンサークル）。季節の行事や祈りに関わった祭祀の場と考えられます。\n石の配置や組み合わせには規則が見られ、太陽の動きや集団の集会と関係した可能性も指摘されています。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">環状列石の配置\n\n      ⚪\n    ⚪   ⚪\n  ⚪       ⚪\n ⚪   🕯️   ⚪\n  ⚪       ⚪\n    ⚪   ⚪\n      ⚪\n\n石の円（ストーンサークル）\n太陽の動きと関係？</div>",
+    "source": "大湯環状列石（おおゆかんじょうれっせき）は、秋田県の大きな石の円（ストーンサークル）。季節の行事や祈りに関わった祭祀の場と考えられます。\n石の配置や組み合わせには規則が見られ、太陽の動きや集団の集会と関係した可能性も指摘されています。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi7.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -115,7 +115,7 @@ window.questions = [
       "刀剣"
     ],
     "answer": 0,
-    "source": "土偶（どぐう）は、縄文時代に作られた土の人形。病気の回復や豊かな実りを祈るお守りの意味があったと考えられます。\n顔や体の表現には地域差があり、壊して埋められた例もあります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">土偶の役割\n\n  🧍 土偶（どぐう）（人形）\n      │\n  ┌──┴──┐\n  │       │\n 🙏祈り  🛡️お守り\n  │       │\n  │   壊して埋める\n  │   (身代わり？)\n  └───────┘\n\n病気回復・豊作を願う</div>",
+    "source": "土偶（どぐう）は、縄文時代に作られた土の人形。病気の回復や豊かな実りを祈るお守りの意味があったと考えられます。\n顔や体の表現には地域差があり、壊して埋められた例もあります。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi8.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -130,7 +130,7 @@ window.questions = [
       "彩色文様"
     ],
     "answer": 0,
-    "source": "弥生土器（やよいどき）は薄手でかたく焼かれ、煮炊き（にたき）や貯蔵（ちょぞう）に向く実用派。縄文土器（じょうもんどき）は厚手で文様がにぎやか、と対比で覚えます。\n壺（つぼ）・甕（かめ）・鉢（はち）など用途別に整い、高床倉庫（たかゆかそうこ）や環濠（かんごう）とセットで「育てて守る」暮らしが整いました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">土器の比較\n\n縄文土器（じょうもんどき）         弥生土器（やよいどき）\n  ┌──┐         ┌──┐\n  │厚手│         │薄手│\n  │文様│         │実用│\n  │にぎやか│     │かたい│\n  └──┘         └──┘\n\n煮る・保存        煮る・貯蔵</div>",
+    "source": "弥生土器（やよいどき）は薄手でかたく焼かれ、煮炊き（にたき）や貯蔵（ちょぞう）に向く実用派。縄文土器（じょうもんどき）は厚手で文様がにぎやか、と対比で覚えます。\n壺（つぼ）・甕（かめ）・鉢（はち）など用途別に整い、高床倉庫（たかゆかそうこ）や環濠（かんごう）とセットで「育てて守る」暮らしが整いました。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi9.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -145,7 +145,7 @@ window.questions = [
       "古墳時代"
     ],
     "answer": 0,
-    "source": "弥生は「育てる」時代。水田（すいでん）で米を作り、高床倉庫（たかゆかそうこ）で守り、村の周囲に環濠（かんごう）をめぐらせて守りました。鉄の農具の登場で作業は効率化します。\n食料が安定すると人口が増え、村どうしの関係や身分の差がつくられていきます。まとまりが強まると王や国の名が現れ、対外関係の記録も出る——金印・卑弥呼へ続きます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">弥生時代のくらし\n\n  🌾 水田（育てる）\n      │\n  ┌──┴──┐\n  │       │\n 🏛️倉庫  🛡️環濠\n  │       │\n  ⚒️鉄の農具\n  │\n  👥人口増加\n  │\n  👑王・国の名</div>",
+    "source": "弥生は「育てる」時代。水田（すいでん）で米を作り、高床倉庫（たかゆかそうこ）で守り、村の周囲に環濠（かんごう）をめぐらせて守りました。鉄の農具の登場で作業は効率化します。\n食料が安定すると人口が増え、村どうしの関係や身分の差がつくられていきます。まとまりが強まると王や国の名が現れ、対外関係の記録も出る——金印・卑弥呼へ続きます。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi10.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -160,7 +160,7 @@ window.questions = [
       "門前町"
     ],
     "answer": 0,
-    "source": "環濠集落（かんごうしゅうらく）は、村の周囲に堀をめぐらせた弥生の集落。出入口を限り、見張りを置くことで守りをかためました。\n北部九州に例が多く、稲作の広がりとともに土地と収穫の争いが生じた背景が見えます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">環濠集落（かんごうしゅうらく）の構造\n\n  ┌─────────────┐\n  │  🏠  🏠  🏠  │\n  │             │\n  │  🏠  🏠  🏠  │\n  └─────────────┘\n  ╱             ╲\n ╱   💧 堀  💧   ╲\n╱               ╲\n\n出入口を限る\n見張りを置く</div>",
+    "source": "環濠集落（かんごうしゅうらく）は、村の周囲に堀をめぐらせた弥生の集落。出入口を限り、見張りを置くことで守りをかためました。\n北部九州に例が多く、稲作の広がりとともに土地と収穫の争いが生じた背景が見えます。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi11.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -175,7 +175,7 @@ window.questions = [
       "見世棚"
     ],
     "answer": 0,
-    "source": "高床倉庫（たかゆかそうこ）は、床を高くして湿気とネズミから穀物を守る倉。柱の上に床を張り、風を通して米を長持ちさせます。\n倉の下には風が抜け、害獣がよじ登りにくい構造です。弥生稲作では「作る→守る→配る」の仕組みが重要で、高床はその要です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">高床倉庫の構造\n\n  ┌─────────┐\n  │  🌾 米  │ 床（高い）\n  └─────────┘\n      │││ 柱\n      │││\n  ──────────── 地面\n      💨 風が抜ける\n      🐭 ネズミよじ登れない</div>",
+    "source": "高床倉庫（たかゆかそうこ）は、床を高くして湿気とネズミから穀物を守る倉。柱の上に床を張り、風を通して米を長持ちさせます。\n倉の下には風が抜け、害獣がよじ登りにくい構造です。弥生稲作では「作る→守る→配る」の仕組みが重要で、高床はその要です。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi12.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -190,7 +190,7 @@ window.questions = [
       "野尻湖遺跡"
     ],
     "answer": 0,
-    "source": "登呂遺跡（とろいせき）は、静岡市の弥生集落。水田・竪穴住居（たてあなじゅうきょ）・高床倉庫（たかゆかそうこ）がそろって見つかり、弥生の暮らしが一目でわかります。\n登呂の強みは「稲作の実景」で、田・家・倉が機能でつながる様子が理解できます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">登呂遺跡（とろいせき）の配置\n\n  🌾 水田\n      │\n  ┌──┴──┐\n  │       │\n 🏠住居  🏛️倉庫\n  │       │\n  └───┬───┘\n      │\n  稲作の実景\n  (田・家・倉)</div>",
+    "source": "登呂遺跡（とろいせき）は、静岡市の弥生集落。水田・竪穴住居（たてあなじゅうきょ）・高床倉庫（たかゆかそうこ）がそろって見つかり、弥生の暮らしが一目でわかります。\n登呂の強みは「稲作の実景」で、田・家・倉が機能でつながる様子が理解できます。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi13.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -205,7 +205,7 @@ window.questions = [
       "唐古・鍵遺跡"
     ],
     "answer": 0,
-    "source": "吉野ヶ里遺跡（よしのがりいせき）は、堀で囲み見張り台も備えた大規模な集落。政（まつりごと）や身分の差を示す施設も見つかりました。\n外敵への備えだけでなく、内部の秩序や儀礼の運営がうかがえます。こうしたまとまりの延長に、王や国名が史料に現れ、外交の記録へつながっていきます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">吉野ヶ里遺跡（よしのがりいせき）の構造\n\n  ┌─────────────┐\n  │  👁️ 見張り台  │\n  │  🏛️ 政の施設  │\n  │  🏠 住居      │\n  └─────────────┘\n  ╱               ╲\n ╱   💧 堀  💧     ╲\n╱                 ╲\n\n大規模集落\n守る＋統治</div>",
+    "source": "吉野ヶ里遺跡（よしのがりいせき）は、堀で囲み見張り台も備えた大規模な集落。政（まつりごと）や身分の差を示す施設も見つかりました。\n外敵への備えだけでなく、内部の秩序や儀礼の運営がうかがえます。こうしたまとまりの延長に、王や国名が史料に現れ、外交の記録へつながっていきます。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi14.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -220,7 +220,7 @@ window.questions = [
       "青銅鏡"
     ],
     "answer": 0,
-    "source": "銅鐸（どうたく）は、弥生時代の祭りで用いられた青銅の鐘。近畿を中心に出土し、権威と祈りを示す象徴的な道具です。\n鳴らして音を響かせることで、共同体の気持ちを一つにしたり、季節の行事を告げたりしたと考えられます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">銅鐸の役割\n\n  🔔 銅鐸（どうたく）（青銅の鐘）\n      │\n  ┌──┴──┐\n  │       │\n 🔊音    🙏祈り\n  │       │\n  │   共同体を一つに\n  │   季節の行事を告げる\n  └───────┘\n\n権威と祈りの象徴</div>",
+    "source": "銅鐸（どうたく）は、弥生時代の祭りで用いられた青銅の鐘。近畿を中心に出土し、権威と祈りを示す象徴的な道具です。\n鳴らして音を響かせることで、共同体の気持ちを一つにしたり、季節の行事を告げたりしたと考えられます。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi15.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -235,7 +235,7 @@ window.questions = [
       "「新羅王」"
     ],
     "answer": 0,
-    "source": "志賀島（しかのしま）の金印「漢委奴国王（かんのわのなのこくおう）」は、中国（漢）が倭の一勢力の王を公式に認めた証拠と考えられます。\n文字の刻まれた金の印章は、外交のやり取りを物で示す確かな資料です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">金印の意味\n\n  🏛️ 中国（漢）\n      │\n      │ 公式に認める\n      ↓\n  🪙 金印\n  「漢委奴国王」\n      │\n      ↓\n  👑 倭の王\n  (政治的まとまり)</div>",
+    "source": "志賀島（しかのしま）の金印「漢委奴国王（かんのわのなのこくおう）」は、中国（漢）が倭の一勢力の王を公式に認めた証拠と考えられます。\n文字の刻まれた金の印章は、外交のやり取りを物で示す確かな資料です。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi16.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -250,7 +250,7 @@ window.questions = [
       "神功皇后"
     ],
     "answer": 0,
-    "source": "卑弥呼（ひみこ）は邪馬台国（やまたいこく）の女王で、『魏志倭人伝（ぎしわじんでん）』に使者を送り鏡などを授かったことが記されています。祈りを重んじる統治で地域のまとまりが強まりました。\n志賀島の金印（漢）とは時代と出典が異なる点に注意。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">卑弥呼の統治\n\n  👑 卑弥呼（ひみこ）（女王）\n      │\n  ┌──┴──┐\n  │       │\n 🙏祈り  👥連合\n  │       │\n  │   村々をまとめる\n  │   精神的な権威\n  └───────┘\n\n『魏志倭人伝（ぎしわじんでん）』に記録</div>",
+    "source": "卑弥呼（ひみこ）は邪馬台国（やまたいこく）の女王で、『魏志倭人伝（ぎしわじんでん）』に使者を送り鏡などを授かったことが記されています。祈りを重んじる統治で地域のまとまりが強まりました。\n志賀島の金印（漢）とは時代と出典が異なる点に注意。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi17.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -265,7 +265,7 @@ window.questions = [
       "騎馬→徒歩"
     ],
     "answer": 0,
-    "source": "縄文→弥生の変化は、くらしが狩猟（しゅりょう）・採集（さいしゅう）中心から稲作（いなさく）中心へ、道具が磨製（ませい）から金属器（きんぞくき）へ、住まいが定住（ていじゅう）から防御強化（ぼうぎょきょうか）へ進むことです。\n稲は保存ができるので余剰（よじょう）が生まれ、倉と分配、労働の調整が必要になります。「獲る→ためる→育てる」というながれで、時代のつながりを理解しましょう。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">時代の変化\n\n縄文時代        →    弥生時代\n  🦌狩猟・採集    →    🌾稲作\n  🪨磨製石器      →    ⚒️金属器\n  🏠定住          →    🛡️防御強化\n  💾保存          →    📦余剰・分配\n\n獲る → ためる → 育てる</div>",
+    "source": "縄文→弥生の変化は、くらしが狩猟（しゅりょう）・採集（さいしゅう）中心から稲作（いなさく）中心へ、道具が磨製（ませい）から金属器（きんぞくき）へ、住まいが定住（ていじゅう）から防御強化（ぼうぎょきょうか）へ進むことです。\n稲は保存ができるので余剰（よじょう）が生まれ、倉と分配、労働の調整が必要になります。「獲る→ためる→育てる」というながれで、時代のつながりを理解しましょう。",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -280,7 +280,7 @@ window.questions = [
       "合葬"
     ],
     "answer": 0,
-    "source": "屈葬（くっそう）は、ひざや腰を曲げて葬る方法で、縄文時代に多く見られます。姿勢は体育座りに近い形です。\n屈葬は集落の近くで行われることも多く、定住社会の家族・共同体のつながりが読み取れます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">屈葬（くっそう）の姿勢\n\n  ┌─────┐\n  │  👤  │\n  │  ╱╲  │  ひざを曲げる\n  │ ╱  ╲ │  腰を曲げる\n  └─────┘\n\n体育座りに近い形\n定住社会のつながり</div>",
+    "source": "屈葬（くっそう）は、ひざや腰を曲げて葬る方法で、縄文時代に多く見られます。姿勢は体育座りに近い形です。\n屈葬は集落の近くで行われることも多く、定住社会の家族・共同体のつながりが読み取れます。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi19.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -295,7 +295,7 @@ window.questions = [
       "合葬墓"
     ],
     "answer": 0,
-    "source": "大きなつぼ（甕）に遺体を納める弥生の墓で、九州北部などで多く見つかるのが甕棺墓（かめかんぼ）です。土と器で守る発想が特徴です。\n甕棺は稲作の容器文化とも親和性があり、地域差をもって発達しました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">甕棺墓（かめかんぼ）の構造\n\n  ┌─────┐\n  │  👤  │  遺体\n  └─────┘\n  ┌─────┐\n  │  🪙  │  甕（つぼ）\n  └─────┘\n\n土と器で守る\n九州北部に多い</div>",
+    "source": "大きなつぼ（甕）に遺体を納める弥生の墓で、九州北部などで多く見つかるのが甕棺墓（かめかんぼ）です。土と器で守る発想が特徴です。\n甕棺は稲作の容器文化とも親和性があり、地域差をもって発達しました。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi20.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -310,7 +310,7 @@ window.questions = [
       "城柵"
     ],
     "answer": 0,
-    "source": "海が今より内陸まで入る縄文海進（じょうもんかいしん）のころは、海辺に貝塚（かいづか）が多く残りました。食べた貝や魚の骨、道具が重なり、当時の環境が読めます。\n地形と遺跡をセットで考えると、気候変動→環境→暮らし→遺跡のつながりが見えます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">縄文海進の影響\n\n  🌊 海（今より内陸）\n      │\n  ┌──┴──┐\n  │       │\n 🐚貝塚  🏠集落\n  │       │\n  │   海辺に多い\n  └───────┘\n\n気候変動 → 環境 → 遺跡</div>",
+    "source": "海が今より内陸まで入る縄文海進（じょうもんかいしん）のころは、海辺に貝塚（かいづか）が多く残りました。食べた貝や魚の骨、道具が重なり、当時の環境が読めます。\n地形と遺跡をセットで考えると、気候変動→環境→暮らし→遺跡のつながりが見えます。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi21.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -325,7 +325,7 @@ window.questions = [
       "大森貝塚"
     ],
     "answer": 0,
-    "source": "多数の竪穴住居（たてあなじゅうきょ）に加え、太い柱穴が並ぶ建物が有名な三内丸山遺跡（さんないまるやまいせき）は、青森の巨大な縄文集落です。\n長期の定住や、当時の自然環境と生活の豊かさが読み取れます。栗などの樹木利用や交易の痕跡もあり、北の大集落が広い範囲とつながっていた可能性が見えてきます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">三内丸山遺跡\n\n  🏠 🏠 🏠 🏠\n  🏠 🏠 🏠 🏠\n      │││\n  大型掘立柱建物\n  (太い柱穴)\n      │\n  🌰栗の利用\n  🌍広い交易</div>",
+    "source": "多数の竪穴住居（たてあなじゅうきょ）に加え、太い柱穴が並ぶ建物が有名な三内丸山遺跡（さんないまるやまいせき）は、青森の巨大な縄文集落です。\n長期の定住や、当時の自然環境と生活の豊かさが読み取れます。栗などの樹木利用や交易の痕跡もあり、北の大集落が広い範囲とつながっていた可能性が見えてきます。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi22.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -340,7 +340,7 @@ window.questions = [
       "水銀"
     ],
     "answer": 0,
-    "source": "鉄は、弥生時代に大陸から伝わり、くわや鎌などの農具につかわれて作業を効率化しました。固い土でも力強く耕せます。\n鉄の普及は生産力を上げ、余った作物が倉や権威を支え、集落間の関係や身分差の形成に影響しました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">鉄器の影響\n\n  🌏 大陸から伝来\n      │\n      ↓\n  ⚒️ 鉄の農具\n  (くわ・鎌)\n      │\n  ┌──┴──┐\n  │       │\n 📈効率化  💪力強く\n  │       │\n  │   生産力向上\n  │   余剰 → 権威</div>",
+    "source": "鉄は、弥生時代に大陸から伝わり、くわや鎌などの農具につかわれて作業を効率化しました。固い土でも力強く耕せます。\n鉄の普及は生産力を上げ、余った作物が倉や権威を支え、集落間の関係や身分差の形成に影響しました。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi23.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -355,7 +355,7 @@ window.questions = [
       "投擲用"
     ],
     "answer": 0,
-    "source": "弥生土器（やよいどき）は、煮炊き（にたき）・貯蔵（ちょぞう）など生活の実用に大活躍。薄手でかたく焼かれ、用途に合わせて形が洗練されました。\n器形は壺（つぼ）・甕（かめ）・鉢（はち）など用途別に整い、日々の作業を効率化し、余剰の保存と分配を助けました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">弥生土器の用途\n\n  🪙 弥生土器\n      │\n  ┌──┴──┐\n  │       │\n 🍲煮炊き  💾貯蔵\n  │       │\n  │   壺・甕・鉢\n  │   用途別に整う\n  └───────┘\n\n実用重視</div>",
+    "source": "弥生土器（やよいどき）は、煮炊き（にたき）・貯蔵（ちょぞう）など生活の実用に大活躍。薄手でかたく焼かれ、用途に合わせて形が洗練されました。\n器形は壺（つぼ）・甕（かめ）・鉢（はち）など用途別に整い、日々の作業を効率化し、余剰の保存と分配を助けました。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi24.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -370,7 +370,7 @@ window.questions = [
       "交易"
     ],
     "answer": 0,
-    "source": "高地性集落（こうちせいしゅうらく）は、見晴らしのよい丘や山上に作られた弥生の村。敵の動きを早くつかみ、守りやすさ重視の立地です。\n稲作が広がると、収穫と土地をめぐる緊張が高まり、高所に籠もる戦いかたが生まれました。環濠集落と合わせておさえましょう。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">高地性集落（こうちせいしゅうらく）の立地\n\n      🏠 🏠\n    🏠 🏠 🏠\n  ────────────\n      ⛰️ 丘・山上\n      │\n  ┌──┴──┐\n  │       │\n 👁️見晴らし  🛡️防御\n  │       │\n  │   敵を早く発見\n  └───────┘</div>",
+    "source": "高地性集落（こうちせいしゅうらく）は、見晴らしのよい丘や山上に作られた弥生の村。敵の動きを早くつかみ、守りやすさ重視の立地です。\n稲作が広がると、収穫と土地をめぐる緊張が高まり、高所に籠もる戦いかたが生まれました。環濠集落と合わせておさえましょう。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi25.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -385,7 +385,7 @@ window.questions = [
       "鉄器"
     ],
     "answer": 0,
-    "source": "磨製石器は、石の表面をこすって形を整え、刃をなめらかにした道具。切り口がきれいになり、用途も広がります。\nこれによって作業効率が高まり、木の加工や土器づくりの補助にも役立ちました。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">石器の作り方\n\n打製石器       磨製石器\n  🪨割る      🪨こする\n  │          │\n  │          │\n  │      なめらか\n  │      用途が広がる\n  │\n  └─→ 作業効率向上</div>",
+    "source": "磨製石器は、石の表面をこすって形を整え、刃をなめらかにした道具。切り口がきれいになり、用途も広がります。\nこれによって作業効率が高まり、木の加工や土器づくりの補助にも役立ちました。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi26.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -400,7 +400,7 @@ window.questions = [
       "土器片"
     ],
     "answer": 0,
-    "source": "銅剣（どうけん）・銅矛（どうほこ）は、弥生の指導者層が権威を示す品として用いました。実戦用だけでなく、祭祀や象徴の意味が強いです。\n武器の形で力を見せるやり方は、共同体の拡大とともに明確になります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">銅剣・銅矛の役割\n\n  ⚔️ 銅剣（どうけん）・銅矛（どうほこ）\n      │\n  ┌──┴──┐\n  │       │\n 💪実戦  👑権威\n  │       │\n  │   祭祀・象徴\n  │   指導者層のしるし\n  └───────┘</div>",
+    "source": "銅剣（どうけん）・銅矛（どうほこ）は、弥生の指導者層が権威を示す品として用いました。実戦用だけでなく、祭祀や象徴の意味が強いです。\n武器の形で力を見せるやり方は、共同体の拡大とともに明確になります。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi27.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -415,7 +415,7 @@ window.questions = [
       "火縄銃"
     ],
     "answer": 0,
-    "source": "縄文の海や川では、骨や角で作った釣針（つりばり）や銛（もり）が活躍しました。自然素材の道具で魚介をとります。\n貝塚からは魚骨や道具が一緒に見つかり、食と環境が読み取れます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">縄文の漁労具\n\n  🦴 骨・角\n      │\n  ┌──┴──┐\n  │       │\n 🎣釣針（つりばり）  🪝銛（もり）\n  │       │\n  │   自然素材\n  │   魚介をとる\n  └───────┘\n\n貝塚から発見</div>",
+    "source": "縄文の海や川では、骨や角で作った釣針（つりばり）や銛（もり）が活躍しました。自然素材の道具で魚介をとります。\n貝塚からは魚骨や道具が一緒に見つかり、食と環境が読み取れます。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi28.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -430,7 +430,7 @@ window.questions = [
       "段畑のみ"
     ],
     "answer": 0,
-    "source": "弥生の稲作と言えば水田（すいでん）。水を張って稲を育て、用水路（ようすいろ）で水を調整します。\n水田は連続した生産を可能にし、倉・分配・防御の仕組みを発達させます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">水田のしくみ\n\n  🌾 水田\n      │\n  ┌──┴──┐\n  │       │\n 💧水を張る  🌊用水路\n  │       │\n  │   連続した生産\n  │   倉・分配・防御\n  └───────┘</div>",
+    "source": "弥生の稲作と言えば水田（すいでん）。水を張って稲を育て、用水路（ようすいろ）で水を調整します。\n水田は連続した生産を可能にし、倉・分配・防御の仕組みを発達させます。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi29.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"
@@ -445,7 +445,7 @@ window.questions = [
       "砂漠性"
     ],
     "answer": 0,
-    "source": "縄文の中ごろは、今よりやや温暖で湿潤な時期があり、森が豊かでした。どんぐりや木の実が採れ、貝もよく育ちます。\n気候→環境→食の順に考えると、貝塚（かいづか）や竪穴住居（たてあなじゅうきょ）といった遺跡の意味が腑に落ちます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #8b5cf6;\">縄文の気候\n\n  🌡️ 温暖・湿潤\n      │\n  ┌──┴──┐\n  │       │\n 🌳森が豊か  🐚貝が育つ\n  │       │\n  │   どんぐり・木の実\n  │   気候→環境→食\n  └───────┘</div>",
+    "source": "縄文の中ごろは、今よりやや温暖で湿潤な時期があり、森が豊かでした。どんぐりや木の実が採れ、貝もよく育ちます。\n気候→環境→食の順に考えると、貝塚（かいづか）や竪穴住居（たてあなじゅうきょ）といった遺跡の意味が腑に落ちます。<img src=\"../images/4200_paleolithic_jomon_yayoi/4200_paleolithic_jomon_yayoi30.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-09-23"

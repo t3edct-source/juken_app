@@ -9,7 +9,7 @@ window.questions = [
       "夜の気温が急に低くなるため"
     ],
     "answer": 0,
-    "source": "夏は気温が高く、太陽の光も強く長く当たる季節です。植物は光と適度な温度がそろうことで光合成をさかんに行い、多くの栄養をつくることができます。また、地面の温度も上がるため、根のはたらきも活発になり、水や養分をたくさん吸い上げられます。こうした条件がそろうことで、夏は一年の中でも植物がいちばん成長しやすい季節になるのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">夏の環境と植物の成長\n\n☀️ 夏の環境条件\n    ├─→ 気温：高い\n    ├─→ 光：強く長く当たる\n    └─→ 地面の温度：上がる\n    │\n    │ 植物への影響\n    ↓\n🌿 光合成がさかんになる\n    ├─→ 多くの栄養をつくる\n    └─→ 根のはたらきが活発に\n    │\n    ↓\n💧 水や養分をたくさん吸い上げる\n    │\n    ↓\n🚀 一年でいちばん成長しやすい季節\n\n気温↑ + 光↑ + 根の活動↑ → 成長最大</div>",
+    "source": "夏は気温が高く、太陽の光も強く長く当たる季節です。植物は光と適度な温度がそろうことで光合成をさかんに行い、多くの栄養をつくることができます。また、地面の温度も上がるため、根のはたらきも活発になり、水や養分をたくさん吸い上げられます。こうした条件がそろうことで、夏は一年の中でも植物がいちばん成長しやすい季節になるのです。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer1.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -24,7 +24,7 @@ window.questions = [
       "風が強く葉がこすれ合うため"
     ],
     "answer": 0,
-    "source": "葉が濃い緑色に見えるのは、葉の中にある葉緑体がたくさん光を受けとっているからです。夏は光が強く当たるため、葉緑体がよく発達し、光合成がさかんになります。その結果、光を強く吸収する部分が増え、見た目にも「濃い緑色」の葉が多くなります。春の若葉と比べて、夏の葉は成長が進んだ状態だと考えられます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">夏の葉の色の変化\n\n☀️ 夏の強い光\n    │\n    ↓\n🌿 葉緑体がよく発達\n    │\n    ↓\n⚡ 光合成がさかんになる\n    │\n    ↓\n💚 光を強く吸収する部分が増える\n    │\n    ↓\n🟢 濃い緑色の葉になる\n\n春の若葉（薄い緑）\n    ↓ 成長\n夏の葉（濃い緑）\n\n光↑ → 葉緑体発達 → 濃い緑色</div>",
+    "source": "葉が濃い緑色に見えるのは、葉の中にある葉緑体がたくさん光を受けとっているからです。夏は光が強く当たるため、葉緑体がよく発達し、光合成がさかんになります。その結果、光を強く吸収する部分が増え、見た目にも「濃い緑色」の葉が多くなります。春の若葉と比べて、夏の葉は成長が進んだ状態だと考えられます。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer2.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -39,7 +39,7 @@ window.questions = [
       "種が発芽しにくいため"
     ],
     "answer": 0,
-    "source": "雑草は、条件が整うとすぐに成長できる性質をもった植物です。夏になると高い気温と強い日ざしがそろい、光合成に有利な環境になります。また、春までに地面の中で準備していた種子や地下茎が、夏のあいだに一気に成長を進めます。そのため、少し目を離しているうちに、雑草が急に伸びたように感じるのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">雑草の急速な成長\n\n🌱 春までに準備\n    ├─→ 種子：地面の中で待機\n    └─→ 地下茎：準備完了\n    │\n    │ 夏になって\n    ↓\n🌡️ 高い気温 + ☀️ 強い日ざし\n    │\n    ↓\n✅ 光合成に有利な環境\n    │\n    ↓\n🚀 一気に成長を進める\n    │\n    ↓\n📏 急に伸びたように見える\n\n準備完了 + 好条件 → 急速成長</div>",
+    "source": "雑草は、条件が整うとすぐに成長できる性質をもった植物です。夏になると高い気温と強い日ざしがそろい、光合成に有利な環境になります。また、春までに地面の中で準備していた種子や地下茎が、夏のあいだに一気に成長を進めます。そのため、少し目を離しているうちに、雑草が急に伸びたように感じるのです。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer3.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -54,7 +54,7 @@ window.questions = [
       "光合成が昆虫の体温を上げるため"
     ],
     "answer": 0,
-    "source": "昆虫は「変温動物」で、体の温度がまわりの気温に左右されます。夏のように気温が高いと、昆虫の体の中のはたらき（代謝）が活発になり、よく動けるようになります。また、花や葉、ほかの小さな生き物など、えさも豊富にあるため、あちこちで活動が盛んになります。このため、夏は一年の中でも昆虫をもっとも多く見かける季節となります。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">夏の昆虫の活動\n\n🐛 変温動物（昆虫）\n    ├─→ 体の温度 = まわりの気温\n    └─→ 気温に左右される\n    │\n    │ 夏になって\n    ↓\n🌡️ 気温が高い\n    │\n    ↓\n⚡ 代謝が活発になる\n    │\n    ↓\n🏃 よく動けるようになる\n    │\n    ├─→ 🌸 花が豊富\n    ├─→ 🍃 葉が豊富\n    └─→ 🐜 小さな生き物が豊富\n    │\n    ↓\n🎯 あちこちで活動が盛ん\n    │\n    ↓\n👀 もっとも多く見かける季節\n\n気温↑ → 代謝↑ → 活動↑</div>",
+    "source": "昆虫は「変温動物」で、体の温度がまわりの気温に左右されます。夏のように気温が高いと、昆虫の体の中のはたらき（代謝）が活発になり、よく動けるようになります。また、花や葉、ほかの小さな生き物など、えさも豊富にあるため、あちこちで活動が盛んになります。このため、夏は一年の中でも昆虫をもっとも多く見かける季節となります。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer4.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -69,7 +69,7 @@ window.questions = [
       "夏は土の水分が自然に増えるため"
     ],
     "answer": 0,
-    "source": "夏は気温が高く、日ざしも強いため、葉から水が水蒸気となって出ていく「蒸散」がさかんになります。蒸散が増えると、植物の体から水がどんどん失われるので、その分を根から補わなければなりません。また、光合成をさかんに行うためにも水は必要です。こうした理由から、夏の植物は多くの水を必要とするのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">夏の植物と水の関係\n\n🌡️ 夏の環境\n    ├─→ 気温：高い\n    └─→ 日ざし：強い\n    │\n    ↓\n💨 蒸散がさかんになる\n    ├─→ 葉から水蒸気が出る\n    └─→ 水がどんどん失われる\n    │\n    ↓\n💧 根から水を補う必要\n    │\n    ├─→ 蒸散の補給\n    └─→ 光合成にも必要\n    │\n    ↓\n🚰 多くの水を必要とする\n\n気温↑ + 日ざし↑ → 蒸散↑ → 水必要↑</div>",
+    "source": "夏は気温が高く、日ざしも強いため、葉から水が水蒸気となって出ていく「蒸散」がさかんになります。蒸散が増えると、植物の体から水がどんどん失われるので、その分を根から補わなければなりません。また、光合成をさかんに行うためにも水は必要です。こうした理由から、夏の植物は多くの水を必要とするのです。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer5.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -84,7 +84,7 @@ window.questions = [
       "夜に光合成を行うため"
     ],
     "answer": 0,
-    "source": "アサガオの花は、高すぎる気温に弱く、涼しい時間帯がもっとも咲きやすい条件になります。朝のうちは気温がまだ上がりきっておらず、花にとってちょうどよい温度です。そのため、明け方から午前中にかけて花を開き、昼前後の暑い時間にはしぼんでしまいます。アサガオが「朝の花」として知られているのは、この性質によるものです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">アサガオの開花リズム\n\n🌅 明け方～午前中\n    ├─→ 気温：まだ上がりきっていない\n    └─→ 花にとって適温\n    │\n    ↓\n🌸 花を開く\n    │\n    │ 時間がたつと\n    ↓\n🌡️ 気温が上がる（高すぎる）\n    │\n    ↓\n❌ 花に弱い\n    │\n    ↓\n🥀 昼前後にしぼむ\n\n朝（適温）→ 開花\n昼（高温）→ しぼむ</div>",
+    "source": "アサガオの花は、高すぎる気温に弱く、涼しい時間帯がもっとも咲きやすい条件になります。朝のうちは気温がまだ上がりきっておらず、花にとってちょうどよい温度です。そのため、明け方から午前中にかけて花を開き、昼前後の暑い時間にはしぼんでしまいます。アサガオが「朝の花」として知られているのは、この性質によるものです。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer6.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -99,7 +99,7 @@ window.questions = [
       "葉の表面に土がついて変色するため"
     ],
     "answer": 0,
-    "source": "秋になると気温が下がり、日照時間も短くなります。その結果、葉の中で光合成を行っていた葉緑素が分解され、新しく作られにくくなります。葉緑素の緑色が目立たなくなると、それまでかくれていた黄色や赤の色素が表に見えるようになります。これが、木々の葉が黄色や赤に色づく「紅葉（黄葉）」の正体です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">秋の紅葉のしくみ\n\n🍂 秋の環境変化\n    ├─→ 気温：下がる\n    └─→ 日照時間：短くなる\n    │\n    ↓\n💚 葉緑素が分解される\n    ├─→ 新しく作られにくくなる\n    └─→ 緑色が目立たなくなる\n    │\n    ↓\n🎨 かくれていた色素が表に\n    ├─→ 黄色の色素\n    └─→ 赤の色素\n    │\n    ↓\n🍁 紅葉（黄葉）\n\n気温↓ + 日照↓ → 葉緑素分解 → 紅葉</div>",
+    "source": "秋になると気温が下がり、日照時間も短くなります。その結果、葉の中で光合成を行っていた葉緑素が分解され、新しく作られにくくなります。葉緑素の緑色が目立たなくなると、それまでかくれていた黄色や赤の色素が表に見えるようになります。これが、木々の葉が黄色や赤に色づく「紅葉（黄葉）」の正体です。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer7.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -114,7 +114,7 @@ window.questions = [
       "子育てが夏に終わるため"
     ],
     "answer": 0,
-    "source": "冬は、植物の葉や虫が少なくなり、自然の中のエサが乏しい季節です。そこで、多くの動物は秋のうちにドングリや木の実などを集め、土の中や木の穴などにかくしておきます。また、体の中に脂肪として栄養をため込む動物もいます。秋のエサ集めは、寒くて厳しい冬を生きのびるための大切な準備なのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">秋のエサ集めと冬への準備\n\n🍂 秋の行動\n    ├─→ ドングリを集める\n    ├─→ 木の実を集める\n    └─→ 土の中や木の穴にかくす\n    │\n    ├─→ 体に脂肪としてため込む\n    │\n    │ 目的\n    ↓\n❄️ 冬への準備\n    ├─→ エサが乏しい季節\n    ├─→ 寒くて厳しい\n    └─→ 生きのびるため\n    │\n    ↓\n✅ 大切な準備\n\n秋（エサ集め）→ 冬（生きのびる）</div>",
+    "source": "冬は、植物の葉や虫が少なくなり、自然の中のエサが乏しい季節です。そこで、多くの動物は秋のうちにドングリや木の実などを集め、土の中や木の穴などにかくしておきます。また、体の中に脂肪として栄養をため込む動物もいます。秋のエサ集めは、寒くて厳しい冬を生きのびるための大切な準備なのです。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer8.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -129,7 +129,7 @@ window.questions = [
       "冬に花を咲かせる準備のため"
     ],
     "answer": 0,
-    "source": "春から夏にかけて成長してきた花は、受粉が成功すると、やがて種子を中にふくんだ実へと変化していきます。秋は、その実がちょうど成熟して、種子を外へ広げるのに適したタイミングです。実は地面に落ちたり、動物に食べられて遠くへ運ばれたりしながら、次の世代の芽を出す準備をします。秋に実が多く見られるのは、「子ども（種）」を広く残す季節だからなのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">秋の実の成熟と種子散布\n\n🌸 春～夏：花が成長\n    ├─→ 受粉が成功\n    └─→ 種子を中にふくんだ実へ\n    │\n    │ 秋になって\n    ↓\n🍎 実が成熟\n    ├─→ 種子を外へ広げる適したタイミング\n    │\n    ↓\n🌍 種子の散布\n    ├─→ 地面に落ちる\n    └─→ 動物に食べられて遠くへ運ばれる\n    │\n    ↓\n🌱 次の世代の芽を出す準備\n\n秋 = 「子ども（種）」を広く残す季節</div>",
+    "source": "春から夏にかけて成長してきた花は、受粉が成功すると、やがて種子を中にふくんだ実へと変化していきます。秋は、その実がちょうど成熟して、種子を外へ広げるのに適したタイミングです。実は地面に落ちたり、動物に食べられて遠くへ運ばれたりしながら、次の世代の芽を出す準備をします。秋に実が多く見られるのは、「子ども（種）」を広く残す季節だからなのです。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer9.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -144,7 +144,7 @@ window.questions = [
       "雨が少なく実が乾燥しやすいため"
     ],
     "answer": 0,
-    "source": "ドングリは、コナラやカシなどの木がつくる「種子」の一種です。秋になると実の中の種子が成熟し、木から自然に落ちるようになります。地面に落ちたドングリは、冬のあいだ土の中などで過ごし、条件が整えば翌春に発芽します。秋にたくさんのドングリが落ちるのは、木が次の世代を増やすための大切なタイミングなのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">ドングリの落下と発芽\n\n🌳 コナラ・カシなどの木\n    ├─→ ドングリ（種子）をつくる\n    │\n    │ 秋になって\n    ↓\n🌰 種子が成熟\n    │\n    ↓\n🍂 木から自然に落ちる\n    │\n    ↓\n🌍 地面に落ちる\n    │\n    │ 冬のあいだ\n    ↓\n❄️ 土の中などで過ごす\n    │\n    │ 翌春、条件が整えば\n    ↓\n🌱 発芽する\n\n秋（落下）→ 冬（待機）→ 春（発芽）</div>",
+    "source": "ドングリは、コナラやカシなどの木がつくる「種子」の一種です。秋になると実の中の種子が成熟し、木から自然に落ちるようになります。地面に落ちたドングリは、冬のあいだ土の中などで過ごし、条件が整えば翌春に発芽します。秋にたくさんのドングリが落ちるのは、木が次の世代を増やすための大切なタイミングなのです。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer10.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -159,7 +159,7 @@ window.questions = [
       "花の数が増えて刺激が強くなるため"
     ],
     "answer": 0,
-    "source": "昆虫は気温に体温が左右されるため、気温が下がると体の中のはたらきも弱くなります。秋になって朝晩の冷え込みが強くなると、動きがにぶくなり、えさを探したり飛び回ったりする回数も減っていきます。また、えさとなる植物や小さな生き物も少なくなるため、活動量をおさえざるをえません。こうして、秋の後半には昆虫の姿を見かけることが少なくなっていきます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">秋の昆虫の活動低下\n\n🐛 変温動物（昆虫）\n    ├─→ 体温 = 気温\n    └─→ 気温に左右される\n    │\n    │ 秋になって\n    ↓\n🌡️ 気温が下がる\n    ├─→ 朝晩の冷え込みが強い\n    │\n    ↓\n⚡ 体の中のはたらきが弱くなる\n    │\n    ↓\n🐌 動きがにぶくなる\n    ├─→ えさを探す回数↓\n    └─→ 飛び回る回数↓\n    │\n    ├─→ えさが少なくなる\n    │\n    ↓\n📉 活動量をおさえる\n    │\n    ↓\n👀 姿を見かけることが少なくなる\n\n気温↓ → 活動↓</div>",
+    "source": "昆虫は気温に体温が左右されるため、気温が下がると体の中のはたらきも弱くなります。秋になって朝晩の冷え込みが強くなると、動きがにぶくなり、えさを探したり飛び回ったりする回数も減っていきます。また、えさとなる植物や小さな生き物も少なくなるため、活動量をおさえざるをえません。こうして、秋の後半には昆虫の姿を見かけることが少なくなっていきます。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer11.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -174,7 +174,7 @@ window.questions = [
       "土の栄養がなくなるから"
     ],
     "answer": 0,
-    "source": "植物が成長するには、光・水・適度な温度が必要です。冬は日照時間が短くなり、気温も低くなるため、光合成にとって不利な環境になります。根が吸い上げる水の量も減り、体内の反応もゆっくりになります。そのため、多くの植物は成長をいったん止め、春までエネルギーを温存しながらじっと耐える形をとるのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">冬の植物の成長停止\n\n❄️ 冬の環境\n    ├─→ 日照時間：短い\n    ├─→ 気温：低い\n    └─→ 光合成に不利\n    │\n    ↓\n💧 根が吸い上げる水の量↓\n    │\n    ↓\n⚡ 体内の反応がゆっくり\n    │\n    ↓\n⏸️ 成長をいったん止める\n    │\n    ↓\n💾 エネルギーを温存\n    │\n    ↓\n🌱 春までじっと耐える\n\n光↓ + 気温↓ → 成長停止 → エネルギー温存</div>",
+    "source": "植物が成長するには、光・水・適度な温度が必要です。冬は日照時間が短くなり、気温も低くなるため、光合成にとって不利な環境になります。根が吸い上げる水の量も減り、体内の反応もゆっくりになります。そのため、多くの植物は成長をいったん止め、春までエネルギーを温存しながらじっと耐える形をとるのです。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer12.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -189,7 +189,7 @@ window.questions = [
       "葉が重くて枝が折れやすくなるため"
     ],
     "answer": 0,
-    "source": "落葉樹は、冬になる前にわざと葉を落とすことで、寒さと乾燥から自分の体を守っています。葉がついたままだと、冷たい風や乾いた空気の中で水分がどんどん失われてしまいます。また、光合成があまりできない冬に、葉を維持することはエネルギーのむだにもなります。そこで葉を落とし、水分の蒸発とエネルギーの消費をおさえて冬をこえるのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">落葉樹の冬の戦略\n\n🍂 冬になる前\n    ├─→ わざと葉を落とす\n    │\n    │ 理由\n    ↓\n❄️ 寒さと乾燥から身を守る\n    ├─→ 葉があると：水分が失われる\n    └─→ 葉があると：エネルギーがむだ\n    │\n    ↓\n🍃 葉を落とす\n    │\n    ↓\n✅ 水分の蒸発をおさえる\n    ├─→ エネルギーの消費をおさえる\n    └─→ 冬をこえる\n\n葉を落とす → 水分・エネルギー節約 → 冬越し</div>",
+    "source": "落葉樹は、冬になる前にわざと葉を落とすことで、寒さと乾燥から自分の体を守っています。葉がついたままだと、冷たい風や乾いた空気の中で水分がどんどん失われてしまいます。また、光合成があまりできない冬に、葉を維持することはエネルギーのむだにもなります。そこで葉を落とし、水分の蒸発とエネルギーの消費をおさえて冬をこえるのです。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer13.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -204,7 +204,7 @@ window.questions = [
       "枝が風でこすれないようにするため"
     ],
     "answer": 0,
-    "source": "冬芽の中には、次の春に開く葉や花のもとがつまっています。冬のあいだ、この大事な部分を寒さや雪、乾燥から守るために、外側はかたい組織や芽鱗（がりん）でおおわれています。これによって、冷たい風や氷点下の気温にも耐えられるようになっています。春になって気温が上がると、この「よろい」が開き、中から新しい芽が顔を出します。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">冬芽の構造と役割\n\n🛡️ 冬芽の構造\n    ├─→ 外側：かたい組織・芽鱗\n    └─→ 中身：次の春の葉や花のもと\n    │\n    │ 冬のあいだ\n    ↓\n❄️ 守るもの\n    ├─→ 寒さ\n    ├─→ 雪\n    └─→ 乾燥\n    │\n    ↓\n✅ 冷たい風や氷点下にも耐える\n    │\n    │ 春になって\n    ↓\n🌡️ 気温が上がる\n    │\n    ↓\n🌱 「よろい」が開く\n    │\n    ↓\n🌸 新しい芽が顔を出す\n\n冬芽（よろい）→ 守る → 春に開く</div>",
+    "source": "冬芽の中には、次の春に開く葉や花のもとがつまっています。冬のあいだ、この大事な部分を寒さや雪、乾燥から守るために、外側はかたい組織や芽鱗（がりん）でおおわれています。これによって、冷たい風や氷点下の気温にも耐えられるようになっています。春になって気温が上がると、この「よろい」が開き、中から新しい芽が顔を出します。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer14.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -219,7 +219,7 @@ window.questions = [
       "えさが多すぎて食べきれないため"
     ],
     "answer": 0,
-    "source": "カエルは変温動物で、体温が気温や水温に左右されます。冬のように温度が低くなると、体のはたらきが弱まり、えさを取ってもあまり消化できません。また、そもそも昆虫などのえさ自体が少なくなります。そこで、エネルギーのむだ遣いを防ぐために、体の活動を大きくおさえる「冬眠」という状態になり、春までじっと過ごすのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">カエルの冬眠\n\n🐸 変温動物（カエル）\n    ├─→ 体温 = 気温・水温\n    └─→ 温度に左右される\n    │\n    │ 冬になって\n    ↓\n🌡️ 温度が低くなる\n    │\n    ↓\n⚡ 体のはたらきが弱まる\n    ├─→ えさを取っても消化できない\n    └─→ えさ自体が少ない\n    │\n    ↓\n💤 冬眠\n    ├─→ 体の活動を大きくおさえる\n    └─→ エネルギーのむだ遣いを防ぐ\n    │\n    ↓\n🌱 春までじっと過ごす\n\n温度↓ → 活動↓ → 冬眠 → 春まで待機</div>",
+    "source": "カエルは変温動物で、体温が気温や水温に左右されます。冬のように温度が低くなると、体のはたらきが弱まり、えさを取ってもあまり消化できません。また、そもそも昆虫などのえさ自体が少なくなります。そこで、エネルギーのむだ遣いを防ぐために、体の活動を大きくおさえる「冬眠」という状態になり、春までじっと過ごすのです。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer15.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -234,7 +234,7 @@ window.questions = [
       "巣が雪でつぶれやすくなるため"
     ],
     "answer": 0,
-    "source": "北の地域では、冬になると雪が積もったり地面が凍ったりして、エサとなる昆虫や植物の実が少なくなります。そこで一部の鳥は、より温暖でエサの多い地域へ移動します。これが「渡り」とよばれる行動です。春になり北の環境が回復すると、再びもとの地域に戻って繁殖や子育てを行います。渡りは、生きのびるための知恵と言える行動なのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">鳥の渡り\n\n❄️ 北の地域（冬）\n    ├─→ 雪が積もる\n    ├─→ 地面が凍る\n    └─→ エサが少ない\n    │\n    │ 一部の鳥\n    ↓\n✈️ 渡り（移動）\n    ├─→ より温暖な地域へ\n    └─→ エサの多い地域へ\n    │\n    │ 春になって\n    ↓\n🌱 北の環境が回復\n    │\n    ↓\n🏠 もとの地域に戻る\n    ├─→ 繁殖\n    └─→ 子育て\n\n冬（北：エサ少）→ 渡り → 春（北：回復）</div>",
+    "source": "北の地域では、冬になると雪が積もったり地面が凍ったりして、エサとなる昆虫や植物の実が少なくなります。そこで一部の鳥は、より温暖でエサの多い地域へ移動します。これが「渡り」とよばれる行動です。春になり北の環境が回復すると、再びもとの地域に戻って繁殖や子育てを行います。渡りは、生きのびるための知恵と言える行動なのです。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer16.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -249,7 +249,7 @@ window.questions = [
       "水が甘くなり動きにくくなるため"
     ],
     "answer": 0,
-    "source": "魚や水生昆虫など、水の中の生物も、体のはたらきが水温に左右されます。冬になると水温が下がり、生き物の代謝が低下するため、あまり動かなくなります。池の底のほうは、表面よりも温度変化が少ないため、多くの生き物はそこに集まってじっと過ごします。見た目には「いなくなった」ように感じても、静かに冬をこえているだけなのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">池の生き物の冬\n\n🐟 水の中の生物\n    ├─→ 体のはたらき = 水温\n    └─→ 水温に左右される\n    │\n    │ 冬になって\n    ↓\n🌡️ 水温が下がる\n    │\n    ↓\n⚡ 代謝が低下\n    │\n    ↓\n🐌 あまり動かなくなる\n    │\n    ↓\n🌊 池の底に集まる\n    ├─→ 温度変化が少ない\n    └─→ じっと過ごす\n    │\n    ↓\n❄️ 静かに冬をこえる\n\n水温↓ → 代謝↓ → 動かない → 冬越し</div>",
+    "source": "魚や水生昆虫など、水の中の生物も、体のはたらきが水温に左右されます。冬になると水温が下がり、生き物の代謝が低下するため、あまり動かなくなります。池の底のほうは、表面よりも温度変化が少ないため、多くの生き物はそこに集まってじっと過ごします。見た目には「いなくなった」ように感じても、静かに冬をこえているだけなのです。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer17.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -264,7 +264,7 @@ window.questions = [
       "葉が地面の水を吸うため"
     ],
     "answer": 0,
-    "source": "常緑樹は、葉が厚くて丈夫で、寒さや乾燥に耐えられるつくりをしています。葉の表面にはクチクラそうとよばれる膜が発達しており、水分が外に逃げにくくなっています。そのため、冬でも葉を残したまま、ゆっくりと光合成を続けることができます。落葉樹とはちがうやり方で、冬をこえている植物だと言えます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">常緑樹の冬の戦略\n\n🌲 常緑樹の特徴\n    ├─→ 葉が厚くて丈夫\n    ├─→ 寒さに強い\n    └─→ 乾燥に強い\n    │\n    ├─→ クチクラ層（膜）が発達\n    └─→ 水分が外に逃げにくい\n    │\n    │ 冬でも\n    ↓\n🍃 葉を残したまま\n    │\n    ↓\n⚡ ゆっくりと光合成を続ける\n    │\n    ↓\n✅ 落葉樹とはちがうやり方\n    │\n    ↓\n❄️ 冬をこえる\n\n葉を残す → 光合成続行 → 冬越し</div>",
+    "source": "常緑樹は、葉が厚くて丈夫で、寒さや乾燥に耐えられるつくりをしています。葉の表面にはクチクラそうとよばれる膜が発達しており、水分が外に逃げにくくなっています。そのため、冬でも葉を残したまま、ゆっくりと光合成を続けることができます。落葉樹とはちがうやり方で、冬をこえている植物だと言えます。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer18.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -279,7 +279,7 @@ window.questions = [
       "葉に水分がたまり続ける"
     ],
     "answer": 0,
-    "source": "秋から冬にかけて、太陽が出ている時間は短くなり、光の量も減っていきます。光合成は光のエネルギーを利用するはたらきなので、日照時間が減ると光合成に使える時間や量も少なくなります。その結果、植物がつくれる栄養の量が減り、成長のスピードもおさえられます。こうして冬のあいだ、植物はあまり大きくならず、春までエネルギーを温存するのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">日照時間の減少と植物の変化\n\n🍂 秋～冬\n    ├─→ 太陽が出ている時間：短くなる\n    └─→ 光の量：減る\n    │\n    ↓\n⚡ 光合成に使える時間・量↓\n    │\n    ↓\n📉 つくれる栄養の量↓\n    │\n    ↓\n🌱 成長のスピード↓\n    │\n    ↓\n💾 あまり大きくならない\n    │\n    ↓\n🌱 春までエネルギーを温存\n\n日照時間↓ → 光合成↓ → 成長↓ → エネルギー温存</div>",
+    "source": "秋から冬にかけて、太陽が出ている時間は短くなり、光の量も減っていきます。光合成は光のエネルギーを利用するはたらきなので、日照時間が減ると光合成に使える時間や量も少なくなります。その結果、植物がつくれる栄養の量が減り、成長のスピードもおさえられます。こうして冬のあいだ、植物はあまり大きくならず、春までエネルギーを温存するのです。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer19.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -294,7 +294,7 @@ window.questions = [
       "星の数が季節で大きく変わるため"
     ],
     "answer": 0,
-    "source": "生物のくらしは、気温・光・水分・エサの量など、環境の変化に強く影響を受けます。季節が変わると、これらの条件も大きく変化するため、生き物もそれに合わせて行動や体のしくみを切り替えます。たとえば、春は活動を始め、夏は繁殖や成長を進め、秋は冬への準備をし、冬は活動をおさえるといったリズムです。季節ごとの行動の変化は、生きのびるために身につけた工夫なのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">季節と生物の行動変化\n\n🌍 環境の変化\n    ├─→ 気温\n    ├─→ 光\n    ├─→ 水分\n    └─→ エサの量\n    │\n    ↓\n🔄 季節が変わる\n    │\n    ↓\n🌱 春：活動を始める\n    │\n    ↓\n☀️ 夏：繁殖や成長を進める\n    │\n    ↓\n🍂 秋：冬への準備\n    │\n    ↓\n❄️ 冬：活動をおさえる\n    │\n    ↓\n✅ 生きのびるための工夫\n\n環境変化 → 行動変化 → 生存</div>",
+    "source": "生物のくらしは、気温・光・水分・エサの量など、環境の変化に強く影響を受けます。季節が変わると、これらの条件も大きく変化するため、生き物もそれに合わせて行動や体のしくみを切り替えます。たとえば、春は活動を始め、夏は繁殖や成長を進め、秋は冬への準備をし、冬は活動をおさえるといったリズムです。季節ごとの行動の変化は、生きのびるために身につけた工夫なのです。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer20.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -309,7 +309,7 @@ window.questions = [
       "発芽"
     ],
     "answer": 0,
-    "source": "光合成は、植物が二酸化炭素と水から栄養をつくる基本的なはたらきです。夏になると光の量が増え、気温も上がるため、光合成に適した条件がそろいます。光合成が活発になると、植物は芽や葉、根などを成長させるためのエネルギーをたくさんつくることができます。夏の成長を支えているのは、この光合成のはたらきなのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">光合成のしくみ\n\n☀️ 夏の強い光\n    │\n    ↓\n🌿 光合成\n    ├─→ 二酸化炭素 + 水\n    └─→ 栄養（でんぷんなど）\n    │\n    ↓\n⚡ エネルギーをつくる\n    │\n    ↓\n🌱 成長に使う\n    ├─→ 芽\n    ├─→ 葉\n    └─→ 根\n\n光 + CO₂ + H₂O → 栄養 → 成長</div>",
+    "source": "光合成は、植物が二酸化炭素と水から栄養をつくる基本的なはたらきです。夏になると光の量が増え、気温も上がるため、光合成に適した条件がそろいます。光合成が活発になると、植物は芽や葉、根などを成長させるためのエネルギーをたくさんつくることができます。夏の成長を支えているのは、この光合成のはたらきなのです。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer21.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -324,7 +324,7 @@ window.questions = [
       "発芽"
     ],
     "answer": 0,
-    "source": "秋になると気温が下がり、日照時間も短くなります。その結果、葉の中で光合成を行っていた葉緑素が分解され、新しく作られにくくなります。葉緑素の緑色が目立たなくなると、それまでかくれていた黄色や赤の色素が表に見えるようになります。これが、木々の葉が黄色や赤に色づく「紅葉（黄葉）」の正体です。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">紅葉（黄葉）のしくみ\n\n🍂 秋の環境\n    ├─→ 気温：下がる\n    └─→ 日照時間：短くなる\n    │\n    ↓\n💚 葉緑素が分解される\n    ├─→ 新しく作られにくい\n    └─→ 緑色が目立たなくなる\n    │\n    ↓\n🎨 かくれていた色素が表に\n    ├─→ 黄色の色素\n    └─→ 赤の色素\n    │\n    ↓\n🍁 紅葉（黄葉）\n\n気温↓ + 日照↓ → 葉緑素分解 → 紅葉</div>",
+    "source": "秋になると気温が下がり、日照時間も短くなります。その結果、葉の中で光合成を行っていた葉緑素が分解され、新しく作られにくくなります。葉緑素の緑色が目立たなくなると、それまでかくれていた黄色や赤の色素が表に見えるようになります。これが、木々の葉が黄色や赤に色づく「紅葉（黄葉）」の正体です。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer22.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -339,7 +339,7 @@ window.questions = [
       "つる植物"
     ],
     "answer": 0,
-    "source": "落葉樹は、冬になる前にわざと葉を落とすことで、寒さと乾燥から自分の体を守っています。葉がついたままだと、冷たい風や乾いた空気の中で水分がどんどん失われてしまいます。また、光合成があまりできない冬に、葉を維持することはエネルギーのむだにもなります。そこで葉を落とし、水分の蒸発とエネルギーの消費をおさえて冬をこえるのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">落葉樹の特徴\n\n🍂 落葉樹\n    ├─→ 冬に葉を落とす\n    │\n    │ 理由\n    ↓\n❄️ 寒さと乾燥から身を守る\n    ├─→ 葉があると：水分が失われる\n    └─→ 葉があると：エネルギーがむだ\n    │\n    ↓\n🍃 葉を落とす\n    │\n    ↓\n✅ 水分・エネルギーを節約\n    │\n    ↓\n🌱 冬をこえる\n\n葉を落とす → 節約 → 冬越し</div>",
+    "source": "落葉樹は、冬になる前にわざと葉を落とすことで、寒さと乾燥から自分の体を守っています。葉がついたままだと、冷たい風や乾いた空気の中で水分がどんどん失われてしまいます。また、光合成があまりできない冬に、葉を維持することはエネルギーのむだにもなります。そこで葉を落とし、水分の蒸発とエネルギーの消費をおさえて冬をこえるのです。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer23.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -354,7 +354,7 @@ window.questions = [
       "シダ植物"
     ],
     "answer": 0,
-    "source": "常緑樹は、葉が厚くて丈夫で、寒さや乾燥に耐えられるつくりをしています。葉の表面にはクチクラそうとよばれる膜が発達しており、水分が外に逃げにくくなっています。そのため、冬でも葉を残したまま、ゆっくりと光合成を続けることができます。落葉樹とはちがうやり方で、冬をこえている植物だと言えます。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">常緑樹の特徴\n\n🌲 常緑樹\n    ├─→ 葉が厚くて丈夫\n    ├─→ 寒さに強い\n    └─→ 乾燥に強い\n    │\n    ├─→ クチクラ層（膜）が発達\n    └─→ 水分が外に逃げにくい\n    │\n    │ 冬でも\n    ↓\n🍃 葉を残したまま\n    │\n    ↓\n⚡ ゆっくりと光合成を続ける\n    │\n    ↓\n✅ 落葉樹とはちがうやり方\n    │\n    ↓\n❄️ 冬をこえる\n\n葉を残す → 光合成続行 → 冬越し</div>",
+    "source": "常緑樹は、葉が厚くて丈夫で、寒さや乾燥に耐えられるつくりをしています。葉の表面にはクチクラそうとよばれる膜が発達しており、水分が外に逃げにくくなっています。そのため、冬でも葉を残したまま、ゆっくりと光合成を続けることができます。落葉樹とはちがうやり方で、冬をこえている植物だと言えます。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer24.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -369,7 +369,7 @@ window.questions = [
       "つる芽"
     ],
     "answer": 0,
-    "source": "冬芽の中には、次の春に開く葉や花のもとがつまっています。冬のあいだ、この大事な部分を寒さや雪、乾燥から守るために、外側はかたい組織や芽鱗（がりん）でおおわれています。これによって、冷たい風や氷点下の気温にも耐えられるようになっています。春になって気温が上がると、この「よろい」が開き、中から新しい芽が顔を出します。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">冬芽の構造\n\n🛡️ 冬芽\n    ├─→ 外側：かたい組織・芽鱗\n    └─→ 中身：次の春の葉や花のもと\n    │\n    │ 冬のあいだ\n    ↓\n❄️ 守るもの\n    ├─→ 寒さ\n    ├─→ 雪\n    └─→ 乾燥\n    │\n    ↓\n✅ 冷たい風や氷点下にも耐える\n    │\n    │ 春になって\n    ↓\n🌱 「よろい」が開く\n    │\n    ↓\n🌸 新しい芽が顔を出す\n\n冬芽（よろい）→ 守る → 春に開く</div>",
+    "source": "冬芽の中には、次の春に開く葉や花のもとがつまっています。冬のあいだ、この大事な部分を寒さや雪、乾燥から守るために、外側はかたい組織や芽鱗（がりん）でおおわれています。これによって、冷たい風や氷点下の気温にも耐えられるようになっています。春になって気温が上がると、この「よろい」が開き、中から新しい芽が顔を出します。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer25.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -384,7 +384,7 @@ window.questions = [
       "脱皮"
     ],
     "answer": 0,
-    "source": "カエルは変温動物で、体温が気温や水温に左右されます。冬のように温度が低くなると、体のはたらきが弱まり、えさを取ってもあまり消化できません。また、そもそも昆虫などのえさ自体が少なくなります。そこで、エネルギーのむだ遣いを防ぐために、体の活動を大きくおさえる「冬眠」という状態になり、春までじっと過ごすのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">冬眠のしくみ\n\n🐸 変温動物\n    ├─→ 体温 = 気温・水温\n    │\n    │ 冬になって\n    ↓\n🌡️ 温度が低くなる\n    │\n    ↓\n⚡ 体のはたらきが弱まる\n    ├─→ えさを取っても消化できない\n    └─→ えさ自体が少ない\n    │\n    ↓\n💤 冬眠\n    ├─→ 体の活動を大きくおさえる\n    └─→ エネルギーのむだ遣いを防ぐ\n    │\n    ↓\n🌱 春までじっと過ごす\n\n温度↓ → 活動↓ → 冬眠 → 春まで待機</div>",
+    "source": "カエルは変温動物で、体温が気温や水温に左右されます。冬のように温度が低くなると、体のはたらきが弱まり、えさを取ってもあまり消化できません。また、そもそも昆虫などのえさ自体が少なくなります。そこで、エネルギーのむだ遣いを防ぐために、体の活動を大きくおさえる「冬眠」という状態になり、春までじっと過ごすのです。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer26.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -399,7 +399,7 @@ window.questions = [
       "越冬"
     ],
     "answer": 0,
-    "source": "北の地域では、冬になると雪が積もったり地面が凍ったりして、エサとなる昆虫や植物の実が少なくなります。そこで一部の鳥は、より温暖でエサの多い地域へ移動します。これが「渡り」とよばれる行動です。春になり北の環境が回復すると、再びもとの地域に戻って繁殖や子育てを行います。渡りは、生きのびるための知恵と言える行動なのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">鳥の渡り\n\n❄️ 北の地域（冬）\n    ├─→ 雪が積もる\n    ├─→ 地面が凍る\n    └─→ エサが少ない\n    │\n    │ 一部の鳥\n    ↓\n✈️ 渡り（移動）\n    ├─→ より温暖な地域へ\n    └─→ エサの多い地域へ\n    │\n    │ 春になって\n    ↓\n🌱 北の環境が回復\n    │\n    ↓\n🏠 もとの地域に戻る\n    ├─→ 繁殖\n    └─→ 子育て\n\n冬（北：エサ少）→ 渡り → 春（北：回復）</div>",
+    "source": "北の地域では、冬になると雪が積もったり地面が凍ったりして、エサとなる昆虫や植物の実が少なくなります。そこで一部の鳥は、より温暖でエサの多い地域へ移動します。これが「渡り」とよばれる行動です。春になり北の環境が回復すると、再びもとの地域に戻って繁殖や子育てを行います。渡りは、生きのびるための知恵と言える行動なのです。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer27.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -414,7 +414,7 @@ window.questions = [
       "発根"
     ],
     "answer": 0,
-    "source": "春から夏にかけて成長してきた花は、受粉が成功すると、やがて種子を中にふくんだ実へと変化していきます。秋は、その実がちょうど成熟して、種子を外へ広げるのに適したタイミングです。実は地面に落ちたり、動物に食べられて遠くへ運ばれたりしながら、次の世代の芽を出す準備をします。秋に実が多く見られるのは、「子ども（種）」を広く残す季節だからなのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">種子散布のしくみ\n\n🌸 春～夏：花が成長\n    ├─→ 受粉が成功\n    └─→ 種子を中にふくんだ実へ\n    │\n    │ 秋になって\n    ↓\n🍎 実が成熟\n    │\n    ↓\n🌍 種子散布\n    ├─→ 地面に落ちる\n    └─→ 動物に食べられて遠くへ運ばれる\n    │\n    ↓\n🌱 次の世代の芽を出す準備\n\n秋 = 「子ども（種）」を広く残す季節</div>",
+    "source": "春から夏にかけて成長してきた花は、受粉が成功すると、やがて種子を中にふくんだ実へと変化していきます。秋は、その実がちょうど成熟して、種子を外へ広げるのに適したタイミングです。実は地面に落ちたり、動物に食べられて遠くへ運ばれたりしながら、次の世代の芽を出す準備をします。秋に実が多く見られるのは、「子ども（種）」を広く残す季節だからなのです。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer28.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -429,7 +429,7 @@ window.questions = [
       "呼吸"
     ],
     "answer": 0,
-    "source": "夏は気温が高く、日ざしも強いため、葉から水が水蒸気となって出ていく「蒸散」がさかんになります。蒸散が増えると、植物の体から水がどんどん失われるので、その分を根から補わなければなりません。また、光合成をさかんに行うためにも水は必要です。こうした理由から、夏の植物は多くの水を必要とするのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">蒸散のしくみ\n\n🌡️ 夏の環境\n    ├─→ 気温：高い\n    └─→ 日ざし：強い\n    │\n    ↓\n💨 蒸散がさかんになる\n    ├─→ 葉から水蒸気が出る\n    └─→ 水がどんどん失われる\n    │\n    ↓\n💧 根から水を補う必要\n    │\n    ├─→ 蒸散の補給\n    └─→ 光合成にも必要\n    │\n    ↓\n🚰 多くの水を必要とする\n\n気温↑ + 日ざし↑ → 蒸散↑ → 水必要↑</div>",
+    "source": "夏は気温が高く、日ざしも強いため、葉から水が水蒸気となって出ていく「蒸散」がさかんになります。蒸散が増えると、植物の体から水がどんどん失われるので、その分を根から補わなければなりません。また、光合成をさかんに行うためにも水は必要です。こうした理由から、夏の植物は多くの水を必要とするのです。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer29.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
@@ -444,7 +444,7 @@ window.questions = [
       "産卵"
     ],
     "answer": 0,
-    "source": "冬は、植物の葉や虫が少なくなり、自然の中のエサが乏しい季節です。そこで、多くの動物は秋のうちにドングリや木の実などを集め、土の中や木の穴などにかくしておきます。また、体の中に脂肪として栄養をため込む動物もいます。秋のエサ集めは、寒くて厳しい冬を生きのびるための大切な準備なのです。<div style=\"font-family: 'Courier New', monospace; white-space: pre-wrap; line-height: 1.6; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;\">蓄え（貯食）の行動\n\n🍂 秋の行動\n    ├─→ ドングリを集める\n    ├─→ 木の実を集める\n    └─→ 土の中や木の穴にかくす\n    │\n    ├─→ 体に脂肪としてため込む\n    │\n    │ 目的\n    ↓\n❄️ 冬への準備\n    ├─→ エサが乏しい季節\n    ├─→ 寒くて厳しい\n    └─→ 生きのびるため\n    │\n    ↓\n✅ 大切な準備\n\n秋（エサ集め）→ 冬（生きのびる）</div>",
+    "source": "冬は、植物の葉や虫が少なくなり、自然の中のエサが乏しい季節です。そこで、多くの動物は秋のうちにドングリや木の実などを集め、土の中や木の穴などにかくしておきます。また、体の中に脂肪として栄養をため込む動物もいます。秋のエサ集めは、寒くて厳しい冬を生きのびるための大切な準備なのです。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer30.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"
