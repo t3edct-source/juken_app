@@ -46,6 +46,20 @@ window.questions = [
   },
   {
     "qnum": 4,
+    "type": "bigQuestion",
+    "text": "生き物は、どんなときに活動を始めるのだろう？",
+    "choices": [
+      "つづける"
+    ],
+    "answer": 0,
+    "source": "",
+    "uiClass": "big-question",
+    "tags": [],
+    "difficulty": 1,
+    "asof": "2025-01-27"
+  },
+  {
+    "qnum": 5,
     "text": "春につぼみがふくらむ直接の要因は？",
     "choices": [
       "細胞の成長と水分の吸収が増えるため",
@@ -60,7 +74,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 5,
+    "qnum": 6,
     "text": "若葉が薄い緑色に見える理由は？",
     "choices": [
       "葉緑体が十分に発達していないから",
@@ -75,7 +89,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 6,
+    "qnum": 7,
     "text": "春に花が多く咲くのはなぜ？",
     "choices": [
       "受粉に適した気温と生物活動が増えるから",
@@ -90,7 +104,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 7,
+    "qnum": 8,
     "text": "春に昆虫が多く出現する理由は？",
     "choices": [
       "冬を越した成虫・さなぎが活動を再開するため",
@@ -105,7 +119,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 8,
+    "qnum": 9,
     "text": "チョウの幼虫が春に活発なのは？",
     "choices": [
       "食草が新しく生えてくるから",
@@ -120,7 +134,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 9,
+    "qnum": 10,
     "text": "春に鳥が巣作りを始める理由は？",
     "choices": [
       "産卵と子育てに適した環境だから",
@@ -135,7 +149,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 10,
+    "qnum": 11,
     "text": "春に植物が発芽しやすい条件は？",
     "choices": [
       "水・空気・適温がそろうため",
@@ -150,7 +164,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 11,
+    "qnum": 12,
     "text": "春に植物の成長スピードが上がる理由は？",
     "choices": [
       "温度と水分が増えるため",
@@ -165,7 +179,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 12,
+    "qnum": 13,
     "text": "春の光量増加が植物に与える影響は？",
     "choices": [
       "光合成の量が増える",
@@ -180,7 +194,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 13,
+    "qnum": 14,
     "text": "春に雑草が一気に増える理由は？",
     "choices": [
       "種子や地下茎が春の環境に適しているから",
@@ -195,7 +209,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 14,
+    "qnum": 15,
     "text": "春に一年草と多年草の違いが見られる理由は？",
     "choices": [
       "成長や越冬方法に差があるから",
@@ -210,7 +224,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 15,
+    "qnum": 16,
     "text": "春の花が明るい色をしている理由は？",
     "choices": [
       "昆虫に見つけてもらいやすいため",
@@ -225,7 +239,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 16,
+    "qnum": 17,
     "text": "春に虫媒花が多いのはなぜ？",
     "choices": [
       "昆虫の活動が盛んになる季節だから",
@@ -240,7 +254,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 17,
+    "qnum": 18,
     "text": "春の土壌が植物の成長に良い理由は？",
     "choices": [
       "温度と湿度が上がるため",
@@ -255,7 +269,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 18,
+    "qnum": 19,
     "text": "春の川辺で生き物が増える理由は？",
     "choices": [
       "水温上昇で生物の代謝が上がるため",
@@ -270,7 +284,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 19,
+    "qnum": 20,
     "text": "春に根と葉が同時によく成長する理由は？",
     "choices": [
       "光・水・栄養を効率よく使える季節だから",
@@ -285,7 +299,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 20,
+    "qnum": 21,
     "text": "春に生物が一斉に活動し始める総合的な理由は？",
     "choices": [
       "気温・光・水分がそろうため",
@@ -300,7 +314,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 21,
+    "qnum": 22,
     "text": "春に開く前の「芽を包んで守る部分」を何という？",
     "choices": [
       "冬芽",
@@ -315,7 +329,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 22,
+    "qnum": 23,
     "text": "若葉が薄い緑に見えるのは、何が十分でないため？",
     "choices": [
       "葉緑体",
@@ -330,7 +344,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 23,
+    "qnum": 24,
     "text": "花粉を運んで受粉に関わる生き物を何という？",
     "choices": [
       "送粉者",
@@ -345,7 +359,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 24,
+    "qnum": 25,
     "text": "春に植物の成長が急に進むのは、何のはたらきが活発になるため？",
     "choices": [
       "光合成",
@@ -360,7 +374,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 25,
+    "qnum": 26,
     "text": "チョウの幼虫が好んで食べる特定の植物を何という？",
     "choices": [
       "食草",
@@ -375,7 +389,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 26,
+    "qnum": 27,
     "text": "植物が空気中から取り込む、光合成に必要な気体は？",
     "choices": [
       "二酸化炭素",
@@ -390,7 +404,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 27,
+    "qnum": 28,
     "text": "春に暖かさで植物が成長を再開する現象を何という？",
     "choices": [
       "生長（成長）開始",
@@ -405,7 +419,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 28,
+    "qnum": 29,
     "text": "植物が水分を吸い上げるときに主に使う部分は？",
     "choices": [
       "根毛",
@@ -420,7 +434,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 29,
+    "qnum": 30,
     "text": "植物の葉にあり、気体の出入りの役割をする穴を何という？",
     "choices": [
       "気孔",
@@ -435,7 +449,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 30,
+    "qnum": 31,
     "text": "春に植物が新しい葉を広げる際、最初に働く成長の中心部分は？",
     "choices": [
       "生長点",
@@ -445,6 +459,40 @@ window.questions = [
     ],
     "answer": 0,
     "source": "生長点は、植物の茎や根の先端にある、特に細胞がよく分かれる部分です。この場所では、新しい細胞が次々と作られ、それが積み重なっていくことで、茎や根が長く伸びていきます。春になると生長点のはたらきが活発になり、新しい葉や枝も生まれやすくなります。つまり、生長点は「植物の成長のエンジン」のような場所であり、春の成長ラッシュを生み出す中心となっているのです。<img src=\"../images/biology/seasons_living_things/seasons_living_things30.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
+    "tags": [],
+    "difficulty": 1,
+    "asof": "2025-01-27"
+  },
+  {
+    "qnum": 32,
+    "type": "summaryQuestion",
+    "text": "生き物は、どんなときに活動を始めるといえるだろうか。",
+    "choices": [
+      "気温や光、水分などの条件がそろったとき",
+      "春という名前の季節になったとき",
+      "花がさき始めたときだけ",
+      "だれかが動き出したとき"
+    ],
+    "answer": 0,
+    "source": "",
+    "uiClass": "summary-question",
+    "tags": [],
+    "difficulty": 1,
+    "asof": "2025-01-27"
+  },
+  {
+    "qnum": 33,
+    "type": "summaryQuestion",
+    "text": "春に生き物が一斉に活動し始めるのはなぜだろうか。",
+    "choices": [
+      "気温や光、水、えさなどの条件が同時にそろうから",
+      "春になると動く決まりがあるから",
+      "虫が植物を起こしているから",
+      "地球が特別な動きをするから"
+    ],
+    "answer": 0,
+    "source": "",
+    "uiClass": "summary-question",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"

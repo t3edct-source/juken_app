@@ -46,6 +46,20 @@ window.questions = [
   },
   {
     "qnum": 4,
+    "type": "bigQuestion",
+    "text": "生き物は、季節の変化にどう対応しているのだろう？",
+    "choices": [
+      "つづける"
+    ],
+    "answer": 0,
+    "source": "",
+    "uiClass": "big-question",
+    "tags": [],
+    "difficulty": 1,
+    "asof": "2025-01-27"
+  },
+  {
+    "qnum": 5,
     "text": "夏に昆虫がもっとも多く見られる理由は？",
     "choices": [
       "高温が昆虫の体温調整に適し代謝が上がるため",
@@ -60,7 +74,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 5,
+    "qnum": 6,
     "text": "植物が夏に水を大量に必要とする理由は？",
     "choices": [
       "蒸散が増えて水分を失いやすいため",
@@ -75,7 +89,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 6,
+    "qnum": 7,
     "text": "アサガオが夏に朝だけ花を咲かせるのはなぜ？",
     "choices": [
       "高温に弱く、気温が上がる前が適温だから",
@@ -90,7 +104,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 7,
+    "qnum": 8,
     "text": "秋に植物の葉が黄色や赤に変わる理由は？",
     "choices": [
       "葉の中の葉緑素が分解されるため",
@@ -105,7 +119,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 8,
+    "qnum": 9,
     "text": "秋に動物がエサを集める理由は？",
     "choices": [
       "冬に備えて栄養を蓄えるため",
@@ -120,7 +134,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 9,
+    "qnum": 10,
     "text": "秋に多くの植物が実をつける理由は？",
     "choices": [
       "種子を外へ広げるために成熟の時期を迎えるから",
@@ -135,7 +149,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 10,
+    "qnum": 11,
     "text": "ドングリが秋に落ちるのはなぜ？",
     "choices": [
       "種子を地面に落とし、翌春の発芽に備えるため",
@@ -150,7 +164,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 11,
+    "qnum": 12,
     "text": "秋の昆虫が活動を弱めるのは何が原因？",
     "choices": [
       "気温の低下",
@@ -165,7 +179,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 12,
+    "qnum": 13,
     "text": "冬に多くの植物が成長を止めるのはなぜ？",
     "choices": [
       "光合成に必要な光と気温が不足するから",
@@ -180,7 +194,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 13,
+    "qnum": 14,
     "text": "落葉樹が冬に葉を落とす理由は？",
     "choices": [
       "水分の蒸発を防ぎ、寒さから身を守るため",
@@ -195,7 +209,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 14,
+    "qnum": 15,
     "text": "冬芽が硬いつくりになっている理由は？",
     "choices": [
       "寒さから新しい芽を守るため",
@@ -210,7 +224,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 15,
+    "qnum": 16,
     "text": "冬にカエルなどが冬眠する理由は？",
     "choices": [
       "気温が下がり体温を保てないため",
@@ -225,7 +239,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 16,
+    "qnum": 17,
     "text": "冬に鳥が南へ移動する（渡り）理由は？",
     "choices": [
       "エサが少ない地域を離れ、生存条件を求めるため",
@@ -240,7 +254,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 17,
+    "qnum": 18,
     "text": "冬に池の生き物が動かなくなるのはなぜ？",
     "choices": [
       "水温低下で代謝が落ちるため",
@@ -255,7 +269,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 18,
+    "qnum": 19,
     "text": "冬でも常緑樹が葉を残す理由は？",
     "choices": [
       "葉が厚く、寒さに強く光合成を続けられるため",
@@ -270,7 +284,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 19,
+    "qnum": 20,
     "text": "秋から冬にかけて日照時間が減ると植物に起こる変化は？",
     "choices": [
       "光合成量が減り成長が弱まる",
@@ -285,7 +299,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 20,
+    "qnum": 21,
     "text": "季節ごとに生物の行動が変化する根本的な理由は？",
     "choices": [
       "光・気温・水分などの環境条件が変わるため",
@@ -300,7 +314,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 21,
+    "qnum": 22,
     "text": "夏の強い光の下で行われる植物の重要なはたらきは？",
     "choices": [
       "光合成",
@@ -315,7 +329,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 22,
+    "qnum": 23,
     "text": "秋に葉が黄色くなる現象を何という？",
     "choices": [
       "紅葉（黄葉）",
@@ -330,7 +344,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 23,
+    "qnum": 24,
     "text": "冬に葉を落とす植物をまとめて何という？",
     "choices": [
       "落葉樹",
@@ -345,7 +359,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 24,
+    "qnum": 25,
     "text": "冬でも葉を残す植物を何という？",
     "choices": [
       "常緑樹",
@@ -360,7 +374,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 25,
+    "qnum": 26,
     "text": "冬に植物の芽を守る、枝先の固いつぼみを何という？",
     "choices": [
       "冬芽",
@@ -375,7 +389,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 26,
+    "qnum": 27,
     "text": "冬に動物が活動を停止している状態を何という？",
     "choices": [
       "冬眠",
@@ -390,7 +404,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 27,
+    "qnum": 28,
     "text": "鳥が季節に合わせて移動することを何という？",
     "choices": [
       "渡り",
@@ -405,7 +419,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 28,
+    "qnum": 29,
     "text": "秋に植物が種子を広げる仕組みを何という？",
     "choices": [
       "種子散布",
@@ -420,7 +434,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 29,
+    "qnum": 30,
     "text": "夏に植物から水が大量に失われる現象を何という？",
     "choices": [
       "蒸散",
@@ -435,7 +449,7 @@ window.questions = [
     "asof": "2025-01-27"
   },
   {
-    "qnum": 30,
+    "qnum": 31,
     "text": "秋に動物がエサをため込む行動を何という？",
     "choices": [
       "蓄え（貯食）",
@@ -445,6 +459,40 @@ window.questions = [
     ],
     "answer": 0,
     "source": "冬は、植物の葉や虫が少なくなり、自然の中のエサが乏しい季節です。そこで、多くの動物は秋のうちにドングリや木の実などを集め、土の中や木の穴などにかくしておきます。また、体の中に脂肪として栄養をため込む動物もいます。秋のエサ集めは、寒くて厳しい冬を生きのびるための大切な準備なのです。<img src=\"../images/biology/seasons_living_things_summer/seasons_living_things_summer30.png\" alt=\"図解\" style=\"max-width: 100%; margin: 1rem 0; border-radius: 8px; display: block;\">",
+    "tags": [],
+    "difficulty": 1,
+    "asof": "2025-01-27"
+  },
+  {
+    "qnum": 32,
+    "type": "summaryQuestion",
+    "text": "生き物は、季節の変化にどう対応しているといえるだろうか。",
+    "choices": [
+      "気温、光、水分、エサなどの環境条件の変化に合わせて行動や体のしくみを変えている",
+      "季節の名前が変わることで自動的に行動が変わる",
+      "地球の自転速度が変わることで行動が変わる",
+      "人間が季節を作っているから行動が変わる"
+    ],
+    "answer": 0,
+    "source": "",
+    "uiClass": "summary-question",
+    "tags": [],
+    "difficulty": 1,
+    "asof": "2025-01-27"
+  },
+  {
+    "qnum": 33,
+    "type": "summaryQuestion",
+    "text": "夏・秋・冬に生き物がそれぞれ異なる行動をとるのはなぜだろうか。",
+    "choices": [
+      "それぞれの季節で環境条件が異なり、それに適応した行動が生きのびるために必要だから",
+      "季節ごとに決められた行動パターンがあるから",
+      "他の生き物が動き出すのを見て真似しているから",
+      "太陽の色が季節で変わるから"
+    ],
+    "answer": 0,
+    "source": "",
+    "uiClass": "summary-question",
     "tags": [],
     "difficulty": 1,
     "asof": "2025-01-27"

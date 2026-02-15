@@ -397,3 +397,96 @@ body.oboeru-mode #timer {
   border-radius: 6px;
   border: 1px solid #f59e0b;
 }
+
+/* 大きな問（big-question）のスタイル - 最高優先度で適用 */
+.question-box.big-question {
+  background: #fdfaf2 !important;
+  border-radius: 20px !important;
+  padding: 0 !important;
+}
+
+.question-box.big-question .question-header {
+  border-bottom: none !important;
+  padding: 4rem 2rem 2rem 2rem !important;
+  background: transparent !important;
+  text-align: center !important;
+  position: relative !important;
+}
+
+.question-box.big-question .question-header *,
+.question-box.big-question .question-header h2,
+.question-box.big-question .question-header div {
+  text-align: center !important;
+}
+
+.question-box.big-question #question {
+  font-size: 2rem !important;
+  line-height: 1.75 !important;
+  margin-bottom: 2rem !important;
+  margin-top: 1rem !important;
+  text-align: center !important;
+  font-weight: 700 !important;
+  width: 100% !important;
+  display: block !important;
+  color: #1f2937 !important;
+}
+
+.question-box.big-question .question-content {
+  padding: 0 2rem 4rem 2rem !important;
+  text-align: center !important;
+}
+
+.question-box.big-question .question-content * {
+  text-align: center !important;
+}
+
+.question-box.big-question .source {
+  display: none !important;
+}
+
+.question-box.big-question #modeLabel,
+.question-box.big-question #eraLabel {
+  display: none !important;
+}
+
+.question-box.big-question .choices {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 1rem !important;
+}
+
+.question-box.big-question .choices button {
+  text-align: center !important;
+  max-width: 300px !important;
+  margin: 0 auto !important;
+}
+
+/* 回収問題（summary-question）のスタイル */
+.question-box.summary-question {
+  background: #f3fbf4;
+  border-radius: 16px;
+}
+
+.question-box.summary-question #question {
+  font-size: 1.5rem;
+  line-height: 1.6;
+}
+
+/* モーダルアニメーション */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    transform: translateY(30px) scale(0.95); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateY(0) scale(1); 
+    opacity: 1; 
+  }
+}
