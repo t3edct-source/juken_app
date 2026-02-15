@@ -1750,24 +1750,27 @@ scienceDrillUnits = [
     shortName: '小4',
     icon: '📝',
     lessons: [
-      // 生物（4）
-      'sci.biology.seasons_living_things_oboeru', // 季節と生物（春）
-      'sci.biology.seasons_living_things_summer_oboeru', // 季節と生物（夏〜冬）
+      'sci.biology.insect_body_lifecycle_oboeru', // こん虫のからだと育ち方
+      'sci.biology.medaka_lifecycle_oboeru', // メダカの育ち方
+      'sci.biology.microscope_water_organisms_oboeru', // けんび鏡 水中の小さな生物
+      'sci.biology.plant_structure_oboeru', // 植物の成長
       'sci.biology.plants_growth_light_oboeru', // 植物の成長
       'sci.biology.plants_observation_oboeru', // 花のつくりと受粉
-      // 物理（3）
-      'sci.physics.weight_volume_basic_oboeru', // つり合いとてんびん
-      'sci.physics.electricity_conductivity_basic_oboeru', // 電気（乾電池と豆電球）
-      'sci.physics.heat_properties_oboeru', // 熱の性質とものの変化
-      // 化学（4）
-      'sci.chemistry.air_properties_oboeru', // 空気の性質
-      'sci.chemistry.water_three_states_oboeru', // 水の変化・状態変化
-      'sci.chemistry.combustion_air_oboeru', // 燃焼と空気の成分
-      // 地学（4）
-      'sci.earth.constellations_seasons_oboeru', // 星と星座
+      'sci.biology.seasons_living_things_oboeru', // 季節と生物（春）
+      'sci.biology.seasons_living_things_summer_oboeru', // 季節と生物（夏〜冬）
+      'sci.biology.seeds_germination_oboeru', // 種子のつくりと発芽
+      'sci.chemistry.air_combustion_integrated_oboeru', // 空気と燃焼
+      'sci.chemistry.physics_heat_transfer_oboeru', // メスシリンダー, ろ過、 ガスバーナー
+      'sci.chemistry.physics_lab_equipment_oboeru', // メスシリンダー, ろ過、 ガスバーナー
+      'sci.chemistry.water_state_integrated_oboeru', // 水の状態変化（統合）
+      'sci.earth.river_work_oboeru', // 川のはたらき
+      'sci.earth.solar_system_oboeru', // 太陽系
+      'sci.earth.stars_constellations_integrated_oboeru', // 星と星座・星の動き
       'sci.earth.sun_movement_shadow_oboeru', // 太陽と影（基礎）
       'sci.earth.weather_changes_oboeru', // 天気の変化
-      'sci.earth.river_work_oboeru' // 川のはたらき
+      'sci.physics.electricity_conductivity_basic_oboeru', // 電気（乾電池と豆電球）
+      'sci.physics.heat_properties_oboeru', // 熱の性質とものの変化
+      'sci.physics.weight_volume_basic_oboeru', // つり合いとてんびん
     ]
   },
   {
@@ -1775,26 +1778,41 @@ scienceDrillUnits = [
     name: '小5理科：しくみを学ぶ',
     shortName: '小5',
     icon: '📝',
-    lessons: [
-      // 物理（7）
-      'sci.physics.current_voltage_circuit_oboeru', // 電気の基礎（乾電池・回路）
+                lessons: [
+      // 物理
+      'sci.physics.current_circuit_integrated_oboeru', // 電気の基礎と回路を流れる電流の大きさ（統合）
       'sci.physics.current_effect_heating_oboeru', // 電流の作用①（発熱）
       'sci.physics.current_effect_magnetic_oboeru', // 電流の作用②（磁界）
       'sci.physics.lever_weight_basic_oboeru', // てこのつり合い
-      'sci.physics.spring_force_oboeru', // ばねと力
+      'sci.physics.spring_force_buoyancy_integrated_oboeru', // ばねと力・ばねと浮力統合版
       'sci.physics.light_properties_oboeru', // 光の性質
-      'sci.physics.force_motion_oboeru', // 力と運動（浮力・かっ車・輪じく）
-      // 地学（4）
-      'sci.earth.volcano_structure_oboeru', // 火山のしくみ
+      'sci.physics.force_motion_pulley_integrated_oboeru', // 力と運動（浮力・かっ車・輪じく）統合版
+      'sci.physics.pendulum_moving_weight_integrated_oboeru', // ふりことおもりの運動
+      'sci.physics.balance_oboeru', // 上皿てんびん
+      'sci.physics.current_compass_oboeru', // 流れる電流と方位磁針
+      // 地学
+      'sci.earth.volcano_structure_land_change_integrated_oboeru', // 火山のしくみ・火山と大地の変化統合版
+      'sci.earth.earthquake_basic_oboeru', // 地震の基礎
       'sci.earth.earthquake_structure_oboeru', // 地震のしくみ
+      'sci.earth.strata_formation_oboeru', // 地層のでき方
+      'sci.earth.rocks_oboeru', // 岩石
+      'sci.earth.various_landforms_oboeru', // いろいろな地形
+      'sci.earth.fossils_strata_oboeru', // 化石と地層のようす
       'sci.earth.land_river_erosion_oboeru', // 流水と地形の変化
-      'sci.earth.clouds_fronts_weather_map_oboeru', // 気象（雲・前線・天気図）
-      // 生物（3）
+      'sci.earth.sun_movement_oboeru', // 太陽の動き
+      'sci.earth.moon_movement_oboeru', // 月の動き
+      'sci.earth.weather_observation_pressure_wind_oboeru', // 気象の観測と雲のでき方
+      'sci.earth.temperature_changes_oboeru', // 気温の変化
+      // 生物
+      'sci.biology.animal_classification_oboeru', // 動物の分類
+      'sci.biology.living_things_seasons_oboeru', // 生物のくらしと四季
       'sci.biology.food_chain_oboeru', // 生物のつながり（食物連鎖）
-      'sci.biology.human_body_digestion_respiration_oboeru', // 人体①（消化・呼吸・血液）
-      'sci.biology.human_body_nervous_motion_oboeru', // 人体②（神経・運動）
-      // 化学（1）
-      'sci.chemistry.solubility_temperature_oboeru' // 水溶液と溶解度
+      'sci.biology.photosynthesis_oboeru', // 光合成のしくみ
+      'sci.biology.plant_structure_transpiration_integrated_oboeru', // 植物のつくりとはたらき
+      'sci.biology.plant_classification_oboeru', // 植物のなかま分け
+      'sci.biology.digestion_absorption_oboeru', // 消化と吸収
+      // 化学
+      'sci.chemistry.solution_integrated_oboeru', // 水溶液（溶解度・とけ方・濃さ）
     ]
   },
   {
@@ -1803,20 +1821,32 @@ scienceDrillUnits = [
     shortName: '小6',
     icon: '📝',
     lessons: [
-      // 物理総合（3）
+      'sci.biology.bones_muscles_senses_oboeru', // 骨と筋肉, 感覚器
+      'sci.biology.environment_energy_oboeru', // 環境問題 エネルギー問題
+      'sci.biology.heart_blood_circulation_oboeru', // 心臓と血液のじゅんかん
+      'sci.biology.human_birth_oboeru', // ヒトのたんじょう
+      'sci.biology.respiration_excretion_oboeru', // 呼吸と排出
+      'sci.chemistry.neutralization_oboeru', // 中 和
+      'sci.chemistry.solution_metal_reaction_oboeru', // 水よう液と金属の反応
+      'sci.chemistry.various_gases_oboeru', // いろいろな気体
+      'sci.comprehensive.animals_comprehensive_oboeru', // 動物総合
+      'sci.comprehensive.astronomy_comprehensive_oboeru', // 天体総合（太陽・月・地球・惑星）
+      'sci.comprehensive.biology_comprehensive_oboeru', // 生物総合
+      'sci.comprehensive.chemistry_comprehensive_oboeru', // 化学総合
+      'sci.comprehensive.combustion_comprehensive_oboeru', // 気体・燃焼総合（計算含む）
+      'sci.comprehensive.earth_science_comprehensive_oboeru', // 地学総合
       'sci.comprehensive.electricity_comprehensive_oboeru', // 電気総合（回路／電力／発熱）
+      'sci.comprehensive.human_body_comprehensive_oboeru', // ヒトの体総合（全分野の横断）
       'sci.comprehensive.light_sound_comprehensive_oboeru', // 光・音の総合
       'sci.comprehensive.mechanics_comprehensive_oboeru', // 力学総合（てこ／滑車／ばね／浮力）
-      // 化学総合（2）
-      'sci.comprehensive.combustion_comprehensive_oboeru', // 気体・燃焼総合（計算含む）
-      'sci.comprehensive.water_solution_comprehensive_oboeru', // 水溶液総合（酸・アルカリ・中和）
-      // 生物（2）
-      'sci.comprehensive.animals_comprehensive_oboeru', // 動物総合
-      'sci.comprehensive.human_body_comprehensive_oboeru', // ヒトの体総合（全分野の横断）
-      // 地学総合（3）
-      'sci.comprehensive.astronomy_comprehensive_oboeru', // 天体総合（太陽・月・地球・惑星）
+      'sci.comprehensive.physics_comprehensive_advanced_oboeru', // 物理総合（最難関中対応）
+      'sci.comprehensive.physics_comprehensive_oboeru', // 物理総合
       'sci.comprehensive.strata_comprehensive_oboeru', // 大地の変化総合（地層／化石／火山／地震）
-      'sci.comprehensive.weather_comprehensive_oboeru' // 気象総合（前線／台風／天気図読み取り）
+      'sci.comprehensive.water_solution_comprehensive_oboeru', // 水溶液総合（酸・アルカリ・中和）
+      'sci.comprehensive.weather_comprehensive_oboeru', // 気象総合（前線／台風／天気図読み取り）
+      'sci.earth.clouds_fronts_weather_map_oboeru', // 気象（雲・前線・天気図）
+      'sci.earth.front_weather_land_sea_breeze_oboeru', // 前線と天気, 海陸風
+      'sci.earth.japan_weather_oboeru', // 日本の天気
     ]
   }
 ];

@@ -18,8 +18,8 @@ function goBack() {
 const urlParams = new URLSearchParams(window.location.search);
 const mode = urlParams.get("mode") || "oboeru"; // デフォルトは覚える編
 // era変数はindex_modular.htmlで既に宣言されるが、script.jsが先に実行される可能性があるため、直接取得
-const era = urlParams.get("era") || window.era || "seasons_living_things_spring"; // レッスンID生成用
-const eraKey = urlParams.get("era") || "seasons_living_things_spring"; // 単元キー（OK判定に使用）
+const era = urlParams.get("era") || window.era || "sci.biology.seasons_living_things_oboeru"; // レッスンID生成用
+const eraKey = urlParams.get("era") || "sci.biology.seasons_living_things_oboeru"; // 単元キー（OK判定に使用）
 
 document.getElementById("modeLabel").textContent = 
   mode === "oboeru" ? "覚える編" : "わかる編";
@@ -169,7 +169,21 @@ function loadQuestion() {
     questionContent.scrollTop = 0;
   }
   
+  // shuffledQuestionsが空の場合はエラー
+  if (!shuffledQuestions || shuffledQuestions.length === 0) {
+    console.error('❌ shuffledQuestionsが空です');
+    questionEl.innerHTML = '問題データが読み込まれていません。ページを再読み込みしてください。';
+    return;
+  }
+  
   const q = shuffledQuestions[current];
+  
+  // 問題が存在しない場合
+  if (!q) {
+    console.error('❌ 問題が見つかりません。current:', current, 'shuffledQuestions.length:', shuffledQuestions.length);
+    questionEl.innerHTML = '問題が見つかりません。';
+    return;
+  }
   
   // 進捗表示を追加
   const progressDisplay = document.getElementById("progress") || createProgressDisplay();
@@ -898,12 +912,20 @@ function clearCheckpoint() {
 
 // 初期化：わかる編は配列順、覚える編はランダム
 async function startApp() {
+  console.log('🚀 startApp開始');
   // window.questions または questions のいずれかを使用
   const questionsArray = window.questions || questions;
+  console.log('📚 questionsArray:', questionsArray ? `${questionsArray.length}個` : 'undefined');
+  
   if (!questionsArray || !Array.isArray(questionsArray) || questionsArray.length === 0) {
     console.error('❌ 問題データが読み込まれていません');
+    console.error('❌ window.questions:', window.questions);
+    console.error('❌ questions:', typeof questions !== 'undefined' ? questions : 'undefined');
+    questionEl.innerHTML = '問題データが読み込まれていません。ページを再読み込みしてください。';
     return;
   }
+  
+  console.log('✅ 問題データ読み込み成功:', questionsArray.length, '個');
   
   // チェックポイントを読み込む
   const checkpoint = loadCheckpoint();
@@ -924,6 +946,7 @@ async function startApp() {
   
   if (mode === "oboeru") {
     shuffledQuestions = shuffleQuestions();
+    console.log('🔀 おぼえる編: シャッフル完了', shuffledQuestions.length, '個');
     if (current > 0) {
       // チェックポイントから再開する場合、既にシャッフルされた問題の順序を保持
       // ただし、currentの位置から開始するため、問題の順序は保持される
@@ -931,7 +954,11 @@ async function startApp() {
   } else {
     // わかる編は questions をそのまま
     shuffledQuestions = [...questionsArray];
+    console.log('📖 わかる編: そのまま使用', shuffledQuestions.length, '個');
   }
+  
+  console.log('📝 shuffledQuestions初期化完了:', shuffledQuestions.length, '個');
+  console.log('📝 current:', current);
   loadQuestion();
 }
 
@@ -939,18 +966,25 @@ async function startApp() {
 (function waitForQuestions(){
   // 既に実行済みの場合は再実行しない
   if (window._appStarted) {
+    console.log('⏭️ startAppは既に実行済みです');
     return;
   }
   
   // window.questions または questions のいずれかが読み込まれているかチェック
-  const questionsLoaded = (typeof window.questions !== 'undefined' && Array.isArray(window.questions) && window.questions.length > 0) ||
+  const windowQuestionsLoaded = typeof window.questions !== 'undefined' && Array.isArray(window.questions) && window.questions.length > 0;
+  const questionsLoaded = windowQuestionsLoaded ||
                          (typeof questions !== 'undefined' && Array.isArray(questions) && questions.length > 0);
+  
+  console.log('🔍 waitForQuestions: window.questions =', windowQuestionsLoaded ? `${window.questions.length}個` : '未読み込み');
+  console.log('🔍 waitForQuestions: questionsLoaded =', questionsLoaded);
   
   if (questionsLoaded) {
     // 実行済みフラグを設定
     window._appStarted = true;
+    console.log('✅ 問題データ読み込み完了、startAppを呼び出します');
     startApp();
   } else {
+    console.log('⏳ 問題データ待機中...');
     setTimeout(waitForQuestions, 50);
   }
 })();
