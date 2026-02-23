@@ -31,7 +31,22 @@
   </div>
 
   <script src="loader.js"></script>
-  <script src="script.js"></script>
+  <script>
+    // mode=wakaruの場合はwakaruディレクトリのscript.jsを読み込む
+    (function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const mode = urlParams.get("mode") || "oboeru";
+      if (mode === "wakaru") {
+        const script = document.createElement('script');
+        script.src = '../wakaru/script.js?v=2.0';
+        document.head.appendChild(script);
+      } else {
+        const script = document.createElement('script');
+        script.src = 'script.js';
+        document.head.appendChild(script);
+      }
+    })();
+  </script>
   <script>
     const eraMap = {
       // 地理分野

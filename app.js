@@ -853,12 +853,6 @@ window.startPurchase = startPurchase;
 function hasEntitlement(sku) { 
   if (!sku) return true; // SKU指定なしは常に許可
   
-  // 開発・テスト用: 開発環境では未認証でもlocalStorageのpurchasesをチェック
-  const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  
-  // 本番環境では未認証の場合はFirebase entitlementsのみをチェック
-  if (!state.user && !isDevelopment) return false;
-  
   // sku（packId、例：g5-soc）から対応するproductId（例：shakai_gakushu_5）を取得
   const pack = PACKS.find(p => p.id === sku);
   const productId = pack ? pack.productId : null;
@@ -868,8 +862,7 @@ function hasEntitlement(sku) {
   const hasFirebaseEntitlementByProductId = productId ? state.userEntitlements.has(productId) : false;
   const hasFirebaseEntitlement = hasFirebaseEntitlementByPackId || hasFirebaseEntitlementByProductId;
   
-  // 開発・テスト用: LocalStorage もチェック（フォールバック）
-  // 開発環境では未認証でもlocalStorageをチェック
+  // LocalStorage もチェック（本番環境でも未認証ユーザーがボタンでオープンした場合に対応）
   const localPurchases = JSON.parse(localStorage.getItem(LS_KEYS.purchases) || '[]');
   const hasLocalPurchase = localPurchases.includes(sku);
   

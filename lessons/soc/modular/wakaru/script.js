@@ -1,3 +1,6 @@
+// script.js v2.0 - 大きな問いと回収問題対応版 (2025-01-27)
+console.log('📄 script.js v2.0 読み込み開始');
+
 // シンプルな戻るボタンの機能
 function goBack() {
   console.log('🏠 ホームボタンクリック');
@@ -187,27 +190,48 @@ function loadQuestion() {
   
   const q = shuffledQuestions[current];
   
+  // 問題が見つからない場合のエラーハンドリング
+  if (!q) {
+    console.error('❌ 問題が見つかりません。current:', current, 'shuffledQuestions.length:', shuffledQuestions.length);
+    questionEl.innerHTML = '問題が見つかりません。';
+    return;
+  }
+  
+  console.log('📝 問題読み込み:', current + 1, 'qnum:', q.qnum, 'type:', q.type, 'uiClass:', q.uiClass);
+  
+  // 大きな問いや回収問題、話し合い問題が誤って読み込まれていないかチェック
+  if (q.type === 'bigQuestion' || q.type === 'summaryQuestion' || q.type === 'discussionQuestion') {
+    console.error('❌ 大きな問い、回収問題、または話し合い問題が通常問題として読み込まれています:', q);
+    console.error('❌ shuffledQuestionsの内容:', shuffledQuestions.map(qq => ({ qnum: qq.qnum, type: qq.type })));
+    questionEl.innerHTML = '問題が見つかりません。';
+    return;
+  }
+  
   // 進捗表示を追加（説明テキスト表示後は表示）
   const progressDisplay = document.getElementById("progress") || createProgressDisplay();
   if (progressDisplay) {
     progressDisplay.style.display = "block";
-    const questionsArray = window.questions || questions;
-    const totalQuestions = questionsArray ? questionsArray.length : 0;
+    // 大きな問いと回収問題を除外した通常問題の数を使用
+    const totalQuestions = shuffledQuestions ? shuffledQuestions.length : 0;
     progressDisplay.textContent = `問題 ${current + 1} / ${totalQuestions}`;
   }
   
   questionEl.innerHTML = q.text || q.question;
   
   // 図解の表示（visualフィールドがある場合）
-  if (q.visual && mode === "wakaru") {
-    visualEl.textContent = q.visual;
-    visualEl.style.display = "block";
-  } else {
-    visualEl.style.display = "none";
-    visualEl.innerHTML = ""; // 内容もクリア
+  if (visualEl) {
+    if (q.visual && mode === "wakaru") {
+      visualEl.textContent = q.visual;
+      visualEl.style.display = "block";
+    } else {
+      visualEl.style.display = "none";
+      visualEl.innerHTML = ""; // 内容もクリア
+    }
   }
   
-  sourceEl.innerHTML = mode === "wakaru" ? q.source : "";
+  if (sourceEl) {
+    sourceEl.innerHTML = mode === "wakaru" ? q.source : "";
+  }
   
   // wakaruモードでタイマー要素が存在する場合は確実に削除
   if (mode === "wakaru") {
@@ -420,8 +444,1209 @@ function showCurrentSessionResult() {
   `;
 }
 
+// 大きな問をモーダルで表示する関数
+function showBigQuestionModal() {
+  return new Promise((resolve) => {
+    if (!window.bigQuestion) {
+      resolve();
+      return;
+    }
+    
+    // 大きな問のテキストに応じて説明テキストを決定
+    const bigQuestionText = window.bigQuestion.text || '';
+    let explanationText1 = '';
+    let explanationText2 = '';
+    let explanationText3 = '';
+    
+    if (bigQuestionText.includes('旧石器・縄文・弥生時代')) {
+      // 旧石器・縄文・弥生時代のレッスン用
+      explanationText1 = 'これまで、旧石器・縄文・弥生時代の「現象」を見てきました。でも、ただ「時代が変わったから」と答えるだけでは、本当の理解にはなりません。';
+      explanationText2 = '同じ時代でも、地域や集落によって対応の仕方が違います。それぞれの時代が「自分たちにとって生きのびやすい条件」を感じ取っているからです。';
+      explanationText3 = 'これから出てくる問題を「時代の変化と社会の発展」という視点で見ていきましょう。技術、環境、生活様式など、それぞれの時代がどう変化していったのかを探ります。';
+    } else {
+      // デフォルト
+      explanationText1 = 'これまで、様々な「現象」を見てきました。でも、ただ「そうなったから」と答えるだけでは、本当の理解にはなりません。';
+      explanationText2 = '同じ状況でも、対応の仕方が違います。それぞれが「自分たちにとって生きのびやすい条件」を感じ取っているからです。';
+      explanationText3 = 'これから出てくる問題を「変化と発展」という視点で見ていきましょう。技術、環境、生活様式など、それぞれがどう変化していったのかを探ります。';
+    }
+    
+    const overlay = document.createElement('div');
+    overlay.id = 'big-question-overlay';
+    overlay.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 10000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease;
+      backdrop-filter: blur(4px);
+    `;
+    
+    const modal = document.createElement('div');
+    modal.className = 'big-question-modal';
+    modal.style.cssText = `
+      background: linear-gradient(135deg, #fdfaf2 0%, #fff7ed 50%, #fef3c7 100%);
+      border-radius: 24px;
+      padding: 0;
+      width: 95vw;
+      height: 95vh;
+      box-shadow: 0 25px 70px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.1);
+      animation: slideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    `;
+    
+    // 装飾的な背景要素
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-10px) rotate(5deg); }
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.8; transform: scale(1.05); }
+      }
+      .big-question-icon {
+        animation: float 3s ease-in-out infinite;
+      }
+      .big-question-highlight {
+        animation: pulse 2s ease-in-out infinite;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    modal.innerHTML = `
+      <!-- 装飾的なヘッダー -->
+      <div style="
+        background: linear-gradient(135deg, #ea580c 0%, #f97316 50%, #fb923c 100%);
+        padding: 1.5rem 2rem 1rem 2rem;
+        position: relative;
+        overflow: hidden;
+        flex-shrink: 0;
+      ">
+        <div style="
+          position: absolute;
+          top: -50%;
+          right: -10%;
+          width: 200px;
+          height: 200px;
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 50%;
+          animation: pulse 3s ease-in-out infinite;
+        "></div>
+        <div style="
+          position: absolute;
+          bottom: -30%;
+          left: -5%;
+          width: 150px;
+          height: 150px;
+          background: rgba(255, 255, 255, 0.08);
+          border-radius: 50%;
+          animation: pulse 4s ease-in-out infinite;
+        "></div>
+        <div style="
+          font-size: 2.5rem;
+          margin-bottom: 0.3rem;
+          position: relative;
+          z-index: 1;
+        " class="big-question-icon">🌱</div>
+        <div style="
+          color: white;
+          font-size: 0.9rem;
+          font-weight: 600;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          position: relative;
+          z-index: 1;
+          opacity: 0.95;
+        ">大きな疑問</div>
+      </div>
+      
+      <!-- メインコンテンツ -->
+      <div style="padding: 2rem 5%; flex: 1; display: flex; flex-direction: column; overflow-y: auto; min-height: 0;">
+        <!-- 問いのテキスト -->
+        <div style="
+          background: linear-gradient(135deg, #fff 0%, #fefce8 100%);
+          border: 3px solid #f97316;
+          border-radius: 16px;
+          padding: 1.5rem;
+          margin-bottom: 1.5rem;
+          box-shadow: 0 8px 24px rgba(249, 115, 22, 0.15);
+          position: relative;
+          flex-shrink: 0;
+          max-width: 80%;
+          margin-left: auto;
+          margin-right: auto;
+        ">
+          <div style="
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #ea580c, #f97316);
+            color: white;
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
+          ">💭 問い</div>
+          <h2 style="
+            font-size: 1.8rem;
+            line-height: 1.6;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 0.5rem 0 0 0;
+            text-align: center;
+          " class="big-question-highlight">
+            ${window.bigQuestion.text}
+          </h2>
+        </div>
+        
+        <!-- 説明セクション -->
+        <div style="
+          background: rgba(255, 255, 255, 0.8);
+          backdrop-filter: blur(10px);
+          border-radius: 16px;
+          padding: 1.5rem 2.5rem;
+          margin-bottom: 1.5rem;
+          text-align: left;
+          line-height: 1.7;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          max-width: 80%;
+          margin-left: auto;
+          margin-right: auto;
+          width: 100%;
+        ">
+          <div style="
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px dashed #fbbf24;
+          ">
+            <div style="
+              font-size: 1.5rem;
+              margin-right: 0.8rem;
+              flex-shrink: 0;
+            ">🌿</div>
+            <div>
+              <div style="
+                color: #ea580c;
+                font-size: 1rem;
+                font-weight: 700;
+                margin-bottom: 0.5rem;
+                display: flex;
+                align-items: center;
+              ">
+                <span style="
+                  display: inline-block;
+                  width: 4px;
+                  height: 20px;
+                  background: linear-gradient(135deg, #ea580c, #f97316);
+                  border-radius: 2px;
+                  margin-right: 0.5rem;
+                "></span>
+                この問いが生まれる背景
+              </div>
+              <div style="color: #4b5563; font-size: 0.95rem;">
+                ${explanationText1}
+              </div>
+            </div>
+          </div>
+          
+          <div style="
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px dashed #fbbf24;
+          ">
+            <div style="
+              font-size: 1.5rem;
+              margin-right: 0.8rem;
+              flex-shrink: 0;
+            ">🔍</div>
+            <div>
+              <div style="
+                color: #ea580c;
+                font-size: 1rem;
+                font-weight: 700;
+                margin-bottom: 0.5rem;
+                display: flex;
+                align-items: center;
+              ">
+                <span style="
+                  display: inline-block;
+                  width: 4px;
+                  height: 20px;
+                  background: linear-gradient(135deg, #ea580c, #f97316);
+                  border-radius: 2px;
+                  margin-right: 0.5rem;
+                "></span>
+                なぜこの疑問が生まれるのか
+              </div>
+              <div style="color: #4b5563; font-size: 0.95rem;">
+                ${explanationText2}
+              </div>
+            </div>
+          </div>
+          
+          <div style="
+            display: flex;
+            align-items: flex-start;
+          ">
+            <div style="
+              font-size: 1.5rem;
+              margin-right: 0.8rem;
+              flex-shrink: 0;
+            ">👁️</div>
+            <div>
+              <div style="
+                color: #ea580c;
+                font-size: 1rem;
+                font-weight: 700;
+                margin-bottom: 0.5rem;
+                display: flex;
+                align-items: center;
+              ">
+                <span style="
+                  display: inline-block;
+                  width: 4px;
+                  height: 20px;
+                  background: linear-gradient(135deg, #ea580c, #f97316);
+                  border-radius: 2px;
+                  margin-right: 0.5rem;
+                "></span>
+                これから先の問題の見方
+              </div>
+              <div style="color: #4b5563; font-size: 0.95rem;">
+                ${explanationText3}
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- つづけるボタン -->
+        <button id="big-question-continue" style="
+          background: linear-gradient(135deg, #ea580c 0%, #f97316 50%, #fb923c 100%);
+          color: white;
+          border: none;
+          padding: 1rem 2.5rem;
+          border-radius: 16px;
+          font-size: 1rem;
+          font-weight: 700;
+          cursor: pointer;
+          box-shadow: 0 8px 24px rgba(234, 88, 12, 0.4);
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
+          letter-spacing: 0.05em;
+          flex-shrink: 0;
+          margin-top: auto;
+        ">
+          <span style="position: relative; z-index: 1;">つづける →</span>
+          <div style="
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+          " class="button-shine"></div>
+        </button>
+      </div>
+    `;
+    
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+    
+    const continueBtn = document.getElementById('big-question-continue');
+    const buttonShine = continueBtn.querySelector('.button-shine');
+    
+    continueBtn.onmouseover = function() {
+      this.style.transform = 'translateY(-3px) scale(1.03)';
+      this.style.boxShadow = '0 12px 32px rgba(234, 88, 12, 0.5)';
+      if (buttonShine) {
+        buttonShine.style.left = '100%';
+      }
+    };
+    continueBtn.onmouseout = function() {
+      this.style.transform = 'translateY(0) scale(1)';
+      this.style.boxShadow = '0 8px 24px rgba(234, 88, 12, 0.4)';
+      if (buttonShine) {
+        buttonShine.style.left = '-100%';
+      }
+    };
+    continueBtn.onclick = () => {
+      console.log('🖱️ つづけるボタンをクリックしました');
+      if (continueBtn.disabled) {
+        console.log('⚠️ ボタンは既に無効化されています');
+        return;
+      }
+      continueBtn.style.transform = 'scale(0.98)';
+      continueBtn.disabled = true; // 連続クリック防止
+      console.log('⏳ 150ms待機してからモーダルを閉じます');
+      setTimeout(() => {
+        console.log('🗑️ モーダルを削除します');
+        try {
+          if (overlay && overlay.parentNode) {
+            document.body.removeChild(overlay);
+            console.log('✅ overlayを削除しました');
+          }
+          if (style && style.parentNode) {
+            document.head.removeChild(style);
+            console.log('✅ styleを削除しました');
+          }
+          console.log('✅ resolve()を呼び出します');
+          resolve();
+          console.log('✅ resolve()呼び出し完了');
+        } catch (error) {
+          console.error('❌ モーダル削除エラー:', error);
+          console.log('⚠️ エラーが発生しましたが、resolve()を呼び出します');
+          resolve(); // エラーが発生しても処理を続行
+        }
+      }, 150);
+    };
+    
+    overlay.onclick = (e) => {
+      if (e.target === overlay) {
+        console.log('🖱️ オーバーレイをクリックしてモーダルを閉じます');
+        try {
+          if (overlay && overlay.parentNode) {
+            document.body.removeChild(overlay);
+            console.log('✅ overlayを削除しました（オーバーレイクリック）');
+          }
+          if (style && style.parentNode) {
+            document.head.removeChild(style);
+            console.log('✅ styleを削除しました（オーバーレイクリック）');
+          }
+          console.log('✅ resolve()を呼び出します（オーバーレイクリック）');
+          resolve();
+        } catch (error) {
+          console.error('❌ モーダル削除エラー:', error);
+          console.log('⚠️ エラーが発生しましたが、resolve()を呼び出します（オーバーレイクリック）');
+          resolve(); // エラーが発生しても処理を続行
+        }
+      }
+    };
+    
+    // モーダルが正しく追加されたか確認
+    console.log('✅ モーダルをDOMに追加しました');
+  });
+}
+
+// 話し合い問題をモーダルで表示する関数
+function showDiscussionQuestionModal(discussionQuestion, questionIndex) {
+  return new Promise((resolve) => {
+    const overlay = document.createElement('div');
+    overlay.id = 'discussion-question-overlay';
+    overlay.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 10000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease;
+      backdrop-filter: blur(4px);
+    `;
+    
+    const modal = document.createElement('div');
+    modal.className = 'discussion-question-modal';
+    modal.style.cssText = `
+      background: linear-gradient(135deg, #fdfaf2 0%, #fff7ed 50%, #fef3c7 100%);
+      border-radius: 24px;
+      padding: 0;
+      width: 95vw;
+      max-width: 1200px;
+      max-height: 95vh;
+      box-shadow: 0 25px 70px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.1);
+      animation: slideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    `;
+    
+    // 進捗表示（例: "1 / 2"）
+    const progressText = window.discussionQuestions && window.discussionQuestions.length > 1 
+      ? `<div style="
+          color: white;
+          font-size: 0.85rem;
+          font-weight: 600;
+          letter-spacing: 0.05em;
+          position: relative;
+          z-index: 1;
+          opacity: 0.95;
+          margin-top: 0.3rem;
+        ">話し合い問題 ${questionIndex + 1} / ${window.discussionQuestions.length}</div>`
+      : '';
+    
+    let choicesHtml = '';
+    discussionQuestion.choices.forEach((choice, index) => {
+      choicesHtml += `
+        <button class="discussion-choice-btn" data-index="${index}" style="
+          background: linear-gradient(135deg, #ffffff 0%, #fefce8 100%);
+          border: 2px solid rgb(226 232 240);
+          border-radius: 1rem;
+          padding: 1.25rem 1.5rem;
+          font-size: 1.05rem;
+          font-weight: 600;
+          color: #374151;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          width: 100%;
+          margin-bottom: 1rem;
+          text-align: left;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        ">${choice}</button>
+      `;
+    });
+    
+    // voices カードのHTML生成
+    let voicesHtml = '';
+    if (discussionQuestion.voices && discussionQuestion.voices.length > 0) {
+      voicesHtml = '<div style="margin-top: 2rem; max-width: 80%; margin-left: auto; margin-right: auto; width: 100%;">';
+      voicesHtml += '<h3 style="font-size: 1.3rem; font-weight: 700; color: #1f2937; margin-bottom: 1.5rem; text-align: left;">みんなの意見</h3>';
+      voicesHtml += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">';
+      
+      discussionQuestion.voices.forEach((voice, index) => {
+        const evidenceText = voice.evidenceQnums && voice.evidenceQnums.length > 0
+          ? `根拠：Q${voice.evidenceQnums.join(', Q')}`
+          : '';
+        
+        voicesHtml += `
+          <div class="voice-card" data-stance="${voice.stance}" style="
+            background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: left;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+          ">
+            <div style="display: flex; align-items: center; margin-bottom: 0.75rem;">
+              <div style="
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, #ea580c, #f97316);
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 700;
+                font-size: 1.1rem;
+                margin-right: 0.75rem;
+                flex-shrink: 0;
+              ">${voice.name.charAt(0)}</div>
+              <div>
+                <div style="font-weight: 700; color: #1f2937; font-size: 1rem;">${voice.name}</div>
+                <div style="font-size: 0.85rem; color: #6b7280; margin-top: 0.25rem;">${voice.title}</div>
+              </div>
+            </div>
+            <div style="
+              color: #374151;
+              font-size: 0.95rem;
+              line-height: 1.6;
+              margin-bottom: 0.75rem;
+            ">${voice.text}</div>
+            ${evidenceText ? `<div style="
+              font-size: 0.75rem;
+              color: #6b7280;
+              margin-top: 0.5rem;
+              padding-top: 0.5rem;
+              border-top: 1px solid #e5e7eb;
+            ">${evidenceText}</div>` : ''}
+          </div>
+        `;
+      });
+      
+      voicesHtml += '</div></div>';
+    }
+    
+    modal.innerHTML = `
+      <!-- 装飾的なヘッダー -->
+      <div style="
+        background: linear-gradient(135deg, #ea580c 0%, #f97316 50%, #fb923c 100%);
+        padding: 1.5rem 2rem 1rem 2rem;
+        position: relative;
+        overflow: hidden;
+        flex-shrink: 0;
+      ">
+        <div style="
+          position: absolute;
+          top: -50%;
+          right: -10%;
+          width: 200px;
+          height: 200px;
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 50%;
+          animation: pulse 3s ease-in-out infinite;
+        "></div>
+        <div style="
+          position: absolute;
+          bottom: -30%;
+          left: -5%;
+          width: 150px;
+          height: 150px;
+          background: rgba(255, 255, 255, 0.08);
+          border-radius: 50%;
+          animation: pulse 4s ease-in-out infinite;
+        "></div>
+        <div style="
+          font-size: 2.5rem;
+          margin-bottom: 0.3rem;
+          position: relative;
+          z-index: 1;
+        ">💬</div>
+        <div style="
+          color: white;
+          font-size: 0.9rem;
+          font-weight: 600;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          position: relative;
+          z-index: 1;
+          opacity: 0.95;
+        ">話し合い問題</div>
+        ${progressText}
+      </div>
+      
+      <!-- メインコンテンツ -->
+      <div style="padding: 2rem 5%; flex: 1; display: flex; flex-direction: column; overflow-y: auto; min-height: 0;">
+        <!-- 問いのテキスト -->
+        <div style="
+          background: linear-gradient(135deg, #fff 0%, #fefce8 100%);
+          border: 3px solid #f97316;
+          border-radius: 16px;
+          padding: 1.5rem;
+          margin-bottom: 1.5rem;
+          box-shadow: 0 8px 24px rgba(249, 115, 22, 0.15);
+          position: relative;
+          flex-shrink: 0;
+          max-width: 80%;
+          margin-left: auto;
+          margin-right: auto;
+        ">
+          <h2 style="
+            font-size: 1.8rem;
+            line-height: 1.6;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 0;
+            text-align: center;
+          ">
+            ${discussionQuestion.text}
+          </h2>
+        </div>
+        
+        <!-- みんなの意見 -->
+        ${voicesHtml}
+        
+        <!-- 自分の意見を選ぶボタン -->
+        <button id="show-choices-btn" style="
+          background: linear-gradient(135deg, #ea580c 0%, #f97316 50%, #fb923c 100%);
+          color: white;
+          border: none;
+          padding: 1rem 2.5rem;
+          border-radius: 16px;
+          font-size: 1rem;
+          font-weight: 700;
+          cursor: pointer;
+          box-shadow: 0 8px 24px rgba(234, 88, 12, 0.4);
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
+          letter-spacing: 0.05em;
+          margin-top: 2rem;
+          max-width: 80%;
+          margin-left: auto;
+          margin-right: auto;
+          width: 100%;
+        ">
+          <span style="position: relative; z-index: 1;">自分の意見を選ぶ →</span>
+          <div style="
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+          " class="button-shine"></div>
+        </button>
+        
+        <!-- 選択肢（最初は非表示） -->
+        <div class="discussion-choices" id="discussion-choices-container" style="
+          margin-bottom: 1.5rem;
+          margin-top: 2rem;
+          max-width: 80%;
+          margin-left: auto;
+          margin-right: auto;
+          width: 100%;
+          display: none;
+        ">
+          ${choicesHtml}
+        </div>
+        
+        <!-- 説明 -->
+        <div id="discussion-explanation" style="
+          background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+          border: 2px solid #f59e0b;
+          border-radius: 12px;
+          padding: 1.25rem;
+          margin-bottom: 1.5rem;
+          font-size: 1rem;
+          line-height: 1.6;
+          color: #92400e;
+          text-align: left;
+          display: none;
+          max-width: 80%;
+          margin-left: auto;
+          margin-right: auto;
+          width: 100%;
+        "></div>
+        
+        <!-- 次の問題へボタン -->
+        <button id="discussion-next-btn" style="
+          background: linear-gradient(135deg, #ea580c 0%, #f97316 50%, #fb923c 100%);
+          color: white;
+          border: none;
+          padding: 1rem 2.5rem;
+          border-radius: 16px;
+          font-size: 1rem;
+          font-weight: 700;
+          cursor: pointer;
+          box-shadow: 0 8px 24px rgba(234, 88, 12, 0.4);
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
+          letter-spacing: 0.05em;
+          flex-shrink: 0;
+          margin-top: auto;
+          max-width: 80%;
+          margin-left: auto;
+          margin-right: auto;
+          width: 100%;
+          display: none;
+        ">
+          <span style="position: relative; z-index: 1;">次の問題へ →</span>
+          <div style="
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+          " class="button-shine"></div>
+        </button>
+      </div>
+    `;
+    
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+    
+    const choiceButtons = modal.querySelectorAll('.discussion-choice-btn');
+    const explanationEl = document.getElementById('discussion-explanation');
+    const nextBtn = document.getElementById('discussion-next-btn');
+    const showChoicesBtn = document.getElementById('show-choices-btn');
+    const choicesContainer = document.getElementById('discussion-choices-container');
+    const voiceCards = modal.querySelectorAll('.voice-card');
+    const buttonShine = nextBtn.querySelector('.button-shine');
+    const showChoicesButtonShine = showChoicesBtn.querySelector('.button-shine');
+    let answered = false;
+    let selectedStance = null;
+    let choicesShown = false;
+    
+    // 「自分の意見を選ぶ」ボタンのホバー効果
+    showChoicesBtn.onmouseover = function() {
+      this.style.transform = 'translateY(-3px) scale(1.03)';
+      this.style.boxShadow = '0 12px 32px rgba(234, 88, 12, 0.5)';
+      if (showChoicesButtonShine) {
+        showChoicesButtonShine.style.left = '100%';
+      }
+    };
+    showChoicesBtn.onmouseout = function() {
+      this.style.transform = 'translateY(0) scale(1)';
+      this.style.boxShadow = '0 8px 24px rgba(234, 88, 12, 0.4)';
+      if (showChoicesButtonShine) {
+        showChoicesButtonShine.style.left = '-100%';
+      }
+    };
+    
+    // 「自分の意見を選ぶ」ボタンのクリック処理
+    showChoicesBtn.onclick = () => {
+      if (choicesShown) return;
+      choicesShown = true;
+      
+      // 選択肢を表示
+      choicesContainer.style.display = 'block';
+      
+      // ボタンを非表示
+      showChoicesBtn.style.display = 'none';
+      
+      // 選択肢コンテナにスクロール
+      setTimeout(() => {
+        choicesContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    };
+    
+    // ボタンのホバー効果
+    nextBtn.onmouseover = function() {
+      this.style.transform = 'translateY(-3px) scale(1.03)';
+      this.style.boxShadow = '0 12px 32px rgba(234, 88, 12, 0.5)';
+      if (buttonShine) {
+        buttonShine.style.left = '100%';
+      }
+    };
+    nextBtn.onmouseout = function() {
+      this.style.transform = 'translateY(0) scale(1)';
+      this.style.boxShadow = '0 8px 24px rgba(234, 88, 12, 0.4)';
+      if (buttonShine) {
+        buttonShine.style.left = '-100%';
+      }
+    };
+    
+    // 選択肢ボタンのクリック処理
+    choiceButtons.forEach((btn) => {
+      btn.onmouseover = function() {
+        if (!this.disabled) {
+          this.style.transform = 'translateY(-2px) scale(1.02)';
+          this.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+        }
+      };
+      btn.onmouseout = function() {
+        if (!this.disabled) {
+          this.style.transform = 'translateY(0) scale(1)';
+          this.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
+        }
+      };
+      btn.onclick = () => {
+        if (answered || !choicesShown) return;
+        answered = true;
+        
+        selectedStance = parseInt(btn.dataset.index);
+        
+        // 選択肢を無効化
+        choiceButtons.forEach((b) => {
+          b.disabled = true;
+          const idx = parseInt(b.dataset.index);
+          if (idx === selectedStance) {
+            b.style.background = 'linear-gradient(135deg, #ea580c 0%, #f97316 100%)';
+            b.style.color = 'white';
+            b.style.borderColor = '#f97316';
+            b.style.boxShadow = '0 4px 12px rgba(234, 88, 12, 0.4)';
+          }
+        });
+        
+        // stance一致カードをハイライト
+        voiceCards.forEach((card) => {
+          const cardStance = parseInt(card.dataset.stance);
+          if (cardStance === selectedStance) {
+            card.style.background = 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)';
+            card.style.borderColor = '#f59e0b';
+            card.style.borderWidth = '3px';
+            card.style.boxShadow = '0 4px 16px rgba(245, 158, 11, 0.3)';
+            card.style.transform = 'scale(1.02)';
+          }
+        });
+        
+        // ハイライトされたカードにスクロール
+        setTimeout(() => {
+          const highlightedCard = Array.from(voiceCards).find(card => 
+            parseInt(card.dataset.stance) === selectedStance
+          );
+          if (highlightedCard) {
+            highlightedCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 300);
+        
+        nextBtn.style.display = 'block';
+        
+        // 次の問題へボタンにスクロール
+        setTimeout(() => {
+          nextBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 600);
+      };
+    });
+    
+    nextBtn.onclick = () => {
+      nextBtn.style.transform = 'scale(0.98)';
+      setTimeout(() => {
+        try {
+          if (overlay && overlay.parentNode) {
+            document.body.removeChild(overlay);
+          }
+          resolve();
+        } catch (error) {
+          console.error('❌ モーダル削除エラー:', error);
+          resolve();
+        }
+      }, 150);
+    };
+    
+    overlay.onclick = (e) => {
+      if (e.target === overlay && answered) {
+        try {
+          if (overlay && overlay.parentNode) {
+            document.body.removeChild(overlay);
+          }
+          resolve();
+        } catch (error) {
+          console.error('❌ モーダル削除エラー:', error);
+          resolve();
+        }
+      }
+    };
+  });
+}
+
+// 回収問題をモーダルで表示する関数
+function showSummaryQuestionModal(summaryQuestion, questionIndex) {
+  return new Promise((resolve) => {
+    const overlay = document.createElement('div');
+    overlay.id = 'summary-question-overlay';
+    overlay.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 10000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease;
+      backdrop-filter: blur(4px);
+    `;
+    
+    const modal = document.createElement('div');
+    modal.className = 'summary-question-modal';
+    modal.style.cssText = `
+      background: linear-gradient(135deg, #fdfaf2 0%, #fff7ed 50%, #fef3c7 100%);
+      border-radius: 24px;
+      padding: 0;
+      width: 95vw;
+      height: 95vh;
+      box-shadow: 0 25px 70px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.1);
+      animation: slideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    `;
+    
+    // 進捗表示（例: "1 / 2"）
+    const progressText = window.summaryQuestions && window.summaryQuestions.length > 1 
+      ? `<div style="
+          color: white;
+          font-size: 0.85rem;
+          font-weight: 600;
+          letter-spacing: 0.05em;
+          position: relative;
+          z-index: 1;
+          opacity: 0.95;
+          margin-top: 0.3rem;
+        ">回収問題 ${questionIndex + 1} / ${window.summaryQuestions.length}</div>`
+      : '';
+    
+    let choicesHtml = '';
+    summaryQuestion.choices.forEach((choice, index) => {
+      choicesHtml += `
+        <button class="summary-choice-btn" data-index="${index}" style="
+          background: linear-gradient(135deg, #ffffff 0%, #fefce8 100%);
+          border: 2px solid rgb(226 232 240);
+          border-radius: 1rem;
+          padding: 1.25rem 1.5rem;
+          font-size: 1.05rem;
+          font-weight: 600;
+          color: #374151;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          width: 100%;
+          margin-bottom: 1rem;
+          text-align: left;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        ">${choice}</button>
+      `;
+    });
+    
+    modal.innerHTML = `
+      <!-- 装飾的なヘッダー -->
+      <div style="
+        background: linear-gradient(135deg, #ea580c 0%, #f97316 50%, #fb923c 100%);
+        padding: 1.5rem 2rem 1rem 2rem;
+        position: relative;
+        overflow: hidden;
+        flex-shrink: 0;
+      ">
+        <div style="
+          position: absolute;
+          top: -50%;
+          right: -10%;
+          width: 200px;
+          height: 200px;
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 50%;
+          animation: pulse 3s ease-in-out infinite;
+        "></div>
+        <div style="
+          position: absolute;
+          bottom: -30%;
+          left: -5%;
+          width: 150px;
+          height: 150px;
+          background: rgba(255, 255, 255, 0.08);
+          border-radius: 50%;
+          animation: pulse 4s ease-in-out infinite;
+        "></div>
+        <div style="
+          font-size: 2.5rem;
+          margin-bottom: 0.3rem;
+          position: relative;
+          z-index: 1;
+        ">📋</div>
+        <div style="
+          color: white;
+          font-size: 0.9rem;
+          font-weight: 600;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          position: relative;
+          z-index: 1;
+          opacity: 0.95;
+        ">回収問題</div>
+        ${progressText}
+      </div>
+      
+      <!-- メインコンテンツ -->
+      <div style="padding: 2rem 5%; flex: 1; display: flex; flex-direction: column; overflow-y: auto; min-height: 0;">
+        <!-- 問いのテキスト -->
+        <div style="
+          background: linear-gradient(135deg, #fff 0%, #fefce8 100%);
+          border: 3px solid #f97316;
+          border-radius: 16px;
+          padding: 1.5rem;
+          margin-bottom: 1.5rem;
+          box-shadow: 0 8px 24px rgba(249, 115, 22, 0.15);
+          position: relative;
+          flex-shrink: 0;
+          max-width: 80%;
+          margin-left: auto;
+          margin-right: auto;
+        ">
+          <h2 style="
+            font-size: 1.8rem;
+            line-height: 1.6;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 0;
+            text-align: center;
+          ">
+            ${summaryQuestion.text}
+          </h2>
+        </div>
+        
+        <!-- 選択肢 -->
+        <div class="summary-choices" style="
+          margin-bottom: 1.5rem;
+          max-width: 80%;
+          margin-left: auto;
+          margin-right: auto;
+          width: 100%;
+        ">
+          ${choicesHtml}
+        </div>
+        
+        <!-- 説明 -->
+        <div id="summary-explanation" style="
+          background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+          border: 2px solid #f59e0b;
+          border-radius: 12px;
+          padding: 1.25rem;
+          margin-bottom: 1.5rem;
+          font-size: 1rem;
+          line-height: 1.6;
+          color: #92400e;
+          text-align: left;
+          display: none;
+          max-width: 80%;
+          margin-left: auto;
+          margin-right: auto;
+          width: 100%;
+        "></div>
+        
+        <!-- 次の問題へボタン -->
+        <button id="summary-next-btn" style="
+          background: linear-gradient(135deg, #ea580c 0%, #f97316 50%, #fb923c 100%);
+          color: white;
+          border: none;
+          padding: 1rem 2.5rem;
+          border-radius: 16px;
+          font-size: 1rem;
+          font-weight: 700;
+          cursor: pointer;
+          box-shadow: 0 8px 24px rgba(234, 88, 12, 0.4);
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
+          letter-spacing: 0.05em;
+          flex-shrink: 0;
+          margin-top: auto;
+          max-width: 80%;
+          margin-left: auto;
+          margin-right: auto;
+          width: 100%;
+        ">
+          <span style="position: relative; z-index: 1;">次の問題へ →</span>
+          <div style="
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+          " class="button-shine"></div>
+        </button>
+      </div>
+    `;
+    
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+    
+    const choiceButtons = modal.querySelectorAll('.summary-choice-btn');
+    const explanationEl = document.getElementById('summary-explanation');
+    const nextBtn = document.getElementById('summary-next-btn');
+    const buttonShine = nextBtn.querySelector('.button-shine');
+    let answered = false;
+    
+    // ボタンのホバー効果
+    nextBtn.onmouseover = function() {
+      this.style.transform = 'translateY(-3px) scale(1.03)';
+      this.style.boxShadow = '0 12px 32px rgba(234, 88, 12, 0.5)';
+      if (buttonShine) {
+        buttonShine.style.left = '100%';
+      }
+    };
+    nextBtn.onmouseout = function() {
+      this.style.transform = 'translateY(0) scale(1)';
+      this.style.boxShadow = '0 8px 24px rgba(234, 88, 12, 0.4)';
+      if (buttonShine) {
+        buttonShine.style.left = '-100%';
+      }
+    };
+    
+    choiceButtons.forEach((btn) => {
+      // 選択肢ボタンのホバー効果
+      btn.onmouseover = function() {
+        if (!this.disabled) {
+          this.style.transform = 'translateY(-2px) scale(1.02)';
+          this.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+        }
+      };
+      btn.onmouseout = function() {
+        if (!this.disabled) {
+          this.style.transform = 'translateY(0) scale(1)';
+          this.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
+        }
+      };
+      btn.onclick = () => {
+        if (answered) return;
+        answered = true;
+        
+        const selectedIndex = parseInt(btn.dataset.index);
+        const isCorrect = selectedIndex === summaryQuestion.answer;
+        
+        choiceButtons.forEach((b) => {
+          b.disabled = true;
+          const idx = parseInt(b.dataset.index);
+          if (idx === summaryQuestion.answer) {
+            b.style.background = 'linear-gradient(135deg, #ea580c 0%, #f97316 100%)';
+            b.style.color = 'white';
+            b.style.borderColor = '#f97316';
+            b.style.boxShadow = '0 4px 12px rgba(234, 88, 12, 0.4)';
+          }
+          if (idx === selectedIndex && !isCorrect) {
+            b.style.background = 'linear-gradient(135deg, #6b7280 0%, #4b5563 100%)';
+            b.style.color = 'white';
+            b.style.borderColor = '#6b7280';
+            b.style.boxShadow = '0 4px 12px rgba(107, 114, 128, 0.4)';
+          }
+        });
+        
+        const message = isCorrect ? 
+          "🎉 正解です！素晴らしい！" : 
+          `❌ 不正解です。正解は「${summaryQuestion.choices[summaryQuestion.answer]}」でした。`;
+        
+        explanationEl.textContent = message;
+        explanationEl.style.display = 'block';
+        nextBtn.style.display = 'block';
+        
+        // 学習履歴に記録（回収問題は問題数に含めない）
+        learningTracker.recordAnswer(shuffledQuestions.length + questionIndex, selectedIndex, summaryQuestion.answer, 0, true);
+      };
+    });
+    
+    nextBtn.onclick = () => {
+      nextBtn.style.transform = 'scale(0.98)';
+      setTimeout(() => {
+        try {
+          if (overlay && overlay.parentNode) {
+            document.body.removeChild(overlay);
+          }
+          resolve();
+        } catch (error) {
+          console.error('❌ モーダル削除エラー:', error);
+          resolve();
+        }
+      }, 150);
+    };
+    
+    overlay.onclick = (e) => {
+      if (e.target === overlay && answered) {
+        try {
+          if (overlay && overlay.parentNode) {
+            document.body.removeChild(overlay);
+          }
+          resolve();
+        } catch (error) {
+          console.error('❌ モーダル削除エラー:', error);
+          resolve();
+        }
+      }
+    };
+  });
+}
+
 // 次の問題へ進む
-nextBtn.onclick = () => {
+console.log('🔧 nextBtn.onclick を定義します（1170行目）');
+nextBtn.onclick = async () => {
   // 次の問題に進む前に即座にページトップにスクロール
   window.scrollTo({ top: 0, behavior: 'instant' });
   document.documentElement.scrollTop = 0;
@@ -433,13 +1658,55 @@ nextBtn.onclick = () => {
     questionContent.scrollTop = 0;
   }
   
-  const questionsArray = window.questions || questions;
-  const totalQuestions = questionsArray ? questionsArray.length : 0;
+  // 大きな問いと回収問題を除外した通常問題の数を使用
+  const totalQuestions = shuffledQuestions ? shuffledQuestions.length : 0;
   console.log('🔄 nextBtn.onclick 実行:', { current, totalQuestions: totalQuestions });
+  
+  // 問題3の後に大きな問を表示（currentは0始まりなので、問題3はcurrent=2）
+  console.log('🔍 大きな問チェック:', { current, hasBigQuestion: !!window.bigQuestion });
+  if (current === 2 && window.bigQuestion) {
+    console.log('🌱 大きな問モーダルを表示します');
+    try {
+      await showBigQuestionModal();
+      console.log('✅ 大きな問モーダルを閉じました - 処理を続行します');
+    } catch (error) {
+      console.error('❌ 大きな問モーダルでエラー:', error);
+      // エラーが発生しても処理を続行
+    }
+  } else {
+    console.log('⚠️ 大きな問モーダルを表示しません:', { current, condition: current === 2, hasBigQuestion: !!window.bigQuestion });
+  }
+  
+  // モーダル表示の有無に関わらず、currentを更新
   current++;
+  console.log('📊 currentを更新:', current, '(次の問題:', current + 1, ')');
+  
+  // 問題31の後に回収問題を表示（最後の通常問題の後）
+  if (current === shuffledQuestions.length && window.summaryQuestions && window.summaryQuestions.length > 0) {
+    console.log('📋 回収問題を表示します');
+    for (let i = 0; i < window.summaryQuestions.length; i++) {
+      await showSummaryQuestionModal(window.summaryQuestions[i], i);
+    }
+    console.log('✅ 回収問題をすべて表示しました');
+    
+    // 回収問題の後に話し合い問題を表示
+    if (window.discussionQuestions && window.discussionQuestions.length > 0) {
+      console.log('💬 話し合い問題を表示します');
+      for (let i = 0; i < window.discussionQuestions.length; i++) {
+        await showDiscussionQuestionModal(window.discussionQuestions[i], i);
+      }
+      console.log('✅ 話し合い問題をすべて表示しました');
+    }
+    
+    // 回収問題をすべて表示した後は、レッスン完了処理に進む
+    console.log('🎯 回収問題完了後、レッスン完了処理に進みます');
+    // レッスン完了処理に進む（下のelseブロック）
+    // ここで処理を続行する（current >= shuffledQuestions.lengthなので、elseブロックに進む）
+  }
   
   // チェックポイント検出（10問、20問完了時）
-  if (current > 0 && current % 10 === 0 && current < totalQuestions) {
+  // ただし、回収問題表示後はチェックポイントを表示しない
+  if (current > 0 && current % 10 === 0 && current < totalQuestions && current < shuffledQuestions.length) {
     console.log(`✅ チェックポイント到達: ${current}問完了`);
     // チェックポイントを自動保存
     saveCheckpoint();
@@ -448,10 +1715,25 @@ nextBtn.onclick = () => {
     return; // ユーザーが選択するまで待つ
   }
   
-  if (current < totalQuestions) {
-    console.log('📝 次の問題を読み込み:', current + 1);
-    loadQuestion();
-  } else {
+  // 回収問題を表示した後は、通常問題を読み込まない
+  // currentがshuffledQuestions.length以上の場合（回収問題表示後を含む）は、レッスン完了処理に進む
+  if (current < shuffledQuestions.length) {
+    console.log('📝 次の問題を読み込み:', current + 1, 'shuffledQuestions.length:', shuffledQuestions.length);
+    try {
+      loadQuestion();
+      // 問題を読み込んだ後、次へボタンは非表示のまま（回答後に表示される）
+      if (nextBtn) {
+        nextBtn.style.display = "none";
+        console.log('✅ nextBtnを非表示に設定');
+      } else {
+        console.error('❌ nextBtnが見つかりません');
+      }
+    } catch (error) {
+      console.error('❌ loadQuestion()でエラー:', error);
+    }
+  } else if (current >= shuffledQuestions.length) {
+    // 回収問題を表示した後、または通常問題がすべて終わった後
+    console.log('🎯 レッスン完了！current:', current, 'shuffledQuestions.length:', shuffledQuestions.length);
     console.log('🎯 レッスン完了！メッセージ送信処理を開始');
     questionEl.textContent = "終了！おつかれさまでした。";
     sourceEl.textContent = "";
@@ -736,7 +2018,7 @@ class LearningTracker {
   }
 
   // 問題回答を記録
-  recordAnswer(questionId, selectedAnswer, correctAnswer, timeSpent) {
+  recordAnswer(questionId, selectedAnswer, correctAnswer, timeSpent, excludeFromTotal = false) {
     this.currentSession.questions.push({
       questionId,
       selectedAnswer,
@@ -749,7 +2031,10 @@ class LearningTracker {
     if (selectedAnswer === correctAnswer) {
       this.currentSession.score++;
     }
-    this.currentSession.totalQuestions++;
+    // 大きな問いと回収問題は問題数に含めない
+    if (!excludeFromTotal) {
+      this.currentSession.totalQuestions++;
+    }
 
     // 即座に保存
     this.saveSession();
@@ -1626,6 +2911,7 @@ function showIntroduction() {
 
 // 初期化：わかる編は配列順、覚える編はランダム
 async function startApp() {
+  console.log('🚀 startApp() 実行開始');
   // チェックポイントを読み込む
   const checkpoint = loadCheckpoint();
   if (checkpoint) {
@@ -1659,7 +2945,32 @@ async function startApp() {
       console.error('❌ 問題データが読み込まれていません');
       return;
     }
-    shuffledQuestions = [...questionsArray];
+    // 大きな問と回収問題を除外（モーダルで表示するため）
+    console.log('🔍 フィルタリング前の全問題数:', questionsArray.length);
+    console.log('🔍 フィルタリング前の問題タイプ:', questionsArray.map(q => ({ qnum: q.qnum, type: q.type })));
+    
+    shuffledQuestions = questionsArray.filter(q => {
+      const isBigQuestion = q.type === 'bigQuestion';
+      const isSummaryQuestion = q.type === 'summaryQuestion';
+      const isDiscussionQuestion = q.type === 'discussionQuestion';
+      if (isBigQuestion || isSummaryQuestion || isDiscussionQuestion) {
+        console.log('🚫 除外:', q.type, 'qnum:', q.qnum, q.text?.substring(0, 30));
+      }
+      return !isBigQuestion && !isSummaryQuestion && !isDiscussionQuestion;
+    });
+    
+    // 大きな問と回収問題、話し合い問題を別途保存
+    window.bigQuestion = questionsArray.find(q => q.type === 'bigQuestion');
+    window.summaryQuestions = questionsArray.filter(q => q.type === 'summaryQuestion');
+    window.discussionQuestions = questionsArray.filter(q => q.type === 'discussionQuestion');
+    
+    console.log('📊 通常問題:', shuffledQuestions.length, '問');
+    console.log('📊 大きな問:', window.bigQuestion ? 'あり' : 'なし');
+    if (window.bigQuestion) {
+      console.log('📊 大きな問の詳細:', { qnum: window.bigQuestion.qnum, type: window.bigQuestion.type, text: window.bigQuestion.text?.substring(0, 30) });
+    }
+    console.log('📊 回収問題:', window.summaryQuestions.length, '問');
+    console.log('📊 フィルタリング後の通常問題のqnum:', shuffledQuestions.map(q => q.qnum));
     
     // 再開時は説明テキストをスキップして直接問題を表示
     if (current > 0) {
@@ -1673,8 +2984,10 @@ async function startApp() {
 
 // データ到着後に開始（loader.js が questions を読み込むため）
 (function waitForQuestions(){
+  console.log('⏳ waitForQuestions() 実行中...');
   // 既に実行済みの場合は再実行しない
   if (window._appStarted) {
+    console.log('⚠️ 既に実行済みのため、waitForQuestions()をスキップします');
     return;
   }
   
@@ -1682,11 +2995,19 @@ async function startApp() {
   const questionsLoaded = (typeof window.questions !== 'undefined' && Array.isArray(window.questions) && window.questions.length > 0) ||
                          (typeof questions !== 'undefined' && Array.isArray(questions) && questions.length > 0);
   
+  console.log('🔍 問題データの読み込み状態:', {
+    'window.questions': typeof window.questions !== 'undefined' ? `${window.questions?.length || 0}個` : 'undefined',
+    'questions': typeof questions !== 'undefined' ? `${questions?.length || 0}個` : 'undefined',
+    'questionsLoaded': questionsLoaded
+  });
+  
   if (questionsLoaded) {
+    console.log('✅ 問題データが読み込まれました。startApp()を実行します');
     // 実行済みフラグを設定
     window._appStarted = true;
     startApp();
   } else {
+    console.log('⏳ 問題データがまだ読み込まれていません。50ms後に再試行します');
     setTimeout(waitForQuestions, 50);
   }
 })();

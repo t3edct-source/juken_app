@@ -1205,14 +1205,19 @@
     // LocalStorageに保存
     localStorage.setItem('purchases', JSON.stringify(updatedPurchases));
     
+    console.log('✅ すべてのパックをLocalStorageに保存しました:', updatedPurchases);
+    
     // 画面を再描画（app.jsの関数を使用）
-    if (window.renderAppView) {
-      // renderAppView関数が利用可能な場合はそれを使用
-      window.renderAppView();
-    } else {
-      // ページをリロードして反映
-      window.location.reload();
-    }
+    // 少し待ってから実行することで、app.jsの読み込みを待つ
+    setTimeout(() => {
+      if (window.renderAppView) {
+        // renderAppView関数が利用可能な場合はそれを使用
+        window.renderAppView();
+      } else {
+        // ページをリロードして反映
+        window.location.reload();
+      }
+    }, 100);
     
     alert('✅ すべてのコンテンツがオープンされました！');
   });

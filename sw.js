@@ -1,4 +1,4 @@
-const CACHE_NAME = 'manabi-step-v29'; // バージョン必ず更新（PWA完全対応版）
+const CACHE_NAME = 'manabi-step-v30'; // バージョン必ず更新（大きな問いと回収問題対応版）
 const urlsToCache = [
   // コアファイル
   '/', '/index.html', '/app.js', '/styles.css', '/manifest.json',

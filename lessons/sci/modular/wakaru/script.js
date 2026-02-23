@@ -239,8 +239,8 @@ function loadQuestion() {
   const progressDisplay = document.getElementById("progress") || createProgressDisplay();
   if (progressDisplay) {
     progressDisplay.style.display = "block";
-    const questionsArray = window.questions || questions;
-    const totalQuestions = questionsArray ? questionsArray.length : 0;
+    // 大きな問いと回収問題を除外した通常問題の数を使用
+    const totalQuestions = shuffledQuestions ? shuffledQuestions.length : 0;
     progressDisplay.textContent = `問題 ${current + 1} / ${totalQuestions}`;
   }
   
@@ -1181,8 +1181,8 @@ function showSummaryQuestionModal(summaryQuestion, questionIndex) {
         explanationEl.style.display = 'block';
         nextBtn.style.display = 'block';
         
-        // 学習履歴に記録
-        learningTracker.recordAnswer(shuffledQuestions.length + questionIndex, selectedIndex, summaryQuestion.answer, 0);
+        // 学習履歴に記録（回収問題は問題数に含めない）
+        learningTracker.recordAnswer(shuffledQuestions.length + questionIndex, selectedIndex, summaryQuestion.answer, 0, true);
       };
     });
     
@@ -1229,8 +1229,8 @@ nextBtn.onclick = async () => {
     questionContent.scrollTop = 0;
   }
   
-  const questionsArray = window.questions || questions;
-  const totalQuestions = questionsArray ? questionsArray.length : 0;
+  // 大きな問いと回収問題を除外した通常問題の数を使用
+  const totalQuestions = shuffledQuestions ? shuffledQuestions.length : 0;
   console.log('🔄 nextBtn.onclick 実行:', { current, totalQuestions: totalQuestions });
   
   // 問題3の後に大きな問を表示（currentは0始まりなので、問題3はcurrent=2）
@@ -1259,10 +1259,15 @@ nextBtn.onclick = async () => {
       await showSummaryQuestionModal(window.summaryQuestions[i], i);
     }
     console.log('✅ 回収問題をすべて表示しました');
+    // 回収問題をすべて表示した後は、レッスン完了処理に進む
+    console.log('🎯 回収問題完了後、レッスン完了処理に進みます');
+    // レッスン完了処理に進む（下のelseブロック）
+    // ここで処理を続行する（current >= shuffledQuestions.lengthなので、elseブロックに進む）
   }
   
   // チェックポイント検出（10問、20問完了時）
-  if (current > 0 && current % 10 === 0 && current < totalQuestions) {
+  // ただし、回収問題表示後はチェックポイントを表示しない
+  if (current > 0 && current % 10 === 0 && current < totalQuestions && current < shuffledQuestions.length) {
     console.log(`✅ チェックポイント到達: ${current}問完了`);
     // チェックポイントを自動保存
     saveCheckpoint();
@@ -1271,6 +1276,8 @@ nextBtn.onclick = async () => {
     return; // ユーザーが選択するまで待つ
   }
   
+  // 回収問題を表示した後は、通常問題を読み込まない
+  // currentがshuffledQuestions.length以上の場合（回収問題表示後を含む）は、レッスン完了処理に進む
   if (current < shuffledQuestions.length) {
     console.log('📝 次の問題を読み込み:', current + 1, 'shuffledQuestions.length:', shuffledQuestions.length);
     try {
@@ -1285,7 +1292,9 @@ nextBtn.onclick = async () => {
     } catch (error) {
       console.error('❌ loadQuestion()でエラー:', error);
     }
-  } else {
+  } else if (current >= shuffledQuestions.length) {
+    // 回収問題を表示した後、または通常問題がすべて終わった後
+    console.log('🎯 レッスン完了！current:', current, 'shuffledQuestions.length:', shuffledQuestions.length);
     console.log('🎯 レッスン完了！メッセージ送信処理を開始');
     questionEl.textContent = "終了！おつかれさまでした。";
     sourceEl.textContent = "";
@@ -1541,7 +1550,7 @@ class LearningTracker {
   }
 
   // 問題回答を記録
-  recordAnswer(questionId, selectedAnswer, correctAnswer, timeSpent) {
+  recordAnswer(questionId, selectedAnswer, correctAnswer, timeSpent, excludeFromTotal = false) {
     this.currentSession.questions.push({
       questionId,
       selectedAnswer,
@@ -1554,7 +1563,10 @@ class LearningTracker {
     if (selectedAnswer === correctAnswer) {
       this.currentSession.score++;
     }
-    this.currentSession.totalQuestions++;
+    // 大きな問いと回収問題は問題数に含めない
+    if (!excludeFromTotal) {
+      this.currentSession.totalQuestions++;
+    }
 
     // 即座に保存
     this.saveSession();
@@ -1901,8 +1913,8 @@ function showResumeDialog(checkpoint) {
       position: relative;
     `;
     
-    const questionsArray = window.questions || questions;
-    const totalQuestions = questionsArray ? questionsArray.length : 0;
+    // 大きな問いと回収問題を除外した通常問題の数を使用
+    const totalQuestions = shuffledQuestions ? shuffledQuestions.length : 0;
     const progressPercent = totalQuestions > 0 ? Math.round((checkpoint.current / totalQuestions) * 100) : 0;
     const scorePercent = checkpoint.session.totalQuestions > 0 ? 
       Math.round((checkpoint.session.score / checkpoint.session.totalQuestions) * 100) : 0;
@@ -2136,8 +2148,8 @@ function showCheckpointDialog(questionNum) {
   if (checkpointMode) return;
   
   checkpointMode = true;
-  const questionsArray = window.questions || questions;
-  const totalQuestions = questionsArray ? questionsArray.length : 0;
+  // 大きな問いと回収問題を除外した通常問題の数を使用
+  const totalQuestions = shuffledQuestions ? shuffledQuestions.length : 0;
   const completedQuestions = questionNum;
   const session = learningTracker.currentSession;
   const scorePercent = session.totalQuestions > 0 ? 
