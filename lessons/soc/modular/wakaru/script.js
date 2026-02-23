@@ -986,6 +986,9 @@ function showDiscussionQuestionModal(discussionQuestion, questionIndex) {
       voicesHtml += '</div></div>';
     }
     
+    // text内の改行（\n）を<br>に変換
+    const questionText = (discussionQuestion.text || '').replace(/\\n/g, '<br>');
+    
     modal.innerHTML = `
       <!-- 装飾的なヘッダー -->
       <div style="
@@ -1057,56 +1060,50 @@ function showDiscussionQuestionModal(discussionQuestion, questionIndex) {
             color: #1f2937;
             margin: 0;
             text-align: center;
+            white-space: pre-line;
           ">
-            ${discussionQuestion.text}
+            ${questionText}
           </h2>
         </div>
         
         <!-- みんなの意見 -->
         ${voicesHtml}
         
-        <!-- 自分の意見を選ぶボタン -->
-        <button id="show-choices-btn" style="
-          background: linear-gradient(135deg, #ea580c 0%, #f97316 50%, #fb923c 100%);
-          color: white;
-          border: none;
-          padding: 1rem 2.5rem;
-          border-radius: 16px;
-          font-size: 1rem;
-          font-weight: 700;
-          cursor: pointer;
-          box-shadow: 0 8px 24px rgba(234, 88, 12, 0.4);
-          transition: all 0.3s ease;
-          position: relative;
-          overflow: hidden;
-          letter-spacing: 0.05em;
+        <!-- 区切り線 -->
+        <div style="
+          margin: 2rem auto;
+          max-width: 80%;
+          width: 100%;
+          height: 2px;
+          background: linear-gradient(90deg, transparent, #e5e7eb, transparent);
+        "></div>
+        
+        <!-- あなたはどう思う？見出し -->
+        <div id="your-opinion-header" style="
           margin-top: 2rem;
+          margin-bottom: 1.5rem;
           max-width: 80%;
           margin-left: auto;
           margin-right: auto;
           width: 100%;
         ">
-          <span style="position: relative; z-index: 1;">自分の意見を選ぶ →</span>
-          <div style="
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s ease;
-          " class="button-shine"></div>
-        </button>
+          <h3 style="
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1f2937;
+            text-align: center;
+            margin: 0;
+          ">あなたはどう思う？</h3>
+        </div>
         
-        <!-- 選択肢（最初は非表示） -->
+        <!-- 選択肢 -->
         <div class="discussion-choices" id="discussion-choices-container" style="
           margin-bottom: 1.5rem;
-          margin-top: 2rem;
+          margin-top: 1rem;
           max-width: 80%;
           margin-left: auto;
           margin-right: auto;
           width: 100%;
-          display: none;
         ">
           ${choicesHtml}
         </div>
@@ -1172,47 +1169,12 @@ function showDiscussionQuestionModal(discussionQuestion, questionIndex) {
     const choiceButtons = modal.querySelectorAll('.discussion-choice-btn');
     const explanationEl = document.getElementById('discussion-explanation');
     const nextBtn = document.getElementById('discussion-next-btn');
-    const showChoicesBtn = document.getElementById('show-choices-btn');
     const choicesContainer = document.getElementById('discussion-choices-container');
+    const yourOpinionHeader = document.getElementById('your-opinion-header');
     const voiceCards = modal.querySelectorAll('.voice-card');
     const buttonShine = nextBtn.querySelector('.button-shine');
-    const showChoicesButtonShine = showChoicesBtn.querySelector('.button-shine');
     let answered = false;
     let selectedStance = null;
-    let choicesShown = false;
-    
-    // 「自分の意見を選ぶ」ボタンのホバー効果
-    showChoicesBtn.onmouseover = function() {
-      this.style.transform = 'translateY(-3px) scale(1.03)';
-      this.style.boxShadow = '0 12px 32px rgba(234, 88, 12, 0.5)';
-      if (showChoicesButtonShine) {
-        showChoicesButtonShine.style.left = '100%';
-      }
-    };
-    showChoicesBtn.onmouseout = function() {
-      this.style.transform = 'translateY(0) scale(1)';
-      this.style.boxShadow = '0 8px 24px rgba(234, 88, 12, 0.4)';
-      if (showChoicesButtonShine) {
-        showChoicesButtonShine.style.left = '-100%';
-      }
-    };
-    
-    // 「自分の意見を選ぶ」ボタンのクリック処理
-    showChoicesBtn.onclick = () => {
-      if (choicesShown) return;
-      choicesShown = true;
-      
-      // 選択肢を表示
-      choicesContainer.style.display = 'block';
-      
-      // ボタンを非表示
-      showChoicesBtn.style.display = 'none';
-      
-      // 選択肢コンテナにスクロール
-      setTimeout(() => {
-        choicesContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
-    };
     
     // ボタンのホバー効果
     nextBtn.onmouseover = function() {
@@ -1245,7 +1207,7 @@ function showDiscussionQuestionModal(discussionQuestion, questionIndex) {
         }
       };
       btn.onclick = () => {
-        if (answered || !choicesShown) return;
+        if (answered) return;
         answered = true;
         
         selectedStance = parseInt(btn.dataset.index);
@@ -1375,10 +1337,21 @@ function showSummaryQuestionModal(summaryQuestion, questionIndex) {
         ">回収問題 ${questionIndex + 1} / ${window.summaryQuestions.length}</div>`
       : '';
     
+    // 選択肢をシャッフル（正解の位置をランダムにする）
+    const shuffledIndices = Array.from({ length: summaryQuestion.choices.length }, (_, i) => i);
+    for (let i = shuffledIndices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledIndices[i], shuffledIndices[j]] = [shuffledIndices[j], shuffledIndices[i]];
+    }
+    
+    // シャッフル後の正解のインデックスを記録
+    const correctShuffledIndex = shuffledIndices.indexOf(summaryQuestion.answer);
+    
     let choicesHtml = '';
-    summaryQuestion.choices.forEach((choice, index) => {
+    shuffledIndices.forEach((originalIndex, shuffledIndex) => {
+      const choice = summaryQuestion.choices[originalIndex];
       choicesHtml += `
-        <button class="summary-choice-btn" data-index="${index}" style="
+        <button class="summary-choice-btn" data-original-index="${originalIndex}" data-shuffled-index="${shuffledIndex}" style="
           background: linear-gradient(135deg, #ffffff 0%, #fefce8 100%);
           border: 2px solid rgb(226 232 240);
           border-radius: 1rem;
@@ -1580,19 +1553,19 @@ function showSummaryQuestionModal(summaryQuestion, questionIndex) {
         if (answered) return;
         answered = true;
         
-        const selectedIndex = parseInt(btn.dataset.index);
-        const isCorrect = selectedIndex === summaryQuestion.answer;
+        const selectedOriginalIndex = parseInt(btn.dataset.originalIndex);
+        const isCorrect = selectedOriginalIndex === summaryQuestion.answer;
         
         choiceButtons.forEach((b) => {
           b.disabled = true;
-          const idx = parseInt(b.dataset.index);
-          if (idx === summaryQuestion.answer) {
+          const originalIdx = parseInt(b.dataset.originalIndex);
+          if (originalIdx === summaryQuestion.answer) {
             b.style.background = 'linear-gradient(135deg, #ea580c 0%, #f97316 100%)';
             b.style.color = 'white';
             b.style.borderColor = '#f97316';
             b.style.boxShadow = '0 4px 12px rgba(234, 88, 12, 0.4)';
           }
-          if (idx === selectedIndex && !isCorrect) {
+          if (originalIdx === selectedOriginalIndex && !isCorrect) {
             b.style.background = 'linear-gradient(135deg, #6b7280 0%, #4b5563 100%)';
             b.style.color = 'white';
             b.style.borderColor = '#6b7280';
@@ -1600,9 +1573,10 @@ function showSummaryQuestionModal(summaryQuestion, questionIndex) {
           }
         });
         
+        const correctChoiceText = summaryQuestion.choices[summaryQuestion.answer];
         const message = isCorrect ? 
           "🎉 正解です！素晴らしい！" : 
-          `❌ 不正解です。正解は「${summaryQuestion.choices[summaryQuestion.answer]}」でした。`;
+          `❌ 不正解です。正解は「${correctChoiceText}」でした。`;
         
         explanationEl.textContent = message;
         explanationEl.style.display = 'block';
