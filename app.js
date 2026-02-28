@@ -72,9 +72,8 @@ if (!window._domContentLoadedRegistered) {
     const loginPanel = document.querySelector('#authBox, .login-card, .auth-container');
     if (loginPanel) {
       if (isIn) {
-        // ログイン状態: 非表示
-        loginPanel.classList.add('hidden');
-        loginPanel.style.display = 'none';
+        // ログイン状態: 非表示（ログイン成功時は自動的に閉じる）
+        hideLoginScreen();
       } else {
         // ログアウト状態: 表示（ただし、初期化中は非表示のまま）
         // 認証状態が確定したことを示すフラグをチェック
@@ -521,10 +520,107 @@ function isAfterApril1(d=new Date()){
 }
 
 function loginMock(){
-  // Firebase認証との連携のため、直接的な状態変更は行わない
-  // Firebase認証の状態変化で自動的にログイン状態が更新される
-  showModernNotification('ログインが必要です', 'アカウントにサインインして学習を始めましょう', 'info');
+  // ログイン画面を表示
+  showLoginScreen();
 }
+
+// ログイン画面を表示する関数
+function showLoginScreen() {
+  console.log('🔐 ログイン画面を表示します');
+  
+  const loginPanel = document.querySelector('#authBox, .login-card, .auth-container');
+  if (loginPanel) {
+    // ログイン画面を表示
+    loginPanel.classList.remove('hidden');
+    loginPanel.style.display = 'block';
+    
+    // モーダル風に表示（背景オーバーレイを追加）
+    // 既にオーバーレイがある場合は追加しない
+    if (!document.getElementById('authOverlay')) {
+      const overlay = document.createElement('div');
+      overlay.id = 'authOverlay';
+      overlay.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 9998;';
+      overlay.addEventListener('click', () => {
+        hideLoginScreen();
+      });
+      document.body.appendChild(overlay);
+    }
+    
+    // ログイン画面を前面に表示
+    loginPanel.style.position = 'fixed';
+    loginPanel.style.top = '50%';
+    loginPanel.style.left = '50%';
+    loginPanel.style.transform = 'translate(-50%, -50%)';
+    loginPanel.style.zIndex = '9999';
+    loginPanel.style.maxWidth = '90%';
+    loginPanel.style.maxWidth = '400px'; // 最大幅を400pxに制限
+    loginPanel.style.maxHeight = '90vh';
+    loginPanel.style.overflow = 'auto';
+    loginPanel.style.backgroundColor = 'white';
+    loginPanel.style.borderRadius = '12px';
+    loginPanel.style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.3)';
+    
+    // ESCキーで閉じる機能を追加
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        hideLoginScreen();
+        document.removeEventListener('keydown', handleEscape);
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
+    
+    // 閉じるボタンのイベントリスナーを設定
+    const closeBtn = document.getElementById('closeAuthBox');
+    if (closeBtn) {
+      closeBtn.onclick = () => {
+        hideLoginScreen();
+        document.removeEventListener('keydown', handleEscape);
+      };
+    }
+    
+    // スクロール位置を調整（ログイン画面が見えるように）
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    console.log('✅ ログイン画面を表示しました');
+  } else {
+    console.error('❌ ログイン画面の要素が見つかりません');
+    // フォールバック: 通知を表示
+    showModernNotification('ログインが必要です', 'アカウントにサインインして学習を始めましょう', 'info');
+  }
+}
+
+// ログイン画面を非表示にする関数
+function hideLoginScreen() {
+  console.log('🔐 ログイン画面を非表示にします');
+  
+  const loginPanel = document.querySelector('#authBox, .login-card, .auth-container');
+  if (loginPanel) {
+    loginPanel.classList.add('hidden');
+    loginPanel.style.display = 'none';
+    
+    // スタイルをリセット
+    loginPanel.style.position = '';
+    loginPanel.style.top = '';
+    loginPanel.style.left = '';
+    loginPanel.style.transform = '';
+    loginPanel.style.zIndex = '';
+    loginPanel.style.maxWidth = '';
+    loginPanel.style.maxHeight = '';
+    loginPanel.style.overflow = '';
+  }
+  
+  // オーバーレイを削除
+  const overlay = document.getElementById('authOverlay');
+  if (overlay) {
+    overlay.remove();
+  }
+  
+  console.log('✅ ログイン画面を非表示にしました');
+}
+
+// グローバルに公開
+window.showLoginScreen = showLoginScreen;
+window.hideLoginScreen = hideLoginScreen;
 
 function logoutMock(){
   // Firebase signOutを呼び出す

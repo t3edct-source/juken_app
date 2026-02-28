@@ -146,6 +146,7 @@
     <!-- Firebase認証ボックス -->
     <div id="authBox" class="auth-container hidden" style="display: none;">
       <div class="auth-header">
+        <button type="button" id="closeAuthBox" class="auth-close-btn" aria-label="ログイン画面を閉じる" onclick="window.hideLoginScreen && window.hideLoginScreen()" style="position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; font-size: 1.5rem; cursor: pointer; color: #666; padding: 0.25rem 0.5rem; line-height: 1;">×</button>
         <h3 class="auth-title" id="authTitle">ログイン</h3>
         <p class="auth-subtitle" id="authSubtitle">アカウントにサインインしてください</p>
       </div>

@@ -46,6 +46,20 @@ window.questions = [
     },
     {
       "qnum": 4,
+      "type": "bigQuestion",
+      "text": "なぜ鎌倉時代に武家政権が成立し、新しい政治や文化が生まれたのだろう？",
+      "choices": [
+        "つづける"
+      ],
+      "answer": 0,
+      "source": "",
+      "uiClass": "big-question",
+      "tags": [],
+      "difficulty": 1,
+      "asof": "2025-01-27"
+    },
+    {
+      "qnum": 5,
       "text": "源頼朝が国ごとに置いた軍事・警察の長はどれですか。",
       "choices": [
         "守護",
@@ -60,7 +74,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 5,
+      "qnum": 6,
       "text": "荘園・公領の現地管理と年貢徴収のために置かれた役職はどれですか。",
       "choices": [
         "地頭",
@@ -75,7 +89,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 6,
+      "qnum": 7,
       "text": "北条氏が将軍を補佐し幕政の実権を握った職を何といいますか。",
       "choices": [
         "執権",
@@ -90,7 +104,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 7,
+      "qnum": 8,
       "text": "武士の土地所有の根拠となる文書で、将軍が与えるのはどれですか。",
       "choices": [
         "御家人への本領安堵状",
@@ -105,7 +119,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 8,
+      "qnum": 9,
       "text": "鎌倉幕府の最高合議機関として裁判も行ったのはどれですか。",
       "choices": [
         "評定衆",
@@ -120,7 +134,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 9,
+      "qnum": 10,
       "text": "鎌倉の中心にある、源氏ゆかりの主要神社はどれですか。",
       "choices": [
         "鶴岡八幡宮",
@@ -135,7 +149,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 10,
+      "qnum": 11,
       "text": "承久の乱で朝廷方を率いたのは誰ですか。",
       "choices": [
         "後鳥羽上皇",
@@ -150,7 +164,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 11,
+      "qnum": 12,
       "text": "承久の乱に勝利した鎌倉幕府が置いた、西国支配のための機関はどれですか。",
       "choices": [
         "六波羅探題",
@@ -165,7 +179,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 12,
+      "qnum": 13,
       "text": "幕府の基本法典として1232年に制定されたのはどれですか。",
       "choices": [
         "御成敗式目",
@@ -180,7 +194,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 13,
+      "qnum": 14,
       "text": "鴨長明が書いた随筆はどれですか。",
       "choices": [
         "『方丈記』",
@@ -195,7 +209,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 14,
+      "qnum": 15,
       "text": "鎌倉新仏教のうち、法然が開いた宗派はどれですか。",
       "choices": [
         "浄土宗",
@@ -210,7 +224,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 15,
+      "qnum": 16,
       "text": "親鸞が開いた宗派はどれですか。",
       "choices": [
         "浄土真宗",
@@ -225,7 +239,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 16,
+      "qnum": 17,
       "text": "日蓮が唱えた教えに基づく宗派はどれですか。",
       "choices": [
         "日蓮宗",
@@ -240,7 +254,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 17,
+      "qnum": 18,
       "text": "栄西が伝えた禅宗はどれですか。",
       "choices": [
         "臨済宗",
@@ -255,7 +269,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 18,
+      "qnum": 19,
       "text": "道元が開いた禅宗はどれですか。",
       "choices": [
         "曹洞宗",
@@ -270,7 +284,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 19,
+      "qnum": 20,
       "text": "鎌倉文化の彫刻で、東大寺南大門の金剛力士像を作った仏師はどれですか。",
       "choices": [
         "運慶・快慶",
@@ -285,7 +299,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 20,
+      "qnum": 21,
       "text": "元が二度にわたり来襲した出来事を総称して何といいますか。",
       "choices": [
         "元寇",
@@ -300,7 +314,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 21,
+      "qnum": 22,
       "text": "元寇に際して幕府が博多湾岸に築かせた防御（ぼうぎょ）施設はどれですか。",
       "choices": [
         "石塁（防塁）",
@@ -315,7 +329,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 22,
+      "qnum": 23,
       "text": "元寇のとき幕政を主導した執権は誰ですか。",
       "choices": [
         "北条時宗",
@@ -330,7 +344,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 23,
+      "qnum": 24,
       "text": "幕府の支配が動揺する原因の一つで、恩賞不足を生んだ出来事はどれですか。",
       "choices": [
         "元寇による外敵防衛",
@@ -345,7 +359,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 24,
+      "qnum": 25,
       "text": "鎌倉時代に貨幣経済の進展で多く流通した外国銭はどれですか。",
       "choices": [
         "宋銭",
@@ -360,7 +374,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 25,
+      "qnum": 26,
       "text": "鎌倉時代、農業生産力の向上に寄与した技術として適切なのはどれですか。",
       "choices": [
         "二毛作の普及・牛馬耕",
@@ -375,7 +389,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 26,
+      "qnum": 27,
       "text": "鎌倉時代、荘園・公領の年貢負担が重くなり、徳政を求めて蜂起したのはどれですか。",
       "choices": [
         "一揆",
@@ -390,7 +404,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 27,
+      "qnum": 28,
       "text": "1297年、借金の破棄を命じた法令はどれですか。",
       "choices": [
         "永仁の徳政令",
@@ -405,7 +419,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 28,
+      "qnum": 29,
       "text": "鎌倉時代の代表的史書で、源平の争乱を描いた軍記物語はどれですか。",
       "choices": [
         "『平家物語』",
@@ -420,7 +434,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 29,
+      "qnum": 30,
       "text": "吉田兼好が書いた随筆はどれですか。",
       "choices": [
         "『徒然草』",
@@ -435,7 +449,7 @@ window.questions = [
       "asof": "2025-09-23"
     },
     {
-      "qnum": 30,
+      "qnum": 31,
       "text": "鎌倉時代末期、後醍醐天皇の倒幕運動に呼応して挙兵したのは誰ですか。",
       "choices": [
         "足利尊氏",
@@ -448,5 +462,85 @@ window.questions = [
       "tags": [],
       "difficulty": 1,
       "asof": "2025-09-23"
+    },
+    {
+      "qnum": 32,
+      "type": "summaryQuestion",
+      "text": "鎌倉時代に武家政権が成立し、新しい政治や文化が生まれた主な理由として最も適切なのはどれですか。",
+      "choices": [
+        "武士が力を持ち、源頼朝が幕府を開いて全国を支配する仕組みを作ったから",
+        "朝廷が武士に政治を任せただけ",
+        "外国から攻められたから",
+        "人々が急に増えたから"
+      ],
+      "answer": 0,
+      "source": "",
+      "uiClass": "summary-question",
+      "tags": [],
+      "difficulty": 1,
+      "asof": "2025-01-27"
+    },
+    {
+      "qnum": 33,
+      "type": "summaryQuestion",
+      "text": "武家政権が成立し、新しい政治や文化が生まれたことで、社会はどのように変わったといえますか。",
+      "choices": [
+        "守護・地頭による支配が進み、御成敗式目などの武家法や新仏教、軍記物語など武士の文化が発展した",
+        "再び朝廷中心の政治にもどった",
+        "文化がなくなった",
+        "争いが完全になくなった"
+      ],
+      "answer": 0,
+      "source": "",
+      "uiClass": "summary-question",
+      "tags": [],
+      "difficulty": 1,
+      "asof": "2025-01-27"
+    },
+    {
+      "qnum": 34,
+      "type": "discussionQuestion",
+      "text": "まず、みんなの意見を読んでみよう。\n鎌倉時代に武家政権が成立した一番の理由は何だったと思う？",
+      "choices": [
+        "源頼朝の力",
+        "武士が力を持っていたこと",
+        "朝廷が弱くなったこと",
+        "外国の脅威があったこと"
+      ],
+      "answer": 1,
+      "source": "",
+      "uiClass": "discussion-question",
+      "tags": [],
+      "difficulty": 1,
+      "asof": "2026-02-23",
+      "voices": [
+        {"name":"りく","stance":0,"title":"頼朝の力","text":"源頼朝が優れたリーダーだったから、幕府を開けたんだと思う。","evidenceQnums":[2,3]},
+        {"name":"みゆ","stance":1,"title":"武士の力","text":"平安時代から武士が力を持っていて、その力が実を結んだ。","evidenceQnums":[5,6]},
+        {"name":"けん","stance":2,"title":"朝廷が弱い","text":"承久の乱で朝廷が負けたから、武士の時代になった。","evidenceQnums":[11]},
+        {"name":"あかり","stance":3,"title":"外国の脅威","text":"元寇があったから、武士がまとまって幕府が強くなった。","evidenceQnums":[21,22]}
+      ]
+    },
+    {
+      "qnum": 35,
+      "type": "discussionQuestion",
+      "text": "鎌倉時代に生まれた武家政権や新しい文化は、よい変化だったのだろうか？",
+      "choices": [
+        "よかった（武士の政治や文化が発展した）",
+        "問題もあった（一部の武士だけが得をした）",
+        "どちらともいえない",
+        "わからない"
+      ],
+      "answer": 2,
+      "source": "",
+      "uiClass": "discussion-question",
+      "tags": [],
+      "difficulty": 1,
+      "asof": "2026-02-23",
+      "voices": [
+        {"name":"さき","stance":0,"title":"武士の文化","text":"御成敗式目や新仏教、軍記物語など、武士の文化が発展した。","evidenceQnums":[12,14,15,28]},
+        {"name":"こうた","stance":1,"title":"一部だけ","text":"御家人だけが得をして、他の武士や農民は大変だった。","evidenceQnums":[7,23]},
+        {"name":"りく","stance":2,"title":"次の時代へ","text":"武家政権は室町・江戸へ続く。良い面も悪い面もある。","evidenceQnums":[31]},
+        {"name":"まな","stance":3,"title":"まだ考え中","text":"武士の時代はいいけど、元寇で苦しんだ人もいた。","evidenceQnums":[21,23]}
+      ]
     }
   ];
