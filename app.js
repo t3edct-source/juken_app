@@ -804,12 +804,8 @@ function updatePurchaseButtonsState(user) {
         headerPurchaseBtn.textContent = '📧 メール確認必要';
         headerPurchaseBtn.className = 'px-3 py-2 rounded-lg bg-orange-500 text-white hover:bg-orange-600 shadow-sm transition-colors duration-200';
         headerPurchaseBtn.title = 'メールアドレスの確認が必要です。クリックして確認メールを再送信できます。';
-        // クリック時にメール確認の再送信または確認状態チェックを行う
-        headerPurchaseBtn.onclick = (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          handleEmailVerificationRequired(user);
-        };
+        // onclickは削除（setupPurchaseModalのaddEventListenerが処理する）
+        headerPurchaseBtn.onclick = null;
         console.log('購入ボタンをメール確認要求モードに設定しました');
       }
     } else {
@@ -6397,14 +6393,34 @@ function modalPurchasePack(packId) {
 }
 
 function setupPurchaseModal() {
+  // 🚨 重複実行防止
+  if (window._purchaseModalSetup) {
+    console.log('⚠️ setupPurchaseModal() は既に実行済みです。スキップします。');
+    return;
+  }
+  window._purchaseModalSetup = true;
+  
   // 購入ボタンのクリックイベント
   const purchaseBtn = document.getElementById('purchaseBtn');
   if (purchaseBtn) {
-    purchaseBtn.addEventListener('click', (e) => {
+    // 既存のイベントリスナーを削除（重複防止）
+    const newPurchaseBtn = purchaseBtn.cloneNode(true);
+    purchaseBtn.parentNode.replaceChild(newPurchaseBtn, purchaseBtn);
+    const btn = document.getElementById('purchaseBtn');
+    
+    console.log('🛒 購入ボタンのクリックイベントを設定します');
+    btn.addEventListener('click', (e) => {
       e.preventDefault();
       
+      // 現在のボタン要素を取得（動的に変更される可能性があるため）
+      const currentBtn = document.getElementById('purchaseBtn');
+      if (!currentBtn) {
+        console.error('❌ 購入ボタンが見つかりません');
+        return;
+      }
+      
       // ボタンが「📧 メール確認必要」の場合は、メール確認処理を実行
-      if (purchaseBtn.textContent.includes('メール確認必要')) {
+      if (currentBtn.textContent.includes('メール確認必要')) {
         console.log('📧 メール確認が必要です。確認処理を実行します。');
         const firebaseUser = window.firebaseAuth?.auth?.currentUser;
         if (firebaseUser) {
@@ -6416,7 +6432,7 @@ function setupPurchaseModal() {
       }
       
       // ボタンが無効化されている場合はクリックを無視
-      if (purchaseBtn.disabled) {
+      if (currentBtn.disabled) {
         console.log('購入ボタンは無効化されています。クリックを無視します。');
         return;
       }
@@ -6424,9 +6440,9 @@ function setupPurchaseModal() {
       // デバッグ情報を出力
       console.log('🛒 購入ボタンクリック - 認証状態:', state.user);
       console.log('🛒 購入ボタンクリック - ボタン状態:', {
-        disabled: purchaseBtn.disabled,
-        textContent: purchaseBtn.textContent,
-        className: purchaseBtn.className
+        disabled: currentBtn.disabled,
+        textContent: currentBtn.textContent,
+        className: currentBtn.className
       });
       console.log('🛒 購入ボタンクリック - ユーザー情報:', {
         user: !!state.user,
