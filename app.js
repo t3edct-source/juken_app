@@ -61,8 +61,14 @@ if (!window._domContentLoadedRegistered) {
       console.log('✅ ユーザー情報を state に保存:', {
         uid: user.uid,
         email: user.email,
-        displayName: user.displayName
+        displayName: user.displayName,
+        emailVerified: user.emailVerified
       });
+      
+      // メール未確認の場合は、確認状態の定期チェックを開始
+      if (!user.emailVerified && user.providerData?.some(provider => provider.providerId === 'password')) {
+        startEmailVerificationCheck(user);
+      }
     }
     
     // 1) 画面の表示/非表示トグル（クラスで切替）
@@ -794,11 +800,17 @@ function updatePurchaseButtonsState(user) {
         }, 200);
       } else {
         // メール未確認
-        headerPurchaseBtn.disabled = true;
+        headerPurchaseBtn.disabled = false; // クリック可能にする
         headerPurchaseBtn.textContent = '📧 メール確認必要';
-        headerPurchaseBtn.className = 'px-3 py-2 rounded-lg bg-gray-400 text-white cursor-not-allowed shadow-sm';
-        headerPurchaseBtn.title = 'メールアドレスの確認が必要です';
-        console.log('購入ボタンを無効化しました（メール未確認）');
+        headerPurchaseBtn.className = 'px-3 py-2 rounded-lg bg-orange-500 text-white hover:bg-orange-600 shadow-sm transition-colors duration-200';
+        headerPurchaseBtn.title = 'メールアドレスの確認が必要です。クリックして確認メールを再送信できます。';
+        // クリック時にメール確認の再送信または確認状態チェックを行う
+        headerPurchaseBtn.onclick = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          handleEmailVerificationRequired(user);
+        };
+        console.log('購入ボタンをメール確認要求モードに設定しました');
       }
     } else {
       console.error('購入ボタンが見つかりません (ID: purchaseBtn)');
@@ -840,6 +852,118 @@ function updatePurchaseButtonsState(user) {
 
 // syncFirebaseAuth関数は既にwindow.syncFirebaseAuthとして定義済み
 console.log("🚀 syncFirebaseAuth は既にグローバルに公開済み");
+
+// メール確認が必要な場合の処理
+async function handleEmailVerificationRequired(user) {
+  console.log('📧 メール確認が必要です。ユーザー:', user.email);
+  
+  if (!user) {
+    alert('ログインが必要です。');
+    return;
+  }
+  
+  // まず確認状態を再チェック（メール確認が完了している可能性がある）
+  try {
+    await user.reload();
+    console.log('🔄 ユーザー情報を再読み込みしました。emailVerified:', user.emailVerified);
+    
+    if (user.emailVerified) {
+      // メール確認が完了していた場合
+      alert('メール確認が完了しています！購入機能をご利用いただけます。');
+      // 購入ボタンの状態を更新
+      updatePurchaseButtonsState(user);
+      // state.userも更新
+      if (state.user) {
+        state.user.emailVerified = true;
+      }
+      return;
+    }
+  } catch (error) {
+    console.error('❌ ユーザー情報の再読み込みエラー:', error);
+  }
+  
+  // メール確認がまだ完了していない場合
+  const action = confirm(
+    `メールアドレスの確認が必要です。\n\n` +
+    `確認メールを再送信しますか？\n\n` +
+    `（既に確認メールを受け取っている場合は、メール内のリンクをクリックしてください）`
+  );
+  
+  if (action) {
+    try {
+      // メール確認設定（日本語、続行URL設定）
+      const actionCodeSettings = {
+        url: window.location.origin,
+        handleCodeInApp: false
+      };
+      
+      // 言語設定を確実に適用
+      if (window.firebaseAuth && window.firebaseAuth.auth) {
+        window.firebaseAuth.auth.languageCode = 'ja';
+      }
+      
+      // sendEmailVerificationを呼び出し
+      await sendEmailVerification(user, actionCodeSettings);
+      alert(`確認メールを ${user.email} に再送信しました。\n\nメールボックスを確認して、認証リンクをクリックしてください。\n\n確認完了後、ページを再読み込みするか、「📧 メール確認必要」ボタンを再度クリックすると購入機能が利用可能になります。`);
+      console.log('✅ 確認メール再送信成功');
+      
+      // 確認状態の定期チェックを開始
+      startEmailVerificationCheck(user);
+    } catch (error) {
+      console.error('❌ 確認メール再送信エラー:', error);
+      let errorMessage = '確認メールの再送信に失敗しました。';
+      if (error.code === 'auth/too-many-requests') {
+        errorMessage = '短時間で多くの要求が送信されました。しばらく待ってから再度お試しください。';
+      }
+      alert(errorMessage);
+    }
+  }
+}
+
+// メール確認状態を定期的にチェックする関数
+function startEmailVerificationCheck(user) {
+  if (!user || user.emailVerified) {
+    return; // 既に確認済みの場合はチェック不要
+  }
+  
+  console.log('📧 メール確認状態の定期チェックを開始します');
+  
+  const checkInterval = setInterval(async () => {
+    try {
+      await user.reload();
+      console.log('🔄 メール確認状態をチェック:', user.emailVerified);
+      
+      if (user.emailVerified) {
+        // メール確認が完了した場合
+        console.log('✅ メール確認が完了しました！');
+        clearInterval(checkInterval);
+        
+        // state.userも更新
+        if (state.user) {
+          state.user.emailVerified = true;
+        }
+        
+        // 購入ボタンの状態を更新
+        updatePurchaseButtonsState(user);
+        
+        // 通知を表示
+        showModernNotification(
+          'メール確認が完了しました！',
+          '購入機能をご利用いただけます。',
+          'success'
+        );
+      }
+    } catch (error) {
+      console.error('❌ メール確認状態チェックエラー:', error);
+    }
+  }, 5000); // 5秒ごとにチェック
+  
+  // 5分後に自動的に停止（長時間チェックしない）
+  setTimeout(() => {
+    clearInterval(checkInterval);
+    console.log('⏹️ メール確認状態の定期チェックを停止しました');
+  }, 5 * 60 * 1000);
+}
 
 // ===== Stripe Checkout連携機能 =====
 async function startPurchase(productId, packLabel) {
@@ -6235,7 +6359,12 @@ function handleModalAuthRequired(type) {
   if (type === 'login') {
     alert('購入機能を利用するには、ログインが必要です。\nモーダルを閉じて、右上の「ログイン」ボタンからアカウントを作成またはログインしてください。');
   } else if (type === 'verify') {
-    alert('購入機能を利用するには、メールアドレスの確認が必要です。\n確認メールのリンクをクリックしてから再度お試しください。');
+    const firebaseUser = window.firebaseAuth?.auth?.currentUser;
+    if (firebaseUser) {
+      handleEmailVerificationRequired(firebaseUser);
+    } else {
+      alert('購入機能を利用するには、メールアドレスの確認が必要です。\n確認メールのリンクをクリックしてから再度お試しください。');
+    }
   }
 }
 
@@ -6273,6 +6402,18 @@ function setupPurchaseModal() {
   if (purchaseBtn) {
     purchaseBtn.addEventListener('click', (e) => {
       e.preventDefault();
+      
+      // ボタンが「📧 メール確認必要」の場合は、メール確認処理を実行
+      if (purchaseBtn.textContent.includes('メール確認必要')) {
+        console.log('📧 メール確認が必要です。確認処理を実行します。');
+        const firebaseUser = window.firebaseAuth?.auth?.currentUser;
+        if (firebaseUser) {
+          handleEmailVerificationRequired(firebaseUser);
+        } else {
+          alert('ログインが必要です。');
+        }
+        return;
+      }
       
       // ボタンが無効化されている場合はクリックを無視
       if (purchaseBtn.disabled) {
